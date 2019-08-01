@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="2"
+    >
+
+    <TextView
+        android:id="@+id/idPickerHeadline"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:text="Test"
+        android:textColor="@color/primary_light"
+        android:textSize="@dimen/abc_text_size_medium_material"
+        />
+
+    <TextView
+        android:id="@+id/idPickerContent"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:text="@string/timetable_input"
+        android:textColor="@color/secondary_light"
+        android:textSize="@dimen/abc_text_size_medium_material"
+        />
+
+</LinearLayout>

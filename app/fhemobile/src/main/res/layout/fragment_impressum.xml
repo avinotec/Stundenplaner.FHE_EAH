@@ -1,0 +1,30 @@
+<de.fhe.fhemobile.views.impressum.ImpressumView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.fhe.fhemobile.fragments.impressum.ImpressumFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/header_image_height"
+            android:id="@+id/imageView"
+            android:src="@drawable/th_impress"
+            android:scaleType="centerCrop" 
+            />
+
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/impressumWebView" 
+            />
+
+    </LinearLayout>
+
+</de.fhe.fhemobile.views.impressum.ImpressumView>

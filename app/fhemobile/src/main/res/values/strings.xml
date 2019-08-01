@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_impressum">Impressum</string>
+    <string name="hello_blank_fragment">Hello World</string>
+
+    <string name="drawer_news">News</string>
+    <string name="drawer_mensa">Mensa</string>
+    <string name="drawer_persons">Personen</string>
+    <string name="drawer_dates">Termine</string>
+    <string name="drawer_campus">Campus</string>
+    <string name="drawer_impressum">Impressum</string>
+    <string name="drawer_timetable">Stundenplan</string>
+
+    <string name="phonebook_firstname">Vorname</string>
+    <string name="phonebook_lastname">Nachname</string>
+    <string name="phonebook_search">Suchen</string>
+
+    <string name="semester_course_times">Eckdaten</string>
+    <string name="semester_holidays">Urlaub</string>
+    <string name="semester_important_dates">Wichtige Termine</string>
+
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="title_activity_news_single">News Auswahl</string>
+    <string name="title_activity_employee_information">Kontaktdaten</string>
+
+    <string name="employee_phone">Telefon</string>
+    <string name="employee_fax">Fax</string>
+    <string name="employee_role">Funktion</string>
+    <string name="employee_division">Fakultät</string>
+    <string name="employee_mail">E-Mail</string>
+    <string name="employee_room">Raum</string>
+
+    <string name="maps_up">Etage hoch</string>
+    <string name="maps_down">Etage runter</string>
+
+    <string name="timetable_headline">Bitte wählen Sie Ihren Studiengang. (Sie können ihre Auswahl in den Einstellungen jederzeit ändern)</string>
+    <string name="timetable_study_course">Studiengang</string>
+    <string name="timetable_study_group">Gruppe</string>
+    <string name="timetable_term">Fachsemester</string>
+    <string name="timetable_button">Eingabe</string>
+    <string name="timetable_input">Bitte auswählen</string>
+    <string name="timetable_error">Dieser Kurs enthält keine Elemente.</string>
+    <string name="timetable_switch">Favorit speichern</string>
+    <string name="timetable_reset">Favorit löschen</string>
+    <string name="timetable_week">Woche</string>
+    <string name="timetable_error_incomplete">Bitte setze für jedes Feld eine Auswahl fest</string>
+
+    <string name="aqua_open">Geöffnet</string>
+    <string name="aqua_closed">Geschlossen</string>
+
+    <string name="mail_default_subject">Betreff</string>
+    <string name="mail_default_text"></string>
+
+    <string name="network_error">Es konnten keine Daten gefunden werden.</string>
+
+    <string name="title_activity_maps_single">Lageplan</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="title_activity_time_table_events">Stundenplan</string>
+
+    <string name="appwidget_news">FH News Listen</string>
+    <string name="appwidget_news_empty">Keine Daten vorhanden\nKlicken zum neu laden</string>
+
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
+
+</resources>

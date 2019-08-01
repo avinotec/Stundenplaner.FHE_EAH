@@ -1,0 +1,61 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+        <!-- Per the design guidelines, navigation drawers should be between 240dp and 320dp:
+         https://developer.android.com/design/patterns/navigation-drawer.html -->
+    
+    <dimen name="margin_bottom_default">8dp</dimen>
+    
+    <!--Navigation Drawer-->
+    
+    <dimen name="drawer_width">300dp</dimen>
+    <dimen name="drawer_item_height">48dp</dimen>
+    <dimen name="drawer_item_text_size">18sp</dimen>
+    <dimen name="drawer_item_indicator_width">8dp</dimen>
+    
+    <!--Header metrics-->
+    
+    <dimen name="header_image_height">156dp</dimen>
+    
+    <!--List item metrics-->
+    
+    <dimen name="list_item_vertical_padding">8dp</dimen>
+    <dimen name="list_item_horizontal_padding">16dp</dimen>
+
+    <dimen name="list_header_vertical_padding">12dp</dimen>
+    <dimen name="list_header_horizontal_padding">16dp</dimen>
+
+    <dimen name="list_header_height">48dp</dimen>
+    
+    <dimen name="list_header_text_size">16sp</dimen>
+    <dimen name="list_header_big_text_size">20sp</dimen>
+
+    <!--Single Line List metrics-->
+    
+    <dimen name="list_single_item_height">48dp</dimen>
+    <dimen name="list_single_item_text_size">16sp</dimen>
+
+    <dimen name="list_extended_single_item_height">56dp</dimen>
+
+    
+    <!--Double Line List metrics-->
+    
+    <dimen name="list_double_item_height">72dp</dimen>
+    
+    <!--Tabbar-->
+    
+    <dimen name="tab_text_size">14sp</dimen>
+
+    <!--Timetable-->
+
+    <dimen name="timetable_headline_textsize">16sp</dimen>
+
+    <!--
+Refer to App Widget Documentation for margin information
+http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
+    -->
+    <dimen name="widget_margin">8dp</dimen>
+
+</resources>

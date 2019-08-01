@@ -1,0 +1,26 @@
+<de.fhe.fhemobile.views.semesterdata.SemesterDataView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true"
+    tools:context="de.fhe.fhemobile.fragments.semesterdata.SemesterDataFragment"
+    >
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/semesterProgressBar"
+        android:layout_gravity="center_horizontal"
+        android:indeterminate="false"
+        />
+
+    <com.applidium.headerlistview.HeaderListView
+        android:id="@+id/semesterListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</de.fhe.fhemobile.views.semesterdata.SemesterDataView>

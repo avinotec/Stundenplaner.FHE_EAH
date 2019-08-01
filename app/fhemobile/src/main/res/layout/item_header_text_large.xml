@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/headerLargeText"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/list_header_height"
+    android:paddingLeft="@dimen/list_header_horizontal_padding"
+    android:paddingRight="@dimen/list_header_horizontal_padding"
+    android:gravity="center_vertical"
+    android:text="Heading"
+    android:textStyle="bold"
+    android:textColor="@color/list_header_text"
+    android:textSize="@dimen/list_header_big_text_size"
+    android:background="@color/list_header_background"
+        />

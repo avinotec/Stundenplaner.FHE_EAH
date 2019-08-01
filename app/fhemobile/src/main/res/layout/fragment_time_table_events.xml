@@ -1,0 +1,39 @@
+<de.fhe.fhemobile.views.timetable.TimeTableEventsView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="de.fhe.fhemobile.activities.timetable.TimeTableEventsActivity"
+    >
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_image_height"
+        android:src="@drawable/th_phonebook"
+        android:scaleType="centerCrop"
+        />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/eventPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/eventPagerIndicator"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:padding="8dip"
+        android:background="@color/list_header_background"
+        app:radius="4dp"
+        app:fillColor="@color/primary_color"
+        app:pageColor="@color/third_color"
+        app:strokeColor="#ffffffff"
+        app:strokeWidth="0dp"
+        />
+
+</de.fhe.fhemobile.views.timetable.TimeTableEventsView>

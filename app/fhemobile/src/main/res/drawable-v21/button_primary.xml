@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+        android:color="@color/primary_dark_button">
+    <item>
+        <selector>
+            <item android:state_enabled="false">
+                <shape xmlns:android="http://schemas.android.com/apk/res/android">
+                    <corners android:radius="2dp" />
+                    <solid android:color="@color/primary_button_disabled" />
+                </shape>
+            </item>
+
+            <item>
+                <shape xmlns:android="http://schemas.android.com/apk/res/android">
+                    <corners android:radius="2dp" />
+                    <solid android:color="@color/primary_button" />
+                </shape>
+            </item>
+        </selector>
+    </item>
+</ripple>

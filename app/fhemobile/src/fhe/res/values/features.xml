@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="feature_news">true</bool>
+    <bool name="feature_phonebook">true</bool>
+    <bool name="feature_mensa">true</bool>
+    <bool name="feature_maps">true</bool>
+    <bool name="feature_semester_data">true</bool>
+    <bool name="feature_timetable">false</bool>
+    <bool name="feature_impress">true</bool>
+</resources>

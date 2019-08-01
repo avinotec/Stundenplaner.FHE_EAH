@@ -1,0 +1,74 @@
+<de.fhe.fhemobile.views.news.NewsSingleView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.fhe.fhemobile.fragments.news.NewsSingleViewFragment"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            >
+
+            <TextView
+                android:id="@+id/newsSinglePubDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_bottom_default"
+                android:gravity="end"
+                android:text="PubDate"
+                android:textColor="@color/third_color"
+                />
+
+            <TextView
+                android:id="@+id/newsSingleTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_horizontal"
+                android:text="Title"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/primary_color"
+                />
+
+            <WebView
+                android:id="@+id/newsSingleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_bottom_default"
+                android:background="@android:color/transparent"
+                />
+            
+            <TextView
+                android:id="@+id/newsSingleCategories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                android:textColor="@color/third_color"
+                />
+
+            <TextView
+                android:id="@+id/newsSingleAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Author"
+                android:textColor="@color/third_color"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+
+</de.fhe.fhemobile.views.news.NewsSingleView>

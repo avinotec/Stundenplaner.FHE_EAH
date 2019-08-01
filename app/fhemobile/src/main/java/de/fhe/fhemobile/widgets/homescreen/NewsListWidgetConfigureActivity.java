@@ -1,0 +1,144 @@
+package de.fhe.fhemobile.widgets.homescreen;
+
+import android.app.Activity;
+import android.appwidget.AppWidgetManager;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import de.fhe.fhemobile.BuildConfig;
+import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.adapters.news.NewsCategoryAdapter;
+import de.fhe.fhemobile.network.NetworkHandler;
+import de.fhe.fhemobile.vos.news.NewsCategoryResponse;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
+/**
+ * The configuration screen for the {@link NewsListWidget NewsListWidget} AppWidget.
+ */
+public class NewsListWidgetConfigureActivity extends Activity {
+
+
+    private static final String PREFS_NAME = "de.fhe.fhemobile.widgets.homescreen.NewsListWidget" + BuildConfig.FLAVOR;
+    private static final String PREF_PREFIX_KEY = "newslist_appwidget_";
+
+    public NewsListWidgetConfigureActivity() {
+        super();
+    }
+
+    @Override
+    public void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
+
+        // Set the result to CANCELED.  This will cause the widget host to cancel
+        // out of the widget placement if the user presses the back button.
+        setResult(RESULT_CANCELED);
+
+        setContentView(R.layout.news_list_widget_configure);
+
+        mAvailableCategories = (ListView) findViewById(R.id.widgetNewsCategoryList);
+        mAvailableCategories.setOnItemClickListener(mItemClickListener);
+
+        // Find the widget id from the intent.
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            mAppWidgetId = extras.getInt(
+                    AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+        }
+
+        // If this activity was started with an intent without an app widget ID, finish with an error.
+        if (mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
+            finish();
+            return;
+        }
+
+        NetworkHandler.getInstance().fetchAvailableNewsLists(mNewsCategoryCallback);
+    }
+
+    /**
+     * This method right now displays the widget and starts a Service to fetch
+     * remote data from Server
+     */
+    private void startWidget() {
+
+        // this intent is essential to show the widget
+        // if this intent is not included,you can't show
+        // widget on homescreen
+        Intent intent = new Intent();
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
+        setResult(Activity.RESULT_OK, intent);
+
+        // start your service
+        // to fetch data from web
+        Intent serviceIntent = new Intent(this, NewsListRemoteFetchService.class);
+        serviceIntent
+                .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
+        startService(serviceIntent);
+
+        // finish this activity
+        this.finish();
+
+    }
+
+    private AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            // Save News Id to prefs
+            saveNewsWidgetPref(
+                    NewsListWidgetConfigureActivity.this,
+                    mAppWidgetId,
+                    String.valueOf(mCategoryAdapter.getItem(position).getId())
+            );
+
+            startWidget();
+        }
+    };
+
+    // Write the prefix to the SharedPreferences object for this widget
+    static void saveNewsWidgetPref(Context context, int appWidgetId, String categoryId) {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
+        prefs.putString(PREF_PREFIX_KEY + appWidgetId, categoryId);
+        prefs.commit();
+    }
+
+    // Read the prefix from the SharedPreferences object for this widget.
+    // If there is no preference saved, get the default from a resource
+    static String loadNewsWidgetPref(Context context, int appWidgetId) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
+        return prefs.getString(PREF_PREFIX_KEY + appWidgetId, "0");
+    }
+
+    static void deleteNewsWidgetPref(Context context, int appWidgetId) {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
+        prefs.remove(PREF_PREFIX_KEY + appWidgetId);
+        prefs.commit();
+    }
+
+    private Callback<NewsCategoryResponse> mNewsCategoryCallback = new Callback<NewsCategoryResponse>() {
+        @Override
+        public void success(NewsCategoryResponse t, Response response) {
+            if (mAvailableCategories != null && t.getNewsCategories() != null && t != null ) {
+                mCategoryAdapter = new NewsCategoryAdapter(NewsListWidgetConfigureActivity.this, t.getNewsCategories());
+                mAvailableCategories.setAdapter(mCategoryAdapter);
+            }
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+
+        }
+    };
+
+    private int                 mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+    private ListView            mAvailableCategories;
+    private NewsCategoryAdapter mCategoryAdapter;
+}
+

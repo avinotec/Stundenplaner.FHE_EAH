@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/drawer_item_height">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="@dimen/drawer_item_indicator_width"
+        android:layout_height="match_parent"
+        android:id="@+id/drawerSelectedItem"
+        android:background="@drawable/selector_drawer_checked"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/drawerLabel"
+        android:textColor="@color/drawer_item_text"
+        android:textSize="@dimen/drawer_item_text_size"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/drawerSelectedItem"
+        android:layout_marginLeft="@dimen/list_item_horizontal_padding"
+        android:layout_marginRight="@dimen/list_item_horizontal_padding"
+        />
+
+</RelativeLayout>

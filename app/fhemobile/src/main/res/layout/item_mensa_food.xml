@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/list_item_vertical_padding"
+    android:paddingBottom="@dimen/list_item_vertical_padding"
+    android:paddingLeft="@dimen/list_item_horizontal_padding"
+    android:paddingRight="@dimen/list_item_horizontal_padding"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:id="@+id/mensaTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_bottom_default"
+        android:textStyle="bold"
+        android:textColor="@color/third_color"
+        android:textSize="9pt"
+        android:text="New Text"
+        />
+
+    <TextView
+        android:id="@+id/mensaDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_bottom_default"
+        android:paddingTop="2dp"
+        android:textColor="@color/primary_color"
+        android:text="New Text"
+        />
+
+    <TextView
+        android:id="@+id/mensaPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:textColor="@color/third_color"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="New Text"
+        />
+
+    <!--<TextView-->
+        <!--android:id="@+id/mensaIngredients"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textColor="@color/third_color"-->
+        <!--android:textStyle="bold"-->
+        <!--android:text=""-->
+        <!--/>-->
+
+</LinearLayout>

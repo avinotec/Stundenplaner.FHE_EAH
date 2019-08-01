@@ -1,0 +1,90 @@
+package de.fhe.fhemobile.fragments.phonebook;
+
+import android.app.Activity;
+import android.os.Bundle;
+import androidx.fragment.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.views.phonebook.EmployeeListView;
+
+
+public class EmployeeListFragment extends Fragment {
+
+    public interface EmployeeListCallbacks {
+        void onEmployeeChosen(Integer _ListPosition);
+    }
+
+    public EmployeeListFragment() {
+        // Required empty public constructor
+    }
+
+    public static EmployeeListFragment newInstance() {
+        EmployeeListFragment fragment = new EmployeeListFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //TODO: Save instance list
+
+        if (getArguments() != null) {
+
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        mView = (EmployeeListView) inflater.inflate(R.layout.fragment_employee_list, container, false);
+        mView.initializeView(mViewListener);
+        return mView;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mCallbacks = (EmployeeListCallbacks) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement EmployeeListCallbacks");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
+
+    /**
+     * Called when the fragment is no longer in use.  This is called
+     * after {@link #onStop()} and before {@link #onDetach()}.
+     */
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mView != null) {
+            mView.destroy();
+        }
+    }
+
+    private EmployeeListView.ViewListener mViewListener = new EmployeeListView.ViewListener() {
+        @Override
+        public void onListItemClicked(Integer _ListPosition) {
+            mCallbacks.onEmployeeChosen(_ListPosition);
+        }
+    };
+
+    private EmployeeListCallbacks mCallbacks;
+
+    private EmployeeListView mView;
+
+}

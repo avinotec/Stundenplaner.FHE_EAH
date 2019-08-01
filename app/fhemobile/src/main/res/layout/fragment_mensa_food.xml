@@ -1,0 +1,39 @@
+<de.fhe.fhemobile.views.mensa.MensaFoodView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true"
+    tools:context="de.fhe.fhemobile.fragments.mensa.MensaFoodFragment"
+    >
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:id="@+id/mensaProgressIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/mensaFoodError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:text="Leider sind keine Daten verfügbar"
+        android:textSize="@dimen/list_header_big_text_size"
+        android:textColor="@color/third_color"
+        android:visibility="gone"
+        />
+
+    <com.applidium.headerlistview.HeaderListView
+        android:id="@+id/mensaListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+</de.fhe.fhemobile.views.mensa.MensaFoodView>

@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/widget_margin"
+                android:background="@drawable/appwidget_bg"
+    >
+
+    <TextView
+        android:id="@+id/widgetNewsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/list_item_vertical_padding"
+        android:paddingBottom="@dimen/list_item_vertical_padding"
+        android:paddingLeft="@dimen/list_item_horizontal_padding"
+        android:paddingRight="@dimen/list_item_horizontal_padding"
+        android:gravity="center"
+        android:background="@color/list_header_background"
+        android:textColor="@color/list_header_text"
+        />
+
+    <!-- Empty view is show if list items are empty -->
+    <TextView
+        android:id="@+id/widgetNewsListEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/appwidget_news_empty"
+        android:textColor="@color/primary_color"
+        android:textSize="16sp"/>
+
+    <ListView
+        android:id="@+id/widgetNewsList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/widgetNewsTitle"
+        android:paddingBottom="@dimen/list_item_vertical_padding"
+        />
+
+</RelativeLayout>

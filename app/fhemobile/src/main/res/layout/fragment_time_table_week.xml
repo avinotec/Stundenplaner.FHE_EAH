@@ -1,0 +1,52 @@
+<de.fhe.fhemobile.views.timetable.TimeTableWeekView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="de.fhe.fhemobile.fragments.semesterdata.SemesterDataItemFragment"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_header_height"
+        android:paddingLeft="@dimen/list_header_horizontal_padding"
+        android:paddingRight="@dimen/list_header_horizontal_padding"
+        android:paddingTop="@dimen/list_item_vertical_padding"
+        android:paddingBottom="@dimen/list_item_vertical_padding"
+        android:background="@color/list_header_background"
+        >
+
+        <TextView
+            android:id="@+id/timeTableWeekHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="Heading"
+            android:textStyle="bold"
+            android:textColor="@color/list_header_text"
+            android:textSize="@dimen/abc_text_size_headline_material"
+            />
+
+        <TextView
+            android:id="@+id/timeTableWeekRange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Heading"
+            android:textColor="@color/list_header_text"
+            android:textSize="@dimen/abc_text_size_small_material"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/timeTableWeekList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:listSelector="@android:color/transparent"
+        android:footerDividersEnabled="false"
+        />
+
+
+</de.fhe.fhemobile.views.timetable.TimeTableWeekView>

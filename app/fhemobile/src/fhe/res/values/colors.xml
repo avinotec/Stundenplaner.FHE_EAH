@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!--General Colors-->
+    
+    <color name="primary_color">#033b79</color>
+    <color name="primary_transparent_color">#CC033b79</color>
+    <color name="primary_dark_color">#033b79</color>
+
+    <color name="secondary_color">#99b1c9</color>
+    <color name="third_color">#8995A2</color>
+
+    <color name="actionbar_text">#ffffff</color>
+    <color name="background_color">#dddddd</color>
+
+    <!--Navigation Drawer-->
+    
+    <color name="drawer_background">@android:color/white</color>
+    <color name="drawer_item_text">@color/primary_color</color>
+    <color name="drawer_item_indicator">@color/secondary_color</color>
+    <color name="drawer_divider">#eee</color>
+
+    <!--Button Colors-->
+
+    <color name="primary_button">#033b79</color>
+    <color name="primary_dark_button">@color/g_blue_500</color>
+    <color name="primary_button_disabled">#55033b79</color>
+    
+    <!--Lists-->
+    
+    <color name="list_item_text">@color/primary_color</color>
+    <color name="list_item_text_secondary">@color/third_color</color>
+    <color name="list_header_text">@color/primary_color</color>
+    <color name="list_header_background">#ffe8e9f4</color>
+
+</resources>

@@ -1,0 +1,54 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion '29.0.0'
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode 4
+        versionName '3.0 (May 2019)'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        //abortOnError false
+    }
+    packagingOptions {
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+    flavorDimensions "version"
+    productFlavors {
+        eah {
+            applicationId 'de.fhe.eahmobile'
+            dimension "version"
+        }
+        fhe {
+            applicationId "de.fhe.fhemobile"
+            dimension "version"
+        }
+    }
+}
+
+dependencies {
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
+    implementation 'com.viewpagerindicator:library:2.4.1@aar'
+    implementation 'com.darwinsys:hirondelle-date4j:1.5.1'
+
+    implementation 'com.github.applidium:HeaderListView:f9c33c21ae'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.retrofit:retrofit:1.+'
+}

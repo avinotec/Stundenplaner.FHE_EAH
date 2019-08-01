@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/itemHeader"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/list_header_height"
+    android:paddingBottom="@dimen/list_header_vertical_padding"
+    android:paddingTop="@dimen/list_header_vertical_padding"
+    android:paddingLeft="@dimen/list_header_horizontal_padding"
+    android:paddingRight="@dimen/list_header_horizontal_padding"
+    android:text="Test"
+    android:textColor="@color/list_header_text"
+    android:textSize="@dimen/list_header_text_size"
+    android:textStyle="bold"
+    android:background="@color/list_header_background"
+    android:gravity="center_vertical" 
+    />
