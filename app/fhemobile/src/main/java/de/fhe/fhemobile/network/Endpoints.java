@@ -6,8 +6,10 @@ package de.fhe.fhemobile.network;
 public class Endpoints {
     public static final String LIVE_URL             = "http://193.174.232.89:8080";
     public static final String LOCAL_URL            = "http://192.168.1.102:8080";
+    public static final String SIMON_LOCAL_URL      = "http://10.12.24.58:8000";
 
-    public static final String BASE_URL             = LIVE_URL;
+//    public static final String BASE_URL             = LIVE_URL;
+    public static final String BASE_URL             = SIMON_LOCAL_URL;
     public static final String APP_NAME             = "/fheapp/";
 
 
@@ -29,7 +31,7 @@ public class Endpoints {
 
     public static final String RSS                  = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/news";
     public static final String MENSA                = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/canteens";
-    public static final String SEMESTER             = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/semester"; //Semestertermine     
+    public static final String SEMESTER             = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/Semester"; //Semestertermine
     public static final String PHONEBOOK            = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/persons";  //funktioniert nicht
     public static final String IMPRESSUM            = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/impress";
     public static final String WEATHER              = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/weather";

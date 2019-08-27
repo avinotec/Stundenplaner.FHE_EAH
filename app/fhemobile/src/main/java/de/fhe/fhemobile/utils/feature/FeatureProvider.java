@@ -25,6 +25,7 @@ public class FeatureProvider {
         Features.MAPS           = _Context.getResources().getBoolean(R.bool.feature_maps);
         Features.SEMESTER_DATA  = _Context.getResources().getBoolean(R.bool.feature_semester_data);
         Features.TIMETABLE      = _Context.getResources().getBoolean(R.bool.feature_timetable);
+        Features.MYTIMETABLE    = _Context.getResources().getBoolean(R.bool.feature_mytimetable);
         Features.IMPRESS        = _Context.getResources().getBoolean(R.bool.feature_impress);
     }
 
@@ -37,6 +38,10 @@ public class FeatureProvider {
 
         if (Features.TIMETABLE) {
             list.add(new DrawerItem(FeatureId.TIMETABLE, getFeatureTitle(FeatureId.TIMETABLE)));
+        }
+
+        if (Features.MYTIMETABLE) {
+            list.add(new DrawerItem(FeatureId.MYTIMETABLE, getFeatureTitle(FeatureId.MYTIMETABLE)));
         }
 
         if (Features.PHONEBOOK) {
@@ -73,6 +78,7 @@ public class FeatureProvider {
             case FeatureId.MAPS:            stringRes = R.string.drawer_campus;    break;
             case FeatureId.SEMESTER_DATA:   stringRes = R.string.drawer_dates;     break;
             case FeatureId.TIMETABLE:       stringRes = R.string.drawer_timetable; break;
+            case FeatureId.MYTIMETABLE:       stringRes = R.string.drawer_mytimetable; break;
             case FeatureId.IMPRESS:         stringRes = R.string.drawer_impressum; break;
         }
 

@@ -11,4 +11,5 @@ public interface FeatureId {
     int SEMESTER_DATA   = 4;
     int TIMETABLE       = 5;
     int IMPRESS         = 6;
+    int MYTIMETABLE     = 7;
 }

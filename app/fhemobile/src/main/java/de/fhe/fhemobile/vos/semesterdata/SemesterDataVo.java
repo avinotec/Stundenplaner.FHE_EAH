@@ -18,6 +18,6 @@ public class SemesterDataVo {
         mSemester = _semester;
     }
 
-    @SerializedName("semester")
+    @SerializedName("Semester")
     private SemesterVo[] mSemester;
 }

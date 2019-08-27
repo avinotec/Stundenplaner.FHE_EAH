@@ -23,17 +23,5 @@
         android:layout_weight="1"
         />
 
-    <com.viewpagerindicator.CirclePageIndicator
-        android:id="@+id/eventPagerIndicator"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:padding="8dip"
-        android:background="@color/list_header_background"
-        app:radius="4dp"
-        app:fillColor="@color/primary_color"
-        app:pageColor="@color/third_color"
-        app:strokeColor="#ffffffff"
-        app:strokeWidth="0dp"
-        />
 
 </de.fhe.fhemobile.views.timetable.TimeTableEventsView>

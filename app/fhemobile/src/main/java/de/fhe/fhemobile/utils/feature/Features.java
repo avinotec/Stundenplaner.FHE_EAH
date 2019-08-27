@@ -12,5 +12,6 @@ public class Features {
     public static boolean SEMESTER_DATA   = false;
     public static boolean TIMETABLE       = false;
     public static boolean IMPRESS         = false;
+    public static boolean MYTIMETABLE     = false;
 
 }

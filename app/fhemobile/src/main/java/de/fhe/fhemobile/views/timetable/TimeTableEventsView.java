@@ -49,7 +49,7 @@ public class TimeTableEventsView extends LinearLayout {
         super.onFinishInflate();
 
         mPager         = (ViewPager)           findViewById(R.id.eventPager);
-        mPageIndicator = (CirclePageIndicator) findViewById(R.id.eventPagerIndicator);
+
     }
 
     private Context                     mContext;
