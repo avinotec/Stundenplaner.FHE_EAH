@@ -1,6 +1,7 @@
 package de.fhe.fhemobile.fragments.mytimetable;
 
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,6 +59,18 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     public MyTimeTableDialogFragment() {
         // Required empty public constructor
     }
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null)
+        {
+            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+            dialog.getWindow().setLayout(width, height);
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,31 +105,48 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
     private void proceedToTimetable(String _TimeTableId, TimeTableCallback callback) {
         NetworkHandler.getInstance().fetchTimeTableEvents(_TimeTableId,callback);
+
     }
 
 
 
-    private List<FlatDataStructure> getAllEvents(List<TimeTableWeekVo> weekList, FlatDataStructure data) {
+    private List<List<List<FlatDataStructure>>> getAllEvents(List<TimeTableWeekVo> weekList,List<List<List<FlatDataStructure>>> dataList ,FlatDataStructure data) {
         if (weekList != null) {
             try {
-                List<FlatDataStructure> dataList= new ArrayList<>();
+
                 for(int weekIndex=0;weekIndex<weekList.size();weekIndex++){
+
                     List<TimeTableDayVo> dayList = weekList.get(weekIndex).getDays();
                     for(int dayIndex=0;dayIndex<dayList.size();dayIndex++){
                         List<TimeTableEventVo> eventList = dayList.get(dayIndex).getEvents();
                         for(int eventIndex=0;eventIndex<eventList.size();eventIndex++){
-                            data
+                            FlatDataStructure datacopy = data.copy();
+                            datacopy
                                     .setEventWeek(weekList.get(weekIndex))
                                     .setEventDay(dayList.get(dayIndex))
                                     .setEvent(eventList.get(eventIndex));
-                            Log.d(TAG, data.getCourse().getTitle() + "-->"
-                                    + data.getSemester().getTitle() + "-->"
-                                    + data.getStudyGroup().getTitle() + "-->"
-                                    + data.getEventWeek().getWeekInYear() + "-->"
-                                    + data.getEventDay().getDayInWeek() + "-->"
-                                    + data.getEvent().getUid());
-                            if(!FlatDataStructure.listContainsEvent(completeDataset,data)){
-                                dataList.add(data);
+
+
+//                            Log.d(TAG, data.getCourse().getTitle() + "-->"
+//                                    + datacopy.getSemester().getTitle() + "-->"
+//                                    + datacopy.getStudyGroup().getTitle() + "-->"
+//                                    + datacopy.getEventWeek().getWeekInYear() + "-->"
+//                                    + datacopy.getEventDay().getDayInWeek() + "-->"
+//                                    + datacopy.getEvent().getUid() + "-->"
+//		                            + datacopy.getEvent().getTitle());
+                                FlatDataStructure.groupEvents(dataList,datacopy);
+
+
+                                Log.d(TAG, "getAllEvents: datalistLength: "+dataList.size());
+
+                        }
+                        for (List<List<FlatDataStructure>>list :dataList){
+                            Log.d(TAG, "listAll: "+list.get(0).get(0).getEvent().getTitle());
+                            for (List<FlatDataStructure> debugeventList :list){
+                                Log.d(TAG, "listAll: "+debugeventList.get(0).getStudyGroup().getTitle());
+                                for(FlatDataStructure event:debugeventList) {
+                                    Log.d(TAG, "listAll: " + event.getEvent().getDate() + " " + event.getEvent().getStartTime() + "  " + event.getStudyGroup().getTitle());
+                                }
                             }
                         }
                     }
@@ -128,7 +158,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                 Log.e(TAG, "success: Exception beim Zusammenstellen der Datensaetze.",e);
             }
         }
-        return new ArrayList();
+        return dataList;
     }
 
 
@@ -146,6 +176,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
             boolean errorOccurred = false;
 
+
+            final List<List<List<FlatDataStructure>>> dataList= new ArrayList<>();
             for (StudyCourseVo courseVo : mResponse.getStudyCourses()) {
                 if (courseVo.getId() != null && courseVo.getId().equals(_TermId)) {
                     mChosenCourse = courseVo;
@@ -160,16 +192,22 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                             .setCourse(courseVo)
                                             .setSemester(term)
                                             .setStudyGroup(studyGroupVo);
+
+
                                     TimeTableCallback<List<TimeTableWeekVo>> callback = new TimeTableCallback<List<TimeTableWeekVo>>(data) {
                                         @Override
                                         public void success(List<TimeTableWeekVo> weekList, Response response) {
                                             super.success(weekList, response);
-                                            Log.d(TAG, "success: Request wurde ausgefuehrt: " + response.getUrl() + " Status: " + response.getStatus());
-                                            completeDataset.clear();
-                                            completeDataset.addAll(getAllEvents(weekList,this.getData()));
-                                            TimeTableLessonAdapter timeTableLessonAdapter = new TimeTableLessonAdapter(MyTimeTableDialogFragment.this.getContext(), completeDataset);
-                                            mView.setLessonListAdapter(timeTableLessonAdapter);
-                                            mView.toggleLessonListVisibility(true);
+                                            if(response.getStatus()>=200) {
+                                                Log.d(TAG, "success: Request wurde ausgefuehrt: " + response.getUrl() + " Status: " + response.getStatus());
+                                                List<List<List<FlatDataStructure>>> courseEvents = getAllEvents(weekList, dataList, this.getData());
+                                                Log.d(TAG, "success: length"+courseEvents.size());
+
+                                                TimeTableLessonAdapter timeTableLessonAdapter = new TimeTableLessonAdapter(MyTimeTableDialogFragment.this.getContext(), courseEvents);
+                                                mView.setLessonListAdapter(timeTableLessonAdapter);
+                                                mView.toggleLessonListVisibility(true);
+                                                timeTableLessonAdapter.notifyDataSetChanged();
+                                            }
                                         }
 
                                         @Override
@@ -179,7 +217,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                         }
                                     };
 
-                                    proceedToTimetable(studyGroupVo.getTimeTableId(), callback);
+                                    synchronized (this){proceedToTimetable(studyGroupVo.getTimeTableId(), callback);}
                                 }
                             }
 

@@ -9,8 +9,12 @@ import android.widget.ListView;
 
 import androidx.fragment.app.FragmentManager;
 
+import java.util.ArrayList;
+
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.adapters.timetable.SelectedLessonAdapter;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableDialogFragment;
+import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
 /**
  * Created by paul on 12.03.15.
@@ -46,6 +50,8 @@ public class MyTimeTableView extends LinearLayout {
                 createAddDialog();
             }
         });
+        selectedLessonAdapter = new SelectedLessonAdapter(mContext);
+        mLessonList.setAdapter(selectedLessonAdapter);
     }
     private void createAddDialog(){
 
@@ -53,19 +59,30 @@ public class MyTimeTableView extends LinearLayout {
         MyTimeTableDialogFragment myTimeTableDialogFragment = MyTimeTableDialogFragment.newInstance();
         myTimeTableDialogFragment.show(fm, "fragment_edit_name");
 
-
-//        Dialog addDialog = new Dialog(mContext);
-//        addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        addDialog.setCancelable(false);
-//        addDialog.setContentView(R.layout.add_time_table);
-//        addDialog.show();
     }
 
-    private Context           mContext;
+    private static Context           mContext;
     private FragmentManager   mFragmentManager;
 
 
     private Button            mAddButton;
     private ListView          mLessonList;
+
+    private static SelectedLessonAdapter selectedLessonAdapter;
+    private final static ArrayList<FlatDataStructure> selectedLessons = new ArrayList();
+    public static ArrayList<FlatDataStructure> getLessons(){
+        return selectedLessons;
+    }
+    public static boolean removeLesson(FlatDataStructure lesson){
+        selectedLessons.remove(lesson);
+        selectedLessonAdapter.notifyDataSetChanged();
+        return true;
+    }
+    public static boolean addLesson(FlatDataStructure lesson){
+        selectedLessons.add(lesson);
+        selectedLessonAdapter.notifyDataSetChanged();
+        return true;
+
+    }
 
 }
