@@ -17,6 +17,7 @@ import java.util.List;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.timetable.TimeTableLessonAdapter;
+import de.fhe.fhemobile.comperator.LessonTitle_StudyGroupTitle_Comperator;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.network.TimeTableCallback;
 import de.fhe.fhemobile.utils.Utils;
@@ -108,9 +109,11 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
     }
 
+//weeklist ist der Datensatz, der beim Request erhalten wird (alle events eines Sets)
+//dataList ist die Liste, die am Ende alle Daten der verschiedenen Requests beinhaltet.
+//data ist der neue Datensatz, der in die Liste eingepflegt werden soll.
 
-
-    private List<List<List<FlatDataStructure>>> getAllEvents(List<TimeTableWeekVo> weekList,List<List<List<FlatDataStructure>>> dataList ,FlatDataStructure data) {
+    private List<FlatDataStructure> getAllEvents(List<TimeTableWeekVo> weekList,List<FlatDataStructure> dataList ,FlatDataStructure data) {
         if (weekList != null) {
             try {
 
@@ -126,33 +129,11 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                     .setEventDay(dayList.get(dayIndex))
                                     .setEvent(eventList.get(eventIndex));
 
-
-//                            Log.d(TAG, data.getCourse().getTitle() + "-->"
-//                                    + datacopy.getSemester().getTitle() + "-->"
-//                                    + datacopy.getStudyGroup().getTitle() + "-->"
-//                                    + datacopy.getEventWeek().getWeekInYear() + "-->"
-//                                    + datacopy.getEventDay().getDayInWeek() + "-->"
-//                                    + datacopy.getEvent().getUid() + "-->"
-//		                            + datacopy.getEvent().getTitle());
-                                FlatDataStructure.groupEvents(dataList,datacopy);
-
-
-                                Log.d(TAG, "getAllEvents: datalistLength: "+dataList.size());
-
-                        }
-                        for (List<List<FlatDataStructure>>list :dataList){
-                            Log.d(TAG, "listAll: "+list.get(0).get(0).getEvent().getTitle());
-                            for (List<FlatDataStructure> debugeventList :list){
-                                Log.d(TAG, "listAll: "+debugeventList.get(0).getStudyGroup().getTitle());
-                                for(FlatDataStructure event:debugeventList) {
-                                    Log.d(TAG, "listAll: " + event.getEvent().getDate() + " " + event.getEvent().getStartTime() + "  " + event.getStudyGroup().getTitle());
-                                }
-                            }
+                            dataList.add(datacopy);
                         }
                     }
                 }
                 return dataList;
-
             }
             catch (Exception e){
                 Log.e(TAG, "success: Exception beim Zusammenstellen der Datensaetze.",e);
@@ -176,8 +157,6 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
             boolean errorOccurred = false;
 
-
-            final List<List<List<FlatDataStructure>>> dataList= new ArrayList<>();
             for (StudyCourseVo courseVo : mResponse.getStudyCourses()) {
                 if (courseVo.getId() != null && courseVo.getId().equals(_TermId)) {
                     mChosenCourse = courseVo;
@@ -185,45 +164,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                     // Check if course has any terms available
                     if (courseVo.getTerms() != null) {
                         errorOccurred = false;
-
-                            for (TermsVo term : courseVo.getTerms()) {
-                                for (StudyGroupVo studyGroupVo : term.getStudyGroups()) {
-                                    FlatDataStructure data = new FlatDataStructure()
-                                            .setCourse(courseVo)
-                                            .setSemester(term)
-                                            .setStudyGroup(studyGroupVo);
-
-
-                                    TimeTableCallback<List<TimeTableWeekVo>> callback = new TimeTableCallback<List<TimeTableWeekVo>>(data) {
-                                        @Override
-                                        public void success(List<TimeTableWeekVo> weekList, Response response) {
-                                            super.success(weekList, response);
-                                            if(response.getStatus()>=200) {
-                                                Log.d(TAG, "success: Request wurde ausgefuehrt: " + response.getUrl() + " Status: " + response.getStatus());
-                                                List<List<List<FlatDataStructure>>> courseEvents = getAllEvents(weekList, dataList, this.getData());
-                                                Log.d(TAG, "success: length"+courseEvents.size());
-
-                                                TimeTableLessonAdapter timeTableLessonAdapter = new TimeTableLessonAdapter(MyTimeTableDialogFragment.this.getContext(), courseEvents);
-                                                mView.setLessonListAdapter(timeTableLessonAdapter);
-                                                mView.toggleLessonListVisibility(true);
-                                                timeTableLessonAdapter.notifyDataSetChanged();
-                                            }
-                                        }
-
-                                        @Override
-                                        public void failure(RetrofitError error) {
-                                            super.failure(error);
-                                            Log.d(TAG, "failure: " + error);
-                                        }
-                                    };
-
-                                    synchronized (this){proceedToTimetable(studyGroupVo.getTimeTableId(), callback);}
-                                }
-                            }
-
-
-
-                       // mView.setTermsItems(courseVo.getTerms());
+                        mView.setTermsItems(courseVo.getTerms());
                     }
                     else {
                         // No terms are available
@@ -238,42 +179,66 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             }
 
             if (errorOccurred) {
-                mView.toggleTermsPickerVisibility(false);
+                mView.toggleTermsPickerVisibility(true);
                 Utils.showToast(R.string.timetable_error);
             }
             else {
-                //mView.toggleTermsPickerVisibility(true);
-                Log.d(TAG, "onTermChosen: Complete Data Array Length: "+completeDataset.size());
-//                    for (FlatDataStructure dataset : completeDataset) {
-//                        Log.d(TAG, dataset.getCourse().getTitle() + "-->"
-//                                + dataset.getSemester().getTitle() + "-->"
-//                                + dataset.getStudyGroup().getTitle() + "-->"
-//                                + dataset.getEventWeek().getWeekInYear() + "-->"
-//                                + dataset.getEventDay().getDayInWeek() + "-->"
-//                                + dataset.getEvent().getUid());
-//                    }
-
+                mView.toggleTermsPickerVisibility(true);
             }
 
         }
 
         @Override
         public void onGroupChosen(String _GroupId) {
-          //  mView.toggleGroupsPickerVisibility(true);
+            mView.toggleGroupsPickerVisibility(false);
             mView.toggleButtonEnabled(false);
            // mView.resetGroupsPicker();
 
             mChosenTerm = null;
 
+
+            final List<FlatDataStructure> dataList= new ArrayList<>();
             for (TermsVo termsVo : mChosenCourse.getTerms()) {
                 if (termsVo.getId().equals(_GroupId)) {
+
                     mChosenTerm = termsVo;
 
-                    for (StudyGroupVo studyGroupVo:termsVo.getStudyGroups()){
+                    for (StudyGroupVo studyGroupVo : mChosenTerm.getStudyGroups()) {
+                        FlatDataStructure data = new FlatDataStructure()
+                                .setCourse(mChosenCourse)
+                                .setSemester(mChosenTerm)
+                                .setStudyGroup(studyGroupVo);
 
-//                        proceedToTimetable(studyGroupVo.getTimeTableId());
+
+                        TimeTableCallback<List<TimeTableWeekVo>> callback = new TimeTableCallback<List<TimeTableWeekVo>>(data) {
+                            @Override
+                            public void success(List<TimeTableWeekVo> weekList, Response response) {
+                                super.success(weekList, response);
+                                if(response.getStatus()>=200) {
+                                    Log.d(TAG, "success: Request wurde ausgefuehrt: " + response.getUrl() + " Status: " + response.getStatus());
+                                    //Gemergte liste aller zurückgekehrten Requests. Die Liste wächst mit jedem Request.
+                                    //Hier (im success) haben wir neue Daten bekommen.
+//TODO: überprüfen ob courseEvents nötig ist
+                                    List<FlatDataStructure> courseEvents = getAllEvents(weekList, dataList, this.getData());
+                                    Log.d(TAG, "success: length"+courseEvents.size());
+                                    //Wir sortieren diesen letzten Stand der Liste
+                                    Collections.sort(courseEvents,new LessonTitle_StudyGroupTitle_Comperator());
+                                    TimeTableLessonAdapter timeTableLessonAdapter = new TimeTableLessonAdapter(MyTimeTableDialogFragment.this.getContext(), courseEvents);
+                                    mView.setLessonListAdapter(timeTableLessonAdapter);
+                                    mView.toggleLessonListVisibility(true);
+                                    timeTableLessonAdapter.notifyDataSetChanged();
+                                }
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                                super.failure(error);
+                                Log.d(TAG, "failure: " + error);
+                            }
+                        };
+
+                        synchronized (this){proceedToTimetable(studyGroupVo.getTimeTableId(), callback);}
                     }
-//                    mView.setStudyGroupItems(termsVo.getStudyGroups());
                 }
             }
         }

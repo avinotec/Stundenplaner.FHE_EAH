@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,10 +19,14 @@ import de.fhe.fhemobile.views.timetable.MyTimeTableView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
 public class TimeTableLessonAdapter extends BaseAdapter {
+	private static final String TAG = "TimeTableLessonAdapter";
 
-	private List<List<List<FlatDataStructure>>> tableLessonData;
+	private String lessonTitle="";
+	private String studygroupTitle="";
+
+	private List<FlatDataStructure> tableLessonData;
 	private Context context;
-	public TimeTableLessonAdapter(Context context, List<List<List<FlatDataStructure>>> data) {
+	public TimeTableLessonAdapter(Context context, List<FlatDataStructure> data) {
 		tableLessonData=data;
 		this.context=context;
 	}
@@ -47,56 +50,70 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
 			convertView = LayoutInflater.from(context).
-					inflate(R.layout.row_layout_lessons, parent, false);
+					inflate(R.layout.row_layout_events, parent, false);
 		}
-		final List<List<FlatDataStructure>> currentItem = tableLessonData.get(position);
+		final FlatDataStructure currentItem = tableLessonData.get(position);
 		RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.singleRowLayout);
 
 		TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvLessonTitle);
-		if(currentItem.size()>=1) {
-			lessonTitle.setText(currentItem.get(0).get(0).getEvent().getTitle());
+
+		if(position==0){
+			lessonTitle.setText(currentItem.getEvent().getTitle());
+			lessonTitle.setVisibility(View.VISIBLE);
+		}
+		else if(!tableLessonData.get(position).getEvent().getTitle().equals(tableLessonData.get(position-1).getEvent().getTitle())){
+			lessonTitle.setText(currentItem.getEvent().getTitle());
+			lessonTitle.setVisibility(View.VISIBLE);
+			Log.d(TAG, "getView: currentItem: "+currentItem.getEvent().getTitle()+" prevItem: "+tableLessonData.get(position-1).getEvent().getTitle());
+		}
+		else{
+			lessonTitle.setVisibility(View.GONE);
 		}
 
-		LinearLayout eventList = (LinearLayout)convertView.findViewById(R.id.llEventList);
-
-		for(final List<FlatDataStructure> studygroupList : currentItem) {
-			TextView setTitle = new TextView(context);
-			setTitle.setText(studygroupList.get(0).getStudyGroup().getTitle());
-			ImageButton btnAddLesson = new ImageButton(context);
-			btnAddLesson.setImageResource(android.R.drawable.ic_input_add);
-			btnAddLesson.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					for (final FlatDataStructure event : studygroupList) {
-						MyTimeTableView.addLesson(event);
-					}
-				}
-			});
-			eventList.addView(setTitle);
-			eventList.addView(btnAddLesson);
-
-			for (final FlatDataStructure event : studygroupList) {
-				View setView = LayoutInflater.from(context).inflate(R.layout.row_layout_events, eventList, false);
-				TextView lessonTime = (TextView) setView.findViewById(R.id.tvLessonTime);
-				Date df = new java.util.Date(event.getEvent().getStartDate());
-				String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
-				lessonTime.setText(date + " " + event.getEvent().getStartTime() + "-" + event.getEvent().getEndTime());
-
-				TextView roomNumber = (TextView) setView.findViewById(R.id.tvRoom);
-				roomNumber.setText(event.getEvent().getRoom());
-
-				TextView eventId = (TextView)setView.findViewById(R.id.eventId);
-
-				eventId.setText(""+event.getId());
-				Log.d("test", "getView: "+event.getId());
 
 
+		TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.tvSetTitle);
+		ImageButton btnAddLesson = (ImageButton)convertView.findViewById(R.id.ibAddLesson);
+		btnAddLesson.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
 
-
-				eventList.addView(setView);
-
+				MyTimeTableView.addLesson(currentItem);
 			}
+
+		});
+
+
+
+		if(position==0){
+			studyGroupTitle.setText(currentItem.getStudyGroup().getTitle());
+			studyGroupTitle.setVisibility(View.VISIBLE);
+			btnAddLesson.setVisibility(View.VISIBLE);
+
+
 		}
+		else if(!currentItem.getEvent().getTitle().equals(tableLessonData.get(position-1).getEvent().getTitle())){
+			studyGroupTitle.setText(currentItem.getStudyGroup().getTitle());
+			studyGroupTitle.setVisibility(View.VISIBLE);
+			btnAddLesson.setVisibility(View.VISIBLE);
+		}
+		else if(!currentItem.getStudyGroup().getTitle().equals(tableLessonData.get(position-1).getStudyGroup().getTitle())){
+			studyGroupTitle.setText(currentItem.getStudyGroup().getTitle());
+			studyGroupTitle.setVisibility(View.VISIBLE);
+			btnAddLesson.setVisibility(View.VISIBLE);
+		}
+		else{
+			studyGroupTitle.setVisibility(View.GONE);
+			btnAddLesson.setVisibility(View.GONE);
+		}
+
+		TextView tvTime = (TextView) convertView.findViewById(R.id.tvLessonTime);
+		Date df = new java.util.Date(currentItem.getEvent().getStartDate());
+		String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
+		tvTime.setText(date + " " + currentItem.getEvent().getStartTime() + "-" + currentItem.getEvent().getEndTime());
+
+		TextView tvRoom = (TextView)convertView.findViewById(R.id.tvRoom);
+		tvRoom.setText(currentItem.getEvent().getRoom());
 
 
 

@@ -12,7 +12,7 @@ public class FlatDataStructure {
 
 
 
-	public FlatDataStructure() {
+	public FlatDataStructure(){
 	}
 	public FlatDataStructure copy(){
 		FlatDataStructure copy = new FlatDataStructure();
@@ -77,65 +77,8 @@ public class FlatDataStructure {
 
 	]
 	 */
-	public static void groupEvents(List<List<List<FlatDataStructure>>> list, FlatDataStructure data){
+	public static int counter=0;
 
-
-		Log.d(TAG, "groupEvents id:"+data.getId());
-		//Wenn die Liste komplett leer ist, erstelle die Struktur für das erste Element
-		if(list.size()==0){
-			Log.d(TAG, "Vergleich : First New List: "+data.getEvent().getTitle());
-			List<List<FlatDataStructure>>eventList = new ArrayList<>();
-			List<FlatDataStructure> studygroupList = new ArrayList<>();
-
-			studygroupList.add(data);
-			eventList.add(studygroupList);
-			list.add(eventList);
-
-			return;
-		}else{
-			for(List<List<FlatDataStructure>>eventList:list){
-				if(eventList.size()>=1){
-					Log.d(TAG, "event Vergleich: "+eventList.get(0).get(0).getEvent().getTitle()+" : "+data.getEvent().getTitle());
-
-					//Ist das Studienfach mit diesem Titel schon in der Liste?
-					if(eventList.get(0).get(0).getEvent().getTitle().equals(data.getEvent().getTitle())){
-						for(List<FlatDataStructure> studygroupList:eventList) {
-							if(studygroupList.size()>=1){
-								Log.d(TAG, "groupEvents Vergleich: " + studygroupList.get(0).getStudyGroup().getTitle() + " : " + data.getStudyGroup().getTitle());
-
-								//Ist das Set mit der ID schon in der Liste?
-								if (studygroupList.get(0).getStudyGroup().getTimeTableId().equals(data.getStudyGroup().getTimeTableId())) {
-
-									//Studienfach und SetID gefunden, füge den Datensatz hinein.
-									studygroupList.add(data);
-									return;
-								}
-							}
-						}
-						//SetID wurde nicht gefunden --> Erstelle Liste für das Set und lege den Datensatz hinein.
-						Log.d(TAG, "Vergleich : Neue Studygroup");
-						List<FlatDataStructure> newStudygroupList=new ArrayList<>();
-						newStudygroupList.add(data);
-						eventList.add(newStudygroupList);
-						return;
-					}
-
-				}
-
-			}
-			//Studienfach nicht gefunden, Erstelle eine Liste für das Fach und darin eine Liste für das Set. Füge alles inklusive dem Datensatz zusammen.
-			Log.d(TAG, "Vergleich : Neuer Event: "+data.getEvent().getTitle());
-			List<List<FlatDataStructure>> newEventList= new ArrayList<>();
-			List<FlatDataStructure> newStudygroupList = new ArrayList<>();
-
-			newStudygroupList.add(data);
-			newEventList.add(newStudygroupList);
-			list.add(newEventList);
-
-			return;
-		}
-
-	}
 
 	public static boolean listContainsEvent(List<FlatDataStructure> list, FlatDataStructure data){
 		for(FlatDataStructure event:list){
