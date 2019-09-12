@@ -21,7 +21,7 @@ import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
  * create an instance of this fragment.
  */
 public class MyTimeTableFragment extends FeatureFragment {
-
+    public static final String TAG = "MyTimeTableFragment";
 
     /**
      * Use this factory method to create a new instance of

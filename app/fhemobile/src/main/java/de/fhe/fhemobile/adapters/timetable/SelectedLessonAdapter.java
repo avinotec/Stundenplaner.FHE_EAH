@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -46,7 +47,7 @@ public class SelectedLessonAdapter extends BaseAdapter {
 		final FlatDataStructure currentItem = MyTimeTableView.getLessons().get(position);
 		RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.singleRowLayout);
 
-		TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvLessonTitle);
+		TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvLessonDay);
 		lessonTitle.setText(currentItem.getEvent().getTitle());
 
 		TextView lessonTime = (TextView)convertView.findViewById(R.id.tvLessonTime);
@@ -54,8 +55,16 @@ public class SelectedLessonAdapter extends BaseAdapter {
 		String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
 		lessonTime.setText(date+" "+currentItem.getEvent().getStartTime()+"-"+currentItem.getEvent().getEndTime());
 
-		TextView setTitle = (TextView)convertView.findViewById(R.id.tvSetTitle);
+		TextView setTitle = (TextView)convertView.findViewById(R.id.tvLessonDate);
 		setTitle.setText(currentItem.getStudyGroup().getTitle());
+
+		ImageButton ibRemoveLesson = convertView.findViewById(R.id.ibRemoveLesson);
+		ibRemoveLesson.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				MyTimeTableView.removeLesson(currentItem);
+			}
+		});
 
 		return convertView;
 	}

@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,21 +15,21 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.views.timetable.MyTimeTableView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
-public class SelectedLessonAdapter extends BaseAdapter {
+public class CalendarAdapter extends BaseAdapter {
 
 	private Context context;
-	public SelectedLessonAdapter(Context context) {
+	public CalendarAdapter(Context context) {
 		this.context=context;
 	}
 
 	@Override
 	public int getCount() {
-		return MyTimeTableView.getLessons().size();
+		return MyTimeTableView.getSortedLessons().size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return MyTimeTableView.getLessons().get(position);
+		return MyTimeTableView.getSortedLessons().get(position);
 	}
 
 	@Override
@@ -42,29 +41,54 @@ public class SelectedLessonAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
 			convertView = LayoutInflater.from(context).
-					inflate(R.layout.row_layout_my_scedule, parent, false);
+					inflate(R.layout.row_layout_calendar, parent, false);
 		}
-		final FlatDataStructure currentItem = MyTimeTableView.getLessons().get(position);
+		final FlatDataStructure currentItem = MyTimeTableView.getSortedLessons().get(position);
 		RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.singleRowLayout);
 
-		TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvLessonTitle);
+
+		TextView lessonDay = (TextView)convertView.findViewById(R.id.tvLessonDay);
+		lessonDay.setText(currentItem.getEvent().getDayOfWeek());
+
+		TextView lessonDate = (TextView)convertView.findViewById(R.id.tvLessonDate);
+		lessonDate.setText(currentItem.getEvent().getDate());
+
+
+		TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvTitle);
 		lessonTitle.setText(currentItem.getEvent().getTitle());
 
 		TextView lessonTime = (TextView)convertView.findViewById(R.id.tvLessonTime);
 		Date df = new Date(currentItem.getEvent().getStartDate());
 		String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
-		lessonTime.setText(date+" "+currentItem.getEvent().getStartTime()+"-"+currentItem.getEvent().getEndTime());
+		lessonTime.setText(currentItem.getEvent().getStartTime()+"-"+currentItem.getEvent().getEndTime());
 
-		TextView setTitle = (TextView)convertView.findViewById(R.id.tvSetTitle);
-		setTitle.setText(currentItem.getStudyGroup().getTitle());
+		TextView lessonRoom = (TextView)convertView.findViewById(R.id.tvRoom);
+		lessonRoom.setText(currentItem.getEvent().getRoom());
 
-		ImageButton ibRemoveLesson = convertView.findViewById(R.id.ibRemoveLesson);
-		ibRemoveLesson.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				MyTimeTableView.removeLesson(currentItem);
-			}
-		});
+		TextView lessonLecturer = (TextView)convertView.findViewById(R.id.tvLecturer);
+		lessonLecturer.setText(currentItem.getEvent().getLecturer());
+
+
+
+		if(position==0){
+			lessonDay.setText("Heute ("+currentItem.getEvent().getDayOfWeek()+")");
+			lessonDay.setVisibility(View.VISIBLE);
+			lessonDate.setVisibility(View.VISIBLE);
+
+
+		}
+		else if(!currentItem.getEvent().getDate().equals(MyTimeTableView.getSortedLessons().get(position-1).getEvent().getDate())){
+			lessonDay.setVisibility(View.VISIBLE);
+			lessonDate.setVisibility(View.VISIBLE);
+
+		}
+		else{
+			lessonDay.setVisibility(View.GONE);
+			lessonDate.setVisibility(View.GONE);
+		}
+
+
+
 
 		return convertView;
 	}

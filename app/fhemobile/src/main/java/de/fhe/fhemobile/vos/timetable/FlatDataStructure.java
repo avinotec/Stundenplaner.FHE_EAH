@@ -4,7 +4,10 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class FlatDataStructure {
@@ -35,7 +38,7 @@ public class FlatDataStructure {
 		return selected;
 	}
 
-	private static List<FlatDataStructure> queryGetEventsByEventTitle(List<FlatDataStructure> list, String eventTitle){
+	public static List<FlatDataStructure> queryGetEventsByEventTitle(List<FlatDataStructure> list, String eventTitle){
 		List<FlatDataStructure> filteredEvents = new ArrayList<>();
 		for (FlatDataStructure event : list) {
 			if(event.getEvent().getTitle().equals(eventTitle)){
@@ -44,10 +47,27 @@ public class FlatDataStructure {
 		}
 		return filteredEvents;
 	}
-	private static List<FlatDataStructure> queryGetEventsByStudyGroupTitle(List<FlatDataStructure>list, String studyGroupTitle){
+	public static List<FlatDataStructure> queryGetEventsByStudyGroupTitle(List<FlatDataStructure>list, String studyGroupTitle){
 		List<FlatDataStructure> filteredEvents = new ArrayList<>();
 		for(FlatDataStructure event : list){
 			if(event.getStudyGroup().getTitle().equals(studyGroupTitle)){
+				filteredEvents.add(event);
+			}
+		}
+		return filteredEvents;
+	}
+
+	public static List<FlatDataStructure> queryfutureEvents(List<FlatDataStructure>list){
+		List<FlatDataStructure> filteredEvents = new ArrayList<>();
+		for(FlatDataStructure event : list){
+			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
+			Date eventDate = null;
+			try {
+				eventDate= sdf.parse(event.getEvent().getDate()+" "+event.getEvent().getStartTime());
+			} catch (ParseException e) {
+				Log.e(TAG, "Fehler beim Parsen der Daten: ",e );
+			}
+			if(eventDate.after(new Date())){
 				filteredEvents.add(event);
 			}
 		}

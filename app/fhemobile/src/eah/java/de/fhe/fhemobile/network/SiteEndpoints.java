@@ -5,5 +5,6 @@ package de.fhe.fhemobile.network;
  */
 public class SiteEndpoints
 {
+    //public static final String SITE_PATH_PARAM = "eah";
     public static final String SITE_PATH_PARAM = "fhe";
 }

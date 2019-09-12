@@ -85,7 +85,7 @@ android {
     signingConfigs {
         release {
             //storeFile file('D:\\Projekt\\Mobile.AndroidStudio\\VideoChat2\\doc\\cert\\Keystore')
-            storeFile file('doc\\cert\\Keystore')
+            //storeFile file('doc\\cert\\Keystore')
             storePassword ""
             keyAlias ""
             keyPassword ""
@@ -93,7 +93,7 @@ android {
         debug {
             // Ein fester debug keystore damit, wenn man mit verschiedenen Rechnern arbeitet, die APK updaten kann.
             // Der dubug.keystore liegt im Projekt unter /app/debug.keystore und kann auch ausgetauscht werden.
-            storeFile file('debug.keystore')
+            //storeFile file('debug.keystore')
             storePassword 'android'
         }
     }

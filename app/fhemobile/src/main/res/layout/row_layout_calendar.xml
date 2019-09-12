@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tvLessonTitle"
+        android:id="@+id/tvLessonDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -15,10 +15,10 @@
         android:visibility="gone"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
     <TextView
-        android:id="@+id/tvSetTitle"
+        android:id="@+id/tvLessonDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvLessonTitle"
+        android:layout_below="@+id/tvLessonDay"
         android:layout_marginTop="5dp"
         android:text="TextView"
         android:visibility="gone"
@@ -28,38 +28,47 @@
         android:id="@+id/tvLessonTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvSetTitle"
+        android:layout_below="@+id/tvLessonDate"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     <TextView
-        android:id="@+id/tvRoom"
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
-        android:layout_below="@+id/tvSetTitle"
+        android:layout_below="@+id/tvLessonDate"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/tvLessonTime"
         android:layout_toRightOf="@+id/tvLessonTime"
         android:text="TextView" />
 
-
-
-    <ImageButton
-        android:id="@+id/ibAddLesson"
+    <TextView
+        android:id="@+id/tvRoom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginRight="3dp"
-        android:visibility="gone"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        android:layout_below="@+id/tvLessonTime"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+    <TextView
+        android:id="@+id/tvLecturer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_below="@+id/tvLessonTime"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/tvRoom"
+        android:layout_toRightOf="@+id/tvRoom"
+        android:text="TextView" />
+
 
 </RelativeLayout>

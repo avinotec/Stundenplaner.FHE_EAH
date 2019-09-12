@@ -10,9 +10,13 @@ import android.widget.ListView;
 import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.timetable.SelectedLessonAdapter;
+import de.fhe.fhemobile.comparator.Date_Comparator;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableDialogFragment;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
@@ -70,16 +74,27 @@ public class MyTimeTableView extends LinearLayout {
 
     private static SelectedLessonAdapter selectedLessonAdapter;
     private final static ArrayList<FlatDataStructure> selectedLessons = new ArrayList();
-    public static ArrayList<FlatDataStructure> getLessons(){
+    private static List<FlatDataStructure> sortedLessons=new ArrayList<>();
+
+    private static List<FlatDataStructure> getSortedList(Comparator<FlatDataStructure> comparator){
+        List<FlatDataStructure> sortedList = new ArrayList<FlatDataStructure>(selectedLessons);
+        Collections.sort(sortedList,comparator);
+        return sortedList;
+    }
+
+    public static List<FlatDataStructure> getLessons(){
         return selectedLessons;
     }
+    public static List<FlatDataStructure> getSortedLessons(){return sortedLessons;}
     public static boolean removeLesson(FlatDataStructure lesson){
         selectedLessons.remove(lesson);
+        sortedLessons=getSortedList(new Date_Comparator());
         selectedLessonAdapter.notifyDataSetChanged();
         return true;
     }
     public static boolean addLesson(FlatDataStructure lesson){
         selectedLessons.add(lesson);
+        sortedLessons=getSortedList(new Date_Comparator());
         selectedLessonAdapter.notifyDataSetChanged();
         return true;
 

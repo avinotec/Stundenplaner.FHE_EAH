@@ -4,7 +4,7 @@ import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.impressum.ImpressumFragment;
 import de.fhe.fhemobile.fragments.maps.MapsFragment;
 import de.fhe.fhemobile.fragments.mensa.MensaFoodFragment;
-import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableFragment;
+import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableCalendarFragment;
 import de.fhe.fhemobile.fragments.news.NewsListFragment;
 import de.fhe.fhemobile.fragments.phonebook.PhonebookSearchFragment;
 import de.fhe.fhemobile.fragments.semesterdata.SemesterDataFragment;
@@ -25,7 +25,7 @@ public class FeatureFragmentFactory {
             case FeatureId.SEMESTER_DATA:   fragment = SemesterDataFragment.newInstance();      break;
             case FeatureId.IMPRESS:         fragment = ImpressumFragment.newInstance();         break;
             case FeatureId.TIMETABLE:       fragment = TimeTableFactory.getTimeTableFragment(); break;
-            case FeatureId.MYTIMETABLE:     fragment = MyTimeTableFragment.newInstance();       break;
+            case FeatureId.MYTIMETABLE:     fragment = MyTimeTableCalendarFragment.newInstance();       break;
             case FeatureId.NEWS:
             default:                        fragment = NewsListFragment.newInstance();
         }

@@ -55,7 +55,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		final FlatDataStructure currentItem = tableLessonData.get(position);
 		RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.singleRowLayout);
 
-		TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvLessonTitle);
+		TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvLessonDay);
 
 		if(position==0){
 			lessonTitle.setText(currentItem.getEvent().getTitle());
@@ -72,13 +72,17 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 
 
 
-		TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.tvSetTitle);
+		TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.tvLessonDate);
 		ImageButton btnAddLesson = (ImageButton)convertView.findViewById(R.id.ibAddLesson);
 		btnAddLesson.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				List<FlatDataStructure> eventFilteredList = FlatDataStructure.queryGetEventsByEventTitle(tableLessonData,currentItem.getEvent().getTitle());
+				List<FlatDataStructure> studyGroupFilteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(eventFilteredList,currentItem.getStudyGroup().getTitle());
+				for(FlatDataStructure event : studyGroupFilteredList){
+					MyTimeTableView.addLesson(event);
+				}
 
-				MyTimeTableView.addLesson(currentItem);
 			}
 
 		});

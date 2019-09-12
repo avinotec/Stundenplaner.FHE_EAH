@@ -17,7 +17,7 @@ import java.util.List;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.timetable.TimeTableLessonAdapter;
-import de.fhe.fhemobile.comperator.LessonTitle_StudyGroupTitle_Comperator;
+import de.fhe.fhemobile.comparator.LessonTitle_StudyGroupTitle_Comparator;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.network.TimeTableCallback;
 import de.fhe.fhemobile.utils.Utils;
@@ -188,6 +188,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
         }
 
+        public volatile int requestCounter=0;
         @Override
         public void onGroupChosen(String _GroupId) {
             mView.toggleGroupsPickerVisibility(false);
@@ -215,6 +216,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                             public void success(List<TimeTableWeekVo> weekList, Response response) {
                                 super.success(weekList, response);
                                 if(response.getStatus()>=200) {
+
                                     Log.d(TAG, "success: Request wurde ausgefuehrt: " + response.getUrl() + " Status: " + response.getStatus());
                                     //Gemergte liste aller zurückgekehrten Requests. Die Liste wächst mit jedem Request.
                                     //Hier (im success) haben wir neue Daten bekommen.
@@ -222,11 +224,14 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                     List<FlatDataStructure> courseEvents = getAllEvents(weekList, dataList, this.getData());
                                     Log.d(TAG, "success: length"+courseEvents.size());
                                     //Wir sortieren diesen letzten Stand der Liste
-                                    Collections.sort(courseEvents,new LessonTitle_StudyGroupTitle_Comperator());
-                                    TimeTableLessonAdapter timeTableLessonAdapter = new TimeTableLessonAdapter(MyTimeTableDialogFragment.this.getContext(), courseEvents);
-                                    mView.setLessonListAdapter(timeTableLessonAdapter);
-                                    mView.toggleLessonListVisibility(true);
-                                    timeTableLessonAdapter.notifyDataSetChanged();
+                                    requestCounter--;
+                                    if(requestCounter==0) {
+                                        Collections.sort(courseEvents, new LessonTitle_StudyGroupTitle_Comparator());
+                                        TimeTableLessonAdapter timeTableLessonAdapter = new TimeTableLessonAdapter(MyTimeTableDialogFragment.this.getContext(), courseEvents);
+                                        mView.setLessonListAdapter(timeTableLessonAdapter);
+                                        mView.toggleLessonListVisibility(true);
+                                        timeTableLessonAdapter.notifyDataSetChanged();
+                                    }
                                 }
                             }
 
@@ -238,6 +243,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                         };
 
                         synchronized (this){proceedToTimetable(studyGroupVo.getTimeTableId(), callback);}
+                        requestCounter++;
                     }
                 }
             }

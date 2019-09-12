@@ -8,25 +8,24 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import androidx.fragment.app.FragmentManager;
-
-import java.util.ArrayList;
+import androidx.fragment.app.FragmentTransaction;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.adapters.timetable.SelectedLessonAdapter;
+import de.fhe.fhemobile.adapters.timetable.CalendarAdapter;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableDialogFragment;
-import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
+import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableFragment;
 
 /**
  * Created by paul on 12.03.15.
  */
-public class MyTimeTableShowView extends LinearLayout {
+public class MyTimeTableCalendarView extends LinearLayout {
 
-    public MyTimeTableShowView(Context context, AttributeSet attrs) {
+    public MyTimeTableCalendarView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
     }
 
-    public MyTimeTableShowView(Context context) {
+    public MyTimeTableCalendarView(Context context) {
         super(context);
         mContext = context;
     }
@@ -34,24 +33,28 @@ public class MyTimeTableShowView extends LinearLayout {
     public void initializeView(FragmentManager _Manager) {
         mFragmentManager = _Manager;
 
-
     }
 
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mAddButton      = (Button)            findViewById(R.id.timetableAddLesson);
-        mLessonList     = (ListView)          findViewById(R.id.lvLessons);
+        mEditButton = (Button)            findViewById(R.id.timetableEdit);
+        mCalendarList = (ListView)          findViewById(R.id.lvCalendar);
 
-        mAddButton.setOnClickListener(new OnClickListener() {
+        mEditButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                createAddDialog();
+                FragmentTransaction transaction= mFragmentManager.beginTransaction();
+                transaction.replace(R.id.container,new MyTimeTableFragment(),MyTimeTableFragment.TAG)
+                        .addToBackStack(MyTimeTableFragment.TAG)
+                        .commit();
+                //Todo: Wechsele zum EditorFragment (MyTimeTableFragment)
+                //backstack berücksichtigen!
             }
         });
-        selectedLessonAdapter = new SelectedLessonAdapter(mContext);
-        mLessonList.setAdapter(selectedLessonAdapter);
+        calendarAdapter = new CalendarAdapter(mContext);
+        mCalendarList.setAdapter(calendarAdapter);
     }
     private void createAddDialog(){
 
@@ -65,24 +68,10 @@ public class MyTimeTableShowView extends LinearLayout {
     private FragmentManager   mFragmentManager;
 
 
-    private Button            mAddButton;
-    private ListView          mLessonList;
+    private Button mEditButton;
+    private ListView mCalendarList;
 
-    private static SelectedLessonAdapter selectedLessonAdapter;
-    private final static ArrayList<FlatDataStructure> selectedLessons = new ArrayList();
-    public static ArrayList<FlatDataStructure> getLessons(){
-        return selectedLessons;
-    }
-    public static boolean removeLesson(FlatDataStructure lesson){
-        selectedLessons.remove(lesson);
-        selectedLessonAdapter.notifyDataSetChanged();
-        return true;
-    }
-    public static boolean addLesson(FlatDataStructure lesson){
-        selectedLessons.add(lesson);
-        selectedLessonAdapter.notifyDataSetChanged();
-        return true;
+    private static CalendarAdapter calendarAdapter;
 
-    }
 
 }

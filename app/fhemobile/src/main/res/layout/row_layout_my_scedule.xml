@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
     <TextView
-        android:id="@+id/tvLessonTitle"
+        android:id="@+id/tvLessonDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -26,16 +26,16 @@
         android:id="@+id/tvLessonTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvLessonTitle"
+        android:layout_below="@+id/tvLessonDay"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/tvSetTitle"
+        android:id="@+id/tvLessonDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvLessonTitle"
+        android:layout_below="@+id/tvLessonDay"
         android:layout_marginLeft="20dp"
         android:layout_toEndOf="@+id/tvLessonTime"
         android:layout_toRightOf="@+id/tvLessonTime"
