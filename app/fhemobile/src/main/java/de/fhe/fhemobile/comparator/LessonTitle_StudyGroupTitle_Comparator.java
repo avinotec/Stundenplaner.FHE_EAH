@@ -1,10 +1,10 @@
-package de.fhe.fhemobile.comperator;
+package de.fhe.fhemobile.comparator;
 
 import java.util.Comparator;
 
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
-public class LessonTitle_StudyGroupTitle_Comperator implements Comparator<FlatDataStructure> {
+public class LessonTitle_StudyGroupTitle_Comparator implements Comparator<FlatDataStructure> {
 	private static final String TAG = "LessonTitle_StudyGroupT";
 	private final static int GREATER=1;
 	private final static int EQUAL=0;
