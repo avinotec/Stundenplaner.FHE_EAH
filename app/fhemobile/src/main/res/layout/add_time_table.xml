@@ -65,7 +65,9 @@
                 android:id="@+id/add_lvLessons"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:divider="@null"
+                android:dividerHeight="0dp"/>
 
             <ProgressBar
                 android:id="@+id/progressIndicator"

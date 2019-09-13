@@ -46,6 +46,7 @@ public interface ApiDeclaration {
     @GET("/" + Endpoints.AQUA)
     public void fetchCafeAquaStatus(Callback<CafeAquaResponse> _Callback);
 
+
     @GET("/" + Endpoints.TIMETABLE)
     public void fetchTimeTable(Callback<TimeTableResponse> _Callback);
 

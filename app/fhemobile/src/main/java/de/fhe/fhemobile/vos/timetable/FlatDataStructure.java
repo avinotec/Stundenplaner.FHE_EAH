@@ -202,6 +202,15 @@ public class FlatDataStructure {
 	public int getId() {
 		return id;
 	}
+	private boolean visible = false;
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+
+	public boolean isVisible() {
+		return visible;
+	}
 
 	@NonNull
 	@Override

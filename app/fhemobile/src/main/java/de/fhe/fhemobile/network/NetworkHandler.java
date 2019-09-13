@@ -247,6 +247,7 @@ public class NetworkHandler {
 				.create();
 
 
+
 		mRestAdapter = new RestAdapter.Builder()
 				.setEndpoint(Endpoints.BASE_URL + Endpoints.APP_NAME)
 				.setConverter(new GsonConverter(gson))
@@ -254,6 +255,7 @@ public class NetworkHandler {
 				.build();
 
 		mApi = mRestAdapter.create(ApiDeclaration.class);
+
 	}
 
 

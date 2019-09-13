@@ -5,8 +5,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -47,24 +49,50 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(int position, View convertView, final ViewGroup parent) {
 		if (convertView == null) {
 			convertView = LayoutInflater.from(context).
 					inflate(R.layout.row_layout_events, parent, false);
 		}
 		final FlatDataStructure currentItem = tableLessonData.get(position);
 		RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.singleRowLayout);
+		convertView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				List<FlatDataStructure> lessonTitleFilteredList = FlatDataStructure.queryGetEventsByEventTitle(tableLessonData,currentItem.getEvent().getTitle());
+				List <FlatDataStructure> filteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(lessonTitleFilteredList,currentItem.getStudyGroup().getTitle());
+				for (FlatDataStructure event:filteredList){
+					event.setVisible(!event.isVisible());
+				}
+				((ListView)parent).invalidateViews();
+				Log.d(TAG, "onClick: VisibleClick");
 
-		TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvLessonDay);
+			}
+		});
+
+		if(currentItem.isVisible()){
+			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
+			convertView.setVisibility(View.VISIBLE);
+		}
+		else{
+			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,1));
+			convertView.setVisibility(View.GONE);
+		}
+
+		TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvLessonTitle);
 
 		if(position==0){
 			lessonTitle.setText(currentItem.getEvent().getTitle());
 			lessonTitle.setVisibility(View.VISIBLE);
+			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
+			convertView.setVisibility(View.VISIBLE);
+
 		}
 		else if(!tableLessonData.get(position).getEvent().getTitle().equals(tableLessonData.get(position-1).getEvent().getTitle())){
 			lessonTitle.setText(currentItem.getEvent().getTitle());
 			lessonTitle.setVisibility(View.VISIBLE);
-			Log.d(TAG, "getView: currentItem: "+currentItem.getEvent().getTitle()+" prevItem: "+tableLessonData.get(position-1).getEvent().getTitle());
+			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
+			convertView.setVisibility(View.VISIBLE);
 		}
 		else{
 			lessonTitle.setVisibility(View.GONE);
@@ -72,7 +100,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 
 
 
-		TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.tvLessonDate);
+		TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.tvStudyGroupTitle);
 		ImageButton btnAddLesson = (ImageButton)convertView.findViewById(R.id.ibAddLesson);
 		btnAddLesson.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -93,6 +121,8 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 			studyGroupTitle.setText(currentItem.getStudyGroup().getTitle());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			btnAddLesson.setVisibility(View.VISIBLE);
+			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
+			convertView.setVisibility(View.VISIBLE);
 
 
 		}
@@ -100,11 +130,16 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 			studyGroupTitle.setText(currentItem.getStudyGroup().getTitle());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			btnAddLesson.setVisibility(View.VISIBLE);
+			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
+			convertView.setVisibility(View.VISIBLE);
+
 		}
 		else if(!currentItem.getStudyGroup().getTitle().equals(tableLessonData.get(position-1).getStudyGroup().getTitle())){
 			studyGroupTitle.setText(currentItem.getStudyGroup().getTitle());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			btnAddLesson.setVisibility(View.VISIBLE);
+			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
+			convertView.setVisibility(View.VISIBLE);
 		}
 		else{
 			studyGroupTitle.setVisibility(View.GONE);
