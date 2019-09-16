@@ -27,11 +27,11 @@ import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
 import de.fhe.fhemobile.vos.semesterdata.SemesterDataVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-import retrofit.converter.GsonConverter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by paul on 22.01.14.
@@ -49,19 +49,19 @@ public class NetworkHandler {
 	 */
 	public void fetchEmployees(String _FirstName, String _LastName) {
 
-		mApi.fetchEmployees(_FirstName, _LastName, new Callback<ArrayList<EmployeeVo>>() {
+		mApi.fetchEmployees(_FirstName, _LastName).enqueue(new Callback<ArrayList<EmployeeVo>>() {
 			@Override
-			public void success(ArrayList<EmployeeVo> t, Response response) {
-				// MS: Bei den News sind die news/0 kaputt
-				if ( t != null ) {
-					PhonebookModel.getInstance().setFoundEmployees(t);
+			public void onResponse(Call<ArrayList<EmployeeVo>> call, Response<ArrayList<EmployeeVo>> response) {
+				if ( response.body() != null ) {
+					PhonebookModel.getInstance().setFoundEmployees(response.body());
 				}
 			}
 
 			@Override
-			public void failure(RetrofitError error) {
+			public void onFailure(Call<ArrayList<EmployeeVo>> call, Throwable t) {
 				showErrorToast();
 			}
+
 		});
 	}
 
@@ -70,17 +70,16 @@ public class NetworkHandler {
 	 */
 	public void fetchSemesterData() {
 
-		mApi.fetchSemesterData(new Callback<SemesterDataVo>() {
+		mApi.fetchSemesterData().enqueue(new Callback<SemesterDataVo>() {
 			@Override
-			public void success(SemesterDataVo t, Response response) {
-				// MS: Bei den News sind die news/0 kaputt
-				if ( t != null ) {
-					SemesterDataModel.getInstance().setData(t.getSemester());
+			public void onResponse(Call<SemesterDataVo> call, Response<SemesterDataVo> response) {
+				if ( response.body() != null ) {
+					SemesterDataModel.getInstance().setData(response.body().getSemester());
 				}
 			}
 
 			@Override
-			public void failure(RetrofitError error) {
+			public void onFailure(Call<SemesterDataVo> call, Throwable t) {
 				showErrorToast();
 			}
 		});
@@ -91,9 +90,10 @@ public class NetworkHandler {
 	 */
 	public void fetchMensaData() {
 
-		mApi.fetchMensaData(UserSettings.getInstance().getChosenMensa(), new Callback<MensaFoodItemVo[]>() {
+		mApi.fetchMensaData(UserSettings.getInstance().getChosenMensa()).enqueue( new Callback<MensaFoodItemVo[]>() {
 			@Override
-			public void success(MensaFoodItemVo[] _mensaItems, Response response) {
+			public void onResponse(Call<MensaFoodItemVo[]> call, Response<MensaFoodItemVo[]> response) {
+				MensaFoodItemVo[] _mensaItems =response.body();
 				List<MensaFoodItemCollectionVo> orderedItems = null;
 
 				if (_mensaItems != null && _mensaItems.length > 0)
@@ -107,7 +107,7 @@ public class NetworkHandler {
 			}
 
 			@Override
-			public void failure(RetrofitError error) {
+			public void onFailure(Call<MensaFoodItemVo[]> call, Throwable t) {
 				showErrorToast();
 			}
 		});
@@ -120,17 +120,16 @@ public class NetworkHandler {
 
 		fetchNewsData(UserSettings.getInstance().getChosenNewsCategory(), new Callback<NewsItemResponse>() {
 			@Override
-			public void success(NewsItemResponse t, Response response) {
-
+			public void onResponse(Call<NewsItemResponse> call, Response<NewsItemResponse> response) {
 				// MS: Bei den News sind die news/0 kaputt
-				if ( t != null ) {
-					final NewsItemVo[] newsItemVos = t.getChannel().getNewsItems();
+				if ( response.body() != null ) {
+					final NewsItemVo[] newsItemVos = response.body().getChannel().getNewsItems();
 					NewsModel.getInstance().setNewsItems(newsItemVos);
 				}
 			}
 
 			@Override
-			public void failure(RetrofitError error) {
+			public void onFailure(Call<NewsItemResponse> call, Throwable t) {
 				showErrorToast();
 			}
 		});
@@ -141,7 +140,7 @@ public class NetworkHandler {
 	 */
 	public void fetchNewsData(String _NewsCategory, Callback<NewsItemResponse> _Callback) {
 
-		mApi.fetchNewsData(_NewsCategory, _Callback);
+		mApi.fetchNewsData(_NewsCategory ).enqueue(_Callback);
 	}
 
 	/**
@@ -149,17 +148,17 @@ public class NetworkHandler {
 	 */
 	public void fetchAvailableMensas() {
 
-		mApi.fetchAvailableMensas(new Callback<MensaChoiceItemVo[]>() {
+		mApi.fetchAvailableMensas().enqueue(new Callback<MensaChoiceItemVo[]>() {
 			@Override
-			public void success(MensaChoiceItemVo[] t, Response response) {
+			public void onResponse(Call<MensaChoiceItemVo[]> call, Response<MensaChoiceItemVo[]> response) {
 				// MS: Bei den News sind die news/0 kaputt
-				if ( t != null ) {
-					MensaFoodModel.getInstance().setChoiceItems(t);
+				if ( response.body() != null ) {
+					MensaFoodModel.getInstance().setChoiceItems(response.body());
 				}
 			}
 
 			@Override
-			public void failure(RetrofitError error) {
+			public void onFailure(Call<MensaChoiceItemVo[]> call, Throwable t) {
 				showErrorToast();
 			}
 		});
@@ -172,15 +171,15 @@ public class NetworkHandler {
 
 		fetchAvailableNewsLists(new Callback<NewsCategoryResponse>() {
 			@Override
-			public void success(NewsCategoryResponse t, Response response) {
+			public void onResponse(Call<NewsCategoryResponse> call, Response<NewsCategoryResponse> response) {
 				// MS: Bei den News sind die news/0 kaputt
-				if ( t != null ) {
-					NewsModel.getInstance().setCategoryItems(t.getNewsCategories());
+				if ( response.body() != null ) {
+					NewsModel.getInstance().setCategoryItems(response.body().getNewsCategories());
 				}
 			}
 
 			@Override
-			public void failure(RetrofitError error) {
+			public void onFailure(Call<NewsCategoryResponse> call, Throwable t) {
 				showErrorToast();
 			}
 		});
@@ -191,7 +190,7 @@ public class NetworkHandler {
 	 */
 	public void fetchAvailableNewsLists(Callback<NewsCategoryResponse> _Callback) {
 
-		mApi.fetchAvailableNewsLists(_Callback);
+		mApi.fetchAvailableNewsLists().enqueue(_Callback);
 	}
 
 	/**
@@ -199,7 +198,7 @@ public class NetworkHandler {
 	 */
 	public void fetchWeather(Callback<WeatherResponse> _Callback) {
 
-		mApi.fetchWeather(_Callback);
+		mApi.fetchWeather().enqueue(_Callback);
 	}
 
 	/**
@@ -208,7 +207,7 @@ public class NetworkHandler {
 	 */
 	public void fetchTimeTable(Callback<TimeTableResponse> _Callback) {
 
-		mApi.fetchTimeTable(_Callback);
+		mApi.fetchTimeTable().enqueue(_Callback);
 	}
 
 	/**
@@ -218,7 +217,7 @@ public class NetworkHandler {
 	 */
 	public void fetchTimeTableEvents(String _TimeTableId, Callback<ArrayList<TimeTableWeekVo>> _Callback) {
 
-		mApi.fetchTimeTableEvents(_TimeTableId, _Callback);
+		mApi.fetchTimeTableEvents(_TimeTableId).enqueue(_Callback);
 	}
 
 	/**
@@ -227,7 +226,7 @@ public class NetworkHandler {
 	 */
 	public void fetchCafeAquaStatus(Callback<CafeAquaResponse> _Callback) {
 
-		mApi.fetchCafeAquaStatus(_Callback);
+		mApi.fetchCafeAquaStatus().enqueue(_Callback);
 	}
 
 	/**
@@ -248,9 +247,10 @@ public class NetworkHandler {
 
 
 
-		mRestAdapter = new RestAdapter.Builder()
-				.setEndpoint(Endpoints.BASE_URL + Endpoints.APP_NAME)
-				.setConverter(new GsonConverter(gson))
+		mRestAdapter = new Retrofit.Builder()
+				.baseUrl(Endpoints.BASE_URL + Endpoints.APP_NAME)
+				.addConverterFactory(GsonConverterFactory.create())
+				//.setConverter(new GsonConverter(gson))
 //                .setLogLevel(RestAdapter.LogLevel.FULL)
 				.build();
 
@@ -263,7 +263,7 @@ public class NetworkHandler {
 
 	private static NetworkHandler ourInstance = new NetworkHandler();
 
-	private RestAdapter     mRestAdapter;
+	private Retrofit mRestAdapter;
 	private ApiDeclaration  mApi;
 
 }

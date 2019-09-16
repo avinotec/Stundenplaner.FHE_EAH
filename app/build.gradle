@@ -20,9 +20,12 @@ buildscript {
      * Google's Maven repository.
      */
     repositories {
-        google()
-	    mavenCentral()
+        maven { url "http://dl.bintray.com/populov/maven" }
+        maven { url "https://jitpack.io" }
         jcenter()
+        google()
+
+        mavenCentral()
     }
    
     /**
@@ -47,8 +50,9 @@ allprojects {
     repositories {
         maven { url "http://dl.bintray.com/populov/maven" }
         maven { url "https://jitpack.io" }
-        mavenCentral()
+        jcenter()
         google()
+        mavenCentral()
         //201908 MS: somewhere read, that google sometimes is older and needs updates directly through maven
         maven { url "https://maven.google.com" }
     }

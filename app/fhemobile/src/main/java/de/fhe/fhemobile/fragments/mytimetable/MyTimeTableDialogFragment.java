@@ -30,9 +30,9 @@ import de.fhe.fhemobile.vos.timetable.TimeTableDayVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.content.ContentValues.TAG;
 
@@ -213,11 +213,13 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
                         TimeTableCallback<List<TimeTableWeekVo>> callback = new TimeTableCallback<List<TimeTableWeekVo>>(data) {
                             @Override
-                            public void success(List<TimeTableWeekVo> weekList, Response response) {
-                                super.success(weekList, response);
-                                if(response.getStatus()>=200) {
+                            public void onResponse(Call<List<TimeTableWeekVo>> call, Response<List<TimeTableWeekVo>> response) {
 
-                                    Log.d(TAG, "success: Request wurde ausgefuehrt: " + response.getUrl() + " Status: " + response.getStatus());
+                                super.onResponse(call, response);
+                                if(response.code()>=200) {
+                                    List<TimeTableWeekVo> weekList=response.body();
+
+                                    Log.d(TAG, "success: Request wurde ausgefuehrt: " + response.raw().request().url() + " Status: " + response.code());
                                     //Gemergte liste aller zurückgekehrten Requests. Die Liste wächst mit jedem Request.
                                     //Hier (im success) haben wir neue Daten bekommen.
 //TODO: überprüfen ob courseEvents nötig ist
@@ -233,12 +235,13 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                         timeTableLessonAdapter.notifyDataSetChanged();
                                     }
                                 }
+
                             }
 
                             @Override
-                            public void failure(RetrofitError error) {
-                                super.failure(error);
-                                Log.d(TAG, "failure: " + error);
+                            public void onFailure(Call<List<TimeTableWeekVo>> call, Throwable t) {
+                                super.onFailure(call, t);
+                                Log.d(TAG, "failure: " + t);
                             }
                         };
 
@@ -271,20 +274,19 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
     private Callback<TimeTableResponse> mTimeTableResponseCallback = new Callback<TimeTableResponse>() {
         @Override
-        public void success(TimeTableResponse t, Response response) {
-            Log.d(TAG, "success: Request wurde ausgefuehrt: "+response.getUrl()+" Status: "+response.getStatus());
-            // MS: Bei den News sind die news/0 kaputt
-            if ( t != null ) {
-                mResponse = t;
-                mView.setStudyCourseItems(t.getStudyCourses());
+        public void onResponse(Call<TimeTableResponse> call, Response<TimeTableResponse> response) {
+            if ( response.body() != null ) {
+                mResponse = response.body();
+                mView.setStudyCourseItems(response.body().getStudyCourses());
 
             }
+            Log.d(TAG, "success: Request wurde ausgefuehrt: "+response.raw().request().url()+" Status: "+response.code());
+            // MS: Bei den News sind die news/0 kaputt
         }
 
         @Override
-        public void failure(RetrofitError error) {
-            Log.d(TAG, "failure: Request wurde ausgefuehrt: "+error.getUrl());
-
+        public void onFailure(Call<TimeTableResponse> call, Throwable t) {
+            Log.d(TAG, "failure: Request wurde ausgefuehrt: "+call.request().url());
         }
     };
 

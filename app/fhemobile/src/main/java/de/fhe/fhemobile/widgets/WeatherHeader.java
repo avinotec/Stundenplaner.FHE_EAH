@@ -15,9 +15,10 @@ import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.vos.WeatherResponse;
 import hirondelle.date4j.DateTime;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 /**
  * Created by paul on 04.03.15.
@@ -74,17 +75,18 @@ public class WeatherHeader extends RelativeLayout {
     
     private Callback<WeatherResponse> mWeatherResponseCallback = new Callback<WeatherResponse>() {
         @Override
-        public void success(WeatherResponse t, Response response) {
+        public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
             // MS: Bei den News sind die news/0 kaputt
-            if ( t != null ) {
-                update(t.getTemperature(), t.getBackgroundId(), t.getIconId());
+            if ( response.body() != null ) {
+                update(response.body().getTemperature(), response.body().getBackgroundId(), response.body().getIconId());
             }
         }
 
         @Override
-        public void failure(RetrofitError error) {
-            // Show some kind of error
+        public void onFailure(Call<WeatherResponse> call, Throwable t) {
+
         }
+
     };
     
     private Context   mContext;

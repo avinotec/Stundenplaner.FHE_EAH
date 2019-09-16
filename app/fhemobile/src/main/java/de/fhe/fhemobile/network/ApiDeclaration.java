@@ -12,44 +12,44 @@ import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
 import de.fhe.fhemobile.vos.semesterdata.SemesterDataVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
-import retrofit.Callback;
-import retrofit.http.GET;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
+
 
 /**
  * Created by paul on 03.03.15.
  */
 public interface ApiDeclaration {
     
-    @GET("/" + Endpoints.PHONEBOOK)
-    public void fetchEmployees(@Query(Endpoints.PARAM_FNAME) String _FirstName, @Query(Endpoints.PARAM_LNAME) String _LastName, Callback<ArrayList<EmployeeVo>> _Callback);
+    @GET(Endpoints.PHONEBOOK)
+    public Call<ArrayList<EmployeeVo>> fetchEmployees(@Query(Endpoints.PARAM_FNAME) String _FirstName, @Query(Endpoints.PARAM_LNAME) String _LastName);
     
-    @GET("/" + Endpoints.SEMESTER)
-    public void fetchSemesterData(Callback<SemesterDataVo> _Callback);
+    @GET(Endpoints.SEMESTER)
+    public Call<SemesterDataVo> fetchSemesterData();
     
-    @GET("/" + Endpoints.MENSA + "/{mensaId}")
-    public void fetchMensaData(@Path("mensaId") String _MensaId, Callback<MensaFoodItemVo[]> _Callback);
+    @GET(Endpoints.MENSA + "/{mensaId}")
+    public Call<MensaFoodItemVo[]> fetchMensaData(@Path("mensaId") String _MensaId);
     
-    @GET("/" + Endpoints.MENSA)
-    public void fetchAvailableMensas(Callback<MensaChoiceItemVo[]> _Callback);
+    @GET(Endpoints.MENSA)
+    public Call<MensaChoiceItemVo[]> fetchAvailableMensas();
 
-    @GET("/" + Endpoints.RSS + "/{newsListId}")
-    public void fetchNewsData(@Path("newsListId") String _NewsListId, Callback<NewsItemResponse> _Callback);
+    @GET(Endpoints.RSS + "/{newsListId}")
+    public Call<NewsItemResponse> fetchNewsData(@Path("newsListId") String _NewsListId);
 
-    @GET("/" + Endpoints.RSS)
-    public void fetchAvailableNewsLists(Callback<NewsCategoryResponse> _Callback);
+    @GET(Endpoints.RSS)
+    public Call<NewsCategoryResponse> fetchAvailableNewsLists();
     
-    @GET("/" + Endpoints.WEATHER)
-    public void fetchWeather(Callback<WeatherResponse> _Callback);
+    @GET(Endpoints.WEATHER)
+    public Call<WeatherResponse> fetchWeather();
     
-    @GET("/" + Endpoints.AQUA)
-    public void fetchCafeAquaStatus(Callback<CafeAquaResponse> _Callback);
+    @GET( Endpoints.AQUA)
+    public Call<CafeAquaResponse> fetchCafeAquaStatus();
+    
+    @GET( Endpoints.TIMETABLE)
+    public Call<TimeTableResponse> fetchTimeTable();
 
-
-    @GET("/" + Endpoints.TIMETABLE)
-    public void fetchTimeTable(Callback<TimeTableResponse> _Callback);
-
-    @GET("/" + Endpoints.TIMETABLE_EVENTS)
-    public void fetchTimeTableEvents(@Query(Endpoints.PARAM_TIMETABLE_ID) String _TimeTableId, Callback<ArrayList<TimeTableWeekVo>> _Callback);
+    @GET(Endpoints.TIMETABLE_EVENTS)
+    public Call<ArrayList<TimeTableWeekVo>> fetchTimeTableEvents(@Query(Endpoints.PARAM_TIMETABLE_ID) String _TimeTableId);
 }

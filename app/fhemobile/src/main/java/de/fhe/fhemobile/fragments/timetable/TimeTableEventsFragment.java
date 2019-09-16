@@ -20,9 +20,10 @@ import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.TimeTableSettings;
 import de.fhe.fhemobile.views.timetable.TimeTableEventsView;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -110,15 +111,17 @@ public class TimeTableEventsFragment extends FeatureFragment {
 
 	private Callback<ArrayList<TimeTableWeekVo>> mCallback = new Callback<ArrayList<TimeTableWeekVo>>() {
 		@Override
-		public void success(ArrayList<TimeTableWeekVo> t, Response response) {
-			if (t != null) {
-				mView.setPagerItems(t);
+		public void onResponse(Call<ArrayList<TimeTableWeekVo>> call, Response<ArrayList<TimeTableWeekVo>> response) {
+			if (response.body() != null) {
+				mView.setPagerItems(response.body());
 			}
 		}
 
 		@Override
-		public void failure(RetrofitError error) {
+		public void onFailure(Call<ArrayList<TimeTableWeekVo>> call, Throwable t) {
+
 		}
+
 	};
 
 	private TimeTableEventsView.IViewListener mViewListener = new TimeTableEventsView.IViewListener() {

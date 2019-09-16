@@ -15,9 +15,10 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.news.NewsCategoryAdapter;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.vos.news.NewsCategoryResponse;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 /**
  * The configuration screen for the {@link NewsListWidget NewsListWidget} AppWidget.
@@ -124,17 +125,18 @@ public class NewsListWidgetConfigureActivity extends Activity {
 
     private Callback<NewsCategoryResponse> mNewsCategoryCallback = new Callback<NewsCategoryResponse>() {
         @Override
-        public void success(NewsCategoryResponse t, Response response) {
-            if (mAvailableCategories != null && t.getNewsCategories() != null && t != null ) {
-                mCategoryAdapter = new NewsCategoryAdapter(NewsListWidgetConfigureActivity.this, t.getNewsCategories());
+        public void onResponse(Call<NewsCategoryResponse> call, Response<NewsCategoryResponse> response) {
+            if (mAvailableCategories != null && response.body().getNewsCategories() != null && response.body() != null ) {
+                mCategoryAdapter = new NewsCategoryAdapter(NewsListWidgetConfigureActivity.this, response.body().getNewsCategories());
                 mAvailableCategories.setAdapter(mCategoryAdapter);
             }
         }
 
         @Override
-        public void failure(RetrofitError error) {
+        public void onFailure(Call<NewsCategoryResponse> call, Throwable t) {
 
         }
+
     };
 
     private int                 mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;

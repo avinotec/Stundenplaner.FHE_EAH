@@ -18,9 +18,10 @@ import de.fhe.fhemobile.views.timetable.TimeTableView;
 import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
 import de.fhe.fhemobile.vos.timetable.TermsVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -167,16 +168,15 @@ public class TimeTableFragment extends FeatureFragment {
 
     private Callback<TimeTableResponse> mTimeTableResponseCallback = new Callback<TimeTableResponse>() {
         @Override
-        public void success(TimeTableResponse t, Response response) {
-            // MS: Bei den News sind die news/0 kaputt
-            if ( t != null ) {
-                mResponse = t;
-                mView.setStudyCourseItems(t.getStudyCourses());
+        public void onResponse(Call<TimeTableResponse> call, Response<TimeTableResponse> response) {
+            if ( response.body() != null ) {
+                mResponse = response.body();
+                mView.setStudyCourseItems(response.body().getStudyCourses());
             }
         }
 
         @Override
-        public void failure(RetrofitError error) {
+        public void onFailure(Call<TimeTableResponse> call, Throwable t) {
 
         }
     };

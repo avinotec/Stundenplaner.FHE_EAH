@@ -1,9 +1,10 @@
 package de.fhe.fhemobile.network;
 
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class TimeTableCallback<T> implements Callback<T> {
 	public TimeTableCallback(FlatDataStructure data) {
@@ -15,13 +16,14 @@ public class TimeTableCallback<T> implements Callback<T> {
 		return data;
 	}
 
+
 	@Override
-	public void success(T t, Response response) {
+	public void onResponse(Call<T> call, Response<T> response) {
 
 	}
 
 	@Override
-	public void failure(RetrofitError error) {
+	public void onFailure(Call<T> call, Throwable t) {
 
 	}
 }

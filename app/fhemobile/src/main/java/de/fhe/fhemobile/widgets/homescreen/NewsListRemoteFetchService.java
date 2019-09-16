@@ -9,9 +9,10 @@ import android.util.SparseArray;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.vos.news.NewsItemResponse;
 import de.fhe.fhemobile.vos.news.NewsItemVo;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class NewsListRemoteFetchService extends Service {
 
@@ -37,21 +38,22 @@ public class NewsListRemoteFetchService extends Service {
                     NewsListWidgetConfigureActivity.loadNewsWidgetPref(getBaseContext(), appWidgetId),
                     new Callback<NewsItemResponse>() {
                         @Override
-                        public void success(NewsItemResponse t, Response response) {
+                        public void onResponse(Call<NewsItemResponse> call, Response<NewsItemResponse> response) {
 
                             // MS: Bei den News sind die news/0 kaputt
-                            if ( t != null ) {
+                            if ( response.body() != null ) {
                                 // Set data
-                                mNewsData.append(appWidgetId, t.getChannel().getNewsItems());
-                                mNewsChannelNames.append(appWidgetId, t.getChannel().getTitle());
+                                mNewsData.append(appWidgetId, response.body().getChannel().getNewsItems());
+                                mNewsChannelNames.append(appWidgetId, response.body().getChannel().getTitle());
                                 populateWidget(appWidgetId);
                             }
                         }
 
                         @Override
-                        public void failure(RetrofitError error) {
+                        public void onFailure(Call<NewsItemResponse> call, Throwable t) {
 
                         }
+
                     });
         }
 

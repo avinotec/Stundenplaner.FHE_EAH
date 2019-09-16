@@ -13,9 +13,10 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.vos.CafeAquaResponse;
 import hirondelle.date4j.DateTime;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 /**
  * Created by Paul Cech on 01.04.15.
@@ -70,17 +71,16 @@ public class AquaWidget extends RelativeLayout {
 
     private Callback<CafeAquaResponse> mResponseCallback = new Callback<CafeAquaResponse>() {
         @Override
-        public void success(CafeAquaResponse t, Response response) {
+        public void onResponse(Call<CafeAquaResponse> call, Response<CafeAquaResponse> response) {
             mStartedFetching = false;
-            if (mStatusLabel != null && t != null ) {
-                mStatusLabel.setImageResource(t.isOpen() ? R.drawable.cafe_aqua_open : R.drawable.cafe_aqua_closed);
+            if (mStatusLabel != null && response.body() != null ) {
+                mStatusLabel.setImageResource(response.body().isOpen() ? R.drawable.cafe_aqua_open : R.drawable.cafe_aqua_closed);
                 mLastTimeUpdated = DateTime.now(TimeZone.getDefault()).getMilliseconds(TimeZone.getDefault());
             }
         }
 
         @Override
-        public void failure(RetrofitError error) {
-
+        public void onFailure(Call<CafeAquaResponse> call, Throwable t) {
             mStartedFetching = false;
         }
     };
