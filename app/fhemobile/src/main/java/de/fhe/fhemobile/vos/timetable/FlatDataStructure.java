@@ -1,8 +1,12 @@
 package de.fhe.fhemobile.vos.timetable;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+
+import com.google.gson.annotations.SerializedName;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,13 +14,51 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class FlatDataStructure {
+public class FlatDataStructure implements Parcelable {
 	private static final String TAG = "FlatDataStructure";
 
 
 
 	public FlatDataStructure(){
 	}
+
+
+	protected FlatDataStructure(Parcel in) {
+		course = in.readParcelable(StudyCourseVo.class.getClassLoader());
+		semester = in.readParcelable(TermsVo.class.getClassLoader());
+		studyGroup = in.readParcelable(StudyGroupVo.class.getClassLoader());
+		eventWeek = in.readParcelable(TimeTableWeekVo.class.getClassLoader());
+		eventDay = in.readParcelable(TimeTableDayVo.class.getClassLoader());
+		event = in.readParcelable(TimeTableEventVo.class.getClassLoader());
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeParcelable(course, flags);
+		dest.writeParcelable(semester, flags);
+		dest.writeParcelable(studyGroup, flags);
+		dest.writeParcelable(eventWeek, flags);
+		dest.writeParcelable(eventDay, flags);
+		dest.writeParcelable(event, flags);
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	public static final Creator<FlatDataStructure> CREATOR = new Creator<FlatDataStructure>() {
+		@Override
+		public FlatDataStructure createFromParcel(Parcel in) {
+			return new FlatDataStructure(in);
+		}
+
+		@Override
+		public FlatDataStructure[] newArray(int size) {
+			return new FlatDataStructure[size];
+		}
+	};
+
 	public FlatDataStructure copy(){
 		FlatDataStructure copy = new FlatDataStructure();
 		FlatDataStructure.incId++;
@@ -27,16 +69,7 @@ public class FlatDataStructure {
 		copy.setStudyGroup(this.getStudyGroup());
 		return copy;
 	}
-	public void select(){
-		selected = true;
-	}
-	public void unselect(){
-		selected = false;
-	}
 
-	public boolean isSelected() {
-		return selected;
-	}
 
 	public static List<FlatDataStructure> queryGetEventsByEventTitle(List<FlatDataStructure> list, String eventTitle){
 		List<FlatDataStructure> filteredEvents = new ArrayList<>();
@@ -191,13 +224,22 @@ public class FlatDataStructure {
 
 	private static int incId=0;
 	private int id;
+	@SerializedName("course")
 	private StudyCourseVo course;
+	@SerializedName("semester")
 	private TermsVo semester;
+	@SerializedName("studyGroup")
 	private StudyGroupVo studyGroup;
+	@SerializedName("eventWeek")
 	private TimeTableWeekVo eventWeek;
+	@SerializedName("eventDay")
 	private TimeTableDayVo eventDay;
+	@SerializedName("event")
 	private TimeTableEventVo event;
-	private boolean selected = false;
+
+
+
+
 
 	public int getId() {
 		return id;
@@ -223,4 +265,6 @@ public class FlatDataStructure {
 				+ this.getEvent().getUid() + "-->"
 				+ this.getEvent().getTitle();
 	}
+
+
 }

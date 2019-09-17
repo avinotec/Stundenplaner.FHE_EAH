@@ -1,10 +1,12 @@
 package de.fhe.fhemobile.network;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,9 @@ import de.fhe.fhemobile.vos.news.NewsItemResponse;
 import de.fhe.fhemobile.vos.news.NewsItemVo;
 import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
 import de.fhe.fhemobile.vos.semesterdata.SemesterDataVo;
+import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.timetable.TimeTableDayVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
 import retrofit2.Call;
@@ -37,6 +42,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by paul on 22.01.14.
  */
 public class NetworkHandler {
+	private static final String TAG = "NetworkHandler";
 
 	public static NetworkHandler getInstance() {
 		return ourInstance;
@@ -218,6 +224,29 @@ public class NetworkHandler {
 	public void fetchTimeTableEvents(String _TimeTableId, Callback<ArrayList<TimeTableWeekVo>> _Callback) {
 
 		mApi.fetchTimeTableEvents(_TimeTableId).enqueue(_Callback);
+	}
+	public List<FlatDataStructure> reloadEvents(FlatDataStructure event) {
+			List<FlatDataStructure>eventList = new ArrayList<>();
+		try {
+			ArrayList<TimeTableWeekVo> timeTable=mApi.fetchTimeTableEvents(event.getStudyGroup().getTimeTableId()).execute().body();
+			for (TimeTableWeekVo weekEntry:timeTable){
+				for(TimeTableDayVo dayEntry:weekEntry.getDays() ){
+					for(TimeTableEventVo eventEntry : dayEntry.getEvents() ){
+						if(eventEntry.getTitle().equals(event.getEvent().getTitle())){
+							FlatDataStructure item = event.copy();
+							item
+								.setEventWeek(weekEntry)
+								.setEventDay(dayEntry)
+								.setEvent(eventEntry);
+							eventList.add(item);
+						}
+					}
+				}
+			}
+		} catch (IOException e) {
+			Log.e(TAG, "fetchTimeTableEventsSynchron: ",e );
+		}
+		return eventList;
 	}
 
 	/**

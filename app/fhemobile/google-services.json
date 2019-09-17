@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "19139107904",
+    "firebase_url": "https://eah-jena-stundenplaner.firebaseio.com",
+    "project_id": "eah-jena-stundenplaner",
+    "storage_bucket": "eah-jena-stundenplaner.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:19139107904:android:5afd46cc57bfae2c1e93a5",
+        "android_client_info": {
+          "package_name": "de.fhe.eahmobile.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "19139107904-o3p9gaiu6unlkoocrgd510jsna3r3e5g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7Ih1_ag5QtkvS99nZ4XqeOm-od_TR2Ro"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "19139107904-o3p9gaiu6unlkoocrgd510jsna3r3e5g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -16,7 +16,7 @@ android {
      * this API level and lower.
      */
     compileSdkVersion 28
-    
+
     /**
      * buildToolsVersion specifies the version of the SDK build tools, command-line
      * utilities, and compiler that Gradle should use to build your app. You need to
@@ -26,16 +26,16 @@ android {
      * the build tools by default.
      */
     buildToolsVersion '29.0.2'
-    
+
     compileOptions {
         // Error: Invoke-customs are only supported starting with Android O (--min-api 26)
         // solution: Java 8
         // Attention: desktop adds '' arround the string. Remove them
-    //    sourceCompatibility 1.8
-    //    targetCompatibility 1.8
+        //    sourceCompatibility 1.8
+        //    targetCompatibility 1.8
     }
-    
-    
+
+
     /**
      * The defaultConfig block encapsulates default settings and entries for all
      * build variants, and can override some attributes in main/AndroidManifest.xml
@@ -48,7 +48,7 @@ android {
         versionCode 4
         versionName '3.0 (May 2019)'
     }
-    
+
     // nötig ab AS 3 damit Flavors gehen
     /**
      * The productFlavors block is where you can configure multiple product flavors.
@@ -65,13 +65,13 @@ android {
      */
     flavorDimensions "version"
     productFlavors {
-        
+
         /**
          * applicationId uniquely identifies the package for publishing.
          * However, your source code should still reference the package name
          * defined by the package attribute in the main/AndroidManifest.xml file.
          */
-        
+
         eah {
             applicationId 'de.fhe.eahmobile'
             dimension "version"
@@ -81,7 +81,7 @@ android {
             dimension "version"
         }
     }
-    
+
     signingConfigs {
         release {
             //storeFile file('D:\\Projekt\\Mobile.AndroidStudio\\VideoChat2\\doc\\cert\\Keystore')
@@ -97,7 +97,7 @@ android {
             storePassword 'android'
         }
     }
-    
+
     /**
      * The buildTypes block is where you can configure multiple build types.
      * By default, the build system defines two build types: debug and release. The
@@ -106,7 +106,7 @@ android {
      * build type applies Proguard settings and is not signed by default.
      */
     buildTypes {
-    
+
         /**
          * By default, Android Studio configures the release build type to enable code
          * shrinking, using minifyEnabled, and specifies the Proguard settings file.
@@ -116,7 +116,7 @@ android {
             // your project's release build type.
             //minifyEnabled false
             minifyEnabled true
-    
+
             // Enables resource shrinking, which is performed by the
             // Android Gradle plugin.
             shrinkResources true
@@ -126,11 +126,11 @@ android {
             signingConfig signingConfigs.release
             //pseudoLocalesEnabled true     MS
             pseudoLocalesEnabled false
-    
-    
+
+
             //schöneren APK Namen
             //archivesBaseName = "Stundenplan"
-            
+
         }
         debug {
             debuggable true
@@ -150,21 +150,20 @@ android {
         // but continue the build even when errors are found:
         abortOnError false
     }
-    
+
     packagingOptions {
         exclude 'META-INF/ASL2.0'
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
-    
+
         //junit stuff, not necessary
         exclude 'LICENCE.txt' // from old code
         exclude 'junit/runner/smalllogo.gif'
         exclude 'junit/runner/logo.gif'
         exclude 'LICENSE-junit.txt'
     }
-    
-    
-    
+
+
 }
 
 /**
@@ -186,9 +185,9 @@ dependencies {
     implementation 'com.github.applidium:HeaderListView:f9c33c21ae'
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
-    implementation 'com.google.firebase:firebase-messaging:10.2.6'
 
 
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
 }
 
 configurations.all {
@@ -198,14 +197,15 @@ configurations.all {
     //
     // https://github.com/x-stream/xstream/issues/117
     // Duplicate classes in xpp3_min and xmlpull #117
-    
+
     //Duplicate class org.xmlpull.mxp1.MXParser found in modules xpp3-1.1.4c.jar (xpp3:xpp3:1.1.4c) and xpp3_min-1.1.4c.jar (xpp3:xpp3_min:1.1.4c)
     //Duplicate class org.xmlpull.v1.XmlPullParserFactory found in modules kxml2-2.3.0.jar (net.sf.kxml:kxml2:2.3.0) and xpp3-1.1.4c.jar (xpp3:xpp3:1.1.4c)
     //Duplicate class org.xmlpull.v1.XmlSerializer found in modules kxml2-2.3.0.jar (net.sf.kxml:kxml2:2.3.0) and xpp3-1.1.4c.jar (xpp3:xpp3:1.1.4c)
     exclude group: 'net.sf.kxml', module: 'kxml2'
     // exclude all from xpp3. Not only xpp3 or xpp3_min. '' is a wildcard
     exclude group: 'xpp3', module: ''
-    
-    
+
+
     exclude group: 'com.android.support', module: ''
 }
+apply plugin: 'com.google.gms.google-services'

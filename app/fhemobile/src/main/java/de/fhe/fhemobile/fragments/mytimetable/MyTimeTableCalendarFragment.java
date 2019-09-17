@@ -1,13 +1,22 @@
 package de.fhe.fhemobile.fragments.mytimetable;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.views.timetable.MyTimeTableCalendarView;
+import de.fhe.fhemobile.views.timetable.MyTimeTableView;
+import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
 public class MyTimeTableCalendarFragment extends FeatureFragment {
 
@@ -39,6 +48,11 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		// Inflate the layout for this fragment
 		mView = (MyTimeTableCalendarView) inflater.inflate(R.layout.fragment_calendar_my_time_table, container, false);
 		mView.initializeView(getActivity().getSupportFragmentManager());
+		SharedPreferences sharedPreferences =getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+		String json = sharedPreferences.getString("list","");
+		Gson gson = new Gson();
+		FlatDataStructure[] list = gson.fromJson(json, FlatDataStructure[].class);
+		MyTimeTableView.setLessons(new ArrayList<FlatDataStructure>(Arrays.asList(list)));
 
 		return mView;
 	}
