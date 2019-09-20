@@ -13,7 +13,9 @@ import de.fhe.fhemobile.vos.semesterdata.SemesterDataVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -52,4 +54,7 @@ public interface ApiDeclaration {
 
     @GET(Endpoints.TIMETABLE_EVENTS)
     public Call<ArrayList<TimeTableWeekVo>> fetchTimeTableEvents(@Query(Endpoints.PARAM_TIMETABLE_ID) String _TimeTableId);
+
+    @POST()
+    public Call<ArrayList<TimeTableWeekVo>> registerTimeTableChanges(@Body String _json);
 }

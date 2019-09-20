@@ -39,6 +39,21 @@
                 android:visibility="gone"
                 app:idpHeadline="@string/timetable_term" />
 
+
+
+            <ToggleButton
+                android:id="@+id/add_tbEditMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:textOn="Komplettes Set wählen"
+                android:textOff="Selbst zusammenstellen"
+                android:visibility="gone">
+
+            </ToggleButton>
+
+
+
             <de.fhe.fhemobile.widgets.picker.StudyGroupPicker
                 android:id="@+id/add_timetableStudyGroupPicker"
                 android:layout_width="match_parent"
@@ -49,17 +64,18 @@
 
             </de.fhe.fhemobile.widgets.picker.StudyGroupPicker>
 
-            <!--<Button-->
-            <!--android:id="@+id/add_timetableSearchButton"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_marginTop="30dp"-->
-            <!--android:layout_gravity="center_horizontal"-->
-            <!--android:text="@string/timetable_button"-->
-            <!--android:textColor="@android:color/white"-->
-            <!--android:background="@drawable/button_primary"-->
-            <!--android:enabled="false"-->
-            <!--/>-->
+            <Button
+            android:id="@+id/add_timetableSearchButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/timetable_button"
+            android:textColor="@android:color/white"
+            android:background="@drawable/button_primary"
+            android:enabled="false"
+            android:visibility="gone"
+            />
 
             <ListView
                 android:id="@+id/add_lvLessons"

@@ -52,7 +52,9 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		String json = sharedPreferences.getString("list","");
 		Gson gson = new Gson();
 		FlatDataStructure[] list = gson.fromJson(json, FlatDataStructure[].class);
-		MyTimeTableView.setLessons(new ArrayList<FlatDataStructure>(Arrays.asList(list)));
+		if(list!=null) {
+			MyTimeTableView.setLessons(new ArrayList<FlatDataStructure>(Arrays.asList(list)));
+		}
 
 		return mView;
 	}

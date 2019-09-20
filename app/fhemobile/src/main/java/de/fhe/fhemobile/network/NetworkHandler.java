@@ -248,6 +248,11 @@ public class NetworkHandler {
 		}
 		return eventList;
 	}
+	public void registerTimeTableChanges(String json, Callback<ArrayList<TimeTableWeekVo>>_Callback){
+		mApi.registerTimeTableChanges(json).enqueue(_Callback);
+
+	}
+
 
 	/**
 	 *
@@ -274,11 +279,9 @@ public class NetworkHandler {
 				.setDateFormat("HH:mm:ss'T'yyyy-MM-dd")
 				.create();
 
-
-
 		mRestAdapter = new Retrofit.Builder()
 				.baseUrl(Endpoints.BASE_URL + Endpoints.APP_NAME)
-				.addConverterFactory(GsonConverterFactory.create())
+				.addConverterFactory(GsonConverterFactory.create(gson))
 				//.setConverter(new GsonConverter(gson))
 //                .setLogLevel(RestAdapter.LogLevel.FULL)
 				.build();

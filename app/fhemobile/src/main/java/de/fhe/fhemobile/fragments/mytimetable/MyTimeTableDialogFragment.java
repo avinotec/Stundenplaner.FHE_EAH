@@ -224,6 +224,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                     Log.d(TAG, "success: Request wurde ausgefuehrt: " + response.raw().request().url() + " Status: " + response.code());
                                     //Gemergte liste aller zurückgekehrten Requests. Die Liste wächst mit jedem Request.
                                     //Hier (im success) haben wir neue Daten bekommen.
+
 //TODO: überprüfen ob courseEvents nötig ist
                                     List<FlatDataStructure> courseEvents = getAllEvents(weekList, dataList, this.getData());
                                     Log.d(TAG, "success: length"+courseEvents.size());
