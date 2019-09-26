@@ -25,17 +25,17 @@ public class RequestModel {
 	@SerializedName("module_list")
 	ArrayList<Module> module_list;
 
-	public void addLesson(Module module){
-		this.module_list.add(module);
+	public void addLesson(String setID,String moduleTitle){
+		this.module_list.add(new Module(setID,moduleTitle));
 	}
 
 	class Module {
-		public Module(String setTitle,String moduleTitle){
-			this.setTitle=setTitle;
+		public Module(String setID,String moduleTitle){
+			this.setID=setID;
 			this.moduleTitle=moduleTitle;
 		}
 		@SerializedName("set_title")
-		String setTitle;
+		String setID;
 		@SerializedName("module_title")
 		String moduleTitle;
 	}

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fhe.fhemobile.Main;
+import de.fhe.fhemobile.models.TimeTableChanges.ResponseModel;
 import de.fhe.fhemobile.models.mensa.MensaFoodModel;
 import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.phonebook.PhonebookModel;
@@ -32,6 +33,8 @@ import de.fhe.fhemobile.vos.timetable.TimeTableDayVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -248,8 +251,9 @@ public class NetworkHandler {
 		}
 		return eventList;
 	}
-	public void registerTimeTableChanges(String json, Callback<ArrayList<TimeTableWeekVo>>_Callback){
-		mApi.registerTimeTableChanges(json).enqueue(_Callback);
+	public void registerTimeTableChanges(String json, Callback<ResponseModel>_Callback){
+		RequestBody body =RequestBody.create(MediaType.parse("application/json"),json);
+		mApi.registerTimeTableChanges(body).enqueue(_Callback);
 
 	}
 

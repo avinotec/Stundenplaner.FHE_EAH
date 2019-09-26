@@ -90,6 +90,7 @@ public class MyTimeTableView extends LinearLayout {
             selectedLessons=new ArrayList<>();
         }else{
             selectedLessons=lessons;
+            sortedLessons=getSortedList(new Date_Comparator());
         }
 
     }
