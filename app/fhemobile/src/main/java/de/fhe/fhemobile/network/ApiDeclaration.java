@@ -2,6 +2,7 @@ package de.fhe.fhemobile.network;
 
 import java.util.ArrayList;
 
+import de.fhe.fhemobile.models.TimeTableChanges.ResponseModel;
 import de.fhe.fhemobile.vos.CafeAquaResponse;
 import de.fhe.fhemobile.vos.WeatherResponse;
 import de.fhe.fhemobile.vos.mensa.MensaChoiceItemVo;
@@ -12,9 +13,11 @@ import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
 import de.fhe.fhemobile.vos.semesterdata.SemesterDataVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -55,6 +58,9 @@ public interface ApiDeclaration {
     @GET(Endpoints.TIMETABLE_EVENTS)
     public Call<ArrayList<TimeTableWeekVo>> fetchTimeTableEvents(@Query(Endpoints.PARAM_TIMETABLE_ID) String _TimeTableId);
 
-    @POST()
-    public Call<ArrayList<TimeTableWeekVo>> registerTimeTableChanges(@Body String _json);
+    @Headers({
+            "Content-Type:application/json"
+    })
+    @POST("https://lustigtestt.de/fhjena/rest_api/public/changes")
+    public Call<ResponseModel> registerTimeTableChanges(@Body RequestBody _json);
 }

@@ -1,0 +1,16 @@
+# Beispiel Aufruf für die Schnittstelle /changes mittels GET
+# Rückgabe in Datei: change_GET_antwort.json
+
+curl -X GET \
+  'http://{DOMAIN}/rest_api/public/changes?os_id=%201&device_id=cc4S_VOJB0A:APA91bGLHU9a9cLLjloOLY4KJI6S4qEDx9uIBDQOS0vYaumJqL3X9IUe2krTObu57QqjKsENVBNkfWDHgDY8kiutewz63oKqqxrPtMChAcASBmo_0o5F1w_vAlAZ-l2sUyk3zBTOVxee&refresh_timestamp=9999999' \
+  -H 'Accept: */*' \
+  -H 'Accept-Encoding: gzip, deflate' \
+  -H 'Cache-Control: no-cache' \
+  -H 'Connection: keep-alive' \
+  -H 'Content-Length: 364' \
+  -H 'Content-Type: application/json' \
+  -H 'Cookie: PHPSESSID=9hqql5pnhr81dt947javv2a2v7' \
+  -H 'Host: localhost' \
+  -H 'Postman-Token: 83c674f2-8153-4eaf-8efd-feb491b5ed85,f6052c7b-5d6e-4b30-a82e-aa8f7262fcad' \
+  -H 'User-Agent: PostmanRuntime/7.17.1' \
+  -H 'cache-control: no-cache'

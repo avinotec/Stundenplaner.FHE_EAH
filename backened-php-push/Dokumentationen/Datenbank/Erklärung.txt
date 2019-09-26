@@ -1,0 +1,7 @@
+#System Anforderung
+- Maria DB wird empfohlen
+- in der Version: 10.4.7
+
+#Info
+Die benötigte Datenbank wird mittels DB_Dump stundenplan.sql erstellt.
+Diese Datei muss ebenso im Ordner /builder\src liegen

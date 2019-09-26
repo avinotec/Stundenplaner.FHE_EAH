@@ -1,0 +1,6 @@
+{
+  
+    "require": {
+        "edwinhoksberg/php-fcm": "^1.0"
+    }
+}

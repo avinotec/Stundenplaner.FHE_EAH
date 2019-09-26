@@ -48,7 +48,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 		notificationBuilder.setAutoCancel(true)
 				.setDefaults(Notification.DEFAULT_ALL)
 				.setWhen(System.currentTimeMillis())
-				.setSmallIcon(R.drawable.drawer_bg)
+				.setSmallIcon(R.drawable.ic_launcher)
 				.setContentTitle(title)
 				.setContentText(body)
 				.setContentInfo("Info");

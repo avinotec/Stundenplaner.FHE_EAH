@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity
             public void onComplete(@NonNull Task<InstanceIdResult> task) {
                 String token = task.getResult().getToken();
                 Log.d(TAG, "onComplete: Token: "+token);
+                firebaseToken=token;
             }
         });
 
@@ -140,4 +141,9 @@ public class MainActivity extends AppCompatActivity
     private CharSequence    mTitle;
     private int             mCurrentFragmentId = -1;
     private FeatureFragment mCurrentFragment;
+    private static String firebaseToken;
+
+    public static String getFirebaseToken() {
+        return firebaseToken;
+    }
 }
