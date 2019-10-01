@@ -79,11 +79,24 @@ public class MyTimeTableView extends LinearLayout {
     private static SelectedLessonAdapter selectedLessonAdapter;
     private static List<FlatDataStructure> selectedLessons = new ArrayList();
     private static List<FlatDataStructure> sortedLessons=new ArrayList<>();
+    private static List<FlatDataStructure> completeLessons = new ArrayList<>();
 
     private static List<FlatDataStructure> getSortedList(Comparator<FlatDataStructure> comparator){
         List<FlatDataStructure> sortedList = new ArrayList<FlatDataStructure>(selectedLessons);
         Collections.sort(sortedList,comparator);
         return sortedList;
+    }
+    public static void setCompleteLessons(List<FlatDataStructure> lessons){
+        if(lessons==null){
+            completeLessons=new ArrayList<>();
+        }
+        else{
+            completeLessons=lessons;
+        }
+
+    }
+    public static List<FlatDataStructure> getCompleteLessons(){
+        return completeLessons;
     }
     public static void setLessons(List<FlatDataStructure> lessons){
         if(lessons==null){
@@ -96,6 +109,9 @@ public class MyTimeTableView extends LinearLayout {
     }
     public static List<FlatDataStructure> getLessons(){
         return selectedLessons;
+    }
+    public static List<FlatDataStructure>generateNegativeLessons(){
+        
     }
     public static List<FlatDataStructure> getSortedLessons(){return sortedLessons;}
     public static boolean removeLesson(FlatDataStructure lesson){
