@@ -1,17 +1,20 @@
 package de.fhe.fhemobile.fragments.mytimetable;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
 
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -117,11 +120,82 @@ public class MyTimeTableFragment extends FeatureFragment {
         String json = gson.toJson(request);
         Log.d(TAG, "onDetach: "+json);
         NetworkHandler.getInstance().registerTimeTableChanges(json, new Callback<ResponseModel>() {
+            final int CHANGEREASON_EDIT = 1;
+            final int CHANGEREASON_NEW = 3;
+            final int CHANGEREASON_DELETE = 2;
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 Log.d(TAG, "onResponse: "+response.raw().request().url());
-
                 Log.d(TAG, "onResponse code: "+response.code()+" geparsed: "+gson.toJson(response.body()));
+                List<ResponseModel.Change> changes = response.body().getChanges();
+
+                for(ResponseModel.Change change : changes){
+                    String changeEventTitle="";
+                    try {
+                        Pattern p = Pattern.compile("^(.*[a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß])");
+                        Matcher m = p.matcher(change.getNewEventJson().getTitle());
+                        if(m.find()){
+                            changeEventTitle =m.group(1);
+                            Log.d(TAG, "eventTitle: "+changeEventTitle);
+                        }
+                        else {
+                            changeEventTitle = change.getNewEventJson().getTitle();
+                        }
+
+                    }
+                    catch (Exception e){
+                        Log.e(TAG, "onResponse: ",e );
+                    }
+
+                    //TODO: Negativ Liste von der gespeicherten Liste erstellen
+                    List<FlatDataStructure> events = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getNegativeLessons(),changeEventTitle);
+                    if(events.size()>0){
+                        changes.remove(change);
+                    }
+                }
+
+                String changesAsString="";
+                for(ResponseModel.Change change: changes){
+                    changesAsString+=(change.getChangesReasonText()+"/n/n");
+                }
+                new AlertDialog.Builder(MyTimeTableFragment.this.getContext())
+                        .setTitle("Änderungen")
+                        .setMessage(changesAsString)
+
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Continue with delete operation
+                            }
+                        })
+
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .show();
+
+                for(ResponseModel.Change change : changes){
+                    //Aenderung eines Events: suche den Event und ueberschreibe seine Daten
+                    if(change.getChangesReason()==CHANGEREASON_EDIT) {
+                        FlatDataStructure event = FlatDataStructure.getEventByID(MyTimeTableView.getLessons(),change.getNewEventJson().getUid());
+                        if(event!=null){
+                            event.setEvent(change.getNewEventJson());
+                        }
+                    }
+                    //Hinzufuegen eines neuen Events: Erstelle ein neues Element vom Typ FlatDataStructure, schreibe alle Set-, Semester- und Studiengangdaten in diesen
+                    //und fuege dann die Eventdaten des neuen Events hinzu. Anschliessend in die Liste hinzufuegen.
+                    if(change.getChangesReason()==CHANGEREASON_NEW) {
+                        FlatDataStructure event = FlatDataStructure.queryGetEventsByStudyGroupTitle(MyTimeTableView.getLessons(),change.getSetSplusKey()).get(0).copy();
+                        event.setEvent(change.getNewEventJson());
+                        MyTimeTableView.getLessons().add(event);
+
+                    }
+                    //Loeschen eines Events: Suche den Event mit der SplusID und lösche ihn aus der Liste.
+                    if(change.getChangesReason()==CHANGEREASON_DELETE){
+                        FlatDataStructure event = FlatDataStructure.getEventByID(MyTimeTableView.getLessons(),change.getNewEventJson().getUid());
+                        MyTimeTableView.getLessons().remove(event);
+                    }
+                }
+
             }
 
             @Override

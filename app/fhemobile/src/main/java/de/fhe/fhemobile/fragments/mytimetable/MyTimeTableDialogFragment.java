@@ -24,6 +24,7 @@ import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.network.TimeTableCallback;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.timetable.AddLessonView;
+import de.fhe.fhemobile.views.timetable.MyTimeTableView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
 import de.fhe.fhemobile.vos.timetable.StudyGroupVo;
@@ -231,8 +232,9 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                     //Wir sortieren diesen letzten Stand der Liste
                                     requestCounter--;
                                     if(requestCounter==0) {
+                                        MyTimeTableView.setCompleteLessons(courseEvents);
                                         Collections.sort(courseEvents, new LessonTitle_StudyGroupTitle_Comparator());
-                                        TimeTableLessonAdapter timeTableLessonAdapter = new TimeTableLessonAdapter(MyTimeTableDialogFragment.this.getContext(), courseEvents);
+                                        TimeTableLessonAdapter timeTableLessonAdapter = new TimeTableLessonAdapter(MyTimeTableDialogFragment.this.getContext());
                                         mView.setLessonListAdapter(timeTableLessonAdapter);
                                         mView.toggleLessonListVisibility(true);
                                         timeTableLessonAdapter.notifyDataSetChanged();

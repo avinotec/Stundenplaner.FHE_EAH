@@ -74,7 +74,7 @@ public class FlatDataStructure implements Parcelable {
 	public static List<FlatDataStructure> queryGetEventsByEventTitle(List<FlatDataStructure> list, String eventTitle){
 		List<FlatDataStructure> filteredEvents = new ArrayList<>();
 		for (FlatDataStructure event : list) {
-			if(event.getEvent().getTitle().equals(eventTitle)){
+			if(event.getEvent().getTitle().contains(eventTitle)){
 				filteredEvents.add(event);
 			}
 		}
@@ -105,6 +105,15 @@ public class FlatDataStructure implements Parcelable {
 			}
 		}
 		return filteredEvents;
+	}
+
+	public static FlatDataStructure getEventByID (List<FlatDataStructure> list, String ID){
+		for(FlatDataStructure event:list){
+			if(ID.equals(event.getEvent().getUid())){
+				return event;
+			}
+		}
+		return null;
 	}
 
 //In dieser Funktion werden die Daten auf folgende Struktur gebracht:
