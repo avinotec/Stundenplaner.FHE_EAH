@@ -1,22 +1,19 @@
 package de.fhe.fhemobile.fragments.mytimetable;
 
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
@@ -94,22 +91,7 @@ public class MyTimeTableFragment extends FeatureFragment {
         String title="";
         String setID="";
         for (FlatDataStructure event:MyTimeTableView.getLessons()){
-            String eventTitle="";
-            try {
-                Pattern p = Pattern.compile("^(.*[a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß])");
-                Matcher m = p.matcher(event.getEvent().getTitle());
-                if(m.find()){
-                    eventTitle =m.group(1);
-                    Log.d(TAG, "eventTitle: "+eventTitle);
-                }
-                else {
-                    eventTitle = event.getEvent().getTitle();
-                }
-
-            }
-            catch (Exception e){
-                Log.d(TAG, "onDetach: Error",e);
-            }
+            String eventTitle=FlatDataStructure.cutEventTitle(event.getEvent().getTitle());
             if((title.equals(eventTitle)&&setID.equals(event.getStudyGroup().getTimeTableId()))==false){
                 request.addLesson(event.getStudyGroup().getTimeTableId(),event.getEvent().getTitle());
                 title=eventTitle;
@@ -128,29 +110,22 @@ public class MyTimeTableFragment extends FeatureFragment {
                 Log.d(TAG, "onResponse: "+response.raw().request().url());
                 Log.d(TAG, "onResponse code: "+response.code()+" geparsed: "+gson.toJson(response.body()));
                 List<ResponseModel.Change> changes = response.body().getChanges();
-
-                for(ResponseModel.Change change : changes){
-                    String changeEventTitle="";
-                    try {
-                        Pattern p = Pattern.compile("^(.*[a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß])");
-                        Matcher m = p.matcher(change.getNewEventJson().getTitle());
-                        if(m.find()){
-                            changeEventTitle =m.group(1);
-                            Log.d(TAG, "eventTitle: "+changeEventTitle);
-                        }
-                        else {
-                            changeEventTitle = change.getNewEventJson().getTitle();
-                        }
-
-                    }
-                    catch (Exception e){
-                        Log.e(TAG, "onResponse: ",e );
-                    }
-
+                List<String[]> negativeList=MyTimeTableView.generateNegativeLessons();
+                Iterator<ResponseModel.Change> iterator= changes.iterator();
+                while(iterator.hasNext()){
+                    ResponseModel.Change change=iterator.next();
                     //TODO: Negativ Liste von der gespeicherten Liste erstellen
-                    List<FlatDataStructure> events = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getNegativeLessons(),changeEventTitle);
-                    if(events.size()>0){
-                        changes.remove(change);
+                    boolean isInNegativeList=false;
+                    for(String[] negativeEvent:negativeList){
+                        if(change.getNewEventJson().getTitle().contains(negativeEvent[0])
+                                && change.getSetSplusKey().equals(negativeEvent[1])){
+                            isInNegativeList=true;
+                        }
+
+                    }
+                    if(isInNegativeList){
+                        iterator.remove();
+
                     }
                 }
 
@@ -158,20 +133,22 @@ public class MyTimeTableFragment extends FeatureFragment {
                 for(ResponseModel.Change change: changes){
                     changesAsString+=(change.getChangesReasonText()+"/n/n");
                 }
-                new AlertDialog.Builder(MyTimeTableFragment.this.getContext())
-                        .setTitle("Änderungen")
-                        .setMessage(changesAsString)
-
-                        // Specifying a listener allows you to take an action before dismissing the dialog.
-                        // The dialog is automatically dismissed when a dialog button is clicked.
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Continue with delete operation
-                            }
-                        })
-
-                        // A null listener allows the button to dismiss the dialog and take no further action.
-                        .show();
+//                new AlertDialog.Builder(MyTimeTableFragment.this.getActivity())
+//                        .setTitle("Änderungen")
+//                       // .setMessage(changesAsString)
+//                        .setMessage("test")
+//
+//                        // Specifying a listener allows you to take an action before dismissing the dialog.
+//                        // The dialog is automatically dismissed when a dialog button is clicked.
+//                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                // Continue with delete operation
+//                            }
+//                        })
+//                        .create()
+//
+//                        // A null listener allows the button to dismiss the dialog and take no further action.
+//                        .show();
 
                 for(ResponseModel.Change change : changes){
                     //Aenderung eines Events: suche den Event und ueberschreibe seine Daten

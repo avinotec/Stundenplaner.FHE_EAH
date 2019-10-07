@@ -13,6 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FlatDataStructure implements Parcelable {
 	private static final String TAG = "FlatDataStructure";
@@ -68,6 +70,27 @@ public class FlatDataStructure implements Parcelable {
 		copy.setSemester(this.getSemester());
 		copy.setStudyGroup(this.getStudyGroup());
 		return copy;
+	}
+
+	public static String cutEventTitle(String title){
+		String changeEventTitle="";
+		try {
+			Pattern p = Pattern.compile("^(.*[a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß])");
+			Matcher m = p.matcher(title);
+			if(m.find()){
+				changeEventTitle =m.group(1);
+				Log.d(TAG, "eventTitle: "+changeEventTitle);
+			}
+			else {
+				changeEventTitle = title;
+			}
+
+		}
+		catch (Exception e){
+			changeEventTitle = title;
+			Log.e(TAG, "onResponse: ",e );
+		}
+		return changeEventTitle;
 	}
 
 
