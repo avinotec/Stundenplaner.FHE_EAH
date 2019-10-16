@@ -26,21 +26,20 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 	private String lessonTitle="";
 	private String studygroupTitle="";
 
-	private List<FlatDataStructure> tableLessonData;
 	private Context context;
-	public TimeTableLessonAdapter(Context context, List<FlatDataStructure> data) {
-		tableLessonData=data;
+	public TimeTableLessonAdapter(Context context) {
+
 		this.context=context;
 	}
 
 	@Override
 	public int getCount() {
-		return tableLessonData.size();
+		return MyTimeTableView.getCompleteLessons().size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return tableLessonData.get(position);
+		return MyTimeTableView.getCompleteLessons().get(position);
 	}
 
 	@Override
@@ -54,12 +53,12 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 			convertView = LayoutInflater.from(context).
 					inflate(R.layout.row_layout_events, parent, false);
 		}
-		final FlatDataStructure currentItem = tableLessonData.get(position);
+		final FlatDataStructure currentItem = MyTimeTableView.getCompleteLessons().get(position);
 		RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.singleRowLayout);
 		convertView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				List<FlatDataStructure> lessonTitleFilteredList = FlatDataStructure.queryGetEventsByEventTitle(tableLessonData,currentItem.getEvent().getTitle());
+				List<FlatDataStructure> lessonTitleFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getCompleteLessons(),currentItem.getEvent().getTitle());
 				List <FlatDataStructure> filteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(lessonTitleFilteredList,currentItem.getStudyGroup().getTitle());
 				for (FlatDataStructure event:filteredList){
 					event.setVisible(!event.isVisible());
@@ -88,7 +87,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 			convertView.setVisibility(View.VISIBLE);
 
 		}
-		else if(!tableLessonData.get(position).getEvent().getTitle().equals(tableLessonData.get(position-1).getEvent().getTitle())){
+		else if(!MyTimeTableView.getCompleteLessons().get(position).getEvent().getTitle().equals(MyTimeTableView.getCompleteLessons().get(position-1).getEvent().getTitle())){
 			lessonTitle.setText(currentItem.getEvent().getTitle());
 			lessonTitle.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
@@ -105,7 +104,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		btnAddLesson.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				List<FlatDataStructure> eventFilteredList = FlatDataStructure.queryGetEventsByEventTitle(tableLessonData,currentItem.getEvent().getTitle());
+				List<FlatDataStructure> eventFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getCompleteLessons(),currentItem.getEvent().getTitle());
 				List<FlatDataStructure> studyGroupFilteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(eventFilteredList,currentItem.getStudyGroup().getTitle());
 				for(FlatDataStructure event : studyGroupFilteredList){
 					MyTimeTableView.addLesson(event);
@@ -126,7 +125,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 
 
 		}
-		else if(!currentItem.getEvent().getTitle().equals(tableLessonData.get(position-1).getEvent().getTitle())){
+		else if(!currentItem.getEvent().getTitle().equals(MyTimeTableView.getCompleteLessons().get(position-1).getEvent().getTitle())){
 			studyGroupTitle.setText(currentItem.getStudyGroup().getTitle());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			btnAddLesson.setVisibility(View.VISIBLE);
@@ -134,7 +133,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 			convertView.setVisibility(View.VISIBLE);
 
 		}
-		else if(!currentItem.getStudyGroup().getTitle().equals(tableLessonData.get(position-1).getStudyGroup().getTitle())){
+		else if(!currentItem.getStudyGroup().getTitle().equals(MyTimeTableView.getCompleteLessons().get(position-1).getStudyGroup().getTitle())){
 			studyGroupTitle.setText(currentItem.getStudyGroup().getTitle());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			btnAddLesson.setVisibility(View.VISIBLE);
