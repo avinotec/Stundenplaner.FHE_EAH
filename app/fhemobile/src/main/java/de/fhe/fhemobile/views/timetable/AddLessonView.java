@@ -3,8 +3,10 @@ package de.fhe.fhemobile.views.timetable;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ToggleButton;
 
 import androidx.fragment.app.FragmentManager;
 
@@ -105,6 +107,8 @@ public class AddLessonView extends LinearLayout {
         mStudyCoursePicker = (StudyCoursePicker) findViewById(R.id.add_timetableStudyCoursePicker);
         mTermsPicker       = (TermsPicker)       findViewById(R.id.add_timetableTermsPicker);
         mStudyGroupPicker  = (StudyGroupPicker)  findViewById(R.id.add_timetableStudyGroupPicker);
+        mToggleEditModus   = (ToggleButton)      findViewById(R.id.add_tbEditMode);
+
         mLessonList        = (ListView)          findViewById(R.id.add_lvLessons);
     }
 
@@ -160,7 +164,10 @@ public class AddLessonView extends LinearLayout {
 
     private StudyCoursePicker mStudyCoursePicker;
     private TermsPicker       mTermsPicker;
+    private LinearLayout      mButtonLayout;
+    private ToggleButton      mToggleEditModus;
     private StudyGroupPicker  mStudyGroupPicker;
+    private Button            mSearchButton;
     private ListView          mLessonList;
 
 

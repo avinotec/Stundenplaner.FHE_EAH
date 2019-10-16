@@ -1,0 +1,18 @@
+# Beispiel Aufruf für die Schnittstelle /changes mittels POST
+# Rückgabe in Datei: change_POST_antwort.json
+
+curl -X POST \
+  http://{DOMAIN}/rest_api/public/changes \
+  -H 'Accept: */*' \
+  -H 'Accept-Encoding: gzip, deflate' \
+  -H 'Cache-Control: no-cache' \
+  -H 'Connection: keep-alive' \
+  -H 'Content-Length: 364' \
+  -H 'Content-Type: application/json' \
+  -H 'Cookie: PHPSESSID=9hqql5pnhr81dt947javv2a2v7' \
+  -H 'Host: localhost' \
+  -H 'Postman-Token: 83c674f2-8153-4eaf-8efd-feb491b5ed85,a52fbc04-222e-4ece-b311-5501c75a1c80' \
+  -H 'User-Agent: PostmanRuntime/7.17.1' \
+  -H 'cache-control: no-cache' \
+  -d '{"os_id":1,"device_id":"cJroQVCSi3I:APA91bEAu2sXpFnwuWVrJgdaCGLERC30DXV2VfsNDjB6klhUucOLiamnioP_EBH2L5BQyjIlRu7Ia2gSxOzBot5TSUuwrEwquxt1OIomMC-i_vLImw-LdEc7Fg3avoNUUMbXte62FMxu", "refresh_timestamp": 99999,
+                "module_list":[{"module_title":"Data Min./S", "set_title": "SPLUSECBB84"}, {"module_title":"Web Shop Proj./S", "set_title": "SPLUSECBB84"}]}'

@@ -31,8 +31,8 @@ android {
         // Error: Invoke-customs are only supported starting with Android O (--min-api 26)
         // solution: Java 8
         // Attention: desktop adds '' arround the string. Remove them
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+        //    sourceCompatibility 1.8
+        //    targetCompatibility 1.8
     }
 
 
@@ -73,7 +73,8 @@ android {
          */
 
         eah {
-            applicationId 'de.fhe.eahmobile'
+            /* applicationId 'de.fhe.eahmobile' alte ID*/
+            applicationId 'de.eah-jena.stundenplan'
             dimension "version"
         }
         fhe {
@@ -181,13 +182,15 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.viewpagerindicator:library:2.4.1@aar'
     implementation 'com.darwinsys:hirondelle-date4j:1.5.1'
-	
-	implementation 'com.github.applidium:HeaderListView:f9c33c21ae'
-	implementation 'com.squareup.retrofit2:retrofit:2.6.1'
-	implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
 
+    implementation 'com.github.applidium:HeaderListView:f9c33c21ae'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
 
+    implementation 'com.google.firebase:firebase-analytics:17.2.0'
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
+
+
 }
 
 configurations.all {
@@ -208,4 +211,5 @@ configurations.all {
 
     exclude group: 'com.android.support', module: ''
 }
+
 apply plugin: 'com.google.gms.google-services'
