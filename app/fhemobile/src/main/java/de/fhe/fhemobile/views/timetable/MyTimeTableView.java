@@ -79,6 +79,8 @@ public class MyTimeTableView extends LinearLayout {
 
     private static SelectedLessonAdapter selectedLessonAdapter;
 
+
+
     private static List<FlatDataStructure> getSortedList(Comparator<FlatDataStructure> comparator){
         List<FlatDataStructure> sortedList = new ArrayList<FlatDataStructure>(MainActivity.selectedLessons);
         Collections.sort(sortedList,comparator);
@@ -86,22 +88,28 @@ public class MyTimeTableView extends LinearLayout {
     }
     public static void setCompleteLessons(List<FlatDataStructure> lessons){
         if(lessons==null){
+
             MainActivity.completeLessons=new ArrayList<>();
         }
         else{
             MainActivity.completeLessons=lessons;
+
         }
 
     }
     public static List<FlatDataStructure> getCompleteLessons(){
+
         return MainActivity.completeLessons;
+
     }
     public static void setLessons(List<FlatDataStructure> lessons){
         if(lessons==null){
             MainActivity.selectedLessons=new ArrayList<>();
         }else{
+
             MainActivity.selectedLessons=lessons;
             MainActivity.sortedLessons=getSortedList(new Date_Comparator());
+
         }
 
     }
@@ -138,6 +146,7 @@ public class MyTimeTableView extends LinearLayout {
        return negativeList;
     }
     public static List<FlatDataStructure> getSortedLessons(){return MainActivity.sortedLessons;}
+
     public static boolean removeLesson(FlatDataStructure lesson){
         MainActivity.selectedLessons.remove(lesson);
         MainActivity.sortedLessons=getSortedList(new Date_Comparator());

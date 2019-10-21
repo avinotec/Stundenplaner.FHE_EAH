@@ -1,19 +1,26 @@
 package de.fhe.fhemobile.fragments.mytimetable;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
 
 import java.util.Date;
+
 import java.util.Iterator;
 import java.util.List;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
@@ -92,6 +99,7 @@ public class MyTimeTableFragment extends FeatureFragment {
         String setID="";
         for (FlatDataStructure event:MyTimeTableView.getLessons()){
             String eventTitle=FlatDataStructure.cutEventTitle(event.getEvent().getTitle());
+
             if((title.equals(eventTitle)&&setID.equals(event.getStudyGroup().getTimeTableId()))==false){
                 request.addLesson(event.getStudyGroup().getTimeTableId(),event.getEvent().getTitle());
                 title=eventTitle;
@@ -110,6 +118,7 @@ public class MyTimeTableFragment extends FeatureFragment {
                 Log.d(TAG, "onResponse: "+response.raw().request().url());
                 Log.d(TAG, "onResponse code: "+response.code()+" geparsed: "+gson.toJson(response.body()));
                 List<ResponseModel.Change> changes = response.body().getChanges();
+
                 List<String[]> negativeList=MyTimeTableView.generateNegativeLessons();
                 Iterator<ResponseModel.Change> iterator= changes.iterator();
                 while(iterator.hasNext()){
@@ -133,6 +142,7 @@ public class MyTimeTableFragment extends FeatureFragment {
                 for(ResponseModel.Change change: changes){
                     changesAsString+=(change.getChangesReasonText()+"/n/n");
                 }
+
 //                new AlertDialog.Builder(MyTimeTableFragment.this.getActivity())
 //                        .setTitle("Änderungen")
 //                       // .setMessage(changesAsString)
@@ -149,6 +159,7 @@ public class MyTimeTableFragment extends FeatureFragment {
 //
 //                        // A null listener allows the button to dismiss the dialog and take no further action.
 //                        .show();
+
 
                 for(ResponseModel.Change change : changes){
                     //Aenderung eines Events: suche den Event und ueberschreibe seine Daten

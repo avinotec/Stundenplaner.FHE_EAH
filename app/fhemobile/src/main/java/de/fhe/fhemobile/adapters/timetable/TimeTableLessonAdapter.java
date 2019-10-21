@@ -57,6 +57,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		convertView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+
 				List<FlatDataStructure> lessonTitleFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getCompleteLessons(),FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 				List <FlatDataStructure> filteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(lessonTitleFilteredList,currentItem.getStudyGroup().getTitle());
 				for (FlatDataStructure event:filteredList){
@@ -86,6 +87,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 			convertView.setVisibility(View.VISIBLE);
 
 		}
+
 		else if(!FlatDataStructure.cutEventTitle(MyTimeTableView.getCompleteLessons().get(position).getEvent().getTitle()).equals(FlatDataStructure.cutEventTitle(MyTimeTableView.getCompleteLessons().get(position-1).getEvent().getTitle()))){
 			lessonTitle.setText(FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 			lessonTitle.setVisibility(View.VISIBLE);
@@ -103,6 +105,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		btnAddLesson.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+
 				List<FlatDataStructure> eventFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getCompleteLessons(),FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 				List<FlatDataStructure> studyGroupFilteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(eventFilteredList,currentItem.getStudyGroup().getTitle());
 				for(FlatDataStructure event : studyGroupFilteredList){
@@ -124,6 +127,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 
 
 		}
+
 		else if(!FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()).equals(FlatDataStructure.cutEventTitle(MyTimeTableView.getCompleteLessons().get(position-1).getEvent().getTitle()))){
 			studyGroupTitle.setText(currentItem.getStudyGroup().getTitle());
 			studyGroupTitle.setVisibility(View.VISIBLE);
