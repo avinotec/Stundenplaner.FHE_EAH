@@ -39,12 +39,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
         android:layout_below="@+id/tvLessonDate"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/tvLessonTime"
-        android:layout_toRightOf="@+id/tvLessonTime"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
         android:text="TextView" />
 
     <TextView
@@ -63,11 +63,11 @@
         android:layout_height="wrap_content"
 
         android:layout_below="@+id/tvLessonTime"
-        android:layout_alignStart="@+id/tvTitle"
-        android:layout_alignLeft="@+id/tvTitle"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginTop="5dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
         android:layout_marginBottom="50dp"
         android:text="TextView" />
 

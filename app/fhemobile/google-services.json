@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:359992021944:android:b571c207a0841f77af354d",
         "android_client_info": {
-          "package_name": "de.fhe.eahmobile.debug"
+          "package_name": "de.eah_jena.stundenplan.debug"
         }
       },
       "oauth_client": [

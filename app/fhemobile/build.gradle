@@ -45,8 +45,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 4
-        versionName '3.0 (May 2019)'
+        versionCode 1
+        versionName '0.1'
     }
 
     // nötig ab AS 3 damit Flavors gehen
@@ -73,7 +73,7 @@ android {
          */
 
         eah {
-            applicationId 'de.fhe.eahmobile'
+            applicationId 'de.eah_jena.stundenplan'
             dimension "version"
         }
         fhe {

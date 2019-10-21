@@ -46,7 +46,7 @@ public class MapsSingleFragment extends Fragment {
 
         if (savedInstanceState != null) {
             mCurrentMapIndex = savedInstanceState.getInt(SAV_MAP_INDEX);
-            Log.d(LOG_TAG, "onCreate ");
+//            Log.d(LOG_TAG, "onCreate ");
         }
         else {
             mCurrentMapIndex = 0;
@@ -126,7 +126,7 @@ public class MapsSingleFragment extends Fragment {
         super.onSaveInstanceState(outState);
 
         outState.putInt(SAV_MAP_INDEX, mCurrentMapIndex);
-        Log.d(LOG_TAG, "onSaveInstanceState ");
+//        Log.d(LOG_TAG, "onSaveInstanceState ");
     }
 
     private void updateActionBarTitle(String _Title) {

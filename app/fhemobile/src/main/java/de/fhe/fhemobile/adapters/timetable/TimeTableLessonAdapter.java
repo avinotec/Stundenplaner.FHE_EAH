@@ -1,7 +1,6 @@
 package de.fhe.fhemobile.adapters.timetable;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,13 +57,13 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		convertView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				List<FlatDataStructure> lessonTitleFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getCompleteLessons(),currentItem.getEvent().getTitle());
+				List<FlatDataStructure> lessonTitleFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getCompleteLessons(),FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 				List <FlatDataStructure> filteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(lessonTitleFilteredList,currentItem.getStudyGroup().getTitle());
 				for (FlatDataStructure event:filteredList){
 					event.setVisible(!event.isVisible());
 				}
 				((ListView)parent).invalidateViews();
-				Log.d(TAG, "onClick: VisibleClick");
+//				Log.d(TAG, "onClick: VisibleClick");
 
 			}
 		});
@@ -81,14 +80,14 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvLessonTitle);
 
 		if(position==0){
-			lessonTitle.setText(currentItem.getEvent().getTitle());
+			lessonTitle.setText(FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 			lessonTitle.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
 
 		}
-		else if(!MyTimeTableView.getCompleteLessons().get(position).getEvent().getTitle().equals(MyTimeTableView.getCompleteLessons().get(position-1).getEvent().getTitle())){
-			lessonTitle.setText(currentItem.getEvent().getTitle());
+		else if(!FlatDataStructure.cutEventTitle(MyTimeTableView.getCompleteLessons().get(position).getEvent().getTitle()).equals(FlatDataStructure.cutEventTitle(MyTimeTableView.getCompleteLessons().get(position-1).getEvent().getTitle()))){
+			lessonTitle.setText(FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 			lessonTitle.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
@@ -104,7 +103,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		btnAddLesson.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				List<FlatDataStructure> eventFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getCompleteLessons(),currentItem.getEvent().getTitle());
+				List<FlatDataStructure> eventFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getCompleteLessons(),FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 				List<FlatDataStructure> studyGroupFilteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(eventFilteredList,currentItem.getStudyGroup().getTitle());
 				for(FlatDataStructure event : studyGroupFilteredList){
 					MyTimeTableView.addLesson(event);
@@ -125,7 +124,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 
 
 		}
-		else if(!currentItem.getEvent().getTitle().equals(MyTimeTableView.getCompleteLessons().get(position-1).getEvent().getTitle())){
+		else if(!FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()).equals(FlatDataStructure.cutEventTitle(MyTimeTableView.getCompleteLessons().get(position-1).getEvent().getTitle()))){
 			studyGroupTitle.setText(currentItem.getStudyGroup().getTitle());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			btnAddLesson.setVisibility(View.VISIBLE);
