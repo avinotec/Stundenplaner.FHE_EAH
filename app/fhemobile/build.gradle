@@ -74,7 +74,7 @@ android {
 
         eah {
             /* applicationId 'de.fhe.eahmobile' alte ID*/
-            applicationId 'de.eah-jena.stundenplan'
+            applicationId 'de.eahjena.stundenplan'
             dimension "version"
         }
         fhe {
@@ -87,9 +87,10 @@ android {
         release {
             //storeFile file('D:\\Projekt\\Mobile.AndroidStudio\\VideoChat2\\doc\\cert\\Keystore')
             //storeFile file('doc\\cert\\Keystore')
-            storePassword ""
-            keyAlias ""
-            keyPassword ""
+            storePassword 'EAHJena2019Stundenplan'
+            keyAlias 'EAHStundenplan'
+            keyPassword 'EAHJena2019Stundenplan'
+	        storeFile file('D:\\Projekt\\Mobile.AndroidStudio\\Stundenplaner.FHE_EAH.2019\\doc\\EAHKeystore')
         }
         debug {
             // Ein fester debug keystore damit, wenn man mit verschiedenen Rechnern arbeitet, die APK updaten kann.
