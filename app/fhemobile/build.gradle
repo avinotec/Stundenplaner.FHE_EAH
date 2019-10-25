@@ -31,8 +31,9 @@ android {
         // Error: Invoke-customs are only supported starting with Android O (--min-api 26)
         // solution: Java 8
         // Attention: desktop adds '' arround the string. Remove them
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+        //Dieser bekackte String gegenüber 1.8 bewirkt, dass die seltsamen Kotlin Fehler (Ab AndroidStudio 3.5) bei Release/APK ausbleiben
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
 
