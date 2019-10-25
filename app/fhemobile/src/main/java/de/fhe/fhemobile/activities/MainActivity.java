@@ -60,7 +60,14 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
             @Override
             public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                String token = task.getResult().getToken();
+                String token;
+                try {
+                    token = task.getResult().getToken();
+                } catch (final NullPointerException npe )
+                {
+                    Log.d(TAG, "onComplete: instance missing");
+                    return;
+                }
                 Log.d(TAG, "onComplete: Token: "+token);
                 firebaseToken=token;
             }
