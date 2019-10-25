@@ -27,7 +27,7 @@ public class PhonebookModel extends EventDispatcher {
     }
 
     public void setFoundEmployees(ArrayList<EmployeeVo> _FoundEmployees) {
-        mFoundEmployees = _FoundEmployees;
+        this.mFoundEmployees = _FoundEmployees;
         if(mFoundEmployees != null) {
             
             // remove "-;" from title, when the person has no title available
