@@ -233,8 +233,35 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                     requestCounter--;
                                     if(requestCounter==0) {
                                         MyTimeTableView.setCompleteLessons(courseEvents);
-                                        Collections.sort(courseEvents, new LessonTitle_StudyGroupTitle_Comparator());
-                                        TimeTableLessonAdapter timeTableLessonAdapter = new TimeTableLessonAdapter(MyTimeTableDialogFragment.this.getContext());
+
+                                        try {
+                                            Collections.sort(courseEvents, new LessonTitle_StudyGroupTitle_Comparator());
+                                        } catch ( final RuntimeException e ) {
+                                            Log.e(TAG, "Fehler beim Sortieren", e); //$NON-NLS
+                                        }
+
+/* TODO: Performance, fühlt sich an, als ob es immer ausgeführt würde....
+                                        //Alle Duplikate rauswerfen, Sprich, Einträge, die gleich sind
+                                        int nCourseLength = courseEvents.size();
+                                        // we need at least 2 elements, to find duplicates and throw away the duplicate
+                                        if ( nCourseLength > 2 ) {
+                                            // we have to check per iteration, if we reached the end, because we delete
+                                            // dynamically the list and shorten it
+                                            for (int j = 0 + 1; j < courseEvents.size(); j++) {
+                                                final FlatDataStructure course0 = courseEvents.get( j-1 );
+                                                final FlatDataStructure course1 = courseEvents.get( j );
+
+                                                // wenn es gleich ist, dann entfernen wir es, damit entfernen wir Duplikate
+                                                if ( LessonTitle_StudyGroupTitle_Comparator.compareStatic( course0, course1 ) == 0 ) {
+                                                    courseEvents.remove(j);
+                                                    j--;
+                                                }
+                                            }
+                                        }
+*/
+
+
+                                        final TimeTableLessonAdapter timeTableLessonAdapter = new TimeTableLessonAdapter(MyTimeTableDialogFragment.this.getContext());
                                         mView.setLessonListAdapter(timeTableLessonAdapter);
                                         mView.toggleLessonListVisibility(true);
                                         timeTableLessonAdapter.notifyDataSetChanged();
