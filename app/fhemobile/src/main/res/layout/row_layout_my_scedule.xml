@@ -4,40 +4,63 @@
     android:id="@+id/singleRowLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:clickable="true">
+
     <TextView
-        android:id="@+id/tvLessonDay"
+        android:id="@+id/tvLessonTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:text="TextView" />
-
-    <ImageButton
-        android:id="@+id/ibRemoveLesson"
+        android:text="TextView"
+        android:visibility="gone"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+    <TextView
+        android:id="@+id/tvStudyGroupTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
-        app:srcCompat="@android:drawable/ic_delete" />
+        android:layout_below="@+id/tvLessonTitle"
+        android:layout_marginTop="5dp"
+        android:text="TextView"
+        android:visibility="gone"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <TextView
         android:id="@+id/tvLessonTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvLessonDay"
+        android:layout_below="@+id/tvStudyGroupTitle"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     <TextView
-        android:id="@+id/tvLessonDate"
+        android:id="@+id/tvRoom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvLessonDay"
-        android:layout_marginLeft="20dp"
+
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_below="@+id/tvStudyGroupTitle"
+        android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/tvLessonTime"
         android:layout_toRightOf="@+id/tvLessonTime"
         android:text="TextView" />
+
+
+
+    <ImageButton
+        android:id="@+id/ibRemoveLesson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginRight="3dp"
+        android:visibility="gone"
+        app:srcCompat="@android:drawable/ic_delete" />
+
 </RelativeLayout>

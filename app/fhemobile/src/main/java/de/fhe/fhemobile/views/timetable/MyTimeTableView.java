@@ -18,6 +18,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.adapters.timetable.SelectedLessonAdapter;
 import de.fhe.fhemobile.comparator.Date_Comparator;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableDialogFragment;
@@ -77,46 +78,78 @@ public class MyTimeTableView extends LinearLayout {
     private ListView          mLessonList;
 
     private static SelectedLessonAdapter selectedLessonAdapter;
-    private static List<FlatDataStructure> selectedLessons = new ArrayList();
-    private static List<FlatDataStructure> sortedLessons=new ArrayList<>();
-    private static List<FlatDataStructure> completeLessons = new ArrayList<>();
+
+
 
     private static List<FlatDataStructure> getSortedList(Comparator<FlatDataStructure> comparator){
-        List<FlatDataStructure> sortedList = new ArrayList<FlatDataStructure>(selectedLessons);
+        List<FlatDataStructure> sortedList = new ArrayList<FlatDataStructure>(MainActivity.selectedLessons);
         Collections.sort(sortedList,comparator);
         return sortedList;
     }
     public static void setCompleteLessons(List<FlatDataStructure> lessons){
         if(lessons==null){
-            completeLessons=new ArrayList<>();
+
+            MainActivity.completeLessons=new ArrayList<>();
         }
         else{
-            completeLessons=lessons;
+            MainActivity.completeLessons=lessons;
+
         }
 
     }
     public static List<FlatDataStructure> getCompleteLessons(){
-        return completeLessons;
+
+        return MainActivity.completeLessons;
+
     }
     public static void setLessons(List<FlatDataStructure> lessons){
         if(lessons==null){
-            selectedLessons=new ArrayList<>();
+            MainActivity.selectedLessons=new ArrayList<>();
         }else{
-            selectedLessons=lessons;
-            sortedLessons=getSortedList(new Date_Comparator());
+
+            MainActivity.selectedLessons=lessons;
+            MainActivity.sortedLessons=getSortedList(new Date_Comparator());
+
         }
 
     }
     public static List<FlatDataStructure> getLessons(){
-        return selectedLessons;
+        return MainActivity.selectedLessons;
     }
-    public static List<FlatDataStructure>generateNegativeLessons(){
-        
+    public static List<String[]>generateNegativeLessons(){
+    	List<String[]> negativeList= new ArrayList<>();
+    	for(FlatDataStructure eventInCompleteList: MainActivity.completeLessons){
+    	    boolean exists=false;
+    		for(String[] eventdata:negativeList){
+    		    if(eventdata[0].equals(FlatDataStructure.cutEventTitle(eventInCompleteList.getEvent().getTitle()))
+                && eventdata[1].equals(eventInCompleteList.getStudyGroup().getTimeTableId())){
+                    exists=true;
+                    break;
+                }
+            }
+    		if(exists==false) {
+    		    boolean isSelected=false;
+                for (FlatDataStructure eventInSelectedList : MainActivity.selectedLessons) {
+                    if (FlatDataStructure.cutEventTitle(eventInCompleteList.getEvent().getTitle()).equals(FlatDataStructure.cutEventTitle(eventInSelectedList.getEvent().getTitle()))
+                    && eventInCompleteList.getStudyGroup().getTimeTableId().equals(eventInSelectedList.getStudyGroup().getTimeTableId())){
+                        isSelected=true;
+                    }
+                }
+                if(isSelected==false){
+                    String[] eventdata = new String[2];
+                    eventdata[0]=FlatDataStructure.cutEventTitle(eventInCompleteList.getEvent().getTitle());
+                    eventdata[1]=eventInCompleteList.getStudyGroup().getTimeTableId();
+                    negativeList.add(eventdata);
+                }
+            }
+	    }
+       return negativeList;
     }
-    public static List<FlatDataStructure> getSortedLessons(){return sortedLessons;}
+    public static List<FlatDataStructure> getSortedLessons(){return MainActivity.sortedLessons;}
+
     public static boolean removeLesson(FlatDataStructure lesson){
-        selectedLessons.remove(lesson);
-        sortedLessons=getSortedList(new Date_Comparator());
+        MainActivity.selectedLessons.remove(lesson);
+        MainActivity.sortedLessons=getSortedList(new Date_Comparator());
         Gson gson = new Gson();
         String json = gson.toJson(MyTimeTableView.getLessons());
         SharedPreferences sharedPreferences =mContext.getSharedPreferences("prefs",Context.MODE_PRIVATE);
@@ -127,8 +160,8 @@ public class MyTimeTableView extends LinearLayout {
         return true;
     }
     public static boolean addLesson(FlatDataStructure lesson){
-        selectedLessons.add(lesson);
-        sortedLessons=getSortedList(new Date_Comparator());
+        MainActivity.selectedLessons.add(lesson);
+        MainActivity.sortedLessons=getSortedList(new Date_Comparator());
         Gson gson = new Gson();
         String json = gson.toJson(MyTimeTableView.getLessons());
         SharedPreferences sharedPreferences =mContext.getSharedPreferences("prefs",Context.MODE_PRIVATE);

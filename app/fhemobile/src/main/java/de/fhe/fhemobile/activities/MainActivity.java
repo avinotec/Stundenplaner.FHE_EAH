@@ -17,16 +17,25 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.NavigationDrawerFragment;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.feature.FeatureFragmentFactory;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
+import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     private static final String TAG = "MainActivity";
+
+	public static List<FlatDataStructure> selectedLessons = new ArrayList();
+	public static List<FlatDataStructure> sortedLessons=new ArrayList<>();
+	public static List<FlatDataStructure> completeLessons = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

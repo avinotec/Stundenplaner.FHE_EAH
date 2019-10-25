@@ -13,6 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FlatDataStructure implements Parcelable {
 	private static final String TAG = "FlatDataStructure";
@@ -62,12 +64,33 @@ public class FlatDataStructure implements Parcelable {
 	public FlatDataStructure copy(){
 		FlatDataStructure copy = new FlatDataStructure();
 		FlatDataStructure.incId++;
-		Log.d(TAG, "FlatDataStructure: incID: "+FlatDataStructure.incId);
+//		Log.d(TAG, "FlatDataStructure: incID: "+FlatDataStructure.incId);
 		copy.id=incId;
 		copy.setCourse(this.getCourse());
 		copy.setSemester(this.getSemester());
 		copy.setStudyGroup(this.getStudyGroup());
 		return copy;
+	}
+
+	public static String cutEventTitle(String title){
+		String changeEventTitle="";
+		try {
+			Pattern p = Pattern.compile("^(.*[a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß])");
+			Matcher m = p.matcher(title);
+			if(m.find()){
+				changeEventTitle =m.group(1);
+//				Log.d(TAG, "eventTitle: "+changeEventTitle);
+			}
+			else {
+				changeEventTitle = title;
+			}
+
+		}
+		catch (Exception e){
+			changeEventTitle = title;
+			Log.e(TAG, "onResponse: ",e );
+		}
+		return changeEventTitle;
 	}
 
 
@@ -144,8 +167,8 @@ public class FlatDataStructure implements Parcelable {
 
 	public static boolean listContainsEvent(List<FlatDataStructure> list, FlatDataStructure data){
 		for(FlatDataStructure event:list){
-			Log.d(TAG, "Eventvergleich1: "+event);
-			Log.d(TAG, "Eventvergleich2: "+data);
+//			Log.d(TAG, "Eventvergleich1: "+event);
+//			Log.d(TAG, "Eventvergleich2: "+data);
 //			Log.d(TAG, "listContainsEvent: "+event.getEvent().getTitle()+" "+data.getEvent().getTitle());
 //			Log.d(TAG, "listContainsEvent: "+event.getEventDay().getDayInWeek()+" "+data.getEventDay().getDayInWeek());
 //			Log.d(TAG, "listContainsEvent: "+event.getEventWeek().getWeekInYear()+" "+data.getEventWeek().getWeekInYear());
@@ -153,17 +176,17 @@ public class FlatDataStructure implements Parcelable {
 //			Log.d(TAG, "listContainsEvent: "+event.getSemester().getId()+" "+data.getSemester().getId());
 //			Log.d(TAG, "listContainsEvent: "+event.getCourse().getId()+" "+data.getCourse().getId());
 			if(event.getEvent().getTitle().equals(data.getEvent().getTitle())){
-				Log.d(TAG, "EventTitle: true");
+//				Log.d(TAG, "EventTitle: true");
 				if(event.getEventDay().getDayInWeek().equals(data.getEventDay().getDayInWeek())){
-					Log.d(TAG, "EventDay: true");
+//					Log.d(TAG, "EventDay: true");
 					if(event.getEventWeek().getWeekInYear()==data.getEventWeek().getWeekInYear()){
-						Log.d(TAG, "EventWeek: true");
+//						Log.d(TAG, "EventWeek: true");
 						if(event.getStudyGroup().getTimeTableId().equals(data.getStudyGroup().getTimeTableId())){
-							Log.d(TAG, "StudieGroup: true");
+//							Log.d(TAG, "StudieGroup: true");
 							if(event.getSemester().getId().equals(data.getSemester().getId())){
-								Log.d(TAG, "Semester: true");
+//								Log.d(TAG, "Semester: true");
 								if(event.getCourse().getId().equals(data.getCourse().getId())){
-									Log.d(TAG, "Course: true");
+//									Log.d(TAG, "Course: true");
 									return true;
 								}
 							}
@@ -173,7 +196,7 @@ public class FlatDataStructure implements Parcelable {
 
 			}
 		}
-		Log.d(TAG, "listContainsEvent: Contains not!");
+//		Log.d(TAG, "listContainsEvent: Contains not!");
 		return false;
 	}
 

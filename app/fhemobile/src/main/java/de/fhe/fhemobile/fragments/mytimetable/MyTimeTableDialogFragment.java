@@ -182,7 +182,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             }
 
             if (errorOccurred) {
-                mView.toggleTermsPickerVisibility(true);
+                mView.toggleTermsPickerVisibility(false);
                 Utils.showToast(R.string.timetable_error);
             }
             else {
@@ -222,12 +222,13 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                 if(response.code()>=200) {
                                     List<TimeTableWeekVo> weekList=response.body();
 
-                                    Log.d(TAG, "success: Request wurde ausgefuehrt: " + response.raw().request().url() + " Status: " + response.code());
+//                                    Log.d(TAG, "success: Request wurde ausgefuehrt: " + response.raw().request().url() + " Status: " + response.code());
                                     //Gemergte liste aller zurückgekehrten Requests. Die Liste wächst mit jedem Request.
                                     //Hier (im success) haben wir neue Daten bekommen.
+
 //TODO: überprüfen ob courseEvents nötig ist
                                     List<FlatDataStructure> courseEvents = getAllEvents(weekList, dataList, this.getData());
-                                    Log.d(TAG, "success: length"+courseEvents.size());
+//                                    Log.d(TAG, "success: length"+courseEvents.size());
                                     //Wir sortieren diesen letzten Stand der Liste
                                     requestCounter--;
                                     if(requestCounter==0) {
@@ -245,7 +246,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                             @Override
                             public void onFailure(Call<List<TimeTableWeekVo>> call, Throwable t) {
                                 super.onFailure(call, t);
-                                Log.d(TAG, "failure: " + t);
+//                                Log.d(TAG, "failure: " + t);
                             }
                         };
 
@@ -279,19 +280,19 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.d(TAG, "onDestroyView");
+//        Log.d(TAG, "onDestroyView");
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        Log.d(TAG, "onAttach");
+//        Log.d(TAG, "onAttach");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(TAG, "onDetach");
+//        Log.d(TAG, "onDetach");
     }
 
 
@@ -319,7 +320,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             if ( response.body() != null ) {
                 mResponse = response.body();
                 for (StudyCourseVo course : response.body().getStudyCourses()){
-                    Log.d(TAG, "onResponse: "+course.getTitle());
+//                    Log.d(TAG, "onResponse: "+course.getTitle());
                 }
 
 
