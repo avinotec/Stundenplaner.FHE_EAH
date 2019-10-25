@@ -19,13 +19,10 @@ import java.util.regex.Pattern;
 public class FlatDataStructure implements Parcelable {
 	private static final String TAG = "FlatDataStructure";
 
-
-
 	public FlatDataStructure(){
 	}
 
-
-	protected FlatDataStructure(Parcel in) {
+	protected FlatDataStructure(final Parcel in) {
 		course = in.readParcelable(StudyCourseVo.class.getClassLoader());
 		semester = in.readParcelable(TermsVo.class.getClassLoader());
 		studyGroup = in.readParcelable(StudyGroupVo.class.getClassLoader());
@@ -35,7 +32,7 @@ public class FlatDataStructure implements Parcelable {
 	}
 
 	@Override
-	public void writeToParcel(Parcel dest, int flags) {
+	public void writeToParcel(final Parcel dest, final int flags) {
 		dest.writeParcelable(course, flags);
 		dest.writeParcelable(semester, flags);
 		dest.writeParcelable(studyGroup, flags);
@@ -62,22 +59,25 @@ public class FlatDataStructure implements Parcelable {
 	};
 
 	public FlatDataStructure copy(){
-		FlatDataStructure copy = new FlatDataStructure();
-		FlatDataStructure.incId++;
+		final FlatDataStructure copy = new FlatDataStructure();
+		;
 //		Log.d(TAG, "FlatDataStructure: incID: "+FlatDataStructure.incId);
-		copy.id=incId;
+		copy.id=FlatDataStructure.incId++;
 		copy.setCourse(this.getCourse());
 		copy.setSemester(this.getSemester());
 		copy.setStudyGroup(this.getStudyGroup());
 		return copy;
 	}
 
-	public static String cutEventTitle(String title){
-		String changeEventTitle="";
+	// "Bachelor: E-Commerce-->EC(BA)7-->EC(BA)7.01-->45-->3-->SPLUSA3E2FAs-2-->WI(BA)ERP-Sys.GPA/P/S/01"
+	private final static Pattern p = Pattern.compile("^(.*[a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß])");
+	public static String cutEventTitle(final String title) {
+
+		// WI/WIEC(BA)Cloudtech./V/01
+		String changeEventTitle = title;
 		try {
-			Pattern p = Pattern.compile("^(.*[a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß])");
-			Matcher m = p.matcher(title);
-			if(m.find()){
+			final Matcher m = p.matcher(title);
+			if (m.find() ) {
 				changeEventTitle =m.group(1);
 //				Log.d(TAG, "eventTitle: "+changeEventTitle);
 			}
@@ -86,26 +86,28 @@ public class FlatDataStructure implements Parcelable {
 			}
 
 		}
-		catch (Exception e){
-			changeEventTitle = title;
+		catch (final Exception e){
 			Log.e(TAG, "onResponse: ",e );
 		}
+		// WI/WIEC(BA)Cloudtech./V
 		return changeEventTitle;
 	}
 
 
-	public static List<FlatDataStructure> queryGetEventsByEventTitle(List<FlatDataStructure> list, String eventTitle){
-		List<FlatDataStructure> filteredEvents = new ArrayList<>();
-		for (FlatDataStructure event : list) {
+	public static List<FlatDataStructure> queryGetEventsByEventTitle(final List<FlatDataStructure> list, final String eventTitle){
+
+		final List<FlatDataStructure> filteredEvents = new ArrayList<>();
+		for (final FlatDataStructure event : list) {
 			if(event.getEvent().getTitle().contains(eventTitle)){
 				filteredEvents.add(event);
 			}
 		}
 		return filteredEvents;
 	}
-	public static List<FlatDataStructure> queryGetEventsByStudyGroupTitle(List<FlatDataStructure>list, String studyGroupTitle){
-		List<FlatDataStructure> filteredEvents = new ArrayList<>();
-		for(FlatDataStructure event : list){
+
+	public static List<FlatDataStructure> queryGetEventsByStudyGroupTitle(final List<FlatDataStructure>list, final String studyGroupTitle){
+		final List<FlatDataStructure> filteredEvents = new ArrayList<>();
+		for(final FlatDataStructure event : list){
 			if(event.getStudyGroup().getTitle().equals(studyGroupTitle)){
 				filteredEvents.add(event);
 			}
@@ -113,14 +115,17 @@ public class FlatDataStructure implements Parcelable {
 		return filteredEvents;
 	}
 
-	public static List<FlatDataStructure> queryfutureEvents(List<FlatDataStructure>list){
-		List<FlatDataStructure> filteredEvents = new ArrayList<>();
-		for(FlatDataStructure event : list){
-			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
+	private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
+
+	public static List<FlatDataStructure> queryfutureEvents(final List<FlatDataStructure>list){
+
+		final List<FlatDataStructure> filteredEvents = new ArrayList<>();
+		for(final FlatDataStructure event : list){
+
 			Date eventDate = null;
 			try {
 				eventDate= sdf.parse(event.getEvent().getDate()+" "+event.getEvent().getStartTime());
-			} catch (ParseException e) {
+			} catch (final ParseException e) {
 				Log.e(TAG, "Fehler beim Parsen der Daten: ",e );
 			}
 			if(eventDate.after(new Date())){
@@ -130,8 +135,8 @@ public class FlatDataStructure implements Parcelable {
 		return filteredEvents;
 	}
 
-	public static FlatDataStructure getEventByID (List<FlatDataStructure> list, String ID){
-		for(FlatDataStructure event:list){
+	public static final FlatDataStructure getEventByID (final List<FlatDataStructure> list, final String ID){
+		for ( final FlatDataStructure event:list ) {
 			if(ID.equals(event.getEvent().getUid())){
 				return event;
 			}
@@ -162,10 +167,8 @@ public class FlatDataStructure implements Parcelable {
 
 	]
 	 */
-	public static int counter=0;
 
-
-	public static boolean listContainsEvent(List<FlatDataStructure> list, FlatDataStructure data){
+	public final static boolean listContainsEvent(final List<FlatDataStructure> list, final FlatDataStructure data){
 		for(FlatDataStructure event:list){
 //			Log.d(TAG, "Eventvergleich1: "+event);
 //			Log.d(TAG, "Eventvergleich2: "+data);
@@ -200,56 +203,56 @@ public class FlatDataStructure implements Parcelable {
 		return false;
 	}
 
-	public StudyCourseVo getCourse() {
+	public final StudyCourseVo getCourse() {
 		return course;
 	}
 
-	public TermsVo getSemester() {
+	public final TermsVo getSemester() {
 		return semester;
 	}
 
-	public StudyGroupVo getStudyGroup() {
+	public final StudyGroupVo getStudyGroup() {
 		return studyGroup;
 	}
 
-	public TimeTableWeekVo getEventWeek() {
+	public final TimeTableWeekVo getEventWeek() {
 		return eventWeek;
 	}
 
-	public TimeTableDayVo getEventDay() {
+	public final TimeTableDayVo getEventDay() {
 		return eventDay;
 	}
 
-	public TimeTableEventVo getEvent() {
+	public final TimeTableEventVo getEvent() {
 		return event;
 	}
 
-	public FlatDataStructure setCourse(StudyCourseVo course) {
+	public final FlatDataStructure setCourse(final StudyCourseVo course) {
 		this.course = course;
 		return this;
 	}
 
-	public FlatDataStructure setSemester(TermsVo semester) {
+	public final FlatDataStructure setSemester(final TermsVo semester) {
 		this.semester = semester;
 		return this;
 	}
 
-	public FlatDataStructure setStudyGroup(StudyGroupVo studyGroup) {
+	public final FlatDataStructure setStudyGroup(final StudyGroupVo studyGroup) {
 		this.studyGroup = studyGroup;
 		return this;
 	}
 
-	public FlatDataStructure setEventWeek(TimeTableWeekVo eventWeek) {
+	public final FlatDataStructure setEventWeek(final TimeTableWeekVo eventWeek) {
 		this.eventWeek = eventWeek;
 		return this;
 	}
 
-	public FlatDataStructure setEventDay(TimeTableDayVo eventDay) {
+	public final FlatDataStructure setEventDay(final TimeTableDayVo eventDay) {
 		this.eventDay = eventDay;
 		return this;
 	}
 
-	public FlatDataStructure setEvent(TimeTableEventVo event) {
+	public final FlatDataStructure setEvent(final TimeTableEventVo event) {
 		this.event = event;
 		return this;
 	}
@@ -269,26 +272,22 @@ public class FlatDataStructure implements Parcelable {
 	@SerializedName("event")
 	private TimeTableEventVo event;
 
-
-
-
-
-	public int getId() {
+	public final int getId() {
 		return id;
 	}
 	private boolean visible = false;
 
-	public void setVisible(boolean visible) {
+	public void setVisible(final boolean visible) {
 		this.visible = visible;
 	}
 
-	public boolean isVisible() {
+	public final boolean isVisible() {
 		return visible;
 	}
 
 	@NonNull
 	@Override
-	public String toString() {
+	public final String toString() {
 		return this.getCourse().getTitle() + "-->"
 				+ this.getSemester().getTitle() + "-->"
 				+ this.getStudyGroup().getTitle() + "-->"
@@ -297,6 +296,4 @@ public class FlatDataStructure implements Parcelable {
 				+ this.getEvent().getUid() + "-->"
 				+ this.getEvent().getTitle();
 	}
-
-
 }

@@ -8,7 +8,6 @@ import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -49,7 +48,7 @@ public class SelectedLessonAdapter extends BaseAdapter {
 					inflate(R.layout.row_layout_my_scedule, parent, false);
 		}
 		final FlatDataStructure currentItem = MyTimeTableView.getLessons().get(position);
-		RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.singleRowLayout);
+		//final RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.singleRowLayout);
 
 		convertView.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -93,8 +92,6 @@ public class SelectedLessonAdapter extends BaseAdapter {
 			lessonTitle.setVisibility(View.GONE);
 		}
 
-
-
 		final TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.tvStudyGroupTitle);
 
 		final ImageButton ibRemoveLesson = convertView.findViewById(R.id.ibRemoveLesson);
@@ -118,8 +115,6 @@ public class SelectedLessonAdapter extends BaseAdapter {
 			ibRemoveLesson.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
-
-
 		}
 		else if(!FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()).equals(FlatDataStructure.cutEventTitle(MyTimeTableView.getLessons().get(position-1).getEvent().getTitle()))){
 			studyGroupTitle.setText(currentItem.getStudyGroup().getTitle());
@@ -141,23 +136,13 @@ public class SelectedLessonAdapter extends BaseAdapter {
 			ibRemoveLesson.setVisibility(View.GONE);
 		}
 
-		TextView tvTime = (TextView) convertView.findViewById(R.id.tvLessonTime);
-		Date df = new java.util.Date(currentItem.getEvent().getStartDate());
-		String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
+		final TextView tvTime = (TextView) convertView.findViewById(R.id.tvLessonTime);
+		final Date df = new java.util.Date(currentItem.getEvent().getStartDate());
+		final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
 		tvTime.setText(date + " " + currentItem.getEvent().getStartTime() + "-" + currentItem.getEvent().getEndTime());
 
-		TextView tvRoom = (TextView)convertView.findViewById(R.id.tvRoom);
+		final TextView tvRoom = (TextView)convertView.findViewById(R.id.tvRoom);
 		tvRoom.setText(currentItem.getEvent().getRoom());
-
-
-
-
-
-
-
-
-
-
 
 		return convertView;
 	}
