@@ -1,6 +1,8 @@
 package de.fhe.fhemobile;
 
 import android.app.Application;
+import android.content.Context;
+
 import androidx.annotation.StringRes;
 
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
@@ -30,4 +32,15 @@ public class Main extends Application {
     public static Application getAppContext() {
         return mAppContext;
     }
+
+
+    //MS 201908 Multidex apk introduced
+    // Or if you do override the Application class but it's not possible to change the base class,
+    // then you can instead override the attachBaseContext() method and call MultiDex.install(this) to enable multidex:
+    @Override
+    protected void attachBaseContext(final Context base) {
+        super.attachBaseContext(base);
+        androidx.multidex.MultiDex.install(this);
+    }
+
 }
