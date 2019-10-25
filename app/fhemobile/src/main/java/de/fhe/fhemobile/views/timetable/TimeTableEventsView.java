@@ -45,9 +45,10 @@ public class TimeTableEventsView extends LinearLayout {
         Assert.assertTrue( mAdapter != null );
         mPager.setAdapter(mAdapter);
         Assert.assertTrue( mPager != null );
-        Assert.assertTrue( mPageIndicator != null );
+        //Assert.assertTrue( mPageIndicator != null );
 
-        mPageIndicator.setViewPager(mPager);
+        //TODO Simon, warum ist das null?
+        //mPageIndicator.setViewPager(mPager);
     }
 
     @Override
