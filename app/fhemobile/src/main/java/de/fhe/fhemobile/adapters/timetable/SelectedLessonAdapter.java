@@ -22,6 +22,7 @@ import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 public class SelectedLessonAdapter extends BaseAdapter {
 	private static final String TAG = "SelectedLessonAdapter";
 	private Context context;
+
 	public SelectedLessonAdapter(Context context) {
 		this.context=context;
 	}
@@ -32,17 +33,17 @@ public class SelectedLessonAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Object getItem(int position) {
+	public Object getItem(final int position) {
 		return MyTimeTableView.getLessons().get(position);
 	}
 
 	@Override
-	public long getItemId(int position) {
+	public long getItemId(final int position) {
 		return position;
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, final ViewGroup parent) {
 		if (convertView == null) {
 			convertView = LayoutInflater.from(context).
 					inflate(R.layout.row_layout_my_scedule, parent, false);
@@ -73,7 +74,7 @@ public class SelectedLessonAdapter extends BaseAdapter {
 			convertView.setVisibility(View.GONE);
 		}
 
-		TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvLessonTitle);
+		final TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvLessonTitle);
 
 		if(position==0){
 			lessonTitle.setText(FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
@@ -94,14 +95,15 @@ public class SelectedLessonAdapter extends BaseAdapter {
 
 
 
-		TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.tvStudyGroupTitle);
+		final TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.tvStudyGroupTitle);
 
-		ImageButton ibRemoveLesson = convertView.findViewById(R.id.ibRemoveLesson);
+		final ImageButton ibRemoveLesson = convertView.findViewById(R.id.ibRemoveLesson);
 		ibRemoveLesson.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				List<FlatDataStructure> eventFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getLessons(),FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
-				List<FlatDataStructure> studyGroupFilteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(eventFilteredList,currentItem.getStudyGroup().getTitle());
+				final List<FlatDataStructure> eventFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getLessons(),FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
+				final List<FlatDataStructure> studyGroupFilteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(eventFilteredList,currentItem.getStudyGroup().getTitle());
+
 				for(FlatDataStructure event : studyGroupFilteredList){
 					MyTimeTableView.removeLesson(event);
 				}

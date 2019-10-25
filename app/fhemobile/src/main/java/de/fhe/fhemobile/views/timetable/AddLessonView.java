@@ -3,7 +3,6 @@ package de.fhe.fhemobile.views.timetable;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ToggleButton;
@@ -27,21 +26,21 @@ import de.fhe.fhemobile.widgets.picker.base.OnItemChosenListener;
  */
 public class AddLessonView extends LinearLayout {
 
-    public AddLessonView(Context context, AttributeSet attrs) {
+    public AddLessonView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
     }
 
-    public AddLessonView(Context context) {
+    public AddLessonView(final Context context) {
         super(context);
         mContext = context;
     }
 
-    public void setViewListener(IViewListener _Listener) {
+    public void setViewListener(final IViewListener _Listener) {
         mViewListener = _Listener;
     }
 
-    public void initializeView(FragmentManager _Manager) {
+    public void initializeView(final FragmentManager _Manager) {
         mFragmentManager = _Manager;
 
         mStudyCoursePicker.setFragmentManager(mFragmentManager);
@@ -59,32 +58,32 @@ public class AddLessonView extends LinearLayout {
 //        mSearchButton.setOnClickListener(mSearchClickListener);
     }
 
-    public void setStudyCourseItems(List<StudyCourseVo> _Items) {
+    public void setStudyCourseItems(final List<StudyCourseVo> _Items) {
         mStudyCoursePicker.setItems(_Items);
         mStudyCoursePicker.toggleEnabled(true);
     }
 
-    public void setTermsItems(List<TermsVo> _Items) {
+    public void setTermsItems(final List<TermsVo> _Items) {
         mTermsPicker.setItems(_Items);
         mTermsPicker.toggleEnabled(true);
     }
 
-    public void setStudyGroupItems(List<StudyGroupVo> _Items) {
+    public void setStudyGroupItems(final List<StudyGroupVo> _Items) {
         mStudyGroupPicker.setItems(_Items);
         mStudyGroupPicker.toggleEnabled(true);
     }
 
-    public void toggleTermsPickerVisibility(boolean _Visible) {
+    public void toggleTermsPickerVisibility(final boolean _Visible) {
         mTermsPicker.setVisibility(_Visible ? VISIBLE : GONE);
     }
 
-    public void toggleGroupsPickerVisibility(boolean _Visible) {
+    public void toggleGroupsPickerVisibility(final boolean _Visible) {
         mStudyGroupPicker.setVisibility(_Visible ? VISIBLE : GONE);
     }
-    public void toggleLessonListVisibility(boolean _Visible){
+    public void toggleLessonListVisibility(final boolean _Visible){
         mLessonList.setVisibility(_Visible ? VISIBLE : GONE);
     }
-    public void setLessonListAdapter(TimeTableLessonAdapter adapter){
+    public void setLessonListAdapter(final TimeTableLessonAdapter adapter){
         mLessonList.setAdapter(adapter);
 
     }
@@ -97,7 +96,7 @@ public class AddLessonView extends LinearLayout {
         mStudyGroupPicker.reset(true);
     }
 
-    public void toggleButtonEnabled(boolean _Enabled) {
+    public void toggleButtonEnabled(final boolean _Enabled) {
     }
 
     @Override
@@ -115,7 +114,7 @@ public class AddLessonView extends LinearLayout {
     // Returns the chosen TermsId
     private OnItemChosenListener mCourseListener = new OnItemChosenListener() {
         @Override
-        public void onItemChosen(String _ItemId, int _ItemPos) {
+        public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
                 mViewListener.onTermChosen(_ItemId);
             }
@@ -125,7 +124,7 @@ public class AddLessonView extends LinearLayout {
     // Returns the GroupId
     private OnItemChosenListener mTermsListener = new OnItemChosenListener() {
         @Override
-        public void onItemChosen(String _ItemId, int _ItemPos) {
+        public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
                 mViewListener.onGroupChosen(_ItemId);
             }
@@ -135,7 +134,7 @@ public class AddLessonView extends LinearLayout {
     // Returns the TimeTableId
     private OnItemChosenListener mGroupsListener = new OnItemChosenListener() {
         @Override
-        public void onItemChosen(String _ItemId, int _ItemPos) {
+        public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
                 mViewListener.onTimeTableChosen(_ItemId);
             }
@@ -144,7 +143,7 @@ public class AddLessonView extends LinearLayout {
 
     private OnClickListener mSearchClickListener = new OnClickListener() {
         @Override
-        public void onClick(View v) {
+        public void onClick(final View v) {
             if (mViewListener != null) {
                 mViewListener.onSearchClicked();
             }
@@ -164,10 +163,10 @@ public class AddLessonView extends LinearLayout {
 
     private StudyCoursePicker mStudyCoursePicker;
     private TermsPicker       mTermsPicker;
-    private LinearLayout      mButtonLayout;
+    //not used? private LinearLayout      mButtonLayout;
     private ToggleButton      mToggleEditModus;
     private StudyGroupPicker  mStudyGroupPicker;
-    private Button            mSearchButton;
+    //not used? private Button            mSearchButton;
     private ListView          mLessonList;
 
 

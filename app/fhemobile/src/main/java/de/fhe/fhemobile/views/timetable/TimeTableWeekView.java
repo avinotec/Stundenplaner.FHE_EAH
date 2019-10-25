@@ -28,38 +28,39 @@ import de.fhe.fhemobile.widgets.headerList.TimeTableEventItem;
  */
 public class TimeTableWeekView extends LinearLayout {
 
-    public TimeTableWeekView(Context context, AttributeSet attrs) {
+    public TimeTableWeekView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
     }
 
-    public void initializeView(TimeTableWeekVo _Data) {
+    public void initializeView(final TimeTableWeekVo _Data) {
         mHeading.setText(Main.getSafeString(R.string.timetable_week) + " " + _Data.getWeekInYear());
         buildListEntries(_Data);
         calculateWeekRange(_Data);
 
-        HeaderListAdapter adapter = new HeaderListAdapter(mContext, mData);
+        final HeaderListAdapter adapter = new HeaderListAdapter(mContext, mData);
         mDateList.setAdapter(adapter);
     }
 
-    private void calculateWeekRange(TimeTableWeekVo _Data) {
-        Calendar calendar = Calendar.getInstance();
+    private void calculateWeekRange(final TimeTableWeekVo _Data) {
+
+        final Calendar calendar = Calendar.getInstance();
         calendar.clear();
         calendar.set(Calendar.WEEK_OF_YEAR, _Data.getWeekInYear());
         calendar.set(Calendar.YEAR, _Data.getYear());
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.", Locale.getDefault()); // PST`
-        Date startDate = calendar.getTime();
-        String startDateInStr = formatter.format(startDate);
+        final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.", Locale.getDefault()); // PST`
+        final Date startDate = calendar.getTime();
+        final String startDateInStr = formatter.format(startDate);
 
         calendar.add(Calendar.DATE, 4);
-        Date enddate = calendar.getTime();
-        String endDaString = formatter.format(enddate);
+        final Date enddate = calendar.getTime();
+        final String endDaString = formatter.format(enddate);
 
         mWeekRange.setText(startDateInStr + " - " + endDaString);
     }
 
-    private void buildListEntries(TimeTableWeekVo _Data) {
+    private void buildListEntries(final TimeTableWeekVo _Data) {
         mData = new ArrayList<>();
 
         for (TimeTableDayVo dayVo : _Data.getDays()) {

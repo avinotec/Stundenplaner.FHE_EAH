@@ -9,6 +9,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.viewpagerindicator.CirclePageIndicator;
 
+import org.junit.Assert;
+
 import java.util.ArrayList;
 
 import de.fhe.fhemobile.R;
@@ -24,22 +26,26 @@ public class TimeTableEventsView extends LinearLayout {
 
     }
 
-    public TimeTableEventsView(Context context, AttributeSet attrs) {
+    public TimeTableEventsView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
     }
 
-    public void setViewListener(IViewListener _Listener) {
+    public void setViewListener(final IViewListener _Listener) {
         mListener = _Listener;
     }
 
-    public void initializeView(FragmentManager _Manager) {
+    public void initializeView(final FragmentManager _Manager) {
         mFragmentManager = _Manager;
     }
 
-    public void setPagerItems(ArrayList<TimeTableWeekVo> _Items) {
+    public void setPagerItems(final ArrayList<TimeTableWeekVo> _Items) {
+
         mAdapter = new TimeTableWeekPagerAdapter(mFragmentManager, _Items);
+        Assert.assertTrue( mAdapter != null );
         mPager.setAdapter(mAdapter);
+        Assert.assertTrue( mPager != null );
+        Assert.assertTrue( mPageIndicator != null );
 
         mPageIndicator.setViewPager(mPager);
     }

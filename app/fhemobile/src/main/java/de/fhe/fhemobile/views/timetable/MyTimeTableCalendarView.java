@@ -20,17 +20,17 @@ import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableFragment;
  */
 public class MyTimeTableCalendarView extends LinearLayout {
 
-    public MyTimeTableCalendarView(Context context, AttributeSet attrs) {
+    public MyTimeTableCalendarView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
     }
 
-    public MyTimeTableCalendarView(Context context) {
+    public MyTimeTableCalendarView(final Context context) {
         super(context);
         mContext = context;
     }
 
-    public void initializeView(FragmentManager _Manager) {
+    public void initializeView(final FragmentManager _Manager) {
         mFragmentManager = _Manager;
 
     }
@@ -44,7 +44,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
 
         mEditButton.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 FragmentTransaction transaction= mFragmentManager.beginTransaction();
                 transaction.replace(R.id.container,new MyTimeTableFragment(),MyTimeTableFragment.TAG)
                         .addToBackStack(MyTimeTableFragment.TAG)
@@ -58,20 +58,17 @@ public class MyTimeTableCalendarView extends LinearLayout {
     }
     private void createAddDialog(){
 
-        FragmentManager fm = mFragmentManager;
+        final FragmentManager fm = mFragmentManager;
         MyTimeTableDialogFragment myTimeTableDialogFragment = MyTimeTableDialogFragment.newInstance();
         myTimeTableDialogFragment.show(fm, "fragment_edit_name");
 
     }
 
-    private static Context           mContext;
+    private Context           mContext;
     private FragmentManager   mFragmentManager;
-
 
     private Button mEditButton;
     private ListView mCalendarList;
 
-    private static CalendarAdapter calendarAdapter;
-
-
+    private CalendarAdapter calendarAdapter;
 }

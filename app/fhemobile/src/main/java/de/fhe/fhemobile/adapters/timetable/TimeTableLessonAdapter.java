@@ -22,8 +22,8 @@ import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 public class TimeTableLessonAdapter extends BaseAdapter {
 	private static final String TAG = "TimeTableLessonAdapter";
 
-	private String lessonTitle="";
-	private String studygroupTitle="";
+	//private String lessonTitle="";
+	//private String studygroupTitle="";
 
 	private Context context;
 	public TimeTableLessonAdapter(Context context) {
@@ -37,29 +37,30 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Object getItem(int position) {
+	public Object getItem(final int position) {
 		return MyTimeTableView.getCompleteLessons().get(position);
 	}
 
 	@Override
-	public long getItemId(int position) {
+	public long getItemId(final int position) {
 		return position;
 	}
 
 	@Override
-	public View getView(int position, View convertView, final ViewGroup parent) {
+	public View getView(final int position, View convertView, final ViewGroup parent) {
 		if (convertView == null) {
 			convertView = LayoutInflater.from(context).
 					inflate(R.layout.row_layout_events, parent, false);
 		}
 		final FlatDataStructure currentItem = MyTimeTableView.getCompleteLessons().get(position);
-		RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.singleRowLayout);
+		final RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.singleRowLayout);
+
 		convertView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
-				List<FlatDataStructure> lessonTitleFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getCompleteLessons(),FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
-				List <FlatDataStructure> filteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(lessonTitleFilteredList,currentItem.getStudyGroup().getTitle());
+				final List<FlatDataStructure> lessonTitleFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getCompleteLessons(),FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
+				final List <FlatDataStructure> filteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(lessonTitleFilteredList,currentItem.getStudyGroup().getTitle());
 				for (FlatDataStructure event:filteredList){
 					event.setVisible(!event.isVisible());
 				}
@@ -78,7 +79,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 			convertView.setVisibility(View.GONE);
 		}
 
-		TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvLessonTitle);
+		final TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvLessonTitle);
 
 		if(position==0){
 			lessonTitle.setText(FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
@@ -100,14 +101,15 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 
 
 
-		TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.tvStudyGroupTitle);
-		ImageButton btnAddLesson = (ImageButton)convertView.findViewById(R.id.ibAddLesson);
+		final TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.tvStudyGroupTitle);
+		final ImageButton btnAddLesson = (ImageButton)convertView.findViewById(R.id.ibAddLesson);
 		btnAddLesson.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v) {
+			public void onClick(final View v) {
 
-				List<FlatDataStructure> eventFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getCompleteLessons(),FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
-				List<FlatDataStructure> studyGroupFilteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(eventFilteredList,currentItem.getStudyGroup().getTitle());
+				final List<FlatDataStructure> eventFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getCompleteLessons(),FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
+				final List<FlatDataStructure> studyGroupFilteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(eventFilteredList,currentItem.getStudyGroup().getTitle());
+
 				for(FlatDataStructure event : studyGroupFilteredList){
 					MyTimeTableView.addLesson(event);
 				}
@@ -128,7 +130,9 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 
 		}
 
-		else if(!FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()).equals(FlatDataStructure.cutEventTitle(MyTimeTableView.getCompleteLessons().get(position-1).getEvent().getTitle()))){
+		else if(!FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()).equals(
+					FlatDataStructure.cutEventTitle(MyTimeTableView.getCompleteLessons().get(position-1).getEvent().getTitle())))
+		{
 			studyGroupTitle.setText(currentItem.getStudyGroup().getTitle());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			btnAddLesson.setVisibility(View.VISIBLE);
@@ -136,7 +140,9 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 			convertView.setVisibility(View.VISIBLE);
 
 		}
-		else if(!currentItem.getStudyGroup().getTitle().equals(MyTimeTableView.getCompleteLessons().get(position-1).getStudyGroup().getTitle())){
+		else if(!currentItem.getStudyGroup().getTitle().equals(
+				MyTimeTableView.getCompleteLessons().get(position-1).getStudyGroup().getTitle()))
+		{
 			studyGroupTitle.setText(currentItem.getStudyGroup().getTitle());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			btnAddLesson.setVisibility(View.VISIBLE);
@@ -148,19 +154,13 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 			btnAddLesson.setVisibility(View.GONE);
 		}
 
-		TextView tvTime = (TextView) convertView.findViewById(R.id.tvLessonTime);
-		Date df = new java.util.Date(currentItem.getEvent().getStartDate());
-		String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
+		final TextView tvTime = (TextView) convertView.findViewById(R.id.tvLessonTime);
+		final Date df = new java.util.Date(currentItem.getEvent().getStartDate());
+		final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
 		tvTime.setText(date + " " + currentItem.getEvent().getStartTime() + "-" + currentItem.getEvent().getEndTime());
 
-		TextView tvRoom = (TextView)convertView.findViewById(R.id.tvRoom);
+		final TextView tvRoom = (TextView)convertView.findViewById(R.id.tvRoom);
 		tvRoom.setText(currentItem.getEvent().getRoom());
-
-
-
-
-
-
 
 		return convertView;
 	}
