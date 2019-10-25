@@ -1,0 +1,180 @@
+# To enable ProGuard in your project, edit project.properties
+# to define the proguard.config property as described in that file.
+#
+# Add project specific ProGuard rules here.
+# By default, the flags in this file are appended to flags specified
+# in ${sdk.dir}/tools/proguard/proguard-android.txt
+# You can edit the include path and order by changing the ProGuard
+# include property in project.properties.
+#
+# For more details, see
+#   http://developer.android.com/guide/developing/tools/proguard.html
+
+
+# Add any project specific remove options here:
+#-assumenosideeffects class junit.framework.Assert { *; }
+#-assumenosideeffects class org.junit.Assert { *; }
+#-assumenosideeffects class android.util.Log { *; }
+-assumenosideeffects class android.util.Log {
+    public static boolean isLoggable(java.lang.String, int);
+    public static int v(...);
+    public static int i(...);
+    public static int w(...);
+    public static int d(...);
+    public static int e(...);
+}
+#avinotec
+-assumenosideeffects class videochat.util.Log { public static void toFile(...); }
+
+
+
+# Add any project specific keep options here:
+
+# For Serializable Objects
+# https://www.guardsquare.com/en/proguard/manual/examples#serializable
+# this is needed for Update of the Play Store
+-keepnames class * implements java.io.Serializable
+-keepclassmembers class * implements java.io.Serializable { *; }
+
+# If your project uses WebView with JS, uncomment the following
+# and specify the fully qualified class name to the JavaScript interface
+# class:
+#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+#   public *;
+#}
+
+
+# avinotec specific --------------------------------------------------------------------
+
+-dontwarn javax.annotation.**
+-dontwarn org.conscrypt.**
+
+# do not warn on this stupid fucking library of open source developers
+#-dontwarn org.apache.http.**
+
+# not needed
+#-keepattributes SourceFile,LineNumberTable
+#-keep class com.parse.*{ *; }
+
+# Smack specific configuration ----------------------------------------------------------------------------------
+# If you use ProGuard, you have to configure it so that no important
+# Smack classes are optimized away:
+#
+#-keep class org.jivesoftware.smack.** { *; }
+#-keep class org.jivesoftware.smackx.** { *; }
+-keep class org.jivesoftware.smack.XMPPConnection
+-keep class org.jivesoftware.smack.XMPPException
+-keep class org.jivesoftware.smack.packet.Message
+-keep class org.jivesoftware.smack.packet.Message.Type
+
+# Smack specific configuration
+-keep class de.measite.smack.AndroidDebugger { *; }
+-keep class * implements org.jivesoftware.smack.initializer.SmackInitializer
+-keep class * implements org.jivesoftware.smack.provider.PacketExtensionProvider
+-keep class * extends org.jivesoftware.smack.provider.IQProvider
+-keep class * extends org.jivesoftware.smack.packet.Packet
+#-keep class org.jivesoftware.smack.CustomSmackConfiguration
+#-keep class org.jivesoftware.smack.ReconnectionManager
+####-keep class org.jivesoftware.smack.** { *; }
+####-keep class org.jivesoftware.smackx.** { *; }
+# need for Smack to work in release Version
+# (https://stackoverflow.com/questions/31157616/smack-for-android-fails-when-using-proguard)
+#Java 8 or higher
+-keepattributes Signature
+#Java 5 or higher
+-keepattributes InnerClasses
+-keepattributes EnclosingMethod
+-keepclasseswithmembers class * extends org.jivesoftware.smack.sasl.SASLMechanism {
+    public <init>(org.jivesoftware.smack.SASLAuthentication);
+}
+
+#Picasso ----------------------------------------------------------------------------------
+# do not warn on Picasso, async loading image library
+-dontwarn okio.**
+-dontwarn com.squareup.okhttp.**
+-dontwarn com.squareup.okhttp3.**
+-dontwarn okhttp3.internal.**
+-keep class com.squareup.okhttp3.** { *; }
+-keep interface com.squareup.okhttp3.* { *; }
+
+# A resource is loaded with a relative path so the package of this class must be preserved.
+-keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
+
+
+-dontwarn javax.annotation.Nullable
+-dontwarn javax.annotation.ParametersAreNonnullByDefault
+
+# for xmlpull
+-dontwarn org.xmlpull.v1.**
+-dontnote org.xmlpull.v1.**
+-keep class org.xmlpull.** { *; }
+
+#-libraryjars /libs/Parse-1.5.1.jar
+#-libraryjars /libs/crashlytics.jar
+#-libraryjars /libs/picasso-2.3.2.jar
+#-dontwarn com.parse.**
+#-dontwarn com.squareup.picasso.**
+#-keepclasseswithmembernames class * {
+#    native <methods>;
+#}
+
+-android
+#-dontshrink
+#-dontoptimize
+#-dontusemixedcaseclassnames
+#-dontskipnonpubliclibraryclasses
+#-dontpreverify
+-repackageclasses ''
+-allowaccessmodification
+
+-optimizationpasses 4
+#-optimizations !code/simplification/arithmetic
+#-keepattributes *Annotation*
+#new dont warn for releaseVersion
+-dontwarn java.lang.management.**
+-dontwarn android.test.**
+
+-verbose
+#-addconfigurationdebugging
+#-overloadaggressively		not for DVK 1.9/1.5
+-printusage
+
+
+#### from Android SDK
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+
+-keep public class * extends android.view.View {
+      public <init>(android.content.Context);
+      public <init>(android.content.Context, android.util.AttributeSet);
+      public <init>(android.content.Context, android.util.AttributeSet, int);
+      public void set*(...);
+}
+
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet);
+}
+
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+
+-keepclassmembers class * extends android.content.Context {
+    public void *(android.view.View);
+    public void *(android.view.MenuItem);
+}
+
+-keepclassmembers class * implements android.os.Parcelable {
+    static ** CREATOR;
+}
+
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
+}
