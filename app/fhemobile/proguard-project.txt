@@ -56,50 +56,6 @@
 #-keepattributes SourceFile,LineNumberTable
 #-keep class com.parse.*{ *; }
 
-# Smack specific configuration ----------------------------------------------------------------------------------
-# If you use ProGuard, you have to configure it so that no important
-# Smack classes are optimized away:
-#
-#-keep class org.jivesoftware.smack.** { *; }
-#-keep class org.jivesoftware.smackx.** { *; }
--keep class org.jivesoftware.smack.XMPPConnection
--keep class org.jivesoftware.smack.XMPPException
--keep class org.jivesoftware.smack.packet.Message
--keep class org.jivesoftware.smack.packet.Message.Type
-
-# Smack specific configuration
--keep class de.measite.smack.AndroidDebugger { *; }
--keep class * implements org.jivesoftware.smack.initializer.SmackInitializer
--keep class * implements org.jivesoftware.smack.provider.PacketExtensionProvider
--keep class * extends org.jivesoftware.smack.provider.IQProvider
--keep class * extends org.jivesoftware.smack.packet.Packet
-#-keep class org.jivesoftware.smack.CustomSmackConfiguration
-#-keep class org.jivesoftware.smack.ReconnectionManager
-####-keep class org.jivesoftware.smack.** { *; }
-####-keep class org.jivesoftware.smackx.** { *; }
-# need for Smack to work in release Version
-# (https://stackoverflow.com/questions/31157616/smack-for-android-fails-when-using-proguard)
-#Java 8 or higher
--keepattributes Signature
-#Java 5 or higher
--keepattributes InnerClasses
--keepattributes EnclosingMethod
--keepclasseswithmembers class * extends org.jivesoftware.smack.sasl.SASLMechanism {
-    public <init>(org.jivesoftware.smack.SASLAuthentication);
-}
-
-#Picasso ----------------------------------------------------------------------------------
-# do not warn on Picasso, async loading image library
--dontwarn okio.**
--dontwarn com.squareup.okhttp.**
--dontwarn com.squareup.okhttp3.**
--dontwarn okhttp3.internal.**
--keep class com.squareup.okhttp3.** { *; }
--keep interface com.squareup.okhttp3.* { *; }
-
-# A resource is loaded with a relative path so the package of this class must be preserved.
--keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
-
 
 -dontwarn javax.annotation.Nullable
 -dontwarn javax.annotation.ParametersAreNonnullByDefault
@@ -143,9 +99,6 @@
 #### from Android SDK
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Application
--keep public class * extends android.app.Service
--keep public class * extends android.content.BroadcastReceiver
--keep public class * extends android.content.ContentProvider
 
 -keep public class * extends android.view.View {
       public <init>(android.content.Context);
@@ -171,10 +124,3 @@
     static ** CREATOR;
 }
 
--keepclassmembers class **.R$* {
-    public static <fields>;
-}
-
--keepclassmembers class * {
-    @android.webkit.JavascriptInterface <methods>;
-}
