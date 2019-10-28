@@ -1,13 +1,14 @@
 package de.fhe.fhemobile.fragments.semesterdata;
 
 import android.os.Bundle;
-import androidx.appcompat.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.appcompat.app.ActionBar;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.events.Event;
@@ -73,11 +74,12 @@ public class SemesterDataFragment extends FeatureFragment {
     public boolean onOptionsItemSelected(MenuItem _item) {
         switch (_item.getItemId()) {
             case R.id.action_settings:
-                if (mModel.getChosenSemester() < mModel.getSemesterData().length - 1) {
-                    mModel.setChosenSemester(mModel.getChosenSemester() + 1);
-                }
-                else {
-                    mModel.setChosenSemester(0);
+                if(null!=mModel&&null!=mModel.getSemesterData()) {
+                    if (mModel.getChosenSemester() < mModel.getSemesterData().length - 1) {
+                        mModel.setChosenSemester(mModel.getChosenSemester() + 1);
+                    } else {
+                        mModel.setChosenSemester(0);
+                    }
                 }
 
                 return true;
