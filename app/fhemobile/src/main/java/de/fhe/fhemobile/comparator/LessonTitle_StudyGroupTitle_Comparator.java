@@ -1,7 +1,5 @@
 package de.fhe.fhemobile.comparator;
 
-import android.util.Log;
-
 import org.junit.Assert;
 
 import java.util.Comparator;
@@ -56,7 +54,7 @@ public class LessonTitle_StudyGroupTitle_Comparator implements Comparator<FlatDa
 		//und sind beide gleich, wird 0 zurückgegeben.
 		//Bei unterschiedlichen Titeln lass einfach sortieren, bei gleichem Titel sortiere noch nach StudyGroupTitle
 		final int courseCompareResult = lessonTitle1.compareTo(lessonTitle2);
-		Log.d(TAG, "compare Title1: "+lessonTitle1+" Title2:"+lessonTitle2 +" result: " +courseCompareResult);
+//		Log.d(TAG, "compare Title1: "+lessonTitle1+" Title2:"+lessonTitle2 +" result: " +courseCompareResult);
 		if (courseCompareResult > 0) {
 			return GREATER;
 		} else if(courseCompareResult < 0) {
@@ -64,11 +62,11 @@ public class LessonTitle_StudyGroupTitle_Comparator implements Comparator<FlatDa
 		}
 		else{
 			final int studyGroupCompareResult = studyGroupID1.compareTo(studyGroupID2);
-			Log.d(TAG, "compare GroupID1: "+studyGroupID1+" GroupID2"+studyGroupID2+" result: " +studyGroupCompareResult);
+//			Log.d(TAG, "compare GroupID1: "+studyGroupID1+" GroupID2"+studyGroupID2+" result: " +studyGroupCompareResult);
 
-			if(studyGroupCompareResult > GREATER){
+			if(studyGroupCompareResult > 0){
 				return GREATER;
-			}else if(studyGroupCompareResult < LESSER){
+			}else if(studyGroupCompareResult < 0){
 				return LESSER;
 			}else {
 				return EQUAL;

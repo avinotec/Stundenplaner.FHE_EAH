@@ -2,12 +2,13 @@ package de.fhe.fhemobile.widgets.picker.base;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import androidx.fragment.app.FragmentManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,11 +145,15 @@ public abstract class IdPicker extends LinearLayout{
         public void onItemChosen(String _ItemId, int _ItemPos) {
             mContentView.setText(getName(_ItemPos));
 
+
             if (mListener != null) {
                 mListener.onItemChosen(_ItemId, _ItemPos);
             }
         }
     };
+    public void setDisplayValue(String text){
+        mContentView.setText(text);
+    }
 
     private Context              mContext;
     private FragmentManager      mFragmentManager;
