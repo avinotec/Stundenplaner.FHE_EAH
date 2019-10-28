@@ -46,8 +46,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 4
-        versionName '0.4'
+        versionCode 5
+        versionName '0.5'
 
         multiDexEnabled = true
 
@@ -127,12 +127,13 @@ android {
         release {
             // Enables code shrinking, obfuscation, and optimization for only
             // your project's release build type.
-            //minifyEnabled false
-            minifyEnabled true
-
+            minifyEnabled false
+            //TODO minifyEnabled true
             // Enables resource shrinking, which is performed by the
             // Android Gradle plugin.
-            shrinkResources true
+            //TODO shrinkResources true
+            shrinkResources false
+    
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt', 'proguard-project.txt'
             debuggable false
             jniDebuggable false
