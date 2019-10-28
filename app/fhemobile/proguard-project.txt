@@ -15,16 +15,16 @@
 #-assumenosideeffects class junit.framework.Assert { *; }
 #-assumenosideeffects class org.junit.Assert { *; }
 #-assumenosideeffects class android.util.Log { *; }
--assumenosideeffects class android.util.Log {
-    public static boolean isLoggable(java.lang.String, int);
-    public static int v(...);
-    public static int i(...);
-    public static int w(...);
-    public static int d(...);
-    public static int e(...);
-}
+##-assumenosideeffects class android.util.Log {
+##    public static boolean isLoggable(java.lang.String, int);
+##    public static int v(...);
+##    public static int i(...);
+##    public static int w(...);
+##    public static int d(...);
+##    public static int e(...);
+##}
 #avinotec
--assumenosideeffects class videochat.util.Log { public static void toFile(...); }
+##-assumenosideeffects class videochat.util.Log { public static void toFile(...); }
 
 
 
@@ -56,6 +56,30 @@
 #-keepattributes SourceFile,LineNumberTable
 #-keep class com.parse.*{ *; }
 
+## Smack, Retrofit
+#Java 8 or higher
+-keepattributes Signature
+#Java 5 or higher
+-keepattributes InnerClasses
+-keepattributes EnclosingMethod
+# Retrofit does reflection on generic parameters. InnerClasses is required to use Signature and
+# EnclosingMethod is required to use InnerClasses.
+#-keepattributes Signature, InnerClasses, EnclosingMethod
+
+#Picasso ----------------------------------------------------------------------------------
+# do not warn on Picasso, async loading image library
+-dontwarn okio.**
+-dontwarn com.squareup.okhttp.**
+-dontwarn com.squareup.okhttp3.**
+-dontwarn okhttp3.internal.**
+-keep class com.squareup.okhttp3.** { *; }
+-keep interface com.squareup.okhttp3.* { *; }
+-keep class okhttp3.OkHttpClient.* { *; }
+
+
+# A resource is loaded with a relative path so the package of this class must be preserved.
+-keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
+
 
 -dontwarn javax.annotation.Nullable
 -dontwarn javax.annotation.ParametersAreNonnullByDefault
@@ -79,7 +103,7 @@
 #-dontoptimize
 #-dontusemixedcaseclassnames
 #-dontskipnonpubliclibraryclasses
-#-dontpreverify
+-dontpreverify
 -repackageclasses ''
 -allowaccessmodification
 
@@ -99,6 +123,9 @@
 #### from Android SDK
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
 
 -keep public class * extends android.view.View {
       public <init>(android.content.Context);
@@ -124,3 +151,50 @@
     static ** CREATOR;
 }
 
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
+}
+
+############### retrofit
+#
+# Retrofit does reflection on generic parameters. InnerClasses is required to use Signature and
+# EnclosingMethod is required to use InnerClasses.
+#siehe oben -keepattributes Signature, InnerClasses, EnclosingMethod
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+
+# Retrofit does reflection on method and parameter annotations.
+-keepattributes RuntimeVisibleAnnotations, RuntimeVisibleParameterAnnotations
+
+# Retain service method parameters when optimizing.
+-keepclassmembers,allowshrinking,allowobfuscation interface * {
+    @retrofit2.http.* <methods>;
+}
+
+# Ignore annotation used for build tooling.
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+
+# Ignore JSR 305 annotations for embedding nullability information.
+-dontwarn javax.annotation.**
+
+# Guarded by a NoClassDefFoundError try/catch and only used when on the classpath.
+-dontwarn kotlin.Unit
+
+# Top-level functions that can only be used by Kotlin.
+-dontwarn retrofit2.KotlinExtensions
+-dontwarn retrofit2.KotlinExtensions$*
+# Top-level functions that can only be used by Kotlin.
+-dontwarn retrofit2.-KotlinExtensions
+
+# With R8 full mode, it sees no subtypes of Retrofit interfaces since they are created with a Proxy
+# and replaces all potential values with null. Explicitly keeping the interfaces prevents this.
+-if interface * { @retrofit2.http.* <methods>; }
+-keep,allowobfuscation interface <1>
+
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
