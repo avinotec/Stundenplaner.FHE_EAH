@@ -131,9 +131,27 @@ public class NetworkHandler {
 			@Override
 			public void onResponse(Call<NewsItemResponse> call, Response<NewsItemResponse> response) {
 				// MS: Bei den News sind die news/0 kaputt
-				if ( response.body() != null ) {
-					final NewsItemVo[] newsItemVos = response.body().getChannel().getNewsItems();
+				if ( response.code() == 200 ) {
+					if (response.body() != null) {
+						final NewsItemVo[] newsItemVos = response.body().getChannel().getNewsItems();
+						NewsModel.getInstance().setNewsItems(newsItemVos);
+					}
+				}
+				else /* if ( response.code() == 204 ) */
+				{
+					// no content, bspw. wegen einer Weiterleitung
+					// TODO: Leere Meldung erzeugen
+/*					NewsItemVo aNoNewsItemErrorObj = new NewsItemVo();
+					aNoNewsItemErrorObj.setTitle("System Error");
+					aNoNewsItemErrorObj.setLink("");
+					aNoNewsItemErrorObj.setDescription("An internal error in this news system showed up. Please report.");
+					aNoNewsItemErrorObj.setAuthor("The News System");
+
+					NewsItemVo[] mNewsItems = new NewsItemVo[1];
+					mNewsItems[0] = aNoNewsItemErrorObj;
+					final NewsItemVo[] newsItemVos = mNewsItems;
 					NewsModel.getInstance().setNewsItems(newsItemVos);
+*/
 				}
 			}
 
