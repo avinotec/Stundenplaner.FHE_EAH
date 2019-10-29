@@ -13,13 +13,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.RuntimeExecutionException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
@@ -66,6 +66,10 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 } catch (final NullPointerException npe )
                 {
                     Log.d(TAG, "onComplete: instance missing");
+                    return;
+                } catch (final RuntimeExecutionException ree )
+                {
+                    Log.e(TAG, "Error bei der Registrierung am FirebaseServer: ",ree);
                     return;
                 }
                 Log.d(TAG, "onComplete: Token: "+token);

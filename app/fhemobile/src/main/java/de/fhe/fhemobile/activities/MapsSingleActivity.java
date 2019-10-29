@@ -2,13 +2,14 @@ package de.fhe.fhemobile.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.maps.MapsSingleFragment;
 import de.fhe.fhemobile.models.maps.MapsModel;
 
 public class MapsSingleActivity extends BaseActivity {
-
+    private static final String TAG = "MapsSingleActivity";
     public static final String STATE_MAPS_ID = "stateMapsId";
 
     @Override
@@ -26,12 +27,16 @@ public class MapsSingleActivity extends BaseActivity {
             mMapId = intent.getIntExtra(EXTRA_MAP_ID, -1);
         }
 
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, MapsSingleFragment.newInstance(mMapId))
-                .commit();
+        try {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, MapsSingleFragment.newInstance(mMapId))
+                    .commit();
 
-        getSupportActionBar().setTitle( MapsModel.getInstance().getMaps().get(mMapId).getName() );
-
+            getSupportActionBar().setTitle(MapsModel.getInstance().getMaps().get(mMapId).getName());
+        }
+        catch (Exception e){
+            Log.e(TAG, "Fehler beim Aufrufen des Fragments: ",e );
+        }
     }
 
     @Override
