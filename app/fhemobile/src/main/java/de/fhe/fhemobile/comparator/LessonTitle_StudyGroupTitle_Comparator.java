@@ -1,7 +1,5 @@
 package de.fhe.fhemobile.comparator;
 
-import android.util.Log;
-
 import org.junit.Assert;
 
 import java.util.Comparator;
@@ -44,31 +42,31 @@ public class LessonTitle_StudyGroupTitle_Comparator implements Comparator<FlatDa
 		Assert.assertTrue( lessonTitle1.length() > 3 );
 		Assert.assertTrue( lessonTitle2.length() > 3 );
 
-		final String studyGroupID1 = o1.getStudyGroup().getTimeTableId();
-		final String studyGroupID2 = o2.getStudyGroup().getTimeTableId();
-		Assert.assertTrue( studyGroupID1 != null );
-		Assert.assertTrue( studyGroupID2 != null );
-		Assert.assertTrue( studyGroupID1.length() > 3 );
-		Assert.assertTrue( studyGroupID2.length() > 3 );
+		final String studyGroupTitle1 = o1.getStudyGroup().getTitle();
+		final String studyGroupTitle2 = o2.getStudyGroup().getTitle();
+		Assert.assertTrue( studyGroupTitle1 != null );
+		Assert.assertTrue( studyGroupTitle2 != null );
+		Assert.assertTrue( studyGroupTitle1.length() > 3 );
+		Assert.assertTrue( studyGroupTitle2.length() > 3 );
 
 		//Vergleiche den CourseTitel vom ersten element mit dem CourseTitel des zweiten Elements.
 		//Ist der erste Titel "größer" wird 1 zurückgegeben, ist der zweite Titel größer wird -1 zurückgegeben
 		//und sind beide gleich, wird 0 zurückgegeben.
 		//Bei unterschiedlichen Titeln lass einfach sortieren, bei gleichem Titel sortiere noch nach StudyGroupTitle
 		final int courseCompareResult = lessonTitle1.compareTo(lessonTitle2);
-		Log.d(TAG, "compare Title1: "+lessonTitle1+" Title2:"+lessonTitle2 +" result: " +courseCompareResult);
+//		Log.d(TAG, "compare Title1: "+lessonTitle1+" Title2:"+lessonTitle2 +" result: " +courseCompareResult);
 		if (courseCompareResult > 0) {
 			return GREATER;
 		} else if(courseCompareResult < 0) {
 			return LESSER;
 		}
 		else{
-			final int studyGroupCompareResult = studyGroupID1.compareTo(studyGroupID2);
-			Log.d(TAG, "compare GroupID1: "+studyGroupID1+" GroupID2"+studyGroupID2+" result: " +studyGroupCompareResult);
+			final int studyGroupCompareResult = studyGroupTitle1.compareTo(studyGroupTitle2);
+//			Log.d(TAG, "compare GroupID1: "+studyGroupTitle1+" GroupID2"+studyGroupTitle2+" result: " +studyGroupCompareResult);
 
-			if(studyGroupCompareResult > GREATER){
+			if(studyGroupCompareResult > 0){
 				return GREATER;
-			}else if(studyGroupCompareResult < LESSER){
+			}else if(studyGroupCompareResult < 0){
 				return LESSER;
 			}else {
 				return EQUAL;
