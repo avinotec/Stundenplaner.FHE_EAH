@@ -91,6 +91,13 @@ public class AddLessonView extends LinearLayout {
     public void resetTermsPicker() {
         mTermsPicker.reset(true);
     }
+    public void setmTermsPickerEnabled(boolean enabled){
+
+        mTermsPicker.toggleEnabled(enabled);
+    }
+    public void setmGroupPickerEnabled(boolean enabled){
+        mStudyGroupPicker.toggleEnabled(enabled);
+    }
 
     public void resetGroupsPicker() {
         mStudyGroupPicker.reset(true);
@@ -155,6 +162,13 @@ public class AddLessonView extends LinearLayout {
         public void onGroupChosen(String _GroupId);
         public void onTimeTableChosen(String _TimeTableId);
         public void onSearchClicked();
+    }
+
+    public void setSelectedTermText(String text){
+        mTermsPicker.setDisplayValue(text);
+    }
+    public void setSelectedGroupText(String text){
+        mStudyCoursePicker.setDisplayValue(text);
     }
 
     private Context           mContext;

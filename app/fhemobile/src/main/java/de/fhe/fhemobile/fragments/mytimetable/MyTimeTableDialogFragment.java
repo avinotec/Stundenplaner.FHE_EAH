@@ -2,6 +2,8 @@ package de.fhe.fhemobile.fragments.mytimetable;
 
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +13,10 @@ import android.view.ViewGroup;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -94,7 +99,12 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         // Inflate the layout for this fragment
         mView = (AddLessonView) inflater.inflate(R.layout.add_time_table, container, false);
         mView.setViewListener(mViewListener);
+
         mView.initializeView(getChildFragmentManager());
+        sharedPreferences =this.getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        initSelectionSite();
 
         return mView;
     }
@@ -109,12 +119,13 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         NetworkHandler.getInstance().fetchTimeTableEvents(_TimeTableId,callback);
 
     }
-
-//weeklist ist der Datensatz, der beim Request erhalten wird (alle events eines Sets)
-//dataList ist die Liste, die am Ende alle Daten der verschiedenen Requests beinhaltet.
-//data ist der neue Datensatz, der in die Liste eingepflegt werden soll.
-
-    private List<FlatDataStructure> getAllEvents(List<TimeTableWeekVo> weekList,List<FlatDataStructure> dataList ,FlatDataStructure data) {
+    /**
+     * @param weekList ist der Datensatz, der beim Request erhalten wird (alle events eines Sets)
+     * @param dataList ist die Liste, die am Ende alle Daten der verschiedenen Requests beinhaltet.
+     * @param data ist der neue Datensatz, der in die Liste eingepflegt werden soll.
+     * @return Die Liste mit dem ergänzten Element
+     **/
+    private static List<FlatDataStructure> getAllEvents(final List<TimeTableWeekVo> weekList,final List<FlatDataStructure> dataList ,final FlatDataStructure data) {
         if (weekList != null) {
             try {
 
@@ -145,13 +156,51 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
 
 
+    //Setzt die beim letzten mal ausgewählten Werte und die letzen Suchergebnisse.
+    public void initSelectionSite(){
+        Gson gson= new Gson();
+        if(sharedPreferences.contains("_ChosenCourse")){
+            String chosenCourseJson=sharedPreferences.getString("_ChosenCourse","");
+            StudyCourseVo chosenCourse = gson.fromJson(chosenCourseJson,StudyCourseVo.class);
+            mChosenCourse=chosenCourse;
+            mView.setTermsItems(mChosenCourse.getTerms());
+            mView.setSelectedGroupText(chosenCourse.getTitle());
+        }
+
+        if(sharedPreferences.contains("_ChosenTerm")) {
+            String chosenTermJson = sharedPreferences.getString("_ChosenTerm", "");
+            TermsVo chosenTerm = gson.fromJson(chosenTermJson, TermsVo.class);
+            mChosenTerm = chosenTerm;
+            mView.setSelectedTermText(chosenTerm.getTitle());
+            mView.toggleTermsPickerVisibility(true);
+            mView.setmGroupPickerEnabled(true);
+            mView.setmTermsPickerEnabled(true);
+
+
+            if (sharedPreferences.contains("_Result")) {
+                String resultJson = sharedPreferences.getString("_Result", "");
+                FlatDataStructure[] result = gson.fromJson(resultJson, FlatDataStructure[].class);
+                MyTimeTableView.setCompleteLessons(new ArrayList<FlatDataStructure>(Arrays.asList(result)));
+                final TimeTableLessonAdapter timeTableLessonAdapter = new TimeTableLessonAdapter(MyTimeTableDialogFragment.this.getContext());
+                mView.setLessonListAdapter(timeTableLessonAdapter);
+                mView.toggleLessonListVisibility(true);
+                timeTableLessonAdapter.notifyDataSetChanged();
+            }
+        }
+
+    }
+
     private AddLessonView.IViewListener mViewListener = new AddLessonView.IViewListener() {
+
+
         @Override
         public void onTermChosen(String _TermId) {
+
             mView.toggleGroupsPickerVisibility(false);
-            mView.toggleButtonEnabled(false);
             mView.resetTermsPicker();
             mView.resetGroupsPicker();
+            mView.toggleLessonListVisibility(false);
+            MyTimeTableView.getCompleteLessons().clear();
 
             mChosenCourse = null;
             mChosenTerm   = null;
@@ -161,10 +210,16 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             for (StudyCourseVo courseVo : mResponse.getStudyCourses()) {
                 if (courseVo.getId() != null && courseVo.getId().equals(_TermId)) {
                     mChosenCourse = courseVo;
+                    Gson gson = new Gson();
+                    String chosenCourseJson=gson.toJson(courseVo);
+
+
 
                     // Check if course has any terms available
                     if (courseVo.getTerms() != null) {
                         errorOccurred = false;
+                        editor.putString("_ChosenCourse",chosenCourseJson);
+                        editor.commit();
                         mView.setTermsItems(courseVo.getTerms());
                     }
                     else {
@@ -194,16 +249,21 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         public void onGroupChosen(String _GroupId) {
             mView.toggleGroupsPickerVisibility(false);
             mView.toggleButtonEnabled(false);
-           // mView.resetGroupsPicker();
+            mView.toggleLessonListVisibility(false);
+            MyTimeTableView.getCompleteLessons().clear();
+
+            // mView.resetGroupsPicker();
 
             mChosenTerm = null;
 
-
-            final List<FlatDataStructure> dataList= new ArrayList<>();
             for (TermsVo termsVo : mChosenCourse.getTerms()) {
                 if (termsVo.getId().equals(_GroupId)) {
 
                     mChosenTerm = termsVo;
+                    Gson gson = new Gson();
+                    String chosenTermJson = gson.toJson(mChosenTerm);
+                    editor.putString("_ChosenTerm",chosenTermJson);
+                    editor.commit();
 
                     for (StudyGroupVo studyGroupVo : mChosenTerm.getStudyGroups()) {
                         FlatDataStructure data = new FlatDataStructure()
@@ -224,16 +284,15 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                     //Gemergte liste aller zurückgekehrten Requests. Die Liste wächst mit jedem Request.
                                     //Hier (im success) haben wir neue Daten bekommen.
 
-//TODO: überprüfen ob courseEvents nötig ist
-                                    List<FlatDataStructure> courseEvents = getAllEvents(weekList, dataList, this.getData());
+                                    getAllEvents(weekList, MyTimeTableView.getCompleteLessons(), this.getData());
 //                                    Log.d(TAG, "success: length"+courseEvents.size());
                                     //Wir sortieren diesen letzten Stand der Liste
                                     requestCounter--;
                                     if(requestCounter==0) {
-                                        MyTimeTableView.setCompleteLessons(courseEvents);
+
 
                                         try {
-                                            Collections.sort(courseEvents, new LessonTitle_StudyGroupTitle_Comparator());
+                                            Collections.sort(MyTimeTableView.getCompleteLessons(), new LessonTitle_StudyGroupTitle_Comparator());
                                         } catch ( final RuntimeException e ) {
                                             Log.e(TAG, "Fehler beim Sortieren", e); //$NON-NLS
                                         }
@@ -258,11 +317,15 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                         }
 */
 
-
                                         final TimeTableLessonAdapter timeTableLessonAdapter = new TimeTableLessonAdapter(MyTimeTableDialogFragment.this.getContext());
                                         mView.setLessonListAdapter(timeTableLessonAdapter);
                                         mView.toggleLessonListVisibility(true);
                                         timeTableLessonAdapter.notifyDataSetChanged();
+                                        Gson gson = new Gson();
+                                        String chosenTermJson = gson.toJson(MyTimeTableView.getCompleteLessons());
+                                        editor.putString("_Result",chosenTermJson);
+                                        editor.commit();
+
                                     }
                                 }
 
@@ -284,7 +347,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
         @Override
         public void onTimeTableChosen(String _TimeTableId) {
-           // proceedToTimetable(_TimeTableId);
+            // proceedToTimetable(_TimeTableId);
         }
 
         @Override
@@ -301,56 +364,44 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             }
         }
     };
-
 /*
     @Override
     public void onDestroyView() {
         super.onDestroyView();
 //        Log.d(TAG, "onDestroyView");
     }
-*/
 
-/*
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 //        Log.d(TAG, "onAttach");
     }
-*/
 
-/*
     @Override
     public void onDetach() {
         super.onDetach();
 //        Log.d(TAG, "onDetach");
     }
-*/
 
 
-/*
     @Override
     public void onStop() {
         super.onStop();
         Log.d(TAG, "onStop");
     }
-*/
 
-/*
     @Override
     public void onCancel(DialogInterface dialog) {
         super.onCancel(dialog);
         Log.d(TAG,"onCancel");
     }
-*/
 
-/*
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
 
     }
 */
-
     private Callback<TimeTableResponse> mTimeTableResponseCallback = new Callback<TimeTableResponse>() {
         @Override
         public void onResponse(Call<TimeTableResponse> call, Response<TimeTableResponse> response) {
@@ -374,8 +425,9 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         }
     };
 
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     private AddLessonView     mView;
-
     private TimeTableResponse mResponse;
     private StudyCourseVo     mChosenCourse;
     private TermsVo           mChosenTerm;
