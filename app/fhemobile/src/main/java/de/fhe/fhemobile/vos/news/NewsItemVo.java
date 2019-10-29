@@ -71,7 +71,10 @@ public class NewsItemVo implements Parcelable {
     }
 
     public String getPubDate() {
-        return mPubDate.substring(4, 22);
+        if(null!=mPubDate){
+            return mPubDate.substring(4, 22);
+        }
+        return "";
     }
 
     public void setPubDate(String mPubDate) {

@@ -141,7 +141,7 @@ public class NetworkHandler {
 				{
 					// no content, bspw. wegen einer Weiterleitung
 					// TODO: Leere Meldung erzeugen
-/*					NewsItemVo aNoNewsItemErrorObj = new NewsItemVo();
+					NewsItemVo aNoNewsItemErrorObj = new NewsItemVo();
 					aNoNewsItemErrorObj.setTitle("System Error");
 					aNoNewsItemErrorObj.setLink("");
 					aNoNewsItemErrorObj.setDescription("An internal error in this news system showed up. Please report.");
@@ -151,7 +151,7 @@ public class NetworkHandler {
 					mNewsItems[0] = aNoNewsItemErrorObj;
 					final NewsItemVo[] newsItemVos = mNewsItems;
 					NewsModel.getInstance().setNewsItems(newsItemVos);
-*/
+
 				}
 			}
 
