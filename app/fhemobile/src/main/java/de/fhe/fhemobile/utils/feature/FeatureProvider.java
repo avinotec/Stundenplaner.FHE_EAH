@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2014-2019 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package de.fhe.fhemobile.utils.feature;
 
 import android.content.Context;
@@ -9,16 +24,13 @@ import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.drawer.DrawerItem;
 
-/**
- * Created by paul on 18.03.15.
- */
 public class FeatureProvider {
 
     /**
      * Loads the feature settings from the corresponding XML-file into the Features class
      * @param _Context
      */
-    public static void loadFeatures(Context _Context) {
+    public static void loadFeatures(final Context _Context) {
         Features.NEWS           = _Context.getResources().getBoolean(R.bool.feature_news);
         Features.PHONEBOOK      = _Context.getResources().getBoolean(R.bool.feature_phonebook);
         Features.MENSA          = _Context.getResources().getBoolean(R.bool.feature_mensa);
@@ -67,7 +79,7 @@ public class FeatureProvider {
         return list;
     }
 
-    public static String getFeatureTitle(int _FeatureId) {
+    public final static String getFeatureTitle(int _FeatureId) {
         String result = "";
         int stringRes = -1;
 
