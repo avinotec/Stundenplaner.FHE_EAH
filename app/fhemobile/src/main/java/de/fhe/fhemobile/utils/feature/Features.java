@@ -17,13 +17,13 @@ package de.fhe.fhemobile.utils.feature;
 
 public class Features {
 
-    public final static boolean NEWS            = false;
-    public final static boolean PHONEBOOK       = false;
-    public final static boolean MENSA           = false;
-    public final static boolean MAPS            = false;
-    public final static boolean SEMESTER_DATA   = false;
-    public final static boolean TIMETABLE       = false;
-    public final static boolean IMPRESS         = false;
-    public final static boolean MYTIMETABLE     = false;
+    public static boolean NEWS            = false;
+    public static boolean PHONEBOOK       = false;
+    public static boolean MENSA           = false;
+    public static boolean MAPS            = false;
+    public static boolean SEMESTER_DATA   = false;
+    public static boolean TIMETABLE       = false;
+    public static boolean IMPRESS         = false;
+    public static boolean MYTIMETABLE     = false;
 
 }
