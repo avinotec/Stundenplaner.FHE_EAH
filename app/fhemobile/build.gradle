@@ -15,7 +15,7 @@ android {
      * compile your app. This means your app can use the API features included in
      * this API level and lower.
      */
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     /**
      * buildToolsVersion specifies the version of the SDK build tools, command-line
@@ -206,7 +206,7 @@ dependencies {
     
     // Testing-only dependencies
     //testImplementation 'junit:junit:4.+'
-    implementation 'junit:junit:4.13-beta-3'
+    implementation 'junit:junit:4.13-rc-1'
     implementation 'androidx.test:rules:1.3.0-alpha02'
     
     implementation 'androidx.multidex:multidex:2.0.1'
