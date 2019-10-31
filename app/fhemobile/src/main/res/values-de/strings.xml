@@ -19,4 +19,12 @@
 
 <resources>
     <string name="semester_holidays">Urlaub</string>
+	<string name="komplettes_set_w_hlen">Komplettes Set wählen</string>
+	<string name="selbst_zusammenstellen">Selbst zusammenstellen</string>
+	<string name="edit">Edit</string>
+	<string name="professor_name">Professor Name</string>
+	<string name="role">Role</string>
+	<string name="leider_sind_keine_daten_verf_gbar">Leider sind keine Daten verfügbar</string>
+	<string name="add_lesson">Add Lesson</string>
+	<string name="loading">Loading...</string>
 </resources>
