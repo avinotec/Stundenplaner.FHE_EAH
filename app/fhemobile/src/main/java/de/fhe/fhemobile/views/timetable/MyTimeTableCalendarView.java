@@ -79,7 +79,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
 
     }
 
-    private Context           mContext;
+    private final Context           mContext;
     private FragmentManager   mFragmentManager;
 
     private Button mEditButton;

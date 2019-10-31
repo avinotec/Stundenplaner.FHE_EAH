@@ -65,6 +65,6 @@ public class DoubleLineItem implements IBaseItem {
         TextView mSubHeadline;
     }
     
-    private String mHeadline;
-    private String mSubHeadline;
+    private final String mHeadline;
+    private final String mSubHeadline;
 }

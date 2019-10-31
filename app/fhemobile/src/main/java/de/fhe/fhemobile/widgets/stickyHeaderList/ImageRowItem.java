@@ -62,5 +62,5 @@ public class ImageRowItem extends IRowItem {
 
     private static final String LOG_TAG = ImageRowItem.class.getSimpleName();
 
-    private int mImageRes;
+    private final int mImageRes;
 }

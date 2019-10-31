@@ -140,7 +140,7 @@ public class MyTimeTableView extends LinearLayout {
                     break;
                 }
             }
-    		if(exists==false) {
+    		if(!exists) {
     		    boolean isSelected=false;
                 for (FlatDataStructure eventInSelectedList : MainActivity.selectedLessons) {
                     if (FlatDataStructure.cutEventTitle(eventInCompleteList.getEvent().getTitle()).equals(FlatDataStructure.cutEventTitle(eventInSelectedList.getEvent().getTitle()))
@@ -148,7 +148,7 @@ public class MyTimeTableView extends LinearLayout {
                         isSelected=true;
                     }
                 }
-                if(isSelected==false){
+                if(!isSelected){
                     final String[] eventdata = new String[2];
                     eventdata[0]=FlatDataStructure.cutEventTitle(eventInCompleteList.getEvent().getTitle());
                     eventdata[1]=eventInCompleteList.getStudyGroup().getTimeTableId();
@@ -161,7 +161,7 @@ public class MyTimeTableView extends LinearLayout {
 
     public static List<FlatDataStructure> getSortedLessons(){return MainActivity.sortedLessons;}
 
-    public static boolean removeLesson(final FlatDataStructure lesson){
+    public static void removeLesson(final FlatDataStructure lesson){
         MainActivity.selectedLessons.remove(lesson);
         MainActivity.sortedLessons=getSortedList(new Date_Comparator());
 
@@ -170,14 +170,12 @@ public class MyTimeTableView extends LinearLayout {
         final SharedPreferences sharedPreferences =mContext.getSharedPreferences("prefs",Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("list",json);
-        editor.commit();
+        editor.apply();
 
         selectedLessonAdapter.notifyDataSetChanged();
-
-        return true;
     }
 
-    public static boolean addLesson(final FlatDataStructure lesson){
+    public static void addLesson(final FlatDataStructure lesson){
         MainActivity.selectedLessons.add(lesson);
         MainActivity.sortedLessons=getSortedList(new Date_Comparator());
 
@@ -186,10 +184,8 @@ public class MyTimeTableView extends LinearLayout {
         final SharedPreferences sharedPreferences =mContext.getSharedPreferences("prefs",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("list",json);
-        editor.commit();
+        editor.apply();
         selectedLessonAdapter.notifyDataSetChanged();
-        return true;
-
     }
     public static List<FlatDataStructure> loadSelectedList(final List<FlatDataStructure> selectedLessons){
 

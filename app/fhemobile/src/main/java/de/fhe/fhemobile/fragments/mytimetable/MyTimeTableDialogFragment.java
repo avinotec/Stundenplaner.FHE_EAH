@@ -115,7 +115,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         NetworkHandler.getInstance().fetchTimeTable(mTimeTableResponseCallback);
     }
 
-    private void proceedToTimetable(String _TimeTableId, TimeTableCallback callback) {
+    private void proceedToTimetable(final String _TimeTableId, final TimeTableCallback callback) {
         NetworkHandler.getInstance().fetchTimeTableEvents(_TimeTableId,callback);
 
     }
@@ -123,9 +123,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
      * @param weekList ist der Datensatz, der beim Request erhalten wird (alle events eines Sets)
      * @param dataList ist die Liste, die am Ende alle Daten der verschiedenen Requests beinhaltet.
      * @param data ist der neue Datensatz, der in die Liste eingepflegt werden soll.
-     * @return Die Liste mit dem ergänzten Element
      **/
-    private static List<FlatDataStructure> getAllEvents(final List<TimeTableWeekVo> weekList,final List<FlatDataStructure> dataList ,final FlatDataStructure data) {
+    private static void getAllEvents(final List<TimeTableWeekVo> weekList, final List<FlatDataStructure> dataList , final FlatDataStructure data) {
         if (weekList != null) {
             try {
 
@@ -145,13 +144,11 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                         }
                     }
                 }
-                return dataList;
             }
             catch (Exception e){
                 Log.e(TAG, "success: Exception beim Zusammenstellen der Datensaetze.",e);
             }
         }
-        return dataList;
     }
 
 
@@ -190,7 +187,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
     }
 
-    private AddLessonView.IViewListener mViewListener = new AddLessonView.IViewListener() {
+    private final AddLessonView.IViewListener mViewListener = new AddLessonView.IViewListener() {
 
 
         @Override
@@ -248,7 +245,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         @Override
         public void onGroupChosen(String _GroupId) {
             mView.toggleGroupsPickerVisibility(false);
-            mView.toggleButtonEnabled(false);
+            //mView.toggleButtonEnabled(false);
             mView.toggleLessonListVisibility(false);
             MyTimeTableView.getCompleteLessons().clear();
 
@@ -402,7 +399,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
     }
 */
-    private Callback<TimeTableResponse> mTimeTableResponseCallback = new Callback<TimeTableResponse>() {
+    private final Callback<TimeTableResponse> mTimeTableResponseCallback = new Callback<TimeTableResponse>() {
         @Override
         public void onResponse(Call<TimeTableResponse> call, Response<TimeTableResponse> response) {
             if ( response.body() != null ) {

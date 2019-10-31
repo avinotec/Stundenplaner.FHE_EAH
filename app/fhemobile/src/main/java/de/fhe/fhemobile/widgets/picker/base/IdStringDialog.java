@@ -20,11 +20,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import androidx.fragment.app.DialogFragment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import androidx.fragment.app.DialogFragment;
 
 import java.util.List;
 
@@ -49,11 +50,13 @@ public class IdStringDialog extends DialogFragment {
     }
 
     //onStart---------------------------------------------------------------------------------------
+/*
     @Override
     public void onStart() {
         super.onStart();
 
     }
+*/
 
     //initDialog------------------------------------------------------------------------------------
     public void initDialog(Context _Context, List<IDItem> _Items, String _Title) {
@@ -79,7 +82,7 @@ public class IdStringDialog extends DialogFragment {
         super.onDismiss(dialog);
     }
 
-    private AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
+    private final AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             if (mListener != null) {

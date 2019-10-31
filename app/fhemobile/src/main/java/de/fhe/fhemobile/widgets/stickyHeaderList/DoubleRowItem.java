@@ -66,6 +66,6 @@ public class DoubleRowItem extends IRowItem {
 
     private static final String LOG_TAG = DoubleRowItem.class.getSimpleName();
 
-    private String mHeadline;
-    private String mSubHeadline;
+    private final String mHeadline;
+    private final String mSubHeadline;
 }

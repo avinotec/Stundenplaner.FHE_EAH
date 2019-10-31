@@ -28,25 +28,33 @@ public class AnimFrameLayout extends FrameLayout {
         super(_context, _attrs);
     }
 
-    //getXFraction----------------------------------------------------------------------------------
-    public float getXFraction() {
-        return getX() / getWidth(); // TODO: guard divide-by-zero
-    }
+// --Commented out by Inspection START (01.11.2019 00:18):
+//    //getXFraction----------------------------------------------------------------------------------
+//    public float getXFraction() {
+//        return getX() / getWidth(); // TODO: guard divide-by-zero
+//    }
+// --Commented out by Inspection STOP (01.11.2019 00:18)
 
-    //setXFraction----------------------------------------------------------------------------------
-    public void setXFraction(float _xFraction) {
-        final int width = getWidth();
-        setX((width > 0) ? (_xFraction * width) : -9999);
-    }
+// --Commented out by Inspection START (01.11.2019 00:19):
+//    //setXFraction----------------------------------------------------------------------------------
+//    public void setXFraction(float _xFraction) {
+//        final int width = getWidth();
+//        setX((width > 0) ? (_xFraction * width) : -9999);
+//    }
+// --Commented out by Inspection STOP (01.11.2019 00:19)
 
-    //getYFraction----------------------------------------------------------------------------------
-    public float getYFraction() {
-        return getY() / getHeight(); // TODO: guard divide-by-zero
-    }
+// --Commented out by Inspection START (01.11.2019 00:19):
+//    //getYFraction----------------------------------------------------------------------------------
+//    public float getYFraction() {
+//        return getY() / getHeight(); // TODO: guard divide-by-zero
+//    }
+// --Commented out by Inspection STOP (01.11.2019 00:19)
 
-    //setYFraction----------------------------------------------------------------------------------
-    public void setYFraction(float _yFraction) {
-        final int height = getHeight();
-        setY((height > 0) ? (_yFraction * height) : -9999);
-    }
+// --Commented out by Inspection START (01.11.2019 00:19):
+//    //setYFraction----------------------------------------------------------------------------------
+//    public void setYFraction(float _yFraction) {
+//        final int height = getHeight();
+//        setY((height > 0) ? (_yFraction * height) : -9999);
+//    }
+// --Commented out by Inspection STOP (01.11.2019 00:19)
 }

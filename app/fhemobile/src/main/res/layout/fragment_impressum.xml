@@ -33,8 +33,8 @@
             android:layout_height="@dimen/header_image_height"
             android:id="@+id/imageView"
             android:src="@drawable/th_impress"
-            android:scaleType="centerCrop" 
-            />
+            android:scaleType="centerCrop"
+	        android:contentDescription="TODO" />
 
         <WebView
             android:layout_width="match_parent"

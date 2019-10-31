@@ -57,7 +57,7 @@ public class MapsSingleView extends FrameLayout {
 
     private static final String LOG_TAG = MapsSingleView.class.getSimpleName();
 
-    private Context mContext;
+    private final Context mContext;
 
     private WebView mMapView;
 }

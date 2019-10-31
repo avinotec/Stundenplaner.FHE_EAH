@@ -118,8 +118,10 @@ public class AddLessonView extends LinearLayout {
         mStudyGroupPicker.reset(true);
     }
 
+/*
     public void toggleButtonEnabled(final boolean _Enabled) {
     }
+*/
 
     @Override
     protected void onFinishInflate() {
@@ -134,7 +136,7 @@ public class AddLessonView extends LinearLayout {
     }
 
     // Returns the chosen TermsId
-    private OnItemChosenListener mCourseListener = new OnItemChosenListener() {
+    private final OnItemChosenListener mCourseListener = new OnItemChosenListener() {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
@@ -144,7 +146,7 @@ public class AddLessonView extends LinearLayout {
     };
 
     // Returns the GroupId
-    private OnItemChosenListener mTermsListener = new OnItemChosenListener() {
+    private final OnItemChosenListener mTermsListener = new OnItemChosenListener() {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
@@ -154,7 +156,7 @@ public class AddLessonView extends LinearLayout {
     };
 
     // Returns the TimeTableId
-    private OnItemChosenListener mGroupsListener = new OnItemChosenListener() {
+    private final OnItemChosenListener mGroupsListener = new OnItemChosenListener() {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
@@ -173,10 +175,10 @@ public class AddLessonView extends LinearLayout {
     };
 
     public interface IViewListener {
-        public void onTermChosen(String _TermId);
-        public void onGroupChosen(String _GroupId);
-        public void onTimeTableChosen(String _TimeTableId);
-        public void onSearchClicked();
+        void onTermChosen(String _TermId);
+        void onGroupChosen(String _GroupId);
+        void onTimeTableChosen(String _TimeTableId);
+        void onSearchClicked();
     }
 
     public void setSelectedTermText(String text){
@@ -186,7 +188,7 @@ public class AddLessonView extends LinearLayout {
         mStudyCoursePicker.setDisplayValue(text);
     }
 
-    private Context           mContext;
+    private final Context           mContext;
     private FragmentManager   mFragmentManager;
     private IViewListener     mViewListener;
 

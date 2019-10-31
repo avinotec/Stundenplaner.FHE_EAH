@@ -16,9 +16,6 @@
 package de.fhe.fhemobile.activities;
 
 import android.os.Bundle;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +27,10 @@ import android.widget.SpinnerAdapter;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import de.fhe.fhemobile.R;
 
@@ -87,16 +88,20 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     //onPause---------------------------------------------------------------------------------------
+/*
     @Override
     protected void onPause() {
         super.onPause();
     }
+*/
 
     //onDestroy-------------------------------------------------------------------------------------
+/*
     @Override
-    protected void onDestroy() {
+     protected void onDestroy() {
         super.onDestroy();
     }
+*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -109,19 +114,23 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-    protected void setActionBarIcon(int iconRes) {
-        mToolbar.setNavigationIcon(iconRes);
-    }
+// --Commented out by Inspection START (01.11.2019 00:18):
+//    protected void setActionBarIcon(int iconRes) {
+//        mToolbar.setNavigationIcon(iconRes);
+//    }
+// --Commented out by Inspection STOP (01.11.2019 00:18)
 
     protected void setBaseContent(int _layoutResource) {
         mContent = View.inflate(this, _layoutResource, null);
         mContainer.addView(mContent);
     }
 
-    protected void setBaseContent(View _layoutView) {
-        mContent = _layoutView;
-        mContainer.addView(_layoutView);
-    }
+// --Commented out by Inspection START (01.11.2019 00:18):
+//    protected void setBaseContent(View _layoutView) {
+//        mContent = _layoutView;
+//        mContainer.addView(_layoutView);
+//    }
+// --Commented out by Inspection STOP (01.11.2019 00:18)
 
     protected void showTabs(boolean _show) {
         mTabHost.setVisibility(_show ? View.VISIBLE : View.GONE);
@@ -131,14 +140,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         mShadow.setVisibility(_show ? View.VISIBLE : View.GONE);
     }
 
-    protected TabHost getTabHost() {
-        return mTabHost;
-    }
+// --Commented out by Inspection START (01.11.2019 00:18):
+//    protected TabHost getTabHost() {
+//        return mTabHost;
+//    }
+// --Commented out by Inspection STOP (01.11.2019 00:18)
 
-    protected void toggleToolbarSpinner(boolean _show) {
-        mActionBar.setDisplayShowTitleEnabled(!_show);
-        mSpinner.setVisibility(_show ? View.VISIBLE : View.GONE);
-    }
+// --Commented out by Inspection START (01.11.2019 00:17):
+//    protected void toggleToolbarSpinner(boolean _show) {
+//        mActionBar.setDisplayShowTitleEnabled(!_show);
+//        mSpinner.setVisibility(_show ? View.VISIBLE : View.GONE);
+//    }
+// --Commented out by Inspection STOP (01.11.2019 00:17)
 
     protected void setSpinnerListener(AdapterView.OnItemSelectedListener _listener) {
         mSpinner.setOnItemSelectedListener(_listener);
@@ -156,9 +169,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         mSpinner.setSelection(_index, _animate);
     }
 
-    protected int getSelectedSpinnerItem() {
-        return mSpinner.getSelectedItemPosition();
-    }
+// --Commented out by Inspection START (01.11.2019 00:18):
+//    protected int getSelectedSpinnerItem() {
+//        return mSpinner.getSelectedItemPosition();
+//    }
+// --Commented out by Inspection STOP (01.11.2019 00:18)
 
     private static final String LOG_TAG = BaseActivity.class.getSimpleName();
 
@@ -171,7 +186,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private ImageView   mShadow;
     private Spinner     mSpinner;
 
-    private int         mTabSelectedTextColor   = 0xFFFFFFFF;
-    private int         mTabUnselectedTextColor = 0xFFFFFF00;
-    private boolean     mAdsEnabled             = false;
+    private final int         mTabSelectedTextColor   = 0xFFFFFFFF;
+    // --Commented out by Inspection (01.11.2019 00:18):private int         mTabUnselectedTextColor = 0xFFFFFF00;
+    // --Commented out by Inspection (01.11.2019 00:18):private boolean     mAdsEnabled             = false;
 }

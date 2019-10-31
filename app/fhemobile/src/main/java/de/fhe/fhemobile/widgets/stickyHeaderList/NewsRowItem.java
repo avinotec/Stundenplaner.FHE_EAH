@@ -81,5 +81,5 @@ public class NewsRowItem extends IRowItem {
 
     private static final String LOG_TAG = NewsRowItem.class.getSimpleName();
 
-    private NewsItemVo mItem;
+    private final NewsItemVo mItem;
 }

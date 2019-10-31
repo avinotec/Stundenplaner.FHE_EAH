@@ -106,7 +106,7 @@ public class NewsListRemoteFactory implements RemoteViewsService.RemoteViewsFact
 
     private static final String LOG_TAG = NewsListRemoteFactory.class.getSimpleName();
 
-    private NewsItemVo[] mItems;
-    private int          mWidgetId;
-    private Context      mContext;
+    private final NewsItemVo[] mItems;
+    private final int          mWidgetId;
+    private final Context      mContext;
 }

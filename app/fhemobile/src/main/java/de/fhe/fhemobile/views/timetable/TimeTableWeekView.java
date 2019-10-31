@@ -104,7 +104,7 @@ public class TimeTableWeekView extends LinearLayout {
 
     private static final String LOG_TAG = TimeTableWeekView.class.getSimpleName();
 
-    private Context mContext;
+    private final Context mContext;
 
     private List<IBaseItem> mData;
 

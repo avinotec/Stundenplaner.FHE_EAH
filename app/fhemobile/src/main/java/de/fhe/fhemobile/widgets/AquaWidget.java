@@ -84,7 +84,7 @@ public class AquaWidget extends RelativeLayout {
 
 
 
-    private Callback<CafeAquaResponse> mResponseCallback = new Callback<CafeAquaResponse>() {
+    private final Callback<CafeAquaResponse> mResponseCallback = new Callback<CafeAquaResponse>() {
         @Override
         public void onResponse(Call<CafeAquaResponse> call, Response<CafeAquaResponse> response) {
             mStartedFetching = false;
@@ -100,7 +100,7 @@ public class AquaWidget extends RelativeLayout {
         }
     };
 
-    private OnClickListener mClickListener = new OnClickListener() {
+    private final OnClickListener mClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
             update(true);
@@ -111,7 +111,7 @@ public class AquaWidget extends RelativeLayout {
 
     private static final long   UPDATE_INTERVALL    =  900000;
 
-    private Context     mContext;
+    private final Context     mContext;
 
     private ImageView   mStatusLabel;
 

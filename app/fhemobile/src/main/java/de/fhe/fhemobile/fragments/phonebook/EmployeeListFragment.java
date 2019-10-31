@@ -2,10 +2,11 @@ package de.fhe.fhemobile.fragments.phonebook;
 
 import android.app.Activity;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.views.phonebook.EmployeeListView;
@@ -76,7 +77,7 @@ public class EmployeeListFragment extends Fragment {
         }
     }
 
-    private EmployeeListView.ViewListener mViewListener = new EmployeeListView.ViewListener() {
+    private final EmployeeListView.ViewListener mViewListener = new EmployeeListView.ViewListener() {
         @Override
         public void onListItemClicked(Integer _ListPosition) {
             mCallbacks.onEmployeeChosen(_ListPosition);

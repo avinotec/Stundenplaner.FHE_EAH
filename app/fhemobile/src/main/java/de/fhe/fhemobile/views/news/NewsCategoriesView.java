@@ -70,7 +70,7 @@ public class NewsCategoriesView extends FrameLayout {
         mCategoryListView = (ListView) findViewById(R.id.newsCategoryListView);
     }
 
-    private AdapterView.OnItemClickListener mCategorySelectListener = new AdapterView.OnItemClickListener() {
+    private final AdapterView.OnItemClickListener mCategorySelectListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             mViewListener.onNewsCategoryChosen((int) mAdapter.getItemId(position), position);
@@ -84,9 +84,9 @@ public class NewsCategoriesView extends FrameLayout {
         }
     };
 
-    private Context             mContext;
+    private final Context             mContext;
 
-    private NewsModel           mModel;
+    private final NewsModel           mModel;
 
     private ViewListener        mViewListener;
     private NewsCategoryAdapter mAdapter;

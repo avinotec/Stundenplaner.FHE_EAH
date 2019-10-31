@@ -50,7 +50,7 @@ public class PhonebookSearchFragment extends FeatureFragment {
         return mView;
     }
 
-    private PhonebookSearchView.ViewListener mViewListener = new PhonebookSearchView.ViewListener() {
+    private final PhonebookSearchView.ViewListener mViewListener = new PhonebookSearchView.ViewListener() {
         @Override
         public void onSearchClicked(String _FirstName, String _LastName) {
             NetworkHandler.getInstance().fetchEmployees(_FirstName, _LastName);

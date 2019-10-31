@@ -63,8 +63,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="false"
-                android:textOn="Komplettes Set wählen"
-                android:textOff="Selbst zusammenstellen"
+                android:textOn="@string/komplettes_set_w_hlen"
+                android:textOff="@string/selbst_zusammenstellen"
                 android:visibility="gone">
 
             </ToggleButton>

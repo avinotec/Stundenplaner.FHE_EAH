@@ -82,7 +82,7 @@ public class TimeTableFragment extends FeatureFragment {
         ((MainActivity) getActivity()).changeFragment(TimeTableEventsFragment.newInstance(_TimeTableId), true);
     }
 
-    private TimeTableView.IViewListener mViewListener = new TimeTableView.IViewListener() {
+    private final TimeTableView.IViewListener mViewListener = new TimeTableView.IViewListener() {
         @Override
         public void onTermChosen(String _TermId) {
             mView.toggleGroupsPickerVisibility(false);
@@ -166,7 +166,7 @@ public class TimeTableFragment extends FeatureFragment {
         }
     };
 
-    private Callback<TimeTableResponse> mTimeTableResponseCallback = new Callback<TimeTableResponse>() {
+    private final Callback<TimeTableResponse> mTimeTableResponseCallback = new Callback<TimeTableResponse>() {
         @Override
         public void onResponse(Call<TimeTableResponse> call, Response<TimeTableResponse> response) {
             if ( response.body() != null ) {

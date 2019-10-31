@@ -38,7 +38,7 @@
                 android:layout_height="@dimen/header_image_height"
                 android:src="@drawable/th_phonebook"
                 android:scaleType="centerCrop"
-                />
+                android:contentDescription="TODO" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,7 +55,7 @@
                     android:id="@+id/timetableAddLesson"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Add Lesson" />
+                    android:text="@string/add_lesson" />
 
                 <ListView
                     android:id="@+id/lvLessons"

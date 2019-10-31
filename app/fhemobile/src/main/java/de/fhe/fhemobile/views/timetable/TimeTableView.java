@@ -133,7 +133,7 @@ public class TimeTableView extends LinearLayout {
     };
 
     // Returns the GroupId
-    private OnItemChosenListener mTermsListener = new OnItemChosenListener() {
+    private final OnItemChosenListener mTermsListener = new OnItemChosenListener() {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
@@ -143,7 +143,7 @@ public class TimeTableView extends LinearLayout {
     };
 
     // Returns the TimeTableId
-    private OnItemChosenListener mGroupsListener = new OnItemChosenListener() {
+    private final OnItemChosenListener mGroupsListener = new OnItemChosenListener() {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
@@ -152,7 +152,7 @@ public class TimeTableView extends LinearLayout {
         }
     };
 
-    private OnClickListener mSearchClickListener = new OnClickListener() {
+    private final OnClickListener mSearchClickListener = new OnClickListener() {
         @Override
         public void onClick(final View v) {
             if (mViewListener != null) {
@@ -162,13 +162,13 @@ public class TimeTableView extends LinearLayout {
     };
 
     public interface IViewListener {
-        public void onTermChosen(String _TermId);
-        public void onGroupChosen(String _GroupId);
-        public void onTimeTableChosen(String _TimeTableId);
-        public void onSearchClicked();
+        void onTermChosen(String _TermId);
+        void onGroupChosen(String _GroupId);
+        void onTimeTableChosen(String _TimeTableId);
+        void onSearchClicked();
     }
 
-    private Context           mContext;
+    private final Context           mContext;
     private FragmentManager   mFragmentManager;
     private IViewListener     mViewListener;
 

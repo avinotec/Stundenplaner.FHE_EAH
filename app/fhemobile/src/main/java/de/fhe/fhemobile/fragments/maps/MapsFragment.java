@@ -35,7 +35,7 @@ public class MapsFragment extends FeatureFragment {
         return mView;
     }
 
-    private MapsView.ViewListener mViewListener = new MapsView.ViewListener() {
+    private final MapsView.ViewListener mViewListener = new MapsView.ViewListener() {
         @Override
         public void onMapItemClicked(Integer _Position) {
             Intent intent = new Intent(getActivity(), MapsSingleActivity.class);

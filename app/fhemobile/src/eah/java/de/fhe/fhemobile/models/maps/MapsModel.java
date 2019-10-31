@@ -107,5 +107,5 @@ public class MapsModel {
 
     private static MapsModel ourInstance = null;
 
-    private List<MapCollectionVo> mMaps;
+    private final List<MapCollectionVo> mMaps;
 }

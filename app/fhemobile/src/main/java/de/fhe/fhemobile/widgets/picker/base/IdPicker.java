@@ -146,7 +146,7 @@ public abstract class IdPicker extends LinearLayout{
         return items;
     }
 
-    private OnClickListener mClickListener = new OnClickListener() {
+    private final OnClickListener mClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
             if (mEnabled) {
@@ -155,7 +155,7 @@ public abstract class IdPicker extends LinearLayout{
         }
     };
 
-    private OnItemChosenListener mItemChosenListener = new OnItemChosenListener() {
+    private final OnItemChosenListener mItemChosenListener = new OnItemChosenListener() {
         @Override
         public void onItemChosen(String _ItemId, int _ItemPos) {
             mContentView.setText(getName(_ItemPos));
@@ -170,7 +170,7 @@ public abstract class IdPicker extends LinearLayout{
         mContentView.setText(text);
     }
 
-    private Context              mContext;
+    private final Context              mContext;
     private FragmentManager      mFragmentManager;
     private OnItemChosenListener mListener;
 

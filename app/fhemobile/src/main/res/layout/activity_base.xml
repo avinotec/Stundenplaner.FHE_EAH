@@ -90,8 +90,8 @@
 </TabHost>
 
 <!--content frame-->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:id="@+id/baseActivityContainer"
+<FrameLayout
+    android:id="@+id/baseActivityContainer"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:layout_below="@+id/baseActivityTabHost"/>
@@ -102,6 +102,7 @@
     android:layout_height="4dp"
     android:layout_below="@+id/baseActivityTabHost"
     android:background="@drawable/shadow"
-    android:visibility="gone"/>
+    android:visibility="gone"
+    android:contentDescription="TODO" />
 
 </RelativeLayout>

@@ -78,10 +78,12 @@ public class MyTimeTableFragment extends FeatureFragment {
 		return mView;
 	}
 
+/*
 	@Override
 	public void onResume() {
 		super.onResume();
 	}
+*/
 
 
 	@Override

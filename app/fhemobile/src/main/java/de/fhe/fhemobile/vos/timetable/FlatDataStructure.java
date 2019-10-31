@@ -75,8 +75,7 @@ public class FlatDataStructure implements Parcelable {
 
 	public FlatDataStructure copy(){
 		final FlatDataStructure copy = new FlatDataStructure();
-		;
-//		Log.d(TAG, "FlatDataStructure: incID: "+FlatDataStructure.incId);
+		//		Log.d(TAG, "FlatDataStructure: incID: "+FlatDataStructure.incId);
 		copy.id=FlatDataStructure.incId++;
 		copy.setCourse(this.getCourse());
 		copy.setSemester(this.getSemester());
@@ -85,7 +84,7 @@ public class FlatDataStructure implements Parcelable {
 	}
 
 	// "Bachelor: E-Commerce-->EC(BA)7-->EC(BA)7.01-->45-->3-->SPLUSA3E2FAs-2-->WI(BA)ERP-Sys.GPA/P/S/01"
-	private final static Pattern p = Pattern.compile("^(.*[a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß])");
+	private final static Pattern p = Pattern.compile("^(.*[a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß])"); //$NON-NLS
 	public static String cutEventTitle(final String title) {
 
 		// WI/WIEC(BA)Cloudtech./V/01
@@ -248,9 +247,8 @@ public class FlatDataStructure implements Parcelable {
 		this.course.setTitle(course.getTitle());
 		return this;
 	}
-	public final FlatDataStructure setCourse(final FlatStudyCourse course) {
+	public final void setCourse(final FlatStudyCourse course) {
 		this.course = course;
-		return this;
 	}
 
 	public final FlatDataStructure setSemester(final TermsVo semester) {
@@ -259,9 +257,8 @@ public class FlatDataStructure implements Parcelable {
 		this.semester.setTitle(semester.getTitle());
 		return this;
 	}
-	public final FlatDataStructure setSemester(final FlatTerms semester) {
+	public final void setSemester(final FlatTerms semester) {
 		this.semester = semester;
-		return this;
 	}
 
 
@@ -292,9 +289,8 @@ public class FlatDataStructure implements Parcelable {
 		return this;
 	}
 
-	public final FlatDataStructure setEvent(final TimeTableEventVo event) {
+	public final void setEvent(final TimeTableEventVo event) {
 		this.event = event;
-		return this;
 	}
 
 	private static int incId=0;

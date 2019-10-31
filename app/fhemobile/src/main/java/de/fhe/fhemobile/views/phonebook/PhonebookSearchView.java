@@ -32,8 +32,8 @@ import de.fhe.fhemobile.models.phonebook.PhonebookModel;
 public class PhonebookSearchView extends FrameLayout {
 
     public interface ViewListener {
-        public void onSearchClicked(String _FirstName, String _LastName);
-        public void onEmployeesFound();
+        void onSearchClicked(String _FirstName, String _LastName);
+        void onEmployeesFound();
     }
 
     public PhonebookSearchView(Context context, AttributeSet attrs) {
@@ -73,7 +73,7 @@ public class PhonebookSearchView extends FrameLayout {
         mErrorText          = (TextView)    findViewById(R.id.phonebookError);
     }
 
-    private EventListener mFoundEmployeesListener = new EventListener() {
+    private final EventListener mFoundEmployeesListener = new EventListener() {
         @Override
         public void onEvent(Event event) {
             mProgressIndicator.setVisibility(GONE);
@@ -82,7 +82,7 @@ public class PhonebookSearchView extends FrameLayout {
         }
     };
 
-    private EventListener mFoundNoEmployeesListener = new EventListener() {
+    private final EventListener mFoundNoEmployeesListener = new EventListener() {
         @Override
         public void onEvent(Event event) {
             mProgressIndicator.setVisibility(GONE);
@@ -90,7 +90,7 @@ public class PhonebookSearchView extends FrameLayout {
         }
     };
 
-    private OnClickListener mSearchClick = new OnClickListener() {
+    private final OnClickListener mSearchClick = new OnClickListener() {
         @Override
         public void onClick(View v) {
             mErrorText.setVisibility(GONE);
@@ -101,7 +101,7 @@ public class PhonebookSearchView extends FrameLayout {
 
     private static final String LOG_TAG = PhonebookSearchView.class.getSimpleName();
 
-    private Context mContext;
+    private final Context mContext;
 
     private EditText mFirstName;
     private EditText mLastName;
@@ -110,7 +110,7 @@ public class PhonebookSearchView extends FrameLayout {
 
     private TextView mErrorText;
 
-    private PhonebookModel mModel;
+    private final PhonebookModel mModel;
 
     private ViewListener mViewListener;
 }

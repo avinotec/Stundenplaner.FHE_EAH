@@ -60,5 +60,5 @@ public class HeaderItem implements IBaseItem {
         TextView mHeaderText;
     }
 
-    private String mHeaderText;
+    private final String mHeaderText;
 }

@@ -84,6 +84,6 @@ public class DrawerAdapter extends BaseAdapter {
         public TextView     mLabel;
     }
 
-    private Context          mContext;
-    private List<DrawerItem> mItems;
+    private final Context          mContext;
+    private final List<DrawerItem> mItems;
 }

@@ -68,7 +68,7 @@ public class NewsSingleView extends FrameLayout {
 
     }
 
-    private Context mContext;
+    private final Context mContext;
 
     private TextView mTitle;
     private WebView mText;

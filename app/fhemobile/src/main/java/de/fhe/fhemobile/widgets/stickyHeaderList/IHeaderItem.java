@@ -78,5 +78,5 @@ public abstract class IHeaderItem {
     // ---------------------------------------------------------------------------------------------
 
     protected List<IRowItem> mItems;
-    protected boolean        mHasSectionHeader;
+    protected final boolean        mHasSectionHeader;
 }

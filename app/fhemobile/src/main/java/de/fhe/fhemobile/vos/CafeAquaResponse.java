@@ -29,9 +29,11 @@ public class CafeAquaResponse {
         return mOpen;
     }
 
-    public void setOpen(boolean _open) {
-        mOpen = _open;
-    }
+// --Commented out by Inspection START (01.11.2019 00:17):
+//    public void setOpen(boolean _open) {
+//        mOpen = _open;
+//    }
+// --Commented out by Inspection STOP (01.11.2019 00:17)
 
     @SerializedName("open")
     private boolean mOpen;

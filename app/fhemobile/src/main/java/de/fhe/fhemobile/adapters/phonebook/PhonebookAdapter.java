@@ -32,8 +32,8 @@ import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
  */
 public class PhonebookAdapter extends BaseAdapter {
 
-    private Context mContext;
-    private List<EmployeeVo> mListElements;
+    private final Context mContext;
+    private final List<EmployeeVo> mListElements;
 
     static class ViewHolder {
         TextView mFullName;
@@ -81,8 +81,8 @@ public class PhonebookAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        EmployeeVo employee = mListElements.get(position);
-        String title = employee.getTitle();
+        final EmployeeVo employee = mListElements.get(position);
+        final String title = employee.getTitle();
         if(title.length() == 0) {
             viewHolder.mFullName.setText(employee.getFirstName() + " " + employee.getLastName());
         }

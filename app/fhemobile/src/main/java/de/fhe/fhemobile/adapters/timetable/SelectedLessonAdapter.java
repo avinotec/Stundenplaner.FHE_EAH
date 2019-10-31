@@ -35,7 +35,7 @@ import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
 public class SelectedLessonAdapter extends BaseAdapter {
 	private static final String TAG = "SelectedLessonAdapter";
-	private Context context;
+	private final Context context;
 
 	public SelectedLessonAdapter(Context context) {
 		this.context=context;

@@ -103,7 +103,7 @@ public class NewsListWidgetConfigureActivity extends Activity {
 
     }
 
-    private AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
+    private final AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -122,7 +122,7 @@ public class NewsListWidgetConfigureActivity extends Activity {
     static void saveNewsWidgetPref(Context context, int appWidgetId, String categoryId) {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         prefs.putString(PREF_PREFIX_KEY + appWidgetId, categoryId);
-        prefs.commit();
+        prefs.apply();
     }
 
     // Read the prefix from the SharedPreferences object for this widget.
@@ -135,10 +135,10 @@ public class NewsListWidgetConfigureActivity extends Activity {
     static void deleteNewsWidgetPref(Context context, int appWidgetId) {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         prefs.remove(PREF_PREFIX_KEY + appWidgetId);
-        prefs.commit();
+        prefs.apply();
     }
 
-    private Callback<NewsCategoryResponse> mNewsCategoryCallback = new Callback<NewsCategoryResponse>() {
+    private final Callback<NewsCategoryResponse> mNewsCategoryCallback = new Callback<NewsCategoryResponse>() {
         @Override
         public void onResponse(Call<NewsCategoryResponse> call, Response<NewsCategoryResponse> response) {
             if (mAvailableCategories != null && response.body().getNewsCategories() != null && response.body() != null ) {

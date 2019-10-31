@@ -28,7 +28,7 @@ public class LessonTitle_StudyGroupTitle_Comparator implements Comparator<FlatDa
 	private final static int EQUAL=0;
 	private final static int LESSER=-1;
 
-	private static LessonTitle_StudyGroupTitle_Comparator lessonTitle_StudyGroupTitle_Comparator = new LessonTitle_StudyGroupTitle_Comparator();
+	private static final LessonTitle_StudyGroupTitle_Comparator lessonTitle_StudyGroupTitle_Comparator = new LessonTitle_StudyGroupTitle_Comparator();
 
 	public static int compareStatic(final FlatDataStructure o1, final FlatDataStructure o2) {
 		return lessonTitle_StudyGroupTitle_Comparator.compare(o1, o2);

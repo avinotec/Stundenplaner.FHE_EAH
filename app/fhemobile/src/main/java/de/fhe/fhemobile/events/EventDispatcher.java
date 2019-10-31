@@ -25,7 +25,7 @@ public class EventDispatcher implements Dispatcher {
 	
 	private static final String TAG = EventDispatcher.class.getSimpleName();
 	
-	private HashMap<String, CopyOnWriteArrayList<EventListener>> listenerMap;
+	private final HashMap<String, CopyOnWriteArrayList<EventListener>> listenerMap;
 	private Dispatcher target;
 	
 	public EventDispatcher() {

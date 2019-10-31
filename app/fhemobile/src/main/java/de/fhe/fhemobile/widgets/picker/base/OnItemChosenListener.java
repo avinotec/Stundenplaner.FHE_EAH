@@ -20,5 +20,5 @@ package de.fhe.fhemobile.widgets.picker.base;
  */
 public interface OnItemChosenListener {
 
-    public void onItemChosen(String _ItemId, int _ItemPos);
+    void onItemChosen(String _ItemId, int _ItemPos);
 }
