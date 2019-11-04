@@ -66,6 +66,6 @@ public class HeaderListAdapter extends BaseAdapter {
         return mItems.get(position).getViewType();
     }
 
-    private List<IBaseItem> mItems;
-    private LayoutInflater  mLayoutInflater;
+    private final List<IBaseItem> mItems;
+    private final LayoutInflater  mLayoutInflater;
 }

@@ -113,7 +113,7 @@ public class NewsCategoryAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private Context mContext;
+    private final Context mContext;
 
-    private NewsCategoryVo[] mItems;
+    private final NewsCategoryVo[] mItems;
 }

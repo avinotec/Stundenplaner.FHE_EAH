@@ -30,8 +30,8 @@ import de.fhe.fhemobile.vos.news.NewsItemVo;
  */
 public class NewsListAdapter extends BaseAdapter {
 
-    private Context mContext;
-    private NewsItemVo[] mItems;
+    private final Context mContext;
+    private final NewsItemVo[] mItems;
 
     static class ViewHolder {
         TextView mTitle;

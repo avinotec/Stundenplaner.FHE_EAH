@@ -58,7 +58,7 @@ public class MapsView extends FrameLayout {
 
     }
 
-    private AdapterView.OnItemClickListener mMapsClickListener = new AdapterView.OnItemClickListener() {
+    private final AdapterView.OnItemClickListener mMapsClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             mViewListener.onMapItemClicked(position);
@@ -67,10 +67,10 @@ public class MapsView extends FrameLayout {
 
     private static final String LOG_TAG = MapsView.class.getSimpleName();
 
-    private Context mContext;
+    private final Context mContext;
     private ViewListener mViewListener;
 
-    private MapsModel mModel;
+    private final MapsModel mModel;
 
     private MapsAdapter mAdapter;
 

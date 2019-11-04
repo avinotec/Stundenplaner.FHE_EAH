@@ -32,7 +32,7 @@ import de.fhe.fhemobile.models.phonebook.PhonebookModel;
 public class EmployeeListView extends FrameLayout {
 
     public interface ViewListener {
-        public void onListItemClicked(Integer _ListPosition);
+        void onListItemClicked(Integer _ListPosition);
     }
 
     public EmployeeListView(Context context, AttributeSet attrs) {
@@ -79,7 +79,7 @@ public class EmployeeListView extends FrameLayout {
         mList.setAdapter(new PhonebookAdapter(mContext, mModel.getFoundEmployees()));
     }
 
-    private AdapterView.OnItemClickListener mListClickListener = new AdapterView.OnItemClickListener() {
+    private final AdapterView.OnItemClickListener mListClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             mViewListener.onListItemClicked(position);

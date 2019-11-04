@@ -110,7 +110,7 @@ public class NewsListView extends LinearLayout {
         mNewsList.getListView().setId(R.id.listMode);
     }
 
-    private EventListener mReceivedNewsListener = new EventListener() {
+    private final EventListener mReceivedNewsListener = new EventListener() {
         @Override
         public void onEvent(Event event) {
             mNewsProgressBar.setVisibility(GONE);
@@ -118,14 +118,14 @@ public class NewsListView extends LinearLayout {
         }
     };
 
-    private EventListener mReceivedEmptyNewsListener = new EventListener() {
+    private final EventListener mReceivedEmptyNewsListener = new EventListener() {
         @Override
         public void onEvent(Event event) {
 
         }
     };
 
-    private AdapterView.OnItemClickListener mListItemClickListener = new AdapterView.OnItemClickListener() {
+    private final AdapterView.OnItemClickListener mListItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             if (mViewListener != null) {
@@ -139,9 +139,9 @@ public class NewsListView extends LinearLayout {
         }
     };
 
-    private Context             mContext;
+    private final Context             mContext;
 
-    private NewsModel           mModel;
+    private final NewsModel           mModel;
     private StickyHeaderAdapter mAdapter;
 
     private ProgressBar         mNewsProgressBar;

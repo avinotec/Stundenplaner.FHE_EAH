@@ -28,7 +28,7 @@ import de.fhe.fhemobile.network.Endpoints;
  */
 public class ImpressumView extends FrameLayout {
 
-    private Context mContext;
+    private final Context mContext;
 
     private WebView mWebView;
 

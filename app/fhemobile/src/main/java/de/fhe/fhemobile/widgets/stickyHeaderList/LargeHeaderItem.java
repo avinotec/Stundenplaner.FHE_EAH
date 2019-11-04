@@ -86,5 +86,5 @@ public class LargeHeaderItem extends IHeaderItem {
 
     private static final String LOG_TAG = LargeHeaderItem.class.getSimpleName();
 
-    private String         mHeaderText;
+    private final String         mHeaderText;
 }

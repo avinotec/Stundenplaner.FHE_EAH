@@ -113,7 +113,7 @@ public class MensaChoiceAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private Context mContext;
+    private final Context mContext;
 
-    private MensaChoiceItemVo[] mItems;
+    private final MensaChoiceItemVo[] mItems;
 }

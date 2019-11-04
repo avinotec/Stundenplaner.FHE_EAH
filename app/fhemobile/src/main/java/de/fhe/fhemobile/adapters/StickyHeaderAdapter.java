@@ -118,8 +118,8 @@ public class StickyHeaderAdapter extends SectionAdapter {
 
     private static final String LOG_TAG = StickyHeaderAdapter.class.getSimpleName();
 
-    private Context                 mContext;
-    private LayoutInflater          mLayoutInflater;
+    private final Context                 mContext;
+    private final LayoutInflater          mLayoutInflater;
 
     private List<IHeaderItem>       mItems;
 

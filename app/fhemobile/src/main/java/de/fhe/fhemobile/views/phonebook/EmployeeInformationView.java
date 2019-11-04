@@ -81,21 +81,21 @@ public class EmployeeInformationView extends FrameLayout {
 
     }
 
-    private OnClickListener mMailClick = new OnClickListener() {
+    private final OnClickListener mMailClick = new OnClickListener() {
         @Override
         public void onClick(View v) {
             mViewListener.onMailClicked();
         }
     };
 
-    private OnClickListener mPhoneClick = new OnClickListener() {
+    private final OnClickListener mPhoneClick = new OnClickListener() {
         @Override
         public void onClick(View v) {
             mViewListener.onPhoneClicked();
         }
     };
 
-    private Context mContext;
+    private final Context mContext;
 
     private ViewListener mViewListener;
 

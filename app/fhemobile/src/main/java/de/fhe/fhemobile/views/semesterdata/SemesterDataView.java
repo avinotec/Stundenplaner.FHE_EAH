@@ -114,7 +114,7 @@ public class SemesterDataView extends LinearLayout {
         mListView.setAdapter(mAdapter);
     }
 
-    private EventListener mModelListener = new EventListener() {
+    private final EventListener mModelListener = new EventListener() {
         @Override
         public void onEvent(Event event) {
             initializeList();
@@ -123,9 +123,9 @@ public class SemesterDataView extends LinearLayout {
 
     private static final String LOG_TAG = SemesterDataView.class.getSimpleName();
 
-    private Context                     mContext;
+    private final Context                     mContext;
 
-    private SemesterDataModel           mModel;
+    private final SemesterDataModel           mModel;
     private StickyHeaderAdapter         mAdapter;
 
     private ProgressBar                 mProgress;

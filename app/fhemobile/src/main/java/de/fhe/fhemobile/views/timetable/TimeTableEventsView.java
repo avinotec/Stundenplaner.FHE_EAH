@@ -74,7 +74,7 @@ public class TimeTableEventsView extends LinearLayout {
 
     }
 
-    private Context                     mContext;
+    private final Context                     mContext;
     private IViewListener               mListener;
     private FragmentManager             mFragmentManager;
 

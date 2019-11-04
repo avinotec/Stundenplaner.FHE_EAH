@@ -62,7 +62,7 @@ public class MensaSettingsFragment extends Fragment {
     }
 
 
-    private MensaChoiceView.ViewListener mViewListener = new MensaChoiceView.ViewListener() {
+    private final MensaChoiceView.ViewListener mViewListener = new MensaChoiceView.ViewListener() {
         @Override
         public void onMensaChosen(Integer _Id, Integer _Position) {
 

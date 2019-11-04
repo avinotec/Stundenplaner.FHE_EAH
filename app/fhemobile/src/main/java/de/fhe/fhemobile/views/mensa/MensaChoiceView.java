@@ -71,7 +71,7 @@ public class MensaChoiceView extends FrameLayout {
 
     }
 
-    private AdapterView.OnItemClickListener mMensaSelectListener = new AdapterView.OnItemClickListener() {
+    private final AdapterView.OnItemClickListener mMensaSelectListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             mViewListener.onMensaChosen((int) mAdapter.getItemId(position), position);
@@ -85,9 +85,9 @@ public class MensaChoiceView extends FrameLayout {
         }
     };
 
-    private Context mContext;
+    private final Context mContext;
 
-    private MensaFoodModel mModel;
+    private final MensaFoodModel mModel;
 
     private ViewListener mViewListener;
     private MensaChoiceAdapter mAdapter;

@@ -60,7 +60,7 @@ public class NewsCategoriesFragment extends Fragment {
         }
     }
 
-    private NewsCategoriesView.ViewListener mViewsListener = new NewsCategoriesView.ViewListener() {
+    private final NewsCategoriesView.ViewListener mViewsListener = new NewsCategoriesView.ViewListener() {
         @Override
         public void onNewsCategoryChosen(Integer _Id, Integer _Position) {
             UserSettings.getInstance().setChosenNewsCategory(String.valueOf(_Id));

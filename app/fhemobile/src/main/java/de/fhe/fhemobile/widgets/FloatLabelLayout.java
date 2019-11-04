@@ -68,10 +68,10 @@ public class FloatLabelLayout extends LinearLayout {
     private static final float DEFAULT_LABEL_PADDING_BOTTOM = 4f;
 
     private EditText mEditText;
-    private TextView mLabel;
+    private final TextView mLabel;
 
     private CharSequence mHint;
-    private Interpolator mInterpolator;
+    private final Interpolator mInterpolator;
 
     public FloatLabelLayout(Context context) {
         this(context, null);

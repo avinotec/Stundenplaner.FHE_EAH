@@ -23,7 +23,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:clickable="true">
+    android:clickable="true"
+	android:focusable="true">
 
     <RelativeLayout
         android:id="@+id/headerBackground"
@@ -94,6 +95,7 @@
         android:layout_marginRight="3dp"
         android:visibility="gone"
         android:layout_below="@+id/headerBackground"
-        app:srcCompat="@android:drawable/ic_delete" />
+        app:srcCompat="@android:drawable/ic_delete"
+	    android:contentDescription="TODO" />
 
 </RelativeLayout>

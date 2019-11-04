@@ -62,5 +62,5 @@ public class HeaderImageItem implements IBaseItem {
 
     private static final String LOG_TAG = HeaderImageItem.class.getSimpleName();
 
-    private int mImageRes;
+    private final int mImageRes;
 }

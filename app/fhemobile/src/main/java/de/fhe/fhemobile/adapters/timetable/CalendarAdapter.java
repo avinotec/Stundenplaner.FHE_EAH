@@ -52,6 +52,8 @@ public class CalendarAdapter extends BaseAdapter {
 		return position;
 	}
 
+	private final static SimpleDateFormat sdf= new SimpleDateFormat("dd.MM.yyyy");
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
@@ -63,20 +65,20 @@ public class CalendarAdapter extends BaseAdapter {
 
 		RelativeLayout headerLayout = convertView.findViewById(R.id.headerBackground);
 
-		TextView lessonDay = (TextView)convertView.findViewById(R.id.tvLessonDay);
+		final TextView lessonDay = (TextView)convertView.findViewById(R.id.tvLessonDay);
 		lessonDay.setText(currentItem.getEvent().getDayOfWeek());
 
-		TextView lessonDate = (TextView)convertView.findViewById(R.id.tvLessonDate);
+		final TextView lessonDate = (TextView)convertView.findViewById(R.id.tvLessonDate);
 		lessonDate.setText(currentItem.getEvent().getDate());
 
 
-		TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvTitle);
+		final TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvTitle);
 		lessonTitle.setText(currentItem.getEvent().getShortTitle());
 
-		TextView lessonTime = (TextView)convertView.findViewById(R.id.tvLessonTime);
-		Date df = new Date(currentItem.getEvent().getStartDate());
-		SimpleDateFormat sdf= new SimpleDateFormat("dd.MM.yyyy");
-		String date = sdf.format(df);
+
+		final TextView lessonTime = (TextView)convertView.findViewById(R.id.tvLessonTime);
+		final Date df = new Date(currentItem.getEvent().getStartDate());
+		//String date = sdf.format(df);
 		lessonTime.setText(currentItem.getEvent().getStartTime()+"-"+currentItem.getEvent().getEndTime());
 
 		TextView lessonRoom = (TextView)convertView.findViewById(R.id.tvRoom);
@@ -85,20 +87,15 @@ public class CalendarAdapter extends BaseAdapter {
 		TextView lessonLecturer = (TextView)convertView.findViewById(R.id.tvLecturer);
 		lessonLecturer.setText(currentItem.getEvent().getLecturer());
 
-
-
 		if(position==0){
 			headerLayout.setVisibility(View.VISIBLE);
 			lessonDay.setVisibility(View.VISIBLE);
 			lessonDate.setVisibility(View.VISIBLE);
-
-
 		}
 		else if(!currentItem.getEvent().getDate().equals(MyTimeTableView.getSortedLessons().get(position-1).getEvent().getDate())){
 			headerLayout.setVisibility(View.VISIBLE);
 			lessonDay.setVisibility(View.VISIBLE);
 			lessonDate.setVisibility(View.VISIBLE);
-
 		}
 		else{
 			headerLayout.setVisibility(View.GONE);
@@ -106,11 +103,8 @@ public class CalendarAdapter extends BaseAdapter {
 			lessonDate.setVisibility(View.GONE);
 		}
 		if(sdf.format(df).compareTo(sdf.format(new Date()))==0){
-			lessonDay.setText("Heute ("+currentItem.getEvent().getDayOfWeek()+")");
+			lessonDay.setText("Heute "+"("+currentItem.getEvent().getDayOfWeek()+")");
 		}
-
-
-
 
 		return convertView;
 	}

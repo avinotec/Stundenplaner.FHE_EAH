@@ -330,9 +330,9 @@ public class NetworkHandler {
 
 	private static final String LOG_TAG = NetworkHandler.class.getSimpleName();
 
-	private static NetworkHandler ourInstance = new NetworkHandler();
+	private static final NetworkHandler ourInstance = new NetworkHandler();
 
-	private Retrofit mRestAdapter;
-	private ApiDeclaration  mApi;
+	private final Retrofit mRestAdapter;
+	private final ApiDeclaration  mApi;
 
 }

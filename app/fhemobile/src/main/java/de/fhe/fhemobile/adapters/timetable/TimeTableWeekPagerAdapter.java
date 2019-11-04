@@ -52,5 +52,5 @@ public class TimeTableWeekPagerAdapter extends FragmentStatePagerAdapter {
         return mData.size();
     }
 
-    private ArrayList<TimeTableWeekVo> mData;
+    private final ArrayList<TimeTableWeekVo> mData;
 }

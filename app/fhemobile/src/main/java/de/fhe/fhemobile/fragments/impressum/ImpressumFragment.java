@@ -1,7 +1,6 @@
 package de.fhe.fhemobile.fragments.impressum;
 
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +26,7 @@ public class ImpressumFragment extends FeatureFragment {
         return fragment;
     }
 
+/*
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,17 +34,22 @@ public class ImpressumFragment extends FeatureFragment {
 
         }
     }
+*/
 
+/*
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
     }
+*/
 
+/*
     @Override
     public void onDetach() {
         super.onDetach();
     }
+*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

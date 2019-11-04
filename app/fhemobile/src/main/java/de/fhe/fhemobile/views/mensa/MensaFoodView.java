@@ -110,7 +110,7 @@ public class MensaFoodView extends LinearLayout {
 
     }
 
-    private EventListener mReceivedMensaFoodListener = new EventListener() {
+    private final EventListener mReceivedMensaFoodListener = new EventListener() {
         @Override
         public void onEvent(Event event) {
             mMensaProgressBar.setVisibility(GONE);
@@ -118,7 +118,7 @@ public class MensaFoodView extends LinearLayout {
         }
     };
 
-    private EventListener mReceivedEmptyMensaFoodListener = new EventListener() {
+    private final EventListener mReceivedEmptyMensaFoodListener = new EventListener() {
         @Override
         public void onEvent(Event event) {
             mMensaProgressBar.setVisibility(GONE);
@@ -126,7 +126,7 @@ public class MensaFoodView extends LinearLayout {
         }
     };
 
-    private Context mContext;
+    private final Context mContext;
 
     private MensaFoodModel      mModel              = null;
 

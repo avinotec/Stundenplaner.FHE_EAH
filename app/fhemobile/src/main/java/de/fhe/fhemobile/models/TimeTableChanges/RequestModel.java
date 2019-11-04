@@ -29,15 +29,19 @@ public class RequestModel {
 	}
 
 	@SerializedName("os_id")
+	final
 	int os_id;
 
 	@SerializedName("device_id")
+	final
 	String device_id;
 
 	@SerializedName("refresh_timestamp")
+	final
 	long  refresh_timestamp;
 
 	@SerializedName("module_list")
+	final
 	ArrayList<Module> module_list;
 
 	public void addLesson(String setID,String moduleTitle){
@@ -50,8 +54,10 @@ public class RequestModel {
 			this.moduleTitle=moduleTitle;
 		}
 		@SerializedName("set_title")
+		final
 		String setID;
 		@SerializedName("module_title")
+		final
 		String moduleTitle;
 	}
 

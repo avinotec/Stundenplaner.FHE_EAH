@@ -73,8 +73,8 @@ public class TimeTableEventItem implements IBaseItem {
         TextView mPerson;
     }
     
-    private String mTime;
-    private String mTitle;
-    private String mRoom;
-    private String mPerson;
+    private final String mTime;
+    private final String mTitle;
+    private final String mRoom;
+    private final String mPerson;
 }

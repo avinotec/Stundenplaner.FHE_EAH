@@ -27,7 +27,7 @@ import de.fhe.fhemobile.models.settings.UserDefaults;
  * Created by paul on 22.01.14.
  */
 public class UserSettings {
-    private static UserSettings ourInstance = new UserSettings();
+    private static final UserSettings ourInstance = new UserSettings();
 
     private static final String LOG_TAG = "UserSettings";
 
@@ -35,7 +35,7 @@ public class UserSettings {
     private static final String PREF_CHOSEN_MENSA_NAME      = "chosenMensaName";
     private static final String PREF_CHOSEN_NEWS_CATEGORY   = "chosenNewsCategory";
 
-    private SharedPreferences   mSP;
+    private final SharedPreferences   mSP;
 
     private String              mChosenMensa        = null;
     private String              mChosenMensaName    = null;

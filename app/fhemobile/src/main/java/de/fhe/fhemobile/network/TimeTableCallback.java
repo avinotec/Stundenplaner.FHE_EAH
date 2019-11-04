@@ -25,7 +25,7 @@ public class TimeTableCallback<T> implements Callback<T> {
 	public TimeTableCallback(FlatDataStructure data) {
 		this.data=data;
 	}
-	FlatDataStructure data;
+	final FlatDataStructure data;
 
 	public FlatDataStructure getData() {
 		return data;

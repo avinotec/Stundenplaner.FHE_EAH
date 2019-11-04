@@ -40,7 +40,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 	//private String lessonTitle="";
 	//private String studygroupTitle="";
 
-	private Context context;
+	private final Context context;
 	public TimeTableLessonAdapter(Context context) {
 
 		this.context=context;

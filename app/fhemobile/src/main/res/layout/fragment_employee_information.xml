@@ -41,7 +41,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Professor Name"
+                android:text="@string/professor_name"
                 android:id="@+id/employeeName"
                 android:layout_marginBottom="12dp"
                 android:textSize="@dimen/list_header_big_text_size"
@@ -111,7 +111,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Role"
+                    android:text="@string/role"
                     android:id="@+id/employeeRole"
                     android:textColor="@color/primary_color"
                     android:textStyle="bold"/>

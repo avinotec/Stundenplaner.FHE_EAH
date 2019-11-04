@@ -4,10 +4,11 @@ package de.fhe.fhemobile.fragments.phonebook;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.models.phonebook.PhonebookModel;
@@ -42,15 +43,14 @@ public class EmployeeInformationFragment extends Fragment {
         mEmployee = _Employee;
     }
 
-    private EmployeeInformationView.ViewListener mViewListener = new EmployeeInformationView.ViewListener() {
+    private final EmployeeInformationView.ViewListener mViewListener = new EmployeeInformationView.ViewListener() {
         @Override
         public void onMailClicked() {
             Intent sendIntent = new Intent(Intent.ACTION_VIEW);
             sendIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
             sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { mEmployee.getMail()});
-            sendIntent.setData(Uri.parse(mEmployee.getMail()));
+            sendIntent.setDataAndType(Uri.parse(mEmployee.getMail()), "plain/text" );
             sendIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.mail_default_subject));
-            sendIntent.setType("plain/text");
             sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.mail_default_text));
             startActivity(sendIntent);
         }

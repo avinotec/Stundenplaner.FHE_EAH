@@ -70,5 +70,5 @@ public class MensaImageHeaderItem extends IHeaderItem {
 
     private static final String LOG_TAG = MensaImageHeaderItem.class.getSimpleName();
 
-    private int mImageRes;
+    private final int mImageRes;
 }

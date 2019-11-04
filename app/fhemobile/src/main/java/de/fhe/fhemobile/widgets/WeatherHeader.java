@@ -88,7 +88,7 @@ public class WeatherHeader extends RelativeLayout {
         postInitialize();
     }
     
-    private Callback<WeatherResponse> mWeatherResponseCallback = new Callback<WeatherResponse>() {
+    private final Callback<WeatherResponse> mWeatherResponseCallback = new Callback<WeatherResponse>() {
         @Override
         public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
             // MS: Bei den News sind die news/0 kaputt
@@ -104,7 +104,7 @@ public class WeatherHeader extends RelativeLayout {
 
     };
     
-    private Context   mContext;
+    private final Context   mContext;
     
     private ImageView mBackground;
     private ImageView mIcon;

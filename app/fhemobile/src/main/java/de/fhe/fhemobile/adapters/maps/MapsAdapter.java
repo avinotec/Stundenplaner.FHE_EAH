@@ -116,7 +116,7 @@ public class MapsAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private Context               mContext;
-    private List<MapCollectionVo> mItems;
+    private final Context               mContext;
+    private final List<MapCollectionVo> mItems;
 
 }

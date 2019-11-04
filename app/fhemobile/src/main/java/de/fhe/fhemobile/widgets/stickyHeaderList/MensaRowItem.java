@@ -79,5 +79,5 @@ public class MensaRowItem extends IRowItem {
 
     private static final String LOG_TAG = MensaRowItem.class.getSimpleName();
 
-    private MensaFoodItemVo mItem;
+    private final MensaFoodItemVo mItem;
 }

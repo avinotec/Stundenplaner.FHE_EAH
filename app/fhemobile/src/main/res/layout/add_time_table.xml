@@ -30,9 +30,9 @@
             android:layout_height="match_parent"
             android:animateLayoutChanges="true"
             android:orientation="vertical"
-
+            android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin"
-
+            android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingBottom="@dimen/activity_vertical_margin">
 
             <TextView
@@ -69,11 +69,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="false"
-                android:textOn="Komplettes Set wählen"
-                android:textOff="Selbst zusammenstellen"
                 android:visibility="gone"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp">
+                android:textOn="@string/komplettes_set_w_hlen"
+                android:textOff="@string/selbst_zusammenstellen"
+                android:visibility="gone">
 
             </ToggleButton>
 

@@ -118,7 +118,7 @@ public class SemesterDataFragment extends FeatureFragment {
         }
     }
 
-    private EventListener mModelChangeListener = new EventListener() {
+    private final EventListener mModelChangeListener = new EventListener() {
         @Override
         public void onEvent(Event event) {
             // Used to update the ActionbarTitle if the selection has changed

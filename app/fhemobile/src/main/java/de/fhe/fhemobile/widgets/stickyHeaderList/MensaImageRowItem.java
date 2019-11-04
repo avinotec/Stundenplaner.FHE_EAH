@@ -63,5 +63,5 @@ public class MensaImageRowItem extends IRowItem {
 
     private static final String LOG_TAG = MensaImageRowItem.class.getSimpleName();
 
-    private int         mImageRes;
+    private final int         mImageRes;
 }

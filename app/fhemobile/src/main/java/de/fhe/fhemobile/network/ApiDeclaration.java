@@ -44,38 +44,38 @@ import retrofit2.http.Query;
 public interface ApiDeclaration {
     
     @GET(Endpoints.PHONEBOOK)
-    public Call<ArrayList<EmployeeVo>> fetchEmployees(@Query(Endpoints.PARAM_FNAME) String _FirstName, @Query(Endpoints.PARAM_LNAME) String _LastName);
+    Call<ArrayList<EmployeeVo>> fetchEmployees(@Query(Endpoints.PARAM_FNAME) String _FirstName, @Query(Endpoints.PARAM_LNAME) String _LastName);
     
     @GET(Endpoints.SEMESTER)
-    public Call<SemesterDataVo> fetchSemesterData();
+    Call<SemesterDataVo> fetchSemesterData();
     
     @GET(Endpoints.MENSA + "/{mensaId}")
-    public Call<MensaFoodItemVo[]> fetchMensaData(@Path("mensaId") String _MensaId);
+    Call<MensaFoodItemVo[]> fetchMensaData(@Path("mensaId") String _MensaId);
     
     @GET(Endpoints.MENSA)
-    public Call<MensaChoiceItemVo[]> fetchAvailableMensas();
+    Call<MensaChoiceItemVo[]> fetchAvailableMensas();
 
     @GET(Endpoints.RSS + "/{newsListId}")
-    public Call<NewsItemResponse> fetchNewsData(@Path("newsListId") String _NewsListId);
+    Call<NewsItemResponse> fetchNewsData(@Path("newsListId") String _NewsListId);
 
     @GET(Endpoints.RSS)
-    public Call<NewsCategoryResponse> fetchAvailableNewsLists();
+    Call<NewsCategoryResponse> fetchAvailableNewsLists();
     
     @GET(Endpoints.WEATHER)
-    public Call<WeatherResponse> fetchWeather();
+    Call<WeatherResponse> fetchWeather();
     
     @GET( Endpoints.AQUA)
-    public Call<CafeAquaResponse> fetchCafeAquaStatus();
+    Call<CafeAquaResponse> fetchCafeAquaStatus();
     
     @GET( Endpoints.TIMETABLE)
-    public Call<TimeTableResponse> fetchTimeTable();
+    Call<TimeTableResponse> fetchTimeTable();
 
     @GET(Endpoints.TIMETABLE_EVENTS)
-    public Call<ArrayList<TimeTableWeekVo>> fetchTimeTableEvents(@Query(Endpoints.PARAM_TIMETABLE_ID) String _TimeTableId);
+    Call<ArrayList<TimeTableWeekVo>> fetchTimeTableEvents(@Query(Endpoints.PARAM_TIMETABLE_ID) String _TimeTableId);
 
     @Headers({
             "Content-Type:application/json"
     })
     @POST("https://lustigtestt.de/fhjena/rest_api/public/changes")
-    public Call<ResponseModel> registerTimeTableChanges(@Body RequestBody _json);
+    Call<ResponseModel> registerTimeTableChanges(@Body RequestBody _json);
 }

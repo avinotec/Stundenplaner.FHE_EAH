@@ -41,8 +41,6 @@ import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.feature.FeatureId;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
 
-;
-
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">

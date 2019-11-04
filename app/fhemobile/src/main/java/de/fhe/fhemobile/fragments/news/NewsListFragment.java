@@ -97,7 +97,7 @@ public class NewsListFragment extends FeatureFragment {
         }
     }
 
-    private NewsListView.ViewListener mViewListener = new NewsListView.ViewListener() {
+    private final NewsListView.ViewListener mViewListener = new NewsListView.ViewListener() {
         @Override
         public void onNewsItemClick(Integer _Id) {
             Intent intent = new Intent(getActivity(), NewsSingleActivity.class);

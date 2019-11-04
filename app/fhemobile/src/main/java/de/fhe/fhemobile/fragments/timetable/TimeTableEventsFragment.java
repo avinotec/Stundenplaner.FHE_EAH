@@ -109,7 +109,7 @@ public class TimeTableEventsFragment extends FeatureFragment {
 		}
 	}
 
-	private Callback<ArrayList<TimeTableWeekVo>> mCallback = new Callback<ArrayList<TimeTableWeekVo>>() {
+	private final Callback<ArrayList<TimeTableWeekVo>> mCallback = new Callback<ArrayList<TimeTableWeekVo>>() {
 		@Override
 		public void onResponse(Call<ArrayList<TimeTableWeekVo>> call, Response<ArrayList<TimeTableWeekVo>> response) {
 			if (response.body() != null) {
@@ -124,7 +124,7 @@ public class TimeTableEventsFragment extends FeatureFragment {
 
 	};
 
-	private TimeTableEventsView.IViewListener mViewListener = new TimeTableEventsView.IViewListener() {
+	private final TimeTableEventsView.IViewListener mViewListener = new TimeTableEventsView.IViewListener() {
 	};
 
 	public static final String PARAM_TIMETABLE_ID = "paramTimeTableId";
