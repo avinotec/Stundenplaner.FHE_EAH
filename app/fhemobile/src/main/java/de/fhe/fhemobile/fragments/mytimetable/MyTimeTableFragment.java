@@ -1,6 +1,7 @@
 package de.fhe.fhemobile.fragments.mytimetable;
 
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
+
+import org.junit.Assert;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -84,7 +87,6 @@ public class MyTimeTableFragment extends FeatureFragment {
 */
 
 
-	private final static Gson gson= new Gson();
 	private final int CHANGEREASON_EDIT = 1;
 	private final int CHANGEREASON_NEW = 3;
 	private final int CHANGEREASON_DELETE = 2;
@@ -93,7 +95,8 @@ public class MyTimeTableFragment extends FeatureFragment {
 	public void onDetach() {
 		super.onDetach();
 
-		final RequestModel request = new RequestModel(1, MainActivity.getFirebaseToken(),new Date().getTime()-86400000);
+
+		final RequestModel request = new RequestModel(RequestModel.ANDROID_DEVICE, MainActivity.getFirebaseToken(),new Date().getTime()-86400000);
 		String title="";
 		String setID="";
 
@@ -109,16 +112,45 @@ public class MyTimeTableFragment extends FeatureFragment {
 			}
 		}
 
+		final Gson gson = new Gson();
 		final String json = gson.toJson(request);
-		Log.d(TAG, "onDetach: "+json);
+		Log.d(TAG, "onDetach: " + json);
 
-		//TODO: Das hier geht nicht. insbesondere nicht in onDetach.
-		// in die Applikation verlegen
-		NetworkHandler.getInstance().registerTimeTableChanges(json, new Callback<ResponseModel>() {
+		NetworkHandler.getInstance().registerTimeTableChanges( json, new Callback<ResponseModel>() {
 			@Override
 			public void onResponse(final Call<ResponseModel> call, final Response<ResponseModel> response) {
+
+				Assert.assertTrue( response != null );
+				Assert.assertTrue( response.body() != null );
+
+				//DEBUG
+				if ( response.body() == null )
+				{
+					// Da ist ein Fehler in der Kommunikation
+					// 400: Bad request
+					if ( response.code() == 400 )
+					{
+						String sErrorText = response.errorBody().toString();
+						Log.d( TAG, "Error in Schedule Change Server: " + sErrorText );
+
+						AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
+						builder1.setMessage("Push Notifications: Error in Schedule Change Server: " + sErrorText);
+						AlertDialog alert11 = builder1.create();
+						alert11.show();
+					}
+
+					// nothing to do now....
+					return;
+				}
+
+
+				final Gson gson = new Gson();
+				final String json = gson.toJson(response.body());
+				Assert.assertTrue( !json.isEmpty() );
+
 				Log.d(TAG, "onResponse: "+response.raw().request().url());
-				Log.d(TAG, "onResponse code: "+response.code()+" geparsed: "+gson.toJson(response.body()));
+				Log.d(TAG, "onResponse code: "+response.code()+" geparsed: "+ json );
+
 				final List<ResponseModel.Change> changes = response.body().getChanges();
 
 				final List<String[]> negativeList = MyTimeTableView.generateNegativeLessons();
