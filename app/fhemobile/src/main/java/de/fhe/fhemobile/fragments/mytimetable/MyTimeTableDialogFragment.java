@@ -403,14 +403,14 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         @Override
         public void onResponse(Call<TimeTableResponse> call, Response<TimeTableResponse> response) {
             if ( response.body() != null ) {
+
+                //store the response, to work on later
                 mResponse = response.body();
-                for (StudyCourseVo course : response.body().getStudyCourses()){
+//                for (StudyCourseVo course : response.body().getStudyCourses()){
 //                    Log.d(TAG, "onResponse: "+course.getTitle());
-                }
+//                }
 
-
-                mView.setStudyCourseItems(response.body().getStudyCourses());
-
+                mView.setStudyCourseItems(mResponse.getStudyCourses());
             }
             Log.d(TAG, "success: Request wurde ausgefuehrt: "+response.raw().request().url()+" Status: "+response.code());
             // MS: Bei den News sind die news/0 kaputt
