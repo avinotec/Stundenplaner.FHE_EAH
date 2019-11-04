@@ -21,7 +21,10 @@ import java.util.ArrayList;
 
 public class RequestModel {
 
-	public RequestModel(int os_id, String device_id, long refresh_timestamp){
+	public static final int ANDROID_DEVICE = 1 ;
+
+
+	public RequestModel(final int os_id, final String device_id, final long refresh_timestamp){
 		this.os_id=os_id;
 		this.device_id=device_id;
 		this.refresh_timestamp=refresh_timestamp;
