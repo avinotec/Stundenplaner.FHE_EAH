@@ -21,16 +21,18 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.junit.Assert;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.fhe.fhemobile.Main;
-import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.models.mensa.MensaFoodModel;
 import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.phonebook.PhonebookModel;
 import de.fhe.fhemobile.models.semesterdata.SemesterDataModel;
+import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.utils.MensaUtils;
 import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.vos.CafeAquaResponse;
@@ -61,8 +63,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class NetworkHandler {
 	private static final String TAG = "NetworkHandler";
+	private static final String LOG_TAG = NetworkHandler.class.getSimpleName();
+
+	private static final NetworkHandler ourInstance = new NetworkHandler();
+
+	private Retrofit mRestAdapter = null;
+	private ApiDeclaration  mApi = null;
+
 
 	public static NetworkHandler getInstance() {
+		Assert.assertTrue( ourInstance != null);
 		return ourInstance;
 	}
 
@@ -71,18 +81,20 @@ public class NetworkHandler {
 	 * @param _FirstName
 	 * @param _LastName
 	 */
-	public void fetchEmployees(String _FirstName, String _LastName) {
+	public void fetchEmployees(final String _FirstName, final String _LastName) {
 
+		Assert.assertTrue( mApi != null );
 		mApi.fetchEmployees(_FirstName, _LastName).enqueue(new Callback<ArrayList<EmployeeVo>>() {
+
 			@Override
-			public void onResponse(Call<ArrayList<EmployeeVo>> call, Response<ArrayList<EmployeeVo>> response) {
+			public void onResponse(final Call<ArrayList<EmployeeVo>> call, final Response<ArrayList<EmployeeVo>> response) {
 				if ( response.body() != null ) {
 					PhonebookModel.getInstance().setFoundEmployees(response.body());
 				}
 			}
 
 			@Override
-			public void onFailure(Call<ArrayList<EmployeeVo>> call, Throwable t) {
+			public void onFailure(final Call<ArrayList<EmployeeVo>> call, final Throwable t) {
 				showErrorToast();
 			}
 
@@ -93,17 +105,18 @@ public class NetworkHandler {
 	 * *
 	 */
 	public void fetchSemesterData() {
+		Assert.assertTrue( mApi != null );
 
-		mApi.fetchSemesterData().enqueue(new Callback<SemesterDataVo>() {
+		mApi.fetchSemesterData().enqueue( new Callback<SemesterDataVo>() {
 			@Override
-			public void onResponse(Call<SemesterDataVo> call, Response<SemesterDataVo> response) {
+			public void onResponse( final Call<SemesterDataVo> call, final Response<SemesterDataVo> response) {
 				if ( response.body() != null ) {
 					SemesterDataModel.getInstance().setData(response.body().getSemester());
 				}
 			}
 
 			@Override
-			public void onFailure(Call<SemesterDataVo> call, Throwable t) {
+			public void onFailure(final Call<SemesterDataVo> call, final Throwable t) {
 				showErrorToast();
 			}
 		});
@@ -113,11 +126,12 @@ public class NetworkHandler {
 	 * *
 	 */
 	public void fetchMensaData() {
+		Assert.assertTrue( mApi != null );
 
 		mApi.fetchMensaData(UserSettings.getInstance().getChosenMensa()).enqueue( new Callback<MensaFoodItemVo[]>() {
 			@Override
-			public void onResponse(Call<MensaFoodItemVo[]> call, Response<MensaFoodItemVo[]> response) {
-				MensaFoodItemVo[] _mensaItems =response.body();
+			public void onResponse(final Call<MensaFoodItemVo[]> call, final Response<MensaFoodItemVo[]> response) {
+				final MensaFoodItemVo[] _mensaItems =response.body();
 				List<MensaFoodItemCollectionVo> orderedItems = null;
 
 				if (_mensaItems != null && _mensaItems.length > 0)
@@ -131,7 +145,7 @@ public class NetworkHandler {
 			}
 
 			@Override
-			public void onFailure(Call<MensaFoodItemVo[]> call, Throwable t) {
+			public void onFailure(final Call<MensaFoodItemVo[]> call, final Throwable t) {
 				showErrorToast();
 			}
 		});
@@ -144,7 +158,7 @@ public class NetworkHandler {
 
 		fetchNewsData(UserSettings.getInstance().getChosenNewsCategory(), new Callback<NewsItemResponse>() {
 			@Override
-			public void onResponse(Call<NewsItemResponse> call, Response<NewsItemResponse> response) {
+			public void onResponse(final Call<NewsItemResponse> call, final Response<NewsItemResponse> response) {
 				// MS: Bei den News sind die news/0 kaputt
 				if ( response.code() == 200 ) {
 					if (response.body() != null) {
@@ -156,13 +170,13 @@ public class NetworkHandler {
 				{
 					// no content, bspw. wegen einer Weiterleitung
 					// TODO: Leere Meldung erzeugen
-					NewsItemVo aNoNewsItemErrorObj = new NewsItemVo();
+					final NewsItemVo aNoNewsItemErrorObj = new NewsItemVo();
 					aNoNewsItemErrorObj.setTitle("System Error");
 					aNoNewsItemErrorObj.setLink("");
 					aNoNewsItemErrorObj.setDescription("An internal error in this news system showed up. Please report.");
 					aNoNewsItemErrorObj.setAuthor("The News System");
 
-					NewsItemVo[] mNewsItems = new NewsItemVo[1];
+					final NewsItemVo[] mNewsItems = new NewsItemVo[1];
 					mNewsItems[0] = aNoNewsItemErrorObj;
 					final NewsItemVo[] newsItemVos = mNewsItems;
 					NewsModel.getInstance().setNewsItems(newsItemVos);
@@ -171,7 +185,7 @@ public class NetworkHandler {
 			}
 
 			@Override
-			public void onFailure(Call<NewsItemResponse> call, Throwable t) {
+			public void onFailure(final Call<NewsItemResponse> call, final Throwable t) {
 				showErrorToast();
 			}
 		});
@@ -180,7 +194,8 @@ public class NetworkHandler {
 	/**
 	 * *
 	 */
-	public void fetchNewsData(String _NewsCategory, Callback<NewsItemResponse> _Callback) {
+	public void fetchNewsData(final String _NewsCategory, final Callback<NewsItemResponse> _Callback) {
+		Assert.assertTrue( mApi != null );
 
 		mApi.fetchNewsData(_NewsCategory ).enqueue(_Callback);
 	}
@@ -189,10 +204,11 @@ public class NetworkHandler {
 	 * *
 	 */
 	public void fetchAvailableMensas() {
+		Assert.assertTrue( mApi != null );
 
 		mApi.fetchAvailableMensas().enqueue(new Callback<MensaChoiceItemVo[]>() {
 			@Override
-			public void onResponse(Call<MensaChoiceItemVo[]> call, Response<MensaChoiceItemVo[]> response) {
+			public void onResponse(final Call<MensaChoiceItemVo[]> call, final Response<MensaChoiceItemVo[]> response) {
 				// MS: Bei den News sind die news/0 kaputt
 				if ( response.body() != null ) {
 					MensaFoodModel.getInstance().setChoiceItems(response.body());
@@ -200,7 +216,7 @@ public class NetworkHandler {
 			}
 
 			@Override
-			public void onFailure(Call<MensaChoiceItemVo[]> call, Throwable t) {
+			public void onFailure(final Call<MensaChoiceItemVo[]> call, final Throwable t) {
 				showErrorToast();
 			}
 		});
@@ -213,7 +229,7 @@ public class NetworkHandler {
 
 		fetchAvailableNewsLists(new Callback<NewsCategoryResponse>() {
 			@Override
-			public void onResponse(Call<NewsCategoryResponse> call, Response<NewsCategoryResponse> response) {
+			public void onResponse(final Call<NewsCategoryResponse> call, final Response<NewsCategoryResponse> response) {
 				// MS: Bei den News sind die news/0 kaputt
 				if ( response.body() != null ) {
 					NewsModel.getInstance().setCategoryItems(response.body().getNewsCategories());
@@ -221,7 +237,7 @@ public class NetworkHandler {
 			}
 
 			@Override
-			public void onFailure(Call<NewsCategoryResponse> call, Throwable t) {
+			public void onFailure(final Call<NewsCategoryResponse> call, final Throwable t) {
 				showErrorToast();
 			}
 		});
@@ -230,7 +246,8 @@ public class NetworkHandler {
 	/**
 	 * *
 	 */
-	public void fetchAvailableNewsLists(Callback<NewsCategoryResponse> _Callback) {
+	public void fetchAvailableNewsLists(final Callback<NewsCategoryResponse> _Callback) {
+		Assert.assertTrue( mApi != null );
 
 		mApi.fetchAvailableNewsLists().enqueue(_Callback);
 	}
@@ -238,7 +255,8 @@ public class NetworkHandler {
 	/**
 	 * *
 	 */
-	public void fetchWeather(Callback<WeatherResponse> _Callback) {
+	public void fetchWeather(final Callback<WeatherResponse> _Callback) {
+		Assert.assertTrue( mApi != null );
 
 		mApi.fetchWeather().enqueue(_Callback);
 	}
@@ -247,7 +265,8 @@ public class NetworkHandler {
 	 *
 	 * @param _Callback
 	 */
-	public void fetchTimeTable(Callback<TimeTableResponse> _Callback) {
+	public void fetchTimeTable(final Callback<TimeTableResponse> _Callback) {
+		Assert.assertTrue( mApi != null );
 
 		mApi.fetchTimeTable().enqueue(_Callback);
 	}
@@ -257,19 +276,28 @@ public class NetworkHandler {
 	 * @param _TimeTableId
 	 * @param _Callback
 	 */
-	public void fetchTimeTableEvents(String _TimeTableId, Callback<ArrayList<TimeTableWeekVo>> _Callback) {
+	public void fetchTimeTableEvents(final String _TimeTableId, final Callback<ArrayList<TimeTableWeekVo>> _Callback) {
+		Assert.assertTrue( mApi != null );
 
 		mApi.fetchTimeTableEvents(_TimeTableId).enqueue(_Callback);
 	}
-	public List<FlatDataStructure> reloadEvents(FlatDataStructure event) {
-			List<FlatDataStructure>eventList = new ArrayList<>();
+
+	public List<FlatDataStructure> reloadEvents(final FlatDataStructure event) {
+		Assert.assertTrue( mApi != null );
+		Assert.assertTrue( event != null );
+
+
+		final List<FlatDataStructure>eventList = new ArrayList<>();
+
 		try {
-			ArrayList<TimeTableWeekVo> timeTable=mApi.fetchTimeTableEvents(event.getStudyGroup().getTimeTableId()).execute().body();
-			for (TimeTableWeekVo weekEntry:timeTable){
-				for(TimeTableDayVo dayEntry:weekEntry.getDays() ){
-					for(TimeTableEventVo eventEntry : dayEntry.getEvents() ){
+			final ArrayList<TimeTableWeekVo> timeTable = mApi.fetchTimeTableEvents(event.getStudyGroup().getTimeTableId()).execute().body();
+			Assert.assertTrue( timeTable != null );
+
+			for (final TimeTableWeekVo weekEntry:timeTable){
+				for(final TimeTableDayVo dayEntry:weekEntry.getDays() ){
+					for(final TimeTableEventVo eventEntry : dayEntry.getEvents() ){
 						if(eventEntry.getTitle().equals(event.getEvent().getTitle())){
-							FlatDataStructure item = event.copy();
+							final FlatDataStructure item = event.copy();
 							item
 								.setEventWeek(weekEntry)
 								.setEventDay(dayEntry)
@@ -279,15 +307,15 @@ public class NetworkHandler {
 					}
 				}
 			}
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Log.e(TAG, "fetchTimeTableEventsSynchron: ",e );
 		}
 		return eventList;
 	}
-	public void registerTimeTableChanges(String json, Callback<ResponseModel>_Callback){
-		RequestBody body =RequestBody.create(MediaType.parse("application/json"),json);
+	public void registerTimeTableChanges(final String json, final Callback<ResponseModel>_Callback){
+		Assert.assertTrue( mApi != null );
+		final RequestBody body =RequestBody.create( MediaType.parse("application/json"), json);
 		mApi.registerTimeTableChanges(body).enqueue(_Callback);
-
 	}
 
 
@@ -295,8 +323,8 @@ public class NetworkHandler {
 	 *
 	 * @param _Callback
 	 */
-	public void fetchCafeAquaStatus(Callback<CafeAquaResponse> _Callback) {
-
+	public void fetchCafeAquaStatus(final Callback<CafeAquaResponse> _Callback) {
+		Assert.assertTrue( mApi != null );
 		mApi.fetchCafeAquaStatus().enqueue(_Callback);
 	}
 
@@ -308,11 +336,16 @@ public class NetworkHandler {
 				Toast.LENGTH_LONG).show();
 	}
 
+
+
 	/**
 	 *
 	 */
 	private NetworkHandler() {
-		Gson gson = new GsonBuilder()
+		Assert.assertTrue( mApi == null );
+		Assert.assertTrue( mRestAdapter == null );
+
+		final Gson gson = new GsonBuilder()
 				.setDateFormat("HH:mm:ss'T'yyyy-MM-dd")
 				.create();
 
@@ -324,15 +357,9 @@ public class NetworkHandler {
 				.build();
 
 		mApi = mRestAdapter.create(ApiDeclaration.class);
+		Assert.assertTrue( mApi != null );
+		Assert.assertTrue( mRestAdapter != null );
 
 	}
-
-
-	private static final String LOG_TAG = NetworkHandler.class.getSimpleName();
-
-	private static final NetworkHandler ourInstance = new NetworkHandler();
-
-	private final Retrofit mRestAdapter;
-	private final ApiDeclaration  mApi;
 
 }
