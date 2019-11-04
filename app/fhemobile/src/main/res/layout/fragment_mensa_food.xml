@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
-        android:text="@string/leider_sind_keine_daten_verf_gbar"
+        android:text="@string/leider_sind_keine_daten_verfuegbar"
         android:textSize="@dimen/list_header_big_text_size"
         android:textColor="@color/third_color"
         android:visibility="gone"
