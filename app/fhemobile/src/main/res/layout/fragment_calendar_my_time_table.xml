@@ -38,15 +38,13 @@
                 android:layout_height="@dimen/header_image_height"
                 android:src="@drawable/th_phonebook"
                 android:scaleType="centerCrop"
-                android:contentDescription="TODO" />
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingBottom="@dimen/activity_vertical_margin"
                 android:animateLayoutChanges="true"
                 >
@@ -55,6 +53,10 @@
                     android:id="@+id/timetableEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/button_primary"
                     android:text="@string/edit" />
 
                 <ListView

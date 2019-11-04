@@ -95,12 +95,14 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		}
 
 		final TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvLessonTitle);
+		final RelativeLayout headerLayout = convertView.findViewById(R.id.headerBackground);
 
 		if(position==0){
 			lessonTitle.setText(FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 			lessonTitle.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
+			headerLayout.setVisibility(View.VISIBLE);
 
 		}
 
@@ -109,9 +111,11 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 			lessonTitle.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
+			headerLayout.setVisibility(View.VISIBLE);
 		}
 		else{
 			lessonTitle.setVisibility(View.GONE);
+			headerLayout.setVisibility(View.GONE);
 		}
 
 
