@@ -23,8 +23,6 @@ import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.views.timetable.MyTimeTableView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
-import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
-import de.fhe.fhemobile.vos.timetable.TermsVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,6 +36,10 @@ import retrofit2.Response;
 public class MyTimeTableFragment extends FeatureFragment {
 	public static final String TAG = "MyTimeTableFragment";
 
+	private MyTimeTableView     mView;
+
+	private TimeTableResponse mResponse;
+
 	/**
 	 * Use this factory method to create a new instance of
 	 * this fragment using the provided parameters.
@@ -45,8 +47,8 @@ public class MyTimeTableFragment extends FeatureFragment {
 	 * @return A new instance of fragment TimeTableFragment.
 	 */
 	public static MyTimeTableFragment newInstance() {
-		MyTimeTableFragment fragment = new MyTimeTableFragment();
-		Bundle args = new Bundle();
+		final MyTimeTableFragment fragment = new MyTimeTableFragment();
+		final Bundle args = new Bundle();
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -58,10 +60,6 @@ public class MyTimeTableFragment extends FeatureFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		mChosenCourse       = null;
-		mChosenTerm         = null;
-		mChosenTimetableId  = null;
 
 		if (getArguments() != null) {
 
@@ -86,41 +84,49 @@ public class MyTimeTableFragment extends FeatureFragment {
 */
 
 
+	private final static Gson gson= new Gson();
+	private final int CHANGEREASON_EDIT = 1;
+	private final int CHANGEREASON_NEW = 3;
+	private final int CHANGEREASON_DELETE = 2;
+
 	@Override
 	public void onDetach() {
 		super.onDetach();
+
 		final RequestModel request = new RequestModel(1, MainActivity.getFirebaseToken(),new Date().getTime()-86400000);
 		String title="";
 		String setID="";
-		for (FlatDataStructure event:MyTimeTableView.getLessons()){
-			String eventTitle=FlatDataStructure.cutEventTitle(event.getEvent().getTitle());
 
-			if((title.equals(eventTitle)&&setID.equals(event.getStudyGroup().getTimeTableId()))==false){
+		for (FlatDataStructure event:MyTimeTableView.getLessons()){
+			final String eventTitleShort=FlatDataStructure.cutEventTitle(event.getEvent().getTitle());
+			final String sSetID = event.getStudyGroup().getTimeTableId() ;
+
+			if( (title.equals(eventTitleShort) && setID.equals( sSetID ) ) == false ) {
+
 				request.addLesson(event.getStudyGroup().getTimeTableId(),event.getEvent().getTitle());
-				title=eventTitle;
-				setID=event.getStudyGroup().getTimeTableId();
+				title=eventTitleShort;
+				setID=sSetID;
 			}
 		}
 
-		final Gson gson= new Gson();
 		final String json = gson.toJson(request);
 		Log.d(TAG, "onDetach: "+json);
 
+		//TODO: Das hier geht nicht. insbesondere nicht in onDetach.
+		// in die Applikation verlegen
 		NetworkHandler.getInstance().registerTimeTableChanges(json, new Callback<ResponseModel>() {
-			final int CHANGEREASON_EDIT = 1;
-			final int CHANGEREASON_NEW = 3;
-			final int CHANGEREASON_DELETE = 2;
 			@Override
-			public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+			public void onResponse(final Call<ResponseModel> call, final Response<ResponseModel> response) {
 				Log.d(TAG, "onResponse: "+response.raw().request().url());
 				Log.d(TAG, "onResponse code: "+response.code()+" geparsed: "+gson.toJson(response.body()));
-				List<ResponseModel.Change> changes = response.body().getChanges();
+				final List<ResponseModel.Change> changes = response.body().getChanges();
 
 				final List<String[]> negativeList = MyTimeTableView.generateNegativeLessons();
-				Iterator<ResponseModel.Change> iterator= changes.iterator();
+				final Iterator<ResponseModel.Change> iterator= changes.iterator();
 
 				while(iterator.hasNext()){
-					ResponseModel.Change change=iterator.next();
+
+					final ResponseModel.Change change=iterator.next();
 					//TODO: Negativ Liste von der gespeicherten Liste erstellen
 					boolean isInNegativeList=false;
 					for(String[] negativeEvent:negativeList){
@@ -130,9 +136,9 @@ public class MyTimeTableFragment extends FeatureFragment {
 						}
 
 					}
+
 					if(isInNegativeList){
 						iterator.remove();
-
 					}
 				}
 
@@ -160,9 +166,13 @@ public class MyTimeTableFragment extends FeatureFragment {
 
 
 				for(ResponseModel.Change change : changes){
+
+					// Shortcut to the list
+					final List<FlatDataStructure> myTimetableList = MyTimeTableView.getLessons();
+
 					//Aenderung eines Events: suche den Event und ueberschreibe seine Daten
 					if(change.getChangesReason()==CHANGEREASON_EDIT) {
-						FlatDataStructure event = FlatDataStructure.getEventByID(MyTimeTableView.getLessons(),change.getNewEventJson().getUid());
+						final FlatDataStructure event = FlatDataStructure.getEventByID( myTimetableList, change.getNewEventJson().getUid());
 						if(event!=null){
 							event.setEvent(change.getNewEventJson());
 						}
@@ -170,14 +180,14 @@ public class MyTimeTableFragment extends FeatureFragment {
 					//Hinzufuegen eines neuen Events: Erstelle ein neues Element vom Typ FlatDataStructure, schreibe alle Set-, Semester- und Studiengangdaten in diesen
 					//und fuege dann die Eventdaten des neuen Events hinzu. Anschliessend in die Liste hinzufuegen.
 					if(change.getChangesReason()==CHANGEREASON_NEW) {
-						FlatDataStructure event = FlatDataStructure.queryGetEventsByStudyGroupTitle(MyTimeTableView.getLessons(),change.getSetSplusKey()).get(0).copy();
+						final FlatDataStructure event = FlatDataStructure.queryGetEventsByStudyGroupTitle( myTimetableList, change.getSetSplusKey()).get(0).copy();
 						event.setEvent(change.getNewEventJson());
 						MyTimeTableView.getLessons().add(event);
 
 					}
 					//Loeschen eines Events: Suche den Event mit der SplusID und lösche ihn aus der Liste.
 					if(change.getChangesReason()==CHANGEREASON_DELETE){
-						FlatDataStructure event = FlatDataStructure.getEventByID(MyTimeTableView.getLessons(),change.getNewEventJson().getUid());
+						final FlatDataStructure event = FlatDataStructure.getEventByID( myTimetableList, change.getNewEventJson().getUid());
 						MyTimeTableView.getLessons().remove(event);
 					}
 				}
@@ -191,10 +201,4 @@ public class MyTimeTableFragment extends FeatureFragment {
 		});
 	}
 
-	private MyTimeTableView     mView;
-
-	private TimeTableResponse mResponse;
-	private StudyCourseVo     mChosenCourse;
-	private TermsVo           mChosenTerm;
-	private String            mChosenTimetableId;
 }
