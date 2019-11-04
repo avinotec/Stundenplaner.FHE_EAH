@@ -61,6 +61,7 @@ public class CalendarAdapter extends BaseAdapter {
 		final FlatDataStructure currentItem = MyTimeTableView.getSortedLessons().get(position);
 		RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.singleRowLayout);
 
+		RelativeLayout headerLayout = convertView.findViewById(R.id.headerBackground);
 
 		TextView lessonDay = (TextView)convertView.findViewById(R.id.tvLessonDay);
 		lessonDay.setText(currentItem.getEvent().getDayOfWeek());
@@ -70,7 +71,7 @@ public class CalendarAdapter extends BaseAdapter {
 
 
 		TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvTitle);
-		lessonTitle.setText(currentItem.getEvent().getTitle());
+		lessonTitle.setText(currentItem.getEvent().getShortTitle());
 
 		TextView lessonTime = (TextView)convertView.findViewById(R.id.tvLessonTime);
 		Date df = new Date(currentItem.getEvent().getStartDate());
@@ -87,17 +88,20 @@ public class CalendarAdapter extends BaseAdapter {
 
 
 		if(position==0){
+			headerLayout.setVisibility(View.VISIBLE);
 			lessonDay.setVisibility(View.VISIBLE);
 			lessonDate.setVisibility(View.VISIBLE);
 
 
 		}
 		else if(!currentItem.getEvent().getDate().equals(MyTimeTableView.getSortedLessons().get(position-1).getEvent().getDate())){
+			headerLayout.setVisibility(View.VISIBLE);
 			lessonDay.setVisibility(View.VISIBLE);
 			lessonDate.setVisibility(View.VISIBLE);
 
 		}
 		else{
+			headerLayout.setVisibility(View.GONE);
 			lessonDay.setVisibility(View.GONE);
 			lessonDate.setVisibility(View.GONE);
 		}
