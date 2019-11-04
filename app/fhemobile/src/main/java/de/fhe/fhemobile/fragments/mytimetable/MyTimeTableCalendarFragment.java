@@ -11,12 +11,9 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.models.TimeTableChanges.RequestModel;
 import de.fhe.fhemobile.views.timetable.MyTimeTableCalendarView;
 import de.fhe.fhemobile.views.timetable.MyTimeTableView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;

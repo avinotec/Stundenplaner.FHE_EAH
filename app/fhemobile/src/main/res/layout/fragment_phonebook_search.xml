@@ -89,7 +89,7 @@
                         android:ems="10"
                         android:hint="@string/phonebook_lastname"
                         android:textColor="@color/primary_color"
-                        />
+	                    android:autofillHints="" />
                 </de.fhe.fhemobile.widgets.FloatLabelLayout>
 
                 <Button

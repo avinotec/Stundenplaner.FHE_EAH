@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.fhe.fhemobile.models.TimeTableChanges;
+package de.fhe.fhemobile.models.timeTableChanges;
 
 import com.google.gson.annotations.SerializedName;
 

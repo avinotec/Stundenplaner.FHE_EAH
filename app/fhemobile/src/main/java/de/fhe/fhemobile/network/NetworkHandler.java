@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fhe.fhemobile.Main;
-import de.fhe.fhemobile.models.TimeTableChanges.ResponseModel;
+import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.models.mensa.MensaFoodModel;
 import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.phonebook.PhonebookModel;

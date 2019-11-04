@@ -27,6 +27,10 @@ import de.fhe.fhemobile.vos.maps.MapVo;
  */
 public class MapsModel {
 
+
+    private static MapsModel ourInstance = null;
+    private final List<MapCollectionVo> mMaps;
+
     public static MapsModel getInstance() {
         if(ourInstance == null) {
             ourInstance = new MapsModel();
@@ -34,7 +38,7 @@ public class MapsModel {
         return ourInstance;
     }
 
-    public List<MapCollectionVo> getMaps() {
+    final public List<MapCollectionVo> getMaps() {
         return mMaps;
     }
 
@@ -49,7 +53,7 @@ public class MapsModel {
         
         // -----------------------------------------------------------------------------------------
 
-        List<MapVo> building3Maps = new ArrayList<>();
+        final List<MapVo> building3Maps = new ArrayList<>();
         building3Maps.add(new MapVo("Haus 3-2-1",       "Haus3-0_Start2.jpeg"));
         building3Maps.add(new MapVo("Haus 3-2-1 - KG",  "Haus3-1_KG.jpeg"));
         building3Maps.add(new MapVo("Haus 3-2-1 - EG",  "Haus3-2_EG.jpeg"));
@@ -62,7 +66,7 @@ public class MapsModel {
 
         // -----------------------------------------------------------------------------------------
 
-        List<MapVo> building4Maps = new ArrayList<>();
+        final List<MapVo> building4Maps = new ArrayList<>();
         building4Maps.add(new MapVo("Haus 4",       "Haus4-0_Start.jpeg"));
         building4Maps.add(new MapVo("Haus 4 - KG",  "Haus4-1_KG.jpeg"));
         building4Maps.add(new MapVo("Haus 4 - EG",  "Haus4-2_EG.jpeg"));
@@ -74,7 +78,7 @@ public class MapsModel {
 
         // -----------------------------------------------------------------------------------------
 
-        List<MapVo> building5Maps = new ArrayList<>();
+        final List<MapVo> building5Maps = new ArrayList<>();
         building5Maps.add(new MapVo("Haus 5",       "Haus5-0_Start.jpeg"));
         building5Maps.add(new MapVo("Haus 5 - KG",  "Haus5-1_KG.jpeg"));
         building5Maps.add(new MapVo("Haus 5 - EG",  "Haus5-2_EG.jpeg"));
@@ -86,14 +90,14 @@ public class MapsModel {
 
         // -----------------------------------------------------------------------------------------
 
-        List<MapVo> hitAulaMaps = new ArrayList<>();
+        final List<MapVo> hitAulaMaps = new ArrayList<>();
         hitAulaMaps.add(new MapVo("HIT - Aula", "HIT-Aula.jpg"));
         MapCollectionVo hitAula = new MapCollectionVo("HIT - Aula", hitAulaMaps);
 
         
         // -----------------------------------------------------------------------------------------
 
-        List<MapVo> hitCampusMaps = new ArrayList<>();
+        final List<MapVo> hitCampusMaps = new ArrayList<>();
         hitCampusMaps.add(new MapVo("HIT - Campus", "HIT-Campus.jpg"));
         MapCollectionVo hitCampus = new MapCollectionVo("HIT - Campus", hitCampusMaps);
         
@@ -105,7 +109,4 @@ public class MapsModel {
         mMaps.add(hitCampus);
     }
 
-    private static MapsModel ourInstance = null;
-
-    private final List<MapCollectionVo> mMaps;
 }

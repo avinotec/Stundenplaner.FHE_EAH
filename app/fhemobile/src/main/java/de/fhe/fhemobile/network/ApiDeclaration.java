@@ -17,7 +17,7 @@ package de.fhe.fhemobile.network;
 
 import java.util.ArrayList;
 
-import de.fhe.fhemobile.models.TimeTableChanges.ResponseModel;
+import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.vos.CafeAquaResponse;
 import de.fhe.fhemobile.vos.WeatherResponse;
 import de.fhe.fhemobile.vos.mensa.MensaChoiceItemVo;
