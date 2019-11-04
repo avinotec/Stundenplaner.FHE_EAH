@@ -25,6 +25,9 @@ public class Endpoints {
     public static final String BASE_URL             = LIVE_URL;
     public static final String APP_NAME             = "/fheapp/";
 
+    //TODO
+    public static final String SCHEDULE_CHANGE_SERVER = "https://lustigtestt.de/fhjena/rest_api/public/changes";
+
 
     /* Example
         http://193.174.232.89:8080/fheapp/api/eah/timetable

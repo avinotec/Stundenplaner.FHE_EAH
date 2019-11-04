@@ -76,6 +76,6 @@ public interface ApiDeclaration {
     @Headers({
             "Content-Type:application/json"
     })
-    @POST("https://lustigtestt.de/fhjena/rest_api/public/changes")
+    @POST( Endpoints.SCHEDULE_CHANGE_SERVER )
     Call<ResponseModel> registerTimeTableChanges(@Body RequestBody _json);
 }
