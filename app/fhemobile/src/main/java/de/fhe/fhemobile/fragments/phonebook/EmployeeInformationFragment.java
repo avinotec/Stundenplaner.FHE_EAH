@@ -46,13 +46,13 @@ public class EmployeeInformationFragment extends Fragment {
     private final EmployeeInformationView.ViewListener mViewListener = new EmployeeInformationView.ViewListener() {
         @Override
         public void onMailClicked() {
-            Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-            sendIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
+            Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
+            //sendIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
             sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { mEmployee.getMail()});
-            sendIntent.setDataAndType(Uri.parse(mEmployee.getMail()), "plain/text" );
+            sendIntent.setData(Uri.parse("mailto:"));
             sendIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.mail_default_subject));
             sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.mail_default_text));
-            startActivity(sendIntent);
+            startActivity(Intent.createChooser(sendIntent, ""));
         }
 
         @Override
