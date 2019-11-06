@@ -24,10 +24,12 @@ import android.widget.ToggleButton;
 
 import androidx.fragment.app.FragmentManager;
 
+import java.util.Collections;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.timetable.TimeTableLessonAdapter;
+import de.fhe.fhemobile.comparator.StudyCourseComperator;
 import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
 import de.fhe.fhemobile.vos.timetable.StudyGroupVo;
 import de.fhe.fhemobile.vos.timetable.TermsVo;
@@ -74,11 +76,15 @@ public class AddLessonView extends LinearLayout {
     }
 
     public void setStudyCourseItems(final List<StudyCourseVo> _Items) {
+        StudyCourseVo.alterTitle(_Items);
+        Collections.sort(_Items,new StudyCourseComperator());
         mStudyCoursePicker.setItems(_Items);
         mStudyCoursePicker.toggleEnabled(true);
     }
 
     public void setTermsItems(final List<TermsVo> _Items) {
+
+
         mTermsPicker.setItems(_Items);
         mTermsPicker.toggleEnabled(true);
     }

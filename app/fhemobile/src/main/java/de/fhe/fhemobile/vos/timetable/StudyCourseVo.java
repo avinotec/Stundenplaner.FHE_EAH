@@ -17,16 +17,18 @@ package de.fhe.fhemobile.vos.timetable;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by paul on 12.03.15.
  */
 public class StudyCourseVo implements Parcelable {
-
+    private static final String TAG = "StudyCourseVo";
     public StudyCourseVo() {
     }
 
@@ -70,6 +72,24 @@ public class StudyCourseVo implements Parcelable {
 
     public void setTerms(ArrayList<TermsVo> _terms) {
         mTerms = _terms;
+    }
+    final static String BACHELOR_BEFORE="Bachelor: ";
+    final static String BACHELOR_AFTER=": B";
+    final static String MASTER_BEFORE ="Master: ";
+    final static String MASTER_AFTER =": M";
+
+    public static void alterTitle(List<StudyCourseVo> list){
+        for (StudyCourseVo term:list){
+            Log.d(TAG, "alterTitle: "+ term.getTitle());
+            if(term.getTitle().contains(BACHELOR_BEFORE)){
+                term.setTitle(term.getTitle().replace(BACHELOR_BEFORE,"")+BACHELOR_AFTER);
+            }
+            else if(term.getTitle().contains(MASTER_BEFORE)){
+                term.setTitle(term.getTitle().replace(MASTER_BEFORE,"")+MASTER_AFTER);
+            }
+            else{}
+        }
+
     }
 
     @SerializedName("id")

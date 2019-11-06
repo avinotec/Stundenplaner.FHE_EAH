@@ -1,14 +1,15 @@
 package de.fhe.fhemobile.fragments.maps;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import android.util.Log;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.BaseActivity;
@@ -59,20 +60,136 @@ public class MapsSingleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (MapsSingleView) inflater.inflate(R.layout.fragment_maps_single, container, false);
+        try {
+            mView = (MapsSingleView) inflater.inflate(R.layout.fragment_maps_single, container, false);
+            MapVo map;
 
-        MapVo map;
+            if (mMap.getMaps().size() > 1) {
+                map = mMap.getMaps().get(mCurrentMapIndex);
+                mView.initializeView(map);
+            }
+            else {
+                map = mMap.getMaps().get(0);
+                mView.initializeView(map);
+            }
 
-        if (mMap.getMaps().size() > 1) {
-            map = mMap.getMaps().get(mCurrentMapIndex);
-            mView.initializeView(map);
+            updateActionBarTitle(map.getName());
+        }catch (Exception e){
+            mView = new MapsSingleView(getContext(), new AttributeSet() {
+                @Override
+                public int getAttributeCount() {
+                    return 0;
+                }
+
+                @Override
+                public String getAttributeName(int i) {
+                    return null;
+                }
+
+                @Override
+                public String getAttributeValue(int i) {
+                    return null;
+                }
+
+                @Override
+                public String getAttributeValue(String s, String s1) {
+                    return null;
+                }
+
+                @Override
+                public String getPositionDescription() {
+                    return null;
+                }
+
+                @Override
+                public int getAttributeNameResource(int i) {
+                    return 0;
+                }
+
+                @Override
+                public int getAttributeListValue(String s, String s1, String[] strings, int i) {
+                    return 0;
+                }
+
+                @Override
+                public boolean getAttributeBooleanValue(String s, String s1, boolean b) {
+                    return false;
+                }
+
+                @Override
+                public int getAttributeResourceValue(String s, String s1, int i) {
+                    return 0;
+                }
+
+                @Override
+                public int getAttributeIntValue(String s, String s1, int i) {
+                    return 0;
+                }
+
+                @Override
+                public int getAttributeUnsignedIntValue(String s, String s1, int i) {
+                    return 0;
+                }
+
+                @Override
+                public float getAttributeFloatValue(String s, String s1, float v) {
+                    return 0;
+                }
+
+                @Override
+                public int getAttributeListValue(int i, String[] strings, int i1) {
+                    return 0;
+                }
+
+                @Override
+                public boolean getAttributeBooleanValue(int i, boolean b) {
+                    return false;
+                }
+
+                @Override
+                public int getAttributeResourceValue(int i, int i1) {
+                    return 0;
+                }
+
+                @Override
+                public int getAttributeIntValue(int i, int i1) {
+                    return 0;
+                }
+
+                @Override
+                public int getAttributeUnsignedIntValue(int i, int i1) {
+                    return 0;
+                }
+
+                @Override
+                public float getAttributeFloatValue(int i, float v) {
+                    return 0;
+                }
+
+                @Override
+                public String getIdAttribute() {
+                    return null;
+                }
+
+                @Override
+                public String getClassAttribute() {
+                    return null;
+                }
+
+                @Override
+                public int getIdAttributeResourceValue(int i) {
+                    return 0;
+                }
+
+                @Override
+                public int getStyleAttribute() {
+                    return 0;
+                }
+            });
         }
-        else {
-            map = mMap.getMaps().get(0);
-            mView.initializeView(map);
-        }
 
-        updateActionBarTitle(map.getName());
+
+
 
         return mView;
     }

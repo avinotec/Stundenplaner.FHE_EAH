@@ -142,8 +142,14 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 //        transaction.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.abc_fade_in, R.anim.abc_fade_out);
 
         if (_AddToBackStack) {
+
             transaction.addToBackStack(null);
         }
+//Todo: Wenn ein eintrag im Backstack ist, dann eine andere Rubrik ausgewählt wird (z.B. news) und dann back-taste gedrueckt wird, überlagern sich die layouts.
+//An dieser Stelle muss dann der BackStack geleert werden, wenn man wechselt.
+// else{
+//            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//        }
 
         transaction.commit();
     }
