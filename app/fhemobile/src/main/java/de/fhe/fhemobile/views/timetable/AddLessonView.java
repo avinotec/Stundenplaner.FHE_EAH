@@ -183,6 +183,7 @@ public class AddLessonView extends LinearLayout {
     public interface IViewListener {
         void onTermChosen(String _TermId);
         void onGroupChosen(String _GroupId);
+        //TODO not yet implemented?
         void onTimeTableChosen(String _TimeTableId);
         void onSearchClicked();
     }
