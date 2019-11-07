@@ -28,7 +28,7 @@ public class FlatStudyCourse implements Parcelable {
     public FlatStudyCourse() {
     }
 
-    protected FlatStudyCourse(Parcel in) {
+    FlatStudyCourse(Parcel in) {
         mId = in.readString();
         mTitle = in.readString();
     }

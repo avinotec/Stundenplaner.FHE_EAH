@@ -28,10 +28,10 @@ public class EventDispatcher implements Dispatcher {
 	private final HashMap<String, CopyOnWriteArrayList<EventListener>> listenerMap;
 	private Dispatcher target;
 	
-	public EventDispatcher() {
+	protected EventDispatcher() {
 		this(null);
 	}
-	public EventDispatcher(Dispatcher target) {
+	private EventDispatcher(Dispatcher target) {
 		listenerMap = new HashMap<String, CopyOnWriteArrayList<EventListener>>();
 		this.target = (target != null) ? target : this;
 	}

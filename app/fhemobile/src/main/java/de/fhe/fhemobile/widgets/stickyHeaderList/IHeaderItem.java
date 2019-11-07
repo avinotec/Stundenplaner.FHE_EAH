@@ -35,12 +35,12 @@ public abstract class IHeaderItem {
     //  Constructor
     // ---------------------------------------------------------------------------------------------
 
-    public IHeaderItem(boolean _hasSectionHeader) {
+    IHeaderItem(boolean _hasSectionHeader) {
         mHasSectionHeader = _hasSectionHeader;
         mItems            = new ArrayList<>();
     }
 
-    public IHeaderItem(List<IRowItem> _items, boolean _hasSectionHeader) {
+    IHeaderItem(List<IRowItem> _items, boolean _hasSectionHeader) {
         mItems            = _items;
         mHasSectionHeader = _hasSectionHeader;
     }
@@ -77,6 +77,6 @@ public abstract class IHeaderItem {
     //  Member
     // ---------------------------------------------------------------------------------------------
 
-    protected List<IRowItem> mItems;
-    protected final boolean        mHasSectionHeader;
+    private List<IRowItem> mItems;
+    private final boolean        mHasSectionHeader;
 }

@@ -27,7 +27,7 @@ import de.fhe.fhemobile.R;
  */
 public class HeaderImageItem implements IBaseItem {
 
-    public HeaderImageItem(int _imageRes) {
+    private HeaderImageItem(int _imageRes) {
         mImageRes = _imageRes;
     }
 

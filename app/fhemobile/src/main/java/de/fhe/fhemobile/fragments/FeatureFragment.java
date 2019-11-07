@@ -30,7 +30,7 @@ public abstract class FeatureFragment extends Fragment {
 
     }
 
-    public void setActionBarTitle(final String _Title) {
+    protected void setActionBarTitle(final String _Title) {
         if (getActivity() != null) {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(_Title);
         }

@@ -18,7 +18,7 @@ package de.fhe.fhemobile.widgets.picker.base;
 /**
  * Created by paul on 12.03.15.
  */
-public class IDItem {
+class IDItem {
     public IDItem(String _Name, String _Id) {
         mName = _Name;
         mId   = _Id;

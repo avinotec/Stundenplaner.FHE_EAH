@@ -30,7 +30,7 @@ import de.fhe.fhemobile.vos.mensa.MensaChoiceItemVo;
  */
 public class MensaChoiceAdapter extends BaseAdapter {
 
-    public static class ViewHolder {
+    static class ViewHolder {
         TextView mMensaName;
     }
 

@@ -28,7 +28,7 @@ public class FlatTerms implements Parcelable {
     public FlatTerms() {
     }
 
-    protected FlatTerms(Parcel in) {
+    FlatTerms(Parcel in) {
         mId = in.readString();
         mTitle = in.readString();
     }

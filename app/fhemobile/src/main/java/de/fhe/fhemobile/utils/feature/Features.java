@@ -15,7 +15,7 @@
  */
 package de.fhe.fhemobile.utils.feature;
 
-public class Features {
+class Features {
 
     public static boolean NEWS            = false;
     public static boolean PHONEBOOK       = false;

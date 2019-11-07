@@ -37,7 +37,7 @@ public class MapsAdapter extends BaseAdapter {
         mItems   = _Items;
     }
 
-    public static class ViewHolder {
+    static class ViewHolder {
         TextView mMapName;
     }
 
