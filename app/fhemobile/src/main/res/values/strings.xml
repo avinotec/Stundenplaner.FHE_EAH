@@ -73,7 +73,7 @@
     <string name="aqua_closed" translatable="false">Geschlossen</string>
 
     <string name="mail_default_subject" translatable="false">Betreff</string>
-    <string name="mail_default_text" translatable="false"></string>
+    <string name="mail_default_text" translatable="false">Mit freundlichen Gruessen aus der EAH App</string>
 
     <string name="network_error" translatable="false">Es konnten keine Daten gefunden werden.</string>
 
