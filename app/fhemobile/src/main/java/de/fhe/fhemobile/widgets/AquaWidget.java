@@ -18,7 +18,6 @@ package de.fhe.fhemobile.widgets;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -100,12 +99,7 @@ public class AquaWidget extends RelativeLayout {
         }
     };
 
-    private final OnClickListener mClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            update(true);
-        }
-    };
+    private final OnClickListener mClickListener = v -> update(true);
 
     private static final String LOG_TAG             = AquaWidget.class.getSimpleName();
 
