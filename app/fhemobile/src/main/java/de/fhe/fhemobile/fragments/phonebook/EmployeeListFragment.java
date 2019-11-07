@@ -34,9 +34,9 @@ public class EmployeeListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         //TODO: Save instance list
 
-        if (getArguments() != null) {
-
-        }
+//        if (getArguments() != null) {
+//
+//        }
     }
 
     @Override

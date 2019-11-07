@@ -40,9 +40,9 @@ public class NewsListFragment extends FeatureFragment {
             NetworkHandler.getInstance().fetchNewsData();
         }
 
-        if (getArguments() != null) {
-
-        }
+//        if (getArguments() != null) {
+//
+//        }
 
         setHasOptionsMenu(true);
     }

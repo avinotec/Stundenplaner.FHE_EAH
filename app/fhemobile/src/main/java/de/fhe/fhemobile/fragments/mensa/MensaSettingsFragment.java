@@ -3,10 +3,11 @@ package de.fhe.fhemobile.fragments.mensa;
 
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.models.mensa.MensaFoodModel;
@@ -31,9 +32,9 @@ public class MensaSettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
+//        if (getArguments() != null) {
+//
+//        }
     }
 
     @Override

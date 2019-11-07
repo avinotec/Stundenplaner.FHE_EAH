@@ -87,7 +87,9 @@ public class StudyCourseVo implements Parcelable {
             else if(term.getTitle().contains(MASTER_BEFORE)){
                 term.setTitle(term.getTitle().replace(MASTER_BEFORE,"")+MASTER_AFTER);
             }
-            else{}
+//            else {
+//                //nothing
+//            }
         }
 
     }

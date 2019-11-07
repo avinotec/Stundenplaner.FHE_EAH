@@ -38,9 +38,9 @@ public class SemesterDataFragment extends FeatureFragment {
 
         mModel = SemesterDataModel.getInstance();
 
-        if (getArguments() != null) {
-
-        }
+//        if (getArguments() != null) {
+//
+//        }
 
         setHasOptionsMenu(true);
     }

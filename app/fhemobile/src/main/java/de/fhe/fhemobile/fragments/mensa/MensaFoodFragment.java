@@ -2,13 +2,14 @@ package de.fhe.fhemobile.fragments.mensa;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.appcompat.app.ActionBar;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.SettingsActivity;
@@ -39,9 +40,9 @@ public class MensaFoodFragment extends FeatureFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-
-        }
+//        if (getArguments() != null) {
+//
+//        }
 
         setHasOptionsMenu(true);
     }

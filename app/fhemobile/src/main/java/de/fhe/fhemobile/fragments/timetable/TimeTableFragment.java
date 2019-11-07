@@ -56,9 +56,9 @@ public class TimeTableFragment extends FeatureFragment {
         mChosenTerm         = null;
         mChosenTimetableId  = null;
 
-        if (getArguments() != null) {
-
-        }
+//        if (getArguments() != null) {
+//
+//        }
     }
 
     @Override

@@ -47,9 +47,9 @@ public class EmployeeListView extends FrameLayout {
         if(mModel.getFoundEmployees() != null) {
             initializeList();
         }
-        else {
-            // TODO: Handle no Employees
-        }
+//        else {
+//            // TODO: Handle no Employees
+//        }
 
         mList.setOnItemClickListener(mListClickListener);
     }

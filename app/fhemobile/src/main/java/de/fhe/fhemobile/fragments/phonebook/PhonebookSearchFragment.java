@@ -29,8 +29,8 @@ public class PhonebookSearchFragment extends FeatureFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
+//        if (getArguments() != null) {
+//        }
     }
 
     @Override
