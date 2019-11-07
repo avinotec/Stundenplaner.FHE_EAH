@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import de.fhe.fhemobile.R;
@@ -122,7 +121,7 @@ public class NewsListWidget extends AppWidgetProvider {
                 AppWidgetManager.INVALID_APPWIDGET_ID);
 
         if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
-            if (intent.getAction().equals(DATA_FETCHED)) {
+            if (DATA_FETCHED.equals(intent.getAction())) {
 
                 AppWidgetManager appWidgetManager = AppWidgetManager
                         .getInstance(context);
