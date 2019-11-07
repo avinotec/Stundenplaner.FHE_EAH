@@ -1,3 +1,20 @@
+/*
+ *  Copyright (c) 2014-2019 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package de.fhe.fhemobile.fragments.mytimetable;
 
 
@@ -134,6 +151,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                     for(int dayIndex=0;dayIndex<dayList.size();dayIndex++){
                         List<TimeTableEventVo> eventList = dayList.get(dayIndex).getEvents();
                         for(int eventIndex=0;eventIndex<eventList.size();eventIndex++){
+
+                            //durchsuche die komplette Liste nach der EventUID, des momentan hinzuzufügenden Event.
                         	FlatDataStructure exists = null;
                         	for(FlatDataStructure savedEvent:dataList){
 //		                        Log.d(TAG, "EventUID1: "+savedEvent.getEvent().getUid()+" EventUID2: "+eventList.get(eventIndex).getUid()+" setTitle: "+ savedEvent.getStudyGroup().getTitle()+" result: "+savedEvent.getEvent().getUid().equals(eventList.get(eventIndex).getUid()));
@@ -142,6 +161,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                         			break;
 		                        }
 	                        }
+                            //Kommt die UID schon in der Liste vor, braucht der Event nicht hinzugefügt werden, da es ein Duplikat wäre.
                         	if(exists==null){
 		                        FlatDataStructure datacopy = data.copy();
 		                        datacopy
@@ -151,6 +171,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
 		                        dataList.add(datacopy);
 	                        }
+                            //Stattdessen füge bei dem existierenden Eintrag das Set des neuen Events hinzu.
                         	else{
                         		if(exists.getSets().contains(data.copy().getStudyGroup().getTitle())==false){
 			                        exists.getSets().add(data.getStudyGroup().getTitle());
