@@ -87,9 +87,9 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         mChosenTerm         = null;
         mChosenTimetableId  = null;
 
-        if (getArguments() != null) {
-
-        }
+//        if (getArguments() != null) {
+//
+//        }
         completeDataset = Collections.synchronizedList(new ArrayList<FlatDataStructure>());
     }
 
@@ -257,8 +257,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                 if (termsVo.getId().equals(_GroupId)) {
 
                     mChosenTerm = termsVo;
-                    Gson gson = new Gson();
-                    String chosenTermJson = gson.toJson(mChosenTerm);
+                    final Gson gson = new Gson();
+                    final String chosenTermJson = gson.toJson(mChosenTerm);
                     editor.putString("_ChosenTerm",chosenTermJson);
                     editor.commit();
 
@@ -284,8 +284,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                     getAllEvents(weekList, MyTimeTableView.getCompleteLessons(), this.getData());
 //                                    Log.d(TAG, "success: length"+courseEvents.size());
                                     //Wir sortieren diesen letzten Stand der Liste
-                                    requestCounter--;
-                                    if(requestCounter==0) {
+                                    //non Atomic, if in 2 lines: requestCounter--;
+                                    if( (requestCounter--) >= 0) {
 
 
                                         try {
