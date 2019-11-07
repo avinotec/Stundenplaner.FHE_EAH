@@ -32,7 +32,7 @@ import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
 public class CalendarAdapter extends BaseAdapter {
 
-	private Context context;
+	private final Context context;
 	public CalendarAdapter(Context context) {
 		this.context=context;
 	}

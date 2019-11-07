@@ -39,7 +39,7 @@ public class EmployeeInformationActivity extends BaseActivity
 
         if(savedInstanceState != null) {
             mEmployee = savedInstanceState.getParcelable(STATE_EMPLOYEE);
-            ArrayList<Parcelable> temp = savedInstanceState.getParcelableArrayList(STATE_EMPLOYEE_LIST);
+            final ArrayList<Parcelable> temp = savedInstanceState.getParcelableArrayList(STATE_EMPLOYEE_LIST);
             for(Parcelable parcel : temp) {
                 mModel.addEmployeeToList((EmployeeVo) parcel);
             }

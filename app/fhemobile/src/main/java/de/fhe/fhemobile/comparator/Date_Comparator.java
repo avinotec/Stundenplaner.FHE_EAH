@@ -29,8 +29,9 @@ public class Date_Comparator implements Comparator<FlatDataStructure> {
 	private final static int GREATER=1;
 	private final static int EQUAL=0;
 	private final static int LESSER=-1;
+
 	@Override
-	public int compare(FlatDataStructure o1, FlatDataStructure o2) {
+	public int compare(final FlatDataStructure o1, final FlatDataStructure o2) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
 		Date lessonDate1 = null;
 		Date lessonDate2 = null;
@@ -39,16 +40,18 @@ public class Date_Comparator implements Comparator<FlatDataStructure> {
 			lessonDate2= sdf.parse(o2.getEvent().getDate()+" "+o2.getEvent().getStartTime());
 		} catch (ParseException e) {
 			Log.e(TAG, "Fehler beim Parsen der Daten: ",e );
+			return EQUAL;
 		}
 
 
 		//Vergleiche das Datum vom ersten element mit dem Datum des zweiten Elements.
 		//Ist das erste Datum "größer" wird 1 zurückgegeben, ist das zweite größer wird -1 zurückgegeben
 		//und sind beide gleich, wird 0 zurückgegeben.
-		int dateCompareResult=lessonDate1.compareTo(lessonDate2);
-		if(dateCompareResult>=0){
+		final int dateCompareResult = lessonDate1.compareTo(lessonDate2);
+
+		if ( dateCompareResult > 0 ) {
 			return GREATER;
-		}else if(dateCompareResult<=0){
+		}else if( dateCompareResult < 0 ){
 			return LESSER;
 		}
 		else{
