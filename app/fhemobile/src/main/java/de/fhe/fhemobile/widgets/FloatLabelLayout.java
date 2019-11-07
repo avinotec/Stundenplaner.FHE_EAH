@@ -34,8 +34,6 @@ package de.fhe.fhemobile.widgets;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.ViewPropertyAnimatorListenerAdapter;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -48,6 +46,9 @@ import android.view.animation.Interpolator;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.core.view.ViewCompat;
+import androidx.core.view.ViewPropertyAnimatorListenerAdapter;
 
 import de.fhe.fhemobile.R;
 
@@ -158,12 +159,7 @@ public class FloatLabelLayout extends LinearLayout {
 
         // Add focus listener to the EditText so that we can notify the label that it is activated.
         // Allows the use of a ColorStateList for the text color on the label
-        mEditText.setOnFocusChangeListener(new OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean focused) {
-                updateLabelVisibility(true);
-            }
-        });
+        mEditText.setOnFocusChangeListener((view, focused) -> updateLabelVisibility(true));
 
         // If we do not have a valid hint, try and retrieve it from the EditText
         if (TextUtils.isEmpty(mHint)) {
@@ -207,7 +203,7 @@ public class FloatLabelLayout extends LinearLayout {
     /**
      * Set the hint to be displayed in the floating label
      */
-    public void setHint(CharSequence hint) {
+    private void setHint(CharSequence hint) {
         mHint = hint;
         mLabel.setText(hint);
     }
