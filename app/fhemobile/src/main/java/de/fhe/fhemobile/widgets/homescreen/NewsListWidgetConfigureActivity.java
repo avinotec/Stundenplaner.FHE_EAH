@@ -141,7 +141,7 @@ public class NewsListWidgetConfigureActivity extends Activity {
     private final Callback<NewsCategoryResponse> mNewsCategoryCallback = new Callback<NewsCategoryResponse>() {
         @Override
         public void onResponse(Call<NewsCategoryResponse> call, Response<NewsCategoryResponse> response) {
-            if (mAvailableCategories != null && response.body().getNewsCategories() != null && response.body() != null ) {
+            if ((mAvailableCategories != null) && (response.body().getNewsCategories() != null) && (response.body() != null)) {
                 mCategoryAdapter = new NewsCategoryAdapter(NewsListWidgetConfigureActivity.this, response.body().getNewsCategories());
                 mAvailableCategories.setAdapter(mCategoryAdapter);
             }

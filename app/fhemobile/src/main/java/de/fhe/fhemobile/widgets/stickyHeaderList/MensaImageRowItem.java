@@ -21,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.widgets.AquaWidget;
 
 /**
  * Created by Paul Cech on 13.05.15.

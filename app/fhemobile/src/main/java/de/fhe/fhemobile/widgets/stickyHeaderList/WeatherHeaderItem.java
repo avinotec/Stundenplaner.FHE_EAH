@@ -55,6 +55,7 @@ public class WeatherHeaderItem extends IHeaderItem {
             _convertView.setTag(viewHolder);
         }
         else {
+            //TODO never used
             viewHolder = (ViewHolder) _convertView.getTag();
         }
 

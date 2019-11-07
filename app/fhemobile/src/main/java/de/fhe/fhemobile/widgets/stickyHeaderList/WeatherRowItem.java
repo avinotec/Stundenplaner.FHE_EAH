@@ -48,6 +48,7 @@ public class WeatherRowItem extends IRowItem {
             _convertView.setTag(viewHolder);
         }
         else {
+            //TODO never used
             viewHolder = (ViewHolder) _convertView.getTag();
         }
 
