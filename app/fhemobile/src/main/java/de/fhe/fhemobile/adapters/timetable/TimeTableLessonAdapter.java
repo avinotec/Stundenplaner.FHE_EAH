@@ -138,9 +138,14 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		});
 
 
+		String combinedStudyGroups = currentItem.getStudyGroup().getTitle();
+//		for(String _studyGroupTitle : currentItem.getSets()){
+//			combinedStudyGroups+=(", "+_studyGroupTitle);
+//		}
+		studyGroupTitle.setText(combinedStudyGroups);
 
 		if(position==0){
-			studyGroupTitle.setText(currentItem.getStudyGroup().getTitle());
+
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			btnAddLesson.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
@@ -152,7 +157,6 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		else if(!FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()).equals(
 					FlatDataStructure.cutEventTitle(MyTimeTableView.getCompleteLessons().get(position-1).getEvent().getTitle())))
 		{
-			studyGroupTitle.setText(currentItem.getStudyGroup().getTitle());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			btnAddLesson.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
@@ -162,7 +166,6 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		else if(!currentItem.getStudyGroup().getTitle().equals(
 				MyTimeTableView.getCompleteLessons().get(position-1).getStudyGroup().getTitle()))
 		{
-			studyGroupTitle.setText(currentItem.getStudyGroup().getTitle());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			btnAddLesson.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));

@@ -134,13 +134,29 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                     for(int dayIndex=0;dayIndex<dayList.size();dayIndex++){
                         List<TimeTableEventVo> eventList = dayList.get(dayIndex).getEvents();
                         for(int eventIndex=0;eventIndex<eventList.size();eventIndex++){
-                            FlatDataStructure datacopy = data.copy();
-                            datacopy
-                                    .setEventWeek(weekList.get(weekIndex))
-                                    .setEventDay(dayList.get(dayIndex))
-                                    .setEvent(eventList.get(eventIndex));
+                        	FlatDataStructure exists = null;
+                        	for(FlatDataStructure savedEvent:dataList){
+//		                        Log.d(TAG, "EventUID1: "+savedEvent.getEvent().getUid()+" EventUID2: "+eventList.get(eventIndex).getUid()+" setTitle: "+ savedEvent.getStudyGroup().getTitle()+" result: "+savedEvent.getEvent().getUid().equals(eventList.get(eventIndex).getUid()));
+                        		if (savedEvent.getEvent().getUid().equals(eventList.get(eventIndex).getUid())){
+                        			exists=savedEvent;
+                        			break;
+		                        }
+	                        }
+                        	if(exists==null){
+		                        FlatDataStructure datacopy = data.copy();
+		                        datacopy
+				                        .setEventWeek(weekList.get(weekIndex))
+				                        .setEventDay(dayList.get(dayIndex))
+				                        .setEvent(eventList.get(eventIndex));
 
-                            dataList.add(datacopy);
+		                        dataList.add(datacopy);
+	                        }
+                        	else{
+                        		if(exists.getSets().contains(data.copy().getStudyGroup().getTitle())==false){
+			                        exists.getSets().add(data.getStudyGroup().getTitle());
+		                        }
+
+	                        }
                         }
                     }
                 }

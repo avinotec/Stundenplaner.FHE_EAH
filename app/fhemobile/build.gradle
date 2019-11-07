@@ -46,8 +46,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 6
-        versionName '0.6'
+        versionCode 8
+        versionName '0.8'
 
         multiDexEnabled = true
 
@@ -203,6 +203,8 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-analytics:17.2.1'
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
+
+
     
     // Testing-only dependencies
     //testImplementation 'junit:junit:4.+'
