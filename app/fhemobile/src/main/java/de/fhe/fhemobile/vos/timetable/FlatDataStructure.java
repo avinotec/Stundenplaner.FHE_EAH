@@ -44,6 +44,7 @@ public class FlatDataStructure implements Parcelable {
 		eventWeek = in.readParcelable(FlatTimeTableWeek.class.getClassLoader());
 		eventDay = in.readParcelable(FlatTimeTableDay.class.getClassLoader());
 		event = in.readParcelable(TimeTableEventVo.class.getClassLoader());
+		in.readStringList(sets);
 	}
 
 	@Override
@@ -54,6 +55,8 @@ public class FlatDataStructure implements Parcelable {
 		dest.writeParcelable(eventWeek, flags);
 		dest.writeParcelable(eventDay, flags);
 		dest.writeParcelable(event, flags);
+		dest.writeStringList(sets);
+
 	}
 
 	@Override
@@ -80,6 +83,7 @@ public class FlatDataStructure implements Parcelable {
 		copy.setCourse(this.getCourse());
 		copy.setSemester(this.getSemester());
 		copy.setStudyGroup(this.getStudyGroup());
+		copy.setSets(this.getSets());
 		return copy;
 	}
 
@@ -293,6 +297,14 @@ public class FlatDataStructure implements Parcelable {
 		this.event = event;
 	}
 
+	public List<String> getSets() {
+		return sets;
+	}
+
+	public void setSets(List<String> sets) {
+		this.sets = sets;
+	}
+
 	private static int incId=0;
 	private int id;
 	@SerializedName("course")
@@ -307,6 +319,11 @@ public class FlatDataStructure implements Parcelable {
 	private FlatTimeTableDay eventDay;
 	@SerializedName("event")
 	private TimeTableEventVo event;
+
+
+
+	@SerializedName("sets")
+	private List<String> sets=new ArrayList<>();
 
 	public final int getId() {
 		return id;
