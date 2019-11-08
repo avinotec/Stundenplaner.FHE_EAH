@@ -195,18 +195,19 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
     //Setzt die beim letzten mal ausgewählten Werte und die letzen Suchergebnisse.
     public void initSelectionSite(){
-        Gson gson= new Gson();
+        final Gson gson= new Gson();
+
         if(sharedPreferences.contains("_ChosenCourse")){
-            String chosenCourseJson=sharedPreferences.getString("_ChosenCourse","");
-            StudyCourseVo chosenCourse = gson.fromJson(chosenCourseJson,StudyCourseVo.class);
+            final String chosenCourseJson=sharedPreferences.getString("_ChosenCourse","");
+            final StudyCourseVo chosenCourse = gson.fromJson(chosenCourseJson,StudyCourseVo.class);
             mChosenCourse=chosenCourse;
             mView.setTermsItems(mChosenCourse.getTerms());
             mView.setSelectedGroupText(chosenCourse.getTitle());
         }
 
         if(sharedPreferences.contains("_ChosenTerm")) {
-            String chosenTermJson = sharedPreferences.getString("_ChosenTerm", "");
-            TermsVo chosenTerm = gson.fromJson(chosenTermJson, TermsVo.class);
+            final String chosenTermJson = sharedPreferences.getString("_ChosenTerm", "");
+            final TermsVo chosenTerm = gson.fromJson(chosenTermJson, TermsVo.class);
             mChosenTerm = chosenTerm;
             mView.setSelectedTermText(chosenTerm.getTitle());
             mView.toggleTermsPickerVisibility(true);
@@ -215,9 +216,10 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
 
             if (sharedPreferences.contains("_Result")) {
-                String resultJson = sharedPreferences.getString("_Result", "");
-                FlatDataStructure[] result = gson.fromJson(resultJson, FlatDataStructure[].class);
+                final String resultJson = sharedPreferences.getString("_Result", "");
+                final FlatDataStructure[] result = gson.fromJson(resultJson, FlatDataStructure[].class);
                 MyTimeTableView.setCompleteLessons(new ArrayList<FlatDataStructure>(Arrays.asList(result)));
+
                 final TimeTableLessonAdapter timeTableLessonAdapter = new TimeTableLessonAdapter(MyTimeTableDialogFragment.this.getContext());
                 mView.setLessonListAdapter(timeTableLessonAdapter);
                 mView.toggleLessonListVisibility(true);
