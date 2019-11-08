@@ -58,8 +58,8 @@ public class LessonTitle_StudyGroupTitle_Comparator implements Comparator<FlatDa
 		Assert.assertTrue( lessonTitle1.length() > 3 );
 		Assert.assertTrue( lessonTitle2.length() > 3 );
 
-		final String studyGroupTitle1 = o1.getStudyGroup().getTitle();
-		final String studyGroupTitle2 = o2.getStudyGroup().getTitle();
+		final String studyGroupTitle1 = o1.getSetString();
+		final String studyGroupTitle2 = o2.getSetString();
 		Assert.assertTrue( studyGroupTitle1 != null );
 		Assert.assertTrue( studyGroupTitle2 != null );
 		Assert.assertTrue( studyGroupTitle1.length() > 3 );

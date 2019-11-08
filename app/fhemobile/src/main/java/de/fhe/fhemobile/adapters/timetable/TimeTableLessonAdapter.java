@@ -76,7 +76,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 			public void onClick(View v) {
 
 				final List<FlatDataStructure> lessonTitleFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getCompleteLessons(),FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
-				final List <FlatDataStructure> filteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(lessonTitleFilteredList,currentItem.getStudyGroup().getTitle());
+				final List <FlatDataStructure> filteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(lessonTitleFilteredList,currentItem.getSetString());
 				for (FlatDataStructure event:filteredList){
 					event.setVisible(!event.isVisible());
 				}
@@ -128,7 +128,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 			public void onClick(final View v) {
 
 				final List<FlatDataStructure> eventFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getCompleteLessons(),FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
-				final List<FlatDataStructure> studyGroupFilteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(eventFilteredList,currentItem.getStudyGroup().getTitle());
+				final List<FlatDataStructure> studyGroupFilteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(eventFilteredList,currentItem.getSetString());
 
 				for(FlatDataStructure event : studyGroupFilteredList){
 					MyTimeTableView.addLesson(event);
@@ -139,10 +139,9 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		});
 
 
-		String combinedStudyGroups = currentItem.getStudyGroup().getTitle();
-//		for(String _studyGroupTitle : currentItem.getSets()){
-//			combinedStudyGroups+=(", "+_studyGroupTitle);
-//		}
+
+		String combinedStudyGroups = currentItem.getSetString();
+
 		studyGroupTitle.setText(combinedStudyGroups);
 
 		if(position==0){
@@ -164,8 +163,8 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 			convertView.setVisibility(View.VISIBLE);
 
 		}
-		else if(!currentItem.getStudyGroup().getTitle().equals(
-				MyTimeTableView.getCompleteLessons().get(position-1).getStudyGroup().getTitle()))
+		else if(!currentItem.getSetString().equals(
+				MyTimeTableView.getCompleteLessons().get(position-1).getSetString()))
 		{
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			btnAddLesson.setVisibility(View.VISIBLE);

@@ -24,6 +24,7 @@ import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -70,7 +71,7 @@ public class SelectedLessonAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				List<FlatDataStructure> lessonTitleFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getLessons(),FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
-				List <FlatDataStructure> filteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(lessonTitleFilteredList,currentItem.getStudyGroup().getTitle());
+				List <FlatDataStructure> filteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(lessonTitleFilteredList,currentItem.getSetString());
 				for (FlatDataStructure event:filteredList){
 					event.setVisible(!event.isVisible());
 				}
@@ -90,22 +91,24 @@ public class SelectedLessonAdapter extends BaseAdapter {
 		}
 
 		final TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvLessonTitle);
-
+		final RelativeLayout headerBackground = convertView.findViewById(R.id.headerBackground);
+		lessonTitle.setText(FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 		if(position==0){
-			lessonTitle.setText(FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 			lessonTitle.setVisibility(View.VISIBLE);
+			headerBackground.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
 
 		}
 		else if(!FlatDataStructure.cutEventTitle(MyTimeTableView.getLessons().get(position).getEvent().getTitle()).equals(FlatDataStructure.cutEventTitle(MyTimeTableView.getLessons().get(position-1).getEvent().getTitle()))){
-			lessonTitle.setText(FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 			lessonTitle.setVisibility(View.VISIBLE);
+			headerBackground.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
 		}
 		else{
 			lessonTitle.setVisibility(View.GONE);
+			headerBackground.setVisibility(View.GONE);
 		}
 
 		final TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.tvStudyGroupTitle);
@@ -115,7 +118,7 @@ public class SelectedLessonAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				final List<FlatDataStructure> eventFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getLessons(),FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
-				final List<FlatDataStructure> studyGroupFilteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(eventFilteredList,currentItem.getStudyGroup().getTitle());
+				final List<FlatDataStructure> studyGroupFilteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(eventFilteredList,currentItem.getSetString());
 
 				for(FlatDataStructure event : studyGroupFilteredList){
 					MyTimeTableView.removeLesson(event);
@@ -126,22 +129,22 @@ public class SelectedLessonAdapter extends BaseAdapter {
 
 
 		if(position==0){
-			studyGroupTitle.setText(currentItem.getStudyGroup().getTitle());
+			studyGroupTitle.setText(currentItem.getSetString());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			ibRemoveLesson.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
 		}
 		else if(!FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()).equals(FlatDataStructure.cutEventTitle(MyTimeTableView.getLessons().get(position-1).getEvent().getTitle()))){
-			studyGroupTitle.setText(currentItem.getStudyGroup().getTitle());
+			studyGroupTitle.setText(currentItem.getSetString());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			ibRemoveLesson.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
 
 		}
-		else if(!currentItem.getStudyGroup().getTitle().equals(MyTimeTableView.getLessons().get(position-1).getStudyGroup().getTitle())){
-			studyGroupTitle.setText(currentItem.getStudyGroup().getTitle());
+		else if(!currentItem.getSetString().equals(MyTimeTableView.getLessons().get(position-1).getSetString())){
+			studyGroupTitle.setText(currentItem.getSetString());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			ibRemoveLesson.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));

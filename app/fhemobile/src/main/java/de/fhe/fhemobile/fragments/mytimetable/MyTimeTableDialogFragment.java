@@ -151,7 +151,12 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                     for(int dayIndex=0;dayIndex<dayList.size();dayIndex++){
                         List<TimeTableEventVo> eventList = dayList.get(dayIndex).getEvents();
                         for(int eventIndex=0;eventIndex<eventList.size();eventIndex++){
-
+                            for(FlatDataStructure addedEvent:MyTimeTableView.getLessons()){
+                                if (addedEvent.getEvent().getUid().equals(eventList.get(eventIndex).getUid())){
+                                    data.setAdded(true);
+                                    break;
+                                }
+                            }
                             //durchsuche die komplette Liste nach der EventUID, des momentan hinzuzufügenden Event.
                         	FlatDataStructure exists = null;
                         	for(FlatDataStructure savedEvent:dataList){
@@ -168,15 +173,13 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 				                        .setEventWeek(weekList.get(weekIndex))
 				                        .setEventDay(dayList.get(dayIndex))
 				                        .setEvent(eventList.get(eventIndex));
+		                        datacopy.getSets().add(datacopy.getStudyGroup().getTitle());
 
 		                        dataList.add(datacopy);
 	                        }
                             //Stattdessen füge bei dem existierenden Eintrag das Set des neuen Events hinzu.
                         	else{
-                        		if(exists.getSets().contains(data.copy().getStudyGroup().getTitle())==false){
-			                        exists.getSets().add(data.getStudyGroup().getTitle());
-		                        }
-
+                        	    exists.getSets().add(data.getStudyGroup().getTitle());
 	                        }
                         }
                     }
@@ -321,8 +324,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                     getAllEvents(weekList, MyTimeTableView.getCompleteLessons(), this.getData());
 //                                    Log.d(TAG, "success: length"+courseEvents.size());
                                     //Wir sortieren diesen letzten Stand der Liste
-                                    //non Atomic, if in 2 lines: requestCounter--;
-                                    if( (requestCounter--) >= 0) {
+                                    //Wichtig: --requestCounter nicht requestCounter--! Hier muss erst decrementiert werden und dann der vergleich stattfinden.
+                                    if( (--requestCounter) <= 0) {
 
 
                                         try {
