@@ -7,3 +7,10 @@ app/gradle/wrapper/gradle-wrapper.jar
 app/gradle/wrapper/gradle-wrapper.properties
 *.bak
 app/gradlew
+doc/EAHKeystore
+doc/deployment_cert.der
+doc/google-firebase-CloudMessagingAPI-Keys.txt
+doc/google-firebase-services_FHE_EAH_Mobile.json.txt
+*.pepk
+*.der
+doc/maps - Kopie/
