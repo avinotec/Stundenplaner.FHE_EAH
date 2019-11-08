@@ -92,6 +92,6 @@
     <string name="role">Role</string>
     <string name="leider_sind_keine_daten_verfuegbar">Leider sind keine Daten verfügbar</string>
     <string name="add_lesson">Add Lesson</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
 
 </resources>
