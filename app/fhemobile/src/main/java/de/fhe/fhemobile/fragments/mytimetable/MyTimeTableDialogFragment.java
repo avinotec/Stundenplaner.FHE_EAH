@@ -334,8 +334,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                         mView.setLessonListAdapter(timeTableLessonAdapter);
                                         mView.toggleLessonListVisibility(true);
                                         timeTableLessonAdapter.notifyDataSetChanged();
-                                        Gson gson = new Gson();
-                                        String chosenTermJson = gson.toJson(MyTimeTableView.getCompleteLessons());
+                                        final Gson gson = new Gson();
+                                        final String chosenTermJson = gson.toJson(MyTimeTableView.getCompleteLessons());
                                         editor.putString("_Result",chosenTermJson);
                                         editor.commit();
 
