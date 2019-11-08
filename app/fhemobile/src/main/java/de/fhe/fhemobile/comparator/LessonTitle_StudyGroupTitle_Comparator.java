@@ -1,17 +1,18 @@
 /*
- * Copyright (c) 2019 Ernst-Abbe-Hochschule Jena, Simon Wolf, Michael Stepping
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *  Copyright (c) 2014-2019 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 package de.fhe.fhemobile.comparator;
 
@@ -57,8 +58,8 @@ public class LessonTitle_StudyGroupTitle_Comparator implements Comparator<FlatDa
 		Assert.assertTrue( lessonTitle1.length() > 3 );
 		Assert.assertTrue( lessonTitle2.length() > 3 );
 
-		final String studyGroupTitle1 = o1.getStudyGroup().getTitle();
-		final String studyGroupTitle2 = o2.getStudyGroup().getTitle();
+		final String studyGroupTitle1 = o1.getSetString();
+		final String studyGroupTitle2 = o2.getSetString();
 		Assert.assertTrue( studyGroupTitle1 != null );
 		Assert.assertTrue( studyGroupTitle2 != null );
 		Assert.assertTrue( studyGroupTitle1.length() > 3 );

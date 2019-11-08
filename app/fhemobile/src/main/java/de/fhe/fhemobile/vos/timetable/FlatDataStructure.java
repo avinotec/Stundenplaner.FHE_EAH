@@ -1,17 +1,18 @@
 /*
- * Copyright (c) 2014-2019 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *  Copyright (c) 2014-2019 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 package de.fhe.fhemobile.vos.timetable;
 
@@ -26,6 +27,7 @@ import com.google.gson.annotations.SerializedName;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -83,7 +85,7 @@ public class FlatDataStructure implements Parcelable {
 		copy.setCourse(this.getCourse());
 		copy.setSemester(this.getSemester());
 		copy.setStudyGroup(this.getStudyGroup());
-		copy.setSets(this.getSets());
+		copy.setSets(new ArrayList<>(this.getSets()));
 		return copy;
 	}
 
@@ -127,7 +129,7 @@ public class FlatDataStructure implements Parcelable {
 	public static List<FlatDataStructure> queryGetEventsByStudyGroupTitle(final List<FlatDataStructure>list, final String studyGroupTitle){
 		final List<FlatDataStructure> filteredEvents = new ArrayList<>();
 		for(final FlatDataStructure event : list){
-			if(event.getStudyGroup().getTitle().equals(studyGroupTitle)){
+			if(event.getSetString().equals(studyGroupTitle)){
 				filteredEvents.add(event);
 			}
 		}
@@ -306,6 +308,15 @@ public class FlatDataStructure implements Parcelable {
 		this.sets = sets;
 	}
 
+	public String getSetString(){
+		Collections.sort(sets);
+		String combinedStudyGroups = "";
+		for(String _studyGroupTitle : sets){
+			combinedStudyGroups+=(_studyGroupTitle)+", ";
+		}
+		return combinedStudyGroups.substring(0,combinedStudyGroups.length()-2);
+	}
+
 	private static int incId=0;
 	private int id;
 	@SerializedName("course")
@@ -330,6 +341,7 @@ public class FlatDataStructure implements Parcelable {
 		return id;
 	}
 	private boolean visible = false;
+	private boolean added = false;
 
 	public void setVisible(final boolean visible) {
 		this.visible = visible;
@@ -337,6 +349,14 @@ public class FlatDataStructure implements Parcelable {
 
 	public final boolean isVisible() {
 		return visible;
+	}
+
+	public boolean isAdded() {
+		return added;
+	}
+
+	public void setAdded(boolean added) {
+		this.added = added;
 	}
 
 	@NonNull
@@ -348,6 +368,8 @@ public class FlatDataStructure implements Parcelable {
 				+ this.getEventWeek().getWeekInYear() + "-->"
 				+ this.getEventDay().getDayInWeek() + "-->"
 				+ this.getEvent().getUid() + "-->"
-				+ this.getEvent().getTitle();
+				+ this.getEvent().getTitle() + "-->"
+				+ this.getSets().size();
+
 	}
 }

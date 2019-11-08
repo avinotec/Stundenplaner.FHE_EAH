@@ -1,3 +1,20 @@
+/*
+ *  Copyright (c) 2014-2019 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package de.fhe.fhemobile.fragments.phonebook;
 
 
@@ -46,8 +63,10 @@ public class EmployeeInformationFragment extends Fragment {
     private final EmployeeInformationView.ViewListener mViewListener = new EmployeeInformationView.ViewListener() {
         @Override
         public void onMailClicked() {
+            //Der alte Quellcode hatte explizit versucht GMail zu öffnen. War Gmail nicht installiert, gab es einen Absturz.
+            //Jetzt wird nach einer App gesucht, die mit "mailto:"-Url umgehen kann. Ist eine gefunden, wird diese benutzt,
+            //sind mehrere vorhanden, kann man auswählen. Ist keine installiert, zeigt das System dies selbstständig an.
             Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
-            //sendIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
             sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { mEmployee.getMail()});
             sendIntent.setData(Uri.parse("mailto:"));
             sendIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.mail_default_subject));

@@ -1,25 +1,46 @@
+/*
+ *  Copyright (c) 2014-2019 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package de.fhe.fhemobile.fragments.mytimetable;
 
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
 
 import org.junit.Assert;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
+import de.fhe.fhemobile.comparator.LessonTitle_StudyGroupTitle_Comparator;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.models.timeTableChanges.RequestModel;
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
@@ -86,6 +107,13 @@ public class MyTimeTableFragment extends FeatureFragment {
 	}
 */
 
+	@Override
+	public void onAttach(@NonNull Context context) {
+		super.onAttach(context);
+		if(MyTimeTableView.getLessons().isEmpty()==false){
+			Collections.sort(MyTimeTableView.getLessons(),new LessonTitle_StudyGroupTitle_Comparator());
+		}
+	}
 
 	private final int CHANGEREASON_EDIT = 1;
 	private final int CHANGEREASON_NEW = 3;

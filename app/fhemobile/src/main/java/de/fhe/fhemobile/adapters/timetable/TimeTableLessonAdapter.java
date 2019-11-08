@@ -1,17 +1,18 @@
 /*
- * Copyright (c) 2014-2019 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *  Copyright (c) 2014-2019 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 package de.fhe.fhemobile.adapters.timetable;
 
@@ -75,7 +76,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 			public void onClick(View v) {
 
 				final List<FlatDataStructure> lessonTitleFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getCompleteLessons(),FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
-				final List <FlatDataStructure> filteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(lessonTitleFilteredList,currentItem.getStudyGroup().getTitle());
+				final List <FlatDataStructure> filteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(lessonTitleFilteredList,currentItem.getSetString());
 				for (FlatDataStructure event:filteredList){
 					event.setVisible(!event.isVisible());
 				}
@@ -127,7 +128,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 			public void onClick(final View v) {
 
 				final List<FlatDataStructure> eventFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getCompleteLessons(),FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
-				final List<FlatDataStructure> studyGroupFilteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(eventFilteredList,currentItem.getStudyGroup().getTitle());
+				final List<FlatDataStructure> studyGroupFilteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(eventFilteredList,currentItem.getSetString());
 
 				for(FlatDataStructure event : studyGroupFilteredList){
 					MyTimeTableView.addLesson(event);
@@ -138,10 +139,9 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		});
 
 
-		String combinedStudyGroups = currentItem.getStudyGroup().getTitle();
-//		for(String _studyGroupTitle : currentItem.getSets()){
-//			combinedStudyGroups+=(", "+_studyGroupTitle);
-//		}
+
+		String combinedStudyGroups = currentItem.getSetString();
+
 		studyGroupTitle.setText(combinedStudyGroups);
 
 		if(position==0){
@@ -163,8 +163,8 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 			convertView.setVisibility(View.VISIBLE);
 
 		}
-		else if(!currentItem.getStudyGroup().getTitle().equals(
-				MyTimeTableView.getCompleteLessons().get(position-1).getStudyGroup().getTitle()))
+		else if(!currentItem.getSetString().equals(
+				MyTimeTableView.getCompleteLessons().get(position-1).getSetString()))
 		{
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			btnAddLesson.setVisibility(View.VISIBLE);
