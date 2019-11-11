@@ -108,6 +108,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 //
 //        }
         completeDataset = Collections.synchronizedList(new ArrayList<FlatDataStructure>());
+	    timeTableLessonAdapter = new TimeTableLessonAdapter(MyTimeTableDialogFragment.this.getContext());
     }
 
     @Override
@@ -122,6 +123,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         editor = sharedPreferences.edit();
 
         initSelectionSite();
+        String emptyText = getResources().getString(R.string.empty_text_select);
+        mView.setEmptyText(emptyText);
 
         return mView;
     }
@@ -238,8 +241,9 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             mView.toggleGroupsPickerVisibility(false);
             mView.resetTermsPicker();
             mView.resetGroupsPicker();
-            mView.toggleLessonListVisibility(false);
+            //mView.toggleLessonListVisibility(false);
             MyTimeTableView.getCompleteLessons().clear();
+            timeTableLessonAdapter.notifyDataSetChanged();
 
             mChosenCourse = null;
             mChosenTerm   = null;
@@ -356,7 +360,6 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                         }
 */
 
-                                        final TimeTableLessonAdapter timeTableLessonAdapter = new TimeTableLessonAdapter(MyTimeTableDialogFragment.this.getContext());
                                         mView.setLessonListAdapter(timeTableLessonAdapter);
                                         mView.toggleLessonListVisibility(true);
                                         timeTableLessonAdapter.notifyDataSetChanged();
@@ -472,4 +475,5 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     private TermsVo           mChosenTerm;
     private String            mChosenTimetableId;
     private List<FlatDataStructure> completeDataset;
+	private TimeTableLessonAdapter timeTableLessonAdapter;
 }

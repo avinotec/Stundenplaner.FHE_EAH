@@ -110,6 +110,13 @@
                 android:visibility="gone"
                 android:divider="@null"
                 android:dividerHeight="0dp"/>
+            <TextView
+                android:id="@+id/emptyView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="test"
+                android:visibility="gone"></TextView>
 
             <ProgressBar
                 android:id="@+id/progressIndicator"

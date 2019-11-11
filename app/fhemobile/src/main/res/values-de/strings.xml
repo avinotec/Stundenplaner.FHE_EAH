@@ -26,4 +26,7 @@
 	<string name="leider_sind_keine_daten_verfuegbar">Leider sind keine Daten verfügbar</string>
 	<string name="add_lesson">Add Lesson</string>
 	<string name="loading">Loading…</string>
+    <string name="empty_text_calendar">Du hast noch keinen Stundenplan erstellt</string>
+	<string name="empty_text_edit">Du hast noch keine Vorlesungen ausgewählt</string>
+	<string name="empty_text_select">Wähle Studiengang und Semester aus</string>
 </resources>

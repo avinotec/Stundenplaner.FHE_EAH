@@ -74,6 +74,8 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 
 
 		}
+		String emptyText = getResources().getString(R.string.empty_text_calendar);
+		mView.setEmptyText(emptyText);
 
 		return mView;
 	}

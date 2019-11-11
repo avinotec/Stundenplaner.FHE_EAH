@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -78,6 +79,11 @@ public class MyTimeTableCalendarView extends LinearLayout {
         MyTimeTableDialogFragment myTimeTableDialogFragment = MyTimeTableDialogFragment.newInstance();
         myTimeTableDialogFragment.show(fm, "fragment_edit_name");
 
+    }
+    public void setEmptyText(String text){
+        TextView emptyView = findViewById(R.id.emptyView);
+        emptyView.setText(text);
+        mCalendarList.setEmptyView(emptyView);
     }
 
     private final Context           mContext;

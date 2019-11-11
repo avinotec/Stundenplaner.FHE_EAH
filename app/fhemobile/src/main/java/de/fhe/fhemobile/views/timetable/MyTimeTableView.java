@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.fragment.app.FragmentManager;
 
@@ -201,6 +202,11 @@ public class MyTimeTableView extends LinearLayout {
         }
 
         return completeSelectedList;
+    }
+    public void setEmptyText(String text){
+        TextView emptyView = findViewById(R.id.emptyView);
+        emptyView.setText(text);
+        mLessonList.setEmptyView(emptyView);
     }
 
 }

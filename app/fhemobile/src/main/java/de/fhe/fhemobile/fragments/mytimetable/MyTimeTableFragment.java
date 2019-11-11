@@ -97,6 +97,8 @@ public class MyTimeTableFragment extends FeatureFragment {
 		mView = (MyTimeTableView) inflater.inflate(R.layout.fragment_my_time_table, container, false);
 		mView.initializeView(getChildFragmentManager());
 
+		String emptyText = getResources().getString(R.string.empty_text_edit);
+		mView.setEmptyText(emptyText);
 		return mView;
 	}
 
@@ -149,7 +151,9 @@ public class MyTimeTableFragment extends FeatureFragment {
 			public void onResponse(final Call<ResponseModel> call, final Response<ResponseModel> response) {
 
 				Assert.assertTrue( response != null );
-				Assert.assertTrue( response.body() != null );
+				//wieso assert und damit einen Absturz produzieren, wenn das einfach auftreten kann, wenn der Server nicht verfügbar ist?
+				//vorallem wenn darunter eh ein if das gleiche abfragt.
+//				Assert.assertTrue( response.body() != null );
 
 				//DEBUG
 				if ( response.body() == null )

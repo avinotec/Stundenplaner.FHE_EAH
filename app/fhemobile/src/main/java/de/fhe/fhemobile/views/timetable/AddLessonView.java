@@ -21,6 +21,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.fragment.app.FragmentManager;
@@ -72,6 +73,7 @@ public class AddLessonView extends LinearLayout {
         mStudyGroupPicker.setFragmentManager(mFragmentManager);
         mStudyGroupPicker.toggleEnabled(false);
         mStudyGroupPicker.setOnItemChosenListener(mGroupsListener);
+
 
 //        mSearchButton.setOnClickListener(mSearchClickListener);
     }
@@ -194,6 +196,12 @@ public class AddLessonView extends LinearLayout {
     }
     public void setSelectedGroupText(String text){
         mStudyCoursePicker.setDisplayValue(text);
+    }
+
+    public void setEmptyText(String text){
+        TextView emptyView = new TextView(this.mContext);
+        emptyView.setText(text);
+        mLessonList.setEmptyView(emptyView);
     }
 
     private final Context           mContext;
