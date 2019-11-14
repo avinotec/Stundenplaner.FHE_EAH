@@ -16,6 +16,7 @@
  */
 package de.fhe.fhemobile.models.timeTableChanges;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -45,11 +46,19 @@ public class RequestModel {
 	long  refresh_timestamp;
 
 	@SerializedName("module_list")
-	final
 	ArrayList<Module> module_list;
 
 	public void addLesson(String setID,String moduleTitle){
 		this.module_list.add(new Module(setID,moduleTitle));
+	}
+
+	public String toJson(){
+		if(module_list.size()>0 == false){
+			module_list=null;
+		}
+		final Gson gson = new Gson();
+		final String json = gson.toJson(this);
+		return json;
 	}
 
 	class Module {

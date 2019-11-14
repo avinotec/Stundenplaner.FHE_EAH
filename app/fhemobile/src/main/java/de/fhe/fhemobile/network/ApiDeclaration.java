@@ -79,4 +79,6 @@ public interface ApiDeclaration {
     })
     @POST( Endpoints.SCHEDULE_CHANGE_SERVER )
     Call<ResponseModel> registerTimeTableChanges(@Body RequestBody _json);
+    @GET( Endpoints.SCHEDULE_CHANGE_SERVER )
+    Call<ResponseModel> getTimeTableChanges(@Body RequestBody _json);
 }

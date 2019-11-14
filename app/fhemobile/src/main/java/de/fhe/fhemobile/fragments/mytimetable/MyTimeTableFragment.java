@@ -18,7 +18,6 @@
 package de.fhe.fhemobile.fragments.mytimetable;
 
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +32,7 @@ import com.google.gson.Gson;
 
 import org.junit.Assert;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
@@ -126,85 +126,88 @@ public class MyTimeTableFragment extends FeatureFragment {
 		super.onDetach();
 
 
-		final RequestModel request = new RequestModel(RequestModel.ANDROID_DEVICE, MainActivity.getFirebaseToken(),new Date().getTime()-86400000);
-		String title="";
-		String setID="";
+		if (MyTimeTableView.getLessons().isEmpty() == false) {
+			final RequestModel request = new RequestModel(RequestModel.ANDROID_DEVICE, MainActivity.getFirebaseToken(), new Date().getTime() - 86400000);
+			String title = "";
+			String setID = "";
 
-		for (FlatDataStructure event:MyTimeTableView.getLessons()){
-			final String eventTitleShort=FlatDataStructure.cutEventTitle(event.getEvent().getTitle());
-			final String sSetID = event.getStudyGroup().getTimeTableId() ;
+			for (FlatDataStructure event : MyTimeTableView.getLessons()) {
+				final String eventTitleShort = FlatDataStructure.cutEventTitle(event.getEvent().getTitle());
+				final String sSetID = event.getStudyGroup().getTimeTableId();
 
-			if( (title.equals(eventTitleShort) && setID.equals( sSetID ) ) == false ) {
+				if ((title.equals(eventTitleShort) && setID.equals(sSetID)) == false) {
 
-				request.addLesson(event.getStudyGroup().getTimeTableId(),event.getEvent().getTitle());
-				title=eventTitleShort;
-				setID=sSetID;
+					request.addLesson(event.getStudyGroup().getTimeTableId(), event.getEvent().getTitle());
+					title = eventTitleShort;
+					setID = sSetID;
+				}
 			}
-		}
 
-		final Gson gson = new Gson();
-		final String json = gson.toJson(request);
-		Log.d(TAG, "onDetach: " + json);
+			final String json = request.toJson();
+			Log.d(TAG, "onDetach: " + json);
 
-		NetworkHandler.getInstance().registerTimeTableChanges( json, new Callback<ResponseModel>() {
-			@Override
-			public void onResponse(final Call<ResponseModel> call, final Response<ResponseModel> response) {
+			NetworkHandler.getInstance().registerTimeTableChanges(json, new Callback<ResponseModel>() {
+				@Override
+				public void onResponse(final Call<ResponseModel> call, final Response<ResponseModel> response) {
 
-				Assert.assertTrue( response != null );
-				//wieso assert und damit einen Absturz produzieren, wenn das einfach auftreten kann, wenn der Server nicht verfügbar ist?
-				//vorallem wenn darunter eh ein if das gleiche abfragt.
+					Assert.assertTrue(response != null);
+					//wieso assert und damit einen Absturz produzieren, wenn das einfach auftreten kann, wenn der Server nicht verfügbar ist?
+					//vorallem wenn darunter eh ein if das gleiche abfragt.
 //				Assert.assertTrue( response.body() != null );
 
-				//DEBUG
-				if ( response.body() == null )
-				{
-					// Da ist ein Fehler in der Kommunikation
-					// 400: Bad request
-					if ( response.code() == 400 )
-					{
-						String sErrorText = response.errorBody().toString();
-						Log.d( TAG, "Error in Schedule Change Server: " + sErrorText );
+					//DEBUG
+					if (response.body() == null) {
+						// Da ist ein Fehler in der Kommunikation
+						// 400: Bad request
+						if (response.code() == 400) {
+							String sErrorText = "";
+							try {
+								sErrorText = response.errorBody().string();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							Log.d(TAG, "Error in Schedule Change Server: " + sErrorText);
 
-						AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
-						builder1.setMessage("Push Notifications: Error in Schedule Change Server: " + sErrorText);
-						AlertDialog alert11 = builder1.create();
-						alert11.show();
-					}
-
-					// nothing to do now....
-					return;
-				}
-
-
-				final Gson gson = new Gson();
-				final String json = gson.toJson(response.body());
-				Assert.assertTrue( !json.isEmpty() );
-
-				Log.d(TAG, "onResponse: "+response.raw().request().url());
-				Log.d(TAG, "onResponse code: "+response.code()+" geparsed: "+ json );
-
-				final List<ResponseModel.Change> changes = response.body().getChanges();
-
-				final List<String[]> negativeList = MyTimeTableView.generateNegativeLessons();
-				final Iterator<ResponseModel.Change> iterator= changes.iterator();
-
-				while(iterator.hasNext()){
-
-					final ResponseModel.Change change=iterator.next();
-					//TODO: Negativ Liste von der gespeicherten Liste erstellen
-					boolean isInNegativeList=false;
-					for(String[] negativeEvent:negativeList){
-						if(change.getNewEventJson().getTitle().contains(negativeEvent[0])
-								&& change.getSetSplusKey().equals(negativeEvent[1])){
-							isInNegativeList=true;
+//							AlertDialog.Builder builder1 = new AlertDialog.Builder(MyTimeTableFragment.this.getContext().getApplicationContext());
+//							builder1.setMessage("Push Notifications: Error in Schedule Change Server: " + sErrorText);
+//							AlertDialog alert11 = builder1.create();
+//							alert11.show();
 						}
 
+						// nothing to do now....
+						return;
 					}
 
-					if(isInNegativeList){
-						iterator.remove();
+
+					final Gson gson = new Gson();
+					final String json = gson.toJson(response.body());
+					Assert.assertTrue(!json.isEmpty());
+
+					Log.d(TAG, "onResponse: " + response.raw().request().url());
+					Log.d(TAG, "onResponse code: " + response.code() + " geparsed: " + json);
+
+					final List<ResponseModel.Change> changes = response.body().getChanges();
+
+					final List<String[]> negativeList = MyTimeTableView.generateNegativeLessons();
+					final Iterator<ResponseModel.Change> iterator = changes.iterator();
+
+					while (iterator.hasNext()) {
+
+						final ResponseModel.Change change = iterator.next();
+						//TODO: Negativ Liste von der gespeicherten Liste erstellen
+						boolean isInNegativeList = false;
+						for (String[] negativeEvent : negativeList) {
+							if (change.getNewEventJson().getTitle().contains(negativeEvent[0])
+									&& change.getSetSplusKey().equals(negativeEvent[1])) {
+								isInNegativeList = true;
+							}
+
+						}
+
+						if (isInNegativeList) {
+							iterator.remove();
+						}
 					}
-				}
 
 //				String changesAsString="";
 //				for(ResponseModel.Change change: changes){
@@ -229,40 +232,40 @@ public class MyTimeTableFragment extends FeatureFragment {
 //                        .show();
 
 
-				for(ResponseModel.Change change : changes){
+					for (ResponseModel.Change change : changes) {
 
-					// Shortcut to the list
-					final List<FlatDataStructure> myTimetableList = MyTimeTableView.getLessons();
+						// Shortcut to the list
+						final List<FlatDataStructure> myTimetableList = MyTimeTableView.getLessons();
 
-					//Aenderung eines Events: suche den Event und ueberschreibe seine Daten
-					if(change.getChangesReason()==CHANGEREASON_EDIT) {
-						final FlatDataStructure event = FlatDataStructure.getEventByID( myTimetableList, change.getNewEventJson().getUid());
-						if(event!=null){
+						//Aenderung eines Events: suche den Event und ueberschreibe seine Daten
+						if (change.getChangesReason() == CHANGEREASON_EDIT) {
+							final FlatDataStructure event = FlatDataStructure.getEventByID(myTimetableList, change.getNewEventJson().getUid());
+							if (event != null) {
+								event.setEvent(change.getNewEventJson());
+							}
+						}
+						//Hinzufuegen eines neuen Events: Erstelle ein neues Element vom Typ FlatDataStructure, schreibe alle Set-, Semester- und Studiengangdaten in diesen
+						//und fuege dann die Eventdaten des neuen Events hinzu. Anschliessend in die Liste hinzufuegen.
+						if (change.getChangesReason() == CHANGEREASON_NEW) {
+							final FlatDataStructure event = FlatDataStructure.queryGetEventsByStudyGroupTitle(myTimetableList, change.getSetSplusKey()).get(0).copy();
 							event.setEvent(change.getNewEventJson());
+							MyTimeTableView.getLessons().add(event);
+
+						}
+						//Loeschen eines Events: Suche den Event mit der SplusID und lösche ihn aus der Liste.
+						if (change.getChangesReason() == CHANGEREASON_DELETE) {
+							final FlatDataStructure event = FlatDataStructure.getEventByID(myTimetableList, change.getNewEventJson().getUid());
+							MyTimeTableView.getLessons().remove(event);
 						}
 					}
-					//Hinzufuegen eines neuen Events: Erstelle ein neues Element vom Typ FlatDataStructure, schreibe alle Set-, Semester- und Studiengangdaten in diesen
-					//und fuege dann die Eventdaten des neuen Events hinzu. Anschliessend in die Liste hinzufuegen.
-					if(change.getChangesReason()==CHANGEREASON_NEW) {
-						final FlatDataStructure event = FlatDataStructure.queryGetEventsByStudyGroupTitle( myTimetableList, change.getSetSplusKey()).get(0).copy();
-						event.setEvent(change.getNewEventJson());
-						MyTimeTableView.getLessons().add(event);
 
-					}
-					//Loeschen eines Events: Suche den Event mit der SplusID und lösche ihn aus der Liste.
-					if(change.getChangesReason()==CHANGEREASON_DELETE){
-						final FlatDataStructure event = FlatDataStructure.getEventByID( myTimetableList, change.getNewEventJson().getUid());
-						MyTimeTableView.getLessons().remove(event);
-					}
 				}
 
-			}
-
-			@Override
-			public void onFailure(Call<ResponseModel> call, Throwable t) {
-				Log.d(TAG, "onFailure: "+t.toString());
-			}
-		});
+				@Override
+				public void onFailure(Call<ResponseModel> call, Throwable t) {
+					Log.d(TAG, "onFailure: " + t.toString());
+				}
+			});
+		}
 	}
-
 }
