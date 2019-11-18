@@ -43,7 +43,9 @@ public class ImpressumView extends FrameLayout {
         super.onFinishInflate();
 
         mWebView = (WebView) findViewById(R.id.impressumWebView);
-        mWebView.loadUrl(Endpoints.BASE_URL + Endpoints.APP_NAME + Endpoints.IMPRESSUM);
+        //wird der WebViewClient nicht geaendert, kann die Seite nicht geladen werden, da die Webview
+        mWebView.setWebViewClient(new SSLTolerentWebViewClient());
+        mWebView.loadUrl(Endpoints.IMPRESSUM_ENDPOINT);
 
     }
 }

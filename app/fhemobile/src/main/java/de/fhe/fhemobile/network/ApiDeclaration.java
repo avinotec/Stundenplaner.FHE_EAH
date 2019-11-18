@@ -33,6 +33,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -79,6 +80,7 @@ public interface ApiDeclaration {
     })
     @POST( Endpoints.SCHEDULE_CHANGE_SERVER )
     Call<ResponseModel> registerTimeTableChanges(@Body RequestBody _json);
-    @GET( Endpoints.SCHEDULE_CHANGE_SERVER )
+
+    @HTTP(method="GET",path = Endpoints.SCHEDULE_CHANGE_SERVER, hasBody = true)
     Call<ResponseModel> getTimeTableChanges(@Body RequestBody _json);
 }
