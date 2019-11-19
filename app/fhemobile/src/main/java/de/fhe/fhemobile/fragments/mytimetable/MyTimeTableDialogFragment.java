@@ -176,7 +176,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 				                        .setEventWeek(weekList.get(weekIndex))
 				                        .setEventDay(dayList.get(dayIndex))
 				                        .setEvent(eventList.get(eventIndex));
-		                        datacopy.getSets().add(datacopy.getStudyGroup().getTitle());
+		                        datacopy.getSets().add(datacopy.getStudyGroup().getTitle().split("\\.")[1]);
 		                        boolean found=false;
 		                        for(FlatDataStructure selectedItem:MyTimeTableView.getLessons()){
 		                            if(datacopy.getEvent().getUid().equals(selectedItem.getEvent().getUid())){
@@ -193,7 +193,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 	                        }
                             //Stattdessen füge bei dem existierenden Eintrag das Set des neuen Events hinzu.
                         	else{
-                        	    exists.getSets().add(data.getStudyGroup().getTitle());
+                        	    exists.getSets().add(data.getStudyGroup().getTitle().split("\\.")[1]);
 	                        }
                         }
                     }

@@ -311,10 +311,15 @@ public class FlatDataStructure implements Parcelable {
 	public String getSetString(){
 		Collections.sort(sets);
 		String combinedStudyGroups = "";
-		for(String _studyGroupTitle : sets){
-			combinedStudyGroups+=(_studyGroupTitle)+", ";
+		if(sets.size()>0) {
+			for (String _studyGroupTitle : sets) {
+				combinedStudyGroups += (_studyGroupTitle) + ", ";
+			}
+			return combinedStudyGroups.substring(0, combinedStudyGroups.length() - 2);
 		}
-		return combinedStudyGroups.substring(0,combinedStudyGroups.length()-2);
+		else{
+			return combinedStudyGroups;
+		}
 	}
 
 	private static int incId=0;
