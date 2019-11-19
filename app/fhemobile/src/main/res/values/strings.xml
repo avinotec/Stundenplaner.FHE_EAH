@@ -18,83 +18,79 @@
 
 <resources>
 
-    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
-    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
-    <string name="action_example" translatable="false">Example action</string>
-    <string name="action_settings" translatable="false">Settings</string>
-    <string name="action_impressum" translatable="false">Impressum</string>
-    <string name="hello_blank_fragment" translatable="false">Hello World</string>
+    <string name="navigation_drawer_open" >Open navigation drawer</string>
+    <string name="navigation_drawer_close" >Close navigation drawer</string>
+        <string name="action_settings" >Einstellungen</string>
+    <string name="drawer_news" >News</string>
+    <string name="drawer_mensa" >Canteen</string>
+    <string name="drawer_persons" >Persons</string>
+    <string name="drawer_dates" >Dates</string>
+    <string name="drawer_campus" >Campus</string>
+    <string name="drawer_impressum" >Imprint</string>
+    <string name="drawer_timetable" >Schedule</string>
+    <string name="drawer_mytimetable" >My Schedule</string>
 
-    <string name="drawer_news" translatable="false">News</string>
-    <string name="drawer_mensa" translatable="false">Mensa</string>
-    <string name="drawer_persons" translatable="false">Personen</string>
-    <string name="drawer_dates" translatable="false">Termine</string>
-    <string name="drawer_campus" translatable="false">Campus</string>
-    <string name="drawer_impressum" translatable="false">Impressum</string>
-    <string name="drawer_timetable" translatable="false">Stundenplan</string>
-    <string name="drawer_mytimetable" translatable="false">Mein Stundenplan</string>
+    <string name="phonebook_firstname" >First name</string>
+    <string name="phonebook_lastname" >Last name</string>
+    <string name="phonebook_search" >Search</string>
 
-    <string name="phonebook_firstname" translatable="false">Vorname</string>
-    <string name="phonebook_lastname" translatable="false">Nachname</string>
-    <string name="phonebook_search" translatable="false">Suchen</string>
+    <string name="semester_course_times" >Semester date</string>
+    <string name="semester_holidays">Holidays</string>
+    <string name="semester_important_dates" >Important dates</string>
 
-    <string name="semester_course_times" translatable="false">Eckdaten</string>
-    <string name="semester_holidays">Urlaub</string>
-    <string name="semester_important_dates" translatable="false">Wichtige Termine</string>
+    <string name="title_activity_settings" >Settings</string>
+    <string name="title_activity_news_single" >News selection</string>
+    <string name="title_activity_employee_information" >Contact</string>
 
-    <string name="title_activity_settings" translatable="false">Einstellungen</string>
-    <string name="title_activity_news_single" translatable="false">News Auswahl</string>
-    <string name="title_activity_employee_information" translatable="false">Kontaktdaten</string>
+    <string name="employee_phone" >Phone</string>
+    <string name="employee_fax" >Fax</string>
+    <string name="employee_role" >Function</string>
+    <string name="employee_division" >Faculty</string>
+    <string name="employee_mail" >E-Mail</string>
+    <string name="employee_room" >Room</string>
 
-    <string name="employee_phone" translatable="false">Telefon</string>
-    <string name="employee_fax" translatable="false">Fax</string>
-    <string name="employee_role" translatable="false">Funktion</string>
-    <string name="employee_division" translatable="false">Fakultät</string>
-    <string name="employee_mail" translatable="false">E-Mail</string>
-    <string name="employee_room" translatable="false">Raum</string>
+    <string name="maps_up" >One floor up</string>
+    <string name="maps_down" >One floor down</string>
 
-    <string name="maps_up" translatable="false">Etage hoch</string>
-    <string name="maps_down" translatable="false">Etage runter</string>
+    <string name="timetable_headline" >Please selct your study term. (You can change it in the Settings always)</string>
+    <string name="timetable_study_course" >Study term</string>
+    <string name="timetable_study_group" >Group</string>
+    <string name="timetable_term" >Semester</string>
+    <string name="timetable_button" >Input</string>
+    <string name="timetable_input" >Please select</string>
+    <string name="timetable_error" >This course is empty.</string>
+    <string name="timetable_switch" >Save favorite</string>
+    <string name="timetable_reset" >Delete favorite</string>
+    <string name="timetable_week" >Week</string>
+    <string name="timetable_error_incomplete" >Please set all fields.</string>
 
-    <string name="timetable_headline" translatable="false">Bitte wählen Sie Ihren Studiengang. (Sie können ihre Auswahl in den Einstellungen jederzeit ändern)</string>
-    <string name="timetable_study_course" translatable="false">Studiengang</string>
-    <string name="timetable_study_group" translatable="false">Gruppe</string>
-    <string name="timetable_term" translatable="false">Fachsemester</string>
-    <string name="timetable_button" translatable="false">Eingabe</string>
-    <string name="timetable_input" translatable="false">Bitte auswählen</string>
-    <string name="timetable_error" translatable="false">Dieser Kurs enthält keine Elemente.</string>
-    <string name="timetable_switch" translatable="false">Favorit speichern</string>
-    <string name="timetable_reset" translatable="false">Favorit löschen</string>
-    <string name="timetable_week" translatable="false">Woche</string>
-    <string name="timetable_error_incomplete" translatable="false">Bitte setze für jedes Feld eine Auswahl fest</string>
+    <string name="aqua_open" >Open</string>
+    <string name="aqua_closed" >Closed</string>
 
-    <string name="aqua_open" translatable="false">Geöffnet</string>
-    <string name="aqua_closed" translatable="false">Geschlossen</string>
+    <string name="mail_default_subject" >Subject</string>
+    <string name="mail_default_text" >With kind regards from EAH App</string>
 
-    <string name="mail_default_subject" translatable="false">Betreff</string>
-    <string name="mail_default_text" translatable="false">Mit freundlichen Gruessen aus der EAH App</string>
+    <string name="network_error" >No data found.</string>
 
-    <string name="network_error" translatable="false">Es konnten keine Daten gefunden werden.</string>
+    <string name="title_activity_maps_single" >Map</string>
+        <string name="title_activity_time_table_events" >Schedule</string>
 
-    <string name="title_activity_maps_single" translatable="false">Lageplan</string>
-    <string name="title_activity_base" translatable="false">BaseActivity</string>
-    <string name="title_activity_time_table_events" translatable="false">Stundenplan</string>
+    <string name="appwidget_news" >News list</string>
+    <string name="appwidget_news_empty" >No data available\nClick to refresh</string>
 
-    <string name="appwidget_news" translatable="false">FH News Listen</string>
-    <string name="appwidget_news_empty" translatable="false">Keine Daten vorhanden\nKlicken zum neu laden</string>
+    <string name="configure" >Configure</string>
+    <string name="add_widget" >Add widget</string>
 
-    <string name="configure" translatable="false">Configure</string>
-    <string name="add_widget" translatable="false">Add widget</string>
-	<string name="komplettes_set_waehlen">Komplettes Set wählen</string>
-    <string name="selbst_zusammenstellen">Selbst zusammenstellen</string>
-    <string name="edit">Edit</string>
-    <string name="professor_name">Professor Name</string>
-    <string name="role">Role</string>
-    <string name="leider_sind_keine_daten_verfuegbar">Leider sind keine Daten verfügbar</string>
+	<string name="komplettes_set_waehlen">Select a full set</string>
+    <string name="selbst_zusammenstellen">Configure your set on your own</string>
+    <string name="edit">Modify schedule</string>
+    <string name="professor_name">Professor</string>
+    <string name="role" translatable="false">Role</string>
+        <string name="leider_sind_keine_daten_verfuegbar">No data available</string>
     <string name="add_lesson">Add Lesson</string>
     <string name="loading">Loading…</string>
-    <string name="empty_text_calendar">Du hast noch keinen Stundenplan erstellt</string>
-    <string name="empty_text_edit">Du hast noch keine Vorlesungen ausgewählt</string>
-    <string name="empty_text_select">Wähle Studiengang und Semester aus</string>
+    <string name="empty_text_calendar">You did not compose a schedule.</string>
+    <string name="empty_text_edit">You did not choose a lesson.</string>
+    <string name="empty_text_select">Choose study term and semester.</string>
 
 </resources>
