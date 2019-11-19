@@ -48,7 +48,7 @@ public class MapsModel {
 
         // -----------------------------------------------------------------------------------------
         List<MapVo> campusOverViewMaps = new ArrayList<>();
-        campusOverViewMaps.add(new MapVo("Campus Übersicht", "campus_overview.png"));
+        campusOverViewMaps.add(new MapVo("Campus Übersicht", "campus_overview.jpg"));
         MapCollectionVo campusOverview = new MapCollectionVo("Campus Übersicht", campusOverViewMaps);
 
         

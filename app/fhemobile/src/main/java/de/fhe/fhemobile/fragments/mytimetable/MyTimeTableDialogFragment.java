@@ -177,7 +177,18 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 				                        .setEventDay(dayList.get(dayIndex))
 				                        .setEvent(eventList.get(eventIndex));
 		                        datacopy.getSets().add(datacopy.getStudyGroup().getTitle());
-
+		                        boolean found=false;
+		                        for(FlatDataStructure selectedItem:MyTimeTableView.getLessons()){
+		                            if(datacopy.getEvent().getUid().equals(selectedItem.getEvent().getUid())){
+		                                found=true;
+                                    }
+                                }
+		                        if(found==true){
+		                            datacopy.setAdded(true);
+                                }
+		                        else{
+		                            datacopy.setAdded(false);
+                                }
 		                        dataList.add(datacopy);
 	                        }
                             //Stattdessen füge bei dem existierenden Eintrag das Set des neuen Events hinzu.
@@ -221,6 +232,20 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             if (sharedPreferences.contains("_Result")) {
                 final String resultJson = sharedPreferences.getString("_Result", "");
                 final FlatDataStructure[] result = gson.fromJson(resultJson, FlatDataStructure[].class);
+                for(FlatDataStructure loadedElement:result){
+                    boolean found=false;
+                    for(FlatDataStructure selectedItem:MyTimeTableView.getLessons()){
+                        if(loadedElement.getEvent().getUid().equals(selectedItem.getEvent().getUid())){
+                            found=true;
+                        }
+                    }
+                    if(found==true){
+                        loadedElement.setAdded(true);
+                    }
+                    else{
+                        loadedElement.setAdded(false);
+                    }
+                }
                 MyTimeTableView.setCompleteLessons(new ArrayList<FlatDataStructure>(Arrays.asList(result)));
 
                 final TimeTableLessonAdapter timeTableLessonAdapter = new TimeTableLessonAdapter(MyTimeTableDialogFragment.this.getContext());

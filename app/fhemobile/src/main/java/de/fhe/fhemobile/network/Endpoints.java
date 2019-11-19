@@ -27,6 +27,7 @@ public class Endpoints {
     public static final String APP_NAME             = "/fheapp/";
 
     //TODO
+    public static final String IMPRESSUM_ENDPOINT = "https://www.eah-jena.de/de-de/impressum";
     public static final String SCHEDULE_CHANGE_SERVER = "https://lustigtestt.de/fhjena/rest_api/public/changes";
 
 

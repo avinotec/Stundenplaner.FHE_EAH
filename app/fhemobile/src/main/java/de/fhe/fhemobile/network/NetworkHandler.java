@@ -319,6 +319,11 @@ public class NetworkHandler {
 		mApi.registerTimeTableChanges(body).enqueue(_Callback);
 	}
 
+	public void getTimeTableChanges(final String json, final Callback<ResponseModel>_Callback){
+		Assert.assertTrue( mApi != null );
+		final RequestBody body =RequestBody.create( MediaType.parse("application/json"), json);
+		mApi.getTimeTableChanges(body).enqueue(_Callback);
+	}
 
 	/**
 	 *

@@ -28,7 +28,6 @@ import de.fhe.fhemobile.vos.maps.MapVo;
  * Created by paul on 23.02.14.
  */
 public class MapsSingleView extends FrameLayout {
-
     public MapsSingleView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;

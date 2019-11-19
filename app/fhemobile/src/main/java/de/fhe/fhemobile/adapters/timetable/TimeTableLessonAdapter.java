@@ -123,16 +123,24 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 
 		final TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.tvStudyGroupTitle);
 		final ImageButton btnAddLesson = (ImageButton)convertView.findViewById(R.id.ibAddLesson);
+		if(currentItem.isAdded()==true){
+			btnAddLesson.setEnabled(false);
+		}
+		else{
+			btnAddLesson.setEnabled(true);
+		}
 		btnAddLesson.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-
+				btnAddLesson.setEnabled(false);
+				currentItem.setAdded(true);
 				final List<FlatDataStructure> eventFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getCompleteLessons(),FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 				final List<FlatDataStructure> studyGroupFilteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(eventFilteredList,currentItem.getSetString());
 
 				for(FlatDataStructure event : studyGroupFilteredList){
 					MyTimeTableView.addLesson(event);
 				}
+				TimeTableLessonAdapter.this.notifyDataSetChanged();
 
 			}
 
