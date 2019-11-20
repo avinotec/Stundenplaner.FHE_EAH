@@ -47,10 +47,23 @@
 
     </RelativeLayout>
     <TextView
+        android:id="@+id/tvStudyGroupLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/headerBackground"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="16dp"
+        android:layout_alignParentLeft="true"
+        android:text="Sets:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:visibility="visible" />
+    <TextView
         android:id="@+id/tvStudyGroupTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/headerBackground"
+        android:layout_toRightOf="@id/tvStudyGroupLabel"
+        android:layout_toLeftOf="@+id/ibAddLesson"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="16dp"
 
@@ -79,11 +92,12 @@
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/tvLessonTime"
         android:layout_toRightOf="@+id/tvLessonTime"
+        android:layout_toLeftOf="@id/ibAddLesson"
         android:text="TextView" />
 
 
 
-    <ImageButton
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/ibAddLesson"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

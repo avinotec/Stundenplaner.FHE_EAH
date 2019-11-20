@@ -17,6 +17,8 @@
 package de.fhe.fhemobile.adapters.timetable;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,19 +122,22 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		}
 
 
-
+		final TextView studyGroupLabel = (TextView)convertView.findViewById(R.id.tvStudyGroupLabel);
 		final TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.tvStudyGroupTitle);
 		final ImageButton btnAddLesson = (ImageButton)convertView.findViewById(R.id.ibAddLesson);
 		if(currentItem.isAdded()==true){
 			btnAddLesson.setEnabled(false);
+			btnAddLesson.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
 		}
 		else{
 			btnAddLesson.setEnabled(true);
+			btnAddLesson.getBackground().setColorFilter(null);
 		}
 		btnAddLesson.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(final View v) {
 				btnAddLesson.setEnabled(false);
+
 				currentItem.setAdded(true);
 				final List<FlatDataStructure> eventFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getCompleteLessons(),FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 				final List<FlatDataStructure> studyGroupFilteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(eventFilteredList,currentItem.getSetString());
@@ -140,7 +145,9 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 				for(FlatDataStructure event : studyGroupFilteredList){
 					MyTimeTableView.addLesson(event);
 				}
+				btnAddLesson.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
 				TimeTableLessonAdapter.this.notifyDataSetChanged();
+
 
 			}
 
@@ -155,6 +162,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		if(position==0){
 
 			studyGroupTitle.setVisibility(View.VISIBLE);
+			studyGroupLabel.setVisibility(View.VISIBLE);
 			btnAddLesson.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
@@ -166,6 +174,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 					FlatDataStructure.cutEventTitle(MyTimeTableView.getCompleteLessons().get(position-1).getEvent().getTitle())))
 		{
 			studyGroupTitle.setVisibility(View.VISIBLE);
+			studyGroupLabel.setVisibility(View.VISIBLE);
 			btnAddLesson.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
@@ -175,12 +184,14 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 				MyTimeTableView.getCompleteLessons().get(position-1).getSetString()))
 		{
 			studyGroupTitle.setVisibility(View.VISIBLE);
+			studyGroupLabel.setVisibility(View.VISIBLE);
 			btnAddLesson.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
 		}
 		else{
 			studyGroupTitle.setVisibility(View.GONE);
+			studyGroupLabel.setVisibility(View.GONE);
 			btnAddLesson.setVisibility(View.GONE);
 		}
 

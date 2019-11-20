@@ -110,8 +110,9 @@ public class SelectedLessonAdapter extends BaseAdapter {
 			lessonTitle.setVisibility(View.GONE);
 			headerBackground.setVisibility(View.GONE);
 		}
-
+		final TextView studyGroupLabel = (TextView)convertView.findViewById(R.id.tvStudyGroupLabel);
 		final TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.tvStudyGroupTitle);
+
 
 		final ImageButton ibRemoveLesson = convertView.findViewById(R.id.ibRemoveLesson);
 		ibRemoveLesson.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +132,7 @@ public class SelectedLessonAdapter extends BaseAdapter {
 		if(position==0){
 			studyGroupTitle.setText(currentItem.getSetString());
 			studyGroupTitle.setVisibility(View.VISIBLE);
+			studyGroupLabel.setVisibility(View.VISIBLE);
 			ibRemoveLesson.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
@@ -138,6 +140,7 @@ public class SelectedLessonAdapter extends BaseAdapter {
 		else if(!FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()).equals(FlatDataStructure.cutEventTitle(MyTimeTableView.getLessons().get(position-1).getEvent().getTitle()))){
 			studyGroupTitle.setText(currentItem.getSetString());
 			studyGroupTitle.setVisibility(View.VISIBLE);
+			studyGroupLabel.setVisibility(View.VISIBLE);
 			ibRemoveLesson.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
@@ -146,12 +149,14 @@ public class SelectedLessonAdapter extends BaseAdapter {
 		else if(!currentItem.getSetString().equals(MyTimeTableView.getLessons().get(position-1).getSetString())){
 			studyGroupTitle.setText(currentItem.getSetString());
 			studyGroupTitle.setVisibility(View.VISIBLE);
+			studyGroupLabel.setVisibility(View.VISIBLE);
 			ibRemoveLesson.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
 		}
 		else{
 			studyGroupTitle.setVisibility(View.GONE);
+			studyGroupLabel.setVisibility(View.GONE);
 			ibRemoveLesson.setVisibility(View.GONE);
 		}
 
