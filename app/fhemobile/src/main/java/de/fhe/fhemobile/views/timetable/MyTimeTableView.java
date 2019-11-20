@@ -96,7 +96,9 @@ public class MyTimeTableView extends LinearLayout {
 
     private static List<FlatDataStructure> getSortedList(Comparator<FlatDataStructure> comparator){
         List<FlatDataStructure> sortedList = new ArrayList<FlatDataStructure>(MainActivity.selectedLessons);
-        Collections.sort(sortedList,comparator);
+        if(sortedList.isEmpty()==false){
+            Collections.sort(sortedList,comparator);
+        }
         return sortedList;
     }
     public static void setCompleteLessons(List<FlatDataStructure> lessons){
