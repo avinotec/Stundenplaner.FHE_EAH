@@ -20,6 +20,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.maps.MapsSingleFragment;
 import de.fhe.fhemobile.models.maps.MapsModel;
@@ -56,7 +58,7 @@ public class MapsSingleActivity extends BaseActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(STATE_MAPS_ID, mMapId);
     }

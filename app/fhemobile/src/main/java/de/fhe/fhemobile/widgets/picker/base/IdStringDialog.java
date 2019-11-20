@@ -26,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import java.util.List;
@@ -35,6 +36,7 @@ import java.util.List;
  */
 public class IdStringDialog extends DialogFragment {
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         //create the list view
@@ -79,7 +81,7 @@ public class IdStringDialog extends DialogFragment {
 
     //onDismiss-------------------------------------------------------------------------------------
     @Override
-    public void onDismiss(DialogInterface dialog) {
+    public void onDismiss(@NonNull DialogInterface dialog) {
         super.onDismiss(dialog);
     }
 

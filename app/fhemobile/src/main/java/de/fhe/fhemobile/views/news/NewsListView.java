@@ -21,7 +21,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.applidium.headerlistview.HeaderListView;
@@ -30,7 +29,6 @@ import java.util.ArrayList;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.StickyHeaderAdapter;
-import de.fhe.fhemobile.adapters.news.NewsListAdapter;
 import de.fhe.fhemobile.events.Event;
 import de.fhe.fhemobile.events.EventListener;
 import de.fhe.fhemobile.models.news.NewsModel;

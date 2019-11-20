@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import de.fhe.fhemobile.R;
@@ -74,7 +75,7 @@ public class MapsSingleFragment extends Fragment {
     
     
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         try {
@@ -213,7 +214,7 @@ public class MapsSingleFragment extends Fragment {
 
     //onCreateOptionsMenu---------------------------------------------------------------------------
     @Override
-    public void onCreateOptionsMenu(Menu _menu, MenuInflater _inflater) {
+    public void onCreateOptionsMenu(Menu _menu, @NonNull MenuInflater _inflater) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
         _menu.clear();
@@ -256,7 +257,7 @@ public class MapsSingleFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putInt(SAV_MAP_INDEX, mCurrentMapIndex);

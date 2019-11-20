@@ -26,7 +26,6 @@ import com.applidium.headerlistview.SectionAdapter;
 
 import java.util.List;
 
-import de.fhe.fhemobile.widgets.stickyHeaderList.DefaultHeaderItem;
 import de.fhe.fhemobile.widgets.stickyHeaderList.IHeaderItem;
 import de.fhe.fhemobile.widgets.stickyHeaderList.IRowItem;
 

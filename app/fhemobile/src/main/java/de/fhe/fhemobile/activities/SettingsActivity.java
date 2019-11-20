@@ -21,6 +21,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.mensa.MensaSettingsFragment;
 import de.fhe.fhemobile.fragments.news.NewsCategoriesFragment;
@@ -66,7 +68,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
+    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         // Always call the superclass so it can restore the view hierarchy
         super.onRestoreInstanceState(savedInstanceState);
 

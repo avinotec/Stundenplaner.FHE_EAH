@@ -24,6 +24,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -74,7 +75,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 	}
 
 	@Override
-	public void onNewToken(String token) {
+	public void onNewToken(@NonNull String token) {
 		Log.d(TAG, "Refreshed token: " + token);
 
 		// If you want to send messages to this application instance or

@@ -16,6 +16,7 @@
  */
 package de.fhe.fhemobile.adapters.timetable;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -40,6 +41,7 @@ public class TimeTableWeekPagerAdapter extends FragmentStatePagerAdapter {
      *
      * @param position
      */
+    @NonNull
     @Override
     public Fragment getItem(int position) {
         return TimeTableWeekFragment.newInstance(mData.get(position));

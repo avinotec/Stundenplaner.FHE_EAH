@@ -19,6 +19,8 @@ package de.fhe.fhemobile.activities.phonebook;
 import android.os.Bundle;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 
 import de.fhe.fhemobile.R;
@@ -66,7 +68,7 @@ public class EmployeeInformationActivity extends BaseActivity
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(STATE_EMPLOYEE, mEmployee);
         outState.putParcelableArrayList(STATE_EMPLOYEE_LIST, mModel.getFoundEmployees());

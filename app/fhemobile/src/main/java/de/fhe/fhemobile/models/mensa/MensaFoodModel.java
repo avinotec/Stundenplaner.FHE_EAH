@@ -16,8 +16,6 @@
  */
 package de.fhe.fhemobile.models.mensa;
 
-import android.util.Log;
-
 import de.fhe.fhemobile.events.EventDispatcher;
 import de.fhe.fhemobile.events.SimpleEvent;
 import de.fhe.fhemobile.utils.UserSettings;
