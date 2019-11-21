@@ -125,13 +125,14 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		final TextView studyGroupLabel = (TextView)convertView.findViewById(R.id.tvStudyGroupLabel);
 		final TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.tvStudyGroupTitle);
 		final ImageButton btnAddLesson = (ImageButton)convertView.findViewById(R.id.ibAddLesson);
+		btnAddLesson.getBackground().setColorFilter(Color.parseColor("#D6D7D7"), PorterDuff.Mode.MULTIPLY);
 		if(currentItem.isAdded()==true){
 			btnAddLesson.setEnabled(false);
-			btnAddLesson.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+			btnAddLesson.getBackground().setColorFilter(Color.parseColor("#E9EAEA"), PorterDuff.Mode.MULTIPLY);
 		}
 		else{
 			btnAddLesson.setEnabled(true);
-			btnAddLesson.getBackground().setColorFilter(null);
+			btnAddLesson.getBackground().setColorFilter(Color.parseColor("#D6D7D7"), PorterDuff.Mode.MULTIPLY);
 		}
 		btnAddLesson.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -145,7 +146,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 				for(FlatDataStructure event : studyGroupFilteredList){
 					MyTimeTableView.addLesson(event);
 				}
-				btnAddLesson.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+				btnAddLesson.getBackground().setColorFilter(Color.parseColor("#E9EAEA"), PorterDuff.Mode.MULTIPLY);
 				TimeTableLessonAdapter.this.notifyDataSetChanged();
 
 

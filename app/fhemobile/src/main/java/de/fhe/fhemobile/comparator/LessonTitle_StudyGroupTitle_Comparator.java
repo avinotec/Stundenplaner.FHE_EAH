@@ -62,6 +62,7 @@ public class LessonTitle_StudyGroupTitle_Comparator implements Comparator<FlatDa
 		final String studyGroupTitle2 = o2.getSetString();
 		Assert.assertTrue( studyGroupTitle1 != null );
 		Assert.assertTrue( studyGroupTitle2 != null );
+		//Comperator wird auch ausgeführt, wenn keine elemente vorhanden sind.
 //		Assert.assertTrue( studyGroupTitle1.length() > 1 );
 //		Assert.assertTrue( studyGroupTitle2.length() > 1 );
 
