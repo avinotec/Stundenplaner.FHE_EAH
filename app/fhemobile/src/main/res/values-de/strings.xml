@@ -90,4 +90,7 @@
     <string name="empty_text_calendar">Du hast noch keinen Stundenplan erstellt.</string>
 	<string name="empty_text_edit">Du hast noch keine Vorlesungen ausgewählt.</string>
 	<string name="empty_text_select">Wähle Studiengang und Semester aus.</string>
+
+    <string name="data_protection_link"><a href="https://www.eah-jena.de/de-de/datenschutz">Datenschutz</a></string>
+
 </resources>

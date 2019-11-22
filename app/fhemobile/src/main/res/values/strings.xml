@@ -93,4 +93,6 @@
     <string name="empty_text_edit">You did not choose a lesson.</string>
     <string name="empty_text_select">Choose study term and semester.</string>
 
+    <string name="data_protection_link"><a href="https://www.eah-jena.de/de-de/datenschutz">Data protection</a></string>
+
 </resources>
