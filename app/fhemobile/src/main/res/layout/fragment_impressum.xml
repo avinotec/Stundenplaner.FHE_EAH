@@ -44,10 +44,17 @@
             android:layout_above="@id/data_protection_link"/>
         <TextView
             android:id="@+id/data_protection_link"
-            android:layout_alignParentBottom="true"
+            android:layout_above="@id/version_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/data_protection_link"
+            android:textSize="15dp"
+            android:linksClickable="true"></TextView>
+        <TextView
+            android:id="@+id/version_number"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textSize="15dp"
             android:linksClickable="true"></TextView>
 
