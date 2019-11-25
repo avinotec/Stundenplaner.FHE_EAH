@@ -12,9 +12,9 @@
 
 
 # Add any project specific remove options here:
-#-assumenosideeffects class junit.framework.Assert { *; }
-#-assumenosideeffects class org.junit.Assert { *; }
-#-assumenosideeffects class android.util.Log { *; }
+-assumenosideeffects class junit.framework.Assert { *; }
+-assumenosideeffects class org.junit.Assert { *; }
+-assumenosideeffects class android.util.Log { *; }
 ##-assumenosideeffects class android.util.Log {
 ##    public static boolean isLoggable(java.lang.String, int);
 ##    public static int v(...);
@@ -182,13 +182,13 @@
 -dontwarn javax.annotation.**
 
 # Guarded by a NoClassDefFoundError try/catch and only used when on the classpath.
--dontwarn kotlin.Unit
+##-dontwarn kotlin.Unit
 
 # Top-level functions that can only be used by Kotlin.
--dontwarn retrofit2.KotlinExtensions
--dontwarn retrofit2.KotlinExtensions$*
+#-dontwarn retrofit2.KotlinExtensions
+#-dontwarn retrofit2.KotlinExtensions$*
 # Top-level functions that can only be used by Kotlin.
--dontwarn retrofit2.-KotlinExtensions
+#-dontwarn retrofit2.-KotlinExtensions
 
 # With R8 full mode, it sees no subtypes of Retrofit interfaces since they are created with a Proxy
 # and replaces all potential values with null. Explicitly keeping the interfaces prevents this.
