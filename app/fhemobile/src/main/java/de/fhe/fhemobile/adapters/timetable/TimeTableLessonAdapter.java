@@ -17,8 +17,6 @@
 package de.fhe.fhemobile.adapters.timetable;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -125,14 +123,14 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		final TextView studyGroupLabel = (TextView)convertView.findViewById(R.id.tvStudyGroupLabel);
 		final TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.tvStudyGroupTitle);
 		final ImageButton btnAddLesson = (ImageButton)convertView.findViewById(R.id.ibAddLesson);
-		btnAddLesson.getBackground().setColorFilter(Color.parseColor("#D6D7D7"), PorterDuff.Mode.MULTIPLY);
 		if(currentItem.isAdded()==true){
 			btnAddLesson.setEnabled(false);
-			btnAddLesson.getBackground().setColorFilter(Color.parseColor("#E9EAEA"), PorterDuff.Mode.MULTIPLY);
+			btnAddLesson.setImageResource(R.drawable.ic_input_add_gray);
 		}
 		else{
 			btnAddLesson.setEnabled(true);
-			btnAddLesson.getBackground().setColorFilter(Color.parseColor("#D6D7D7"), PorterDuff.Mode.MULTIPLY);
+			btnAddLesson.setImageResource(android.R.drawable.ic_input_add);
+
 		}
 		btnAddLesson.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -146,7 +144,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 				for(FlatDataStructure event : studyGroupFilteredList){
 					MyTimeTableView.addLesson(event);
 				}
-				btnAddLesson.getBackground().setColorFilter(Color.parseColor("#E9EAEA"), PorterDuff.Mode.MULTIPLY);
+				btnAddLesson.setImageResource(R.drawable.ic_input_add_gray);
 				TimeTableLessonAdapter.this.notifyDataSetChanged();
 
 

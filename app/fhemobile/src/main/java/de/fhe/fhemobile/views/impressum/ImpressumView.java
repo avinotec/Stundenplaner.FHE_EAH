@@ -17,10 +17,13 @@
 package de.fhe.fhemobile.views.impressum;
 
 import android.content.Context;
+import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
+import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.network.Endpoints;
 
@@ -47,6 +50,13 @@ public class ImpressumView extends FrameLayout {
         mWebView.setWebViewClient(new SSLTolerentWebViewClient());
 	    mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.loadUrl(Endpoints.IMPRESSUM_ENDPOINT);
-
+        TextView dataProtection = findViewById(R.id.data_protection_link);
+        dataProtection.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView versionText = findViewById(R.id.version_number);
+        String sText = "Vers.: " + BuildConfig.FLAVOR + " " +BuildConfig.VERSION_NAME +" ("+ BuildConfig.VERSION_CODE + ')'; //$NON-NLS
+        if ( BuildConfig.DEBUG ) {
+            sText += " DEBUG"; //NON-NLS
+        }  //$NON-NLS
+        versionText.setText(sText);
     }
 }
