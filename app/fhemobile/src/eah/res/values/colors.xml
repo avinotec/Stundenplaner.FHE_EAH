@@ -40,6 +40,7 @@
     <!--Button Colors-->
 
     <color name="primary_button">@color/primary_color</color>
+    <color name="primary_button_deactivated">#CCCCCC</color>
     <color name="primary_dark_button">#F5F5F5</color>
     <color name="primary_button_disabled">#55009790</color>
 

@@ -126,10 +126,12 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		if(currentItem.isAdded()==true){
 			btnAddLesson.setEnabled(false);
 			btnAddLesson.setImageResource(R.drawable.ic_input_add_gray);
+			btnAddLesson.setBackgroundResource(R.drawable.buttonshape_disabled);
 		}
 		else{
 			btnAddLesson.setEnabled(true);
 			btnAddLesson.setImageResource(android.R.drawable.ic_input_add);
+			btnAddLesson.setBackgroundResource(R.drawable.buttonshape);
 
 		}
 		btnAddLesson.setOnClickListener(new View.OnClickListener() {
@@ -145,6 +147,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 					MyTimeTableView.addLesson(event);
 				}
 				btnAddLesson.setImageResource(R.drawable.ic_input_add_gray);
+				btnAddLesson.setBackgroundResource(R.drawable.buttonshape_disabled);
 				TimeTableLessonAdapter.this.notifyDataSetChanged();
 
 

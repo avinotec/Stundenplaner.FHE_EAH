@@ -109,6 +109,7 @@
         android:visibility="gone"
         android:layout_below="@+id/headerBackground"
         app:srcCompat="@android:drawable/ic_delete"
+        android:background="@drawable/buttonshape"
 	    android:contentDescription="TODO" />
 
 </RelativeLayout>

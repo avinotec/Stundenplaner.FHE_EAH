@@ -51,11 +51,12 @@
                     android:id="@+id/timetableEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginBottom="16dp"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/button_primary"
-                    android:text="@string/edit" />
+                    android:text="@string/edit"
+                    android:textColor="@color/drawer_item_text"
+                    android:textSize="12sp"
+                    android:background="@drawable/buttonshape"/>
 
                 <ListView
                     android:id="@+id/lvCalendar"

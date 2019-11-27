@@ -47,7 +47,8 @@ public class ImpressumView extends FrameLayout {
 
         mWebView = (WebView) findViewById(R.id.impressumWebView);
         //wird der WebViewClient nicht geaendert, kann die Seite nicht geladen werden, da die Webview
-        mWebView.setWebViewClient(new SSLTolerentWebViewClient());
+        mWebView.setWebViewClient(new SSLTolerentWebViewClient(mContext));
+        //Ohne JavascriptEnabled laesst sich das Impressum nicht scrollen.
 	    mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.loadUrl(Endpoints.IMPRESSUM_ENDPOINT);
         TextView dataProtection = findViewById(R.id.data_protection_link);

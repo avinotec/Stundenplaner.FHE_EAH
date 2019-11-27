@@ -98,8 +98,8 @@
                     android:layout_marginTop="30dp"
                     android:layout_gravity="center_horizontal"
                     android:text="@string/phonebook_search"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/button_primary"
+                    android:textColor="@color/drawer_item_text"
+                    android:background="@drawable/buttonshape"
                     />
 
                 <ProgressBar

@@ -46,14 +46,15 @@
                 >
 
                 <Button
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginBottom="16dp"
                     android:id="@+id/timetableAddLesson"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/add_lesson"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/button_primary"/>
+                    android:textColor="#009790"
+                    android:textSize="12sp"
+                    android:background="@drawable/buttonshape"/>
 
                 <ListView
                     android:id="@+id/lvLessons"

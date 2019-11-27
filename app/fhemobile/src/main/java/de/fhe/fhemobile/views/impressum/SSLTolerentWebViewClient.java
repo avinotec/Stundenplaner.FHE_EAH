@@ -17,15 +17,48 @@
 
 package de.fhe.fhemobile.views.impressum;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.net.http.SslError;
+import android.util.Log;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import androidx.appcompat.app.AlertDialog;
+
+import de.fhe.fhemobile.R;
+
 public class SSLTolerentWebViewClient extends WebViewClient {
+	private static final String TAG = "SSLTolerentWebViewClien";
+	private Context context;
+	public SSLTolerentWebViewClient(Context context){
+
+	}
 	@Override
 	public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-		handler.proceed(); // Ignore SSL certificate errors
+
+		try {
+			final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			builder.setMessage(R.string.notification_error_ssl_cert_invalid);
+			builder.setPositiveButton(context.getString(R.string.ssl_error_continue), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					handler.proceed();
+				}
+			});
+			builder.setNegativeButton(context.getString(R.string.ssl_error_cancel), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					handler.cancel();
+				}
+			});
+			final AlertDialog dialog = builder.create();
+			dialog.show();
+		}catch (Exception e){
+			Log.d(TAG, "onReceivedSslError: ",e);
+			handler.proceed();
+		}
 	}
 
 }

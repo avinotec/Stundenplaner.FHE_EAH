@@ -86,8 +86,6 @@ public class AddLessonView extends LinearLayout {
     }
 
     public void setTermsItems(final List<TermsVo> _Items) {
-
-
         mTermsPicker.setItems(_Items);
         mTermsPicker.toggleEnabled(true);
     }

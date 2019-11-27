@@ -107,6 +107,7 @@
         android:layout_marginEnd="3dp"
         android:layout_marginRight="3dp"
         android:visibility="gone"
+        android:background="@drawable/buttonshape"
         android:layout_below="@+id/headerBackground"
         app:srcCompat="@android:drawable/ic_input_add"
 	    android:contentDescription="TODO" />

@@ -94,5 +94,8 @@
     <string name="empty_text_select">Choose study term and semester.</string>
 
     <string name="data_protection_link"><a href="https://www.eah-jena.de/de-de/datenschutz">Data protection</a></string>
+    <string name="notification_error_ssl_cert_invalid">Es ist ein Zertifikat-Fehler aufgetreten. Möchtest du die Seite trotzdem öffnen?</string>
+    <string name="ssl_error_continue">continue</string>
+    <string name="ssl_error_cancel">cancel</string>
 
 </resources>

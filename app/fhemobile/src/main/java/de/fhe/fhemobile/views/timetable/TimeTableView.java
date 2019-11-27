@@ -25,9 +25,11 @@ import android.widget.LinearLayout;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.FragmentManager;
 
+import java.util.Collections;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.comparator.StudyCourseComperator;
 import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
 import de.fhe.fhemobile.vos.timetable.StudyGroupVo;
 import de.fhe.fhemobile.vos.timetable.TermsVo;
@@ -71,9 +73,12 @@ public class TimeTableView extends LinearLayout {
         mStudyGroupPicker.setOnItemChosenListener(mGroupsListener);
 
         mSearchButton.setOnClickListener(mSearchClickListener);
+        toggleButtonEnabled(false);
     }
 
     public void setStudyCourseItems(final List<StudyCourseVo> _Items) {
+        StudyCourseVo.alterTitle(_Items);
+        Collections.sort(_Items,new StudyCourseComperator());
         mStudyCoursePicker.setItems(_Items);
         mStudyCoursePicker.toggleEnabled(true);
     }
@@ -110,6 +115,14 @@ public class TimeTableView extends LinearLayout {
 
     public void toggleButtonEnabled(final boolean _Enabled) {
         mSearchButton.setEnabled(_Enabled);
+        if(_Enabled){
+            mSearchButton.setTextColor(getResources().getColor(R.color.primary_button));
+            mSearchButton.setBackgroundResource(R.drawable.buttonshape);
+        }
+        else{
+            mSearchButton.setTextColor(getResources().getColor(R.color.primary_button_deactivated));
+            mSearchButton.setBackgroundResource(R.drawable.buttonshape_disabled);
+        }
     }
 
     @Override
