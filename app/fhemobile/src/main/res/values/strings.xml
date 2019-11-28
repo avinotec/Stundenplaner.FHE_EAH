@@ -86,7 +86,7 @@
     <string name="edit">Modify schedule</string>
     <string name="professor_name">Professor</string>
     <string name="role" translatable="false">Role</string>
-        <string name="leider_sind_keine_daten_verfuegbar">No data available</string>
+    <string name="leider_sind_keine_daten_verfuegbar">No data available</string>
     <string name="add_lesson">Add Lesson</string>
     <string name="loading">Loading…</string>
     <string name="empty_text_calendar">You did not compose a schedule.</string>
@@ -94,8 +94,8 @@
     <string name="empty_text_select">Choose study term and semester.</string>
 
     <string name="data_protection_link"><a href="https://www.eah-jena.de/de-de/datenschutz">Data protection</a></string>
-    <string name="notification_error_ssl_cert_invalid">Es ist ein Zertifikat-Fehler aufgetreten. Möchtest du die Seite trotzdem öffnen?</string>
-    <string name="ssl_error_continue">continue</string>
-    <string name="ssl_error_cancel">cancel</string>
+    <string name="notification_error_ssl_cert_invalid">A SSL-Certificate occured. Do you want to proceed?</string>
+    <string name="ssl_error_continue">Continue</string>
+    <string name="ssl_error_cancel">Cancel</string>
 
 </resources>
