@@ -91,23 +91,23 @@ public class MapsModel {
 
         // -----------------------------------------------------------------------------------------
 
-        final List<MapVo> hitAulaMaps = new ArrayList<>();
-        hitAulaMaps.add(new MapVo("HIT - Aula", "HIT-Aula.jpg"));
-        MapCollectionVo hitAula = new MapCollectionVo("HIT - Aula", hitAulaMaps);
+        //final List<MapVo> hitAulaMaps = new ArrayList<>();
+        //hitAulaMaps.add(new MapVo("HIT - Aula", "HIT-Aula.jpg"));
+        //MapCollectionVo hitAula = new MapCollectionVo("HIT - Aula", hitAulaMaps);
 
         
         // -----------------------------------------------------------------------------------------
 
-        final List<MapVo> hitCampusMaps = new ArrayList<>();
-        hitCampusMaps.add(new MapVo("HIT - Campus", "HIT-Campus.jpg"));
-        MapCollectionVo hitCampus = new MapCollectionVo("HIT - Campus", hitCampusMaps);
+        //final List<MapVo> hitCampusMaps = new ArrayList<>();
+        //hitCampusMaps.add(new MapVo("HIT - Campus", "HIT-Campus.jpg"));
+        //MapCollectionVo hitCampus = new MapCollectionVo("HIT - Campus", hitCampusMaps);
         
         mMaps.add(campusOverview);
         mMaps.add(building3);
         mMaps.add(building4);
         mMaps.add(building5);
-        mMaps.add(hitAula);
-        mMaps.add(hitCampus);
+        //mMaps.add(hitAula);
+        //mMaps.add(hitCampus);
     }
 
 }
