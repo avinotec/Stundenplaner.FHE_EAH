@@ -1,0 +1,5 @@
+Features für die Hochschulapp
+
+- Mensa Essenspläne per Swipe wechseln
+- Auswahl beim Stundenplan cachen
+- Layoutanpassungen für kleine Displays (Bilder entfernen) 

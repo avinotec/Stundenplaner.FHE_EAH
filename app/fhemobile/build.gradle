@@ -63,8 +63,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 15
-        versionName '1.2'
+        versionCode 17
+        versionName '1.4'
 
         multiDexEnabled = true
 
@@ -213,7 +213,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.viewpagerindicator:library:2.4.1@aar'
     implementation 'com.darwinsys:hirondelle-date4j:1.5.1'
-    
+
     implementation 'com.github.applidium:HeaderListView:f9c33c21ae'
     implementation 'com.squareup.retrofit2:retrofit:2.6.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
@@ -222,7 +222,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:20.0.1'
 
 
-    
+
+
     // Testing-only dependencies
     //testImplementation 'junit:junit:4.+'
     implementation 'junit:junit:4.13-rc-1'
