@@ -1,0 +1,8 @@
+nach Aussage unseres Datenschutzexperten gilt folgendes, bzw. wird mit der OWA im Moment so gemacht:
+
+frei verfügbar: Kontakt zu Profs sowie Funktionsmailadressen (Stundenplanung@eah...)
+für Studenten verfügbar: Daten zu allen Mitarbeitern
+für Mitarbeiter(?) verfügbar: Daten zu allen Mitarbeitern und Studenten
+
+Schlussfolgerung: eine Suchfunktion, die nur nach Abfrage ob der Nutzer tatsächlich Student ist ausführbar ist, 
+erfordert keine Kategorien für Mitarbeiter (oder sonstige Trennung zwischen Dozenten und sonstigen)
