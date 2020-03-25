@@ -32,7 +32,8 @@ public class MapsModel {
     private static MapsModel ourInstance = null;
     private final List<MapCollectionVo> mMaps;
 
-    public static MapsModel getInstance() {
+    /** singleton */
+    public static final MapsModel getInstance() {
         if(ourInstance == null) {
             ourInstance = new MapsModel();
         }
@@ -47,9 +48,9 @@ public class MapsModel {
         mMaps = new ArrayList<>();
 
         // -----------------------------------------------------------------------------------------
-        List<MapVo> campusOverViewMaps = new ArrayList<>();
+        final List<MapVo> campusOverViewMaps = new ArrayList<>();
         campusOverViewMaps.add(new MapVo("Campus Übersicht", "campus_overview.jpg"));
-        MapCollectionVo campusOverview = new MapCollectionVo("Campus Übersicht", campusOverViewMaps);
+        final MapCollectionVo campusOverview = new MapCollectionVo("Campus Übersicht", campusOverViewMaps);
 
         
         // -----------------------------------------------------------------------------------------
@@ -62,7 +63,7 @@ public class MapsModel {
         building3Maps.add(new MapVo("Haus 3-2-1 - OG2", "Haus3-4_OG2.jpeg"));
         building3Maps.add(new MapVo("Haus 3-2-1 - OG3", "Haus3-5_OG3.jpeg"));
         building3Maps.add(new MapVo("Haus 3-2-1 - OG4", "Haus3-6_OG4.jpeg"));
-        MapCollectionVo building3 = new MapCollectionVo("Haus 3-2-1", building3Maps);
+        final MapCollectionVo building3 = new MapCollectionVo("Haus 3-2-1", building3Maps);
 
 
         // -----------------------------------------------------------------------------------------
@@ -74,7 +75,7 @@ public class MapsModel {
         building4Maps.add(new MapVo("Haus 4 - OG1", "Haus4-3_OG1.jpeg"));
         building4Maps.add(new MapVo("Haus 4 - OG2", "Haus4-4_OG2.jpeg"));
         building4Maps.add(new MapVo("Haus 4 - OG3", "Haus4-5_OG3.jpeg"));
-        MapCollectionVo building4 = new MapCollectionVo("Haus 4", building4Maps);
+        final MapCollectionVo building4 = new MapCollectionVo("Haus 4", building4Maps);
 
 
         // -----------------------------------------------------------------------------------------
@@ -86,7 +87,7 @@ public class MapsModel {
         building5Maps.add(new MapVo("Haus 5 - OG1", "Haus5-3_OG1.jpeg"));
         building5Maps.add(new MapVo("Haus 5 - OG2", "Haus5-4_OG2.jpeg"));
         building5Maps.add(new MapVo("Haus 5 - OG3", "Haus5-5_OG3.jpeg"));
-        MapCollectionVo building5 = new MapCollectionVo("Haus 5", building5Maps);
+        final MapCollectionVo building5 = new MapCollectionVo("Haus 5", building5Maps);
 
 
         // -----------------------------------------------------------------------------------------
