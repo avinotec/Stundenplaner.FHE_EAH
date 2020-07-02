@@ -70,6 +70,14 @@ android {
 
         // For Testing
         //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
+        /*
+        For example, if you are using a library that includes language resources (such as AppCompat or Google Play Services),
+        then your APK includes all translated language strings for the messages in those libraries whether the rest of your
+        app is translated to the same languages or not. If you'd like to keep only the languages that your app officially supports,
+        you can specify those languages using the resConfig property. Any resources for languages not specified are removed.
+         */
+        resConfigs "de", "en", "fr", "ru", "es"
     }
     
     dexOptions {
@@ -146,10 +154,10 @@ android {
             // your project's release build type.
             minifyEnabled false
             //TODO minifyEnabled true
+
             // Enables resource shrinking, which is performed by the
             // Android Gradle plugin.
-            //TODO shrinkResources true
-            shrinkResources false
+            //shrinkResources true    //TODO requires code shrinking, too
     
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt', 'proguard-project.txt'
             debuggable false
