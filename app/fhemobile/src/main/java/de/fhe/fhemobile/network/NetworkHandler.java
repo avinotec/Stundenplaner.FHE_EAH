@@ -128,10 +128,11 @@ public class NetworkHandler {
 	 */
 	public void fetchMensaData() {
 		Assert.assertTrue( mApi != null );
-
+		Log.d(TAG, "Mensa: "+UserSettings.getInstance().getChosenMensa());
 		mApi.fetchMensaData(UserSettings.getInstance().getChosenMensa()).enqueue( new Callback<MensaFoodItemVo[]>() {
 			@Override
 			public void onResponse(final Call<MensaFoodItemVo[]> call, final Response<MensaFoodItemVo[]> response) {
+				Log.d(TAG, "Mensa: "+call.request().url().toString());
 				final MensaFoodItemVo[] _mensaItems =response.body();
 				List<MensaFoodItemCollectionVo> orderedItems = null;
 
