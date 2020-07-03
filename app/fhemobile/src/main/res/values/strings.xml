@@ -97,5 +97,6 @@
     <string name="notification_error_ssl_cert_invalid">A SSL-Certificate occured. Do you want to proceed?</string>
     <string name="ssl_error_continue">Continue</string>
     <string name="ssl_error_cancel">Cancel</string>
+    <string name="jump_current_lesson">Jump to current lesson</string>
 
 </resources>

@@ -28,6 +28,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.adapters.timetable.CalendarAdapter;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableDialogFragment;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableFragment;
@@ -57,6 +58,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         mEditButton = (Button)            findViewById(R.id.timetableEdit);
+        mJumpCurrentLesson = (Button)            findViewById(R.id.jumpCurrentLesson);
         mCalendarList = (ListView)          findViewById(R.id.lvCalendar);
 
         mEditButton.setOnClickListener(new OnClickListener() {
@@ -70,8 +72,15 @@ public class MyTimeTableCalendarView extends LinearLayout {
                 //backstack berücksichtigen!
             }
         });
+        mJumpCurrentLesson.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                jumpCurrentLesson();
+            }
+        });
         calendarAdapter = new CalendarAdapter(mContext);
         mCalendarList.setAdapter(calendarAdapter);
+        jumpCurrentLesson();
     }
     private void createAddDialog(){
 
@@ -90,7 +99,14 @@ public class MyTimeTableCalendarView extends LinearLayout {
     private FragmentManager   mFragmentManager;
 
     private Button mEditButton;
+    private Button mJumpCurrentLesson;
     private ListView mCalendarList;
 
     private CalendarAdapter calendarAdapter;
+    public void jumpCurrentLesson(){
+        int currentDayIndex = MainActivity.getCurrentEventIndex();
+        if(currentDayIndex>=0){
+            mCalendarList.setSelection(currentDayIndex);
+        }
+    }
 }

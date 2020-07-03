@@ -38,6 +38,8 @@ import com.google.gson.Gson;
 
 import org.junit.Assert;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -54,6 +56,7 @@ import de.fhe.fhemobile.utils.feature.FeatureFragmentFactory;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
 import de.fhe.fhemobile.views.timetable.MyTimeTableView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -331,5 +334,29 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     public static String getFirebaseToken() {
         return firebaseToken;
+    }
+
+    //gehe durch die Liste, bis die Startzeit eines Events größer ist als die angegebene Zeit und nehme den vorherigen Event
+    //und gebe den Index zurück.
+    public static int getCurrentEventIndex(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
+
+        for(int i=0;i<sortedLessons.size();i++){
+            TimeTableEventVo event = sortedLessons.get(i).getEvent();
+            try {
+                if(sdf.parse(event.getDate()+" "+event.getStartTime()).compareTo(new Date())==1){
+                    if(sdf.parse(event.getDate()+" "+event.getEndTime()).compareTo(new Date())==-1){
+                        return (i);
+                    }
+                    if(i==0){
+                        return i;
+                    }
+                    return (i-1);
+                }
+            } catch (ParseException e) {
+                Log.e(TAG, "getCurrentEventIndex: ",e );
+            }
+        }
+        return -1;
     }
 }
