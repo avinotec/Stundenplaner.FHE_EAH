@@ -96,5 +96,7 @@
     <string name="ssl_error_cancel">Abbrechen</string>
     <string name="ssl_error_continue">Fortfahren</string>
     <string name="jump_current_lesson">Springe zur aktuellen Vorlesung</string>
+    <string name="deleteTimetableTitle">Stundenplan löschen?</string>
+    <string name="deleteTimetableMessage">Das Semester ist zuende. Möchtest du den Stundenplan löschen?</string>
 
 </resources>

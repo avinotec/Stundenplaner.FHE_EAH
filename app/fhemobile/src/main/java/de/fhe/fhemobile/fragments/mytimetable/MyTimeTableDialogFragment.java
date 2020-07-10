@@ -254,7 +254,6 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                 timeTableLessonAdapter.notifyDataSetChanged();
             }
         }
-
     }
 
     private final AddLessonView.IViewListener mViewListener = new AddLessonView.IViewListener() {
@@ -267,6 +266,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             mView.resetTermsPicker();
             mView.resetGroupsPicker();
             //mView.toggleLessonListVisibility(false);
+            Log.d(TAG, "onTermChosen: "+_TermId+" ausgewählt");
             MyTimeTableView.getCompleteLessons().clear();
             timeTableLessonAdapter.notifyDataSetChanged();
 
@@ -319,6 +319,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             //mView.toggleButtonEnabled(false);
             mView.toggleLessonListVisibility(false);
             MyTimeTableView.getCompleteLessons().clear();
+            timeTableLessonAdapter.notifyDataSetChanged();
 
             // mView.resetGroupsPicker();
 

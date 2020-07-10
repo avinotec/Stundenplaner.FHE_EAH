@@ -238,9 +238,6 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
             });
 
         }
-
-
-
     }
 
     @Override
@@ -344,7 +341,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         for(int i=0;i<sortedLessons.size();i++){
             TimeTableEventVo event = sortedLessons.get(i).getEvent();
             try {
-                if(sdf.parse(event.getDate()+" "+event.getStartTime()).compareTo(new Date())==1){
+                if(sdf.parse(event.getDate()+" "+event.getStartTime()).compareTo(new Date())>=0){
                     if(sdf.parse(event.getDate()+" "+event.getEndTime()).compareTo(new Date())==-1){
                         return (i);
                     }

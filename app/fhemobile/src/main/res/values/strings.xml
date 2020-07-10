@@ -98,5 +98,7 @@
     <string name="ssl_error_continue">Continue</string>
     <string name="ssl_error_cancel">Cancel</string>
     <string name="jump_current_lesson">Jump to current lesson</string>
+    <string name="deleteTimetableTitle">Delete timetable?</string>
+    <string name="deleteTimetableMessage">The semester is over. Do you want to delete the timetable?</string>
 
 </resources>
