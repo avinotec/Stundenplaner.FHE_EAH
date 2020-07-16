@@ -214,7 +214,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
 
     //Setzt die beim letzten mal ausgewählten Werte und die letzen Suchergebnisse.
-    public void initSelectionSite(){
+    private void initSelectionSite(){
         final Gson gson= new Gson();
 
         sharedPreferences =this.getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
