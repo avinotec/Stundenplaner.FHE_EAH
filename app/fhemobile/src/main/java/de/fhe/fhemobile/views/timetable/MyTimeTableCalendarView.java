@@ -40,17 +40,14 @@ public class MyTimeTableCalendarView extends LinearLayout {
 
     public MyTimeTableCalendarView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
-        mContext = context;
     }
 
     public MyTimeTableCalendarView(final Context context) {
         super(context);
-        mContext = context;
     }
 
     public void initializeView(final FragmentManager _Manager) {
         mFragmentManager = _Manager;
-
     }
 
 
@@ -58,7 +55,6 @@ public class MyTimeTableCalendarView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         mEditButton = (Button)            findViewById(R.id.timetableEdit);
-        mJumpCurrentLesson = (Button)            findViewById(R.id.jumpCurrentLesson);
         mCalendarList = (ListView)          findViewById(R.id.lvCalendar);
 
         mEditButton.setOnClickListener(new OnClickListener() {
@@ -72,41 +68,49 @@ public class MyTimeTableCalendarView extends LinearLayout {
                 //backstack berücksichtigen!
             }
         });
+
+        //TODO Behelf, soll automatisch auf den aktuellen Eintrag vorgesprungen werden
+        Button mJumpCurrentLesson = (Button)            findViewById(R.id.jumpCurrentLesson);
         mJumpCurrentLesson.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {
                 jumpCurrentLesson();
             }
         });
-        calendarAdapter = new CalendarAdapter(mContext);
-        mCalendarList.setAdapter(calendarAdapter);
-        jumpCurrentLesson();
-    }
-    private void createAddDialog(){
 
+        //deprecated: calendarAdapter = new CalendarAdapter(mContext);
+        calendarAdapter = new CalendarAdapter( getContext() );
+        mCalendarList.setAdapter(calendarAdapter);
+    }
+
+    // Springen auf den aktuellen Tag
+    public void jumpCurrentLesson(){
+        final int currentDayIndex = MainActivity.getCurrentEventIndex();
+        if(currentDayIndex>=0){
+            mCalendarList.setSelection(currentDayIndex);
+        }
+    }
+
+
+    private void createAddDialog(){
         final FragmentManager fm = mFragmentManager;
         MyTimeTableDialogFragment myTimeTableDialogFragment = MyTimeTableDialogFragment.newInstance();
         myTimeTableDialogFragment.show(fm, "fragment_edit_name");
 
     }
-    public void setEmptyText(String text){
+
+    public void setEmptyText(final String text){
         TextView emptyView = findViewById(R.id.emptyView);
         emptyView.setText(text);
         mCalendarList.setEmptyView(emptyView);
     }
 
-    private final Context           mContext;
+    //deprecated: private final Context           mContext;
     private FragmentManager   mFragmentManager;
 
     private Button mEditButton;
-    private Button mJumpCurrentLesson;
     private ListView mCalendarList;
 
     private CalendarAdapter calendarAdapter;
-    public void jumpCurrentLesson(){
-        int currentDayIndex = MainActivity.getCurrentEventIndex();
-        if(currentDayIndex>=0){
-            mCalendarList.setSelection(currentDayIndex);
-        }
-    }
+
 }
