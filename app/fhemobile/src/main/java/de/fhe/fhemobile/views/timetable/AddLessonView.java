@@ -18,7 +18,6 @@ package de.fhe.fhemobile.views.timetable;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -68,10 +67,6 @@ public class AddLessonView extends LinearLayout {
         mTermsPicker.toggleEnabled(false);
         mTermsPicker.setOnItemChosenListener(mTermsListener);
 
-
-
-
-//        mSearchButton.setOnClickListener(mSearchClickListener);
     }
 
     public void setStudyCourseItems(final List<StudyCourseVo> _Items) {
@@ -107,10 +102,7 @@ public class AddLessonView extends LinearLayout {
         mTermsPicker.toggleEnabled(enabled);
     }
 
-/*
-    public void toggleButtonEnabled(final boolean _Enabled) {
-    }
-*/
+
 
     @Override
     protected void onFinishInflate() {
@@ -118,7 +110,6 @@ public class AddLessonView extends LinearLayout {
 
         mStudyCoursePicker = (StudyCoursePicker) findViewById(R.id.add_timetableStudyCoursePicker);
         mTermsPicker       = (TermsPicker)       findViewById(R.id.add_timetableTermsPicker);
-        mToggleEditModus   = (ToggleButton)      findViewById(R.id.add_tbEditMode);
 
         mLessonList        = (ListView)          findViewById(R.id.add_lvLessons);
     }
@@ -143,24 +134,6 @@ public class AddLessonView extends LinearLayout {
         }
     };
 
-    // Returns the TimeTableId
-    private final OnItemChosenListener mGroupsListener = new OnItemChosenListener() {
-        @Override
-        public void onItemChosen(final String _ItemId, final int _ItemPos) {
-            if (mViewListener != null) {
-                mViewListener.onTimeTableChosen(_ItemId);
-            }
-        }
-    };
-
-    private OnClickListener mSearchClickListener = new OnClickListener() {
-        @Override
-        public void onClick(final View v) {
-            if (mViewListener != null) {
-                mViewListener.onSearchClicked();
-            }
-        }
-    };
 
     public interface IViewListener {
         void onTermChosen(String _TermId);
