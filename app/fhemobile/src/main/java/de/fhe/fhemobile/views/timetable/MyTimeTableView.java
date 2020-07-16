@@ -34,6 +34,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.adapters.timetable.SelectedLessonAdapter;
@@ -47,14 +48,19 @@ import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
  */
 public class MyTimeTableView extends LinearLayout {
 
+    private FragmentManager   mFragmentManager;
+
+    private Button            mAddButton;
+    private ListView          mLessonList;
+
+    private static SelectedLessonAdapter selectedLessonAdapter;
+
     public MyTimeTableView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
-        mContext = context;
     }
 
     public MyTimeTableView(final Context context) {
         super(context);
-        mContext = context;
     }
 
     public void initializeView(final FragmentManager _Manager) {
@@ -74,7 +80,7 @@ public class MyTimeTableView extends LinearLayout {
                 createAddDialog();
             }
         });
-        selectedLessonAdapter = new SelectedLessonAdapter(mContext);
+        selectedLessonAdapter = new SelectedLessonAdapter(Main.getAppContext());
         mLessonList.setAdapter(selectedLessonAdapter);
     }
     private void createAddDialog(){
@@ -85,14 +91,6 @@ public class MyTimeTableView extends LinearLayout {
 
     }
 
-    private static Context           mContext;
-    private FragmentManager   mFragmentManager;
-
-
-    private Button            mAddButton;
-    private ListView          mLessonList;
-
-    private static SelectedLessonAdapter selectedLessonAdapter;
 
     private static List<FlatDataStructure> getSortedList(Comparator<FlatDataStructure> comparator){
         List<FlatDataStructure> sortedList = new ArrayList<FlatDataStructure>(MainActivity.selectedLessons);
@@ -171,7 +169,7 @@ public class MyTimeTableView extends LinearLayout {
 
         final Gson gson = new Gson();
         final String json = gson.toJson(MyTimeTableView.getLessons());
-        final SharedPreferences sharedPreferences =mContext.getSharedPreferences("prefs",Context.MODE_PRIVATE);
+        final SharedPreferences sharedPreferences =Main.getAppContext().getSharedPreferences("prefs",Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("list",json);
         editor.apply();
@@ -185,12 +183,13 @@ public class MyTimeTableView extends LinearLayout {
 
         final Gson gson = new Gson();
         final String json = gson.toJson(MyTimeTableView.getLessons());
-        final SharedPreferences sharedPreferences =mContext.getSharedPreferences("prefs",Context.MODE_PRIVATE);
+        final SharedPreferences sharedPreferences =Main.getAppContext().getSharedPreferences("prefs",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("list",json);
         editor.apply();
         selectedLessonAdapter.notifyDataSetChanged();
     }
+
     public static List<FlatDataStructure> loadSelectedList(final List<FlatDataStructure> selectedLessons){
 
         final List<FlatDataStructure> completeSelectedList = new ArrayList();
