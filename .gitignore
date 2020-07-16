@@ -14,3 +14,5 @@ doc/google-firebase-services_FHE_EAH_Mobile.json.txt
 *.pepk
 *.der
 doc/maps - Kopie/
+doc/readmeKeys.txt
+app/gradle/wrapper/
