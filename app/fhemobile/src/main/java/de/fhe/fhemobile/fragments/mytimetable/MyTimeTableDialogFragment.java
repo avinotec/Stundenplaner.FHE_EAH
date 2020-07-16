@@ -63,9 +63,15 @@ import static android.content.ContentValues.TAG;
  * A simple {@link Fragment} subclass.
  * Use the {@link MyTimeTableDialogFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
+ * Display a modal dialog in front of the fragment of MyTimeTable
  */
 public class MyTimeTableDialogFragment extends DialogFragment {
 
+
+    public static final String PREFS_CHOSEN_TERM = "_ChosenTerm";
+    public static final String PREFS_CHOSEN_COURSE = "_ChosenCourse";
+    public static final String PREFS_CHOSEN_RESULT = "_Result";
 
     /**
      * Use this factory method to create a new instance of
@@ -83,6 +89,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     public MyTimeTableDialogFragment() {
         // Required empty public constructor
     }
+
+    // resize the dialog to fit to the full display
     @Override
     public void onStart()
     {
@@ -116,14 +124,12 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = (AddLessonView) inflater.inflate(R.layout.add_time_table, container, false);
-        mView.setViewListener(mViewListener);
 
         mView.initializeView(getChildFragmentManager());
-        sharedPreferences =this.getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
+        mView.setViewListener(mViewListener);
 
         initSelectionSite();
-        String emptyText = getResources().getString(R.string.empty_text_select);
+        final String emptyText = getResources().getString(R.string.empty_text_select);
         mView.setEmptyText(emptyText);
 
         return mView;
@@ -211,16 +217,19 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     public void initSelectionSite(){
         final Gson gson= new Gson();
 
-        if(sharedPreferences.contains("_ChosenCourse")){
-            final String chosenCourseJson=sharedPreferences.getString("_ChosenCourse","");
+        sharedPreferences =this.getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        if(sharedPreferences.contains(PREFS_CHOSEN_COURSE)){
+            final String chosenCourseJson=sharedPreferences.getString(PREFS_CHOSEN_COURSE,"");
             final StudyCourseVo chosenCourse = gson.fromJson(chosenCourseJson,StudyCourseVo.class);
             mChosenCourse=chosenCourse;
             mView.setTermsItems(mChosenCourse.getTerms());
             mView.setSelectedGroupText(chosenCourse.getTitle());
         }
 
-        if(sharedPreferences.contains("_ChosenTerm")) {
-            final String chosenTermJson = sharedPreferences.getString("_ChosenTerm", "");
+        if(sharedPreferences.contains(PREFS_CHOSEN_TERM)) {
+            final String chosenTermJson = sharedPreferences.getString(PREFS_CHOSEN_TERM, "");
             final TermsVo chosenTerm = gson.fromJson(chosenTermJson, TermsVo.class);
             mChosenTerm = chosenTerm;
             mView.setSelectedTermText(chosenTerm.getTitle());
@@ -229,8 +238,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             mView.setmTermsPickerEnabled(true);
 
 
-            if (sharedPreferences.contains("_Result")) {
-                final String resultJson = sharedPreferences.getString("_Result", "");
+            if (sharedPreferences.contains(PREFS_CHOSEN_RESULT)) {
+                final String resultJson = sharedPreferences.getString(PREFS_CHOSEN_RESULT, "");
                 final FlatDataStructure[] result = gson.fromJson(resultJson, FlatDataStructure[].class);
                 for(FlatDataStructure loadedElement:result){
                     boolean found=false;
@@ -258,15 +267,17 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
     private final AddLessonView.IViewListener mViewListener = new AddLessonView.IViewListener() {
 
-
+        // Auswahl des Studiengangs (Term)
+        // löschen aller Listen und aus der DropDownliste auswählen lassen
         @Override
-        public void onTermChosen(String _TermId) {
+        public void onTermChosen( final String _TermId ) {
+
+            Log.d(TAG, "onTermChosen: "+_TermId+" ausgewählt");
 
             mView.toggleGroupsPickerVisibility(false);
             mView.resetTermsPicker();
             mView.resetGroupsPicker();
             //mView.toggleLessonListVisibility(false);
-            Log.d(TAG, "onTermChosen: "+_TermId+" ausgewählt");
             MyTimeTableView.getCompleteLessons().clear();
             timeTableLessonAdapter.notifyDataSetChanged();
 
@@ -286,7 +297,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                     // Check if course has any terms available
                     if (courseVo.getTerms() != null) {
                         errorOccurred = false;
-                        editor.putString("_ChosenCourse",chosenCourseJson);
+                        editor.putString(PREFS_CHOSEN_COURSE,chosenCourseJson);
                         editor.commit();
                         mView.setTermsItems(courseVo.getTerms());
                     }
@@ -312,6 +323,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
         }
 
+        // es gibt zu jedem Request unterschiedliche Anzahl von Anforderungen und Antworten
+        // wir warten, bis alle Antworten eingetroffen sind.
         public volatile int requestCounter=0;
         @Override
         public void onGroupChosen(String _GroupId) {
@@ -331,7 +344,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                     mChosenTerm = termsVo;
                     final Gson gson = new Gson();
                     final String chosenTermJson = gson.toJson(mChosenTerm);
-                    editor.putString("_ChosenTerm",chosenTermJson);
+                    editor.putString(PREFS_CHOSEN_TERM,chosenTermJson);
                     editor.commit();
 
                     for (StudyGroupVo studyGroupVo : mChosenTerm.getStudyGroups()) {
@@ -391,7 +404,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                         timeTableLessonAdapter.notifyDataSetChanged();
                                         final Gson gson = new Gson();
                                         final String chosenTermJson = gson.toJson(MyTimeTableView.getCompleteLessons());
-                                        editor.putString("_Result",chosenTermJson);
+                                        editor.putString(PREFS_CHOSEN_RESULT,chosenTermJson);
                                         editor.commit();
 
                                     }
@@ -414,7 +427,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         }
 
         @Override
-        public void onTimeTableChosen(String _TimeTableId) {
+        public void onTimeTableChosen(final String _TimeTableId) {
             // proceedToTimetable(_TimeTableId);
         }
 
