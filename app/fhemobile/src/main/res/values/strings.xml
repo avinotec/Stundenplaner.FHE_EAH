@@ -53,7 +53,7 @@
     <string name="maps_down" >One floor down</string>
 
     <string name="timetable_headline" >Please selct your study term. (You can change it in the Settings always)</string>
-    <string name="timetable_study_course" >Study term</string>
+    <string name="timetable_study_course" >Study course</string>
     <string name="timetable_study_group" >Group</string>
     <string name="timetable_term" >Semester</string>
     <string name="timetable_button" >Input</string>

@@ -60,21 +60,6 @@
                 android:layout_marginRight="16dp"/>
 
 
-
-            <ToggleButton
-                android:id="@+id/add_tbEditMode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:textOn="@string/komplettes_set_waehlen"
-                android:textOff="@string/selbst_zusammenstellen"
-                android:visibility="gone">
-
-            </ToggleButton>
-
-
             <ListView
                 android:id="@+id/add_lvLessons"
                 android:layout_width="match_parent"
