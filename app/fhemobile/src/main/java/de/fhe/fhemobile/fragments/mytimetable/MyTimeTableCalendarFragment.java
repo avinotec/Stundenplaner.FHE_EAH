@@ -26,6 +26,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -41,6 +44,9 @@ import de.fhe.fhemobile.views.timetable.MyTimeTableView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
 public class MyTimeTableCalendarFragment extends FeatureFragment {
+
+	private MyTimeTableCalendarView mView;
+	private final static String PREFS_LAST_APP_OPENED = "lastAppOpened";
 
 	/**
 	 * Use this factory method to create a new instance of
@@ -58,13 +64,12 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 	public MyTimeTableCalendarFragment() {
 		// Required empty public constructor
 	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 	}
 
-	final static String LAST_APP_OPENED = "lastAppOpened";
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,7 +84,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 			//Wenn die App das letzte Mal vor Semesterferienbeginn geöffnet wurde und das aktuelle Datum nach dem Beginn, soll nachgefragt werden.
 			//lastAppOpened muss dabei ungleich 0 sein, gleich 0 bedeutet, die App wurde vorher noch nicht gestartet.
 			// in Sekunden seit 1970, Unixtime
-			final long lastAppOpened = sharedPreferences.getLong(LAST_APP_OPENED, 0);
+			final long lastAppOpened = sharedPreferences.getLong(PREFS_LAST_APP_OPENED, 0);
 
 			Calendar calLastOpened = Calendar.getInstance();
 			calLastOpened.setTimeInMillis(lastAppOpened);
@@ -127,7 +132,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 			}
 			//Speichere das letzte Datum, wann die App geöffnet wurde, damit wir nur beim Semesterwechsel gefragt werden.
 			SharedPreferences.Editor editor = sharedPreferences.edit();
-			editor.putLong(LAST_APP_OPENED, new Date().getTime());
+			editor.putLong(PREFS_LAST_APP_OPENED, new Date().getTime());
 			editor.apply();
 		}
 
@@ -136,6 +141,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		final Gson gson = new Gson();
 		final FlatDataStructure[] list = gson.fromJson(json, FlatDataStructure[].class);
 		if(list!=null) {
+			// alle Einträge in den Adapter einstellen
 			MyTimeTableView.setLessons(new ArrayList<FlatDataStructure>(Arrays.asList(list)));
 		}
 
@@ -145,7 +151,17 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		return mView;
 	}
 
+	/**
+	 * onViewCreated : hier sind alle Adapter und alle Listen intialisiert. Jetzt können wir auf die aktuelle Woche vorspringen.
+	 */
+	@Override
+	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 
-	private MyTimeTableCalendarView mView;
-
+		// es sind alle Views initialisiert, Fragmente sind alle inflated
+		//
+		mView.jumpCurrentLesson();
+	}
+	
 }
+
