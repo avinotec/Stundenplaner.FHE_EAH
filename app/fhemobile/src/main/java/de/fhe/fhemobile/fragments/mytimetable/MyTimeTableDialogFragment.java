@@ -110,12 +110,10 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
         mChosenCourse       = null;
         mChosenTerm         = null;
-        mChosenTimetableId  = null;
 
 //        if (getArguments() != null) {
 //
 //        }
-        completeDataset = Collections.synchronizedList(new ArrayList<FlatDataStructure>());
 	    timeTableLessonAdapter = new TimeTableLessonAdapter(MyTimeTableDialogFragment.this.getContext());
     }
 
@@ -266,15 +264,16 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
     private final AddLessonView.IViewListener mViewListener = new AddLessonView.IViewListener() {
 
-        // Auswahl des Studiengangs (Term)
+        // Auswahl des Semesters (Term)
         // löschen aller Listen und aus der DropDownliste auswählen lassen
         @Override
         public void onTermChosen( final String _TermId ) {
 
             Log.d(TAG, "onTermChosen: "+_TermId+" ausgewählt");
-
-            mView.resetTermsPicker();
+//TODO ???
+//            mView.resetTermsPicker();
             //mView.toggleLessonListVisibility(false);
+
             MyTimeTableView.getCompleteLessons().clear();
             timeTableLessonAdapter.notifyDataSetChanged();
 
@@ -288,8 +287,6 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                     mChosenCourse = courseVo;
                     Gson gson = new Gson();
                     String chosenCourseJson=gson.toJson(courseVo);
-
-
 
                     // Check if course has any terms available
                     if (courseVo.getTerms() != null) {
@@ -429,17 +426,9 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
         @Override
         public void onSearchClicked() {
-            if (mChosenTimetableId != null) {
-
-
-                mChosenTimetableId = null;
-                mChosenCourse = null;
-                mChosenTerm = null;
-            }
-            else {
-                Utils.showToast(R.string.timetable_error_incomplete);
-            }
+            ; // empty
         }
+
     };
 /*
     @Override
@@ -508,7 +497,5 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     private TimeTableResponse mResponse;
     private StudyCourseVo     mChosenCourse;
     private TermsVo           mChosenTerm;
-    private String            mChosenTimetableId;
-    private List<FlatDataStructure> completeDataset;
 	private TimeTableLessonAdapter timeTableLessonAdapter;
 }
