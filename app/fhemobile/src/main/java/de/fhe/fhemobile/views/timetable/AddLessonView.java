@@ -21,7 +21,6 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import androidx.fragment.app.FragmentManager;
 
@@ -162,9 +161,6 @@ public class AddLessonView extends LinearLayout {
 
     private StudyCoursePicker mStudyCoursePicker;
     private TermsPicker       mTermsPicker;
-    //not used? private LinearLayout      mButtonLayout;
-    private ToggleButton      mToggleEditModus;
-    //not used? private Button            mSearchButton;
     private ListView          mLessonList;
 
 
