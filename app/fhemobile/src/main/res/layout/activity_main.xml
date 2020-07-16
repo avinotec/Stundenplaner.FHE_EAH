@@ -61,7 +61,7 @@
         android:id="@+id/navigation_drawer"
         android:layout_width="@dimen/drawer_width"
         android:layout_height="match_parent"
-        android:layout_gravity="left"
+        android:layout_gravity="left|start"
         android:name="de.fhe.fhemobile.fragments.NavigationDrawerFragment" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
