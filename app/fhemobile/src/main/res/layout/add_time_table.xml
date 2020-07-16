@@ -75,34 +75,6 @@
             </ToggleButton>
 
 
-
-            <de.fhe.fhemobile.widgets.picker.StudyGroupPicker
-                android:id="@+id/add_timetableStudyGroupPicker"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="@dimen/list_single_item_height"
-                android:visibility="gone"
-                app:idpHeadline="@string/timetable_study_group"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp">
-
-            </de.fhe.fhemobile.widgets.picker.StudyGroupPicker>
-
-            <Button
-            android:id="@+id/add_timetableSearchButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/timetable_button"
-            android:textColor="@android:color/white"
-            android:background="@drawable/button_primary"
-            android:enabled="false"
-            android:visibility="gone"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-            />
-
             <ListView
                 android:id="@+id/add_lvLessons"
                 android:layout_width="match_parent"

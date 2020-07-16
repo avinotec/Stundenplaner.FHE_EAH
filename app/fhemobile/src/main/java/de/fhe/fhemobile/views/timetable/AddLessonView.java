@@ -33,10 +33,8 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.timetable.TimeTableLessonAdapter;
 import de.fhe.fhemobile.comparator.StudyCourseComperator;
 import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
-import de.fhe.fhemobile.vos.timetable.StudyGroupVo;
 import de.fhe.fhemobile.vos.timetable.TermsVo;
 import de.fhe.fhemobile.widgets.picker.StudyCoursePicker;
-import de.fhe.fhemobile.widgets.picker.StudyGroupPicker;
 import de.fhe.fhemobile.widgets.picker.TermsPicker;
 import de.fhe.fhemobile.widgets.picker.base.OnItemChosenListener;
 
@@ -70,9 +68,7 @@ public class AddLessonView extends LinearLayout {
         mTermsPicker.toggleEnabled(false);
         mTermsPicker.setOnItemChosenListener(mTermsListener);
 
-        mStudyGroupPicker.setFragmentManager(mFragmentManager);
-        mStudyGroupPicker.toggleEnabled(false);
-        mStudyGroupPicker.setOnItemChosenListener(mGroupsListener);
+
 
 
 //        mSearchButton.setOnClickListener(mSearchClickListener);
@@ -90,18 +86,11 @@ public class AddLessonView extends LinearLayout {
         mTermsPicker.toggleEnabled(true);
     }
 
-    public void setStudyGroupItems(final List<StudyGroupVo> _Items) {
-        mStudyGroupPicker.setItems(_Items);
-        mStudyGroupPicker.toggleEnabled(true);
-    }
 
     public void toggleTermsPickerVisibility(final boolean _Visible) {
         mTermsPicker.setVisibility(_Visible ? VISIBLE : GONE);
     }
 
-    public void toggleGroupsPickerVisibility(final boolean _Visible) {
-        mStudyGroupPicker.setVisibility(_Visible ? VISIBLE : GONE);
-    }
     public void toggleLessonListVisibility(final boolean _Visible){
         mLessonList.setVisibility(_Visible ? VISIBLE : GONE);
     }
@@ -117,13 +106,6 @@ public class AddLessonView extends LinearLayout {
 
         mTermsPicker.toggleEnabled(enabled);
     }
-    public void setmGroupPickerEnabled(boolean enabled){
-        mStudyGroupPicker.toggleEnabled(enabled);
-    }
-
-    public void resetGroupsPicker() {
-        mStudyGroupPicker.reset(true);
-    }
 
 /*
     public void toggleButtonEnabled(final boolean _Enabled) {
@@ -136,7 +118,6 @@ public class AddLessonView extends LinearLayout {
 
         mStudyCoursePicker = (StudyCoursePicker) findViewById(R.id.add_timetableStudyCoursePicker);
         mTermsPicker       = (TermsPicker)       findViewById(R.id.add_timetableTermsPicker);
-        mStudyGroupPicker  = (StudyGroupPicker)  findViewById(R.id.add_timetableStudyGroupPicker);
         mToggleEditModus   = (ToggleButton)      findViewById(R.id.add_tbEditMode);
 
         mLessonList        = (ListView)          findViewById(R.id.add_lvLessons);
@@ -210,7 +191,6 @@ public class AddLessonView extends LinearLayout {
     private TermsPicker       mTermsPicker;
     //not used? private LinearLayout      mButtonLayout;
     private ToggleButton      mToggleEditModus;
-    private StudyGroupPicker  mStudyGroupPicker;
     //not used? private Button            mSearchButton;
     private ListView          mLessonList;
 

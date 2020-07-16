@@ -234,7 +234,6 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             mChosenTerm = chosenTerm;
             mView.setSelectedTermText(chosenTerm.getTitle());
             mView.toggleTermsPickerVisibility(true);
-            mView.setmGroupPickerEnabled(true);
             mView.setmTermsPickerEnabled(true);
 
 
@@ -274,9 +273,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
             Log.d(TAG, "onTermChosen: "+_TermId+" ausgewählt");
 
-            mView.toggleGroupsPickerVisibility(false);
             mView.resetTermsPicker();
-            mView.resetGroupsPicker();
             //mView.toggleLessonListVisibility(false);
             MyTimeTableView.getCompleteLessons().clear();
             timeTableLessonAdapter.notifyDataSetChanged();
@@ -328,7 +325,6 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         public volatile int requestCounter=0;
         @Override
         public void onGroupChosen(String _GroupId) {
-            mView.toggleGroupsPickerVisibility(false);
             //mView.toggleButtonEnabled(false);
             mView.toggleLessonListVisibility(false);
             MyTimeTableView.getCompleteLessons().clear();
