@@ -37,18 +37,16 @@ import de.fhe.fhemobile.widgets.picker.TermsPicker;
 import de.fhe.fhemobile.widgets.picker.base.OnItemChosenListener;
 
 /**
- * Created by paul on 12.03.15.
+ * Created on 12.03.15.
  */
 public class AddLessonView extends LinearLayout {
 
     public AddLessonView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
-        mContext = context;
     }
 
     public AddLessonView(final Context context) {
         super(context);
-        mContext = context;
     }
 
     public void setViewListener(final IViewListener _Listener) {
@@ -93,6 +91,7 @@ public class AddLessonView extends LinearLayout {
 
     }
 
+    // if study course changes, reset the Terms
     public void resetTermsPicker() {
         mTermsPicker.reset(true);
     }
@@ -150,12 +149,11 @@ public class AddLessonView extends LinearLayout {
     }
 
     public void setEmptyText(String text){
-        TextView emptyView = new TextView(this.mContext);
+        TextView emptyView = new TextView( getContext() );
         emptyView.setText(text);
         mLessonList.setEmptyView(emptyView);
     }
 
-    private final Context           mContext;
     private FragmentManager   mFragmentManager;
     private IViewListener     mViewListener;
 
