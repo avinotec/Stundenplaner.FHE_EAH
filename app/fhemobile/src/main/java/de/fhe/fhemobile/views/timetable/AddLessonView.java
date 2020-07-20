@@ -117,7 +117,7 @@ public class AddLessonView extends LinearLayout {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
-                mViewListener.onTermChosen(_ItemId);
+                mViewListener.onStudyCourseChosen(_ItemId);
             }
         }
     };
@@ -127,17 +127,17 @@ public class AddLessonView extends LinearLayout {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
-                mViewListener.onGroupChosen(_ItemId);
+                mViewListener.onSemesterChosen(_ItemId);
             }
         }
     };
 
 
     public interface IViewListener {
-        void onTermChosen(String _TermId);
-        void onGroupChosen(String _GroupId);
+        void onStudyCourseChosen(String _TermId);
+        void onSemesterChosen(String _GroupId);
         //TODO not yet implemented?
-        void onTimeTableChosen(String _TimeTableId);
+        void onStudyGroupChosen(String _TimeTableId);
         void onSearchClicked();
     }
 

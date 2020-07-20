@@ -267,7 +267,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         // Auswahl des Semesters (Term)
         // löschen aller Listen und aus der DropDownliste auswählen lassen
         @Override
-        public void onTermChosen( final String _TermId ) {
+        public void onStudyCourseChosen(final String _TermId ) {
 
             Log.d(TAG, "onTermChosen: "+_TermId+" ausgewählt");
 //TODO ???
@@ -275,7 +275,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             //mView.toggleLessonListVisibility(false);
 
             MyTimeTableView.getCompleteLessons().clear();
-            timeTableLessonAdapter.notifyDataSetChanged();
+            mView.setLessonListAdapter(timeTableLessonAdapter);
+            //timeTableLessonAdapter.notifyDataSetChanged();
 
             mChosenCourse = null;
             mChosenTerm   = null;
@@ -321,7 +322,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         // wir warten, bis alle Antworten eingetroffen sind.
         public volatile int requestCounter=0;
         @Override
-        public void onGroupChosen(String _GroupId) {
+        public void onSemesterChosen(String _GroupId) {
             //mView.toggleButtonEnabled(false);
             mView.toggleLessonListVisibility(false);
             MyTimeTableView.getCompleteLessons().clear();
@@ -420,13 +421,13 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         }
 
         @Override
-        public void onTimeTableChosen(final String _TimeTableId) {
-            // proceedToTimetable(_TimeTableId);
+        public void onStudyGroupChosen(final String _TimeTableId) {
+            // empty
         }
 
         @Override
         public void onSearchClicked() {
-            ; // empty
+            // empty
         }
 
     };
