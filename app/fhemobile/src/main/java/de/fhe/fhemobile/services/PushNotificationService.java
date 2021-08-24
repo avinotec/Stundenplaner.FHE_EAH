@@ -36,8 +36,11 @@ import de.fhe.fhemobile.R;
 
 public class PushNotificationService extends FirebaseMessagingService {
 	private static final String TAG = "PushNotificationService";
+	private static String firebaseToken;
+
 	public PushNotificationService() {
 	}
+
 
 	@Override
 	public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -82,6 +85,14 @@ public class PushNotificationService extends FirebaseMessagingService {
 		// manage this apps subscriptions on the server side, send the
 		// Instance ID token to your app server.
 		//sendRegistrationToServer(token);
+		setFirebaseToken(token);
+	}
+	public static String getFirebaseToken() {
+		return firebaseToken;
+	}
+
+	public static void setFirebaseToken(final String firebaseToken ) {
+		PushNotificationService.firebaseToken = firebaseToken;
 	}
 
 }

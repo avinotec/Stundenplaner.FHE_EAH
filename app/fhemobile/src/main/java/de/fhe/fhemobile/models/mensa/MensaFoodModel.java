@@ -27,7 +27,7 @@ import de.fhe.fhemobile.vos.mensa.MensaFoodItemCollectionVo;
  */
 public class MensaFoodModel extends EventDispatcher {
 
-    public class ChangeEvent extends SimpleEvent {
+    public static class ChangeEvent extends SimpleEvent {
         public static final String RECEIVED_FOOD_DATA       = "receivedFoodData";
         public static final String RECEIVED_EMPTY_FOOD_DATA = "receivedEmptyFoodData";
 

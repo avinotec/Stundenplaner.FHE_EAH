@@ -21,7 +21,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -29,11 +28,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.RuntimeExecutionException;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.google.gson.Gson;
 
 import org.junit.Assert;
@@ -51,6 +45,7 @@ import de.fhe.fhemobile.fragments.NavigationDrawerFragment;
 import de.fhe.fhemobile.models.timeTableChanges.RequestModel;
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.network.NetworkHandler;
+import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.feature.FeatureFragmentFactory;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
@@ -92,9 +87,11 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-            @Override
-            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+        /*
+        @Override
+        FirebaseInstallations.getInstance().getToken(true).addOnCompleteListener() {
+
+//old
                 String token;
                 try {
                     token = task.getResult().getToken();
@@ -111,10 +108,14 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 firebaseToken=token;
             }
         });
+*/
+
+
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            final RequestModel request = new RequestModel(RequestModel.ANDROID_DEVICE, MainActivity.getFirebaseToken(),new Date().getTime()-86400000);
+            //Push-Notification
+            final RequestModel request = new RequestModel(RequestModel.ANDROID_DEVICE, PushNotificationService.getFirebaseToken(),new Date().getTime()-86400000);
             String title="";
             String setID="";
 
@@ -124,17 +125,17 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 @Override
                 public void onResponse(final Call<ResponseModel> call, final Response<ResponseModel> response) {
 
-                    Assert.assertTrue( response != null );
                     //wieso assert und damit einen Absturz produzieren, wenn das einfach auftreten kann, wenn der Server nicht verfügbar ist?
                     //vorallem wenn darunter eh ein if das gleiche abfragt.
-//				Assert.assertTrue( response.body() != null );
+                    //Assert.assertTrue( response != null );
+                    //Assert.assertTrue( response.body() != null );
 
                     //DEBUG
-                    if ( response.body() == null )
+                    if ( response == null || response.body() == null )
                     {
                         // Da ist ein Fehler in der Kommunikation
                         // 400: Bad request
-                        if ( response.code() == 400 )
+                        if ( response != null && response.code() == 400 )
                         {
                             String sErrorText = response.errorBody().toString();
                             Log.d( TAG, "Error in Schedule Change Server: " + sErrorText );
@@ -167,8 +168,8 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                         final ResponseModel.Change change=iterator.next();
                         boolean isInNegativeList=false;
                         for(String[] negativeEvent:negativeList){
-                            if(change.getNewEventJson().getTitle().contains(negativeEvent[0])
-                                    && change.getSetSplusKey().equals(negativeEvent[1])){
+                            if ( change.getNewEventJson().getTitle().contains(negativeEvent[0])
+                                    && change.getSetSplusKey().equals( negativeEvent[1] ) ) {
                                 isInNegativeList=true;
                             }
 
@@ -327,11 +328,6 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     private CharSequence    mTitle;
     private int             mCurrentFragmentId = -1;
     private FeatureFragment mCurrentFragment;
-    private static String firebaseToken;
-
-    public static String getFirebaseToken() {
-        return firebaseToken;
-    }
 
     //gehe durch die Liste, bis die Startzeit eines Events größer ist als die angegebene Zeit und nehme den vorherigen Event
     //und gebe den Index zurück.
@@ -341,8 +337,8 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         for(int i=0;i<sortedLessons.size();i++){
             TimeTableEventVo event = sortedLessons.get(i).getEvent();
             try {
-                if(sdf.parse(event.getDate()+" "+event.getStartTime()).compareTo(new Date())>=0){
-                    if(sdf.parse(event.getDate()+" "+event.getEndTime()).compareTo(new Date())==-1){
+                if(sdf.parse(event.getDate()+" "+event.getStartTime()).compareTo(new Date())>=0) {
+                    if(sdf.parse(event.getDate() + " " + event.getEndTime()).compareTo(new Date()) < 0) {
                         return (i);
                     }
                     if(i==0){

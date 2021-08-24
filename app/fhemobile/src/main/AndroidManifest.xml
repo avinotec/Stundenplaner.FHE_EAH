@@ -136,7 +136,8 @@
                 android:resource="@xml/news_list_widget_info" />
         </receiver>
 
-        <service android:name=".services.PushNotificationService"
+        <service
+            android:name=".services.PushNotificationService"
             android:permission="TODO">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

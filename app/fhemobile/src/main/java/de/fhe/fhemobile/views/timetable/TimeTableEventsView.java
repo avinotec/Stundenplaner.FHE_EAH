@@ -23,8 +23,6 @@ import android.widget.LinearLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
-import com.viewpagerindicator.CirclePageIndicator;
-
 import org.junit.Assert;
 
 import java.util.ArrayList;
@@ -32,6 +30,8 @@ import java.util.ArrayList;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.timetable.TimeTableWeekPagerAdapter;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
+
+//import com.viewpagerindicator.CirclePageIndicator;
 
 /**
  * Created by paul on 13.03.15.
@@ -80,7 +80,7 @@ public class TimeTableEventsView extends LinearLayout {
     private FragmentManager             mFragmentManager;
 
     private ViewPager                   mPager;
-    private CirclePageIndicator         mPageIndicator;
+    //private CirclePageIndicator         mPageIndicator;
 
     private TimeTableWeekPagerAdapter   mAdapter;
 }
