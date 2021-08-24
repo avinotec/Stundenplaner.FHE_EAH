@@ -80,10 +80,6 @@ android {
         resConfigs "de", "en", "fr", "ru", "es"
     }
     
-    dexOptions {
-        jumboMode true
-        javaMaxHeapSize "4g"
-    }
     
     // nötig ab AS 3 damit Flavors gehen
     /**
