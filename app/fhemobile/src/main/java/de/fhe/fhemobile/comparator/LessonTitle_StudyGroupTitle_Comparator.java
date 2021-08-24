@@ -81,13 +81,7 @@ public class LessonTitle_StudyGroupTitle_Comparator implements Comparator<FlatDa
 			final int studyGroupCompareResult = studyGroupTitle1.compareTo(studyGroupTitle2);
 //			Log.d(TAG, "compare GroupID1: "+studyGroupTitle1+" GroupID2"+studyGroupTitle2+" result: " +studyGroupCompareResult);
 
-			if(studyGroupCompareResult > 0){
-				return GREATER;
-			}else if(studyGroupCompareResult < 0){
-				return LESSER;
-			}else {
-				return EQUAL;
-			}
+			return Integer.compare(studyGroupCompareResult, 0);
 		}
 	}
 }

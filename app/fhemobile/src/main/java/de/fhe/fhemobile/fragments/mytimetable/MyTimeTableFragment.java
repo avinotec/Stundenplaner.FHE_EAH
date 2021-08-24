@@ -39,12 +39,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.comparator.LessonTitle_StudyGroupTitle_Comparator;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.models.timeTableChanges.RequestModel;
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.network.NetworkHandler;
+import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.views.timetable.MyTimeTableView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
@@ -127,7 +127,7 @@ public class MyTimeTableFragment extends FeatureFragment {
 
 
 		if (MyTimeTableView.getLessons().isEmpty() == false) {
-			final RequestModel request = new RequestModel(RequestModel.ANDROID_DEVICE, MainActivity.getFirebaseToken(), new Date().getTime() - 86400000);
+			final RequestModel request = new RequestModel(RequestModel.ANDROID_DEVICE, PushNotificationService.getFirebaseToken(), new Date().getTime() - 86400000);
 			String title = "";
 			String setID = "";
 

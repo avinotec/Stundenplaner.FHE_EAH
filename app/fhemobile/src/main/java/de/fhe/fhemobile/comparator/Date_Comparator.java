@@ -50,13 +50,6 @@ public class Date_Comparator implements Comparator<FlatDataStructure> {
 		//und sind beide gleich, wird 0 zurückgegeben.
 		final int dateCompareResult = lessonDate1.compareTo(lessonDate2);
 
-		if ( dateCompareResult > 0 ) {
-			return GREATER;
-		}else if( dateCompareResult < 0 ){
-			return LESSER;
-		}
-		else{
-			return EQUAL;
-		}
+		return Integer.compare(dateCompareResult, 0);
 	}
 }

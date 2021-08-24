@@ -98,7 +98,6 @@
 #    native <methods>;
 #}
 
--android
 #-dontshrink
 #-dontoptimize
 #-dontusemixedcaseclassnames
