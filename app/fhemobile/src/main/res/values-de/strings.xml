@@ -51,7 +51,7 @@
     <string name="maps_up" >Etage hoch</string>
     <string name="maps_down" >Etage runter</string>
 
-    <string name="timetable_headline" >Bitte wählen Sie Ihren Studiengang. (Sie können ihre Auswahl in den Einstellungen jederzeit ändern)</string>
+    <string name="timetable_headline" >Bitte wähle deine Studiengang. (Deine Auswahl kannst du jederzeit in den Einstellungen ändern)</string>
     <string name="timetable_study_course" >Studiengang</string>
     <string name="timetable_study_group" >Gruppe</string>
     <string name="timetable_term" >Fachsemester</string>
@@ -61,13 +61,13 @@
     <string name="timetable_switch" >Favorit speichern</string>
     <string name="timetable_reset" >Favorit löschen</string>
     <string name="timetable_week" >Woche</string>
-    <string name="timetable_error_incomplete" >Bitte setze für jedes Feld eine Auswahl fest</string>
+    <string name="timetable_error_incomplete" >Bitte triff eine Wahl für jedes Feld</string>
 
     <string name="aqua_open" >Geöffnet</string>
     <string name="aqua_closed" >Geschlossen</string>
 
     <string name="mail_default_subject" >Betreff</string>
-    <string name="mail_default_text" >Mit freundlichen Gruessen aus der EAH App</string>
+    <string name="mail_default_text" >Mit freundlichen Grüßen aus der EAH App</string>
 
     <string name="network_error" >Es konnten keine Daten gefunden werden.</string>
 
@@ -97,6 +97,6 @@
     <string name="ssl_error_continue">Fortfahren</string>
     <string name="jump_current_lesson">Springe zur aktuellen Vorlesung</string>
     <string name="deleteTimetableTitle">Stundenplan löschen?</string>
-    <string name="deleteTimetableMessage">Das Semester ist zuende. Möchtest du den Stundenplan löschen?</string>
+    <string name="deleteTimetableMessage">Das Semester ist zu Ende. Möchtest du den Stundenplan löschen?</string>
 
 </resources>
