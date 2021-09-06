@@ -46,13 +46,13 @@
     <string name="employee_fax" >Fax</string>
     <string name="employee_role" >Function</string>
     <string name="employee_division" >Faculty</string>
-    <string name="employee_mail" >E-Mail</string>
+    <string name="employee_mail" >Email</string>
     <string name="employee_room" >Room</string>
 
     <string name="maps_up" >One floor up</string>
     <string name="maps_down" >One floor down</string>
 
-    <string name="timetable_headline" >Please selct your study term. (You can change it in the Settings always)</string>
+    <string name="timetable_headline" >Please select your study course. (You can always change it in the Settings)</string>
     <string name="timetable_study_course" >Study course</string>
     <string name="timetable_study_group" >Group</string>
     <string name="timetable_term" >Semester</string>
@@ -82,7 +82,7 @@
     <string name="add_widget" >Add widget</string>
 
 	<string name="komplettes_set_waehlen">Select a full set</string>
-    <string name="selbst_zusammenstellen">Configure your set on your own</string>
+    <string name="selbst_zusammenstellen">Configure your own set on your own</string>
     <string name="edit">Modify schedule</string>
     <string name="professor_name">Professor</string>
     <string name="role" translatable="false">Role</string>
@@ -91,10 +91,10 @@
     <string name="loading">Loading…</string>
     <string name="empty_text_calendar">You did not compose a schedule.</string>
     <string name="empty_text_edit">You did not choose a lesson.</string>
-    <string name="empty_text_select">Choose study term and semester.</string>
+    <string name="empty_text_select">Choose study course and semester.</string>
 
     <string name="data_protection_link"><a href="https://www.eah-jena.de/de-de/datenschutz">Data protection</a></string>
-    <string name="notification_error_ssl_cert_invalid">A SSL-Certificate occured. Do you want to proceed?</string>
+    <string name="notification_error_ssl_cert_invalid">A SSL-Certificate occurred. Do you want to proceed?</string>
     <string name="ssl_error_continue">Continue</string>
     <string name="ssl_error_cancel">Cancel</string>
     <string name="jump_current_lesson">Jump to current lesson</string>
