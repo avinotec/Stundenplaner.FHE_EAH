@@ -40,6 +40,7 @@ public class FeatureProvider {
         Features.TIMETABLE      = _Context.getResources().getBoolean(R.bool.feature_timetable);
         Features.MYTIMETABLE    = _Context.getResources().getBoolean(R.bool.feature_mytimetable);
         Features.IMPRESS        = _Context.getResources().getBoolean(R.bool.feature_impress);
+        Features.EVENTS           = _Context.getResources().getBoolean(R.bool.feature_events);
     }
 
     public static List<DrawerItem> getFeaturedItems() {
@@ -57,6 +58,7 @@ public class FeatureProvider {
             list.add(new DrawerItem(FeatureId.MYTIMETABLE, getFeatureTitle(FeatureId.MYTIMETABLE)));
         }
 
+
         if (Features.PHONEBOOK) {
             list.add(new DrawerItem(FeatureId.PHONEBOOK, getFeatureTitle(FeatureId.PHONEBOOK)));
         }
@@ -67,6 +69,10 @@ public class FeatureProvider {
 
         if (Features.MAPS) {
             list.add(new DrawerItem(FeatureId.MAPS, getFeatureTitle(FeatureId.MAPS)));
+        }
+
+        if (Features.EVENTS) {
+            list.add(new DrawerItem(FeatureId.EVENTS, getFeatureTitle(FeatureId.EVENTS)));
         }
 
         if (Features.SEMESTER_DATA) {
@@ -89,9 +95,10 @@ public class FeatureProvider {
             case FeatureId.PHONEBOOK:       stringRes = R.string.drawer_persons;   break;
             case FeatureId.MENSA:           stringRes = R.string.drawer_mensa;     break;
             case FeatureId.MAPS:            stringRes = R.string.drawer_campus;    break;
+            case FeatureId.EVENTS:          stringRes = R.string.drawer_events; break;
             case FeatureId.SEMESTER_DATA:   stringRes = R.string.drawer_semesterdata;     break;
             case FeatureId.TIMETABLE:       stringRes = R.string.drawer_timetable; break;
-            case FeatureId.MYTIMETABLE:       stringRes = R.string.drawer_mytimetable; break;
+            case FeatureId.MYTIMETABLE:     stringRes = R.string.drawer_mytimetable; break;
             case FeatureId.IMPRESS:         stringRes = R.string.drawer_impressum; break;
         }
 

@@ -28,6 +28,7 @@
     <string name="drawer_impressum" >Impressum</string>
     <string name="drawer_timetable" >Stundenplan</string>
     <string name="drawer_mytimetable" >Mein Stundenplan</string>
+    <string name="drawer_events" >Veranstaltungskalender</string>
 
     <string name="phonebook_firstname" >Vorname</string>
     <string name="phonebook_lastname" >Nachname</string>

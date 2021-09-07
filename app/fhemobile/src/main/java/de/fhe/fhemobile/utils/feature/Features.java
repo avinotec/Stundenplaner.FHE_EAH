@@ -26,5 +26,6 @@ class Features {
     public static boolean TIMETABLE       = false;
     public static boolean IMPRESS         = false;
     public static boolean MYTIMETABLE     = false;
+    public static boolean EVENTS          = false;
 
 }

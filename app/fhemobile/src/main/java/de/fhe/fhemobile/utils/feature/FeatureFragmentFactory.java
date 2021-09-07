@@ -17,6 +17,7 @@
 package de.fhe.fhemobile.utils.feature;
 
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
 import de.fhe.fhemobile.fragments.impressum.ImpressumFragment;
 import de.fhe.fhemobile.fragments.maps.MapsFragment;
 import de.fhe.fhemobile.fragments.mensa.MensaFoodFragment;
@@ -39,13 +40,15 @@ public class FeatureFragmentFactory {
             case FeatureId.MENSA:           fragment = MensaFoodFragment.newInstance();         break;
             case FeatureId.MAPS:            fragment = MapsFragment.newInstance();              break;
             //case FeatureId.SEMESTER_DATA:   fragment = SemesterDataFragment.newInstance();      break;
-            case FeatureId.SEMESTER_DATA:   fragment = SemesterDataWebViewFragment.newInstance();      break; //display from Browser/as Webview - Nadja 7.9.21
+            case FeatureId.SEMESTER_DATA:   fragment = SemesterDataWebViewFragment.newInstance();      break; //display from Browser/as Webview - Nadja 07.09.21
             case FeatureId.IMPRESS:         fragment = ImpressumFragment.newInstance();         break;
             case FeatureId.TIMETABLE:       fragment = TimeTableFactory.getTimeTableFragment(); break;
             case FeatureId.MYTIMETABLE:     fragment = MyTimeTableCalendarFragment.newInstance();       break;
+            case FeatureId.EVENTS:          fragment = EventsWebViewFragment.newInstance();       break; //added by Nadja 07.09.21
             case FeatureId.NEWS:
             //default:                        fragment = NewsListFragment.newInstance();
             default:                        fragment = NewsWebViewFragment.newInstance(); //display from Browser/as Webview - Nadja 6.9.21
+
         }
 
         return fragment;
