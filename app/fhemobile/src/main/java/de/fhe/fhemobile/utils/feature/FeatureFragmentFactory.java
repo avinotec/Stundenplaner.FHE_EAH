@@ -21,7 +21,7 @@ import de.fhe.fhemobile.fragments.impressum.ImpressumFragment;
 import de.fhe.fhemobile.fragments.maps.MapsFragment;
 import de.fhe.fhemobile.fragments.mensa.MensaFoodFragment;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableCalendarFragment;
-import de.fhe.fhemobile.fragments.news.NewsListFragment;
+import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.phonebook.PhonebookSearchFragment;
 import de.fhe.fhemobile.fragments.semesterdata.SemesterDataFragment;
 import de.fhe.fhemobile.utils.TimeTableFactory;
@@ -43,7 +43,8 @@ public class FeatureFragmentFactory {
             case FeatureId.TIMETABLE:       fragment = TimeTableFactory.getTimeTableFragment(); break;
             case FeatureId.MYTIMETABLE:     fragment = MyTimeTableCalendarFragment.newInstance();       break;
             case FeatureId.NEWS:
-            default:                        fragment = NewsListFragment.newInstance();
+            //default:                        fragment = NewsListFragment.newInstance(); //old
+            default:                        fragment = NewsWebViewFragment.newInstance(); //display from Browser/as Webview - Nadja 6.9.21
         }
 
         return fragment;

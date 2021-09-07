@@ -14,30 +14,28 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.views.impressum;
+package de.fhe.fhemobile.views.news;
 
 import android.content.Context;
-import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
-import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.network.Endpoints;
 import de.fhe.fhemobile.views.SSLTolerentWebViewClient;
 
 /**
- * Created by paul on 22.01.14.
+ * Created by Nadja on 06.09.21
+ * for displaying News-Browser-Webpage using WebView
  */
-public class ImpressumView extends FrameLayout {
+public class NewsWebView extends FrameLayout {
 
     private final Context mContext;
 
     private WebView mWebView;
 
-    public ImpressumView(Context context, AttributeSet attrs) {
+    public NewsWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
     }
@@ -46,19 +44,12 @@ public class ImpressumView extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mWebView = (WebView) findViewById(R.id.impressumWebView);
+        mWebView = (WebView) findViewById(R.id.newsWebView);
         //wird der WebViewClient nicht geaendert, kann die Seite nicht geladen werden, da die Webview
         mWebView.setWebViewClient(new SSLTolerentWebViewClient(mContext));
         //Ohne JavascriptEnabled laesst sich das Impressum nicht scrollen.
-	    mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.loadUrl(Endpoints.IMPRESSUM_ENDPOINT);
-        TextView dataProtection = findViewById(R.id.data_protection_link);
-        dataProtection.setMovementMethod(LinkMovementMethod.getInstance());
-        TextView versionText = findViewById(R.id.version_number);
-        String sText = "Vers.: " + BuildConfig.FLAVOR + " " +BuildConfig.VERSION_NAME +" ("+ BuildConfig.VERSION_CODE + ')'; //$NON-NLS
-        if ( BuildConfig.DEBUG ) {
-            sText += " DEBUG"; //NON-NLS
-        }  //$NON-NLS
-        versionText.setText(sText);
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.loadUrl(Endpoints.NEWS_ENDPOINT);
+
     }
 }

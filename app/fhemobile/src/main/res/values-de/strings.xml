@@ -51,7 +51,7 @@
     <string name="maps_up" >Etage hoch</string>
     <string name="maps_down" >Etage runter</string>
 
-    <string name="timetable_headline" >Bitte wähle deine Studiengang. (Deine Auswahl kannst du jederzeit in den Einstellungen ändern)</string>
+    <string name="timetable_headline" >Bitte wähle deinen Studiengang. (Deine Auswahl kannst du jederzeit in den Einstellungen ändern)</string>
     <string name="timetable_study_course" >Studiengang</string>
     <string name="timetable_study_group" >Gruppe</string>
     <string name="timetable_term" >Fachsemester</string>
