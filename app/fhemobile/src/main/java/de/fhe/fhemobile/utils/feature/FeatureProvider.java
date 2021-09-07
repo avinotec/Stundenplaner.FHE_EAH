@@ -89,7 +89,7 @@ public class FeatureProvider {
             case FeatureId.PHONEBOOK:       stringRes = R.string.drawer_persons;   break;
             case FeatureId.MENSA:           stringRes = R.string.drawer_mensa;     break;
             case FeatureId.MAPS:            stringRes = R.string.drawer_campus;    break;
-            case FeatureId.SEMESTER_DATA:   stringRes = R.string.drawer_dates;     break;
+            case FeatureId.SEMESTER_DATA:   stringRes = R.string.drawer_semesterdata;     break;
             case FeatureId.TIMETABLE:       stringRes = R.string.drawer_timetable; break;
             case FeatureId.MYTIMETABLE:       stringRes = R.string.drawer_mytimetable; break;
             case FeatureId.IMPRESS:         stringRes = R.string.drawer_impressum; break;
