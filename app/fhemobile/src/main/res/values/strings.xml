@@ -24,11 +24,12 @@
     <string name="drawer_news" >News</string>
     <string name="drawer_mensa" >Canteen</string>
     <string name="drawer_persons" >Persons</string>
-    <string name="drawer_dates" >Dates</string>
+    <string name="drawer_semesterdata" >Semester Data</string>
     <string name="drawer_campus" >Campus</string>
     <string name="drawer_impressum" >Imprint</string>
     <string name="drawer_timetable" >Schedule</string>
     <string name="drawer_mytimetable" >My Schedule</string>
+    <string name="drawer_events" >Event Calender</string>
 
     <string name="phonebook_firstname" >First name</string>
     <string name="phonebook_lastname" >Last name</string>

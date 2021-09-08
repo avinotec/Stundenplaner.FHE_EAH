@@ -27,9 +27,13 @@ public class Endpoints {
     public static final String APP_NAME             = "/fheapp/";
 
     //TODO
-    public static final String IMPRESSUM_ENDPOINT = "https://www.eah-jena.de/de-de/impressum";
-    public static final String SCHEDULE_CHANGE_SERVER = "https://lustigtestt.de/fhjena/rest_api/public/changes";
+    public static final String IMPRESSUM_ENDPOINT = "https://www.eah-jena.de/impressum"; //URL fixed - Nadja 3.9.21
+    //Links for displaying as WebViews - Nadja 6.9.21
+    public static final String NEWS_ENDPOINT = "https://www.eah-jena.de/hochschule/nachrichten";
+    public static final String SEMESTERDATA_ENDPOINT = "https://www.eah-jena.de/hochschule/semestertermine";
+    public static final String EVENTS_ENDPOINT = "https://www.eah-jena.de/veranstaltungskalender";
 
+    public static final String SCHEDULE_CHANGE_SERVER = "https://lustigtestt.de/fhjena/rest_api/public/changes";
 
     /* Example
         http://193.174.232.89:8080/fheapp/api/eah/timetable
@@ -66,5 +70,6 @@ public class Endpoints {
     public static final String PARAM_PUSH_DEVICE_ID = "pushId";
     public static final String PARAM_SUBSCRIBED_LESSONS = "subscribedLessons";
     public static final String PARAM_CHANGES_TIME_STAMP = "timeStamp";
+
 
 }

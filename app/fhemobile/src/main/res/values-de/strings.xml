@@ -23,11 +23,12 @@
     <string name="drawer_news" >News</string>
     <string name="drawer_mensa" >Mensa</string>
     <string name="drawer_persons" >Personen</string>
-    <string name="drawer_dates" >Termine</string>
+    <string name="drawer_semesterdata" >Semestertermine</string>
     <string name="drawer_campus" >Campus</string>
     <string name="drawer_impressum" >Impressum</string>
     <string name="drawer_timetable" >Stundenplan</string>
     <string name="drawer_mytimetable" >Mein Stundenplan</string>
+    <string name="drawer_events" >Veranstaltungskalender</string>
 
     <string name="phonebook_firstname" >Vorname</string>
     <string name="phonebook_lastname" >Nachname</string>
@@ -51,7 +52,7 @@
     <string name="maps_up" >Etage hoch</string>
     <string name="maps_down" >Etage runter</string>
 
-    <string name="timetable_headline" >Bitte wähle deine Studiengang. (Deine Auswahl kannst du jederzeit in den Einstellungen ändern)</string>
+    <string name="timetable_headline" >Bitte wähle deinen Studiengang. (Deine Auswahl kannst du jederzeit in den Einstellungen ändern)</string>
     <string name="timetable_study_course" >Studiengang</string>
     <string name="timetable_study_group" >Gruppe</string>
     <string name="timetable_term" >Fachsemester</string>

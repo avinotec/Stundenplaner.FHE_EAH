@@ -15,7 +15,7 @@
  *
  */
 
-package de.fhe.fhemobile.views.impressum;
+package de.fhe.fhemobile.views;
 
 import android.content.Context;
 import android.content.DialogInterface;

@@ -17,13 +17,14 @@
 package de.fhe.fhemobile.utils.feature;
 
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
 import de.fhe.fhemobile.fragments.impressum.ImpressumFragment;
 import de.fhe.fhemobile.fragments.maps.MapsFragment;
 import de.fhe.fhemobile.fragments.mensa.MensaFoodFragment;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableCalendarFragment;
-import de.fhe.fhemobile.fragments.news.NewsListFragment;
+import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.phonebook.PhonebookSearchFragment;
-import de.fhe.fhemobile.fragments.semesterdata.SemesterDataFragment;
+import de.fhe.fhemobile.fragments.semesterdata.SemesterDataWebViewFragment;
 import de.fhe.fhemobile.utils.TimeTableFactory;
 
 /**
@@ -38,12 +39,16 @@ public class FeatureFragmentFactory {
             case FeatureId.PHONEBOOK:       fragment = PhonebookSearchFragment.newInstance();   break;
             case FeatureId.MENSA:           fragment = MensaFoodFragment.newInstance();         break;
             case FeatureId.MAPS:            fragment = MapsFragment.newInstance();              break;
-            case FeatureId.SEMESTER_DATA:   fragment = SemesterDataFragment.newInstance();      break;
+            //case FeatureId.SEMESTER_DATA:   fragment = SemesterDataFragment.newInstance();      break;
+            case FeatureId.SEMESTER_DATA:   fragment = SemesterDataWebViewFragment.newInstance();      break; //display from Browser/as Webview - Nadja 07.09.21
             case FeatureId.IMPRESS:         fragment = ImpressumFragment.newInstance();         break;
             case FeatureId.TIMETABLE:       fragment = TimeTableFactory.getTimeTableFragment(); break;
             case FeatureId.MYTIMETABLE:     fragment = MyTimeTableCalendarFragment.newInstance();       break;
+            case FeatureId.EVENTS:          fragment = EventsWebViewFragment.newInstance();       break; //added by Nadja 07.09.21
             case FeatureId.NEWS:
-            default:                        fragment = NewsListFragment.newInstance();
+            //default:                        fragment = NewsListFragment.newInstance();
+            default:                        fragment = NewsWebViewFragment.newInstance(); //display from Browser/as Webview - Nadja 6.9.21
+
         }
 
         return fragment;

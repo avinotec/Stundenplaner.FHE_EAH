@@ -25,4 +25,5 @@ public interface FeatureId {
     int TIMETABLE       = 5;
     int IMPRESS         = 6;
     int MYTIMETABLE     = 7;
+    int EVENTS          = 8;
 }
