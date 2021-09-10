@@ -133,11 +133,9 @@
     <string name="text_view_button_destination_location">Enter your destination:</string>
     <string name="button_location_qr">QR-Code</string>
     <string name="text_view_search_or_qr">or</string>
-    <string name="text_view_explanation_location_title">"Find own position:"</string>
-    <string name="text_view_explanation_location_description_code">"QR-Code: Press the QR-Code button."</string>
-    <string name="text_view_explanation_location_description_user">"User input: Enter your position (room number) and press the search button."</string>
-    <string name="text_view_explanation_navigation_title">"Perform navigation:"</string>
-    <string name="text_view_explanation_navigation_description_code">"QR-Code: Select a room or person and press the QR-Code button."</string>
-    <string name="text_view_explanation_navigation_description_user">User input: Select a room or person or enter your destination (room number), enter your location (room number) and press the search button.</string>
-    <string name="text_view_explanation_navigation_description_user_code">User input and QR-Code: Enter your destination (room number) and press the QR-Code button.</string>
+    <string name="text_view_explanation_location_title">Determine my position:</string>
+    <string name="text_view_explanation_location_description">Directly press the "QR-Code" to scan the QR-Code or manually enter your position and search.</string>
+    <string name="text_view_explanation_navigation_title">Perform navigation:</string>
+    <string name="text_view_explanation_navigation_description">Select a room or a person or enter a room number you want to navigate to. Then determine your position like described above.</string>
+    <string name="text_view_oder">or</string>
 </resources>

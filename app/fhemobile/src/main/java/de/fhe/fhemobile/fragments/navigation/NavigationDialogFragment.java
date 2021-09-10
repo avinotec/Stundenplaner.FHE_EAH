@@ -2,6 +2,7 @@ package de.fhe.fhemobile.fragments.navigation;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -14,6 +15,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -93,6 +96,26 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
             }
         });
 
+        //Destination location input field
+        destinationLocationLayoutText = mView.findViewById(R.id.input_field_search_destination_room_layout);
+        destinationLocationEditText = mView.findViewById(R.id.input_field_search_destination_room_edit);
+        destinationLocationEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+
+                searchByRoomSpinner.setSelection(0);
+                searchByPersonSpinner.setSelection(0);
+                roomsIndex = 0;
+                personsIndex = 0;
+
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    handleUserInputErrorAndIntent(textView);
+                }
+                return false;
+            }
+        });
+
         //Find own location button qr-code
         Button findOwnLocationButtonQR = mView.findViewById(R.id.button_location_qr);
         findOwnLocationButtonQR.setOnClickListener(this);
@@ -100,7 +123,6 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
         //Find own location button text
         Button findOwnLocationButtonText = mView.findViewById(R.id.button_location_text);
         findOwnLocationButtonText.setOnClickListener(this);
-        //todo
 
         return mView;
     }
@@ -124,13 +146,14 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private ArrayList[] loadRoomNamesAndPersons(){
         //Get lists of rooms and names for spinners
         JSONHandler jsonHandler = new JSONHandler();
         String json;
 
         try {
-            json = jsonHandler.readJsonFromAssets(getContext(), JSON_FILE_ROOMS); //als Activity: getActivity() statt getContext()
+            json = jsonHandler.readJsonFromAssets(getContext(), JSON_FILE_ROOMS);
             rooms = jsonHandler.parseJsonRooms(json);
         } catch (Exception e) {
             Log.e(TAG, "error reading or parsing JSON file:", e);

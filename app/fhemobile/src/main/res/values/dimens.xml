@@ -72,7 +72,8 @@
 
     <dimen name="text_size_header">20sp</dimen>
     <dimen name="text_size_explanations">16sp</dimen>
-    <dimen name="margin_top_main_activity">30sp</dimen>
+    <dimen name="margin_top_navigation_dialog_activity">10sp</dimen>
+    <dimen name="margin_bottom_explanation_text">10sp</dimen>
 
     <!--
 Refer to App Widget Documentation for margin information

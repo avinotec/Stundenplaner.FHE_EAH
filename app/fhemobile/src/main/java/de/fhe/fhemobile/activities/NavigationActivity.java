@@ -3,6 +3,7 @@ package de.fhe.fhemobile.activities;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
@@ -78,6 +80,7 @@ public class NavigationActivity extends BaseActivity {
     private ArrayList<Transition> transitions = new ArrayList<>();
     private ArrayList<Cell> cellsToWalk = new ArrayList<>();
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +104,7 @@ public class NavigationActivity extends BaseActivity {
         floorPlansSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int index, long id) {
 
@@ -185,6 +189,7 @@ public class NavigationActivity extends BaseActivity {
     }
 
     //Get rooms, stairs, elevators and crossings from JSON
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void getRoomsAndTransitions() {
 
         try {
@@ -228,14 +233,11 @@ public class NavigationActivity extends BaseActivity {
             for (int i = 0; i < rooms.size(); i++) {
 
                 if (rooms.get(i).getQRCode().equals(destinationQRCode)) {
-
                     destinationLocation = rooms.get(i);
                 }
             }
         } catch (Exception e) {
-            Log.e(TAG, "error getting destination location room" +
-                    ".", e);
-            e.printStackTrace();
+            Log.e(TAG, "error getting destination location room", e);
         }
     }
 
@@ -247,7 +249,6 @@ public class NavigationActivity extends BaseActivity {
             cellsToWalk.addAll(routeCalculator.getNavigationCells());
         } catch (Exception e) {
             Log.e(TAG,"error calculating route:", e);
-            e.printStackTrace();
         }
     }
 
@@ -329,6 +330,7 @@ public class NavigationActivity extends BaseActivity {
     }
 
     //Get building and floor Strings from floor plan String
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private ArrayList<String> getBuildingAndFloor(String in) {
 
         ArrayList<String> helperBuildingAndFloor = new ArrayList<>();
@@ -402,12 +404,12 @@ public class NavigationActivity extends BaseActivity {
             }
         } catch (Exception e) {
             Log.e(TAG, "error getting building and floor:", e);
-            e.printStackTrace();
         }
         return helperBuildingAndFloor;
     }
 
     //Get locale
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private String getLocaleStringResource(Locale currentLocale, int floorPlan) {
 
         String localeString = "";
@@ -559,7 +561,6 @@ public class NavigationActivity extends BaseActivity {
 
         } catch (Exception e) {
             Log.e(TAG,"error drawing floor plan:", e);
-            e.printStackTrace();
         }
 
         //Add route path to ConstraintLayout
@@ -591,7 +592,6 @@ public class NavigationActivity extends BaseActivity {
             }
         } catch (Exception e) {
             Log.e(TAG, "error drawing route:",e);
-            e.printStackTrace();
         }
 
         //Add own location room icon to Overlay
@@ -616,7 +616,6 @@ public class NavigationActivity extends BaseActivity {
             }
         } catch (Exception e) {
             Log.e(TAG, "error drawing own location room:", e);
-            e.printStackTrace();
         }
 
         //Add destination location room icon to ConstraintLayout
@@ -644,7 +643,6 @@ public class NavigationActivity extends BaseActivity {
             }
         } catch (Exception e) {
             Log.e(TAG,"error drawing destination location room:", e);
-            e.printStackTrace();
         }
 
         //Add transitions icons to ConstraintLayout
@@ -668,7 +666,6 @@ public class NavigationActivity extends BaseActivity {
             }
         } catch (Exception e) {
             Log.e(TAG, "error drawing transitions:", e);
-            e.printStackTrace();
         }
     }
 

@@ -104,7 +104,7 @@
     <!--    Campus Navigation-->
     <string name="text_view_by_room">Raum wählen:</string>
     <string name="text_view_by_name">Person wählen:</string>
-    <string name="text_view_button_start_location">Gebe deine Position ein:</string>
+    <string name="text_view_button_start_location">Gib deine Position ein:</string>
     <string name="action_language">Sprache</string>
     <string name="title_scanner_activity">Scanner</string>
     <string name="title_navigation_activity">Navigation</string>
@@ -128,15 +128,13 @@
     <string name="button_location_text">Suchen</string>
     <string name="hint_search_room">xx.xx.xx</string>
     <string name="error_message_room_input">Raum nicht gefunden!</string>
-    <string name="text_view_button_destination_location">Gebe dein Ziel ein:</string>
+    <string name="text_view_button_destination_location">Gib dein Ziel ein:</string>
     <string name="button_location_qr">QR-Code</string>
     <string name="text_view_search_or_qr">oder</string>
-    <string name="text_view_explanation_location_title">"Eigene Position finden:\n"</string>
-    <string name="text_view_explanation_location_description_code">"QR-Code: Drücke den QR-Code Button.\n"</string>
-    <string name="text_view_explanation_location_description_user">"Nutzer Eingabe: Gib deine Position ein (Raumnummer) und drücke den Suchen-Button.\n\n"</string>
-    <string name="text_view_explanation_navigation_title">Navigation durchführen:\n</string>
-    <string name="text_view_explanation_navigation_description_code">QR-Code: Wähle einen Raum oder eine Person und drücke den QR-Code Button.\n</string>
-    <string name="text_view_explanation_navigation_description_user">"Nutzer Eingabe: Wähle einen Raum oder eine Person oder gib dein Ziel ein (Raumnummer), gib deine Position ein (Raumnummer) und drücke den Suchen-Button.\n"</string>
-    <string name="text_view_explanation_navigation_description_user_code">Nutzer Eingabe und QR-Code: Gib dein Ziel ein (Raumnummer) und drücke den QR-Code Button.</string>
+    <string name="text_view_explanation_location_title">Meine Position bestimmmen:</string>
+    <string name="text_view_explanation_location_description">Scanne direkt den QR-Code über "QR-Code" oder gib eine Raumnummer ein und drücke "Suchen".</string>
+    <string name="text_view_explanation_navigation_title">Navigation starten:</string>
+    <string name="text_view_explanation_navigation_description">Wähle eine Raumnummer oder eine Person aus oder gib die Raumnummer ein, zu der du navigiert werden möchtest. Dann bestimme deine aktuelle Position wie oben beschrieben.</string>
+    <string name="text_view_oder">oder</string>
 
 </resources>
