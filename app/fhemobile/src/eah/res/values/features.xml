@@ -27,5 +27,6 @@
     <bool name="feature_timetable">true</bool>
     <bool name="feature_mytimetable">true</bool>
     <bool name="feature_impress">true</bool>
+    <bool name="feature_navigation">true</bool>
 
 </resources>

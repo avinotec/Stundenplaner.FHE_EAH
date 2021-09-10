@@ -26,4 +26,5 @@ public interface FeatureId {
     int IMPRESS         = 6;
     int MYTIMETABLE     = 7;
     int EVENTS          = 8;
+    int NAVIGATION      = 9;
 }

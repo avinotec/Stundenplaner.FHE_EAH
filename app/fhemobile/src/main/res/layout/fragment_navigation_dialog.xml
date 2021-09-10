@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="44dp"
+        tools:layout_editor_absoluteY="39dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/text_view_explanation_location_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/text_view_explanation_location_title"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_header"
+                app:layout_constraintBottom_toTopOf="@id/text_view_explanation_location_description_code"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_view_explanation_location_description_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/text_view_explanation_location_description_code"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_explanations"
+                app:layout_constraintBottom_toTopOf="@id/text_view_explanation_location_description_user"
+                app:layout_constraintTop_toBottomOf="@id/text_view_explanation_location_title" />
+
+            <TextView
+                android:id="@+id/text_view_explanation_location_description_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/text_view_explanation_location_description_user"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_explanations"
+                app:layout_constraintBottom_toTopOf="@id/text_view_explanation_navigation_title"
+                app:layout_constraintTop_toBottomOf="@id/text_view_explanation_location_description_code" />
+
+            <TextView
+                android:id="@+id/text_view_explanation_navigation_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/text_view_explanation_navigation_title"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_header"
+                app:layout_constraintBottom_toTopOf="@id/text_view_explanation_navigation_description_code"
+                app:layout_constraintTop_toBottomOf="@id/text_view_explanation_location_description_user" />
+
+            <TextView
+                android:id="@+id/text_view_explanation_navigation_description_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/text_view_explanation_navigation_description_code"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_explanations"
+                app:layout_constraintBottom_toTopOf="@id/text_view_explanation_navigation_description_user"
+                app:layout_constraintTop_toBottomOf="@id/text_view_explanation_navigation_title" />
+
+            <TextView
+                android:id="@+id/text_view_explanation_navigation_description_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/text_view_explanation_navigation_description_user"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_explanations"
+                app:layout_constraintBottom_toTopOf="@id/text_view_explanation_navigation_description_user_code"
+                app:layout_constraintTop_toBottomOf="@id/text_view_explanation_navigation_description_code" />
+
+            <TextView
+                android:id="@+id/text_view_explanation_navigation_description_user_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/text_view_explanation_navigation_description_user_code"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_explanations"
+                app:layout_constraintBottom_toTopOf="@id/text_view_by_room"
+                app:layout_constraintTop_toBottomOf="@id/text_view_explanation_navigation_description_user" />
+
+            <TextView
+                android:id="@+id/text_view_by_room"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/text_view_by_room"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_header"
+                android:layout_marginTop="@dimen/margin_top_main_activity"
+                app:layout_constraintBottom_toTopOf="@id/spinner_by_room"
+                app:layout_constraintTop_toBottomOf="@id/text_view_explanation_navigation_description_user_code" />
+
+            <Spinner
+                android:id="@+id/spinner_by_room"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top_main_activity"
+                app:layout_constraintBottom_toTopOf="@id/text_view_by_name"
+                app:layout_constraintTop_toBottomOf="@id/text_view_by_room" />
+
+            <TextView
+                android:id="@+id/text_view_by_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/text_view_by_name"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_header"
+                android:layout_marginTop="@dimen/margin_top_main_activity"
+                app:layout_constraintBottom_toTopOf="@id/spinner_by_person"
+                app:layout_constraintTop_toBottomOf="@id/spinner_by_room" />
+
+            <Spinner
+                android:id="@+id/spinner_by_person"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top_main_activity"
+                app:layout_constraintBottom_toTopOf="@id/text_view_start_location"
+                app:layout_constraintTop_toBottomOf="@id/spinner_by_person" />
+
+            <TextView
+                android:id="@+id/text_view_start_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/text_view_button_start_location"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_header"
+                android:layout_marginTop="@dimen/margin_top_main_activity"
+                app:layout_constraintBottom_toTopOf="@id/input_field_search_start_room_layout"
+                app:layout_constraintTop_toBottomOf="@id/spinner_by_person" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_field_search_start_room_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_search_room"
+                app:errorEnabled="true"
+                app:layout_constraintBottom_toTopOf="@id/text_view_destination_location"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_start_location">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_field_search_start_room_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/text_view_destination_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/text_view_button_destination_location"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_header"
+                app:layout_constraintBottom_toTopOf="@id/input_field_search_destination_room_layout"
+                app:layout_constraintTop_toBottomOf="@id/input_field_search_start_room_layout" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_field_search_destination_room_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_search_room"
+                app:errorEnabled="true"
+                app:layout_constraintBottom_toTopOf="@id/text_view_search_or_qr"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_destination_location">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_field_search_destination_room_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/button_location_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_location_text"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_header"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/text_view_search_or_qr"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/input_field_search_destination_room_layout" />
+
+            <TextView
+                android:id="@+id/text_view_search_or_qr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_view_search_or_qr"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_header"
+                app:layout_constraintEnd_toStartOf="@id/button_location_qr"
+                app:layout_constraintStart_toEndOf="@id/button_location_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/input_field_search_destination_room_layout" />
+
+            <Button
+                android:id="@+id/button_location_qr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_location_qr"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_header"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/text_view_search_or_qr"
+                app:layout_constraintTop_toBottomOf="@id/input_field_search_destination_room_layout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

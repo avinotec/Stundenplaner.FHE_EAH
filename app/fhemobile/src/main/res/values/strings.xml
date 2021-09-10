@@ -25,11 +25,12 @@
     <string name="drawer_mensa" >Canteen</string>
     <string name="drawer_persons" >Persons</string>
     <string name="drawer_semesterdata" >Semester Data</string>
-    <string name="drawer_campus" >Campus</string>
+    <string name="drawer_campus" >Campus Plan</string>
     <string name="drawer_impressum" >Imprint</string>
     <string name="drawer_timetable" >Schedule</string>
     <string name="drawer_mytimetable" >My Schedule</string>
     <string name="drawer_events" >Event Calender</string>
+    <string name="drawer_navigation" >Campus Navigation</string>
 
     <string name="phonebook_firstname" >First name</string>
     <string name="phonebook_lastname" >Last name</string>
@@ -102,4 +103,41 @@
     <string name="deleteTimetableTitle">Delete timetable?</string>
     <string name="deleteTimetableMessage">The semester is over. Do you want to delete the timetable?</string>
 
+    <!--    Campus Navigation -->
+    <string name="title_scanner_activity">Scanner</string>
+    <string name="title_navigation_activity">Navigation</string>
+    <string name="text_view_by_room">Select room:</string>
+    <string name="text_view_by_name">Select person:</string>
+    <string name="text_view_button_start_location">Enter your position:</string>
+    <string name="action_language">Language</string>
+    <string name="select_from_spinner">Please select</string>
+    <string name="building_03_02_01_floor_ug">House 3, 2 and 1: basement</string>
+    <string name="building_03_02_01_floor_00">House 3, 2 and 1: ground floor</string>
+    <string name="building_03_02_01_floor_01">House 3, 2 and 1: 1st floor</string>
+    <string name="building_03_02_01_floor_02">House 3, 2 and 1: 2nd floor</string>
+    <string name="building_03_02_01_floor_03">House 3, 2 and 1: 3rd floor</string>
+    <string name="building_03_02_01_floor_04">House 3, 2 and 1: 4th floor </string>
+    <string name="building_04_floor_ug">House 4: basement</string>
+    <string name="building_04_floor_00">House 4: ground floor</string>
+    <string name="building_04_floor_01">House 4: 1st floor</string>
+    <string name="building_04_floor_02">House 4: 2nd floor</string>
+    <string name="building_04_floor_03">House 4: 3rd floor</string>
+    <string name="building_05_floor_ug">House 5: basement</string>
+    <string name="building_05_floor_00">House 5: ground floor</string>
+    <string name="building_05_floor_01">House 5: 1st floor</string>
+    <string name="building_05_floor_02">House 5: 2nd floor</string>
+    <string name="building_05_floor_03">House 5: 3rd floor</string>
+    <string name="button_location_text">Search</string>
+    <string name="hint_search_room">xx.x.xx</string>
+    <string name="error_message_room_input">Room not found!</string>
+    <string name="text_view_button_destination_location">Enter your destination:</string>
+    <string name="button_location_qr">QR-Code</string>
+    <string name="text_view_search_or_qr">or</string>
+    <string name="text_view_explanation_location_title">"Find own position:"</string>
+    <string name="text_view_explanation_location_description_code">"QR-Code: Press the QR-Code button."</string>
+    <string name="text_view_explanation_location_description_user">"User input: Enter your position (room number) and press the search button."</string>
+    <string name="text_view_explanation_navigation_title">"Perform navigation:"</string>
+    <string name="text_view_explanation_navigation_description_code">"QR-Code: Select a room or person and press the QR-Code button."</string>
+    <string name="text_view_explanation_navigation_description_user">User input: Select a room or person or enter your destination (room number), enter your location (room number) and press the search button.</string>
+    <string name="text_view_explanation_navigation_description_user_code">User input and QR-Code: Enter your destination (room number) and press the QR-Code button.</string>
 </resources>

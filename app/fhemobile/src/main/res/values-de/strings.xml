@@ -24,11 +24,12 @@
     <string name="drawer_mensa" >Mensa</string>
     <string name="drawer_persons" >Personen</string>
     <string name="drawer_semesterdata" >Semestertermine</string>
-    <string name="drawer_campus" >Campus</string>
+    <string name="drawer_campus" >Campusplan</string>
     <string name="drawer_impressum" >Impressum</string>
     <string name="drawer_timetable" >Stundenplan</string>
     <string name="drawer_mytimetable" >Mein Stundenplan</string>
     <string name="drawer_events" >Veranstaltungskalender</string>
+    <string name="drawer_navigation" >Campusnavigation</string>
 
     <string name="phonebook_firstname" >Vorname</string>
     <string name="phonebook_lastname" >Nachname</string>
@@ -99,5 +100,43 @@
     <string name="jump_current_lesson">Springe zur aktuellen Vorlesung</string>
     <string name="deleteTimetableTitle">Stundenplan löschen?</string>
     <string name="deleteTimetableMessage">Das Semester ist zu Ende. Möchtest du den Stundenplan löschen?</string>
+
+    <!--    Campus Navigation-->
+    <string name="text_view_by_room">Raum wählen:</string>
+    <string name="text_view_by_name">Person wählen:</string>
+    <string name="text_view_button_start_location">Gebe deine Position ein:</string>
+    <string name="action_language">Sprache</string>
+    <string name="title_scanner_activity">Scanner</string>
+    <string name="title_navigation_activity">Navigation</string>
+    <string name="select_from_spinner">Bitte auswählen</string>
+    <string name="building_03_02_01_floor_ug">Haus 3, 2 und 1: Untergeschoss</string>
+    <string name="building_03_02_01_floor_00">Haus 3, 2 und 1: Erdgeschoss</string>
+    <string name="building_03_02_01_floor_01">Haus 3, 2 und 1: 1. Stockwerk</string>
+    <string name="building_03_02_01_floor_02">Haus 3, 2 und 1: 2. Stockwerk</string>
+    <string name="building_03_02_01_floor_03">Haus 3, 2 und 1: 3. Stockwerk</string>
+    <string name="building_03_02_01_floor_04">Haus 3, 2 und 1: 4. Stockwerk</string>
+    <string name="building_04_floor_ug">Haus 4: Untergeschoss</string>
+    <string name="building_04_floor_00">Haus 4: Erdgeschoss</string>
+    <string name="building_04_floor_01">Haus 4: 1. Stockwerk</string>
+    <string name="building_04_floor_02">Haus 4: 2. Stockwerk</string>
+    <string name="building_04_floor_03">Haus 4: 3. Stockwerk</string>
+    <string name="building_05_floor_ug">Haus 5: Untergeschoss</string>
+    <string name="building_05_floor_00">Haus 5: Erdgeschoss</string>
+    <string name="building_05_floor_01">Haus 5: 1. Stockwerk</string>
+    <string name="building_05_floor_02">Haus 5: 2. Stockwerk</string>
+    <string name="building_05_floor_03">Haus 5: 3. Stockwerk</string>
+    <string name="button_location_text">Suchen</string>
+    <string name="hint_search_room">xx.xx.xx</string>
+    <string name="error_message_room_input">Raum nicht gefunden!</string>
+    <string name="text_view_button_destination_location">Gebe dein Ziel ein:</string>
+    <string name="button_location_qr">QR-Code</string>
+    <string name="text_view_search_or_qr">oder</string>
+    <string name="text_view_explanation_location_title">"Eigene Position finden:\n"</string>
+    <string name="text_view_explanation_location_description_code">"QR-Code: Drücke den QR-Code Button.\n"</string>
+    <string name="text_view_explanation_location_description_user">"Nutzer Eingabe: Gib deine Position ein (Raumnummer) und drücke den Suchen-Button.\n\n"</string>
+    <string name="text_view_explanation_navigation_title">Navigation durchführen:\n</string>
+    <string name="text_view_explanation_navigation_description_code">QR-Code: Wähle einen Raum oder eine Person und drücke den QR-Code Button.\n</string>
+    <string name="text_view_explanation_navigation_description_user">"Nutzer Eingabe: Wähle einen Raum oder eine Person oder gib dein Ziel ein (Raumnummer), gib deine Position ein (Raumnummer) und drücke den Suchen-Button.\n"</string>
+    <string name="text_view_explanation_navigation_description_user_code">Nutzer Eingabe und QR-Code: Gib dein Ziel ein (Raumnummer) und drücke den QR-Code Button.</string>
 
 </resources>

@@ -41,7 +41,7 @@ public class FeatureProvider {
         Features.MYTIMETABLE    = _Context.getResources().getBoolean(R.bool.feature_mytimetable);
         Features.IMPRESS        = _Context.getResources().getBoolean(R.bool.feature_impress);
         Features.EVENTS         = _Context.getResources().getBoolean(R.bool.feature_events);
-       // Features.NAVIGATION     = _Context.getResources().getBoolean(R.bool.feature_navigation);
+        Features.NAVIGATION     = _Context.getResources().getBoolean(R.bool.feature_navigation);
     }
 
     public static List<DrawerItem> getFeaturedItems() {
@@ -63,9 +63,9 @@ public class FeatureProvider {
             list.add(new DrawerItem(FeatureId.MAPS, getFeatureTitle(FeatureId.MAPS)));
         }
 
-//        if (Features.NAVIGATION) {
-//            list.add(new DrawerItem(FeatureId.NAVIGATION, getFeatureTitle(FeatureId.NAVIGATION)));
-//        }
+        if (Features.NAVIGATION) {
+            list.add(new DrawerItem(FeatureId.NAVIGATION, getFeatureTitle(FeatureId.NAVIGATION)));
+        }
 
         if (Features.NEWS) {
             list.add(new DrawerItem(FeatureId.NEWS, getFeatureTitle(FeatureId.NEWS)));
@@ -104,7 +104,7 @@ public class FeatureProvider {
             case FeatureId.TIMETABLE:       stringRes = R.string.drawer_timetable; break;
             case FeatureId.MYTIMETABLE:     stringRes = R.string.drawer_mytimetable; break;
             case FeatureId.IMPRESS:         stringRes = R.string.drawer_impressum; break;
-            //case FeatureId.NAVIGATION:      stringRes = R.string.drawer_navigation; break;
+            case FeatureId.NAVIGATION:      stringRes = R.string.drawer_navigation; break;
         }
 
         if (stringRes != -1) {
