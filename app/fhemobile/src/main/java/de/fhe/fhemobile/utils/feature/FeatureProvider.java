@@ -40,15 +40,12 @@ public class FeatureProvider {
         Features.TIMETABLE      = _Context.getResources().getBoolean(R.bool.feature_timetable);
         Features.MYTIMETABLE    = _Context.getResources().getBoolean(R.bool.feature_mytimetable);
         Features.IMPRESS        = _Context.getResources().getBoolean(R.bool.feature_impress);
-        Features.EVENTS           = _Context.getResources().getBoolean(R.bool.feature_events);
+        Features.EVENTS         = _Context.getResources().getBoolean(R.bool.feature_events);
+       // Features.NAVIGATION     = _Context.getResources().getBoolean(R.bool.feature_navigation);
     }
 
     public static List<DrawerItem> getFeaturedItems() {
         ArrayList<DrawerItem> list = new ArrayList<>();
-
-        if (Features.NEWS) {
-            list.add(new DrawerItem(FeatureId.NEWS, getFeatureTitle(FeatureId.NEWS)));
-        }
 
         if (Features.TIMETABLE) {
             list.add(new DrawerItem(FeatureId.TIMETABLE, getFeatureTitle(FeatureId.TIMETABLE)));
@@ -56,11 +53,6 @@ public class FeatureProvider {
 
         if (Features.MYTIMETABLE) {
             list.add(new DrawerItem(FeatureId.MYTIMETABLE, getFeatureTitle(FeatureId.MYTIMETABLE)));
-        }
-
-
-        if (Features.PHONEBOOK) {
-            list.add(new DrawerItem(FeatureId.PHONEBOOK, getFeatureTitle(FeatureId.PHONEBOOK)));
         }
 
         if (Features.MENSA) {
@@ -71,12 +63,24 @@ public class FeatureProvider {
             list.add(new DrawerItem(FeatureId.MAPS, getFeatureTitle(FeatureId.MAPS)));
         }
 
+//        if (Features.NAVIGATION) {
+//            list.add(new DrawerItem(FeatureId.NAVIGATION, getFeatureTitle(FeatureId.NAVIGATION)));
+//        }
+
+        if (Features.NEWS) {
+            list.add(new DrawerItem(FeatureId.NEWS, getFeatureTitle(FeatureId.NEWS)));
+        }
+
         if (Features.EVENTS) {
             list.add(new DrawerItem(FeatureId.EVENTS, getFeatureTitle(FeatureId.EVENTS)));
         }
 
         if (Features.SEMESTER_DATA) {
             list.add(new DrawerItem(FeatureId.SEMESTER_DATA, getFeatureTitle(FeatureId.SEMESTER_DATA)));
+        }
+
+        if (Features.PHONEBOOK) {
+            list.add(new DrawerItem(FeatureId.PHONEBOOK, getFeatureTitle(FeatureId.PHONEBOOK)));
         }
 
         if (Features.IMPRESS) {
@@ -100,6 +104,7 @@ public class FeatureProvider {
             case FeatureId.TIMETABLE:       stringRes = R.string.drawer_timetable; break;
             case FeatureId.MYTIMETABLE:     stringRes = R.string.drawer_mytimetable; break;
             case FeatureId.IMPRESS:         stringRes = R.string.drawer_impressum; break;
+            //case FeatureId.NAVIGATION:      stringRes = R.string.drawer_navigation; break;
         }
 
         if (stringRes != -1) {
