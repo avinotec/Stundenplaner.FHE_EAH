@@ -116,6 +116,25 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.fhe.fhemobile.activities.MainActivity" />
         </activity>
+        <activity
+            android:name=".activities.ScannerActivity"
+            android:label="@string/title_scanner_activity"
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.fhe.fhemobile.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activities.NavigationActivity"
+            android:label="@string/title_navigation_activity"
+            android:parentActivityName=".activities.ScannerActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.fhe.fhemobile.activities.ScannerActivity" />
+        </activity>
+
         <activity android:name=".widgets.homescreen.NewsListWidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />

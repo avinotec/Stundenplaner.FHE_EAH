@@ -67,6 +67,7 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -90,7 +91,7 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
 
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    handleUserInputErrorAndIntent(textView);
+                    handleUserInput(textView);
                 }
                 return false;
             }
@@ -99,21 +100,17 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
         //Destination location input field
         destinationLocationLayoutText = mView.findViewById(R.id.input_field_search_destination_room_layout);
         destinationLocationEditText = mView.findViewById(R.id.input_field_search_destination_room_edit);
-        destinationLocationEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        destinationLocationEditText.setOnEditorActionListener((textView, actionId, keyEvent) -> {
 
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+            searchByRoomSpinner.setSelection(0);
+            searchByPersonSpinner.setSelection(0);
+            roomsIndex = 0;
+            personsIndex = 0;
 
-                searchByRoomSpinner.setSelection(0);
-                searchByPersonSpinner.setSelection(0);
-                roomsIndex = 0;
-                personsIndex = 0;
-
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    handleUserInputErrorAndIntent(textView);
-                }
-                return false;
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                handleUserInput(textView);
             }
+            return false;
         });
 
         //Find own location button qr-code
@@ -133,12 +130,12 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
 
             //QR button
             if (view.getId() == R.id.button_location_qr) {
-                handleUserInputErrorAndIntent(view);
+                handleUserInput(view);
             }
 
             //Search button
             if (view.getId() == R.id.button_location_text) {
-                handleUserInputErrorAndIntent(view);
+                handleUserInput(view);
             }
         } catch (Exception e) {
             Log.e(TAG, "onClick exception", e);
@@ -208,6 +205,8 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
     }
 
 
+    //set roomNames and persons as options at searchByRoomSpinner and at searchByPersonSpinner
+    //returns configured spinners as array: {searchByRoomSpinner,searchByPersonSpinner}
     private Spinner[] getSpinners(ArrayList<String> roomNames, ArrayList<String> persons){
         Spinner searchByRoomSpinner = mView.findViewById(R.id.spinner_by_room);
         Spinner searchByPersonSpinner = mView.findViewById(R.id.spinner_by_person);
@@ -295,8 +294,8 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
     }
 
 
-    //User input error handling and input combinations error handling
-    private void handleUserInputErrorAndIntent(View view) {
+    //User input processing, error handling and input combinations error handling
+    private void handleUserInput(View view) {
 
         String userInputStartLocation = Objects.requireNonNull(startLocationEditText.getText()).toString().replace(".", "");
         String userInputDestinationLocation = Objects.requireNonNull(destinationLocationEditText.getText()).toString().replace(".", "");
@@ -305,7 +304,6 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
 
         //Get available rooms
         for (int index = 0; index < rooms.size(); index++) {
-
             roomNames.add(rooms.get(index).getRoomName());
         }
 
@@ -335,7 +333,7 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
             destinationLocationLayoutText.setError(null);
         }
 
-        //Input combinations error handling
+        //user input was correct - finding position or navigation can be performed
         if (startLocationLayoutText.getError() == null && destinationLocationLayoutText.getError() == null) {
 
             //Use start QR-Code to show own position
@@ -343,7 +341,6 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
                     && userInputDestinationLocation.equals("") && view.getId() == R.id.button_location_qr) {
 
                 destinationQRCode = JUST_LOCATION;
-
                 doIntent(userInputStartLocation, roomNames, false);
             }
 
@@ -352,7 +349,6 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
                     && userInputDestinationLocation.equals("") && view.getId() == R.id.button_location_text) {
 
                 destinationQRCode = JUST_LOCATION;
-
                 doIntent(userInputStartLocation, roomNames, true);
             }
 
@@ -384,7 +380,6 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
                     && !userInputDestinationLocation.equals("") && view.getId() == R.id.button_location_text) {
 
                 destinationQRCode = userInputDestinationLocation;
-
                 doIntent(userInputStartLocation, roomNames, true);
             }
         }
@@ -401,7 +396,5 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
         intentScannerActivity.putExtra("availableRooms", roomNames);
         startActivity(intentScannerActivity);
     }
-
-
 
 }

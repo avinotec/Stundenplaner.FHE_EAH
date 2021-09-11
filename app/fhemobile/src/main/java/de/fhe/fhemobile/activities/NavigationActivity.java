@@ -84,8 +84,7 @@ public class NavigationActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_navigation); //original
-        setBaseContent(R.layout.fragment_navigation_dialog); //edit by Nadja 8.9.21
+        setContentView(R.layout.activity_navigation);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -117,7 +116,6 @@ public class NavigationActivity extends BaseActivity {
                         drawNavigation(helperBuildingAndFloor.get(0), helperBuildingAndFloor.get(1));
                     } catch (Exception e) {
                         Log.e(TAG, " error changing map:", e);
-                        e.printStackTrace();
                     }
                 }
             }
@@ -136,13 +134,11 @@ public class NavigationActivity extends BaseActivity {
 
         //Get destination location room
         if (!JUST_LOCATION.equals(destinationQRCode)) {
-
             getDestinationLocation();
         }
 
         //Calculate route (get ArrayList<Cell> of cells to walk)
         if (!JUST_LOCATION.equals(destinationQRCode)) {
-
             getRoute();
         }
 
@@ -204,7 +200,6 @@ public class NavigationActivity extends BaseActivity {
 
         } catch (Exception e) {
             Log.e(TAG, "error reading or parsing JSON files:", e);
-            e.printStackTrace();
         }
     }
 
@@ -215,14 +210,11 @@ public class NavigationActivity extends BaseActivity {
             for (int i = 0; i < rooms.size(); i++) {
 
                 if (rooms.get(i).getQRCode().equals(ownLocation)) {
-
                     startLocation = rooms.get(i);
                 }
             }
-        } catch (
-                Exception e) {
+        } catch (Exception e) {
             Log.e(TAG, "QR-Code invalid:", e);
-            e.printStackTrace();
         }
     }
 
@@ -242,7 +234,6 @@ public class NavigationActivity extends BaseActivity {
     }
 
     //Calculate route (get ArrayList<Cell> of cells to walk through buildings and floors)
-
     private void getRoute() {
         try {
             RouteCalculator routeCalculator = new RouteCalculator(this, startLocation, destinationLocation, transitions);
@@ -324,7 +315,6 @@ public class NavigationActivity extends BaseActivity {
             }
         } catch (Exception e) {
             Log.e(TAG, "error getting floor plan:", e);
-            e.printStackTrace();
         }
         return floorPlan;
     }
@@ -420,7 +410,6 @@ public class NavigationActivity extends BaseActivity {
             localeString = this.createConfigurationContext(configuration).getString(floorPlan);
         } catch (Exception e) {
             Log.e(TAG,"error getting locale:", e);
-            e.printStackTrace();
         }
         return localeString;
     }
@@ -682,7 +671,6 @@ public class NavigationActivity extends BaseActivity {
             walkableCells = jsonHandler.parseJsonWalkableCells(json);
         } catch (Exception e) {
             Log.e(TAG, "error getting all walkable cells:", e);
-            e.printStackTrace();
         }
         return walkableCells;
     }

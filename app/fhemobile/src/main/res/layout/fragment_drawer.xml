@@ -21,7 +21,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/drawer_background"
-    tools:context="de.fhe.fhemobile.fragments.NavigationDrawerFragment"
+    tools:context="de.fhe.fhemobile.fragments.DrawerFragment"
     >
 
     <RelativeLayout
