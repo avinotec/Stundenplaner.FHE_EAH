@@ -72,7 +72,6 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_navigation_dialog, container, false);
 
@@ -389,7 +388,7 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
     //Intent
     private void doIntent(String userInputStartLocation, ArrayList<String> roomNames, boolean skipScanner) {
 
-        Intent intentScannerActivity = new Intent(getContext(), ScannerActivity.class);
+        Intent intentScannerActivity = new Intent(getActivity(), ScannerActivity.class);
         intentScannerActivity.putExtra("destinationLocation", destinationQRCode);
         intentScannerActivity.putExtra("startLocation", userInputStartLocation);
         intentScannerActivity.putExtra("skipScanner", skipScanner);

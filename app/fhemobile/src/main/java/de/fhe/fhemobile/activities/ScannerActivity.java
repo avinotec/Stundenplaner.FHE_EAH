@@ -53,9 +53,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
             } catch (Exception e) {
                 Log.e(TAG,"intend exception", e);
             }
-        }
-
-        if (!skipScanner) {
+        }else{
             mScannerView = new ZXingScannerView(this);
             setContentView(mScannerView);
             mScannerView.setAutoFocus(mAutoFocus);
