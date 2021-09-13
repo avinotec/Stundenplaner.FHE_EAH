@@ -1,0 +1,297 @@
+[
+  {
+    "xCoordinate": 21,
+    "yCoordinate": 6,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 24,
+    "yCoordinate": 6,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 28,
+    "yCoordinate": 6,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 30,
+    "yCoordinate": 6,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 32,
+    "yCoordinate": 6,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 19,
+    "yCoordinate": 7,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 20,
+    "yCoordinate": 7,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 21,
+    "yCoordinate": 7,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 22,
+    "yCoordinate": 7,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 23,
+    "yCoordinate": 7,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 24,
+    "yCoordinate": 7,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 25,
+    "yCoordinate": 7,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 26,
+    "yCoordinate": 7,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 27,
+    "yCoordinate": 7,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 28,
+    "yCoordinate": 7,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 29,
+    "yCoordinate": 7,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 30,
+    "yCoordinate": 7,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 31,
+    "yCoordinate": 7,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 32,
+    "yCoordinate": 7,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 33,
+    "yCoordinate": 7,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 34,
+    "yCoordinate": 7,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 35,
+    "yCoordinate": 7,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 19,
+    "yCoordinate": 8,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 20,
+    "yCoordinate": 8,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 21,
+    "yCoordinate": 8,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 22,
+    "yCoordinate": 8,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 23,
+    "yCoordinate": 8,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 25,
+    "yCoordinate": 8,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 26,
+    "yCoordinate": 8,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 27,
+    "yCoordinate": 8,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 28,
+    "yCoordinate": 8,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 30,
+    "yCoordinate": 8,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 31,
+    "yCoordinate": 8,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 32,
+    "yCoordinate": 8,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 33,
+    "yCoordinate": 8,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 34,
+    "yCoordinate": 8,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 21,
+    "yCoordinate": 9,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 22,
+    "yCoordinate": 9,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 33,
+    "yCoordinate": 9,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 34,
+    "yCoordinate": 9,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 21,
+    "yCoordinate": 10,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 33,
+    "yCoordinate": 10,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 34,
+    "yCoordinate": 10,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 20,
+    "yCoordinate": 11,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 21,
+    "yCoordinate": 11,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 22,
+    "yCoordinate": 11,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 33,
+    "yCoordinate": 11,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 34,
+    "yCoordinate": 11,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 21,
+    "yCoordinate": 12,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 34,
+    "yCoordinate": 12,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 33,
+    "yCoordinate": 13,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 34,
+    "yCoordinate": 13,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 35,
+    "yCoordinate": 13,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 33,
+    "yCoordinate": 14,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 34,
+    "yCoordinate": 14,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 35,
+    "yCoordinate": 14,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 33,
+    "yCoordinate": 15,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 34,
+    "yCoordinate": 15,
+    "walkable": true
+  },
+  {
+    "xCoordinate": 35,
+    "yCoordinate": 15,
+    "walkable": true
+  }
+]
