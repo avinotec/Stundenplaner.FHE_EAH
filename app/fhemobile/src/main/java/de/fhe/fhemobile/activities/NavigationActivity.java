@@ -64,7 +64,7 @@ public class NavigationActivity extends BaseActivity {
     private static final int X_SCALING_PORTRAIT = 9;
     private static final int Y_SCALING_PORTRAIT = 9;
     private static final int X_OFFSET_PORTRAIT = 0;
-    private static final int Y_OFFSET_PORTRAIT = 31;
+    private static final int Y_OFFSET_PORTRAIT = 19;
     private static final int X_SCALING_LANDSCAPE = 16;
     private static final int Y_SCALING_LANDSCAPE = 16;
     private static final int X_OFFSET_LANDSCAPE = 0;
@@ -72,7 +72,7 @@ public class NavigationActivity extends BaseActivity {
 
     //Variables
     private String destinationQRCode;
-    private String ownLocation;
+    private String currentLocation;
     private Room startLocation;
     private Room destinationLocation;
 
@@ -90,7 +90,7 @@ public class NavigationActivity extends BaseActivity {
 
         //Get extra from parent
         Intent intendScannerActivity = getIntent();
-        ownLocation = intendScannerActivity.getStringExtra("startLocation");
+        currentLocation = intendScannerActivity.getStringExtra("startLocation");
         destinationQRCode = intendScannerActivity.getStringExtra("destinationLocation");
 
         //Spinner select floor plans
@@ -127,10 +127,12 @@ public class NavigationActivity extends BaseActivity {
         });
 
         //Get rooms, stairs, elevators and crossings from JSON
+        // dient dazu die verfügbaren Räume und Übergänge aus den entsprechenden JSON-Dateien zu laden
         getRoomsAndTransitions();
 
-        //Get own location room
-        getOwnLocation();
+        //Get current user location room
+        //dient dazu auf Grund des von der vorherigen Activity übermittelten Standorts den Startraum, bzw. die aktuelle Position des Nutzers zu setzten
+        getCurrentLocation();
 
         //Get destination location room
         if (!JUST_LOCATION.equals(destinationQRCode)) {
@@ -203,13 +205,13 @@ public class NavigationActivity extends BaseActivity {
         }
     }
 
-    //get own location room
-    private void getOwnLocation() {
+    //get current user location room
+    private void getCurrentLocation() {
 
         try {
             for (int i = 0; i < rooms.size(); i++) {
 
-                if (rooms.get(i).getQRCode().equals(ownLocation)) {
+                if (rooms.get(i).getQRCode().equals(currentLocation)) {
                     startLocation = rooms.get(i);
                 }
             }
@@ -234,6 +236,7 @@ public class NavigationActivity extends BaseActivity {
     }
 
     //Calculate route (get ArrayList<Cell> of cells to walk through buildings and floors)
+    //wird ein Objekt vom Typ „RouteCalculator“ initiiert und mittels diesem die Berechnung der Navigation durchgeführt und eine Liste mit allen zu begehenden Zellen zurück gegeben
     private void getRoute() {
         try {
             RouteCalculator routeCalculator = new RouteCalculator(this, startLocation, destinationLocation, transitions);
@@ -423,6 +426,7 @@ public class NavigationActivity extends BaseActivity {
     }
 
     //Draw path cells
+    // dient dazu ein Symbol für eine zu begehende Zelle über die dargestellte Flurkarte einzuzeichnen
     private void drawPathCell(int index, int xOffset, int xScaling, int yOffset, int yScaling, RelativeLayout relativeLayout) {
 
         ImageView pathCellIcon = new ImageView(this);
@@ -583,7 +587,7 @@ public class NavigationActivity extends BaseActivity {
             Log.e(TAG, "error drawing route:",e);
         }
 
-        //Add own location room icon to Overlay
+        //Add icon for current user location room to Overlay
         try {
             if (startLocation.getBuilding().equals(BUILDING_05) && building.equals(BUILDING_05) && startLocation.getFloor().equals(floor)) {
 
@@ -604,7 +608,7 @@ public class NavigationActivity extends BaseActivity {
                 drawStartLocation(xOffset, xScaling, yOffset, yScaling, relativeLayout);
             }
         } catch (Exception e) {
-            Log.e(TAG, "error drawing own location room:", e);
+            Log.e(TAG, "error drawing current location room:", e);
         }
 
         //Add destination location room icon to ConstraintLayout

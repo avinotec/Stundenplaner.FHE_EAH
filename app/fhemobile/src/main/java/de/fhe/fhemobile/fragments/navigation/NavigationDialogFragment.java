@@ -27,6 +27,7 @@ import java.util.Comparator;
 import java.util.Objects;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.activities.NavigationActivity;
 import de.fhe.fhemobile.activities.ScannerActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.models.navigation.Room;
@@ -46,11 +47,11 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
     //Variables
     private String destinationQRCode;
     private ArrayList<Room> rooms = new ArrayList<>();
-    private TextInputLayout startLocationLayoutText;
-    private TextInputEditText startLocationEditText;
-    private TextInputLayout destinationLocationLayoutText;
-    private TextInputEditText destinationLocationEditText;
-    private int roomsIndex = 0;
+    private TextInputLayout startLocationDisplayedErrorText;
+    private TextInputLayout destinationLocationDisplayedErrorText;
+    private TextInputEditText startLocationInputText;
+    private TextInputEditText destinationLocationInputText;
+    private int roomsIndex = 0; //roomsIndex und personsIndex dienen zur Überprüfung zulässiger Eingabekombination (start + destination)
     private int personsIndex = 0;
 
     private View      mView;
@@ -82,24 +83,24 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
         final Spinner searchByPersonSpinner = spinners[1];
 
         //Start location input field
-        startLocationLayoutText = mView.findViewById(R.id.input_field_search_start_room_layout);
-        startLocationEditText = mView.findViewById(R.id.input_field_search_start_room_edit);
-        startLocationEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        startLocationDisplayedErrorText = mView.findViewById(R.id.input_field_search_start_room_layout);
+        startLocationInputText = mView.findViewById(R.id.input_field_search_start_room_edit);
+        startLocationInputText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
 
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    handleUserInput(textView);
+                    processUserInput(textView);
                 }
                 return false;
             }
         });
 
         //Destination location input field
-        destinationLocationLayoutText = mView.findViewById(R.id.input_field_search_destination_room_layout);
-        destinationLocationEditText = mView.findViewById(R.id.input_field_search_destination_room_edit);
-        destinationLocationEditText.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+        destinationLocationDisplayedErrorText = mView.findViewById(R.id.input_field_search_destination_room_layout);
+        destinationLocationInputText = mView.findViewById(R.id.input_field_search_destination_room_edit);
+        destinationLocationInputText.setOnEditorActionListener((textView, actionId, keyEvent) -> {
 
             searchByRoomSpinner.setSelection(0);
             searchByPersonSpinner.setSelection(0);
@@ -107,18 +108,18 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
             personsIndex = 0;
 
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                handleUserInput(textView);
+                processUserInput(textView);
             }
             return false;
         });
 
-        //Find own location button qr-code
-        Button findOwnLocationButtonQR = mView.findViewById(R.id.button_location_qr);
-        findOwnLocationButtonQR.setOnClickListener(this);
+        //Find current location button qr-code
+        Button findCurrentLocationByQRButton = mView.findViewById(R.id.button_location_qr);
+        findCurrentLocationByQRButton.setOnClickListener(this);
 
-        //Find own location button text
-        Button findOwnLocationButtonText = mView.findViewById(R.id.button_location_text);
-        findOwnLocationButtonText.setOnClickListener(this);
+        //Find current location button text
+        Button findCurrentLocationbyTextinputButton = mView.findViewById(R.id.button_location_text);
+        findCurrentLocationbyTextinputButton.setOnClickListener(this);
 
         return mView;
     }
@@ -126,15 +127,10 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
     @Override
     public void onClick(View view) {
         try {
-
-            //QR button
-            if (view.getId() == R.id.button_location_qr) {
-                handleUserInput(view);
-            }
-
-            //Search button
-            if (view.getId() == R.id.button_location_text) {
-                handleUserInput(view);
+            //QR button or search button
+            if (view.getId() == R.id.button_location_qr
+                    || view.getId() == R.id.button_location_text) {
+                processUserInput(view);
             }
         } catch (Exception e) {
             Log.e(TAG, "onClick exception", e);
@@ -233,7 +229,7 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
                             destinationQRCode = rooms.get(i).getQRCode();
                             roomsIndex = i;
                             searchByPersonSpinner.setSelection(0);
-                            destinationLocationEditText.setText("");
+                            destinationLocationInputText.setText("");
                         }
                     }
                 }
@@ -271,7 +267,7 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
                                 destinationQRCode = rooms.get(i).getQRCode();
                                 personsIndex = i;
                                 searchByRoomSpinner.setSelection(0);
-                                destinationLocationEditText.setText("");
+                                destinationLocationInputText.setText("");
                             }
                         }
                     }
@@ -294,10 +290,10 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
 
 
     //User input processing, error handling and input combinations error handling
-    private void handleUserInput(View view) {
+    private void processUserInput(View view) {
 
-        String userInputStartLocation = Objects.requireNonNull(startLocationEditText.getText()).toString().replace(".", "");
-        String userInputDestinationLocation = Objects.requireNonNull(destinationLocationEditText.getText()).toString().replace(".", "");
+        String userInputStartLocation = Objects.requireNonNull(startLocationInputText.getText()).toString().replace(".", "");
+        String userInputDestinationLocation = Objects.requireNonNull(destinationLocationInputText.getText()).toString().replace(".", "");
 
         ArrayList<String> roomNames = new ArrayList<>();
 
@@ -307,55 +303,62 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
         }
 
         //User start location input error handling
-        if (!startLocationEditText.getText().toString().equals("")
-                && !roomNames.contains(startLocationEditText.getText().toString())) {
+        if (!startLocationInputText.getText().toString().equals("")
+                && !roomNames.contains(startLocationInputText.getText().toString())) {
 
-            startLocationLayoutText.setError(getText(R.string.error_message_room_input));
+            startLocationDisplayedErrorText.setError(getText(R.string.error_message_room_input));
         }
 
-        if (startLocationEditText.getText().toString().equals("")
-                || roomNames.contains(startLocationEditText.getText().toString())) {
+        if (startLocationInputText.getText().toString().equals("")
+                || roomNames.contains(startLocationInputText.getText().toString())) {
 
-            startLocationLayoutText.setError(null);
+            startLocationDisplayedErrorText.setError(null);
         }
 
         //User destination location input error handling
-        if (!destinationLocationEditText.getText().toString().equals("")
-                && !roomNames.contains(destinationLocationEditText.getText().toString())) {
+        if (!destinationLocationInputText.getText().toString().equals("")
+                && !roomNames.contains(destinationLocationInputText.getText().toString())) {
 
-            destinationLocationLayoutText.setError(getText(R.string.error_message_room_input));
+            destinationLocationDisplayedErrorText.setError(getText(R.string.error_message_room_input));
         }
 
-        if (destinationLocationEditText.getText().toString().equals("")
-                || roomNames.contains(destinationLocationEditText.getText().toString())) {
+        if (destinationLocationInputText.getText().toString().equals("")
+                || roomNames.contains(destinationLocationInputText.getText().toString())) {
 
-            destinationLocationLayoutText.setError(null);
+            destinationLocationDisplayedErrorText.setError(null);
         }
 
         //user input was correct - finding position or navigation can be performed
-        if (startLocationLayoutText.getError() == null && destinationLocationLayoutText.getError() == null) {
+        if (destinationLocationDisplayedErrorText.getError() == null
+                && startLocationDisplayedErrorText.getError() == null) {
 
-            //Use start QR-Code to show own position
+            Boolean skipScanner = false;
+            Boolean inputValid = false;
+
+            //Use start QR-Code to show current position
             if (roomsIndex == 0 && personsIndex == 0 && userInputStartLocation.equals("")
                     && userInputDestinationLocation.equals("") && view.getId() == R.id.button_location_qr) {
 
                 destinationQRCode = JUST_LOCATION;
-                doIntent(userInputStartLocation, roomNames, false);
+                skipScanner = false;
+                inputValid = true;
             }
 
-            //Use user start input to show own location
+            //Use user start input to show current location
             if (roomsIndex == 0 && personsIndex == 0 && !userInputStartLocation.equals("")
                     && userInputDestinationLocation.equals("") && view.getId() == R.id.button_location_text) {
 
                 destinationQRCode = JUST_LOCATION;
-                doIntent(userInputStartLocation, roomNames, true);
+                skipScanner = true;
+                inputValid = true;
             }
 
             //Use start QR-Code and destination selection to perform navigation
             if ((roomsIndex != 0 || personsIndex != 0) && userInputStartLocation.equals("")
                     && userInputDestinationLocation.equals("") && view.getId() == R.id.button_location_qr) {
 
-                doIntent(userInputStartLocation, roomNames, false);
+                skipScanner = false;
+                inputValid = true;
             }
 
             //Use start QR-Code and user destination input to perform navigation
@@ -363,15 +366,16 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
                     && !userInputDestinationLocation.equals("") && view.getId() == R.id.button_location_qr) {
 
                 destinationQRCode = userInputDestinationLocation;
-
-                doIntent(userInputStartLocation, roomNames, false);
+                skipScanner = false;
+                inputValid = true;
             }
 
             //Use user start input and destination selection to perform navigation
             if ((roomsIndex != 0 || personsIndex != 0) && !userInputStartLocation.equals("")
                     && userInputDestinationLocation.equals("") && view.getId() == R.id.button_location_text) {
 
-                doIntent(userInputStartLocation, roomNames, true);
+                skipScanner = true;
+                inputValid = true;
             }
 
             //Use user start and destination input to perform navigation
@@ -379,21 +383,35 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
                     && !userInputDestinationLocation.equals("") && view.getId() == R.id.button_location_text) {
 
                 destinationQRCode = userInputDestinationLocation;
-                doIntent(userInputStartLocation, roomNames, true);
+                skipScanner = true;
+                inputValid = true;
             }
+
+            if(inputValid) {
+                doIntentAndStartActivity(userInputStartLocation, roomNames, skipScanner);
+            }
+
         }
     }
 
 
     //Intent
-    private void doIntent(String userInputStartLocation, ArrayList<String> roomNames, boolean skipScanner) {
+    private void doIntentAndStartActivity(String userInputStartLocation, ArrayList<String> roomNames, boolean skipScanner) {
 
-        Intent intentScannerActivity = new Intent(getActivity(), ScannerActivity.class);
-        intentScannerActivity.putExtra("destinationLocation", destinationQRCode);
-        intentScannerActivity.putExtra("startLocation", userInputStartLocation);
-        intentScannerActivity.putExtra("skipScanner", skipScanner);
-        intentScannerActivity.putExtra("availableRooms", roomNames);
-        startActivity(intentScannerActivity);
+        if(skipScanner){ //start location determined by user input
+            Intent intentNavigationActivity = new Intent(getActivity(), NavigationActivity.class);
+            intentNavigationActivity.putExtra("startLocation", userInputStartLocation);
+            intentNavigationActivity.putExtra("destinationLocation", destinationQRCode);
+            startActivity(intentNavigationActivity);
+        }
+        if(!skipScanner){ //determine startLocation by scanning QR code
+            Intent intentScannerActivity = new Intent(getActivity(), ScannerActivity.class);
+            intentScannerActivity.putExtra("startLocation", userInputStartLocation);
+            intentScannerActivity.putExtra("destinationLocation", destinationQRCode);
+            intentScannerActivity.putExtra("availableRooms", roomNames);
+            startActivity(intentScannerActivity);
+        }
+
     }
 
 }

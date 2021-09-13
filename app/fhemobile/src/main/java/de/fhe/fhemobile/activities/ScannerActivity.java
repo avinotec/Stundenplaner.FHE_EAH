@@ -41,28 +41,17 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         Intent intendScannerActivity = getIntent();
         destinationQRCode = intendScannerActivity.getStringExtra("destinationLocation");
         startLocation = intendScannerActivity.getStringExtra("startLocation");
-        skipScanner = intendScannerActivity.getBooleanExtra("skipScanner", false);
         availableRooms = intendScannerActivity.getStringArrayListExtra("availableRooms");
 
-        if (skipScanner) {
-            try {
-                Intent intentNavigationActivity = new Intent(getApplicationContext(), NavigationActivity.class);
-                intentNavigationActivity.putExtra("startLocation", startLocation);
-                intentNavigationActivity.putExtra("destinationLocation", destinationQRCode);
-                startActivity(intentNavigationActivity);
-            } catch (Exception e) {
-                Log.e(TAG,"intend exception", e);
-            }
-        }else{
-            mScannerView = new ZXingScannerView(this);
-            setContentView(mScannerView);
-            mScannerView.setAutoFocus(mAutoFocus);
+        mScannerView = new ZXingScannerView(this);
+        setContentView(mScannerView);
+        mScannerView.setAutoFocus(mAutoFocus);
 
-            //Check necessary permissions
-            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_CAMERA);
-            }
+        //Check necessary permissions
+        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_CAMERA);
         }
+
     }
 
 
