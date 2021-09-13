@@ -23,7 +23,7 @@
     <string name="drawer_news" >News</string>
     <string name="drawer_mensa" >Mensa</string>
     <string name="drawer_persons" >Personen</string>
-    <string name="drawer_semesterdata" >Semestertermine</string>
+    <string name="drawer_semesterdates" >Semestertermine</string>
     <string name="drawer_campus" >Campusplan</string>
     <string name="drawer_impressum" >Impressum</string>
     <string name="drawer_timetable" >Stundenplan</string>
@@ -93,7 +93,7 @@
 	<string name="empty_text_edit">Du hast noch keine Vorlesungen ausgewählt.</string>
 	<string name="empty_text_select">Wähle Studiengang und Semester aus.</string>
 
-    <string name="data_protection_link"><a href="https://www.eah-jena.de/de-de/datenschutz">Datenschutz</a></string>
+    <string name="data_protection_link"><a href="https://www.eah-jena.de/datenschutz">Datenschutz</a></string>
     <string name="notification_error_ssl_cert_invalid">Es ist ein Zertifikat-Fehler aufgetreten. Möchtest du die Seite trotzdem öffnen?</string>
     <string name="ssl_error_cancel">Abbrechen</string>
     <string name="ssl_error_continue">Fortfahren</string>
@@ -132,9 +132,9 @@
     <string name="button_location_qr">QR-Code</string>
     <string name="text_view_search_or_qr">oder</string>
     <string name="text_view_explanation_location_title">Meine Position bestimmmen:</string>
-    <string name="text_view_explanation_location_description">Scanne direkt den QR-Code über "QR-Code" oder gib eine Raumnummer ein und drücke "Suchen".</string>
+    <string name="text_view_explanation_location_description">Scanne den QR-Code über "QR-Code" oder gib eine Raumnummer ein und drücke "Suchen".</string>
     <string name="text_view_explanation_navigation_title">Navigation starten:</string>
-    <string name="text_view_explanation_navigation_description">Wähle eine Raumnummer oder eine Person aus oder gib die Raumnummer ein, zu der du navigiert werden möchtest. Dann bestimme deine aktuelle Position wie oben beschrieben.</string>
+    <string name="text_view_explanation_navigation_description">Wähle eine Raumnummer oder eine Person aus oder gib die Raumnummer direkt ein, zu der du navigiert werden möchtest. Dann bestimme deine aktuelle Position wie oben beschrieben.</string>
     <string name="text_view_oder">oder</string>
 
 </resources>

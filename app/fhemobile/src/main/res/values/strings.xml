@@ -24,7 +24,7 @@
     <string name="drawer_news" >News</string>
     <string name="drawer_mensa" >Canteen</string>
     <string name="drawer_persons" >Persons</string>
-    <string name="drawer_semesterdata" >Semester Data</string>
+    <string name="drawer_semesterdates" >Semester Dates</string>
     <string name="drawer_campus" >Campus Plan</string>
     <string name="drawer_impressum" >Imprint</string>
     <string name="drawer_timetable" >Schedule</string>
@@ -54,7 +54,7 @@
     <string name="maps_up" >One floor up</string>
     <string name="maps_down" >One floor down</string>
 
-    <string name="timetable_headline" >Please select your study course. (You can always change it in the Settings)</string>
+    <string name="timetable_headline" >Please select your study course. (You can always change it under settings)</string>
     <string name="timetable_study_course" >Study course</string>
     <string name="timetable_study_group" >Group</string>
     <string name="timetable_term" >Semester</string>
@@ -95,7 +95,7 @@
     <string name="empty_text_edit">You did not choose a lesson.</string>
     <string name="empty_text_select">Choose study course and semester.</string>
 
-    <string name="data_protection_link"><a href="https://www.eah-jena.de/de-de/datenschutz">Data protection</a></string>
+    <string name="data_protection_link"><a href="https://www.eah-jena.de/datenschutz">Data protection</a></string>
     <string name="notification_error_ssl_cert_invalid">A SSL-Certificate occurred. Do you want to proceed?</string>
     <string name="ssl_error_continue">Continue</string>
     <string name="ssl_error_cancel">Cancel</string>
@@ -134,8 +134,8 @@
     <string name="button_location_qr">QR-Code</string>
     <string name="text_view_search_or_qr">or</string>
     <string name="text_view_explanation_location_title">Determine my position:</string>
-    <string name="text_view_explanation_location_description">Directly press the "QR-Code" to scan the QR-Code or manually enter your position and search.</string>
+    <string name="text_view_explanation_location_description">Directly press "QR-Code" to scan the QR-Code or manually enter your position and search.</string>
     <string name="text_view_explanation_navigation_title">Perform navigation:</string>
-    <string name="text_view_explanation_navigation_description">Select a room or a person or enter a room number you want to navigate to. Then determine your position like described above.</string>
+    <string name="text_view_explanation_navigation_description">Select a room or a person or enter a room number you want to be navigated to. Then determine your position like described above.</string>
     <string name="text_view_oder">or</string>
 </resources>
