@@ -21,6 +21,7 @@
     <style name="AppTheme" parent="AppTheme.Base"/>
 
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:fontFamily">@font/roboto_condensed_regular</item>
         <item name="colorPrimary">@color/primary_color</item>
         <item name="colorPrimaryDark">@color/primary_dark_color</item>
         <item name="colorAccent">@color/primary_color</item>
@@ -28,5 +29,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowActionModeOverlay">true</item>
     </style>
+
+
 
 </resources>

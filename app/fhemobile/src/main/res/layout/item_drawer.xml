@@ -38,6 +38,7 @@
         android:id="@+id/drawerLabel"
         android:textColor="@color/drawer_item_text"
         android:textSize="@dimen/drawer_item_text_size"
+        android:fontFamily="@font/roboto_condensed_bold"
         android:gravity="center_vertical"
         android:layout_gravity="center_vertical"
         android:layout_centerVertical="true"
