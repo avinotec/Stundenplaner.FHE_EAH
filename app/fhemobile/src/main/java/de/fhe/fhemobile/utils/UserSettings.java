@@ -42,10 +42,17 @@ public class UserSettings {
     private String              mChosenMensaName    = null;
     private String              mChosenNewsCategory = null;
 
+    /**
+     *
+     * @return
+     */
     public static UserSettings getInstance() {
         return ourInstance;
     }
 
+    /**
+     *  constructor
+     */
     private UserSettings() {
         mSP = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext());
 
@@ -54,11 +61,20 @@ public class UserSettings {
         mChosenNewsCategory = mSP.getString(PREF_CHOSEN_NEWS_CATEGORY, UserDefaults.DEFAULT_NEWS_ID);
     }
 
+    /**
+     * Mensa
+     * @return
+     */
     public String getChosenMensa() {
         return mChosenMensa;
     }
 
-    public void setChosenMensa(String _ChosenMensaId, String _ChosenMensaName ) {
+    /**
+     * Mensa
+     * @param _ChosenMensaId
+     * @param _ChosenMensaName
+     */
+    public void setChosenMensa(final String _ChosenMensaId, final String _ChosenMensaName ) {
         mChosenMensa = _ChosenMensaId;
         mSP.edit().putString(PREF_CHOSEN_MENSA, mChosenMensa).apply();
 
@@ -68,14 +84,27 @@ public class UserSettings {
         MensaFoodModel.getInstance().setFoodItems(null);
     }
 
-    public String getChosenMensaName() { return mChosenMensaName; }
+    /**
+     * Mensa
+     * @return
+     */
+    public String getChosenMensaName() {
+        return mChosenMensaName;
+    }
 
-
+    /**
+     *  News
+     * @return
+     */
     public String getChosenNewsCategory() {
         return mChosenNewsCategory;
     }
 
-    public void setChosenNewsCategory(String _ChosenNewsCategory) {
+    /**
+     * News
+     * @param _ChosenNewsCategory
+     */
+    public void setChosenNewsCategory(final String _ChosenNewsCategory) {
         mChosenNewsCategory = _ChosenNewsCategory;
         mSP.edit().putString(PREF_CHOSEN_NEWS_CATEGORY, this.mChosenNewsCategory).apply();
         NewsModel.getInstance().setNewsItems(null);

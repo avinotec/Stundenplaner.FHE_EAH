@@ -1,3 +1,20 @@
+/*
+ *  Copyright (c) 2020-2021 Ernst-Abbe-Hochschule Jena
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package de.fhe.fhemobile.utils.navigation;
 
 import android.util.Log;
@@ -24,23 +41,38 @@ class AStarAlgorithm {
     private Cell endCell;
     private ArrayList<ArrayList<Cell>> grid;
 
-    //Constructor
-    AStarAlgorithm(Cell startCell, Cell endCell, ArrayList<ArrayList<Cell>> grid) {
+    /**
+     * Constructor
+     * @param startCell
+     * @param endCell
+     * @param grid
+     */
+    AStarAlgorithm(final Cell startCell, final Cell endCell, final ArrayList<ArrayList<Cell>> grid) {
         this.startCell = startCell;
         this.endCell = endCell;
         this.grid = grid;
     }
 
-    //Calculation of cells to walk on one grid
-    ArrayList<Cell> getNavigationCellsOnGrid() {
+    /**
+     * Calculation of cells to walk on one grid
+     * @return
+     */
+    final ArrayList<Cell> getNavigationCellsOnGrid() {
 
-        ArrayList<Cell> navigationCells = new ArrayList<>();
+        final ArrayList<Cell> navigationCells = new ArrayList<>();
 
         try {
             //Set priority queue with comparator
             open = new PriorityQueue<>(16, new Comparator<Cell>() {
+
+                /**
+                 *
+                 * @param cellOne
+                 * @param cellTwo
+                 * @return
+                 */
                 @Override
-                public int compare(Cell cellOne, Cell cellTwo) {
+                public int compare(final Cell cellOne, final Cell cellTwo) {
                     return Integer.compare(cellOne.getFinalCost(), cellTwo.getFinalCost());
                 }
             });
@@ -62,16 +94,17 @@ class AStarAlgorithm {
             }
         } catch (Exception e) {
             Log.e(TAG, "error calculating route ", e);
-            e.printStackTrace();
         }
         return navigationCells;
     }
 
-    //A* algorithm
+    /**
+     * A* algorithm
+     */
     private void aStar() {
         while (!open.isEmpty()) {
 
-            Cell currentCell = open.poll();
+            final Cell currentCell = open.poll();
 
             if (currentCell != null && currentCell.getWalkability()) {
                 closed[currentCell.getXCoordinate()][currentCell.getYCoordinate()] = true;
@@ -112,11 +145,16 @@ class AStarAlgorithm {
         }
     }
 
-    //Check and update cost of a cell
-    private void checkAndUpdateCost(Cell current, Cell test, int cost) {
+    /**
+     * Check and update cost of a cell
+     * @param current
+     * @param test
+     * @param cost
+     */
+    private void checkAndUpdateCost(final Cell current, final Cell test, final int cost) {
 
-        int testFinalCost = test.getHeuristicCost() + cost;
-        boolean inOpen = open.contains(test);
+        final int testFinalCost = test.getHeuristicCost() + cost;
+        final boolean inOpen = open.contains(test);
 
         if (test.getWalkability() && !closed[test.getXCoordinate()][test.getYCoordinate()]) {
 
@@ -131,14 +169,18 @@ class AStarAlgorithm {
         }
     }
 
-    //Set cost of the cell to check
-    private void setCostPerCell(Cell current, Cell test) {
+    /**
+     * Set cost of the cell to check
+     * @param current
+     * @param test
+     */
+    private void setCostPerCell(final Cell current, final Cell test) {
 
-        Class<? extends Cell> aClass = test.getClass();
+        final Class<? extends Cell> aClass = test.getClass();
 
-        Cell compareCellClass = new Cell();
-        Room compareRoomClass = new Room();
-        Transition compareTransitionClass = new Transition();
+        final Cell compareCellClass = new Cell();
+        final Room compareRoomClass = new Room();
+        final Transition compareTransitionClass = new Transition();
 
         if (aClass.equals(compareCellClass.getClass())) {
             current.setHeuristicCost(COSTS_CELL);

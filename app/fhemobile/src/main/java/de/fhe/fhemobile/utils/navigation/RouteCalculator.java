@@ -1,3 +1,20 @@
+/*
+ *  Copyright (c) 2020-2021 Ernst-Abbe-Hochschule Jena
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package de.fhe.fhemobile.utils.navigation;
 
 import android.annotation.SuppressLint;
@@ -10,6 +27,7 @@ import androidx.annotation.RequiresApi;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.models.navigation.*;
 
 public class RouteCalculator {
@@ -64,6 +82,7 @@ public class RouteCalculator {
     }
 
     //Get all cells to walk from start to destination location
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("LongLogTag")
     public ArrayList<Cell> getNavigationCells() {
 
@@ -359,21 +378,24 @@ public class RouteCalculator {
 
         Log.i("_____TEST_CELLS_TO_WALK_size_____", String.valueOf(cellsToWalk.size()));
 
-        for (int i = 0; i < cellsToWalk.size(); i++) {
-
-            Log.i("_____TEST_CELLS_TO_WALK_b.f x.y_____", cellsToWalk.get(i).getBuilding() + "." + cellsToWalk.get(i).getFloor() + " "
-                    + cellsToWalk.get(i).getXCoordinate() + "." + cellsToWalk.get(i).getYCoordinate());
+        if (BuildConfig.DEBUG) {
+            for (Cell cellToWalk : cellsToWalk) {
+                Log.i("_____TEST_CELLS_TO_WALK_b.f x.y_____", cellToWalk.getBuilding() + "." + cellToWalk.getFloor() + " "
+                        + cellToWalk.getXCoordinate() + "." + cellToWalk.getYCoordinate());
+            }
         }
         return cellsToWalk;
     }
 
-    //Get grids of floors in buildings to use (high level navigation)
+    /**
+     * Get grids of floors in buildings to use (high level navigation)
+     */
     private ArrayList<ArrayList<ArrayList<Cell>>> navigationBuildings() {
 
         ArrayList<ArrayList<ArrayList<Cell>>> gridsToAdd = new ArrayList<>();
 
-        int startFloorInteger = startLocation.getFloorAsInteger();
-        int destinationFloorInteger = destinationLocation.getFloorAsInteger();
+        final int startFloorInteger = startLocation.getFloorAsInteger();
+        final int destinationFloorInteger = destinationLocation.getFloorAsInteger();
         int startBuildingInteger = startLocation.getBuildingAsInteger();
         int destinationBuildingInteger = destinationLocation.getBuildingAsInteger();
 
@@ -695,10 +717,12 @@ public class RouteCalculator {
         return gridsToAdd;
     }
 
-    //Integer to String for floors
-    private String getCurrentFloor(int index) {
+    /**
+     * Integer to String for floors
+     */
+    private String getCurrentFloor( final int index) {
 
-        String currentFloor = null;
+        String currentFloor = "";
 
         switch (index) {
             case -1:
@@ -725,8 +749,14 @@ public class RouteCalculator {
         return currentFloor;
     }
 
-    //Build grid of a floor plan
-    private ArrayList<ArrayList<Cell>> buildGrid(String building, String floor) {
+    /**
+     * Build grid of a floor plan
+     * @param building
+     * @param floor
+     * @return
+     */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private ArrayList<ArrayList<Cell>> buildGrid(final String building, final String floor) {
 
         ArrayList<ArrayList<Cell>> grid = new ArrayList<>();
 
@@ -736,7 +766,7 @@ public class RouteCalculator {
 
             //Get floor plan JSON from assets
             json = jsonHandler.readJsonFromAssets(context, getFloorPlan(building, floor) + JSON);
-            ArrayList<Cell> walkableCells = jsonHandler.parseJsonWalkableCells(json);
+            final ArrayList<Cell> walkableCells = jsonHandler.parseJsonWalkableCells(json);
 
             for (int x = 0; x < GRID_X; x++) {
 
@@ -767,8 +797,13 @@ public class RouteCalculator {
         return grid;
     }
 
-    //Get floor plan String without ending (.json / .jpeg)
-    private String getFloorPlan(String building, String floor) {
+    /**
+     * Get floor plan String without ending (.json / .jpeg)
+     * @param building
+     * @param floor
+     * @return
+     */
+    private String getFloorPlan(final String building, final String floor) {
 
         String floorPlan;
 
@@ -839,9 +874,15 @@ public class RouteCalculator {
         return floorPlan;
     }
 
-    //Get all usable transitions on current floor plan, sorted by distance, crossings are not allowed on index = 0
+    /**
+     * Get all usable transitions on current floor plan, sorted by distance, crossings are not allowed on index = 0
+     * @param startCell
+     * @param grids
+     * @param index
+     * @return
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private ArrayList<Transition> getUsableTransitions(Cell startCell, ArrayList<ArrayList<ArrayList<Cell>>> grids, int index) {
+    private ArrayList<Transition> getUsableTransitions(final Cell startCell, final ArrayList<ArrayList<ArrayList<Cell>>> grids, final int index) {
 
         ArrayList<Transition> usableTransitionsHelper = new ArrayList<>();
         ArrayList<Transition> adjustedUsableTransitions = new ArrayList<>();
@@ -917,10 +958,17 @@ public class RouteCalculator {
         return adjustedUsableTransitions;
     }
 
-    //Get usable transitions helper method
-    private ArrayList<Transition> getUsableTransitionsHelper(int i, int j, int index, Cell startCell) {
+    /**
+     * Get usable transitions helper method
+     * @param i
+     * @param j
+     * @param index
+     * @param startCell
+     * @return
+     */
+    private ArrayList<Transition> getUsableTransitionsHelper(final int i, final int j, final int index, final Cell startCell) {
 
-        ArrayList<Transition> usableTransitionsHelper = new ArrayList<>();
+        final ArrayList<Transition> usableTransitionsHelper = new ArrayList<>();
 
         for (int k = 0; k < transitions.get(i).getConnectedCells().size(); k++) {
 
@@ -928,10 +976,10 @@ public class RouteCalculator {
                     && grids.get(index + 1).get(0).get(0).getBuilding().equals(BUILDING_05)
                     && transitions.get(i).getConnectedCells().get(k).getFloor().equals(grids.get(index + 1).get(0).get(0).getFloor())) {
 
-                AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(startCell, transitions.get(i).getConnectedCells().get(j), grids.get(index));
-                ArrayList<Cell> navigationCells = aStarAlgorithm.getNavigationCellsOnGrid();
+                final AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(startCell, transitions.get(i).getConnectedCells().get(j), grids.get(index));
+                final ArrayList<Cell> navigationCells = aStarAlgorithm.getNavigationCellsOnGrid();
 
-                Transition transitionHelper = transitions.get(i);
+                final Transition transitionHelper = transitions.get(i);
                 transitionHelper.setFinalCost(navigationCells.size());
                 usableTransitionsHelper.add(transitionHelper);
             }
@@ -940,10 +988,10 @@ public class RouteCalculator {
                     && grids.get(index + 1).get(0).get(0).getBuilding().equals(BUILDING_04)
                     && transitions.get(i).getConnectedCells().get(k).getFloor().equals(grids.get(index + 1).get(0).get(0).getFloor())) {
 
-                AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(startCell, transitions.get(i).getConnectedCells().get(j), grids.get(index));
-                ArrayList<Cell> navigationCells = aStarAlgorithm.getNavigationCellsOnGrid();
+                final AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(startCell, transitions.get(i).getConnectedCells().get(j), grids.get(index));
+                final ArrayList<Cell> navigationCells = aStarAlgorithm.getNavigationCellsOnGrid();
 
-                Transition transitionHelper = transitions.get(i);
+                final Transition transitionHelper = transitions.get(i);
                 transitionHelper.setFinalCost(navigationCells.size());
                 usableTransitionsHelper.add(transitionHelper);
             }
@@ -956,10 +1004,10 @@ public class RouteCalculator {
                     || grids.get(index + 1).get(0).get(0).getBuilding().equals(BUILDING_01))
                     && transitions.get(i).getConnectedCells().get(k).getFloor().equals(grids.get(index + 1).get(0).get(0).getFloor())) {
 
-                AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(startCell, transitions.get(i).getConnectedCells().get(j), grids.get(index));
-                ArrayList<Cell> navigationCells = aStarAlgorithm.getNavigationCellsOnGrid();
+                final AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(startCell, transitions.get(i).getConnectedCells().get(j), grids.get(index));
+                final ArrayList<Cell> navigationCells = aStarAlgorithm.getNavigationCellsOnGrid();
 
-                Transition transitionHelper = transitions.get(i);
+                final Transition transitionHelper = transitions.get(i);
                 transitionHelper.setFinalCost(navigationCells.size());
                 usableTransitionsHelper.add(transitionHelper);
             }

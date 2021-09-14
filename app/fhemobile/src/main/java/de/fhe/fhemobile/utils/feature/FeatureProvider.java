@@ -25,6 +25,9 @@ import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.drawer.DrawerItem;
 
+/**
+ *
+ */
 public class FeatureProvider {
 
     /**
@@ -44,9 +47,14 @@ public class FeatureProvider {
         Features.NAVIGATION     = _Context.getResources().getBoolean(R.bool.feature_navigation);
     }
 
+    /**
+     *
+     * @return
+     */
     public static List<DrawerItem> getFeaturedItems() {
-        ArrayList<DrawerItem> list = new ArrayList<>();
+        final ArrayList<DrawerItem> list = new ArrayList<>();
 
+        //TODO Features
         if (Features.TIMETABLE) {
             list.add(new DrawerItem(FeatureId.TIMETABLE, getFeatureTitle(FeatureId.TIMETABLE)));
         }
@@ -90,10 +98,16 @@ public class FeatureProvider {
         return list;
     }
 
-    public final static String getFeatureTitle(int _FeatureId) {
+    /**
+     *
+     * @param _FeatureId
+     * @return
+     */
+    public final static String getFeatureTitle(final int _FeatureId) {
         String result = "";
         int stringRes = -1;
 
+        //TODO Features
         switch (_FeatureId) {
             case FeatureId.NEWS:            stringRes = R.string.drawer_news;      break;
             case FeatureId.PHONEBOOK:       stringRes = R.string.drawer_persons;   break;

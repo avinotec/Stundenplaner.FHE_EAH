@@ -32,7 +32,8 @@ public class MensaUtils {
      * @param _Items
      * @return
      */
-    public static List<MensaFoodItemCollectionVo> orderMensaItems(MensaFoodItemVo[] _Items) {
+    public static List<MensaFoodItemCollectionVo> orderMensaItems(final MensaFoodItemVo[] _Items) {
+
         List<MensaFoodItemCollectionVo> result = new ArrayList<MensaFoodItemCollectionVo>();
 
         long lastDate = _Items[0].getDate();
