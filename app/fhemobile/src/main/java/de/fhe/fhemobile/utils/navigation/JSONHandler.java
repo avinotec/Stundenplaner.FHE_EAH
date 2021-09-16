@@ -85,19 +85,19 @@ public class JSONHandler {
     }
 
     //Parse JSON to transitions ArrayList<Cell>
-    public ArrayList<Transition> parseJsonTransitions(String json) {
+    public ArrayList<FloorConnection> parseJsonTransitions(String json) {
 
-        ArrayList<Transition> transitions = new ArrayList<>();
+        ArrayList<FloorConnection> floorConnections = new ArrayList<>();
 
         try {
             JSONArray jsonArray = new JSONArray(json);
 
             for (int i = 0; i < jsonArray.length(); i++) {
 
-                Transition entry = new Transition();
+                FloorConnection entry = new FloorConnection();
                 JSONObject jEntry = jsonArray.getJSONObject(i);
 
-                entry.setTypeOfTransition(jEntry.optString("type"));
+                entry.setTypeOfFloorConnection(jEntry.optString("type"));
 
                 ArrayList<Cell> connectedCells = new ArrayList<>();
                 JSONArray connectedCellsJSON = jEntry.getJSONArray("connectedCells");
@@ -116,12 +116,12 @@ public class JSONHandler {
                     connectedCells.add(cell);
                 }
                 entry.setConnectedCells(connectedCells);
-                transitions.add(entry);
+                floorConnections.add(entry);
             }
         } catch (Exception e) {
-            Log.e(TAG, "error parsing JSON transitions array", e);
+            Log.e(TAG, "error parsing JSON floorConnections array", e);
         }
-        return transitions;
+        return floorConnections;
     }
 
     //Parse JSON to walkableCells ArrayList<Cell>

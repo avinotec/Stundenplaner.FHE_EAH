@@ -138,7 +138,7 @@ class AStarAlgorithm {
 
         Cell compareCellClass = new Cell();
         Room compareRoomClass = new Room();
-        Transition compareTransitionClass = new Transition();
+        FloorConnection compareFloorConnectionClass = new FloorConnection();
 
         if (aClass.equals(compareCellClass.getClass())) {
             current.setHeuristicCost(COSTS_CELL);
@@ -148,7 +148,7 @@ class AStarAlgorithm {
             current.setHeuristicCost(COSTS_ROOM);
         }
 
-        if (aClass.equals(compareTransitionClass.getClass())) {
+        if (aClass.equals(compareFloorConnectionClass.getClass())) {
             current.setHeuristicCost(COSTS_TRANSITION);
         }
     }

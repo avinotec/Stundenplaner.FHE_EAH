@@ -106,9 +106,9 @@
     <!--    Campus Navigation -->
     <string name="title_scanner_activity">Scanner</string>
     <string name="title_navigation_activity">Navigation</string>
-    <string name="text_view_by_room">Select room:</string>
-    <string name="text_view_by_name">Select person:</string>
-    <string name="text_view_button_start_location">Enter your position:</string>
+    <string name="text_view_by_room">Room:</string>
+    <string name="text_view_by_name">Person:</string>
+    <string name="text_view_button_start_location">Your current position:</string>
     <string name="action_language">Language</string>
     <string name="select_from_spinner">Please select</string>
     <string name="building_03_02_01_floor_ug">House 3, 2 and 1: basement</string>
@@ -128,13 +128,13 @@
     <string name="building_05_floor_02">House 5: 2nd floor</string>
     <string name="building_05_floor_03">House 5: 3rd floor</string>
     <string name="button_location_text">Search</string>
-    <string name="hint_search_room">xx.x.xx</string>
+    <string name="hint_search_room">xx.xx.xx</string>
     <string name="error_message_room_input">Room not found!</string>
-    <string name="text_view_button_destination_location">Enter your destination:</string>
+    <string name="text_view_button_destination_location">Your destination:</string>
     <string name="button_location_qr">QR-Code</string>
     <string name="text_view_search_or_qr">or</string>
     <string name="text_view_explanation_location_title">Determine my position:</string>
-    <string name="text_view_explanation_location_description">Directly press "QR-Code" to scan the QR-Code or manually enter your position and search.</string>
+    <string name="text_view_explanation_location_description">Directly press the QR-Code button to scan the QR-Code or manually enter your position and search.</string>
     <string name="text_view_explanation_navigation_title">Perform navigation:</string>
     <string name="text_view_explanation_navigation_description">Select a room or a person or enter a room number you want to be navigated to. Then determine your position like described above.</string>
     <string name="text_view_oder">or</string>

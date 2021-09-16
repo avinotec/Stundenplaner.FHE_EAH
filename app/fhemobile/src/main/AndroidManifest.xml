@@ -132,7 +132,7 @@
             android:parentActivityName=".activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.fhe.fhemobile.activities.ScannerActivity" />
+                android:value="de.fhe.fhemobile.activities.MainActivity" />
         </activity>
 
         <activity android:name=".widgets.homescreen.NewsListWidgetConfigureActivity">

@@ -102,13 +102,13 @@
     <string name="deleteTimetableMessage">Das Semester ist zu Ende. Möchtest du den Stundenplan löschen?</string>
 
     <!--    Campus Navigation-->
-    <string name="text_view_by_room">Raum wählen:</string>
-    <string name="text_view_by_name">Person wählen:</string>
-    <string name="text_view_button_start_location">Gib deine Position ein:</string>
+    <string name="text_view_by_room">Raum:</string>
+    <string name="text_view_by_name">Person:</string>
+    <string name="text_view_button_start_location">Deine aktuelle Position:</string>
     <string name="action_language">Sprache</string>
     <string name="title_scanner_activity">Scanner</string>
     <string name="title_navigation_activity">Navigation</string>
-    <string name="select_from_spinner">Bitte auswählen</string>
+    <string name="select_from_spinner">Bitte wählen</string>
     <string name="building_03_02_01_floor_ug">Haus 3, 2 und 1: Untergeschoss</string>
     <string name="building_03_02_01_floor_00">Haus 3, 2 und 1: Erdgeschoss</string>
     <string name="building_03_02_01_floor_01">Haus 3, 2 und 1: 1. Stockwerk</string>
@@ -128,11 +128,11 @@
     <string name="button_location_text">Suchen</string>
     <string name="hint_search_room">xx.xx.xx</string>
     <string name="error_message_room_input">Raum nicht gefunden!</string>
-    <string name="text_view_button_destination_location">Gib dein Ziel ein:</string>
+    <string name="text_view_button_destination_location">Dein Ziel:</string>
     <string name="button_location_qr">QR-Code</string>
     <string name="text_view_search_or_qr">oder</string>
     <string name="text_view_explanation_location_title">Meine Position bestimmmen:</string>
-    <string name="text_view_explanation_location_description">Scanne den QR-Code über "QR-Code" oder gib eine Raumnummer ein und drücke "Suchen".</string>
+    <string name="text_view_explanation_location_description">Scanne den QR-Code über den Button oder gib eine Raumnummer ein und drücke "Suchen".</string>
     <string name="text_view_explanation_navigation_title">Navigation starten:</string>
     <string name="text_view_explanation_navigation_description">Wähle eine Raumnummer oder eine Person aus oder gib die Raumnummer direkt ein, zu der du navigiert werden möchtest. Dann bestimme deine aktuelle Position wie oben beschrieben.</string>
     <string name="text_view_oder">oder</string>

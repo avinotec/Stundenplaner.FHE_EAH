@@ -2,10 +2,15 @@ package de.fhe.fhemobile.models.navigation;
 
 import java.util.ArrayList;
 
-public class Transition extends Cell{
+/**
+ * Modellklasse für Stockwerk- und Gebäudeverbindungen wie Treppenhäuser, Aufzüge und die Brücke
+ * created: Bachelor Thesis from Tim Münziger from SS2020
+ * edited by Nadja 15.09.21
+ */
+public class FloorConnection extends Cell{
 
     //Constants
-    private static final String TAG = "Transition"; //$NON-NLS
+    private static final String TAG = "FloorConnection"; //$NON-NLS
 
     private static final String BUILDING_01 = "01";
     private static final String BUILDING_02 = "02";
@@ -14,16 +19,16 @@ public class Transition extends Cell{
     private static final String BUILDING_05 = "05";
 
     //Variables
-    private String typeOfTransition; //stair, elevator, crossing
+    private String typeOfFloorConnection; //stair, elevator, crossing (Brücke)
     private ArrayList<Cell> connectedCells;
 
     //Constructor
-    public Transition() {
+    public FloorConnection() {
     }
 
     //Getter
-    public String getTypeOfTransition() {
-        return typeOfTransition;
+    public String getTypeOfFloorConnection() {
+        return typeOfFloorConnection;
     }
 
     public ArrayList<Cell> getConnectedCells() {
@@ -61,8 +66,8 @@ public class Transition extends Cell{
     }
 
     //Setter
-    public void setTypeOfTransition(String typeOfTransition) {
-        this.typeOfTransition = typeOfTransition;
+    public void setTypeOfFloorConnection(String typeOfFloorConnection) {
+        this.typeOfFloorConnection = typeOfFloorConnection;
     }
 
     public void setConnectedCells(ArrayList<Cell> connectedCells) {
