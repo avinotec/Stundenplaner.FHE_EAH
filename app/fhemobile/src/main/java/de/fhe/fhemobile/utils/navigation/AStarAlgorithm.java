@@ -1,3 +1,20 @@
+/*
+ *  Copyright (c) 2020-2021 Ernst-Abbe-Hochschule Jena
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package de.fhe.fhemobile.utils.navigation;
 
 import android.util.Log;
@@ -138,7 +155,7 @@ class AStarAlgorithm {
 
         Cell compareCellClass = new Cell();
         Room compareRoomClass = new Room();
-        FloorConnection compareFloorConnectionClass = new FloorConnection();
+        Transition compareTransitionClass = new Transition();
 
         if (aClass.equals(compareCellClass.getClass())) {
             current.setHeuristicCost(COSTS_CELL);
@@ -148,7 +165,7 @@ class AStarAlgorithm {
             current.setHeuristicCost(COSTS_ROOM);
         }
 
-        if (aClass.equals(compareFloorConnectionClass.getClass())) {
+        if (aClass.equals(compareTransitionClass.getClass())) {
             current.setHeuristicCost(COSTS_TRANSITION);
         }
     }

@@ -21,23 +21,47 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
+/**
+ *
+ * @param <T>
+ */
 public class TimeTableCallback<T> implements Callback<T> {
+	/**
+	 *
+	 * @param data
+	 */
 	public TimeTableCallback(FlatDataStructure data) {
 		this.data=data;
 	}
-	final FlatDataStructure data;
 
+	/**
+	 *
+	 */
+	final private FlatDataStructure data;
+
+	/**
+	 *
+	 * @return
+	 */
 	public FlatDataStructure getData() {
 		return data;
 	}
 
-
+	/**
+	 *
+	 * @param call
+	 * @param response
+	 */
 	@Override
 	public void onResponse(Call<T> call, Response<T> response) {
 
 	}
 
+	/**
+	 *
+	 * @param call
+	 * @param t
+	 */
 	@Override
 	public void onFailure(Call<T> call, Throwable t) {
 

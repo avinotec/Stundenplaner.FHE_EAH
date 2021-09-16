@@ -17,10 +17,12 @@
 package de.fhe.fhemobile.utils;
 
 import android.content.Context;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
 
 import de.fhe.fhemobile.Main;
 
@@ -28,6 +30,8 @@ import de.fhe.fhemobile.Main;
  * Created by paul on 04.03.15.
  */
 public class Utils {
+
+    public static final String TAG = "utils.Utils";
 
     //getStringResource-----------------------------------------------------------------------------
 
@@ -37,15 +41,15 @@ public class Utils {
      * @param _variableName Resource name of the wanted string
      * @return String of the Resource value
      */
-    public static String getStringResource(String _variableName) {
+    public static String getStringResource(final String _variableName) {
         if (_variableName == null || _variableName.isEmpty()) {
             return _variableName;
         }
 
         try {
             return Main.getAppContext().getString(getResourceId(_variableName, "string"));
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (final Exception e) {
+            Log.e( TAG, "Error in fetching ressource", e);
 
             //fallback if not found
             return _variableName;
@@ -73,7 +77,7 @@ public class Utils {
     /**
      * hides the current soft keyboard, if it is open.
      */
-    public static void hideKeyboard(AppCompatActivity _activity) {
+    public static void hideKeyboard(final AppCompatActivity _activity) {
         InputMethodManager inputManager = (InputMethodManager) _activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 
         if (_activity.getCurrentFocus() != null) {
@@ -83,22 +87,39 @@ public class Utils {
         }
     }
 
-    public static void showToast(@StringRes int _ResId) {
+    /**
+     *
+     * @param _ResId
+     */
+    public static void showToast(final @StringRes int _ResId) {
         showToast(Main.getAppContext(), _ResId);
     }
 
-    public static void showToast(Context _Context, @StringRes int _ResId) {
+    /**
+     *
+     * @param _Context
+     * @param _ResId
+     */
+    public static void showToast(final Context _Context, final @StringRes int _ResId) {
         Toast.makeText(_Context, _ResId,
                 Toast.LENGTH_SHORT).show();
     }
 
-    public static void showToast(String _Text) {
+    /**
+     *
+     * @param _Text
+     */
+    public static void showToast(final String _Text) {
         showToast(Main.getAppContext(), _Text);
     }
 
-    public static void showToast(Context _Context, String _Text) {
-        Toast.makeText(_Context, _Text,
-                Toast.LENGTH_SHORT).show();
+    /**
+     *
+     * @param _Context
+     * @param _Text
+     */
+    public static void showToast(final Context _Context, final String _Text) {
+        Toast.makeText(_Context, _Text, Toast.LENGTH_SHORT).show();
     }
 
     

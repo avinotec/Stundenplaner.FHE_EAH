@@ -1,3 +1,20 @@
+/*
+ *  Copyright (c) 2020-2021 Ernst-Abbe-Hochschule Jena
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package de.fhe.fhemobile.utils.navigation;
 
 
@@ -21,22 +38,37 @@ public class JSONHandler {
 
     //Constants
     private static final String TAG = "JSONHandler"; //$NON-NLS
+    public static final String BUILDING = "building";
+    public static final String FLOOR = "floor";
+    public static final String X_COORDINATE = "xCoordinate";
+    public static final String Y_COORDINATE = "yCoordinate";
+    public static final String WALKABLE = "walkable";
+    public static final String TYPE = "type";
+    public static final String ROOM_NUMBER = "roomNumber";
+    public static final String QR_CODE = "qrCode";
+    public static final String PERSONS = "persons";
+    public static final String CONNECTED_CELLS = "connectedCells";
 
     //Constructor
     public JSONHandler() {
     }
 
-    //Read JSON from assets
+    /**
+     * Read JSON from assets
+     * @param context
+     * @param jsonFile
+     * @return
+     */
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public String readJsonFromAssets(Context context, String jsonFile) {
+    public String readJsonFromAssets(final Context context, final String jsonFile) {
 
-        AssetManager assetManager = context.getAssets();
+        final AssetManager assetManager = context.getAssets();
         String json = "";
 
         try {
-            InputStream inputStream = assetManager.open(jsonFile);
-            int size = inputStream.available();
-            byte[] buffer = new byte[size];
+            final InputStream inputStream = assetManager.open(jsonFile);
+            final int size = inputStream.available();
+            final byte[] buffer = new byte[size];
             inputStream.read(buffer);
             inputStream.close();
             json = new String(buffer, StandardCharsets.UTF_8);
@@ -47,30 +79,33 @@ public class JSONHandler {
         return json;
     }
 
-    //Parse JSON to rooms ArrayList<Cell>
+    /**
+     * Parse JSON to rooms ArrayList<Cell>
+     * @param json
+     * @return
+     */
+    public ArrayList<Room> parseJsonRooms(final String json) {
 
-    public ArrayList<Room> parseJsonRooms(String json) {
-
-        ArrayList<Room> rooms = new ArrayList<>();
+        final ArrayList<Room> rooms = new ArrayList<>();
 
         try {
-            JSONArray jsonArray = new JSONArray(json);
+            final JSONArray jsonArray = new JSONArray(json);
 
             for (int i = 0; i < jsonArray.length(); i++) {
 
                 Room entry = new Room();
 
-                JSONObject jEntry = jsonArray.getJSONObject(i);
-                entry.setRoomNumber(jEntry.optString("roomNumber"));
-                entry.setBuilding(jEntry.optString("building"));
-                entry.setFloor(jEntry.optString("floor"));
-                entry.setQRCode(jEntry.optString("qrCode"));
-                entry.setXCoordinate(jEntry.optInt("xCoordinate"));
-                entry.setYCoordinate(jEntry.optInt("yCoordinate"));
-                entry.setWalkability(jEntry.optBoolean("walkable"));
+                final JSONObject jEntry = jsonArray.getJSONObject(i);
+                entry.setRoomNumber(jEntry.optString(ROOM_NUMBER));
+                entry.setBuilding(jEntry.optString(BUILDING));
+                entry.setFloor(jEntry.optString(FLOOR));
+                entry.setQRCode(jEntry.optString(QR_CODE));
+                entry.setXCoordinate(jEntry.optInt(X_COORDINATE));
+                entry.setYCoordinate(jEntry.optInt(Y_COORDINATE));
+                entry.setWalkability(jEntry.optBoolean(WALKABLE));
 
-                JSONArray personsJSON = jEntry.getJSONArray("persons");
-                ArrayList<String> persons = new ArrayList<>();
+                final JSONArray personsJSON = jEntry.getJSONArray(PERSONS);
+                final ArrayList<String> persons = new ArrayList<>();
                 for (int j = 0; j < personsJSON.length(); j++) {
                     persons.add(personsJSON.optString(j));
                 }
@@ -78,67 +113,75 @@ public class JSONHandler {
                 entry.setPersons(persons);
                 rooms.add(entry);
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.e(TAG, "error parsing JSON rooms", e);
         }
         return rooms;
     }
 
-    //Parse JSON to transitions ArrayList<Cell>
-    public ArrayList<FloorConnection> parseJsonTransitions(String json) {
+    /**
+     * Parse JSON to transitions ArrayList<Cell>
+     * @param json
+     * @return
+     */
+    public ArrayList<Transition> parseJsonTransitions(final String json) {
 
-        ArrayList<FloorConnection> floorConnections = new ArrayList<>();
+        final ArrayList<Transition> transitions = new ArrayList<>();
 
         try {
-            JSONArray jsonArray = new JSONArray(json);
+            final JSONArray jsonArray = new JSONArray(json);
 
             for (int i = 0; i < jsonArray.length(); i++) {
 
-                FloorConnection entry = new FloorConnection();
-                JSONObject jEntry = jsonArray.getJSONObject(i);
+                final Transition entry = new Transition();
+                final JSONObject jEntry = jsonArray.getJSONObject(i);
 
-                entry.setTypeOfFloorConnection(jEntry.optString("type"));
+                entry.setTypeOfTransition(jEntry.optString(TYPE));
 
-                ArrayList<Cell> connectedCells = new ArrayList<>();
-                JSONArray connectedCellsJSON = jEntry.getJSONArray("connectedCells");
+                final ArrayList<Cell> connectedCells = new ArrayList<>();
+                final JSONArray connectedCellsJSON = jEntry.getJSONArray(CONNECTED_CELLS);
 
                 for (int j = 0; j < connectedCellsJSON.length(); j++) {
 
-                    JSONObject cellJSON = connectedCellsJSON.getJSONObject(j);
-                    Cell cell = new Cell();
+                    final JSONObject cellJSON = connectedCellsJSON.getJSONObject(j);
+                    final Cell cell = new Cell();
 
-                    cell.setBuilding(cellJSON.optString("building"));
-                    cell.setFloor(cellJSON.optString("floor"));
-                    cell.setXCoordinate(cellJSON.optInt("xCoordinate"));
-                    cell.setYCoordinate(cellJSON.optInt("yCoordinate"));
-                    cell.setWalkability(cellJSON.optBoolean("walkable"));
+                    cell.setBuilding(cellJSON.optString(BUILDING));
+                    cell.setFloor(cellJSON.optString(FLOOR));
+                    cell.setXCoordinate(cellJSON.optInt(X_COORDINATE));
+                    cell.setYCoordinate(cellJSON.optInt(Y_COORDINATE));
+                    cell.setWalkability(cellJSON.optBoolean(WALKABLE));
 
                     connectedCells.add(cell);
                 }
                 entry.setConnectedCells(connectedCells);
-                floorConnections.add(entry);
+                transitions.add(entry);
             }
         } catch (Exception e) {
-            Log.e(TAG, "error parsing JSON floorConnections array", e);
+            Log.e(TAG, "error parsing JSON transitions array", e);
         }
-        return floorConnections;
+        return transitions;
     }
 
-    //Parse JSON to walkableCells ArrayList<Cell>
-    public ArrayList<Cell> parseJsonWalkableCells(String json) {
+    /**
+     * Parse JSON to walkableCells ArrayList<Cell>
+     * @param json
+     * @return
+     */
+    public ArrayList<Cell> parseJsonWalkableCells(final String json) {
 
-        ArrayList<Cell> walkableCells = new ArrayList<>();
+        final ArrayList<Cell> walkableCells = new ArrayList<>();
 
         try {
             JSONArray jsonArray = new JSONArray(json);
 
             for (int i = 0; i < jsonArray.length(); i++) {
-                Cell entry = new Cell();
+                final Cell entry = new Cell();
 
-                JSONObject jEntry = jsonArray.getJSONObject(i);
-                entry.setXCoordinate(jEntry.optInt("xCoordinate"));
-                entry.setYCoordinate(jEntry.optInt("yCoordinate"));
-                entry.setWalkability(jEntry.optBoolean("walkable"));
+                final JSONObject jEntry = jsonArray.getJSONObject(i);
+                entry.setXCoordinate(jEntry.optInt(X_COORDINATE));
+                entry.setYCoordinate(jEntry.optInt(Y_COORDINATE));
+                entry.setWalkability(jEntry.optBoolean(WALKABLE));
 
                 walkableCells.add(entry);
             }

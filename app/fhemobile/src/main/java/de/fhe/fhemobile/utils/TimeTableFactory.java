@@ -24,9 +24,14 @@ import de.fhe.fhemobile.fragments.timetable.TimeTableFragment;
  * Created by paul on 16.03.15.
  */
 public class TimeTableFactory {
+
+    /**
+     *
+     * @return
+     */
     public static FeatureFragment getTimeTableFragment() {
-        String chosenTimeTable = TimeTableSettings.fetchTimeTableSelection();
-        FeatureFragment fragment;
+        final String chosenTimeTable = TimeTableSettings.fetchTimeTableSelection();
+        FeatureFragment fragment = null;
 
         if (chosenTimeTable != null) {
             fragment = TimeTableEventsFragment.newInstance(chosenTimeTable);

@@ -71,7 +71,10 @@ public class NetworkHandler {
 	private Retrofit mRestAdapter = null;
 	private ApiDeclaration  mApi = null;
 
-
+	/**
+	 *
+	 * @return
+	 */
 	public static NetworkHandler getInstance() {
 		Assert.assertTrue( ourInstance != null);
 		return ourInstance;
@@ -87,6 +90,11 @@ public class NetworkHandler {
 		Assert.assertTrue( mApi != null );
 		mApi.fetchEmployees(_FirstName, _LastName).enqueue(new Callback<ArrayList<EmployeeVo>>() {
 
+			/**
+			 *
+			 * @param call
+			 * @param response
+			 */
 			@Override
 			public void onResponse(final Call<ArrayList<EmployeeVo>> call, final Response<ArrayList<EmployeeVo>> response) {
 				if ( response.body() != null ) {
@@ -94,6 +102,11 @@ public class NetworkHandler {
 				}
 			}
 
+			/**
+			 *
+			 * @param call
+			 * @param t
+			 */
 			@Override
 			public void onFailure(final Call<ArrayList<EmployeeVo>> call, final Throwable t) {
 				showErrorToast();
@@ -109,6 +122,12 @@ public class NetworkHandler {
 		Assert.assertTrue( mApi != null );
 
 		mApi.fetchSemesterData().enqueue( new Callback<SemesterDataVo>() {
+
+			/**
+			 *
+			 * @param call
+			 * @param response
+			 */
 			@Override
 			public void onResponse( final Call<SemesterDataVo> call, final Response<SemesterDataVo> response) {
 				if ( response.body() != null ) {
@@ -116,6 +135,11 @@ public class NetworkHandler {
 				}
 			}
 
+			/**
+			 *
+			 * @param call
+			 * @param t
+			 */
 			@Override
 			public void onFailure(final Call<SemesterDataVo> call, final Throwable t) {
 				showErrorToast();
@@ -124,12 +148,19 @@ public class NetworkHandler {
 	}
 
 	/**
-	 * *
+	 *
 	 */
 	public void fetchMensaData() {
 		Assert.assertTrue( mApi != null );
 		Log.d(TAG, "Mensa: "+UserSettings.getInstance().getChosenMensa());
+
 		mApi.fetchMensaData(UserSettings.getInstance().getChosenMensa()).enqueue( new Callback<MensaFoodItemVo[]>() {
+
+			/**
+			 *
+			 * @param call
+			 * @param response
+			 */
 			@Override
 			public void onResponse(final Call<MensaFoodItemVo[]> call, final Response<MensaFoodItemVo[]> response) {
 				Log.d(TAG, "Mensa: "+call.request().url().toString());
@@ -146,6 +177,11 @@ public class NetworkHandler {
 				}
 			}
 
+			/**
+			 *
+			 * @param call
+			 * @param t
+			 */
 			@Override
 			public void onFailure(final Call<MensaFoodItemVo[]> call, final Throwable t) {
 				showErrorToast();
@@ -159,6 +195,12 @@ public class NetworkHandler {
 	public void fetchNewsData() {
 
 		fetchNewsData(UserSettings.getInstance().getChosenNewsCategory(), new Callback<NewsItemResponse>() {
+
+			/**
+			 *
+			 * @param call
+			 * @param response
+			 */
 			@Override
 			public void onResponse(final Call<NewsItemResponse> call, final Response<NewsItemResponse> response) {
 				// MS: Bei den News sind die news/0 kaputt
@@ -186,6 +228,11 @@ public class NetworkHandler {
 				}
 			}
 
+			/**
+			 *
+			 * @param call
+			 * @param t
+			 */
 			@Override
 			public void onFailure(final Call<NewsItemResponse> call, final Throwable t) {
 				showErrorToast();
@@ -209,6 +256,12 @@ public class NetworkHandler {
 		Assert.assertTrue( mApi != null );
 
 		mApi.fetchAvailableMensas().enqueue(new Callback<MensaChoiceItemVo[]>() {
+
+			/**
+			 *
+			 * @param call
+			 * @param response
+			 */
 			@Override
 			public void onResponse(final Call<MensaChoiceItemVo[]> call, final Response<MensaChoiceItemVo[]> response) {
 				// MS: Bei den News sind die news/0 kaputt
@@ -217,6 +270,11 @@ public class NetworkHandler {
 				}
 			}
 
+			/**
+			 *
+			 * @param call
+			 * @param t
+			 */
 			@Override
 			public void onFailure(final Call<MensaChoiceItemVo[]> call, final Throwable t) {
 				showErrorToast();
@@ -230,6 +288,12 @@ public class NetworkHandler {
 	public void fetchAvailableNewsLists() {
 
 		fetchAvailableNewsLists(new Callback<NewsCategoryResponse>() {
+
+			/**
+			 *
+			 * @param call
+			 * @param response
+			 */
 			@Override
 			public void onResponse(final Call<NewsCategoryResponse> call, final Response<NewsCategoryResponse> response) {
 				// MS: Bei den News sind die news/0 kaputt
@@ -238,6 +302,11 @@ public class NetworkHandler {
 				}
 			}
 
+			/**
+			 *
+			 * @param call
+			 * @param t
+			 */
 			@Override
 			public void onFailure(final Call<NewsCategoryResponse> call, final Throwable t) {
 				showErrorToast();
@@ -314,12 +383,23 @@ public class NetworkHandler {
 		}
 		return eventList;
 	}
+
+	/**
+	 *
+	 * @param json
+	 * @param _Callback
+	 */
 	public void registerTimeTableChanges(final String json, final Callback<ResponseModel>_Callback){
 		Assert.assertTrue( mApi != null );
 		final RequestBody body =RequestBody.create( MediaType.parse("application/json"), json);
 		mApi.registerTimeTableChanges(body).enqueue(_Callback);
 	}
 
+	/**
+	 *
+	 * @param json
+	 * @param _Callback
+	 */
 	public void getTimeTableChanges(final String json, final Callback<ResponseModel>_Callback){
 		Assert.assertTrue( mApi != null );
 		final RequestBody body =RequestBody.create( MediaType.parse("application/json"), json);

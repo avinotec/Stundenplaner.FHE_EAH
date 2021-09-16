@@ -16,6 +16,9 @@
  */
 package de.fhe.fhemobile.utils.feature;
 
+/**
+ *
+ */
 public interface FeatureId {
     int NEWS            = 0;
     int PHONEBOOK       = 1;

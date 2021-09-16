@@ -33,9 +33,10 @@ import de.fhe.fhemobile.utils.TimeTableFactory;
  */
 public class FeatureFragmentFactory {
 
-    public static FeatureFragment getFeaturedFragment(int _FeatureId) {
+    public static FeatureFragment getFeaturedFragment(final int _FeatureId) {
         FeatureFragment fragment;
 
+        //TODO Features
         switch (_FeatureId) {
             case FeatureId.PHONEBOOK:       fragment = PhonebookSearchFragment.newInstance();   break;
             case FeatureId.MENSA:           fragment = MensaFoodFragment.newInstance();         break;

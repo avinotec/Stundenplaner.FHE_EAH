@@ -23,7 +23,14 @@ import de.fhe.fhemobile.vos.semesterdata.SemesterTimesVo;
  */
 public class SemesterDataUtils {
 
-    public static String getHeadline(SemesterTimesVo _time) {
+    private static final String LOG_TAG = SemesterDataUtils.class.getSimpleName();
+
+    /**
+     *
+     * @param _time
+     * @return
+     */
+    public static String getHeadline(final SemesterTimesVo _time) {
         String result = "";
 
         if(_time.getDate() != null) {
@@ -36,7 +43,12 @@ public class SemesterDataUtils {
         return result;
     }
 
-    public static String getSubHeadline(SemesterTimesVo _time) {
+    /**
+     *
+     * @param _time
+     * @return
+     */
+    public static String getSubHeadline(final SemesterTimesVo _time) {
         String result = "";
 
         if(_time.getDate() != null) {
@@ -49,5 +61,4 @@ public class SemesterDataUtils {
         return result;
     }
 
-    private static final String LOG_TAG = SemesterDataUtils.class.getSimpleName();
 }
