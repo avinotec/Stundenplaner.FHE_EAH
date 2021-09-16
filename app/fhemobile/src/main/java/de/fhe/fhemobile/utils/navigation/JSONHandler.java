@@ -124,19 +124,19 @@ public class JSONHandler {
      * @param json
      * @return
      */
-    public ArrayList<Transition> parseJsonTransitions(final String json) {
+    public ArrayList<FloorConnection> parseJsonFloorConnection(final String json) {
 
-        final ArrayList<Transition> transitions = new ArrayList<>();
+        final ArrayList<FloorConnection> transitions = new ArrayList<>();
 
         try {
             final JSONArray jsonArray = new JSONArray(json);
 
             for (int i = 0; i < jsonArray.length(); i++) {
 
-                final Transition entry = new Transition();
+                final FloorConnection entry = new FloorConnection();
                 final JSONObject jEntry = jsonArray.getJSONObject(i);
 
-                entry.setTypeOfTransition(jEntry.optString(TYPE));
+                entry.setTypeOfFloorConnection(jEntry.optString(TYPE));
 
                 final ArrayList<Cell> connectedCells = new ArrayList<>();
                 final JSONArray connectedCellsJSON = jEntry.getJSONArray(CONNECTED_CELLS);

@@ -1,4 +1,8 @@
 package de.fhe.fhemobile.models.navigation;
+
+/**
+ * Model for a cell unit of the floorplan
+ */
 public class Cell {
 
     //Constants

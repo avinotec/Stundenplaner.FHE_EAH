@@ -167,7 +167,13 @@ public class NavigationActivity extends BaseActivity {
         super.onPause();
     }
 
-    //Draw graphical output
+
+    /**
+     * Draw floorplan, navigation and route
+     * by adding the corresponding elements to the relativeLayout (navigationLayout)
+     * @param building to be displayed (floorplan)
+     * @param floor to be displayed (floorplan)
+     */
     private void drawNavigationAndRoute(String building, String floor) {
         //Remove views from layouts before redrawing
         if (navigationLayout != null) navigationLayout.removeAllViews();
@@ -206,17 +212,31 @@ public class NavigationActivity extends BaseActivity {
 
     }
 
-    //converts the cell position from unit cellnumber to a unit for displaying
+    /**
+     * Convert the cell position from unit cellnumber to a unit for displaying
+     * @param x position in cells
+     * @return x in the displaying unit
+     */
     private int convertCellCoordX(int x){
         return Math.round(x * cellWidth);
     }
 
-    //converts the cell position from unit cellnumber to a unit for displaying
+    /**
+     * Convert the cell position from unit cellnumber to a unit for displaying
+     * @param y position in cells
+     * @return y in the displaying unit
+     */
     private int convertCellCoordY(int y){
         return Math.round(y * cellHeight);
     }
 
-    //Draw all path cells of the calculated route
+    //
+
+    /**
+     * Draw all path cells of the calculated route
+     * @param building that is displayed (floorplan)
+     * @param floor that is displayed (floorplan)
+     */
     private void drawPathCells(String building, String floor) {
         boolean buildingsThreeTwoOne = building.equals(BUILDING_03) || building.equals(BUILDING_02)
                 || building.equals(BUILDING_01);
@@ -243,7 +263,11 @@ public class NavigationActivity extends BaseActivity {
 
     }
 
-    // adds one cell icon to display a walkable cell of the calculated route
+
+    /**
+     * Add a cell icon to display a walkable cell of the calculated route
+     * @param index
+     */
     private void drawPathCell(int index){
         ImageView pathCellIcon = new ImageView(this);
 //        ViewGroup.LayoutParams params = pathCellIcon.getLayoutParams();
@@ -258,7 +282,11 @@ public class NavigationActivity extends BaseActivity {
         if (navigationLayout != null) navigationLayout.addView(pathCellIcon);
     }
 
-    //Draw start location
+    /**
+     * Draw start location
+     * @param building that is displayed (floorplan)
+     * @param floor that is displayed (floorplan)
+     */
     private void drawStartLocation(String building, String floor) {
         boolean buildingsThreeTwoOne = building.equals(BUILDING_03) || building.equals(BUILDING_02)
                 || building.equals(BUILDING_01);
@@ -292,7 +320,11 @@ public class NavigationActivity extends BaseActivity {
 
     }
 
-    //Draw destination location
+    /**
+     * Draw destination location
+     * @param building that is displayed (floorplan)
+     * @param floor that is displayed (floorplan)
+     */
     private void drawDestinationLocation(String building, String floor) {
         try {
             boolean buildingsThreeTwoOne = building.equals(BUILDING_03) || building.equals(BUILDING_02)
@@ -325,7 +357,11 @@ public class NavigationActivity extends BaseActivity {
         }
     }
 
-    //add all elevators, staircases and the bridge
+    /**
+     * Add all elevators, staircases and the bridge
+     * @param building that is displayed (floorplan)
+     * @param floor that is displayed (floorplan)
+     */
     private void drawFloorConnections(String building, String floor){
         try {
             for (int i = 0; i < floorConnections.size(); i++) {
@@ -348,7 +384,13 @@ public class NavigationActivity extends BaseActivity {
         }
     }
 
-    //Draw floorConnections
+    /**
+     * Draw floorconnection icon corresponding to the floorconnection type (staircaise, elevator, bridge)
+     * @param building that is displayed (floorplan)
+     * @param floor that is displayed (floorplan)
+     * @param i
+     * @param j
+     */
     private void drawFloorConnection(String building, String floor, int i, int j) {
 
         if (floorConnections.get(i).getConnectedCells().get(j).getBuilding().equals(building)
@@ -384,7 +426,10 @@ public class NavigationActivity extends BaseActivity {
     }
 
 
-    //Get items for spinner floor plans
+    /**
+     * Loads resources to get the items for the floorplan spinner
+     * @return list of spinner items
+     */
     private ArrayList<String> getItemsSpinner() {
 
         ArrayList<String> spinnerItems = new ArrayList<>();
@@ -413,7 +458,9 @@ public class NavigationActivity extends BaseActivity {
     }
 
 
-    //Get rooms, stairs, elevators and the bridge from JSON
+    /**
+     * Load rooms, stairs, elevators and the bridge from JSON
+     */
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void getRoomsAndTransitions() {
         try {
@@ -424,7 +471,7 @@ public class NavigationActivity extends BaseActivity {
             rooms = jsonHandler.parseJsonRooms(json);
 
             json = jsonHandler.readJsonFromAssets(this, JSON_FILE_TRANSITIONS);
-            floorConnections = jsonHandler.parseJsonTransitions(json);
+            floorConnections = jsonHandler.parseJsonFloorConnection(json);
 
         } catch (Exception e) {
             Log.e(TAG, "error reading or parsing JSON files:", e);
@@ -432,7 +479,9 @@ public class NavigationActivity extends BaseActivity {
     }
 
 
-    //get current user location room
+    /**
+     * Globally set the user's current location room
+     */
     private void getCurrentLocation() {
 
         try {
@@ -448,7 +497,9 @@ public class NavigationActivity extends BaseActivity {
     }
 
 
-    //Get destination location room
+    /**
+     * Globally set the user's destination room
+     */
     private void getDestinationLocation() {
 
         try {
@@ -464,8 +515,11 @@ public class NavigationActivity extends BaseActivity {
     }
 
 
-    //Calculate route (get ArrayList<Cell> of cells to walk through buildings and floors)
-    //wird ein Objekt vom Typ „RouteCalculator“ initiiert und mittels diesem die Berechnung der Navigation durchgeführt und eine Liste mit allen zu begehenden Zellen zurück gegeben
+    /**
+     * Calculate route using the class RouteCalculator
+     * Get an Arraylist of cells to walk through and add them to cellsToWalk
+     */
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void getRoute() {
         try {
             RouteCalculator routeCalculator = new RouteCalculator(this, startLocation, destinationLocation, floorConnections);
@@ -476,7 +530,12 @@ public class NavigationActivity extends BaseActivity {
     }
 
 
-    //Get floor plan String without ending (.jpeg) from building and floor
+    /**
+     * Get floor plan String without ending (.jpeg) from building and floor
+     * @param building
+     * @param floor
+     * @return
+     */
     private String getFloorPlan(String building, String floor) {
 
         String floorPlan = "";
@@ -553,7 +612,11 @@ public class NavigationActivity extends BaseActivity {
     }
 
 
-    //Get building and floor Strings from floor plan String
+    /**
+     * Get building and floor Strings from floor plan String
+     * @param in
+     * @return
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     private ArrayList<String> getBuildingAndFloor(String in) {
 
@@ -633,7 +696,12 @@ public class NavigationActivity extends BaseActivity {
     }
 
 
-    //Get locale
+    /**
+     * get locale
+     * @param currentLocale
+     * @param floorPlan
+     * @return
+     */
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private String getLocaleStringResource(Locale currentLocale, int floorPlan) {
 
@@ -650,21 +718,4 @@ public class NavigationActivity extends BaseActivity {
     }
 
 
-    //Get all walkable cells of a floor, helper method for manual mapping of JSON files
-    /*
-    private ArrayList<Cell> getWalkableCells(String building, String floor) {
-
-        ArrayList<Cell> walkableCells = new ArrayList<>();
-        JSONHandler jsonHandler = new JSONHandler();
-        String json;
-
-        try {
-            json = jsonHandler.readJsonFromAssets(this, getFloorPlan(building, floor) + ".json");
-            walkableCells = jsonHandler.parseJsonWalkableCells(json);
-        } catch (Exception e) {
-            Log.e(TAG, "error getting all walkable cells:", e);
-        }
-        return walkableCells;
-    }
-    */
 }

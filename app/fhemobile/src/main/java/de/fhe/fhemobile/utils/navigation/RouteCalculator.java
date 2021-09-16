@@ -67,14 +67,14 @@ public class RouteCalculator {
 
     //Variables
     private Context context;
-    private ArrayList<Transition> transitions;
+    private ArrayList<FloorConnection> transitions;
     private Cell startLocation;
     private Cell destinationLocation;
     private ArrayList<Cell> cellsToWalk = new ArrayList<>();
     private ArrayList<ArrayList<ArrayList<Cell>>> grids = new ArrayList<>();
 
     //Constructor
-    public RouteCalculator(Context context, Room startLocation, Room destinationLocation, ArrayList<Transition> transitions) {
+    public RouteCalculator(Context context, Room startLocation, Room destinationLocation, ArrayList<FloorConnection> transitions) {
         this.context = context;
         this.startLocation = startLocation;
         this.destinationLocation = destinationLocation;
@@ -105,7 +105,7 @@ public class RouteCalculator {
                         + " " + startCell.getWalkability());
 
                 //Get reachable transitions and sort by distance
-                ArrayList<Transition> usableTransitions = getUsableTransitions(startCell, grids, index);
+                ArrayList<FloorConnection> usableTransitions = getUsableTransitions(startCell, grids, index);
 
                 //Set endCell
                 //Set endCell with destinationLocation on same floor plan
@@ -167,7 +167,7 @@ public class RouteCalculator {
 
                         for (int i = 0; i < usableTransitions.size(); i++) {
 
-                            if (usableTransitions.get(i).getTypeOfTransition().equals(TRANSITION_TYPE_CROSSING)) {
+                            if (usableTransitions.get(i).getTypeOfFloorConnection().equals(TRANSITION_TYPE_CROSSING)) {
 
                                 for (int j = 0; j < usableTransitions.get(i).getConnectedCells().size(); j++) {
 
@@ -188,7 +188,7 @@ public class RouteCalculator {
 
                         for (int i = 0; i < usableTransitions.size(); i++) {
 
-                            if (usableTransitions.get(i).getTypeOfTransition().equals(TRANSITION_TYPE_CROSSING)) {
+                            if (usableTransitions.get(i).getTypeOfFloorConnection().equals(TRANSITION_TYPE_CROSSING)) {
 
                                 for (int j = 0; j < usableTransitions.get(i).getConnectedCells().size(); j++) {
 
@@ -209,7 +209,7 @@ public class RouteCalculator {
 
                         for (int i = 0; i < usableTransitions.size(); i++) {
 
-                            if (usableTransitions.get(i).getTypeOfTransition().equals(TRANSITION_TYPE_CROSSING)) {
+                            if (usableTransitions.get(i).getTypeOfFloorConnection().equals(TRANSITION_TYPE_CROSSING)) {
 
                                 for (int j = 0; j < usableTransitions.get(i).getConnectedCells().size(); j++) {
 
@@ -232,7 +232,7 @@ public class RouteCalculator {
 
                         for (int i = 0; i < usableTransitions.size(); i++) {
 
-                            if (usableTransitions.get(i).getTypeOfTransition().equals(TRANSITION_TYPE_CROSSING)) {
+                            if (usableTransitions.get(i).getTypeOfFloorConnection().equals(TRANSITION_TYPE_CROSSING)) {
 
                                 for (int j = 0; j < usableTransitions.get(i).getConnectedCells().size(); j++) {
 
@@ -293,7 +293,7 @@ public class RouteCalculator {
 
                         for (int i = 0; i < usableTransitions.size(); i++) {
 
-                            if (usableTransitions.get(i).getTypeOfTransition().equals(TRANSITION_TYPE_CROSSING)) {
+                            if (usableTransitions.get(i).getTypeOfFloorConnection().equals(TRANSITION_TYPE_CROSSING)) {
 
                                 for (int j = 0; j < usableTransitions.get(i).getConnectedCells().size(); j++) {
 
@@ -314,7 +314,7 @@ public class RouteCalculator {
 
                         for (int i = 0; i < usableTransitions.size(); i++) {
 
-                            if (usableTransitions.get(i).getTypeOfTransition().equals(TRANSITION_TYPE_CROSSING)) {
+                            if (usableTransitions.get(i).getTypeOfFloorConnection().equals(TRANSITION_TYPE_CROSSING)) {
 
                                 for (int j = 0; j < usableTransitions.get(i).getConnectedCells().size(); j++) {
 
@@ -337,7 +337,7 @@ public class RouteCalculator {
 
                         for (int i = 0; i < usableTransitions.size(); i++) {
 
-                            if (usableTransitions.get(i).getTypeOfTransition().equals(TRANSITION_TYPE_CROSSING)) {
+                            if (usableTransitions.get(i).getTypeOfFloorConnection().equals(TRANSITION_TYPE_CROSSING)) {
 
                                 for (int j = 0; j < usableTransitions.get(i).getConnectedCells().size(); j++) {
 
@@ -358,7 +358,7 @@ public class RouteCalculator {
 
                         for (int i = 0; i < usableTransitions.size(); i++) {
 
-                            if (usableTransitions.get(i).getTypeOfTransition().equals(TRANSITION_TYPE_CROSSING)) {
+                            if (usableTransitions.get(i).getTypeOfFloorConnection().equals(TRANSITION_TYPE_CROSSING)) {
 
                                 for (int j = 0; j < usableTransitions.get(i).getConnectedCells().size(); j++) {
 
@@ -390,6 +390,7 @@ public class RouteCalculator {
     /**
      * Get grids of floors in buildings to use (high level navigation)
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private ArrayList<ArrayList<ArrayList<Cell>>> navigationBuildings() {
 
         ArrayList<ArrayList<ArrayList<Cell>>> gridsToAdd = new ArrayList<>();
@@ -882,10 +883,10 @@ public class RouteCalculator {
      * @return
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private ArrayList<Transition> getUsableTransitions(final Cell startCell, final ArrayList<ArrayList<ArrayList<Cell>>> grids, final int index) {
+    private ArrayList<FloorConnection> getUsableTransitions(final Cell startCell, final ArrayList<ArrayList<ArrayList<Cell>>> grids, final int index) {
 
-        ArrayList<Transition> usableTransitionsHelper = new ArrayList<>();
-        ArrayList<Transition> adjustedUsableTransitions = new ArrayList<>();
+        ArrayList<FloorConnection> usableTransitionsHelper = new ArrayList<>();
+        ArrayList<FloorConnection> adjustedUsableTransitions = new ArrayList<>();
 
         try {
             if (index + 1 < grids.size()) {
@@ -929,8 +930,8 @@ public class RouteCalculator {
                 }
 
                 //Sort by distance
-                usableTransitionsHelper.sort(new Comparator<Transition>() {
-                    public int compare(Transition TransitionOne, Transition TransitionTwo) {
+                usableTransitionsHelper.sort(new Comparator<FloorConnection>() {
+                    public int compare(FloorConnection TransitionOne, FloorConnection TransitionTwo) {
                         return Integer.compare(TransitionOne.getFinalCost(), TransitionTwo.getFinalCost());
                     }
                 });
@@ -938,7 +939,7 @@ public class RouteCalculator {
                 //Put crossings to the end, crossings not allowed on index = 0
                 for (int j = 0; j < usableTransitionsHelper.size(); j++) {
 
-                    if (!usableTransitionsHelper.get(j).getTypeOfTransition().equals(TRANSITION_TYPE_CROSSING)) {
+                    if (!usableTransitionsHelper.get(j).getTypeOfFloorConnection().equals(TRANSITION_TYPE_CROSSING)) {
 
                         adjustedUsableTransitions.add(usableTransitionsHelper.get(j));
                     }
@@ -946,7 +947,7 @@ public class RouteCalculator {
 
                 for (int j = 0; j < usableTransitionsHelper.size(); j++) {
 
-                    if (usableTransitionsHelper.get(j).getTypeOfTransition().equals(TRANSITION_TYPE_CROSSING)) {
+                    if (usableTransitionsHelper.get(j).getTypeOfFloorConnection().equals(TRANSITION_TYPE_CROSSING)) {
 
                         adjustedUsableTransitions.add(usableTransitionsHelper.get(j));
                     }
@@ -966,9 +967,9 @@ public class RouteCalculator {
      * @param startCell
      * @return
      */
-    private ArrayList<Transition> getUsableTransitionsHelper(final int i, final int j, final int index, final Cell startCell) {
+    private ArrayList<FloorConnection> getUsableTransitionsHelper(final int i, final int j, final int index, final Cell startCell) {
 
-        final ArrayList<Transition> usableTransitionsHelper = new ArrayList<>();
+        final ArrayList<FloorConnection> usableTransitionsHelper = new ArrayList<>();
 
         for (int k = 0; k < transitions.get(i).getConnectedCells().size(); k++) {
 
@@ -979,7 +980,7 @@ public class RouteCalculator {
                 final AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(startCell, transitions.get(i).getConnectedCells().get(j), grids.get(index));
                 final ArrayList<Cell> navigationCells = aStarAlgorithm.getNavigationCellsOnGrid();
 
-                final Transition transitionHelper = transitions.get(i);
+                final FloorConnection transitionHelper = transitions.get(i);
                 transitionHelper.setFinalCost(navigationCells.size());
                 usableTransitionsHelper.add(transitionHelper);
             }
@@ -991,7 +992,7 @@ public class RouteCalculator {
                 final AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(startCell, transitions.get(i).getConnectedCells().get(j), grids.get(index));
                 final ArrayList<Cell> navigationCells = aStarAlgorithm.getNavigationCellsOnGrid();
 
-                final Transition transitionHelper = transitions.get(i);
+                final FloorConnection transitionHelper = transitions.get(i);
                 transitionHelper.setFinalCost(navigationCells.size());
                 usableTransitionsHelper.add(transitionHelper);
             }
@@ -1007,7 +1008,7 @@ public class RouteCalculator {
                 final AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(startCell, transitions.get(i).getConnectedCells().get(j), grids.get(index));
                 final ArrayList<Cell> navigationCells = aStarAlgorithm.getNavigationCellsOnGrid();
 
-                final Transition transitionHelper = transitions.get(i);
+                final FloorConnection transitionHelper = transitions.get(i);
                 transitionHelper.setFinalCost(navigationCells.size());
                 usableTransitionsHelper.add(transitionHelper);
             }

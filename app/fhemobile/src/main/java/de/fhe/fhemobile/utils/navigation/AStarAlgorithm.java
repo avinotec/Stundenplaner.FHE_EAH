@@ -23,7 +23,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-import de.fhe.fhemobile.models.navigation.*;
+import de.fhe.fhemobile.models.navigation.Cell;
+import de.fhe.fhemobile.models.navigation.FloorConnection;
+import de.fhe.fhemobile.models.navigation.Room;
 
 class AStarAlgorithm {
 
@@ -41,23 +43,38 @@ class AStarAlgorithm {
     private Cell endCell;
     private ArrayList<ArrayList<Cell>> grid;
 
-    //Constructor
-    AStarAlgorithm(Cell startCell, Cell endCell, ArrayList<ArrayList<Cell>> grid) {
+    /**
+     * Constructor
+     * @param startCell
+     * @param endCell
+     * @param grid
+     */
+    AStarAlgorithm(final Cell startCell, final Cell endCell, final ArrayList<ArrayList<Cell>> grid) {
         this.startCell = startCell;
         this.endCell = endCell;
         this.grid = grid;
     }
 
-    //Calculation of cells to walk on one grid
-    ArrayList<Cell> getNavigationCellsOnGrid() {
+    /**
+     * Calculation of cells to walk on one grid
+     * @return
+     */
+    final ArrayList<Cell> getNavigationCellsOnGrid() {
 
-        ArrayList<Cell> navigationCells = new ArrayList<>();
+        final ArrayList<Cell> navigationCells = new ArrayList<>();
 
         try {
             //Set priority queue with comparator
             open = new PriorityQueue<>(16, new Comparator<Cell>() {
+
+                /**
+                 *
+                 * @param cellOne
+                 * @param cellTwo
+                 * @return
+                 */
                 @Override
-                public int compare(Cell cellOne, Cell cellTwo) {
+                public int compare(final Cell cellOne, final Cell cellTwo) {
                     return Integer.compare(cellOne.getFinalCost(), cellTwo.getFinalCost());
                 }
             });
@@ -79,16 +96,17 @@ class AStarAlgorithm {
             }
         } catch (Exception e) {
             Log.e(TAG, "error calculating route ", e);
-            e.printStackTrace();
         }
         return navigationCells;
     }
 
-    //A* algorithm
+    /**
+     * A* algorithm
+     */
     private void aStar() {
         while (!open.isEmpty()) {
 
-            Cell currentCell = open.poll();
+            final Cell currentCell = open.poll();
 
             if (currentCell != null && currentCell.getWalkability()) {
                 closed[currentCell.getXCoordinate()][currentCell.getYCoordinate()] = true;
@@ -129,11 +147,16 @@ class AStarAlgorithm {
         }
     }
 
-    //Check and update cost of a cell
-    private void checkAndUpdateCost(Cell current, Cell test, int cost) {
+    /**
+     * Check and update cost of a cell
+     * @param current
+     * @param test
+     * @param cost
+     */
+    private void checkAndUpdateCost(final Cell current, final Cell test, final int cost) {
 
-        int testFinalCost = test.getHeuristicCost() + cost;
-        boolean inOpen = open.contains(test);
+        final int testFinalCost = test.getHeuristicCost() + cost;
+        final boolean inOpen = open.contains(test);
 
         if (test.getWalkability() && !closed[test.getXCoordinate()][test.getYCoordinate()]) {
 
@@ -148,14 +171,18 @@ class AStarAlgorithm {
         }
     }
 
-    //Set cost of the cell to check
-    private void setCostPerCell(Cell current, Cell test) {
+    /**
+     * Set cost of the cell to check
+     * @param current
+     * @param test
+     */
+    private void setCostPerCell(final Cell current, final Cell test) {
 
-        Class<? extends Cell> aClass = test.getClass();
+        final Class<? extends Cell> aClass = test.getClass();
 
-        Cell compareCellClass = new Cell();
-        Room compareRoomClass = new Room();
-        Transition compareTransitionClass = new Transition();
+        final Cell compareCellClass = new Cell();
+        final Room compareRoomClass = new Room();
+        final FloorConnection compareFloorConnectionClass = new FloorConnection();
 
         if (aClass.equals(compareCellClass.getClass())) {
             current.setHeuristicCost(COSTS_CELL);
@@ -165,7 +192,7 @@ class AStarAlgorithm {
             current.setHeuristicCost(COSTS_ROOM);
         }
 
-        if (aClass.equals(compareTransitionClass.getClass())) {
+        if (aClass.equals(compareFloorConnectionClass.getClass())) {
             current.setHeuristicCost(COSTS_TRANSITION);
         }
     }
