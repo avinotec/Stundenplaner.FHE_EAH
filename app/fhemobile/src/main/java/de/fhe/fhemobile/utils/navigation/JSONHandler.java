@@ -19,20 +19,20 @@ package de.fhe.fhemobile.utils.navigation;
 
 
 import android.content.Context;
-import android.content.res.AssetManager;
-import android.os.Build;
 import android.util.Log;
-
-import androidx.annotation.RequiresApi;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import de.fhe.fhemobile.models.navigation.*;
+import de.fhe.fhemobile.models.navigation.Cell;
+import de.fhe.fhemobile.models.navigation.FloorConnection;
+import de.fhe.fhemobile.models.navigation.Room;
 
 public class JSONHandler {
 
@@ -56,10 +56,10 @@ public class JSONHandler {
     /**
      * Read JSON from assets
      * @param context
-     * @param jsonFile
+     * @param jsonFile in den Assets
      * @return
      */
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    /*
     public String readJsonFromAssets(final Context context, final String jsonFile) {
 
         final AssetManager assetManager = context.getAssets();
@@ -77,7 +77,22 @@ public class JSONHandler {
             Log.e(TAG, "error reading JSON file", e);
         }
         return json;
+    } */
+    public static String readJsonFromAssets(Context context, String jsonFile) throws IOException {
+
+        final InputStream input = context.getResources().getAssets().open(jsonFile);
+        final InputStreamReader reader = new InputStreamReader(input, "UTF-8");
+
+        final StringBuffer text = new StringBuffer();
+        BufferedReader br = new BufferedReader( reader );
+
+        for ( String line; (line = br.readLine()) != null; ) {
+            text.append(line + "\n");
+        }
+        return text.toString();
     }
+
+
 
     /**
      * Parse JSON to rooms ArrayList<Cell>
