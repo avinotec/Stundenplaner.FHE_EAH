@@ -78,15 +78,15 @@ public class NavigationActivity extends BaseActivity {
     private Room startLocation;
     private Room destinationLocation;
 
-    private ArrayList<Room> rooms = new ArrayList<>();
-    private ArrayList<FloorConnection> floorConnections = new ArrayList<>();
+    private static ArrayList<Room> rooms = new ArrayList<>();
+    private static ArrayList<FloorConnection> floorConnections = new ArrayList<>();
     private ArrayList<Cell> cellsToWalk = new ArrayList<>();
 
     private float cellWidth;
     private float cellHeight;
     private RelativeLayout navigationLayout;
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,7 +109,6 @@ public class NavigationActivity extends BaseActivity {
         floorPlansSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             //draw map and navigation when floor is selected
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int index, long id) {
 
@@ -157,15 +156,15 @@ public class NavigationActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//    }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//    }
 
 
     /**
@@ -174,7 +173,7 @@ public class NavigationActivity extends BaseActivity {
      * @param building to be displayed (floorplan)
      * @param floor to be displayed (floorplan)
      */
-    private void drawNavigationAndRoute(String building, String floor) {
+    private void drawNavigationAndRoute(final String building, final String floor) {
         //Remove views from layouts before redrawing
         if (navigationLayout != null) navigationLayout.removeAllViews();
 
@@ -461,17 +460,22 @@ public class NavigationActivity extends BaseActivity {
     /**
      * Load rooms, stairs, elevators and the bridge from JSON
      */
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void getRoomsAndTransitions() {
         try {
             JSONHandler jsonHandler = new JSONHandler();
             String json;
 
-            json = jsonHandler.readJsonFromAssets(this, JSON_FILE_ROOMS);
-            rooms = jsonHandler.parseJsonRooms(json);
+            // read only once
+            if (rooms.isEmpty()) {
+                json = jsonHandler.readJsonFromAssets(this, JSON_FILE_ROOMS);
+                rooms = jsonHandler.parseJsonRooms(json);
+            }
 
-            json = jsonHandler.readJsonFromAssets(this, JSON_FILE_TRANSITIONS);
-            floorConnections = jsonHandler.parseJsonFloorConnection(json);
+            // read only once
+            if (floorConnections.isEmpty()) {
+                json = jsonHandler.readJsonFromAssets(this, JSON_FILE_TRANSITIONS);
+                floorConnections = jsonHandler.parseJsonFloorConnection(json);
+            }
 
         } catch (Exception e) {
             Log.e(TAG, "error reading or parsing JSON files:", e);
@@ -519,7 +523,6 @@ public class NavigationActivity extends BaseActivity {
      * Calculate route using the class RouteCalculator
      * Get an Arraylist of cells to walk through and add them to cellsToWalk
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void getRoute() {
         try {
             RouteCalculator routeCalculator = new RouteCalculator(this, startLocation, destinationLocation, floorConnections);
@@ -536,7 +539,7 @@ public class NavigationActivity extends BaseActivity {
      * @param floor
      * @return
      */
-    private String getFloorPlan(String building, String floor) {
+    private static String getFloorPlan(final String building, final String floor) {
 
         String floorPlan = "";
 
@@ -618,7 +621,7 @@ public class NavigationActivity extends BaseActivity {
      * @return
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private ArrayList<String> getBuildingAndFloor(String in) {
+    private ArrayList<String> getBuildingAndFloor(final String in) {
 
         ArrayList<String> helperBuildingAndFloor = new ArrayList<>();
 
