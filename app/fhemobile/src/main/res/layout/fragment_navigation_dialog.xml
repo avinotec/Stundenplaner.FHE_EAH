@@ -25,6 +25,8 @@
                 android:text="@string/text_view_explanation_location_title"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/text_size_header"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
                 app:layout_constraintBottom_toTopOf="@id/text_view_explanation_location_description"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,8 +38,7 @@
                 android:text="@string/text_view_explanation_location_description"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/text_size_explanations"
-                android:layout_marginBottom="@dimen/margin_bottom_explanation_text"
-                android:layout_marginTop="@dimen/margin_bottom_explanation_text"
+                android:layout_margin="@dimen/margin_bottom_explanation_text"
                 app:layout_constraintBottom_toTopOf="@id/text_view_explanation_navigation_title"
                 app:layout_constraintTop_toBottomOf="@id/text_view_explanation_location_title" />
 
@@ -50,6 +51,7 @@
                 android:text="@string/text_view_explanation_navigation_title"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/text_size_header"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/text_view_explanation_navigation_description"
                 app:layout_constraintTop_toBottomOf="@id/text_view_explanation_location_description" />
 
@@ -61,8 +63,7 @@
                 android:text="@string/text_view_explanation_navigation_description"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/text_size_explanations"
-                android:layout_marginBottom="@dimen/margin_bottom_explanation_text"
-                android:layout_marginTop="@dimen/margin_bottom_explanation_text"
+                android:layout_margin="@dimen/margin_bottom_explanation_text"
                 app:layout_constraintBottom_toTopOf="@id/separator"
                 app:layout_constraintTop_toBottomOf="@id/text_view_explanation_navigation_title" />
 
@@ -86,6 +87,7 @@
                 android:text="@string/text_view_by_room"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/text_size_header"
+                android:textStyle="bold"
                 android:layout_marginTop="@dimen/margin_bottom_explanation_text"
                 app:layout_constraintBottom_toTopOf="@id/spinner_by_room"
                 app:layout_constraintTop_toBottomOf="@id/text_view_explanation_navigation_description" />
@@ -95,6 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_top_navigation_dialog_activity"
+                android:layout_marginHorizontal="40dp"
                 app:layout_constraintBottom_toTopOf="@id/textview_or1"
                 app:layout_constraintTop_toBottomOf="@id/text_view_by_room" />
 
@@ -106,8 +109,7 @@
                 android:text="@string/text_view_oder"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/text_size_explanations"
-                android:layout_marginBottom="@dimen/margin_bottom_explanation_text"
-                android:layout_marginTop="@dimen/margin_bottom_explanation_text"
+                android:layout_marginVertical="5sp"
                 app:layout_constraintBottom_toTopOf="@id/text_view_by_name"
                 app:layout_constraintTop_toBottomOf="@+id/spinner_by_room"/>
 
@@ -120,6 +122,7 @@
                 android:text="@string/text_view_by_name"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/text_size_header"
+                android:textStyle="bold"
                 android:layout_marginTop="@dimen/margin_bottom_explanation_text"
                 app:layout_constraintBottom_toTopOf="@id/spinner_by_person"
                 app:layout_constraintTop_toBottomOf="@id/textview_or1" />
@@ -129,6 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_top_navigation_dialog_activity"
+                android:layout_marginHorizontal="40dp"
                 app:layout_constraintBottom_toTopOf="@id/textview_or2"
                 app:layout_constraintTop_toBottomOf="@id/spinner_by_person" />
 
@@ -141,8 +145,7 @@
                 android:text="@string/text_view_oder"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/text_size_explanations"
-                android:layout_marginBottom="@dimen/margin_bottom_explanation_text"
-                android:layout_marginTop="@dimen/margin_bottom_explanation_text"
+                android:layout_marginVertical="5sp"
                 app:layout_constraintBottom_toTopOf="@id/text_view_destination_location"
                 app:layout_constraintTop_toBottomOf="@+id/spinner_by_person"/>
 
@@ -154,6 +157,7 @@
                 android:text="@string/text_view_button_destination_location"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/text_size_header"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/input_field_search_destination_room_layout"
                 app:layout_constraintTop_toBottomOf="@id/textview_or2" />
 
@@ -163,6 +167,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_search_room"
                 app:errorEnabled="true"
+                android:layout_marginHorizontal="40dp"
                 app:layout_constraintBottom_toTopOf="@id/group_enter_position"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -195,10 +200,11 @@
                     android:id="@+id/text_view_start_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:text="@string/text_view_button_start_location"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/text_size_header"
+                    android:textStyle="bold"
                     android:layout_marginTop="@dimen/margin_bottom_explanation_text"
                     app:layout_constraintBottom_toTopOf="@id/input_field_search_start_room_layout" />
 
@@ -229,6 +235,7 @@
                     android:text="@string/button_location_text"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/text_size_header"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/input_field_search_start_room_layout" />
 
@@ -253,6 +260,7 @@
                 android:text="@string/button_location_qr"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/text_size_header"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/text_view_search_or_qr"

@@ -35,6 +35,8 @@ import de.fhe.fhemobile.utils.navigation.JSONHandler;
 
 /**
  * Fragment for dialog (asking for direct input or if QR-Scanner should be opened) before starting navigation - Nadja 9.9.21
+ * source: Bachelor Thesis from Tim Münziger from SS2020
+ * edit and integration: Nadja 09.2021
  */
 public class NavigationDialogFragment extends FeatureFragment implements View.OnClickListener{
 
@@ -207,7 +209,7 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
         Spinner searchByPersonSpinner = mView.findViewById(R.id.spinner_by_person);
 
         //Spinner for room search
-        ArrayAdapter<String> searchByRoomAdapter = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, roomNames);
+        ArrayAdapter<String> searchByRoomAdapter = new ArrayAdapter<>(getContext(), R.layout.spinner_item_text, roomNames);
         searchByRoomSpinner.setAdapter(searchByRoomAdapter);
         searchByRoomSpinner.setSelection(0, false);
         searchByRoomSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -246,7 +248,7 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
         });
 
         //Spinner for person search
-        ArrayAdapter<String> searchByPersonAdapter = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, persons);
+        ArrayAdapter<String> searchByPersonAdapter = new ArrayAdapter<>(getContext(), R.layout.spinner_item_text, persons);
         searchByPersonSpinner.setAdapter(searchByPersonAdapter);
         searchByPersonSpinner.setSelection(0, false);
         searchByPersonSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -288,6 +290,35 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
         return spinners;
     }
 
+    //validate user input for start and destination location and set Error Messages if needed
+    private void validateUserInput(ArrayList<String> availableRooms){
+        //User start location input error handling
+        if (!startLocationInputText.getText().toString().equals("")
+                && !availableRooms.contains(startLocationInputText.getText().toString())) {
+
+            startLocationDisplayedErrorText.setError(getText(R.string.error_message_room_input));
+        }
+
+        if (startLocationInputText.getText().toString().equals("")
+                || availableRooms.contains(startLocationInputText.getText().toString())) {
+
+            startLocationDisplayedErrorText.setError(null);
+        }
+
+        //User destination location input error handling
+        if (!destinationLocationInputText.getText().toString().equals("")
+                && !availableRooms.contains(destinationLocationInputText.getText().toString())) {
+
+            destinationLocationDisplayedErrorText.setError(getText(R.string.error_message_room_input));
+        }
+
+        if (destinationLocationInputText.getText().toString().equals("")
+                || availableRooms.contains(destinationLocationInputText.getText().toString())) {
+
+            destinationLocationDisplayedErrorText.setError(null);
+        }
+    }
+
 
     //User input processing, error handling and input combinations error handling
     private void processUserInput(View view) {
@@ -302,31 +333,7 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
             roomNames.add(rooms.get(index).getRoomName());
         }
 
-        //User start location input error handling
-        if (!startLocationInputText.getText().toString().equals("")
-                && !roomNames.contains(startLocationInputText.getText().toString())) {
-
-            startLocationDisplayedErrorText.setError(getText(R.string.error_message_room_input));
-        }
-
-        if (startLocationInputText.getText().toString().equals("")
-                || roomNames.contains(startLocationInputText.getText().toString())) {
-
-            startLocationDisplayedErrorText.setError(null);
-        }
-
-        //User destination location input error handling
-        if (!destinationLocationInputText.getText().toString().equals("")
-                && !roomNames.contains(destinationLocationInputText.getText().toString())) {
-
-            destinationLocationDisplayedErrorText.setError(getText(R.string.error_message_room_input));
-        }
-
-        if (destinationLocationInputText.getText().toString().equals("")
-                || roomNames.contains(destinationLocationInputText.getText().toString())) {
-
-            destinationLocationDisplayedErrorText.setError(null);
-        }
+        validateUserInput(roomNames);
 
         //user input was correct - finding position or navigation can be performed
         if (destinationLocationDisplayedErrorText.getError() == null
@@ -406,7 +413,6 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
         }
         if(!skipScanner){ //determine startLocation by scanning QR code
             Intent intentScannerActivity = new Intent(getActivity(), ScannerActivity.class);
-            intentScannerActivity.putExtra("startLocation", userInputStartLocation);
             intentScannerActivity.putExtra("destinationLocation", destinationQRCode);
             intentScannerActivity.putExtra("availableRooms", roomNames);
             startActivity(intentScannerActivity);

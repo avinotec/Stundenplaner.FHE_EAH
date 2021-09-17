@@ -23,7 +23,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-import de.fhe.fhemobile.models.navigation.*;
+import de.fhe.fhemobile.models.navigation.Cell;
+import de.fhe.fhemobile.models.navigation.FloorConnection;
+import de.fhe.fhemobile.models.navigation.Room;
 
 class AStarAlgorithm {
 
@@ -180,7 +182,7 @@ class AStarAlgorithm {
 
         final Cell compareCellClass = new Cell();
         final Room compareRoomClass = new Room();
-        final Transition compareTransitionClass = new Transition();
+        final FloorConnection compareFloorConnectionClass = new FloorConnection();
 
         if (aClass.equals(compareCellClass.getClass())) {
             current.setHeuristicCost(COSTS_CELL);
@@ -190,7 +192,7 @@ class AStarAlgorithm {
             current.setHeuristicCost(COSTS_ROOM);
         }
 
-        if (aClass.equals(compareTransitionClass.getClass())) {
+        if (aClass.equals(compareFloorConnectionClass.getClass())) {
             current.setHeuristicCost(COSTS_TRANSITION);
         }
     }

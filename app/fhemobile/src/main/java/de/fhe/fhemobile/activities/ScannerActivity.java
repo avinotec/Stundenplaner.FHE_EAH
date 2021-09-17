@@ -16,6 +16,11 @@ import java.util.ArrayList;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
+/**
+ *  Activity for getting the users current position via QR code scanner
+ *  source: Bachelor Thesis from Tim Münziger from SS2020
+ *  edit and integration: Nadja 09.2021
+ */
 public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
 
     //Constants
@@ -28,7 +33,6 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
     private boolean mAutoFocus = true;
     private String destinationQRCode;
     private String startLocation;
-    private boolean skipScanner;
     private ArrayList<String> availableRooms;
 
 
@@ -40,7 +44,6 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         //Get extra from parent
         Intent intendScannerActivity = getIntent();
         destinationQRCode = intendScannerActivity.getStringExtra("destinationLocation");
-        startLocation = intendScannerActivity.getStringExtra("startLocation");
         availableRooms = intendScannerActivity.getStringArrayListExtra("availableRooms");
 
         mScannerView = new ZXingScannerView(this);
@@ -59,12 +62,10 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
     @Override
     public void onResume() {
         super.onResume();
-        if (!skipScanner) {
-            if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                mScannerView.setResultHandler(this);
-                mScannerView.startCamera();
-                mScannerView.setAutoFocus(mAutoFocus);
-            }
+        if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            mScannerView.setResultHandler(this);
+            mScannerView.startCamera();
+            mScannerView.setAutoFocus(mAutoFocus);
         }
     }
 
@@ -73,10 +74,8 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
     @Override
     public void onPause() {
         super.onPause();
-        if (!skipScanner) {
-            if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                mScannerView.stopCamera();
-            }
+        if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            mScannerView.stopCamera();
         }
     }
 
