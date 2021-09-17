@@ -19,16 +19,16 @@ package de.fhe.fhemobile.utils.navigation;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
 import android.util.Log;
 
-import androidx.annotation.RequiresApi;
+import androidx.multidex.BuildConfig;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import de.fhe.fhemobile.BuildConfig;
-import de.fhe.fhemobile.models.navigation.*;
+import de.fhe.fhemobile.models.navigation.Cell;
+import de.fhe.fhemobile.models.navigation.FloorConnection;
+import de.fhe.fhemobile.models.navigation.Room;
 
 public class RouteCalculator {
 
@@ -82,7 +82,6 @@ public class RouteCalculator {
     }
 
     //Get all cells to walk from start to destination location
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("LongLogTag")
     public ArrayList<Cell> getNavigationCells() {
 
@@ -390,7 +389,6 @@ public class RouteCalculator {
     /**
      * Get grids of floors in buildings to use (high level navigation)
      */
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private ArrayList<ArrayList<ArrayList<Cell>>> navigationBuildings() {
 
         ArrayList<ArrayList<ArrayList<Cell>>> gridsToAdd = new ArrayList<>();
@@ -756,7 +754,6 @@ public class RouteCalculator {
      * @param floor
      * @return
      */
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private ArrayList<ArrayList<Cell>> buildGrid(final String building, final String floor) {
 
         ArrayList<ArrayList<Cell>> grid = new ArrayList<>();
@@ -882,7 +879,6 @@ public class RouteCalculator {
      * @param index
      * @return
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private ArrayList<FloorConnection> getUsableTransitions(final Cell startCell, final ArrayList<ArrayList<ArrayList<Cell>>> grids, final int index) {
 
         ArrayList<FloorConnection> usableTransitionsHelper = new ArrayList<>();
@@ -930,6 +926,7 @@ public class RouteCalculator {
                 }
 
                 //Sort by distance
+                // TODO sort muss in einen anderen Comparator gesteckt werden
                 usableTransitionsHelper.sort(new Comparator<FloorConnection>() {
                     public int compare(FloorConnection TransitionOne, FloorConnection TransitionTwo) {
                         return Integer.compare(TransitionOne.getFinalCost(), TransitionTwo.getFinalCost());
