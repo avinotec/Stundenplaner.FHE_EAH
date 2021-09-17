@@ -140,17 +140,18 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private ArrayList[] loadRoomNamesAndPersons(){
         //Get lists of rooms and names for spinners
         JSONHandler jsonHandler = new JSONHandler();
         String json;
-
-        try {
-            json = jsonHandler.readJsonFromAssets(getContext(), JSON_FILE_ROOMS);
-            rooms = jsonHandler.parseJsonRooms(json);
-        } catch (Exception e) {
-            Log.e(TAG, "error reading or parsing JSON file:", e);
+//TODO verschieben einmalig
+        if (rooms.isEmpty()) {
+            try {
+                json = jsonHandler.readJsonFromAssets(getContext(), JSON_FILE_ROOMS);
+                rooms = jsonHandler.parseJsonRooms(json);
+            } catch (Exception e) {
+                Log.e(TAG, "error reading or parsing JSON file:", e);
+            }
         }
 
         //Get lists of room names and persons for spinners
