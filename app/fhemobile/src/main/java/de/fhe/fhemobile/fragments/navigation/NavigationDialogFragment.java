@@ -197,7 +197,7 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
         roomNames.add(0, defaultSelection);
         persons.add(0, defaultSelection);
 
-        ArrayList[] result = {roomNames, persons};
+        final ArrayList[] result = {roomNames, persons};
         return result;
     }
 
@@ -286,7 +286,7 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
             }
         });
 
-        Spinner[] spinners = {searchByRoomSpinner,searchByPersonSpinner};
+        final Spinner[] spinners = {searchByRoomSpinner,searchByPersonSpinner};
         return spinners;
     }
 
