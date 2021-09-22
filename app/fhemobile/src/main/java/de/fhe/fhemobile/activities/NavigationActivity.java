@@ -61,16 +61,18 @@ public class NavigationActivity extends BaseActivity {
 
     private static final String FLOORCONNECTION_TYPE_STAIR = "stair";
     private static final String FLOORCONNECTION_TYPE_ELEVATOR = "elevator";
-    private static final String FLOORCONNECTION_TYPE_BRIDGE = "bridge";
+    private static final String FLOORCONNECTION_TYPE_BRIDGE = "crossing";
 
     private static final String JSON_FILE_ROOMS = "rooms.json";
-    private static final String JSON_FILE_TRANSITIONS = "transitions.json";
+
+    private static final String JSON_FILE_TRANSITIONS = "floorconnections.json";
 
     private static final String JUST_LOCATION = "location";
 
-    // Size of the grid overlying the floorplan (unit: cells)
-    private static final int cellgrid_width = 40;
-    private static final int cellgrid_height = 23;
+    // Size of the grid overlying the floorplan (unit: cells - needs to be integer)
+    //Note: cell numbering at gridded PNGs (docs folder) starts at 0 -> width/height = number + 1
+    private static final int cellgrid_width = 44;
+    private static final int cellgrid_height = 29;
 
     //Variables
     private String destinationQRCode;
@@ -109,6 +111,7 @@ public class NavigationActivity extends BaseActivity {
         floorPlansSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             //draw map and navigation when floor is selected
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int index, long id) {
 
@@ -131,7 +134,7 @@ public class NavigationActivity extends BaseActivity {
             }
         });
 
-        //Get rooms, stairs, elevators and the bridge from JSON
+        //Get rooms, stairs, elevators and entrances (inkl. bridge) from JSON
         // lädt die verfügbaren Räume und Aufgänge aus den entsprechenden JSON-Dateien
         getRoomsAndTransitions();
 
@@ -179,8 +182,12 @@ public class NavigationActivity extends BaseActivity {
 
         //Set the floor plan ImageView in the relative layout where the whole navigation is drawn in
         ImageView floorPlanView = new ImageView(this);
-        floorPlanView.setImageResource(getResources().getIdentifier("drawable/" +
-                getFloorPlan(building, floor), null, getPackageName()));
+//        floorPlanView.setImageResource(getResources().getIdentifier("drawable/" +
+//                getFloorPlan(building, floor), null, getPackageName()));
+        floorPlanView.setImageResource(getResources().getIdentifier(
+                "drawable/grid_for_debug", null, getPackageName()));
+        floorPlanView.setX(0);
+        floorPlanView.setY(0);
 
         if (navigationLayout != null) navigationLayout.addView(floorPlanView);
 
@@ -357,7 +364,7 @@ public class NavigationActivity extends BaseActivity {
     }
 
     /**
-     * Add all elevators, staircases and the bridge
+     * Add all elevators, staircases and crossings
      * @param building that is displayed (floorplan)
      * @param floor that is displayed (floorplan)
      */
@@ -384,7 +391,7 @@ public class NavigationActivity extends BaseActivity {
     }
 
     /**
-     * Draw floorconnection icon corresponding to the floorconnection type (staircaise, elevator, bridge)
+     * Draw floorconnection icon corresponding to the floorconnection type (staircaise, elevator, crossings)
      * @param building that is displayed (floorplan)
      * @param floor that is displayed (floorplan)
      * @param i
@@ -400,6 +407,12 @@ public class NavigationActivity extends BaseActivity {
                 stairIcon.setImageResource(R.drawable.stair_icon);
                 stairIcon.setX(convertCellCoordX(floorConnections.get(i).getConnectedCells().get(j).getXCoordinate()));
                 stairIcon.setY(convertCellCoordY(floorConnections.get(i).getConnectedCells().get(j).getYCoordinate()));
+                stairIcon.setMaxHeight((int) cellHeight);
+                stairIcon.setMaxWidth((int) cellWidth);
+                stairIcon.setMinimumHeight((int) cellHeight);
+                stairIcon.setMinimumWidth((int) cellWidth);
+                stairIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
 
                 if (navigationLayout != null) navigationLayout.addView(stairIcon);
             }
@@ -414,12 +427,12 @@ public class NavigationActivity extends BaseActivity {
             }
 
             if (floorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_BRIDGE)) {
-                ImageView bridgeIcon = new ImageView(this);
-                bridgeIcon.setImageResource(R.drawable.bridge_icon);
-                bridgeIcon.setX(convertCellCoordX(floorConnections.get(i).getConnectedCells().get(j).getXCoordinate()));
-                bridgeIcon.setY(convertCellCoordY(floorConnections.get(i).getConnectedCells().get(j).getYCoordinate()));
+                ImageView crossingIcon = new ImageView(this);
+                crossingIcon.setImageResource(R.drawable.bridge_icon);
+                crossingIcon.setX(convertCellCoordX(floorConnections.get(i).getConnectedCells().get(j).getXCoordinate()));
+                crossingIcon.setY(convertCellCoordY(floorConnections.get(i).getConnectedCells().get(j).getYCoordinate()));
 
-                if (navigationLayout != null) navigationLayout.addView(bridgeIcon);
+                if (navigationLayout != null) navigationLayout.addView(crossingIcon);
             }
         }
     }
