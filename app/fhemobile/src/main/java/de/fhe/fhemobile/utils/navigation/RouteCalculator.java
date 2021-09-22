@@ -24,6 +24,7 @@ import android.util.Log;
 import androidx.multidex.BuildConfig;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 
 import de.fhe.fhemobile.models.navigation.Cell;
@@ -926,8 +927,7 @@ public class RouteCalculator {
                 }
 
                 //Sort by distance
-                // TODO sort muss in einen anderen Comparator gesteckt werden
-                usableTransitionsHelper.sort(new Comparator<FloorConnection>() {
+                Collections.sort(usableTransitionsHelper, new Comparator<FloorConnection>() {
                     public int compare(FloorConnection TransitionOne, FloorConnection TransitionTwo) {
                         return Integer.compare(TransitionOne.getFinalCost(), TransitionTwo.getFinalCost());
                     }
