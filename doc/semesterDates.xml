@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<!-- EAH Version -->
+
+<semesterList>
+
+    <semester name="SoSe 2021"
+              longName="Sommersemester 2021">
+
+        <courseTimes>
+
+            <date name="Semesterbeginn"
+                  date="01.04.2021"/>
+
+            <period name="Vorlesungszeitraum"
+                    begin="12.04.2021"
+                    end="17.07.2021"/>
+
+            <period name="Prüfungszeitraum"
+                    begin="19.07.2021"
+                    end="07.08.2021"/>
+
+        </courseTimes>
+
+        <holidays>
+
+            <period name="Himmelfahrt + Brückentage"
+                    begin="13.05.2021"
+                    end="15.05.2021"/>
+
+            <period name="Pfingsten + Anreisetag"
+                    begin="22.05.2021"
+                    end="25.05.2021"/>
+
+        </holidays>
+
+        <importantDates>
+
+            <date name="Einführung für das Erstsemester"
+                  date="12.04.2021"/>
+
+            <date name="Hochschulinformationstag"
+                  date="10.04.2021"/>
+
+            <date name="Masterinfotag"
+                  date="16.06.2021"/>
+
+            <period name="Bewerbungszeitraum Bachelor (zulassungsbeschränkt) zum WiSe 2021/22"
+                    begin="15.05.2021"
+                    end="15.07.2021"/>
+
+            <period name="Bewerbungszeitraum Bachelor (kein NC) zum WiSe 2021/22"
+                    begin="15.05.2021"
+                    end="31.08.2021"/>
+
+            <period name="Bewerbungszeitraum Master zum WiSe 2021/22 (je nach Studiengang)"
+                    begin="15.05.2021"
+                    end="15.07./15.09.2021"/>
+
+            <period name="Rückmeldung zum WiSe 2021/22"
+                    begin="01.06.2021"
+                    end="31.07.2021"/>
+
+        </importantDates>
+
+    </semester>
+
+    <semester name="WiSe 2021/2022"
+              longName="Wintersemester 2021/22">
+
+        <courseTimes>
+
+            <date name="Semesterbeginn"
+                  date="01.10.2021"/>
+
+            <period name="Vorlesungszeitraum"
+                    begin="11.10.2021"
+                    end="05.02.2022"/>
+
+            <period name="Prüfungszeitraum"
+                    begin="07.02.2022"
+                    end="26.02.2022"/>
+
+        </courseTimes>
+
+        <holidays>
+
+            <period name="Weihnachten und Neujahr"
+                    begin="20.12.2021"
+                    end="01.01.2022"/>
+
+        </holidays>
+
+        <importantDates>
+
+            <date name="Einführung für das Erstsemester (Bachelor)"
+                  date="ab 04.10.2021"/>
+
+            <date name="Einführung für das Erstsemester (Master)"
+                  date="11.10.2021"/>
+
+            <date name="Feierliche Immatrikulation"
+                  date="20.10.2021"/>
+
+            <period name="Schnupperstudium"
+                    begin="26.10.2021"
+                    end="28.10.2021"/>
+
+            <period name="Bewerbungszeitraum Bachelor (zulassungsbeschränkt) zum SoSe 2022"
+                    begin="01.12.2021"
+                    end="15.01.2022"/>
+
+            <period name="Bewerbungszeitraum Bachelor (kein NC) zum SoSe 2022"
+                    begin="01.12.2021"
+                    end="28.02.2022"/>
+
+            <period name="Bewerbungszeitraum Master zum SoSe 2022 (je nach Studiengang)"
+                    begin="01.12.2021"
+                    end="15.02.2022"/>
+
+            <period name="Rückmeldung zum SoSe 2022"
+                    begin="06.01.2022"
+                    end="28.02.2022"/>
+
+        </importantDates>
+
+    </semester>
+
+    </semester>
+
+    <semester name="SoSe 2022"
+              longName="Sommersemester 2022">
+
+        <courseTimes>
+
+            <date name="Semesterbeginn"
+                  date="01.04.2022"/>
+
+            <period name="Vorlesungszeitraum"
+                    begin="04.04.2022"
+                    end="16.07.2022"/>
+
+            <period name="Prüfungszeitraum"
+                    begin="18.07.2022"
+                    end="06.08.2022"/>
+
+        </courseTimes>
+
+        <holidays>
+
+            <period name="Ostern + Anreistag"
+                    begin="15.04.2022"
+                    end="19.04.2022"/>
+
+            <period name="Himmelfahrt + Brückentage"
+                    begin="26.05.2022"
+                    end="28.05.2022"/>
+
+            <period name="Pfingsten + Anreisetag"
+                    begin="04.06.2022"
+                    end="07.06.2022"/>
+        </holidays>
+
+        <importantDates>
+
+            <date name="Einführung für das Erstsemester (Bachelor & Master)"
+                  date="04.04.2022"/>
+
+            <period name="Bewerbungszeitraum Bachelor (zulassungsbeschränkt) zum WiSe 2022/23"
+                    begin="15.05.2022"
+                    end="15.07.2022"/>
+
+            <period name="Bewerbungszeitraum Bachelor (kein NC) zum WiSe 2022/23"
+                    begin="15.05.2022"
+                    end="31.08.2022"/>
+
+            <period name="Bewerbungszeitraum Master zum WiSe 2022/23 (je nach Studiengang)"
+                    begin="15.05.2022"
+                    end="15.07./15.09.2022"/>
+
+            <period name="Rückmeldung zum WiSe 2022/23"
+                    begin="01.06.2022"
+                    end="31.07.2022"/>
+
+        </importantDates>
+
+    </semester>
+
+</semesterList>
