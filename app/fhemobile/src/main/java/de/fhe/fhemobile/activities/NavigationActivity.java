@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -69,10 +70,10 @@ public class NavigationActivity extends BaseActivity {
 
     private static final String JUST_LOCATION = "location";
 
-    // Size of the grid overlying the floorplan (unit: cells - needs to be integer)
+    //Size of the grid overlying the floorplan (unit: cells - needs to be integer)
     //Note: cell numbering at gridded PNGs (docs folder) starts at 0 -> width/height = number + 1
-    private static final int cellgrid_width = 44;
-    private static final int cellgrid_height = 29;
+    private static final double cellgrid_width = 45;
+    private static final double cellgrid_height = 30;
 
     //Variables
     private String destinationQRCode;
@@ -84,8 +85,8 @@ public class NavigationActivity extends BaseActivity {
     private static ArrayList<FloorConnection> floorConnections = new ArrayList<>();
     private ArrayList<Cell> cellsToWalk = new ArrayList<>();
 
-    private float cellWidth;
-    private float cellHeight;
+    private double cellWidth;
+    private double cellHeight;
     private RelativeLayout navigationLayout;
 
 
@@ -184,12 +185,11 @@ public class NavigationActivity extends BaseActivity {
         ImageView floorPlanView = new ImageView(this);
 //        floorPlanView.setImageResource(getResources().getIdentifier("drawable/" +
 //                getFloorPlan(building, floor), null, getPackageName()));
-        floorPlanView.setImageResource(getResources().getIdentifier(
-                "drawable/grid_for_debug", null, getPackageName()));
+        //grid for debugging
+        floorPlanView.setImageResource(getResources().getIdentifier("drawable/grid_for_debug", null, getPackageName()));
+        if (navigationLayout != null) navigationLayout.addView(floorPlanView);
         floorPlanView.setX(0);
         floorPlanView.setY(0);
-
-        if (navigationLayout != null) navigationLayout.addView(floorPlanView);
 
         //The actual displayed size of the floorplans ImageView is needed to determine correct positioning if the icon
         //But width and height are not available in the onCreate() (because the ImageView has not really be drawn at this time)
@@ -198,20 +198,26 @@ public class NavigationActivity extends BaseActivity {
             @Override
             public void run() {
                 //get display size of the floorplan's ImageView
-                int floorplanDisplayWidth = floorPlanView.getMeasuredWidth();
-                int floorplanDisplayHeight = floorPlanView.getMeasuredHeight();
+                int floorplanDisplayWidth = getResources().getDisplayMetrics().widthPixels;
+                //Dreisatz Rescaling //getWidth and getHeight deliver the original size of the picture
+                int floorplanDisplayHeight = floorPlanView.getHeight() * floorplanDisplayWidth / floorPlanView.getWidth();
 
                 //get height and width of a single cell
                 cellWidth = floorplanDisplayWidth / cellgrid_width;
                 cellHeight = floorplanDisplayHeight / cellgrid_height;
 
+                //rescale floorplan to match display width
+                ViewGroup.LayoutParams layoutParams = floorPlanView.getLayoutParams();
+                layoutParams.width = floorplanDisplayWidth;
+                layoutParams.height = floorplanDisplayHeight;
+                floorPlanView.setLayoutParams(layoutParams);
+                //fits image height and width (aspect ratio of the original resource is not maintained -> width and height must be set properly)
+                floorPlanView.setScaleType(ImageView.ScaleType.FIT_XY);
+
                 //Draw navigation
                 drawPathCells(building, floor); // add route (path of cells) to overlay
-
                 drawStartLocation(building, floor); //Add icon for current user location room to overlay
-
                 drawDestinationLocation(building, floor); //Add destination location room icon to overlay
-
                 drawFloorConnections(building, floor); //Add floorConnection icons (like stairs, lifts, ...) to overlay
             }
         });
@@ -219,12 +225,12 @@ public class NavigationActivity extends BaseActivity {
     }
 
     /**
-     * Convert the cell position from unit cellnumber to a unit for displaying
+     * Convert cell position from unit "cell number" to a unit for displaying
      * @param x position in cells
      * @return x in the displaying unit
      */
     private int convertCellCoordX(int x){
-        return Math.round(x * cellWidth);
+        return (int) Math.round( x * cellWidth);
     }
 
     /**
@@ -233,10 +239,8 @@ public class NavigationActivity extends BaseActivity {
      * @return y in the displaying unit
      */
     private int convertCellCoordY(int y){
-        return Math.round(y * cellHeight);
+        return (int) Math.round(y * cellHeight);
     }
-
-    //
 
     /**
      * Draw all path cells of the calculated route
@@ -246,7 +250,6 @@ public class NavigationActivity extends BaseActivity {
     private void drawPathCells(String building, String floor) {
         boolean buildingsThreeTwoOne = building.equals(BUILDING_03) || building.equals(BUILDING_02)
                 || building.equals(BUILDING_01);
-
         try {
             if (!destinationQRCode.equals(JUST_LOCATION)) {
                 for (int j = 0; j < cellsToWalk.size(); j++) {
@@ -276,16 +279,14 @@ public class NavigationActivity extends BaseActivity {
      */
     private void drawPathCell(int index){
         ImageView pathCellIcon = new ImageView(this);
-//        ViewGroup.LayoutParams params = pathCellIcon.getLayoutParams();
-//        pathCellIcon.setAdjustViewBounds(true);
-//        params.width = Math.round(cellWidth);
-//        params.height = Math.round(cellHeight);
-////        pathCellIcon.setScaleType(ImageView.ScaleType.FIT_XY);
+        if (navigationLayout != null) navigationLayout.addView(pathCellIcon);
+
+        fitOneCell(pathCellIcon);
         pathCellIcon.setImageResource(R.drawable.path_cell_icon);
         pathCellIcon.setX(convertCellCoordX(cellsToWalk.get(index).getXCoordinate()));
         pathCellIcon.setY(convertCellCoordY(cellsToWalk.get(index).getYCoordinate()));
 
-        if (navigationLayout != null) navigationLayout.addView(pathCellIcon);
+
     }
 
     /**
@@ -315,10 +316,12 @@ public class NavigationActivity extends BaseActivity {
             if(valid){
                 ImageView startIcon = new ImageView(this);
                 startIcon.setImageResource(R.drawable.start_icon);
+                if (navigationLayout != null) navigationLayout.addView(startIcon);
+                fitOneCell(startIcon);
                 startIcon.setX(convertCellCoordX(startLocation.getXCoordinate()));
                 startIcon.setY(convertCellCoordY(startLocation.getYCoordinate()));
 
-                if (navigationLayout != null) navigationLayout.addView(startIcon);
+
             }
         } catch (Exception e) {
             Log.e(TAG, "error drawing current location room:", e);
@@ -353,10 +356,12 @@ public class NavigationActivity extends BaseActivity {
             if(valid){
                 ImageView destinationIcon = new ImageView(this);
                 destinationIcon.setImageResource(R.drawable.destination_icon);
+                if (navigationLayout != null) navigationLayout.addView(destinationIcon);
+                fitOneCell(destinationIcon);
                 destinationIcon.setX(convertCellCoordX(destinationLocation.getXCoordinate()));
                 destinationIcon.setY(convertCellCoordY(destinationLocation.getYCoordinate()));
 
-                if (navigationLayout != null) navigationLayout.addView(destinationIcon);
+
             }
         } catch (Exception e) {
             Log.e(TAG,"error drawing destination location room:", e);
@@ -405,36 +410,47 @@ public class NavigationActivity extends BaseActivity {
             if (floorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_STAIR)) {
                 ImageView stairIcon = new ImageView(this);
                 stairIcon.setImageResource(R.drawable.stair_icon);
+                if (navigationLayout != null) navigationLayout.addView(stairIcon);
+
+                fitOneCell(stairIcon);
                 stairIcon.setX(convertCellCoordX(floorConnections.get(i).getConnectedCells().get(j).getXCoordinate()));
                 stairIcon.setY(convertCellCoordY(floorConnections.get(i).getConnectedCells().get(j).getYCoordinate()));
-                stairIcon.setMaxHeight((int) cellHeight);
-                stairIcon.setMaxWidth((int) cellWidth);
-                stairIcon.setMinimumHeight((int) cellHeight);
-                stairIcon.setMinimumWidth((int) cellWidth);
-                stairIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
-
-
-                if (navigationLayout != null) navigationLayout.addView(stairIcon);
             }
 
             if (floorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_ELEVATOR)) {
                 ImageView elevatorIcon = new ImageView(this);
                 elevatorIcon.setImageResource(R.drawable.elevator_icon);
+                if (navigationLayout != null) navigationLayout.addView(elevatorIcon);
+
+                fitOneCell(elevatorIcon);
                 elevatorIcon.setX(convertCellCoordX(floorConnections.get(i).getConnectedCells().get(j).getXCoordinate()));
                 elevatorIcon.setY(convertCellCoordY(floorConnections.get(i).getConnectedCells().get(j).getYCoordinate()));
-
-                if (navigationLayout != null) navigationLayout.addView(elevatorIcon);
             }
 
             if (floorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_BRIDGE)) {
                 ImageView crossingIcon = new ImageView(this);
                 crossingIcon.setImageResource(R.drawable.bridge_icon);
+                if (navigationLayout != null) navigationLayout.addView(crossingIcon);
+
+                fitOneCell(crossingIcon);
                 crossingIcon.setX(convertCellCoordX(floorConnections.get(i).getConnectedCells().get(j).getXCoordinate()));
                 crossingIcon.setY(convertCellCoordY(floorConnections.get(i).getConnectedCells().get(j).getYCoordinate()));
-
-                if (navigationLayout != null) navigationLayout.addView(crossingIcon);
             }
         }
+    }
+
+    /**
+     * Make the Icon Picture fit exactly one cell
+     * @param icon ImageView containing the icon (view must be added to parent view before calling)
+     */
+    private void fitOneCell(ImageView icon){
+        //set height and width of the ImageView
+        ViewGroup.LayoutParams layoutParams = icon.getLayoutParams();
+        layoutParams.height = (int) cellHeight;
+        layoutParams.width = (int) cellWidth;
+        icon.setLayoutParams(layoutParams);
+        //make picture fit image height and width (aspect ratio of the resource is not maintained -> width and height must be set properly)
+        icon.setScaleType(ImageView.ScaleType.FIT_XY);
     }
 
 
