@@ -11,49 +11,71 @@ def generateJson(csv_reader, building, floor):
     for row in csv_reader:
         for x in range(len(row)):
 
+            #walkable cell    
             if row[x] == 'w':
                 cell = { "xCoordinate": x, "yCoordinate": y, "walkable": True }
-
                 walkable_cells.append(cell)
 
+            #stairs
             elif row[x] == 's':
-                print('s')
+                connected_cell = { "building": building, "floor": floor,
+                                    "xCoordinate": x, "yCoordinate": y,
+                                    "walkable": True
+                                    }
+                stairs.append(connected_cell)
 
+            #elevator
             elif row[x] == 'e':
-                print('elevator')
+                connected_cell = { "building": building, "floor": floor,
+                                    "xCoordinate": x, "yCoordinate": y,
+                                    "walkable": True
+                                    }
+                elevators.append(connected_cell)
 
+            #room
             elif re.match('\d+', row[x]):
-                room = { "roomNumber": "xx", "building": "xx", "floor": "00",
+                roomnumber = row[x]
+                room = { "roomNumber": roomnumber, "building": building, "floor": floor,
             	            "persons": [],
-                            "qrCode": "05ug01",
+                            "qrCode": building + floor + roomnumber,
                             "xCoordinate": x, "yCoordinate": y,
                             "walkable": True 
                         }
-
                 rooms.append(room)
                 
-
-
+            #error
             elif row[x] != '':
                 print("Fehler")
 
         y = y + 1    
     
-    # save walkable cells to json for this building and floor
-    with open('json/building'+building+floor + '.json', 'w') as f:
+    #save walkable cells to json for this building and floor
+    with open('json/building_'+ building +'_'+ floor + '.json', 'w') as f:
         json.dump(walkable_cells, f)
 
 
 #initialize
-floorconnections = []
+elevators = []
+stairs = []
 rooms = []
 
 #read in csv files
 for file_name in os.listdir(fp_csv_folder):
-    with open(fp_csv_folder + str(file_name)) as file:
-        floorplan_csv = csv.reader(file, delimiter=';')
-        building = '030201'
-        floor = 'test'
-        generateJson(floorplan_csv, building, floor);
+    if re.match(r'cellplan_0[12345]-(0[01234])|(ug)\.CSV',file_name): #check correct file name pattern
+        #get building and floor
+        building = file_name[9:11]
+        floor = file_name[12:14]
 
-print(rooms)
+        with open(fp_csv_folder + str(file_name)) as file:
+            floorplan_csv = csv.reader(file, delimiter=';')
+            generateJson(floorplan_csv, building, floor);
+
+#save rooms.json
+with open('json/rooms.json', 'w') as f:
+    json.dump(rooms, f)
+
+#save all floorconnections
+floorconnections = [{"type": "staircase", "connectedCells": stairs},
+                    {"type": "elevator", "connectedCells": elevators}]
+with open('json/floorconnections.json', 'w') as f:
+    json.dump(floorconnections, f)

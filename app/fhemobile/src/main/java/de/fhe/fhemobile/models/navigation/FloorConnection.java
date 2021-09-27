@@ -19,7 +19,7 @@ public class FloorConnection extends Cell{
     private static final String BUILDING_05 = "05";
 
     //Variables
-    private String typeOfFloorConnection; //stair, elevator, crossing (Brücke)
+    private String typeOfFloorConnection; //stairs, elevator, crossing (Brücke)
     private ArrayList<Cell> connectedCells;
 
     //Constructor

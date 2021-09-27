@@ -60,7 +60,7 @@ public class NavigationActivity extends BaseActivity {
     private static final String BUILDING_04 = "04";
     private static final String BUILDING_05 = "05";
 
-    private static final String FLOORCONNECTION_TYPE_STAIR = "stair";
+    private static final String FLOORCONNECTION_TYPE_STAIR = "staircase";
     private static final String FLOORCONNECTION_TYPE_ELEVATOR = "elevator";
     private static final String FLOORCONNECTION_TYPE_BRIDGE = "crossing";
 
