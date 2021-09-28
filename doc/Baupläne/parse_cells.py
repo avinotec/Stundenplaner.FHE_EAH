@@ -45,12 +45,12 @@ def generateJson(csv_reader, building, floor):
                 
             #error
             elif row[x] != '':
-                print("Fehler")
+                print("Fehler bei", building, 'floor', floor, 'Zelle', x,y)
 
         y = y + 1    
     
     #save walkable cells to json for this building and floor
-    with open('json/building_'+ building +'_'+ floor + '.json', 'w') as f:
+    with open('json/building_'+ building +'_floor_'+ floor + '.json', 'w') as f:
         json.dump(walkable_cells, f)
 
 

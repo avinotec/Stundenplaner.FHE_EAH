@@ -183,10 +183,10 @@ public class NavigationActivity extends BaseActivity {
 
         //Set the floor plan ImageView in the relative layout where the whole navigation is drawn in
         ImageView floorPlanView = new ImageView(this);
-//        floorPlanView.setImageResource(getResources().getIdentifier("drawable/" +
-//                getFloorPlan(building, floor), null, getPackageName()));
+        floorPlanView.setImageResource(getResources().getIdentifier("drawable/" +
+                getFloorPlan(building, floor), null, getPackageName()));
         //grid for debugging
-        floorPlanView.setImageResource(getResources().getIdentifier("drawable/grid_for_debug", null, getPackageName()));
+        //floorPlanView.setImageResource(getResources().getIdentifier("drawable/grid_for_debug", null, getPackageName()));
         if (navigationLayout != null) navigationLayout.addView(floorPlanView);
         floorPlanView.setX(0);
         floorPlanView.setY(0);
