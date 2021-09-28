@@ -34,7 +34,7 @@ class AStarAlgorithm {
 
     private static final int COSTS_CELL = 1;
     private static final int COSTS_ROOM = 1;
-    private static final int COSTS_TRANSITION = 2;
+    private static final int COSTS_FLOORCONNECTION = 2;
 
     //Variables
     private PriorityQueue<Cell> open;
@@ -193,7 +193,7 @@ class AStarAlgorithm {
         }
 
         if (aClass.equals(compareFloorConnectionClass.getClass())) {
-            current.setHeuristicCost(COSTS_TRANSITION);
+            current.setHeuristicCost(COSTS_FLOORCONNECTION);
         }
     }
 }

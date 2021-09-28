@@ -1,5 +1,7 @@
 package de.fhe.fhemobile.activities;
 
+import static de.fhe.fhemobile.utils.Define.Navigation.*;
+
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -37,43 +39,12 @@ public class NavigationActivity extends BaseActivity {
     //Constants
     private static final String TAG = "NavigationActivity"; //$NON-NLS
 
-    private static final String BUILDING_03_02_01_FLOOR_UG = "building_03_02_01_floor_ug";
-    private static final String BUILDING_03_02_01_FLOOR_00 = "building_03_02_01_floor_00";
-    private static final String BUILDING_03_02_01_FLOOR_01 = "building_03_02_01_floor_01";
-    private static final String BUILDING_03_02_01_FLOOR_02 = "building_03_02_01_floor_02";
-    private static final String BUILDING_03_02_01_FLOOR_03 = "building_03_02_01_floor_03";
-    private static final String BUILDING_03_02_01_FLOOR_04 = "building_03_02_01_floor_04";
-    private static final String BUILDING_04_FLOOR_UG = "building_04_floor_ug";
-    private static final String BUILDING_04_FLOOR_00 = "building_04_floor_00";
-    private static final String BUILDING_04_FLOOR_01 = "building_04_floor_01";
-    private static final String BUILDING_04_FLOOR_02 = "building_04_floor_02";
-    private static final String BUILDING_04_FLOOR_03 = "building_04_floor_03";
-    private static final String BUILDING_05_FLOOR_UG = "building_05_floor_ug";
-    private static final String BUILDING_05_FLOOR_00 = "building_05_floor_00";
-    private static final String BUILDING_05_FLOOR_01 = "building_05_floor_01";
-    private static final String BUILDING_05_FLOOR_02 = "building_05_floor_02";
-    private static final String BUILDING_05_FLOOR_03 = "building_05_floor_03";
+    private static final String FILE_ROOMS = "rooms.json";
 
-    private static final String BUILDING_01 = "01";
-    private static final String BUILDING_02 = "02";
-    private static final String BUILDING_03 = "03";
-    private static final String BUILDING_04 = "04";
-    private static final String BUILDING_05 = "05";
-
-    private static final String FLOORCONNECTION_TYPE_STAIR = "staircase";
-    private static final String FLOORCONNECTION_TYPE_ELEVATOR = "elevator";
-    private static final String FLOORCONNECTION_TYPE_BRIDGE = "crossing";
-
-    private static final String JSON_FILE_ROOMS = "rooms.json";
-
-    private static final String JSON_FILE_TRANSITIONS = "floorconnections.json";
+    private static final String FILE_FLOORCONNECTIONS = "floorconnections.json";
 
     private static final String JUST_LOCATION = "location";
 
-    //Size of the grid overlying the floorplan (unit: cells - needs to be integer)
-    //Note: cell numbering at gridded PNGs (docs folder) starts at 0 -> width/height = number + 1
-    private static final double cellgrid_width = 45;
-    private static final double cellgrid_height = 30;
 
     //Variables
     private String destinationQRCode;
@@ -137,7 +108,7 @@ public class NavigationActivity extends BaseActivity {
 
         //Get rooms, stairs, elevators and entrances (inkl. bridge) from JSON
         // lädt die verfügbaren Räume und Aufgänge aus den entsprechenden JSON-Dateien
-        getRoomsAndTransitions();
+        getRoomsAndFloorconnections();
 
         //Get current user location room
         //setzt den übermittelten Standort den Startraums, bzw. die aktuelle Position des Nutzers
@@ -409,7 +380,7 @@ public class NavigationActivity extends BaseActivity {
 
             if (floorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_STAIR)) {
                 ImageView stairIcon = new ImageView(this);
-                stairIcon.setImageResource(R.drawable.stair_icon);
+                stairIcon.setImageResource(R.drawable.stairs_icon);
                 if (navigationLayout != null) navigationLayout.addView(stairIcon);
 
                 fitOneCell(stairIcon);
@@ -429,7 +400,7 @@ public class NavigationActivity extends BaseActivity {
 
             if (floorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_BRIDGE)) {
                 ImageView crossingIcon = new ImageView(this);
-                crossingIcon.setImageResource(R.drawable.bridge_icon);
+                //crossingIcon.setImageResource(R.drawable.bridge_icon); /todo make new bridge icon
                 if (navigationLayout != null) navigationLayout.addView(crossingIcon);
 
                 fitOneCell(crossingIcon);
@@ -489,20 +460,20 @@ public class NavigationActivity extends BaseActivity {
     /**
      * Load rooms, stairs, elevators and the bridge from JSON
      */
-    private void getRoomsAndTransitions() {
+    private void getRoomsAndFloorconnections() {
         try {
             JSONHandler jsonHandler = new JSONHandler();
             String json;
 
             // read only once
             if (rooms.isEmpty()) {
-                json = jsonHandler.readJsonFromAssets(this, JSON_FILE_ROOMS);
+                json = jsonHandler.readJsonFromAssets(this, FILE_ROOMS);
                 rooms = jsonHandler.parseJsonRooms(json);
             }
 
             // read only once
             if (floorConnections.isEmpty()) {
-                json = jsonHandler.readJsonFromAssets(this, JSON_FILE_TRANSITIONS);
+                json = jsonHandler.readJsonFromAssets(this, FILE_FLOORCONNECTIONS);
                 floorConnections = jsonHandler.parseJsonFloorConnection(json);
             }
 

@@ -1,5 +1,7 @@
 package de.fhe.fhemobile.models.navigation;
 
+import static de.fhe.fhemobile.utils.Define.Navigation.*;
+
 import java.util.ArrayList;
 
 /**
@@ -11,12 +13,6 @@ public class FloorConnection extends Cell{
 
     //Constants
     private static final String TAG = "FloorConnection"; //$NON-NLS
-
-    private static final String BUILDING_01 = "01";
-    private static final String BUILDING_02 = "02";
-    private static final String BUILDING_03 = "03";
-    private static final String BUILDING_04 = "04";
-    private static final String BUILDING_05 = "05";
 
     //Variables
     private String typeOfFloorConnection; //stairs, elevator, crossing (Brücke)
