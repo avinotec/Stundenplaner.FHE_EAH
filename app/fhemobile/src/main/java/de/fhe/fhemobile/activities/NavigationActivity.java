@@ -108,7 +108,7 @@ public class NavigationActivity extends BaseActivity {
 
         //Get rooms, stairs, elevators and entrances (inkl. bridge) from JSON
         // lädt die verfügbaren Räume und Aufgänge aus den entsprechenden JSON-Dateien
-        getRoomsAndFloorconnections();
+        getRoomsAndFloorConnections();
 
         //Get current user location room
         //setzt den übermittelten Standort den Startraums, bzw. die aktuelle Position des Nutzers
@@ -398,9 +398,9 @@ public class NavigationActivity extends BaseActivity {
                 elevatorIcon.setY(convertCellCoordY(floorConnections.get(i).getConnectedCells().get(j).getYCoordinate()));
             }
 
-            if (floorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_BRIDGE)) {
+            if (floorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_WAY)) {
                 ImageView crossingIcon = new ImageView(this);
-                //crossingIcon.setImageResource(R.drawable.bridge_icon); /todo make new bridge icon
+                //crossingIcon.setImageResource(R.drawable.bridge_icon); //todo make new bridge icon
                 if (navigationLayout != null) navigationLayout.addView(crossingIcon);
 
                 fitOneCell(crossingIcon);
@@ -417,8 +417,8 @@ public class NavigationActivity extends BaseActivity {
     private void fitOneCell(ImageView icon){
         //set height and width of the ImageView
         ViewGroup.LayoutParams layoutParams = icon.getLayoutParams();
-        layoutParams.height = (int) cellHeight;
-        layoutParams.width = (int) cellWidth;
+        layoutParams.height = (int) Math.round(cellHeight*0.95); //fill 95% of the cell
+        layoutParams.width = (int) Math.round(cellWidth*0.95);
         icon.setLayoutParams(layoutParams);
         //make picture fit image height and width (aspect ratio of the resource is not maintained -> width and height must be set properly)
         icon.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -460,7 +460,7 @@ public class NavigationActivity extends BaseActivity {
     /**
      * Load rooms, stairs, elevators and the bridge from JSON
      */
-    private void getRoomsAndFloorconnections() {
+    private void getRoomsAndFloorConnections() {
         try {
             JSONHandler jsonHandler = new JSONHandler();
             String json;
@@ -490,7 +490,6 @@ public class NavigationActivity extends BaseActivity {
 
         try {
             for (int i = 0; i < rooms.size(); i++) {
-
                 if (rooms.get(i).getQRCode().equals(currentLocation)) {
                     startLocation = rooms.get(i);
                 }
@@ -508,7 +507,6 @@ public class NavigationActivity extends BaseActivity {
 
         try {
             for (int i = 0; i < rooms.size(); i++) {
-
                 if (rooms.get(i).getQRCode().equals(destinationQRCode)) {
                     destinationLocation = rooms.get(i);
                 }
@@ -526,7 +524,7 @@ public class NavigationActivity extends BaseActivity {
     private void getRoute() {
         try {
             RouteCalculator routeCalculator = new RouteCalculator(this, startLocation, destinationLocation, floorConnections);
-            cellsToWalk.addAll(routeCalculator.getNavigationCells());
+            cellsToWalk.addAll(routeCalculator.getWholeRoute());
         } catch (Exception e) {
             Log.e(TAG,"error calculating route:", e);
         }

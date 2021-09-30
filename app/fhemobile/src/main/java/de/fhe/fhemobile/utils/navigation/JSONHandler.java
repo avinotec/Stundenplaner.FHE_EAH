@@ -95,9 +95,9 @@ public class JSONHandler {
 
 
     /**
-     * Parse JSON to rooms ArrayList<Cell>
+     * Parse rooms from JSON
      * @param json
-     * @return
+     * @return ArrayList fo rooms
      */
     public ArrayList<Room> parseJsonRooms(final String json) {
 
@@ -135,9 +135,9 @@ public class JSONHandler {
     }
 
     /**
-     * Parse JSON to transitions ArrayList<Cell>
+     * Parse floor connections from JSON
      * @param json
-     * @return
+     * @return ArrayList of floor connections
      */
     public ArrayList<FloorConnection> parseJsonFloorConnection(final String json) {
 
@@ -179,9 +179,9 @@ public class JSONHandler {
     }
 
     /**
-     * Parse JSON to walkableCells ArrayList<Cell>
+     * Parse walkable cells from JSON
      * @param json
-     * @return
+     * @return ArrayList of walkable cells
      */
     public ArrayList<Cell> parseJsonWalkableCells(final String json) {
 

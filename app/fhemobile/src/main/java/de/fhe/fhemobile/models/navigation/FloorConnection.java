@@ -2,6 +2,8 @@ package de.fhe.fhemobile.models.navigation;
 
 import static de.fhe.fhemobile.utils.Define.Navigation.*;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -15,7 +17,7 @@ public class FloorConnection extends Cell{
     private static final String TAG = "FloorConnection"; //$NON-NLS
 
     //Variables
-    private String typeOfFloorConnection; //stairs, elevator, crossing (Brücke)
+    private String typeOfFloorConnection; //stairs, elevator, way outside building, bridge
     private ArrayList<Cell> connectedCells;
 
     //Constructor
@@ -31,33 +33,37 @@ public class FloorConnection extends Cell{
         return connectedCells;
     }
 
-    public Cell getSingleCell(String building, String floor) {
+    /**
+     * Returns the connected cell at the particular building and floor
+     * @param building
+     * @param floor
+     * @return connected cell at this building and floor
+     */
+    public Cell getConnectedCell(String building, String floor) {
 
-        Cell cell = new Cell();
+        Cell cell = null;
 
         for (int index = 0; index < connectedCells.size(); index++) {
 
-            if (connectedCells.get(index).getBuilding().equals(BUILDING_05)
-                    && (building.equals(BUILDING_05)) && connectedCells.get(index).getFloor().equals(floor)) {
+            //case building = 04 or 05
+            if (connectedCells.get(index).getBuilding().equals(building)
+                    && connectedCells.get(index).getFloor().equals(floor)) {
 
                 cell = connectedCells.get(index);
             }
-
-            if (connectedCells.get(index).getBuilding().equals(BUILDING_04)
-                    && (building.equals(BUILDING_04)) && connectedCells.get(index).getFloor().equals(floor)) {
-
-                cell = connectedCells.get(index);
-            }
-
-            if ((connectedCells.get(index).getBuilding().equals(BUILDING_03)
+            //case building = 03-02-01
+            else if ((connectedCells.get(index).getBuilding().equals(BUILDING_03)
                     || connectedCells.get(index).getBuilding().equals(BUILDING_02)
                     || connectedCells.get(index).getBuilding().equals(BUILDING_01)) &&
                     (building.equals(BUILDING_03) || building.equals(BUILDING_02) || building.equals(BUILDING_01))
                     && connectedCells.get(index).getFloor().equals(floor)) {
 
                 cell = connectedCells.get(index);
+            } else {
+                Log.e(TAG, "FloorConnection does not connected any cells at the requested building and floor");
             }
         }
+
         return cell;
     }
 

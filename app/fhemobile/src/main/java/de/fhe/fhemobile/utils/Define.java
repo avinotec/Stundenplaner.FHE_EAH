@@ -49,12 +49,17 @@ public class Define {
 
 		public static final String FLOORCONNECTION_TYPE_STAIR = "staircase";
 		public static final String FLOORCONNECTION_TYPE_ELEVATOR = "elevator";
-		public static final String FLOORCONNECTION_TYPE_BRIDGE = "crossing";
+		public static final String FLOORCONNECTION_TYPE_WAY = "way"; //ways outside buildings + bridge //todo icons neu machen und Positionierung festlegen
 
 		//Size of the grid overlying the floorplan (unit: cells - needs to be integer)
 		//Note: cell numbering at gridded PNGs (docs folder) starts at 0 -> width/height = number + 1
 		public static final double cellgrid_width = 45;
 		public static final double cellgrid_height = 30;
+
+		//für A-Star Algroithmus
+		public static final int COSTS_CELL = 1;
+		public static final int COSTS_ROOM = 1;
+		public static final int COSTS_FLOORCONNECTION = 2;
 
 	}
 

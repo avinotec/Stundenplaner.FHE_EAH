@@ -50,8 +50,12 @@ def generateJson(csv_reader, building, floor):
         y = y + 1    
     
     #save walkable cells to json for this building and floor
-    with open('json/building_'+ building +'_floor_'+ floor + '.json', 'w') as f:
-        json.dump(walkable_cells, f)
+    if (building == '04') | (building == '05'):
+        with open('json/building_'+ building +'_floor_'+ floor + '.json', 'w') as f:
+            json.dump(walkable_cells, f)
+    else:
+        with open('json/tmp/building_'+ building +'_floor_'+ floor + '.json', 'w') as f:
+            json.dump(walkable_cells, f)
 
 
 #initialize
@@ -61,7 +65,7 @@ rooms = []
 
 #read in csv files
 for file_name in os.listdir(fp_csv_folder):
-    if re.match(r'cellplan_0[12345]-(0[01234])|(ug)\.CSV',file_name): #check correct file name pattern
+    if re.match(r'cellplan_0[12345]-((0[01234])|(ug))\.CSV',file_name): #check correct file name pattern
         #get building and floor
         building = file_name[9:11]
         floor = file_name[12:14]
@@ -79,3 +83,20 @@ floorconnections = [{"type": "staircase", "connectedCells": stairs},
                     {"type": "elevator", "connectedCells": elevators}]
 with open('json/floorconnections.json', 'w') as f:
     json.dump(floorconnections, f)
+
+
+#merge building 3, 2 and 1
+for i in ['ug', '00', '01', '02', '03', '04']:
+    with open('json/tmp/building_03_floor_' + i + '.json', 'r') as f:
+        json_building03 = json.load(f)
+    with open('json/tmp/building_02_floor_' + i + '.json', 'r') as f:
+        json_building02 = json.load(f)
+    with open('json/tmp/building_01_floor_' + i + '.json', 'r') as f:
+        json_building01 = json.load(f)
+    
+    json_building321 = json_building03 + json_building02 + json_building03
+
+    with open('json/building_03_02_01_floor_'+i+'.json', 'w') as f:
+        json.dump(json_building321, f)
+
+        
