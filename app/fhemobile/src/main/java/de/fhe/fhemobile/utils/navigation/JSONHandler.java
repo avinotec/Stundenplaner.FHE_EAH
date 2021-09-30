@@ -21,6 +21,8 @@ package de.fhe.fhemobile.utils.navigation;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.core.util.Pair;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -29,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.models.navigation.FloorConnection;
@@ -183,9 +186,9 @@ public class JSONHandler {
      * @param json
      * @return ArrayList of walkable cells
      */
-    public ArrayList<Cell> parseJsonWalkableCells(final String json) {
+    public HashMap<Pair<Integer,Integer>, Cell> parseJsonWalkableCells(final String json) {
 
-        final ArrayList<Cell> walkableCells = new ArrayList<>();
+        final HashMap<Pair<Integer,Integer>, Cell> walkableCells = new HashMap<>();
 
         try {
             JSONArray jsonArray = new JSONArray(json);
@@ -198,7 +201,8 @@ public class JSONHandler {
                 entry.setYCoordinate(jEntry.optInt(Y_COORDINATE));
                 entry.setWalkability(jEntry.optBoolean(WALKABLE));
 
-                walkableCells.add(entry);
+                walkableCells.put(new Pair(X_COORDINATE, Y_COORDINATE), entry);
+
             }
         } catch (Exception e) {
             Log.e(TAG, "error parsing JSON walkableCells", e);

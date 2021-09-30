@@ -17,14 +17,40 @@
 
 package de.fhe.fhemobile.utils.navigation;
 
-import static de.fhe.fhemobile.utils.Define.Navigation.*;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_01;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_02;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03_02_01_FLOOR_00;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03_02_01_FLOOR_01;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03_02_01_FLOOR_02;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03_02_01_FLOOR_03;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03_02_01_FLOOR_04;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03_02_01_FLOOR_UG;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_04;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_04_FLOOR_00;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_04_FLOOR_01;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_04_FLOOR_02;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_04_FLOOR_03;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_04_FLOOR_UG;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_05;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_05_FLOOR_00;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_05_FLOOR_01;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_05_FLOOR_02;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_05_FLOOR_03;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_05_FLOOR_UG;
+import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_WAY;
+import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_height;
+import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_width;
 
 import android.content.Context;
 import android.util.Log;
 
+import androidx.core.util.Pair;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 
 import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.models.navigation.FloorConnection;
@@ -679,28 +705,21 @@ public class RouteCalculator {
 
             //Get floor plan JSON from assets
             json = jsonHandler.readJsonFromAssets(context, floorplanName(building, floor) + ".json");
-            final ArrayList<Cell> walkableCells = jsonHandler.parseJsonWalkableCells(json);
+            final HashMap<Pair<Integer,Integer>, Cell> walkableCells = jsonHandler.parseJsonWalkableCells(json);
 
             //iterate over whole grid size to fill floorGrid
             for (int x = 0; x < cellgrid_width; x++) {
                 floorGrid.add(new ArrayList<Cell>());
 
                 for (int y = 0; y < cellgrid_height; y++) {
+
+                    //check walkablility
                     boolean walkable = false;
+                    if (walkableCells.get(new Pair(x, y)) != null) walkable = true;
 
-                    for (int i = 0; i < walkableCells.size(); i++) {
-                        if (walkableCells.get(i).getXCoordinate() == x
-                                && walkableCells.get(i).getYCoordinate() == y) {
+                    //add a walkable or non-walkable cell with coordinates x,y
+                    floorGrid.get(x).add(new Cell(x, y, building, floor, walkable));
 
-                            floorGrid.get(x).add(new Cell(x, y, building, floor, true));
-                            walkable = true;
-                        }
-                    }
-
-                    //if no walkable cell for (x,y) was found add a non-walkable cell
-                    if (!walkable) {
-                        floorGrid.get(x).add(new Cell(x, y, building, floor, false));
-                    }
                 }
             }
         } catch (Exception e) {
