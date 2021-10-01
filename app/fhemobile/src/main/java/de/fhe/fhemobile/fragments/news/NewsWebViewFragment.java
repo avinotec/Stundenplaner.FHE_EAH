@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
@@ -44,6 +45,7 @@ public class NewsWebViewFragment extends FeatureFragment {
         fragment.setArguments(args);
         return fragment;
     }
+
 
 /*
     @Override
@@ -70,5 +72,14 @@ public class NewsWebViewFragment extends FeatureFragment {
         // Inflate the layout for this fragment
         mView = (NewsWebView) inflater.inflate(R.layout.fragment_news_webview, container, false);
         return mView;
+    }
+
+    /**
+     * Return the webview object of the fragment
+     * Needed for back button behavior
+     * @return webview displayed in the fragment
+     */
+    public WebView getWebView(){
+        return getView().findViewById(R.id.newsWebView);
     }
 }

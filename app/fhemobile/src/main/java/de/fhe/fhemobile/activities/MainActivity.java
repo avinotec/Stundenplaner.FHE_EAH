@@ -20,6 +20,7 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.webkit.WebView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,8 +41,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.DrawerFragment;
+import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
+import de.fhe.fhemobile.fragments.impressum.ImpressumFragment;
+import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
+import de.fhe.fhemobile.fragments.semesterdata.SemesterDataWebViewFragment;
 import de.fhe.fhemobile.models.timeTableChanges.RequestModel;
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.network.NetworkHandler;
@@ -109,7 +114,6 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             }
         });
 */
-
 
 
         Bundle bundle = getIntent().getExtras();
@@ -288,7 +292,6 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 //        transaction.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.abc_fade_in, R.anim.abc_fade_out);
 
         if (_AddToBackStack) {
-
             transaction.addToBackStack(null);
         }
 //Todo: Wenn ein eintrag im Backstack ist, dann eine andere Rubrik ausgewählt wird (z.B. news) und dann back-taste gedrueckt wird, überlagern sich die layouts.
@@ -298,6 +301,31 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 //        }
 
         transaction.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mCurrentFragment != null){
+            WebView webview = null;
+
+            //check if currentFragment contains a webview
+            if(mCurrentFragment instanceof NewsWebViewFragment){
+                webview = ((NewsWebViewFragment) mCurrentFragment).getWebView();
+            }else if( mCurrentFragment instanceof SemesterDataWebViewFragment){
+                webview = ((SemesterDataWebViewFragment) mCurrentFragment).getWebView();
+            }else if (mCurrentFragment instanceof ImpressumFragment){
+                webview = ((ImpressumFragment) mCurrentFragment).getWebView();
+            }else if(mCurrentFragment instanceof EventsWebViewFragment){
+                webview = ((EventsWebViewFragment) mCurrentFragment).getWebView();
+            }
+
+            if(webview!= null && webview.canGoBack())
+                webview.goBack();// if there is previous page open it
+            else {
+                super.onBackPressed();//if there is no previous page, close app
+            }
+        } else super.onBackPressed();
+
     }
 
 
@@ -341,7 +369,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                     if(sdf.parse(event.getDate() + " " + event.getEndTime()).compareTo(new Date()) < 0) {
                         return (i);
                     }
-                    if(i==0){
+                    if(i == 0){
                         return i;
                     }
                     return (i-1);
