@@ -20,9 +20,9 @@
 
     <!--General Colors-->
     
-    <color name="primary_color">#009790</color>
-    <color name="primary_transparent_color">#CC009790</color>
-    <color name="primary_dark_color">#009790</color>
+    <color name="primary_color">#009990</color>
+    <color name="primary_transparent_color">#CC009990</color>
+    <color name="primary_dark_color">#009990</color>
 
     <color name="secondary_color">#e5f4f4</color>
     <color name="third_color">#9db3a9</color>
@@ -49,6 +49,6 @@
     <color name="list_item_text">@color/primary_color</color>
     <color name="list_item_text_secondary">@color/third_color</color>
     <color name="list_header_text">@color/primary_color</color>
-    <color name="list_header_background">#12009790</color>
+    <color name="list_header_background">#12009990</color>
     
 </resources>
