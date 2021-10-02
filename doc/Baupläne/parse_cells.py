@@ -5,7 +5,7 @@ fp_csv_folder = r"csv/"
 
 
 def generateJson(csv_reader, building, floor):
-    walkable_cells = [];
+    walkable_cells = []
 
     y = 0
     for row in csv_reader:
@@ -19,10 +19,13 @@ def generateJson(csv_reader, building, floor):
             #stairs
             elif row[x] == 's':
                 connected_cell = { "building": building, "floor": floor,
-                                    "xCoordinate": x, "yCoordinate": y,
-                                    "walkable": True
-                                    }
-                stairs.append(connected_cell)
+                                        "xCoordinate": x, "yCoordinate": y,
+                                        "walkable": True
+                                }
+                if (x,y) in stairs:
+                    stairs[(x,y)].append(connected_cell)
+                else:
+                    stairs[(x,y)] = [connected_cell]
 
             #elevator
             elif row[x] == 'e':
@@ -30,7 +33,10 @@ def generateJson(csv_reader, building, floor):
                                     "xCoordinate": x, "yCoordinate": y,
                                     "walkable": True
                                     }
-                elevators.append(connected_cell)
+                if (x,y) in elevators:
+                    elevators[(x,y)].append(connected_cell)
+                else:
+                    elevators[(x,y)] = [connected_cell]
 
             #room
             elif re.match('\d+', row[x]):
@@ -59,8 +65,8 @@ def generateJson(csv_reader, building, floor):
 
 
 #initialize
-elevators = []
-stairs = []
+elevators = {}
+stairs = {}
 rooms = []
 
 #read in csv files
@@ -79,8 +85,7 @@ with open('json/rooms.json', 'w') as f:
     json.dump(rooms, f)
 
 #save all floorconnections
-floorconnections = [{"type": "staircase", "connectedCells": stairs},
-                    {"type": "elevator", "connectedCells": elevators}]
+floorconnections = [{"type": "staircase", "connectedCells": value} for key, value in stairs.items()] + [{"type": "elevator", "connectedCells": value} for key, value in elevators.items()]
 with open('json/floorconnections.json', 'w') as f:
     json.dump(floorconnections, f)
 
