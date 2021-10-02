@@ -16,7 +16,8 @@
  */
 
 package de.fhe.fhemobile.utils.navigation;
-import static de.fhe.fhemobile.utils.Define.Navigation.*;
+import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_height;
+import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_width;
 
 import android.util.Log;
 
@@ -25,8 +26,6 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 
 import de.fhe.fhemobile.models.navigation.Cell;
-import de.fhe.fhemobile.models.navigation.FloorConnection;
-import de.fhe.fhemobile.models.navigation.Room;
 
 /**
  * Class for route calculation at a single floor using the A* algorithm
@@ -36,11 +35,11 @@ class AStar {
     private static final String TAG = "AStar"; //$NON-NLS
 
     //Variables
-    private PriorityQueue<Cell> openCells; //Zellen im Zustand "wartend", sortiert nach costsPathToCell (s. doc\BA_Kapitel_AStarAlgorithmus.txt)
+    private PriorityQueue<Cell> openCells; //The set of discovered nodes that may need to be (re-)expanded. Sorted by costsPathToCell
     private boolean[][] closedCells; //Zellen im Zustand "fertig"
     private Cell startCell; //Startzelle für den kürzesten Weg auf diesem Stockwerk; kann auch eine Treppe, Aufzug etc sein
     private Cell endCell; //Endzelle für den kürzesten Weg auf diesem Stockwerk; kann auch eine Treppe, Aufzug etc sein
-    private ArrayList<ArrayList<Cell>> floorCellGrid; //Koordinatensystem aus allen begehbaren und nicht-begehbaren Zellen des Stockwerks
+    private Cell[][] floorCellGrid; //Koordinatensystem aus allen begehbaren und nicht-begehbaren Zellen des Stockwerks
 
     /**
      * Constructs an AStar Object
@@ -48,7 +47,7 @@ class AStar {
      * @param endCell
      * @param floorCellGrid
      */
-    AStar(final Cell startCell, final Cell endCell, final ArrayList<ArrayList<Cell>> floorCellGrid) {
+    AStar(final Cell startCell, final Cell endCell, final Cell[][] floorCellGrid) {
         this.startCell = startCell;
         this.endCell = endCell;
         this.floorCellGrid = floorCellGrid;
@@ -63,7 +62,7 @@ class AStar {
         final ArrayList<Cell> navigationCells = new ArrayList<>();
 
         try {
-            //Set priority queue with comparator
+            //Set priority queue with comparator (prioritize cells based on their costsPathToCell)
             openCells = new PriorityQueue<>(16, new Comparator<Cell>() {
 
                 /**
@@ -78,20 +77,23 @@ class AStar {
                 }
             });
 
-            openCells.add(startCell); //add startCell to priority queue (cells with status "wartend")
-            closedCells = new boolean[floorCellGrid.size()][floorCellGrid.get(0).size()]; //set size of closed array (cells with status "fertig")
+            startCell.setCostsPathToCell(-1); //initialize startcell
+            openCells.add(startCell); //add startCell to priority queue (cells with status "open")
+            closedCells = new boolean[(int) cellgrid_width][(int) cellgrid_height]; //set size of closed array (cells with status "closed")
+            floorCellGrid[endCell.getXCoordinate()][endCell.getYCoordinate()].setCostPassingCell(0); //set costs of endcell to 0
+            floorCellGrid[startCell.getXCoordinate()][(startCell.getYCoordinate())].setCostPassingCell(0);
             performAStarAlgorithm(); //run A* algorithm
 
-            //backtracing path
-            if (closedCells[endCell.getXCoordinate()][endCell.getYCoordinate()]) {
+            //backtracing to reconstruct navigation path
+            //get end cell as start cell for backtracing
+            Cell currentCell = floorCellGrid[endCell.getXCoordinate()][endCell.getYCoordinate()];
 
-                Cell current = floorCellGrid.get(endCell.getXCoordinate()).get(endCell.getYCoordinate());
-
-                while (current.getParentCell() != null) {
-                    navigationCells.add(current);
-                    current = current.getParentCell();
-                }
+            //reconstruct path
+            while (currentCell.getParentCell() != null) {
+                navigationCells.add(currentCell);
+                currentCell = currentCell.getParentCell();
             }
+
         } catch (Exception e) {
             Log.e(TAG, "error calculating route ", e);
         }
@@ -104,124 +106,69 @@ class AStar {
     private void performAStarAlgorithm() {
         while (!openCells.isEmpty()) {
 
-            final Cell currentCell = openCells.poll();
+            final Cell currentCell = openCells.poll(); //get the cell that's path to it is the cheapest and remove it from the priority queue
 
             if (currentCell != null && currentCell.getWalkability()) {
                 closedCells[currentCell.getXCoordinate()][currentCell.getYCoordinate()] = true;
 
-                if (!currentCell.equals(endCell)) {
-
-                    Cell testCell;
+                if (!currentCell.equals(endCell)) { //current cell is not destination
 
                     //Überprüft die Kosten der 4 direkt angrenzenden Zellen der aktuellen Zelle (Diagonale wird nicht betrachtet)
                     //Check left
-                    if (currentCell.getXCoordinate() - 1 >= 0) {
-                        testCell = floorCellGrid.get(currentCell.getXCoordinate() - 1).get(currentCell.getYCoordinate());
-                        setCostOfCell(currentCell );
-                        updateParentAndCosts(currentCell, testCell, currentCell.getCostsPathToCell() + currentCell.getCostPassingCell());
+                    if (currentCell.getXCoordinate() > 0) { //check that cell is not at edge of grid
+                        Cell neighbouringCell = floorCellGrid[currentCell.getXCoordinate() - 1][currentCell.getYCoordinate()];
+                        updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
 
                     //Check right
-                    if (currentCell.getXCoordinate() + 1 < floorCellGrid.size()) {
-                        testCell = floorCellGrid.get(currentCell.getXCoordinate() + 1).get(currentCell.getYCoordinate());
-                        setCostOfCell(currentCell);
-                        updateParentAndCosts(currentCell, testCell, currentCell.getCostsPathToCell() + currentCell.getCostPassingCell());
+                    if (currentCell.getXCoordinate() < cellgrid_width) { //check that cell is not at edge of grid
+                        Cell neighbouringCell = floorCellGrid[currentCell.getXCoordinate() + 1][currentCell.getYCoordinate()];
+                        updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
 
                     //Check below
-                    if (currentCell.getYCoordinate() - 1 >= 0) {
-                        testCell = floorCellGrid.get(currentCell.getXCoordinate()).get(currentCell.getYCoordinate() - 1);
-                        setCostOfCell(currentCell);
-                        updateParentAndCosts(currentCell, testCell, currentCell.getCostsPathToCell() + currentCell.getCostPassingCell());
+                    if (currentCell.getYCoordinate() > 0) { //check that cell is not at edge of grid
+                        Cell neighbouringCell = floorCellGrid[currentCell.getXCoordinate()][currentCell.getYCoordinate() - 1];
+                        updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
 
                     //Check above
-                    if (currentCell.getYCoordinate() + 1 < floorCellGrid.get(0).size()) {
-                        testCell = floorCellGrid.get(currentCell.getXCoordinate()).get(currentCell.getYCoordinate() + 1);
-                        setCostOfCell(currentCell);
-                        updateParentAndCosts(currentCell, testCell, currentCell.getCostsPathToCell() + currentCell.getCostPassingCell());
+                    if (currentCell.getYCoordinate() < cellgrid_height) { //check that cell is not at edge of grid
+                        Cell neighbouringCell = floorCellGrid[currentCell.getXCoordinate()][currentCell.getYCoordinate() + 1];
+                        updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
-                }
+                } else return;
             }
         }
     }
 
     /**
-     * Update costs for path to cell and parent cell for the particular cell
+     * Update parent cell for the particular cell and the costs for the path to the cell
      * @param cell
      * @param parentCell
-     * @param costsPathToParentCell costsPathToCell of the parent cell
      */
-    private void updateParentAndCosts(final Cell cell, final Cell parentCell, final int costsPathToParentCell) {
+    private void updateParentAndPathToCellCosts(final Cell cell, final Cell parentCell) {
 
-        final int costsPathToCell = cell.getCostPassingCell() + costsPathToParentCell;
-        final boolean isInOpenQueue = openCells.contains(cell); // cell hat bereits Zustand "wartend"
+        final int parentCellPathCosts = parentCell.getCostsPathToCell(); //is initialized with -1
+        final int costsPathToCell = parentCellPathCosts >= 0 ?
+                cell.getCostPassingCell() + parentCellPathCosts : cell.getCostPassingCell();
+        final boolean isInOpenQueue = openCells.contains(cell); // cell has already status "open"
 
         //check if cell is walkable and does not have status "closed"
         if (cell.getWalkability() && !closedCells[cell.getXCoordinate()][cell.getYCoordinate()]) {
 
-            // cell has unknown status or this path to the cell is cheaper than previous path to it
+            // cell has status "unknown" or this path to the cell is cheaper than the path currently known
             if (!isInOpenQueue || costsPathToCell < cell.getCostsPathToCell()) {
 
                 //update costs and parent cell
-                cell.setCostsPathToCell(costsPathToParentCell);
+                cell.setCostsPathToCell(costsPathToCell);
                 cell.setParentCell(parentCell);
 
                 if (!isInOpenQueue) {
-                    openCells.add(cell); //update status of cell from unknown to "wartend"/"open"
+                    openCells.add(cell); //update status of cell from unknown to "open"
                 }
             }
         }
     }
 
-    //Todo: warum werden im Original die Kosten wie das Passieren einer Zelle in die Elternzelle geschrieben, also warum hängt costPassingCell von der nächsten zelle im Weg ab?
-//    /**
-//     * Set cost of the cell to check
-//     * @param current
-//     * @param test
-//     */
-//    private void setCostPerCell(final Cell current, final Cell test) {
-//
-//        final Class<? extends Cell> aClass = test.getClass();
-//
-//        final Cell compareCellClass = new Cell();
-//        final Room compareRoomClass = new Room();
-//        final FloorConnection compareFloorConnectionClass = new FloorConnection();
-//
-//        if (aClass.equals(compareCellClass.getClass())) {
-//            current.setCostPassingCell(COSTS_CELL);
-//        }
-//
-//        if (aClass.equals(compareRoomClass.getClass())) {
-//            current.setCostPassingCell(COSTS_ROOM);
-//        }
-//
-//        if (aClass.equals(compareFloorConnectionClass.getClass())) {
-//            current.setCostPassingCell(COSTS_FLOORCONNECTION);
-//        }
-//    }
-
-    /**
-     //     * Set cost of the cell to check
-     //     * @param current
-     //     * @param test
-     //     */
-    private void setCostOfCell(final Cell cell) {
-
-        final Class<? extends Cell> aClass = cell.getClass();
-
-
-        if (aClass.equals((new Cell()).getClass())) {
-            cell.setCostPassingCell(COSTS_CELL);
-        }
-        else if (aClass.equals((new Room()).getClass())) {
-            cell.setCostPassingCell(COSTS_ROOM);
-        }
-        else if (aClass.equals((new FloorConnection()).getClass())) {
-            cell.setCostPassingCell(COSTS_FLOORCONNECTION);
-        }
-        else {
-            Log.e(TAG, "Cell is not of class Cell, Room or Floorconnection");
-        }
-    }
 }

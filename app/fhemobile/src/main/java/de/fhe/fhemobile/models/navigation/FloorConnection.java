@@ -1,6 +1,9 @@
 package de.fhe.fhemobile.models.navigation;
 
-import static de.fhe.fhemobile.utils.Define.Navigation.*;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_01;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_02;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03;
+import static de.fhe.fhemobile.utils.Define.Navigation.COSTS_FLOORCONNECTION;
 
 import android.util.Log;
 
@@ -22,6 +25,13 @@ public class FloorConnection extends Cell{
 
     //Constructor
     public FloorConnection() {
+        super(COSTS_FLOORCONNECTION);
+    }
+
+    public FloorConnection(String type, ArrayList<Cell> connectedCells){
+        super(COSTS_FLOORCONNECTION);
+        this.connectedCells = connectedCells;
+        this.typeOfFloorConnection = type;
     }
 
     //Getter
@@ -67,12 +77,4 @@ public class FloorConnection extends Cell{
         return cell;
     }
 
-    //Setter
-    public void setTypeOfFloorConnection(String typeOfFloorConnection) {
-        this.typeOfFloorConnection = typeOfFloorConnection;
-    }
-
-    public void setConnectedCells(ArrayList<Cell> connectedCells) {
-        this.connectedCells = connectedCells;
-    }
 }

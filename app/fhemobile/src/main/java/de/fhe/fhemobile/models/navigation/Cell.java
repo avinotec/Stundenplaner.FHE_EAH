@@ -1,5 +1,7 @@
 package de.fhe.fhemobile.models.navigation;
 
+import static de.fhe.fhemobile.utils.Define.Navigation.COSTS_CELL;
+
 /**
  * Model for a cell of the navigation route
  */
@@ -9,7 +11,7 @@ public class Cell {
     private static final String TAG = "Cell"; //$NON-NLS
 
     //Variables
-    private int costPassingCell = 0; //Kosten für Nutzung/Durquerung einer Zelle
+    private int costPassingCell; //Kosten für Nutzung/Durquerung einer Zelle
     private int costsPathToCell = 0; // Kosten für den Weg bis zu dieser Zelle + Kosten für aktuelle Zelle
     private String building;
     private String floor;
@@ -21,12 +23,40 @@ public class Cell {
     //Constructors
     public Cell() {
     }
+
     public Cell(int xCoordinate, int yCoordinate, String building, String floor, boolean walkable) {
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this. building = building;
         this.floor = floor;
         this.walkable = walkable;
+        this.costPassingCell = COSTS_CELL;
+    }
+
+    /**
+     * Overloaded constructor for inheriting cell type {@link FloorConnection}
+     * @param costPassingCell
+     */
+    public Cell(int costPassingCell) {
+        this.costPassingCell = costPassingCell;
+    }
+
+    /**
+     * Overloaded constructor for cell type {@link Room}
+     * @param xCoordinate
+     * @param yCoordinate
+     * @param building
+     * @param floor
+     * @param walkable
+     */
+    public Cell(int xCoordinate, int yCoordinate, String building, String floor,
+                boolean walkable, int costPassingCell) {
+        this.xCoordinate = xCoordinate;
+        this.yCoordinate = yCoordinate;
+        this. building = building;
+        this.floor = floor;
+        this.walkable = walkable;
+        this.costPassingCell = costPassingCell;
     }
 
     //Getter

@@ -56,9 +56,9 @@ public class Define {
 		public static final double cellgrid_width = 45;
 		public static final double cellgrid_height = 30;
 
-		//für A-Star Algroithmus
+		//für A-Star Algorithmus
 		public static final int COSTS_CELL = 1;
-		public static final int COSTS_ROOM = 1;
+		public static final int COSTS_ROOM = 3;
 		public static final int COSTS_FLOORCONNECTION = 2;
 
 	}
