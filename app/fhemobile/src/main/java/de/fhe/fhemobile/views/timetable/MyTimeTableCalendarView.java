@@ -64,7 +64,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
                 transaction.replace(R.id.container,new MyTimeTableFragment(),MyTimeTableFragment.TAG)
                         .addToBackStack(MyTimeTableFragment.TAG)
                         .commit();
-                //Todo: Wechsele zum EditorFragment (MyTimeTableFragment)
+                //Todo: Wechsle zum EditorFragment (MyTimeTableFragment)
                 //backstack berücksichtigen!
             }
         });

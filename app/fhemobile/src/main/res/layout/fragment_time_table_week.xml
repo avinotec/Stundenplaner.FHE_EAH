@@ -35,10 +35,9 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:text="Heading"
-            android:textStyle="bold"
             android:textColor="@color/list_header_text"
             android:textSize="@dimen/abc_text_size_headline_material"
-            />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/timeTableWeekRange"
