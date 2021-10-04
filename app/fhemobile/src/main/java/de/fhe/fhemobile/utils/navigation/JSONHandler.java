@@ -38,17 +38,17 @@ import de.fhe.fhemobile.models.navigation.Room;
 public class JSONHandler {
 
     //Constants
-    private static final String TAG = "JSONHandler"; //$NON-NLS
-    public static final String BUILDING = "building";
-    public static final String FLOOR = "floor";
-    public static final String X_COORDINATE = "xCoordinate";
-    public static final String Y_COORDINATE = "yCoordinate";
-    public static final String WALKABLE = "walkable";
-    public static final String TYPE = "type";
-    public static final String ROOM_NUMBER = "roomNumber";
-    public static final String QR_CODE = "qrCode";
-    public static final String PERSONS = "persons";
-    public static final String CONNECTED_CELLS = "connectedCells";
+    private static final String TAG = "JSONHandler";            //$NON-NLS
+    public static final String BUILDING = "building";           //$NON-NLS
+    public static final String FLOOR = "floor";                 //$NON-NLS
+    public static final String X_COORDINATE = "xCoordinate";    //$NON-NLS
+    public static final String Y_COORDINATE = "yCoordinate";    //$NON-NLS
+    public static final String WALKABLE = "walkable";           //$NON-NLS
+    public static final String TYPE = "type";                   //$NON-NLS
+    public static final String ROOM_NUMBER = "roomNumber";      //$NON-NLS
+    public static final String QR_CODE = "qrCode";              //$NON-NLS
+    public static final String PERSONS = "persons";             //$NON-NLS
+    public static final String CONNECTED_CELLS = "connectedCells";  //$NON-NLS
 
     //Constructor
     public JSONHandler() {
@@ -79,10 +79,10 @@ public class JSONHandler {
         }
         return json;
     } */
-    public static String readJsonFromAssets(Context context, String jsonFile) throws IOException {
+    public static String readJsonFromAssets(final Context context, final String jsonFile) throws IOException {
 
         final InputStream input = context.getResources().getAssets().open(jsonFile);
-        final InputStreamReader reader = new InputStreamReader(input, "UTF-8");
+        final InputStreamReader reader = new InputStreamReader(input, "UTF-8"); //$NON-NLS
 
         final StringBuffer text = new StringBuffer();
         BufferedReader br = new BufferedReader( reader );

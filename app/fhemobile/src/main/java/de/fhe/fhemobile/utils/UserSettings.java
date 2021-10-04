@@ -32,9 +32,9 @@ public class UserSettings {
 
     private static final String LOG_TAG = "UserSettings";
 
-    private static final String PREF_CHOSEN_MENSA           = "chosenMensa";
-    private static final String PREF_CHOSEN_MENSA_NAME      = "chosenMensaName";
-    private static final String PREF_CHOSEN_NEWS_CATEGORY   = "chosenNewsCategory";
+    private static final String PREF_CHOSEN_MENSA           = "chosenMensa";        // $NON-NLS
+    private static final String PREF_CHOSEN_MENSA_NAME      = "chosenMensaName";    // $NON-NLS
+    private static final String PREF_CHOSEN_NEWS_CATEGORY   = "chosenNewsCategory"; // $NON-NLS
 
     private final SharedPreferences   mSP;
 

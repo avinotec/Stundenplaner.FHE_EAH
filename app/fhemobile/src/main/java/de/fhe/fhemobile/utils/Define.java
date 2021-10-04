@@ -24,32 +24,34 @@ package de.fhe.fhemobile.utils;
 public class Define {
 
 	public class Navigation {
-		public static final String BUILDING_03_02_01_FLOOR_UG = "building_03_02_01_floor_ug";
-		public static final String BUILDING_03_02_01_FLOOR_00 = "building_03_02_01_floor_00";
-		public static final String BUILDING_03_02_01_FLOOR_01 = "building_03_02_01_floor_01";
-		public static final String BUILDING_03_02_01_FLOOR_02 = "building_03_02_01_floor_02";
-		public static final String BUILDING_03_02_01_FLOOR_03 = "building_03_02_01_floor_03";
-		public static final String BUILDING_03_02_01_FLOOR_04 = "building_03_02_01_floor_04";
-		public static final String BUILDING_04_FLOOR_UG = "building_04_floor_ug";
-		public static final String BUILDING_04_FLOOR_00 = "building_04_floor_00";
-		public static final String BUILDING_04_FLOOR_01 = "building_04_floor_01";
-		public static final String BUILDING_04_FLOOR_02 = "building_04_floor_02";
-		public static final String BUILDING_04_FLOOR_03 = "building_04_floor_03";
-		public static final String BUILDING_05_FLOOR_UG = "building_05_floor_ug";
-		public static final String BUILDING_05_FLOOR_00 = "building_05_floor_00";
-		public static final String BUILDING_05_FLOOR_01 = "building_05_floor_01";
-		public static final String BUILDING_05_FLOOR_02 = "building_05_floor_02";
-		public static final String BUILDING_05_FLOOR_03 = "building_05_floor_03";
+		public static final String BUILDING_03_02_01_FLOOR_UG = "building_03_02_01_floor_ug";   //$NON-NLS
+		public static final String BUILDING_03_02_01_FLOOR_00 = "building_03_02_01_floor_00";   //$NON-NLS
+		public static final String BUILDING_03_02_01_FLOOR_01 = "building_03_02_01_floor_01";   //$NON-NLS
+		public static final String BUILDING_03_02_01_FLOOR_02 = "building_03_02_01_floor_02";   //$NON-NLS
+		public static final String BUILDING_03_02_01_FLOOR_03 = "building_03_02_01_floor_03";   //$NON-NLS
+		public static final String BUILDING_03_02_01_FLOOR_04 = "building_03_02_01_floor_04";   //$NON-NLS
+		public static final String BUILDING_04_FLOOR_UG = "building_04_floor_ug";   //$NON-NLS
+		public static final String BUILDING_04_FLOOR_00 = "building_04_floor_00";   //$NON-NLS
+		public static final String BUILDING_04_FLOOR_01 = "building_04_floor_01";   //$NON-NLS
+		public static final String BUILDING_04_FLOOR_02 = "building_04_floor_02";   //$NON-NLS
+		public static final String BUILDING_04_FLOOR_03 = "building_04_floor_03";   //$NON-NLS
+		public static final String BUILDING_05_FLOOR_UG = "building_05_floor_ug";   //$NON-NLS
+		public static final String BUILDING_05_FLOOR_00 = "building_05_floor_00";   //$NON-NLS
+		public static final String BUILDING_05_FLOOR_01 = "building_05_floor_01";   //$NON-NLS
+		public static final String BUILDING_05_FLOOR_02 = "building_05_floor_02";   //$NON-NLS
+		public static final String BUILDING_05_FLOOR_03 = "building_05_floor_03";   //$NON-NLS
 
-		public static final String BUILDING_01 = "01";
-		public static final String BUILDING_02 = "02";
-		public static final String BUILDING_03 = "03";
-		public static final String BUILDING_04 = "04";
-		public static final String BUILDING_05 = "05";
+		public static final String BUILDING_01 = "01";  //$NON-NLS
+		public static final String BUILDING_02 = "02";  //$NON-NLS
+		public static final String BUILDING_03 = "03";  //$NON-NLS
+		public static final String BUILDING_04 = "04";  //$NON-NLS
+		public static final String BUILDING_05 = "05";  //$NON-NLS
 
-		public static final String FLOORCONNECTION_TYPE_STAIR = "staircase";
-		public static final String FLOORCONNECTION_TYPE_ELEVATOR = "elevator";
-		public static final String FLOORCONNECTION_TYPE_WAY = "way"; //ways outside buildings + bridge //todo icons neu machen und Positionierung festlegen
+		public static final String FLOORCONNECTION_TYPE_STAIR = "staircase";    //$NON-NLS
+		public static final String FLOORCONNECTION_TYPE_ELEVATOR = "elevator";  //$NON-NLS
+		//ways outside buildings + bridge
+		//todo icons neu machen und Positionierung festlegen
+		public static final String FLOORCONNECTION_TYPE_WAY = "way"; //$NON-NLS
 
 		//Size of the grid overlying the floorplan (unit: cells - needs to be integer)
 		//Note: cell numbering at gridded PNGs (docs folder) starts at 0 -> width/height = number + 1

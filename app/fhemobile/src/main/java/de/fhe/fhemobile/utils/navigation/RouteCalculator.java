@@ -74,8 +74,16 @@ public class RouteCalculator {
     private ArrayList<Cell> cellsToWalk = new ArrayList<>(); //gesamte Route
     private ArrayList<Cell[][]> floorGrids = new ArrayList<>(); //Koordinatensysteme aller Stockwerke
 
-    //Constructor
-    public RouteCalculator(Context context, Room startLocation, Room destinationLocation, ArrayList<FloorConnection> floorConnections, ArrayList<Room> rooms) {
+    /**
+     * Constuctor
+     * @param context
+     * @param startLocation
+     * @param destinationLocation
+     * @param floorConnections
+     * @param rooms
+     */
+    public RouteCalculator(Context context, final Room startLocation, final Room destinationLocation,
+                           final ArrayList<FloorConnection> floorConnections, final ArrayList<Room> rooms) {
         this.context = context;
         this.startLocation = startLocation;
         this.destinationLocation = destinationLocation;
@@ -109,11 +117,13 @@ public class RouteCalculator {
                         && startCell.getFloor().equals(destinationLocation.getFloor())) {
 
                     endCell = destinationLocation;
+
                 } else  if (isBuilding321(startCell.getBuilding())
                         && isBuilding321(destinationLocation.getBuilding())
                         && startCell.getFloor().equals(destinationLocation.getFloor())) {
 
                     endCell = destinationLocation;
+
                 }
 
                 if (index + 1 < floorGrids.size()) {
@@ -329,6 +339,8 @@ public class RouteCalculator {
         int startBuildingInteger = startLocation.getBuildingAsInteger();
         int destinationBuildingInteger = destinationLocation.getBuildingAsInteger();
 
+        //TODO sind das magische Zahlen? Was ist die Bedeutung der Zahlen?
+
         switch (startBuildingInteger) {
             case 4:
                 startBuildingInteger = 1;
@@ -407,7 +419,7 @@ public class RouteCalculator {
                             }
                         }
                         //destination floor = 0
-                        else if (destinationFloorInteger == 0) {
+                        else /* redundant if (destinationFloorInteger == 0) */ {
                             gridsToAdd.add(buildFloorGrid(BUILDING_03, floorIndexToString(0)));
                         }
                     }
@@ -422,7 +434,7 @@ public class RouteCalculator {
                             }
                         }
                         //Start floor < 1 to 1
-                        else if (startFloorInteger < 1) {
+                        else /* redundant if (startFloorInteger < 1) */ {
                             for (int index = startFloorInteger; index <= 1; index++) {
                                 gridsToAdd.add(buildFloorGrid(BUILDING_03, floorIndexToString(index)));
                             }
@@ -441,7 +453,7 @@ public class RouteCalculator {
                             }
                         }
                         //Destination floor = 1
-                        else if (destinationFloorInteger == 1) {
+                        else /* redundant if (destinationFloorInteger == 1) */ {
                             gridsToAdd.add(buildFloorGrid(BUILDING_05, floorIndexToString(1)));
                         }
                     }
@@ -471,7 +483,7 @@ public class RouteCalculator {
                             }
                         }
                         //Destination floor = 1
-                        else if (destinationFloorInteger == 1) {
+                        else /* redundant if (destinationFloorInteger == 1) */ {
                             gridsToAdd.add(buildFloorGrid(BUILDING_05, floorIndexToString(1)));
                         }
                     }
@@ -619,6 +631,7 @@ public class RouteCalculator {
         return currentFloor;
     }
 
+    static private final JSONHandler jsonHandler = new JSONHandler();
     /**
      * Build grid of a floor plan
      * @param building
@@ -630,7 +643,7 @@ public class RouteCalculator {
         Cell[][] floorGrid = new Cell[(int)cellgrid_width][(int)cellgrid_height];
 
         try {
-            JSONHandler jsonHandler = new JSONHandler();
+            //static JSONHandler jsonHandler = new JSONHandler();
             String json;
 
             //Get floor plan JSON from assets
