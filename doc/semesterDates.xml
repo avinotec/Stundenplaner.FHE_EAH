@@ -126,8 +126,6 @@
 
     </semester>
 
-    </semester>
-
     <semester name="SoSe 2022"
               longName="Sommersemester 2022">
 
@@ -163,7 +161,7 @@
 
         <importantDates>
 
-            <date name="Einführung für das Erstsemester (Bachelor & Master)"
+            <date name="Einführung für das Erstsemester (Bachelor und Master)"
                   date="04.04.2022"/>
 
             <period name="Bewerbungszeitraum Bachelor (zulassungsbeschränkt) zum WiSe 2022/23"

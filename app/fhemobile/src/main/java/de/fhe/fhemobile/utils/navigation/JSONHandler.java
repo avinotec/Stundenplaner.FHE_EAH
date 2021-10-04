@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.models.navigation.FloorConnection;
@@ -93,11 +94,10 @@ public class JSONHandler {
     }
 
 
-
     /**
-     * Parse JSON to rooms ArrayList<Cell>
+     * Parse rooms from JSON
      * @param json
-     * @return
+     * @return ArrayList fo rooms
      */
     public ArrayList<Room> parseJsonRooms(final String json) {
 
@@ -108,25 +108,22 @@ public class JSONHandler {
 
             for (int i = 0; i < jsonArray.length(); i++) {
 
-                Room entry = new Room();
-
                 final JSONObject jEntry = jsonArray.getJSONObject(i);
-                entry.setRoomNumber(jEntry.optString(ROOM_NUMBER));
-                entry.setBuilding(jEntry.optString(BUILDING));
-                entry.setFloor(jEntry.optString(FLOOR));
-                entry.setQRCode(jEntry.optString(QR_CODE));
-                entry.setXCoordinate(jEntry.optInt(X_COORDINATE));
-                entry.setYCoordinate(jEntry.optInt(Y_COORDINATE));
-                entry.setWalkability(jEntry.optBoolean(WALKABLE));
-
                 final JSONArray personsJSON = jEntry.getJSONArray(PERSONS);
                 final ArrayList<String> persons = new ArrayList<>();
                 for (int j = 0; j < personsJSON.length(); j++) {
                     persons.add(personsJSON.optString(j));
                 }
+                Room newRoom = new Room(jEntry.optString(ROOM_NUMBER),
+                        jEntry.optString(BUILDING),
+                        jEntry.optString(FLOOR),
+                        jEntry.optString(QR_CODE),
+                        persons,
+                        jEntry.optInt(X_COORDINATE),
+                        jEntry.optInt(Y_COORDINATE),
+                        jEntry.optBoolean(WALKABLE));
 
-                entry.setPersons(persons);
-                rooms.add(entry);
+                rooms.add(newRoom);
             }
         } catch (final Exception e) {
             Log.e(TAG, "error parsing JSON rooms", e);
@@ -135,23 +132,20 @@ public class JSONHandler {
     }
 
     /**
-     * Parse JSON to transitions ArrayList<Cell>
+     * Parse floor connections from JSON
      * @param json
-     * @return
+     * @return ArrayList of floor connections
      */
     public ArrayList<FloorConnection> parseJsonFloorConnection(final String json) {
 
-        final ArrayList<FloorConnection> transitions = new ArrayList<>();
+        final ArrayList<FloorConnection> floorConnections = new ArrayList<>();
 
         try {
             final JSONArray jsonArray = new JSONArray(json);
 
             for (int i = 0; i < jsonArray.length(); i++) {
 
-                final FloorConnection entry = new FloorConnection();
                 final JSONObject jEntry = jsonArray.getJSONObject(i);
-
-                entry.setTypeOfFloorConnection(jEntry.optString(TYPE));
 
                 final ArrayList<Cell> connectedCells = new ArrayList<>();
                 final JSONArray connectedCellsJSON = jEntry.getJSONArray(CONNECTED_CELLS);
@@ -159,33 +153,32 @@ public class JSONHandler {
                 for (int j = 0; j < connectedCellsJSON.length(); j++) {
 
                     final JSONObject cellJSON = connectedCellsJSON.getJSONObject(j);
-                    final Cell cell = new Cell();
-
-                    cell.setBuilding(cellJSON.optString(BUILDING));
-                    cell.setFloor(cellJSON.optString(FLOOR));
-                    cell.setXCoordinate(cellJSON.optInt(X_COORDINATE));
-                    cell.setYCoordinate(cellJSON.optInt(Y_COORDINATE));
-                    cell.setWalkability(cellJSON.optBoolean(WALKABLE));
+                    final Cell cell = new Cell(cellJSON.optInt(X_COORDINATE),
+                            cellJSON.optInt(Y_COORDINATE),
+                            cellJSON.optString(BUILDING),
+                            cellJSON.optString(FLOOR),
+                            cellJSON.optBoolean(WALKABLE));
 
                     connectedCells.add(cell);
                 }
-                entry.setConnectedCells(connectedCells);
-                transitions.add(entry);
+                String type = jEntry.optString(TYPE);
+                FloorConnection newConnection = new FloorConnection(type, connectedCells);
+                floorConnections.add(newConnection);
             }
         } catch (Exception e) {
-            Log.e(TAG, "error parsing JSON transitions array", e);
+            Log.e(TAG, "error parsing JSON floorConnections array", e);
         }
-        return transitions;
+        return floorConnections;
     }
 
     /**
-     * Parse JSON to walkableCells ArrayList<Cell>
+     * Parse walkable cells from JSON
      * @param json
-     * @return
+     * @return ArrayList of walkable cells
      */
-    public ArrayList<Cell> parseJsonWalkableCells(final String json) {
+    public HashMap<String, Cell>  parseJsonWalkableCells(final String json) {
 
-        final ArrayList<Cell> walkableCells = new ArrayList<>();
+        final HashMap<String, Cell> walkableCells = new HashMap<>();
 
         try {
             JSONArray jsonArray = new JSONArray(json);
@@ -194,11 +187,14 @@ public class JSONHandler {
                 final Cell entry = new Cell();
 
                 final JSONObject jEntry = jsonArray.getJSONObject(i);
-                entry.setXCoordinate(jEntry.optInt(X_COORDINATE));
-                entry.setYCoordinate(jEntry.optInt(Y_COORDINATE));
+                int x = jEntry.optInt(X_COORDINATE);
+                int y = jEntry.optInt(Y_COORDINATE);
+                entry.setXCoordinate(x);
+                entry.setYCoordinate(y);
                 entry.setWalkability(jEntry.optBoolean(WALKABLE));
 
-                walkableCells.add(entry);
+                walkableCells.put(Integer.toString(x) + '_' + Integer.toString(y), entry);
+
             }
         } catch (Exception e) {
             Log.e(TAG, "error parsing JSON walkableCells", e);

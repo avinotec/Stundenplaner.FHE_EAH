@@ -9,9 +9,9 @@
    id="svg178888"
    inkscape:version="1.1 (c68e22c387, 2021-05-23)"
    sodipodi:docname="Icons.svg"
-   inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\path_cell_icon.jpeg"
-   inkscape:export-xdpi="96"
-   inkscape:export-ydpi="96"
+   inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\start_icon.png"
+   inkscape:export-xdpi="960"
+   inkscape:export-ydpi="960"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -31,14 +31,14 @@
      units="px"
      inkscape:snap-page="true"
      inkscape:zoom="42.931986"
-     inkscape:cx="0.00035987154"
-     inkscape:cy="6.3476334"
+     inkscape:cx="5.0200285"
+     inkscape:cy="4.6886253"
      inkscape:window-width="2467"
      inkscape:window-height="1411"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer5"
+     inkscape:current-layer="layer3"
      showguides="false"
      inkscape:rotation="-1" />
   <defs
@@ -135,21 +135,20 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="start"
-     sodipodi:insensitive="true"
-     style="display:none">
+     style="display:inline">
     <path
        style="fill:#ff6600;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 1.4177733,2.6458333 c 0,0 -2.2353647,-2.62956561 0,-2.645833266666668 C 3.6531378,-0.01626763 1.4177733,2.6458333 1.4177733,2.6458333"
-       id="path186362" />
+       d="M 1.4177733,2.6458333 C 1.411344,2.8123704 -0.72779149,0.00169633 1.4177733,3.3333332e-8 3.506661,-0.00165145 1.3772896,2.8099786 1.4177733,2.6458333"
+       id="path186362"
+       sodipodi:nodetypes="csc" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="destination"
-     sodipodi:insensitive="true"
      style="display:none">
     <path
-       style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:0.278615;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#ffc300;fill-opacity:0.720257;stroke:#000000;stroke-width:0.278615;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 0.25587311,0.23993197 V 1.7976058 c 0.71742735,6.851e-4 1.40496729,0.5309597 2.15239819,0 V 0.24508845 C 1.5422107,0.71307802 0.96481251,0.26860355 0.25587311,0.23993197 Z"
        id="path186719-6"
        sodipodi:nodetypes="ccccc" />
@@ -167,7 +166,8 @@
   <g
      inkscape:groupmode="layer"
      id="layer5"
-     inkscape:label="pathcell">
+     inkscape:label="pathcell"
+     style="display:none">
     <circle
        style="font-variation-settings:normal;opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.306098;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:123.564;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
        id="path188562"

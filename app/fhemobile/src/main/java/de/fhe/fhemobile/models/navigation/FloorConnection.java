@@ -1,5 +1,12 @@
 package de.fhe.fhemobile.models.navigation;
 
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_01;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_02;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03;
+import static de.fhe.fhemobile.utils.Define.Navigation.COSTS_FLOORCONNECTION;
+
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -12,18 +19,19 @@ public class FloorConnection extends Cell{
     //Constants
     private static final String TAG = "FloorConnection"; //$NON-NLS
 
-    private static final String BUILDING_01 = "01";
-    private static final String BUILDING_02 = "02";
-    private static final String BUILDING_03 = "03";
-    private static final String BUILDING_04 = "04";
-    private static final String BUILDING_05 = "05";
-
     //Variables
-    private String typeOfFloorConnection; //stair, elevator, crossing (Brücke)
+    private String typeOfFloorConnection; //stairs, elevator, way outside building, bridge
     private ArrayList<Cell> connectedCells;
 
     //Constructor
     public FloorConnection() {
+        super(COSTS_FLOORCONNECTION);
+    }
+
+    public FloorConnection(String type, ArrayList<Cell> connectedCells){
+        super(COSTS_FLOORCONNECTION);
+        this.connectedCells = connectedCells;
+        this.typeOfFloorConnection = type;
     }
 
     //Getter
@@ -35,42 +43,38 @@ public class FloorConnection extends Cell{
         return connectedCells;
     }
 
-    public Cell getSingleCell(String building, String floor) {
+    /**
+     * Returns the connected cell at the particular building and floor
+     * @param building
+     * @param floor
+     * @return connected cell at this building and floor
+     */
+    public Cell getConnectedCell(String building, String floor) {
 
-        Cell cell = new Cell();
+        Cell cell = null;
 
         for (int index = 0; index < connectedCells.size(); index++) {
 
-            if (connectedCells.get(index).getBuilding().equals(BUILDING_05)
-                    && (building.equals(BUILDING_05)) && connectedCells.get(index).getFloor().equals(floor)) {
+            //case building = 04 or 05
+            if (connectedCells.get(index).getBuilding().equals(building)
+                    && connectedCells.get(index).getFloor().equals(floor)) {
 
                 cell = connectedCells.get(index);
             }
-
-            if (connectedCells.get(index).getBuilding().equals(BUILDING_04)
-                    && (building.equals(BUILDING_04)) && connectedCells.get(index).getFloor().equals(floor)) {
-
-                cell = connectedCells.get(index);
-            }
-
-            if ((connectedCells.get(index).getBuilding().equals(BUILDING_03)
+            //case building = 03-02-01
+            else if ((connectedCells.get(index).getBuilding().equals(BUILDING_03)
                     || connectedCells.get(index).getBuilding().equals(BUILDING_02)
                     || connectedCells.get(index).getBuilding().equals(BUILDING_01)) &&
                     (building.equals(BUILDING_03) || building.equals(BUILDING_02) || building.equals(BUILDING_01))
                     && connectedCells.get(index).getFloor().equals(floor)) {
 
                 cell = connectedCells.get(index);
+            } else {
+                Log.e(TAG, "FloorConnection does not connected any cells at the requested building and floor");
             }
         }
+
         return cell;
     }
 
-    //Setter
-    public void setTypeOfFloorConnection(String typeOfFloorConnection) {
-        this.typeOfFloorConnection = typeOfFloorConnection;
-    }
-
-    public void setConnectedCells(ArrayList<Cell> connectedCells) {
-        this.connectedCells = connectedCells;
-    }
 }

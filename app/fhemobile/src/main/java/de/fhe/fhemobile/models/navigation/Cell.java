@@ -1,7 +1,9 @@
 package de.fhe.fhemobile.models.navigation;
 
+import static de.fhe.fhemobile.utils.Define.Navigation.COSTS_CELL;
+
 /**
- * Model for a cell unit of the floorplan
+ * Model for a cell of the navigation route
  */
 public class Cell {
 
@@ -9,33 +11,61 @@ public class Cell {
     private static final String TAG = "Cell"; //$NON-NLS
 
     //Variables
-    private int heuristicCost = 0;
-    private int finalCost = 0;
+    private int costPassingCell; //Kosten für Nutzung/Durquerung einer Zelle
+    private int costsPathToCell = 0; // Kosten für den Weg bis zu dieser Zelle + Kosten für aktuelle Zelle
     private String building;
     private String floor;
     private int xCoordinate;
     private int yCoordinate;
-    private Cell parent;
+    private Cell parentCell; // auf dem Weg davor liegende Zelle (für Rückverfolgung benötigt)
     private boolean walkable;
 
     //Constructors
     public Cell() {
     }
+
     public Cell(int xCoordinate, int yCoordinate, String building, String floor, boolean walkable) {
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this. building = building;
         this.floor = floor;
         this.walkable = walkable;
+        this.costPassingCell = COSTS_CELL;
+    }
+
+    /**
+     * Overloaded constructor for inheriting cell type {@link FloorConnection}
+     * @param costPassingCell
+     */
+    public Cell(int costPassingCell) {
+        this.costPassingCell = costPassingCell;
+    }
+
+    /**
+     * Overloaded constructor for cell type {@link Room}
+     * @param xCoordinate
+     * @param yCoordinate
+     * @param building
+     * @param floor
+     * @param walkable
+     */
+    public Cell(int xCoordinate, int yCoordinate, String building, String floor,
+                boolean walkable, int costPassingCell) {
+        this.xCoordinate = xCoordinate;
+        this.yCoordinate = yCoordinate;
+        this. building = building;
+        this.floor = floor;
+        this.walkable = walkable;
+        this.costPassingCell = costPassingCell;
     }
 
     //Getter
-    public int getHeuristicCost() {
-        return heuristicCost;
+    public int getCostPassingCell() {
+        return costPassingCell;
     }
 
-    public int getFinalCost() {
-        return finalCost;
+    public int getCostsPathToCell() {
+        return costsPathToCell;
     }
 
     public String getBuilding() {
@@ -109,19 +139,19 @@ public class Cell {
         return yCoordinate;
     }
 
-    public Cell getParent() {
-        return parent;
+    public Cell getParentCell() {
+        return parentCell;
     }
 
     public boolean getWalkability() { return walkable; }
 
     //Setter
-    public void setHeuristicCost(int heuristicCost) {
-        this.heuristicCost = heuristicCost;
+    public void setCostPassingCell(int costPassingCell) {
+        this.costPassingCell = costPassingCell;
     }
 
-    public void setFinalCost(int finalCost) {
-        this.finalCost =+ finalCost;
+    public void setCostsPathToCell(int costsPathToCell) {
+        this.costsPathToCell =+costsPathToCell;
     }
 
     public void setBuilding(String building) {
@@ -140,8 +170,8 @@ public class Cell {
         this.yCoordinate = yCoordinate;
     }
 
-    public void setParent(Cell parent) {
-        this.parent = parent;
+    public void setParentCell(Cell parentCell) {
+        this.parentCell = parentCell;
     }
 
     public void setWalkability(boolean walkable) {
