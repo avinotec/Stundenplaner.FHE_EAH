@@ -1,3 +1,20 @@
+/*
+ *  Copyright (c) 2014-2021 Ernst-Abbe-Hochschule Jena
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package de.fhe.fhemobile.activities;
 
 import static de.fhe.fhemobile.utils.Define.Navigation.*;
@@ -83,7 +100,6 @@ public class NavigationActivity extends BaseActivity {
         floorPlansSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             //draw map and navigation when floor is selected
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int index, long id) {
 
@@ -618,7 +634,6 @@ public class NavigationActivity extends BaseActivity {
      * @param in
      * @return
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private ArrayList<String> getBuildingAndFloor(final String in) {
 
         ArrayList<String> helperBuildingAndFloor = new ArrayList<>();
@@ -703,7 +718,6 @@ public class NavigationActivity extends BaseActivity {
      * @param floorPlan
      * @return
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private String getLocaleStringResource(Locale currentLocale, int floorPlan) {
 
         String localeString = "";

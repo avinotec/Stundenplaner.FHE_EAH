@@ -34,12 +34,19 @@ class AStar {
 
     private static final String TAG = "AStar"; //$NON-NLS
 
+    //TODO Was ist die PriorityQueue? Wo kommt das floorCellGrid her, Bedeutung? Warum ist closedCells ein 2D-Array?
+
     //Variables
-    private PriorityQueue<Cell> openCells; //The set of discovered nodes that may need to be (re-)expanded. Sorted by costsPathToCell
-    private boolean[][] closedCells; //Zellen im Zustand "fertig"
-    private Cell startCell; //Startzelle für den kürzesten Weg auf diesem Stockwerk; kann auch eine Treppe, Aufzug etc sein
-    private Cell endCell; //Endzelle für den kürzesten Weg auf diesem Stockwerk; kann auch eine Treppe, Aufzug etc sein
-    private Cell[][] floorCellGrid; //Koordinatensystem aus allen begehbaren und nicht-begehbaren Zellen des Stockwerks
+    //The set of discovered nodes that may need to be (re-)expanded. Sorted by costsPathToCell
+    private PriorityQueue<Cell> openCells;
+    //Zellen im Zustand "fertig"
+    private boolean[][] closedCells;
+    //Startzelle für den kürzesten Weg auf diesem Stockwerk; kann auch eine Treppe, Aufzug etc sein
+    private Cell startCell;
+    //Endzelle für den kürzesten Weg auf diesem Stockwerk; kann auch eine Treppe, Aufzug etc sein
+    private Cell endCell;
+    //Koordinatensystem aus allen begehbaren und nicht-begehbaren Zellen des Stockwerks
+    private Cell[][] floorCellGrid;
 
     /**
      * Constructs an AStar Object
@@ -77,12 +84,17 @@ class AStar {
                 }
             });
 
-            startCell.setCostsPathToCell(-1); //initialize startcell
-            openCells.add(startCell); //add startCell to priority queue (cells with status "open")
-            closedCells = new boolean[(int) cellgrid_width][(int) cellgrid_height]; //set size of closed array (cells with status "closed")
-            floorCellGrid[endCell.getXCoordinate()][endCell.getYCoordinate()].setCostPassingCell(0); //set costs of endcell to 0
+            //initialize startcell
+            startCell.setCostsPathToCell(-1);
+            //add startCell to priority queue (cells with status "open")
+            openCells.add(startCell);
+            //set size of closed array (cells with status "closed")
+            closedCells = new boolean[(int) cellgrid_width][(int) cellgrid_height];
+            //set costs of endcell to 0
+            floorCellGrid[endCell.getXCoordinate()][endCell.getYCoordinate()].setCostPassingCell(0);
             floorCellGrid[startCell.getXCoordinate()][(startCell.getYCoordinate())].setCostPassingCell(0);
-            performAStarAlgorithm(); //run A* algorithm
+            //run A* algorithm
+            performAStarAlgorithm();
 
             //backtracing to reconstruct navigation path
             //get end cell as start cell for backtracing
@@ -104,40 +116,49 @@ class AStar {
      * Performs A* algorithm
      */
     private void performAStarAlgorithm() {
+
         while (!openCells.isEmpty()) {
 
-            final Cell currentCell = openCells.poll(); //get the cell that's path to it is the cheapest and remove it from the priority queue
+            //get the cell that's path to it is the cheapest and remove it from the priority queue
+            final Cell currentCell = openCells.poll();
 
             if (currentCell != null && currentCell.getWalkability()) {
                 closedCells[currentCell.getXCoordinate()][currentCell.getYCoordinate()] = true;
 
-                if (!currentCell.equals(endCell)) { //current cell is not destination
+                //current cell is not destination
+                if (!currentCell.equals(endCell)) {
 
                     //Überprüft die Kosten der 4 direkt angrenzenden Zellen der aktuellen Zelle (Diagonale wird nicht betrachtet)
                     //Check left
-                    if (currentCell.getXCoordinate() > 0) { //check that cell is not at edge of grid
+                        //check that cell is not at edge of grid
+                    if (currentCell.getXCoordinate() > 0) {
                         Cell neighbouringCell = floorCellGrid[currentCell.getXCoordinate() - 1][currentCell.getYCoordinate()];
                         updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
 
                     //Check right
-                    if (currentCell.getXCoordinate() < cellgrid_width) { //check that cell is not at edge of grid
+                    if (currentCell.getXCoordinate() < cellgrid_width) {
+                        //check that cell is not at edge of grid
                         Cell neighbouringCell = floorCellGrid[currentCell.getXCoordinate() + 1][currentCell.getYCoordinate()];
                         updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
 
                     //Check below
-                    if (currentCell.getYCoordinate() > 0) { //check that cell is not at edge of grid
+                    if (currentCell.getYCoordinate() > 0) {
+                        //check that cell is not at edge of grid
                         Cell neighbouringCell = floorCellGrid[currentCell.getXCoordinate()][currentCell.getYCoordinate() - 1];
                         updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
 
                     //Check above
-                    if (currentCell.getYCoordinate() < cellgrid_height) { //check that cell is not at edge of grid
+                    if (currentCell.getYCoordinate() < cellgrid_height) {
+                        //check that cell is not at edge of grid
                         Cell neighbouringCell = floorCellGrid[currentCell.getXCoordinate()][currentCell.getYCoordinate() + 1];
                         updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
-                } else return;
+                } // end of current cell is not destination
+                else
+                    return;
             }
         }
     }
