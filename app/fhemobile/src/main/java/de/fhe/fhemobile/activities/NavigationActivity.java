@@ -112,7 +112,6 @@ public class NavigationActivity extends BaseActivity {
         floorPlansSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             //draw map and navigation when floor is selected
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int index, long id) {
 
@@ -649,7 +648,6 @@ public class NavigationActivity extends BaseActivity {
      * @param in
      * @return
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private ArrayList<String> getBuildingAndFloor(final String in) {
 
         ArrayList<String> helperBuildingAndFloor = new ArrayList<>();
@@ -734,7 +732,6 @@ public class NavigationActivity extends BaseActivity {
      * @param floorPlan
      * @return
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private String getLocaleStringResource(Locale currentLocale, int floorPlan) {
 
         String localeString = "";
