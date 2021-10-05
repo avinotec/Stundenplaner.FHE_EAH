@@ -62,7 +62,7 @@
     <string name="timetable_error" >Dieser Kurs enthält keine Elemente.</string>
     <string name="timetable_switch" >Favorit speichern</string>
     <string name="timetable_reset" >Favorit löschen</string>
-    <string name="timetable_week" >Woche</string>
+    <string name="timetable_week" >Kalenderwoche</string>
     <string name="timetable_error_incomplete" >Bitte triff eine Wahl für jedes Feld</string>
 
     <string name="aqua_open" >Geöffnet</string>

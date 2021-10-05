@@ -63,7 +63,7 @@
     <string name="timetable_error" >This course is empty.</string>
     <string name="timetable_switch" >Save favorite</string>
     <string name="timetable_reset" >Delete favorite</string>
-    <string name="timetable_week" >Week</string>
+    <string name="timetable_week" >Calender Week</string>
     <string name="timetable_error_incomplete" >Please set all fields.</string>
 
     <string name="aqua_open" >Open</string>
