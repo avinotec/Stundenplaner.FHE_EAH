@@ -113,12 +113,8 @@ public class TimeTableEventsFragment extends FeatureFragment {
 			case R.id.action_reset_selection:
 				TimeTableSettings.saveTimeTableSelection(null);
 
-				if (getActivity().getSupportFragmentManager().getBackStackEntryCount() > 0) {
-					getActivity().onBackPressed();
-				}
-				else {
-					((MainActivity) getActivity()).changeFragment(TimeTableFragment.newInstance(), false);
-				}
+				((MainActivity) getActivity()).changeFragment(TimeTableFragment.newInstance(), false);
+
 				return true;
 
 			//other item
