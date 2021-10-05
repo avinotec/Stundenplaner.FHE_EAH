@@ -30,6 +30,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.views.timetable.MyTimeTableView;
@@ -163,7 +164,8 @@ public class SelectedLessonAdapter extends BaseAdapter {
 		final TextView tvTime = (TextView) convertView.findViewById(R.id.tvLessonTime);
 		final Date df = new java.util.Date(currentItem.getEvent().getStartDate());
 		final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
-		tvTime.setText(date + " " + currentItem.getEvent().getStartTime() + "-" + currentItem.getEvent().getEndTime());
+		final String dayOfWeek = new SimpleDateFormat("EEEE", Locale.getDefault()).format(df);
+		tvTime.setText(dayOfWeek + ", " + date + " " + currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime());
 
 		final TextView tvRoom = (TextView)convertView.findViewById(R.id.tvRoom);
 		tvRoom.setText(currentItem.getEvent().getRoom());
