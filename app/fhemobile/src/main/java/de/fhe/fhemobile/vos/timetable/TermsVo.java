@@ -25,6 +25,7 @@ import java.util.ArrayList;
 
 /**
  * Created by paul on 12.03.15.
+ * Value Object für das Semester eines Studiengangs, speichert die verfügbaren Sets
  */
 public class TermsVo implements Parcelable {
 

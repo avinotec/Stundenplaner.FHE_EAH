@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     private static final String TAG = "MainActivity";
 
 	public static List<FlatDataStructure> selectedLessons = new ArrayList();
-	public static List<FlatDataStructure> sortedLessons=new ArrayList<>();
+	public static List<FlatDataStructure> sortedLessons = new ArrayList<>();
 	public static List<FlatDataStructure> completeLessons = new ArrayList<>();
     private final int CHANGEREASON_EDIT = 1;
     private final int CHANGEREASON_NEW = 3;
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mToolbar    = (Toolbar)     findViewById(R.id.toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -119,13 +119,15 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             //Push-Notification
-            final RequestModel request = new RequestModel(RequestModel.ANDROID_DEVICE, PushNotificationService.getFirebaseToken(),new Date().getTime()-86400000);
-            String title="";
-            String setID="";
+            final RequestModel request = new RequestModel(RequestModel.ANDROID_DEVICE,
+                    PushNotificationService.getFirebaseToken(),
+                    new Date().getTime() - 86400000);
+            String title = "";
+            String setID = "";
 
-            String json=request.toJson();
+            String json = request.toJson();
 
-            NetworkHandler.getInstance().getTimeTableChanges( json, new Callback<ResponseModel>() {
+            NetworkHandler.getInstance().getTimeTableChanges(json, new Callback<ResponseModel>() {
                 @Override
                 public void onResponse(final Call<ResponseModel> call, final Response<ResponseModel> response) {
 
@@ -170,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                     while(iterator.hasNext()){
 
                         final ResponseModel.Change change=iterator.next();
-                        boolean isInNegativeList=false;
+                        boolean isInNegativeList = false;
                         for(String[] negativeEvent:negativeList){
                             if ( change.getNewEventJson().getTitle().contains(negativeEvent[0])
                                     && change.getSetSplusKey().equals( negativeEvent[1] ) ) {
@@ -213,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                         final List<FlatDataStructure> myTimetableList = MyTimeTableView.getLessons();
 
                         //Aenderung eines Events: suche den Event und ueberschreibe seine Daten
-                        if(change.getChangesReason()==CHANGEREASON_EDIT) {
+                        if(change.getChangesReason() == CHANGEREASON_EDIT) {
                             final FlatDataStructure event = FlatDataStructure.getEventByID( myTimetableList, change.getNewEventJson().getUid());
                             if(event!=null){
                                 event.setEvent(change.getNewEventJson());
@@ -221,14 +223,14 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                         }
                         //Hinzufuegen eines neuen Events: Erstelle ein neues Element vom Typ FlatDataStructure, schreibe alle Set-, Semester- und Studiengangdaten in diesen
                         //und fuege dann die Eventdaten des neuen Events hinzu. Anschliessend in die Liste hinzufuegen.
-                        if(change.getChangesReason()==CHANGEREASON_NEW) {
+                        if(change.getChangesReason() == CHANGEREASON_NEW) {
                             final FlatDataStructure event = FlatDataStructure.queryGetEventsByStudyGroupTitle( myTimetableList, change.getSetSplusKey()).get(0).copy();
                             event.setEvent(change.getNewEventJson());
                             MyTimeTableView.getLessons().add(event);
 
                         }
                         //Loeschen eines Events: Suche den Event mit der SplusID und lösche ihn aus der Liste.
-                        if(change.getChangesReason()==CHANGEREASON_DELETE){
+                        if(change.getChangesReason() == CHANGEREASON_DELETE){
                             final FlatDataStructure event = FlatDataStructure.getEventByID( myTimetableList, change.getNewEventJson().getUid());
                             MyTimeTableView.getLessons().remove(event);
                         }
@@ -362,17 +364,17 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     public static int getCurrentEventIndex(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
 
-        for(int i=0;i<sortedLessons.size();i++){
+        for(int i = 0; i < sortedLessons.size(); i++){
             TimeTableEventVo event = sortedLessons.get(i).getEvent();
             try {
-                if(sdf.parse(event.getDate()+" "+event.getStartTime()).compareTo(new Date())>=0) {
+                if(sdf.parse(event.getDate() + " " + event.getStartTime()).compareTo(new Date())>=0) {
                     if(sdf.parse(event.getDate() + " " + event.getEndTime()).compareTo(new Date()) < 0) {
                         return (i);
                     }
                     if(i == 0){
                         return i;
                     }
-                    return (i-1);
+                    return (i -  1);
                 }
             } catch (ParseException e) {
                 Log.e(TAG, "getCurrentEventIndex: ",e );

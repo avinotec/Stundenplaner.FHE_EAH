@@ -169,7 +169,7 @@ public class MyTimeTableView extends LinearLayout {
 
         final Gson gson = new Gson();
         final String json = gson.toJson(MyTimeTableView.getLessons());
-        final SharedPreferences sharedPreferences =Main.getAppContext().getSharedPreferences("prefs",Context.MODE_PRIVATE);
+        final SharedPreferences sharedPreferences =Main.getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("list",json);
         editor.apply();

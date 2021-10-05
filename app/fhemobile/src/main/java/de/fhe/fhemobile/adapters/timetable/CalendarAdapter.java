@@ -80,7 +80,7 @@ public class CalendarAdapter extends BaseAdapter {
 		final TextView lessonTime = (TextView)convertView.findViewById(R.id.tvLessonTime);
 		final Date df = new Date(currentItem.getEvent().getStartDate());
 		//String date = sdf.format(df);
-		lessonTime.setText(currentItem.getEvent().getStartTime()+" – "+currentItem.getEvent().getEndTime());
+		lessonTime.setText(currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime());
 
 		TextView lessonRoom = (TextView)convertView.findViewById(R.id.tvRoom);
 		lessonRoom.setText(currentItem.getEvent().getRoom());
@@ -88,7 +88,7 @@ public class CalendarAdapter extends BaseAdapter {
 		TextView lessonLecturer = (TextView)convertView.findViewById(R.id.tvLecturer);
 		lessonLecturer.setText(currentItem.getEvent().getLecturer());
 
-		if(position==0){
+		if(position == 0){
 			headerLayout.setVisibility(View.VISIBLE);
 			lessonDay.setVisibility(View.VISIBLE);
 			lessonDate.setVisibility(View.VISIBLE);
@@ -104,7 +104,7 @@ public class CalendarAdapter extends BaseAdapter {
 			lessonDate.setVisibility(View.GONE);
 		}
 		if(sdf.format(df).compareTo(sdf.format(new Date()))==0){
-			lessonDay.setText("Heute "+"("+currentItem.getEvent().getDayOfWeek()+")");
+			lessonDay.setText("Heute " + "("+currentItem.getEvent().getDayOfWeek() + ")");
 		}
 
 		return convertView;

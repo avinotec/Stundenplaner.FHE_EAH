@@ -206,7 +206,7 @@ public class FlatDataStructure implements Parcelable {
 					if(event.getEventWeek().getWeekInYear()==data.getEventWeek().getWeekInYear()){
 //						Log.d(TAG, "EventWeek: true");
 						if(event.getStudyGroup().getTimeTableId().equals(data.getStudyGroup().getTimeTableId())){
-//							Log.d(TAG, "StudieGroup: true");
+//							Log.d(TAG, "StudyGroup: true");
 							if(event.getSemester().getId().equals(data.getSemester().getId())){
 //								Log.d(TAG, "Semester: true");
 								if(event.getCourse().getId().equals(data.getCourse().getId())){
@@ -249,7 +249,7 @@ public class FlatDataStructure implements Parcelable {
 	}
 
 	public final FlatDataStructure setCourse(final StudyCourseVo course) {
-		this.course=new FlatStudyCourse();
+		this.course = new FlatStudyCourse();
 		this.course.setId(course.getId());
 		this.course.setTitle(course.getTitle());
 		return this;
@@ -259,7 +259,7 @@ public class FlatDataStructure implements Parcelable {
 	}
 
 	public final FlatDataStructure setSemester(final TermsVo semester) {
-		this.semester=new FlatTerms();
+		this.semester = new FlatTerms();
 		this.semester.setId(semester.getId());
 		this.semester.setTitle(semester.getTitle());
 		return this;
@@ -275,7 +275,7 @@ public class FlatDataStructure implements Parcelable {
 	}
 
 	public final FlatDataStructure setEventWeek(final TimeTableWeekVo eventWeek) {
-		this.eventWeek=new FlatTimeTableWeek();
+		this.eventWeek = new FlatTimeTableWeek();
 		this.eventWeek.setWeekInYear(eventWeek.getWeekInYear());
 		this.eventWeek.setYear(eventWeek.getYear());
 		return this;
@@ -286,7 +286,7 @@ public class FlatDataStructure implements Parcelable {
 	}
 
 	public final FlatDataStructure setEventDay(final TimeTableDayVo eventDay) {
-		this.eventDay=new FlatTimeTableDay();
+		this.eventDay = new FlatTimeTableDay();
 		this.eventDay.setDayInWeek(eventDay.getDayInWeek());
 		this.eventDay.setName(eventDay.getName());
 		return this;
@@ -311,7 +311,7 @@ public class FlatDataStructure implements Parcelable {
 	public String getSetString(){
 		Collections.sort(sets);
 		StringBuilder combinedStudyGroups = new StringBuilder();
-		if(sets.size()>0) {
+		if(sets.size() > 0) {
 			for (String _studyGroupTitle : sets) {
 				combinedStudyGroups.append(_studyGroupTitle).append(", ");
 			}

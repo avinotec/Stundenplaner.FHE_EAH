@@ -73,7 +73,7 @@ public class TimeTableWeekView extends LinearLayout {
         final Date enddate = calendar.getTime();
         final String endDaString = formatter.format(enddate);
 
-        mWeekRange.setText(startDateInStr + " - " + endDaString);
+        mWeekRange.setText(startDateInStr + " – " + endDaString);
     }
 
     private void buildListEntries(final TimeTableWeekVo _Data) {
@@ -84,7 +84,7 @@ public class TimeTableWeekView extends LinearLayout {
             mData.add(new HeaderItem(dayVo.getName()));
             for (TimeTableEventVo eventVo : dayVo.getEvents()) {
                 mData.add(new TimeTableEventItem(
-                        eventVo.getStartTime() + " - " + eventVo.getEndTime(),
+                        eventVo.getStartTime() + " – " + eventVo.getEndTime(),
                         eventVo.getShortTitle(),
                         eventVo.getRoom(),
                         eventVo.getLecturer()

@@ -129,8 +129,11 @@ public class TimeTableView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
+        //Studiengang
         mStudyCoursePicker = (StudyCoursePicker) findViewById(R.id.timetableStudyCoursePicker);
+        //Semester
         mTermsPicker       = (TermsPicker)       findViewById(R.id.timetableTermsPicker);
+        //Set
         mStudyGroupPicker  = (StudyGroupPicker)  findViewById(R.id.timetableStudyGroupPicker);
         mRememberSwitch    = (SwitchCompat)      findViewById(R.id.timetableRememberSelection);
         mSearchButton      = (Button)            findViewById(R.id.timetableSearchButton);
