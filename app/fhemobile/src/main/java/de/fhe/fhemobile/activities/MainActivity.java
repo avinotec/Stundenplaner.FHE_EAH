@@ -47,6 +47,8 @@ import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
 import de.fhe.fhemobile.fragments.impressum.ImpressumFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdata.SemesterDataWebViewFragment;
+import de.fhe.fhemobile.fragments.timetable.TimeTableEventsFragment;
+import de.fhe.fhemobile.fragments.timetable.TimeTableFragment;
 import de.fhe.fhemobile.models.timeTableChanges.RequestModel;
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.network.NetworkHandler;
@@ -176,9 +178,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                         for(String[] negativeEvent:negativeList){
                             if ( change.getNewEventJson().getTitle().contains(negativeEvent[0])
                                     && change.getSetSplusKey().equals( negativeEvent[1] ) ) {
-                                isInNegativeList=true;
+                                isInNegativeList = true;
                             }
-
                         }
 
                         if(isInNegativeList){
@@ -321,10 +322,17 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                 webview = ((EventsWebViewFragment) mCurrentFragment).getWebView();
             }
 
-            if(webview!= null && webview.canGoBack())
-                webview.goBack();// if there is previous page open it
-            else {
-                super.onBackPressed();//if there is no previous page, close app
+            //if fragment contains a webview open previous page
+            if(webview != null && webview.canGoBack()) {
+                // if there is previous page open it
+                webview.goBack();
+            }
+            //time table is displayed
+            // then the fragment for selection of course, set ... (TimeTableFragment) should be opened on back button press
+            else if (mCurrentFragment instanceof TimeTableEventsFragment) {
+                changeFragment(TimeTableFragment.newInstance(), false);
+            }else {
+                super.onBackPressed(); //close app
             }
         } else super.onBackPressed();
 
@@ -367,7 +375,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         for(int i = 0; i < sortedLessons.size(); i++){
             TimeTableEventVo event = sortedLessons.get(i).getEvent();
             try {
-                if(sdf.parse(event.getDate() + " " + event.getStartTime()).compareTo(new Date())>=0) {
+                if(sdf.parse(event.getDate() + " " + event.getStartTime()).compareTo(new Date()) >= 0) {
                     if(sdf.parse(event.getDate() + " " + event.getEndTime()).compareTo(new Date()) < 0) {
                         return (i);
                     }
