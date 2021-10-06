@@ -77,7 +77,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		// Inflate the layout for this fragment
 		mView = (MyTimeTableCalendarView) inflater.inflate(R.layout.fragment_calendar_my_time_table, container, false);
 		mView.initializeView(getActivity().getSupportFragmentManager());
-		SharedPreferences sharedPreferences =getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+		SharedPreferences sharedPreferences = getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
 
 		{
 			//Dialog zur Nachfrage, ob der Stundenplan gelöscht werden soll.
@@ -140,7 +140,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		final String json = sharedPreferences.getString("list","");
 		final Gson gson = new Gson();
 		final FlatDataStructure[] list = gson.fromJson(json, FlatDataStructure[].class);
-		if(list!=null) {
+		if(list != null) {
 			// alle Einträge in den Adapter einstellen
 			MyTimeTableView.setLessons(new ArrayList<FlatDataStructure>(Arrays.asList(list)));
 		}
@@ -159,7 +159,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		super.onViewCreated(view, savedInstanceState);
 
 		// es sind alle Views initialisiert, Fragmente sind alle inflated
-		//
+
 		mView.jumpCurrentLesson();
 	}
 	

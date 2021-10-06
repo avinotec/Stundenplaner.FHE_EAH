@@ -99,7 +99,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		final TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvLessonTitle);
 		final RelativeLayout headerLayout = convertView.findViewById(R.id.headerBackground);
 
-		if(position==0){
+		if(position == 0){
 			lessonTitle.setText(FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 			lessonTitle.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
@@ -124,7 +124,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		final TextView studyGroupLabel = (TextView)convertView.findViewById(R.id.tvStudyGroupLabel);
 		final TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.tvStudyGroupTitle);
 		final ImageButton btnAddLesson = (ImageButton)convertView.findViewById(R.id.ibAddLesson);
-		if(currentItem.isAdded()==true){
+		if(currentItem.isAdded() == true){
 			btnAddLesson.setEnabled(false);
 			btnAddLesson.setImageResource(R.drawable.ic_input_add_gray);
 			btnAddLesson.setBackgroundResource(R.drawable.buttonshape_disabled);
@@ -141,8 +141,13 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 				btnAddLesson.setEnabled(false);
 
 				currentItem.setAdded(true);
-				final List<FlatDataStructure> eventFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getCompleteLessons(),FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
-				final List<FlatDataStructure> studyGroupFilteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(eventFilteredList,currentItem.getSetString());
+				final List<FlatDataStructure> eventFilteredList =
+						FlatDataStructure.queryGetEventsByEventTitle(
+								MyTimeTableView.getCompleteLessons(),
+								FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
+				final List<FlatDataStructure> studyGroupFilteredList =
+						FlatDataStructure.queryGetEventsByStudyGroupTitle(
+								eventFilteredList, currentItem.getSetString());
 
 				for(FlatDataStructure event : studyGroupFilteredList){
 					MyTimeTableView.addLesson(event);
@@ -162,7 +167,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 
 		studyGroupTitle.setText(combinedStudyGroups);
 
-		if(position==0){
+		if(position == 0){
 
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			studyGroupLabel.setVisibility(View.VISIBLE);
@@ -201,7 +206,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		final TextView tvTime = (TextView) convertView.findViewById(R.id.tvLessonTime);
 		final Date df = new java.util.Date(currentItem.getEvent().getStartDate());
 		final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
-		final String dayOfWeek = new SimpleDateFormat("EEEE", Locale.getDefault()).format(df);
+		final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(df);
 		tvTime.setText(dayOfWeek + ", " + date + " " + currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime());
 
 		final TextView tvRoom = (TextView)convertView.findViewById(R.id.tvRoom);

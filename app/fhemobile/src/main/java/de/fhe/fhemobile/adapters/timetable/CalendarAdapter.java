@@ -62,22 +62,22 @@ public class CalendarAdapter extends BaseAdapter {
 					inflate(R.layout.row_layout_calendar, parent, false);
 		}
 		final FlatDataStructure currentItem = MyTimeTableView.getSortedLessons().get(position);
-		RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.singleRowLayout);
+		RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.singleRowLayout);
 
 		RelativeLayout headerLayout = convertView.findViewById(R.id.headerBackground);
 
-		final TextView lessonDay = (TextView)convertView.findViewById(R.id.tvLessonDay);
+		final TextView lessonDay = (TextView) convertView.findViewById(R.id.tvLessonDay);
 		lessonDay.setText(currentItem.getEvent().getDayOfWeek());
 
-		final TextView lessonDate = (TextView)convertView.findViewById(R.id.tvLessonDate);
+		final TextView lessonDate = (TextView) convertView.findViewById(R.id.tvLessonDate);
 		lessonDate.setText(currentItem.getEvent().getDate());
 
 
-		final TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvTitle);
+		final TextView lessonTitle = (TextView) convertView.findViewById(R.id.tvTitle);
 		lessonTitle.setText(currentItem.getEvent().getShortTitle());
 
 
-		final TextView lessonTime = (TextView)convertView.findViewById(R.id.tvLessonTime);
+		final TextView lessonTime = (TextView) convertView.findViewById(R.id.tvLessonTime);
 		final Date df = new Date(currentItem.getEvent().getStartDate());
 		//String date = sdf.format(df);
 		lessonTime.setText(currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime());

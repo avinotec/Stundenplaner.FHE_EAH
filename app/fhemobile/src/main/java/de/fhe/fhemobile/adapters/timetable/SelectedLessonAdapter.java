@@ -164,7 +164,7 @@ public class SelectedLessonAdapter extends BaseAdapter {
 		final TextView tvTime = (TextView) convertView.findViewById(R.id.tvLessonTime);
 		final Date df = new java.util.Date(currentItem.getEvent().getStartDate());
 		final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
-		final String dayOfWeek = new SimpleDateFormat("EEEE", Locale.getDefault()).format(df);
+		final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(df);
 		tvTime.setText(dayOfWeek + ", " + date + " " + currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime());
 
 		final TextView tvRoom = (TextView)convertView.findViewById(R.id.tvRoom);
