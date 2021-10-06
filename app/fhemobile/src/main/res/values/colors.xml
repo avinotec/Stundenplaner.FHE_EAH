@@ -41,6 +41,8 @@
 
     <color name="weather_text">#B3FFFFFF</color>
 
+    <color name="background">#FFFFFF</color>
+
 
     <!--    Campus Navigation -->
 
