@@ -33,6 +33,28 @@ public class Utils {
 
     public static final String TAG = "utils.Utils";
 
+    //correctUmlauts--------------------------------------------------------------------------------
+
+    /**
+     * Replaces incorrect german umlauts in the given string
+     * @param str string
+     * @return corrected string
+     */
+    public static String correctUmlauts(String str){
+        //method added by Nadja - 05.01.2021
+
+        str = str.replaceAll("Ã„", "Ä");
+        str = str.replaceAll("Ã\u009C", "Ü");
+        str = str.replaceAll("Ã–", "Ö");
+        str = str.replaceAll("Ã\u009F", "ß");
+        str = str.replaceAll("Ã¼", "ü");
+        str = str.replaceAll("Ã¶", "ö");
+        str = str.replaceAll("Ã¤", "ä");
+
+        return str;
+    }
+
+
     //getStringResource-----------------------------------------------------------------------------
 
     /**
@@ -121,6 +143,8 @@ public class Utils {
     public static void showToast(final Context _Context, final String _Text) {
         Toast.makeText(_Context, _Text, Toast.LENGTH_SHORT).show();
     }
+
+
 
     
 }

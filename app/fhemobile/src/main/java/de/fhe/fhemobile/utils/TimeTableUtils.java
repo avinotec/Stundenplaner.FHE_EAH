@@ -1,3 +1,20 @@
+/*
+ *  Copyright (c) 2014-2019 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package de.fhe.fhemobile.utils;
 
 public class TimeTableUtils {
@@ -17,22 +34,5 @@ public class TimeTableUtils {
         return person;
     }
 
-    /**
-     * Replaces incorrect german umlauts in the given string
-     * @param str name as string
-     * @return corrected name string
-     */
-    public static String correctUmlauts(String str){
-        //method added by Nadja - 05.01.2021
 
-        str = str.replaceAll("Ã„", "Ä");
-        str = str.replaceAll("Ã\u009C", "Ü");
-        str = str.replaceAll("Ã–", "Ö");
-        str = str.replaceAll("Ã\u009F", "ß");
-        str = str.replaceAll("Ã¼", "ü");
-        str = str.replaceAll("Ã¶", "ö");
-        str = str.replaceAll("Ã¤", "ä");
-
-        return str;
-    }
 }

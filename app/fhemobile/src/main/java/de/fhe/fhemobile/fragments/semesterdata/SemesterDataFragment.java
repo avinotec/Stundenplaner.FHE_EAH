@@ -91,7 +91,7 @@ public class SemesterDataFragment extends FeatureFragment {
     public boolean onOptionsItemSelected(MenuItem _item) {
         switch (_item.getItemId()) {
             case R.id.action_settings:
-                if(null!=mModel&&null!=mModel.getSemesterData()) {
+                if(null != mModel && null != mModel.getSemesterData()) {
                     if (mModel.getChosenSemester() < mModel.getSemesterData().length - 1) {
                         mModel.setChosenSemester(mModel.getChosenSemester() + 1);
                     } else {
@@ -131,7 +131,9 @@ public class SemesterDataFragment extends FeatureFragment {
         // As the onCreate method hasn't been called yet, the mModel still is a NP and can't be accessed.
 
         if (SemesterDataModel.getInstance().getSemesterData() != null) {
-            _ActionBar.setTitle(SemesterDataModel.getInstance().getSemesterData()[SemesterDataModel.getInstance().getChosenSemester()].getLongName());
+            _ActionBar.setTitle(SemesterDataModel.getInstance()
+                    .getSemesterData()[SemesterDataModel.getInstance().getChosenSemester()]
+                    .getLongName());
         }
     }
 

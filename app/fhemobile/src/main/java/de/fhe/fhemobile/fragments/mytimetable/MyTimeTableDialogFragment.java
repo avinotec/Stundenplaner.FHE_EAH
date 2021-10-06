@@ -20,7 +20,7 @@ package de.fhe.fhemobile.fragments.mytimetable;
 
 import static android.content.ContentValues.TAG;
 
-import static de.fhe.fhemobile.utils.TimeTableUtils.correctUmlauts;
+import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -150,7 +150,9 @@ public class MyTimeTableDialogFragment extends DialogFragment {
      * @param dataList ist die Liste, die am Ende alle Daten der verschiedenen Requests beinhaltet.
      * @param data ist der neue Datensatz, der in die Liste eingepflegt werden soll.
      **/
-    private static void getAllEvents(final List<TimeTableWeekVo> weekList, final List<FlatDataStructure> dataList , final FlatDataStructure data) {
+    private static void getAllEvents(final List<TimeTableWeekVo> weekList,
+                                     final List<FlatDataStructure> dataList ,
+                                     final FlatDataStructure data) {
         if (weekList != null) {
             try {
 
@@ -176,7 +178,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 		                        }
 	                        }
                             //Kommt die UID schon in der Liste vor, braucht der Event nicht hinzugefügt werden, da es ein Duplikat wäre.
-                        	if(exists==null){
+                        	if(exists == null){
 		                        FlatDataStructure datacopy = data.copy();
 		                        datacopy
 				                        .setEventWeek(weekList.get(weekIndex))
@@ -256,7 +258,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                 }
                 MyTimeTableView.setCompleteLessons(new ArrayList<FlatDataStructure>(Arrays.asList(result)));
 
-                final TimeTableLessonAdapter timeTableLessonAdapter = new TimeTableLessonAdapter(MyTimeTableDialogFragment.this.getContext());
+                final TimeTableLessonAdapter timeTableLessonAdapter
+                        = new TimeTableLessonAdapter(MyTimeTableDialogFragment.this.getContext());
                 mView.setLessonListAdapter(timeTableLessonAdapter);
                 mView.toggleLessonListVisibility(true);
                 timeTableLessonAdapter.notifyDataSetChanged();
@@ -272,8 +275,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         public void onStudyCourseChosen(final String _TermId ) {
 
             Log.d(TAG, "onTermChosen: "+_TermId+" ausgewählt");
-//TODO ???
-//            mView.resetTermsPicker();
+            //TODO ???
+            // mView.resetTermsPicker();
             //mView.toggleLessonListVisibility(false);
 
             MyTimeTableView.getCompleteLessons().clear();
@@ -350,9 +353,11 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                 .setStudyGroup(studyGroupVo);
 
 
-                        TimeTableCallback<List<TimeTableWeekVo>> callback = new TimeTableCallback<List<TimeTableWeekVo>>(data) {
+                        TimeTableCallback<List<TimeTableWeekVo>> callback =
+                                new TimeTableCallback<List<TimeTableWeekVo>>(data) {
                             @Override
-                            public void onResponse(Call<List<TimeTableWeekVo>> call, Response<List<TimeTableWeekVo>> response) {
+                            public void onResponse(Call<List<TimeTableWeekVo>> call,
+                                                   Response<List<TimeTableWeekVo>> response) {
 
                                 super.onResponse(call, response);
                                 if(response.code()>=200) {
@@ -370,7 +375,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
 
                                         try {
-                                            Collections.sort(MyTimeTableView.getCompleteLessons(), new LessonTitle_StudyGroupTitle_Comparator());
+                                            Collections.sort(MyTimeTableView.getCompleteLessons(),
+                                                    new LessonTitle_StudyGroupTitle_Comparator());
                                         } catch ( final RuntimeException e ) {
                                             Log.e(TAG, "Fehler beim Sortieren", e); //$NON-NLS
                                         }
@@ -399,7 +405,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                         mView.toggleLessonListVisibility(true);
                                         timeTableLessonAdapter.notifyDataSetChanged();
                                         final Gson gson = new Gson();
-                                        final String chosenTermJson = correctUmlauts(gson.toJson(MyTimeTableView.getCompleteLessons()));
+                                        final String chosenTermJson = correctUmlauts(
+                                                gson.toJson(MyTimeTableView.getCompleteLessons()));
                                         editor.putString(PREFS_CHOSEN_RESULT, chosenTermJson);
                                         editor.commit();
 
@@ -484,13 +491,14 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
                 mView.setStudyCourseItems(mResponse.getStudyCourses());
             }
-            Log.d(TAG, "success: Request wurde ausgefuehrt: "+response.raw().request().url()+" Status: "+response.code());
+            Log.d(TAG, "success: Request wurde ausgefuehrt: " + response.raw().request().url()
+                    + " Status: "+response.code());
             // MS: Bei den News sind die news/0 kaputt
         }
 
         @Override
         public void onFailure(Call<TimeTableResponse> call, Throwable t) {
-            Log.d(TAG, "failure: Request wurde ausgefuehrt: "+call.request().url());
+            Log.d(TAG, "failure: Request wurde ausgefuehrt: " + call.request().url());
         }
     };
 
