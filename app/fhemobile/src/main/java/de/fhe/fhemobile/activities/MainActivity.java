@@ -47,8 +47,6 @@ import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
 import de.fhe.fhemobile.fragments.impressum.ImpressumFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdata.SemesterDataWebViewFragment;
-import de.fhe.fhemobile.fragments.timetable.TimeTableEventsFragment;
-import de.fhe.fhemobile.fragments.timetable.TimeTableFragment;
 import de.fhe.fhemobile.models.timeTableChanges.RequestModel;
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.network.NetworkHandler;
@@ -322,17 +320,11 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                 webview = ((EventsWebViewFragment) mCurrentFragment).getWebView();
             }
 
-            //if fragment contains a webview open previous page
-            if(webview != null && webview.canGoBack()) {
+            if(webview != null && webview.canGoBack()){
                 // if there is previous page open it
                 webview.goBack();
-            }
-            //time table is displayed
-            // then the fragment for selection of course, set ... (TimeTableFragment) should be opened on back button press
-            else if (mCurrentFragment instanceof TimeTableEventsFragment) {
-                changeFragment(TimeTableFragment.newInstance(), false);
             }else {
-                super.onBackPressed(); //close app
+                super.onBackPressed();//if there is no previous page, close app
             }
         } else super.onBackPressed();
 
