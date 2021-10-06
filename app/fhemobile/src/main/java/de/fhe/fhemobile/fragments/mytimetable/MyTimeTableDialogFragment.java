@@ -18,6 +18,10 @@
 package de.fhe.fhemobile.fragments.mytimetable;
 
 
+import static android.content.ContentValues.TAG;
+
+import static de.fhe.fhemobile.utils.TimeTableUtils.correctUmlauts;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -56,8 +60,6 @@ import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -187,7 +189,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 		                                found=true;
                                     }
                                 }
-		                        if(found==true){
+		                        if(found == true){
 		                            datacopy.setAdded(true);
                                 }
 		                        else{
@@ -215,13 +217,13 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     private void initSelectionSite(){
         final Gson gson= new Gson();
 
-        sharedPreferences =this.getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        sharedPreferences = this.getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
         if(sharedPreferences.contains(PREFS_CHOSEN_COURSE)){
             final String chosenCourseJson=sharedPreferences.getString(PREFS_CHOSEN_COURSE,"");
             final StudyCourseVo chosenCourse = gson.fromJson(chosenCourseJson,StudyCourseVo.class);
-            mChosenCourse=chosenCourse;
+            mChosenCourse = chosenCourse;
             mView.setTermsItems(mChosenCourse.getTerms());
             mView.setSelectedGroupText(chosenCourse.getTitle());
         }
@@ -236,16 +238,16 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
 
             if (sharedPreferences.contains(PREFS_CHOSEN_RESULT)) {
-                final String resultJson = sharedPreferences.getString(PREFS_CHOSEN_RESULT, "");
+                final String resultJson = correctUmlauts(sharedPreferences.getString(PREFS_CHOSEN_RESULT, ""));
                 final FlatDataStructure[] result = gson.fromJson(resultJson, FlatDataStructure[].class);
-                for(FlatDataStructure loadedElement:result){
-                    boolean found=false;
+                for(FlatDataStructure loadedElement : result){
+                    boolean found = false;
                     for(FlatDataStructure selectedItem:MyTimeTableView.getLessons()){
                         if(loadedElement.getEvent().getUid().equals(selectedItem.getEvent().getUid())){
                             found=true;
                         }
                     }
-                    if(found==true){
+                    if(found == true){
                         loadedElement.setAdded(true);
                     }
                     else{
@@ -287,12 +289,12 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                 if (courseVo.getId() != null && courseVo.getId().equals(_TermId)) {
                     mChosenCourse = courseVo;
                     Gson gson = new Gson();
-                    String chosenCourseJson=gson.toJson(courseVo);
+                    String chosenCourseJson = correctUmlauts(gson.toJson(courseVo));
 
                     // Check if course has any terms available
                     if (courseVo.getTerms() != null) {
                         errorOccurred = false;
-                        editor.putString(PREFS_CHOSEN_COURSE,chosenCourseJson);
+                        editor.putString(PREFS_CHOSEN_COURSE, chosenCourseJson);
                         editor.commit();
                         mView.setTermsItems(courseVo.getTerms());
                     }
@@ -337,7 +339,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
                     mChosenTerm = termsVo;
                     final Gson gson = new Gson();
-                    final String chosenTermJson = gson.toJson(mChosenTerm);
+                    final String chosenTermJson = correctUmlauts(gson.toJson(mChosenTerm));
                     editor.putString(PREFS_CHOSEN_TERM,chosenTermJson);
                     editor.commit();
 
@@ -397,8 +399,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                         mView.toggleLessonListVisibility(true);
                                         timeTableLessonAdapter.notifyDataSetChanged();
                                         final Gson gson = new Gson();
-                                        final String chosenTermJson = gson.toJson(MyTimeTableView.getCompleteLessons());
-                                        editor.putString(PREFS_CHOSEN_RESULT,chosenTermJson);
+                                        final String chosenTermJson = correctUmlauts(gson.toJson(MyTimeTableView.getCompleteLessons()));
+                                        editor.putString(PREFS_CHOSEN_RESULT, chosenTermJson);
                                         editor.commit();
 
                                     }
