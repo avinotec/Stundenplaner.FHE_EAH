@@ -84,7 +84,7 @@ public class TimeTableEventItem implements IBaseItem {
         //method added by Nadja - 05.01.2021
 
         str = str.replaceAll("Ã„", "Ä");
-        str = str.replaceAll("Ãœ", "Ü");
+        str = str.replaceAll("Ã\u009C", "Ü");
         str = str.replaceAll("Ã–", "Ö");
         str = str.replaceAll("Ã\u009F", "ß");
         str = str.replaceAll("Ã¼", "ü");
@@ -103,7 +103,7 @@ public class TimeTableEventItem implements IBaseItem {
     private String prettify(String person){
         //method added by Nadja - 05.01.2021
 
-        if (person.matches("[a-zA-Z- ,.]+[^ ][(][a-zA-Z-]+[)]")){
+        if (person.matches("[a-zA-Z- ,._]+[^ ][(][a-zA-Z-]+[)]")){
             person = person.replaceFirst("[(]", " (");
         }
         return person;
