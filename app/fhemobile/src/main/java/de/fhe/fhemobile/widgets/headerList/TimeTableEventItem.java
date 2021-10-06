@@ -16,6 +16,9 @@
  */
 package de.fhe.fhemobile.widgets.headerList;
 
+import static de.fhe.fhemobile.utils.TimeTableUtils.correctUmlauts;
+import static de.fhe.fhemobile.utils.TimeTableUtils.prettifyName;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,11 +31,19 @@ import de.fhe.fhemobile.R;
  */
 public class TimeTableEventItem implements IBaseItem {
 
+    //Variables
+    private final String mTime;
+    private final String mTitle;
+    private final String mRoom;
+    private final String mPerson;
+
+
+
     public TimeTableEventItem(String _Time, String _Title, String _Room, String _Person) {
         mTime   = _Time;
         mTitle  = correctUmlauts(_Title);
         mRoom   = _Room;
-        mPerson = prettify(correctUmlauts(_Person));
+        mPerson = prettifyName(correctUmlauts(_Person));
     }
 
     @Override
@@ -73,45 +84,4 @@ public class TimeTableEventItem implements IBaseItem {
         TextView mRoom;
         TextView mPerson;
     }
-
-
-    /**
-     * Replaces incorrect german umlauts in the given string
-     * @param str name as string
-     * @return corrected name string
-     */
-    private String correctUmlauts(String str){
-        //method added by Nadja - 05.01.2021
-
-        str = str.replaceAll("Ã„", "Ä");
-        str = str.replaceAll("Ãœ", "Ü");
-        str = str.replaceAll("Ã–", "Ö");
-        str = str.replaceAll("Ã\u009F", "ß");
-        str = str.replaceAll("Ã¼", "ü");
-        str = str.replaceAll("Ã¶", "ö");
-        str = str.replaceAll("Ã¤", "ä");
-
-        return str;
-    }
-
-    /**
-     * if there are more than one lecturer with this name the department e.g. SciTec is added in brackets
-     * this prettifies the name if a whitespace between name and bracket is missing
-     * @param person string already corrected for umlauts
-     * @return name string
-     */
-    private String prettify(String person){
-        //method added by Nadja - 05.01.2021
-
-        if (person.matches("[a-zA-Z- ,.]+[^ ][(][a-zA-Z-]+[)]")){
-            person = person.replaceFirst("[(]", " (");
-        }
-        return person;
-    }
-
-
-    private final String mTime;
-    private final String mTitle;
-    private final String mRoom;
-    private final String mPerson;
 }

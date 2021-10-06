@@ -176,9 +176,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                         for(String[] negativeEvent:negativeList){
                             if ( change.getNewEventJson().getTitle().contains(negativeEvent[0])
                                     && change.getSetSplusKey().equals( negativeEvent[1] ) ) {
-                                isInNegativeList=true;
+                                isInNegativeList = true;
                             }
-
                         }
 
                         if(isInNegativeList){
@@ -321,9 +320,10 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                 webview = ((EventsWebViewFragment) mCurrentFragment).getWebView();
             }
 
-            if(webview!= null && webview.canGoBack())
-                webview.goBack();// if there is previous page open it
-            else {
+            if(webview != null && webview.canGoBack()){
+                // if there is previous page open it
+                webview.goBack();
+            }else {
                 super.onBackPressed();//if there is no previous page, close app
             }
         } else super.onBackPressed();
@@ -367,7 +367,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         for(int i = 0; i < sortedLessons.size(); i++){
             TimeTableEventVo event = sortedLessons.get(i).getEvent();
             try {
-                if(sdf.parse(event.getDate() + " " + event.getStartTime()).compareTo(new Date())>=0) {
+                if(sdf.parse(event.getDate() + " " + event.getStartTime()).compareTo(new Date()) >= 0) {
                     if(sdf.parse(event.getDate() + " " + event.getEndTime()).compareTo(new Date()) < 0) {
                         return (i);
                     }

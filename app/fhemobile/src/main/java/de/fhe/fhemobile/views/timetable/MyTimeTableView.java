@@ -16,6 +16,8 @@
  */
 package de.fhe.fhemobile.views.timetable;
 
+import static de.fhe.fhemobile.utils.TimeTableUtils.correctUmlauts;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.AttributeSet;
@@ -83,29 +85,29 @@ public class MyTimeTableView extends LinearLayout {
         selectedLessonAdapter = new SelectedLessonAdapter(Main.getAppContext());
         mLessonList.setAdapter(selectedLessonAdapter);
     }
-    private void createAddDialog(){
 
+
+    private void createAddDialog(){
         final FragmentManager fm = mFragmentManager;
         MyTimeTableDialogFragment myTimeTableDialogFragment = MyTimeTableDialogFragment.newInstance();
         myTimeTableDialogFragment.show(fm, "fragment_edit_name");
-
     }
 
 
     private static List<FlatDataStructure> getSortedList(Comparator<FlatDataStructure> comparator){
         List<FlatDataStructure> sortedList = new ArrayList<FlatDataStructure>(MainActivity.selectedLessons);
-        if(sortedList.isEmpty()==false){
+        if(sortedList.isEmpty() == false){
             Collections.sort(sortedList,comparator);
         }
         return sortedList;
     }
-    public static void setCompleteLessons(List<FlatDataStructure> lessons){
-        if(lessons==null){
 
-            MainActivity.completeLessons=new ArrayList<>();
-        }
-        else{
-            MainActivity.completeLessons=lessons;
+
+    public static void setCompleteLessons(List<FlatDataStructure> lessons){
+        if(lessons == null){
+            MainActivity.completeLessons = new ArrayList<>();
+        } else {
+            MainActivity.completeLessons = lessons;
         }
     }
 
@@ -114,9 +116,9 @@ public class MyTimeTableView extends LinearLayout {
     }
 
     public static void setLessons(final List<FlatDataStructure> lessons){
-        if(lessons==null){
+        if(lessons == null){
             MainActivity.selectedLessons = new ArrayList<>();
-        }else{
+        } else {
 
             MainActivity.selectedLessons = lessons;
             MainActivity.sortedLessons = getSortedList(new Date_Comparator());
@@ -135,7 +137,7 @@ public class MyTimeTableView extends LinearLayout {
     	for(FlatDataStructure eventInCompleteList: MainActivity.completeLessons){
             boolean exists=false;
 
-    		for(String[] eventdata:negativeList){
+    		for(String[] eventdata : negativeList){
     		    if(eventdata[0].equals(FlatDataStructure.cutEventTitle(eventInCompleteList.getEvent().getTitle()))
                 && eventdata[1].equals(eventInCompleteList.getStudyGroup().getTimeTableId())){
                     exists=true;
@@ -161,15 +163,15 @@ public class MyTimeTableView extends LinearLayout {
        return negativeList;
     }
 
-    public static List<FlatDataStructure> getSortedLessons(){return MainActivity.sortedLessons;}
+    public static List<FlatDataStructure> getSortedLessons(){  return MainActivity.sortedLessons;  }
 
     public static void removeLesson(final FlatDataStructure lesson){
         MainActivity.selectedLessons.remove(lesson);
         MainActivity.sortedLessons=getSortedList(new Date_Comparator());
 
         final Gson gson = new Gson();
-        final String json = gson.toJson(MyTimeTableView.getLessons());
-        final SharedPreferences sharedPreferences =Main.getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        final String json = correctUmlauts(gson.toJson(MyTimeTableView.getLessons()));
+        final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("list",json);
         editor.apply();
@@ -179,11 +181,11 @@ public class MyTimeTableView extends LinearLayout {
 
     public static void addLesson(final FlatDataStructure lesson){
         MainActivity.selectedLessons.add(lesson);
-        MainActivity.sortedLessons=getSortedList(new Date_Comparator());
+        MainActivity.sortedLessons = getSortedList(new Date_Comparator());
 
         final Gson gson = new Gson();
-        final String json = gson.toJson(MyTimeTableView.getLessons());
-        final SharedPreferences sharedPreferences =Main.getAppContext().getSharedPreferences("prefs",Context.MODE_PRIVATE);
+        final String json = correctUmlauts(gson.toJson(MyTimeTableView.getLessons()));
+        final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences("prefs",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("list",json);
         editor.apply();

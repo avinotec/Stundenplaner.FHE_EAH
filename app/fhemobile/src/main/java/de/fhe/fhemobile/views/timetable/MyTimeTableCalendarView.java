@@ -86,7 +86,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
     // Springen auf den aktuellen Tag
     public void jumpCurrentLesson(){
         final int currentDayIndex = MainActivity.getCurrentEventIndex();
-        if(currentDayIndex>=0){
+        if(currentDayIndex >= 0){
             mCalendarList.setSelection(currentDayIndex);
         }
     }
