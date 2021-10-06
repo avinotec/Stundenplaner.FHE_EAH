@@ -631,7 +631,6 @@ public class RouteCalculator {
         return currentFloor;
     }
 
-    static private final JSONHandler jsonHandler = new JSONHandler();
     /**
      * Build grid of a floor plan
      * @param building
@@ -643,11 +642,12 @@ public class RouteCalculator {
         Cell[][] floorGrid = new Cell[(int)cellgrid_width][(int)cellgrid_height];
 
         try {
-            //static JSONHandler jsonHandler = new JSONHandler();
+            JSONHandler jsonHandler = new JSONHandler();
             String json;
 
             //Get floor plan JSON from assets
-            json = jsonHandler.readJsonFromAssets(context, floorplanName(building, floor) + ".json");
+            //TODO schon wieder die Rooms einlesen
+            json = JSONHandler.readJsonFromAssets(context, floorplanName(building, floor) + ".json");
             final HashMap<String, Cell> walkableCells = jsonHandler.parseJsonWalkableCells(json);
 
             //fill in rooms

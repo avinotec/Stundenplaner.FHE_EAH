@@ -2,7 +2,6 @@ package de.fhe.fhemobile.fragments.navigation;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -15,8 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import androidx.annotation.RequiresApi;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -70,7 +67,6 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -144,10 +140,10 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
         //Get lists of rooms and names for spinners
         JSONHandler jsonHandler = new JSONHandler();
         String json;
-//TODO verschieben einmalig
+//TODO loadRooms ist schon in NavigationActivity enthalten
         if (rooms.isEmpty()) {
             try {
-                json = jsonHandler.readJsonFromAssets(getContext(), JSON_FILE_ROOMS);
+                json = JSONHandler.readJsonFromAssets(getContext(), JSON_FILE_ROOMS);
                 rooms = jsonHandler.parseJsonRooms(json);
             } catch (Exception e) {
                 Log.e(TAG, "error reading or parsing JSON file:", e);

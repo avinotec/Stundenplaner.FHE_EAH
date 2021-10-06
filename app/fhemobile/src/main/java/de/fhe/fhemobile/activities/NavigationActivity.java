@@ -17,12 +17,36 @@
 
 package de.fhe.fhemobile.activities;
 
-import static de.fhe.fhemobile.utils.Define.Navigation.*;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_01;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_02;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03_02_01_FLOOR_00;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03_02_01_FLOOR_01;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03_02_01_FLOOR_02;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03_02_01_FLOOR_03;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03_02_01_FLOOR_04;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03_02_01_FLOOR_UG;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_04;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_04_FLOOR_00;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_04_FLOOR_01;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_04_FLOOR_02;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_04_FLOOR_03;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_04_FLOOR_UG;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_05;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_05_FLOOR_00;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_05_FLOOR_01;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_05_FLOOR_02;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_05_FLOOR_03;
+import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_05_FLOOR_UG;
+import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_ELEVATOR;
+import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_STAIR;
+import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_WAY;
+import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_height;
+import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_width;
 
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,7 +57,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
@@ -483,13 +506,13 @@ public class NavigationActivity extends BaseActivity {
 
             // read only once
             if (rooms.isEmpty()) {
-                json = jsonHandler.readJsonFromAssets(this, FILE_ROOMS);
+                json = JSONHandler.readJsonFromAssets(this, FILE_ROOMS);
                 rooms = jsonHandler.parseJsonRooms(json);
             }
 
             // read only once
             if (floorConnections.isEmpty()) {
-                json = jsonHandler.readJsonFromAssets(this, FILE_FLOORCONNECTIONS);
+                json = JSONHandler.readJsonFromAssets(this, FILE_FLOORCONNECTIONS);
                 floorConnections = jsonHandler.parseJsonFloorConnection(json);
             }
 
