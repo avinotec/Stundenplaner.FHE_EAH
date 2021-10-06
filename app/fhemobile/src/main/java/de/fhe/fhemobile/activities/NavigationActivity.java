@@ -47,6 +47,7 @@ import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_width;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -661,7 +662,12 @@ public class NavigationActivity extends BaseActivity {
 
         ArrayList<String> helperBuildingAndFloor = new ArrayList<>();
 
-        Locale currentLocale = getResources().getConfiguration().getLocales().get(0);
+        Locale currentLocale;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            currentLocale = getResources().getConfiguration().getLocales().get(0);
+        } else {
+            currentLocale = getResources().getConfiguration().locale;
+        }
 
         try {
             if (in.equals(getLocaleStringResource(currentLocale, R.string.building_03_02_01_floor_ug))) {
@@ -747,8 +753,20 @@ public class NavigationActivity extends BaseActivity {
 
         try {
             Configuration configuration = new Configuration(this.getResources().getConfiguration());
-            configuration.setLocale(currentLocale);
-            localeString = this.createConfigurationContext(configuration).getString(floorPlan);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                configuration.setLocale(currentLocale);
+            } else {
+                configuration.locale = currentLocale;
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                localeString = this.createConfigurationContext(configuration).getString(floorPlan);
+            } else {
+                this.getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+                localeString = this.getResources().getString(floorPlan);
+            }
+
         } catch (Exception e) {
             Log.e(TAG,"error getting locale:", e);
         }
