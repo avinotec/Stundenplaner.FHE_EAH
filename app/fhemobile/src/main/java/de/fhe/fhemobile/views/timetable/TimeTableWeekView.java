@@ -62,6 +62,7 @@ public class TimeTableWeekView extends LinearLayout {
 
         final Calendar calendar = Calendar.getInstance();
         calendar.clear();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
         calendar.set(Calendar.WEEK_OF_YEAR, _Data.getWeekInYear());
         calendar.set(Calendar.YEAR, _Data.getYear());
 
@@ -70,8 +71,8 @@ public class TimeTableWeekView extends LinearLayout {
         final String startDateInStr = formatter.format(startDate);
 
         calendar.add(Calendar.DATE, 4);
-        final Date enddate = calendar.getTime();
-        final String endDaString = formatter.format(enddate);
+        final Date endDate = calendar.getTime();
+        final String endDaString = formatter.format(endDate);
 
         mWeekRange.setText(startDateInStr + " – " + endDaString);
     }
