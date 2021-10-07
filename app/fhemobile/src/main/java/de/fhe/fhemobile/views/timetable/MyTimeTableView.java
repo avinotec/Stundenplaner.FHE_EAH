@@ -16,7 +16,7 @@
  */
 package de.fhe.fhemobile.views.timetable;
 
-import static de.fhe.fhemobile.utils.TimeTableUtils.correctUmlauts;
+import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
 import android.content.Context;
 import android.content.SharedPreferences;

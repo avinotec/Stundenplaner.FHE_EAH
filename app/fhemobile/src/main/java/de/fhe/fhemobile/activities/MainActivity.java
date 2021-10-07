@@ -128,8 +128,14 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             String json = request.toJson();
 
             NetworkHandler.getInstance().getTimeTableChanges(json, new Callback<ResponseModel>() {
+                /**
+                 *
+                 * @param call
+                 * @param response
+                 */
                 @Override
-                public void onResponse(final Call<ResponseModel> call, final Response<ResponseModel> response) {
+                public void onResponse(final Call<ResponseModel> call,
+                                       final Response<ResponseModel> response) {
 
                     //wieso assert und damit einen Absturz produzieren, wenn das einfach auftreten kann, wenn der Server nicht verfügbar ist?
                     //vorallem wenn darunter eh ein if das gleiche abfragt.
@@ -147,7 +153,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                             Log.d( TAG, "Error in Schedule Change Server: " + sErrorText );
 
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
-                            builder1.setMessage("Push Notifications: Error in Schedule Change Server: " + sErrorText);
+                            builder1.setMessage(
+                                    "Push Notifications: Error in Schedule Change Server: " + sErrorText);
                             AlertDialog alert11 = builder1.create();
                             alert11.show();
                         }
@@ -215,22 +222,26 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
                         //Aenderung eines Events: suche den Event und ueberschreibe seine Daten
                         if(change.getChangesReason() == CHANGEREASON_EDIT) {
-                            final FlatDataStructure event = FlatDataStructure.getEventByID( myTimetableList, change.getNewEventJson().getUid());
-                            if(event!=null){
+                            final FlatDataStructure event = FlatDataStructure.getEventByID(
+                                    myTimetableList, change.getNewEventJson().getUid());
+                            if(event != null){
                                 event.setEvent(change.getNewEventJson());
                             }
                         }
                         //Hinzufuegen eines neuen Events: Erstelle ein neues Element vom Typ FlatDataStructure, schreibe alle Set-, Semester- und Studiengangdaten in diesen
                         //und fuege dann die Eventdaten des neuen Events hinzu. Anschliessend in die Liste hinzufuegen.
                         if(change.getChangesReason() == CHANGEREASON_NEW) {
-                            final FlatDataStructure event = FlatDataStructure.queryGetEventsByStudyGroupTitle( myTimetableList, change.getSetSplusKey()).get(0).copy();
+                            final FlatDataStructure event
+                                    = FlatDataStructure.queryGetEventsByStudyGroupTitle(
+                                            myTimetableList, change.getSetSplusKey()).get(0).copy();
                             event.setEvent(change.getNewEventJson());
                             MyTimeTableView.getLessons().add(event);
 
                         }
                         //Loeschen eines Events: Suche den Event mit der SplusID und lösche ihn aus der Liste.
                         if(change.getChangesReason() == CHANGEREASON_DELETE){
-                            final FlatDataStructure event = FlatDataStructure.getEventByID( myTimetableList, change.getNewEventJson().getUid());
+                            final FlatDataStructure event = FlatDataStructure.getEventByID(
+                                    myTimetableList, change.getNewEventJson().getUid());
                             MyTimeTableView.getLessons().remove(event);
                         }
                     }
@@ -367,14 +378,16 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         for(int i = 0; i < sortedLessons.size(); i++){
             TimeTableEventVo event = sortedLessons.get(i).getEvent();
             try {
-                if(sdf.parse(event.getDate() + " " + event.getStartTime()).compareTo(new Date()) >= 0) {
-                    if(sdf.parse(event.getDate() + " " + event.getEndTime()).compareTo(new Date()) < 0) {
+                if(sdf.parse(event.getDate() + " "
+                        + event.getStartTime()).compareTo(new Date()) >= 0) {
+                    if(sdf.parse(event.getDate() + " "
+                            + event.getEndTime()).compareTo(new Date()) < 0) {
                         return (i);
                     }
                     if(i == 0){
                         return i;
                     }
-                    return (i -  1);
+                    return (i - 1);
                 }
             } catch (ParseException e) {
                 Log.e(TAG, "getCurrentEventIndex: ",e );

@@ -87,7 +87,7 @@ public class NewsItemVo implements Parcelable {
     }
 
     public String getPubDate() {
-        if(null!=mPubDate){
+        if(null != mPubDate){
             return mPubDate.substring(4, 22);
         }
         return "";

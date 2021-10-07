@@ -49,29 +49,41 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         mScannerView.setAutoFocus(mAutoFocus);
 
         //Check necessary permissions
-        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_CAMERA);
+        //android developer documentation: "For apps targeting API lower than Build.VERSION_CODES.M these permissions are always granted as such apps do not expect permission revocations and would crash."
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_CAMERA);
+            }
         }
 
     }
+
 
 
     @Override
     public void onResume() {
         super.onResume();
-        if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            mScannerView.setResultHandler(this);
-            mScannerView.startCamera();
-            mScannerView.setAutoFocus(mAutoFocus);
+
+        //android developer documentation: "For apps targeting API lower than Build.VERSION_CODES.M these permissions are always granted as such apps do not expect permission revocations and would crash."
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                mScannerView.setResultHandler(this);
+                mScannerView.startCamera();
+                mScannerView.setAutoFocus(mAutoFocus);
+            }
         }
     }
+
 
 
     @Override
     public void onPause() {
         super.onPause();
-        if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            mScannerView.stopCamera();
+        //android developer documentation: "For apps targeting API lower than Build.VERSION_CODES.M these permissions are always granted as such apps do not expect permission revocations and would crash."
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                mScannerView.stopCamera();
+            }
         }
     }
 
