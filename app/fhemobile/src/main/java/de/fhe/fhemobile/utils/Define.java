@@ -23,7 +23,7 @@ package de.fhe.fhemobile.utils;
  */
 public class Define {
 
-	public class Navigation {
+	public static class Navigation {
 		public static final String BUILDING_03_02_01_FLOOR_UG = "building_03_02_01_floor_ug";   //$NON-NLS
 		public static final String BUILDING_03_02_01_FLOOR_00 = "building_03_02_01_floor_00";   //$NON-NLS
 		public static final String BUILDING_03_02_01_FLOOR_01 = "building_03_02_01_floor_01";   //$NON-NLS
