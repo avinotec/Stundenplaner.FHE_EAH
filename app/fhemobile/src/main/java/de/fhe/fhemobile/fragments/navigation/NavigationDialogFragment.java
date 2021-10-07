@@ -135,7 +135,10 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
         }
     }
 
-
+    /**
+     *
+     * @return RoomNames[] Persons[]
+     */
     private ArrayList[] loadRoomNamesAndPersons(){
         //Get lists of rooms and names for spinners
         JSONHandler jsonHandler = new JSONHandler();
@@ -153,7 +156,7 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
         //Get lists of room names and persons for spinners
         Resources resource = getResources();
         final ArrayList<String> roomNames = new ArrayList<>();
-        ArrayList<String> persons = new ArrayList<>();
+        final ArrayList<String> persons = new ArrayList<>();
 
         try {
             for (int i = 0; i < rooms.size(); i++) {
