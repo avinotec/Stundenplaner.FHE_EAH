@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.zxing.Result;
@@ -36,7 +35,6 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
     private ArrayList<String> availableRooms;
 
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +56,6 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onResume() {
         super.onResume();
@@ -70,7 +67,6 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onPause() {
         super.onPause();
