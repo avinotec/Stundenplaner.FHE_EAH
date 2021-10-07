@@ -224,7 +224,7 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
                     for (int i = 0; i < rooms.size(); i++) {
 
                         String checkQRCode = item.toString();
-                        checkQRCode.replace(".", "");
+                        checkQRCode = checkQRCode.replace(".", "");
 
                         if (checkQRCode.equals(rooms.get(i).getRoomName())) {
 
@@ -339,8 +339,8 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
         if (destinationLocationDisplayedErrorText.getError() == null
                 && startLocationDisplayedErrorText.getError() == null) {
 
-            Boolean skipScanner = false;
-            Boolean inputValid = false;
+            boolean skipScanner = false;
+            boolean inputValid = false;
 
             //Use start QR-Code to show current position
             if (roomsIndex == 0 && personsIndex == 0 && userInputStartLocation.equals("")
