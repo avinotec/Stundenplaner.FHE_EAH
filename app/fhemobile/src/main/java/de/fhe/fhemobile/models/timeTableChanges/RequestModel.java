@@ -53,7 +53,7 @@ public class RequestModel {
 	}
 
 	public String toJson(){
-		if(module_list.size()>0 == false){
+		if(module_list.size() <= 0){
 			module_list=null;
 		}
 		final Gson gson = new Gson();

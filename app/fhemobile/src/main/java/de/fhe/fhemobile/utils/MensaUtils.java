@@ -42,15 +42,13 @@ public class MensaUtils {
 
         for (MensaFoodItemVo item : _Items) {
             long currentDate = item.getDate();
-            if (currentDate == lastDate) {
-                tempItems.add(item);
-            } else {
+            if (currentDate != lastDate) {
                 result.add(new MensaFoodItemCollectionVo(tempItems, lastDateString));
                 lastDate = currentDate;
                 lastDateString = item.getDateString();
                 tempItems = new ArrayList<>();
-                tempItems.add(item);
             }
+            tempItems.add(item);
         }
 
         result.add(new MensaFoodItemCollectionVo(tempItems, lastDateString));

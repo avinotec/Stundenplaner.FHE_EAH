@@ -88,8 +88,10 @@ public class JSONHandler {
         BufferedReader br = new BufferedReader( reader );
 
         for ( String line; (line = br.readLine()) != null; ) {
-            text.append(line + "\n");
+            text.append(line).append("\n");
         }
+
+        //TODO ist das nötig
         return text.toString();
     }
 
@@ -193,7 +195,8 @@ public class JSONHandler {
                 entry.setYCoordinate(y);
                 entry.setWalkability(jEntry.optBoolean(WALKABLE));
 
-                walkableCells.put(Integer.toString(x) + '_' + Integer.toString(y), entry);
+                /* walkableCells.put(Integer.toString(x) + '_' + Integer.toString(y), entry); */
+                walkableCells.put("" + x + '_' + y, entry);
 
             }
         } catch (Exception e) {
