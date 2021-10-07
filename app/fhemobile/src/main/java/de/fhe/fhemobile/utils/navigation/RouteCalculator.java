@@ -672,7 +672,9 @@ public class RouteCalculator {
 
                     //check normal walkable cell
                     if (floorGrid[x][y] == null){
-                        if(walkableCells.get(Integer.toString(x) + '_' + Integer.toString(y)) != null){ //x_y is used as key to store the cell
+                        //x_y is used as key to store the cell
+                        final Cell aCell = walkableCells.get( "" + x + '_' + y );
+                        if(aCell != null){
                             //add a walkable cell with coordinates x,y to grid
                             floorGrid[x][y] = new Cell(x, y, building, floor, true);
                         } else{
@@ -853,9 +855,9 @@ public class RouteCalculator {
             String floorFloorconnection = floorConnections.get(i).getConnectedCells().get(k).getFloor();
             String floorFloorgrid = floorGrids.get(index + 1)[0][0].getFloor();
 
-            if ((buildingFloorconnection == buildingFloorgrid
+            if ((buildingFloorconnection.equals(buildingFloorgrid)
                     || (isBuilding321(buildingFloorconnection) && isBuilding321(buildingFloorgrid)))
-                    && floorFloorconnection == floorFloorgrid) {
+                    && floorFloorconnection.equals(floorFloorgrid)) {
 
                 final AStar aStar = new AStar(startCell, floorConnections.get(i).getConnectedCells().get(j), floorGrids.get(index));
                 final ArrayList<Cell> navigationCells = aStar.getCellsToWalk();
@@ -869,11 +871,10 @@ public class RouteCalculator {
         return availableFloorConnectionsHelper;
     }
 
-    private boolean isBuilding321(String building){
+    private static boolean isBuilding321(final String building){
         if(building.equals(BUILDING_01) || building.equals(BUILDING_02) || building.equals(BUILDING_03)){
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 }
