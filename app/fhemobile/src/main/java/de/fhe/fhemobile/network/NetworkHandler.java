@@ -171,7 +171,7 @@ public class NetworkHandler {
 					orderedItems = MensaUtils.orderMensaItems(_mensaItems);
 
 				if (orderedItems != null) {
-					MensaFoodModel.getInstance().setFoodItems(orderedItems.toArray(new MensaFoodItemCollectionVo[orderedItems.size()]));
+					MensaFoodModel.getInstance().setFoodItems(orderedItems.toArray(new MensaFoodItemCollectionVo[0]));
 				} else {
 					MensaFoodModel.getInstance().setFoodItems(null);
 				}
