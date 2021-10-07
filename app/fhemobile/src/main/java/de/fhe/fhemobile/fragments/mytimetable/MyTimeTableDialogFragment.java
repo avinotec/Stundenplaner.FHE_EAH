@@ -189,14 +189,12 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 		                        for(FlatDataStructure selectedItem:MyTimeTableView.getLessons()){
 		                            if(datacopy.getEvent().getUid().equals(selectedItem.getEvent().getUid())){
 		                                found=true;
+		                                break;
                                     }
                                 }
-		                        if(found == true){
-		                            datacopy.setAdded(true);
-                                }
-		                        else{
-		                            datacopy.setAdded(false);
-                                }
+
+                                datacopy.setAdded( found ) ;
+
 		                        dataList.add(datacopy);
 	                        }
                             //Stattdessen füge bei dem existierenden Eintrag das Set des neuen Events hinzu.
@@ -247,14 +245,11 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                     for(FlatDataStructure selectedItem:MyTimeTableView.getLessons()){
                         if(loadedElement.getEvent().getUid().equals(selectedItem.getEvent().getUid())){
                             found=true;
+                            break;
                         }
                     }
-                    if(found == true){
-                        loadedElement.setAdded(true);
-                    }
-                    else{
-                        loadedElement.setAdded(false);
-                    }
+                    loadedElement.setAdded( found );
+
                 }
                 MyTimeTableView.setCompleteLessons(new ArrayList<FlatDataStructure>(Arrays.asList(result)));
 

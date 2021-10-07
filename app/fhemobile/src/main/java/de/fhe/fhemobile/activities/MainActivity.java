@@ -184,6 +184,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                             if ( change.getNewEventJson().getTitle().contains(negativeEvent[0])
                                     && change.getSetSplusKey().equals( negativeEvent[1] ) ) {
                                 isInNegativeList = true;
+                                break;
                             }
                         }
 
