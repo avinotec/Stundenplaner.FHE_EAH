@@ -79,12 +79,7 @@ public class NavigationActivity extends BaseActivity {
 
     //Constants
     private static final String TAG = "NavigationActivity"; //$NON-NLS
-
-    private static final String FILE_ROOMS = "rooms.json";
-
-    private static final String FILE_FLOORCONNECTIONS = "floorconnections.json";
-
-    private static final String JUST_LOCATION = "location";
+    private static final String JUST_LOCATION = "location"; //$NON-NLS
 
 
     //Variables
@@ -93,7 +88,7 @@ public class NavigationActivity extends BaseActivity {
     private Room startLocation;
     private Room destinationLocation;
 
-    private static ArrayList<Room> rooms = new ArrayList<>();
+    private static ArrayList<Room> rooms;
     private static ArrayList<FloorConnection> floorConnections = new ArrayList<>();
     private ArrayList<Cell> cellsToWalk = new ArrayList<>();
 
@@ -110,9 +105,12 @@ public class NavigationActivity extends BaseActivity {
         setSupportActionBar(toolbar);
 
         //Get extra from parent
-        Intent intendScannerActivity = getIntent();
-        currentLocation = intendScannerActivity.getStringExtra("startLocation");
-        destinationQRCode = intendScannerActivity.getStringExtra("destinationLocation");
+        Intent intendActivity = getIntent();
+        currentLocation = intendActivity.getStringExtra("startLocation");
+        destinationQRCode = intendActivity.getStringExtra("destinationLocation");
+        final String roomsJSON = intendActivity.getStringExtra("rooms");
+        JSONHandler jsonHandler = new JSONHandler();
+        rooms = jsonHandler.parseJsonRooms(roomsJSON);
 
         //Spinner select floor plans
         final ArrayList<String> floorPlans = new ArrayList<>(getItemsSpinner());
@@ -148,7 +146,7 @@ public class NavigationActivity extends BaseActivity {
 
         //Get rooms, stairs, elevators and entrances (inkl. bridge) from JSON
         // lädt die verfügbaren Räume und Aufgänge aus den entsprechenden JSON-Dateien
-        getRoomsAndFloorConnections();
+        getFloorConnections();
 
         //Get current user location room
         //setzt den übermittelten Standort den Startraums, bzw. die aktuelle Position des Nutzers
@@ -498,22 +496,16 @@ public class NavigationActivity extends BaseActivity {
 
 
     /**
-     * Load rooms, stairs, elevators and the bridge from JSON
+     * Load stairs, elevators and the bridge from JSON
      */
-    private void getRoomsAndFloorConnections() {
+    private void getFloorConnections() {
         try {
             JSONHandler jsonHandler = new JSONHandler();
             String json;
 
             // read only once
-            if (rooms.isEmpty()) {
-                json = JSONHandler.readJsonFromAssets(this, FILE_ROOMS);
-                rooms = jsonHandler.parseJsonRooms(json);
-            }
-
-            // read only once
             if (floorConnections.isEmpty()) {
-                json = JSONHandler.readJsonFromAssets(this, FILE_FLOORCONNECTIONS);
+                json = JSONHandler.readFloorConnectionsFromAssets(this);
                 floorConnections = jsonHandler.parseJsonFloorConnection(json);
             }
 

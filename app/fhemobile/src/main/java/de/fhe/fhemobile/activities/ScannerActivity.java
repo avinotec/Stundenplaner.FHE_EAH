@@ -33,6 +33,8 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
     private String destinationQRCode;
     private String startLocation;
     private ArrayList<String> availableRooms;
+    //for sending already read in rooms json string to navigation activity
+    private  String roomsJSON;
 
 
     @Override
@@ -43,6 +45,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         Intent intendScannerActivity = getIntent();
         destinationQRCode = intendScannerActivity.getStringExtra("destinationLocation");
         availableRooms = intendScannerActivity.getStringArrayListExtra("availableRooms");
+        roomsJSON = intendScannerActivity.getStringExtra("rooms");
 
         mScannerView = new ZXingScannerView(this);
         setContentView(mScannerView);
@@ -105,6 +108,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
                 Intent intentNavigationActivity = new Intent(getApplicationContext(), NavigationActivity.class);
                 intentNavigationActivity.putExtra("startLocation", startLocation);
                 intentNavigationActivity.putExtra("destinationLocation", destinationQRCode);
+                intentNavigationActivity.putExtra("rooms", roomsJSON);
                 startActivity(intentNavigationActivity);
             }
 

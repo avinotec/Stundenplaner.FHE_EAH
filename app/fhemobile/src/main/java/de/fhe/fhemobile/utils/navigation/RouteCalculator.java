@@ -646,8 +646,7 @@ public class RouteCalculator {
             String json;
 
             //Get floor plan JSON from assets
-            //TODO schon wieder die Rooms einlesen
-            json = JSONHandler.readJsonFromAssets(context, floorplanName(building, floor) + ".json");
+            json = JSONHandler.readFloorPlanFromAssets(context, floorplanName(building, floor) + ".json");
             final HashMap<String, Cell> walkableCells = jsonHandler.parseJsonWalkableCells(json);
 
             //fill in rooms

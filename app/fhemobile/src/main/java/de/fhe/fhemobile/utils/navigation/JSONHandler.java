@@ -55,10 +55,10 @@ public class JSONHandler {
     }
 
     /**
-     * Read JSON from assets
+     * Read floorplan as json from assets
      * @param context
-     * @param jsonFile in den Assets
-     * @return
+     * @param jsonFile file name in assets
+     * @return read floor plan as json string
      */
     /*
     public String readJsonFromAssets(final Context context, final String jsonFile) {
@@ -79,19 +79,73 @@ public class JSONHandler {
         }
         return json;
     } */
-    public static String readJsonFromAssets(final Context context, final String jsonFile) throws IOException {
-
-        final InputStream input = context.getResources().getAssets().open(jsonFile);
-        final InputStreamReader reader = new InputStreamReader(input, "UTF-8"); //$NON-NLS
-
+    public static String readFloorPlanFromAssets(final Context context, final String jsonFile) throws IOException {
         final StringBuffer text = new StringBuffer();
-        BufferedReader br = new BufferedReader( reader );
 
-        for ( String line; (line = br.readLine()) != null; ) {
-            text.append(line).append("\n");
+        try {
+            final InputStream input = context.getResources().getAssets().open(jsonFile);
+            final InputStreamReader reader = new InputStreamReader(input, "UTF-8"); //$NON-NLS
+
+            BufferedReader br = new BufferedReader(reader);
+
+            for (String line; (line = br.readLine()) != null; ) {
+                text.append(line).append("\n");
+            }
+        }catch (Exception e){
+            Log.e(TAG, "reading floorplan from json failed", e);
         }
 
-        //TODO ist das nötig
+        //TODO ist das nötig - Nadja: ja weil ein String und kein StringBuffer returned wird
+        return text.toString();
+    }
+
+    /**
+     * Read json containing all rooms
+     * @param context
+     * @return json as string
+     */
+    public static String readRoomsFromAssets(final Context context){
+        final String FILE_ROOMS = "rooms.json"; //$NON-NLS
+        final StringBuffer text = new StringBuffer();
+
+        try {
+            final InputStream input = context.getResources().getAssets().open(FILE_ROOMS);
+            final InputStreamReader reader = new InputStreamReader(input, "UTF-8"); //$NON-NLS
+
+            BufferedReader br = new BufferedReader(reader);
+
+            for (String line; (line = br.readLine()) != null; ) {
+                text.append(line).append("\n");
+            }
+        }catch (Exception e){
+            Log.e(TAG, "reading rooms from json failed", e);
+        }
+
+        return text.toString();
+    }
+
+    /**
+     * Read json containing all floor connections of all buildings
+     * @param context
+     * @return json as string
+     */
+    public static String readFloorConnectionsFromAssets(final Context context){
+        final String FILE_FLOORCONNECTIONS = "floorconnections.json"; //$NON-NLS
+        final StringBuffer text = new StringBuffer();
+
+        try {
+            final InputStream input = context.getResources().getAssets().open(FILE_FLOORCONNECTIONS);
+            final InputStreamReader reader = new InputStreamReader(input, "UTF-8"); //$NON-NLS
+
+            BufferedReader br = new BufferedReader(reader);
+
+            for (String line; (line = br.readLine()) != null; ) {
+                text.append(line).append("\n");
+            }
+        } catch (Exception e){
+            Log.e(TAG, "reading floorconnections from json failed", e);
+        }
+
         return text.toString();
     }
 

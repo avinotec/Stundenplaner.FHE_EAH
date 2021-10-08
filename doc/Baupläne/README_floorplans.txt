@@ -6,7 +6,7 @@
 - floorplans_x.svg Vektorgrafiken aller Etagen im Gebäude x
 - all_cells_grid.xlsx beinhaltet die Pläne und die Position aller Zellen für die Navigation
 - grid_overlay.png - das zugrundeliegende Raster
-- parse_cells.py liest die Positionen für die navigation aus dem Ordner csv ein und generiert die entsprechenden JSON-Dateien in den Ordner json
+- parse_cells.py liest die Positionen für die Navigation aus dem Ordner csv ein und generiert die entsprechenden JSON-Dateien in den Ordner json
 - Ordner Icons: Icons für die Lagepläne + Icons für die Navigation (Icons.svg)
 
 # Programme:
