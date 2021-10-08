@@ -31,21 +31,26 @@ import de.fhe.fhemobile.models.navigation.Cell;
  * Class for route calculation at a single floor using the A* algorithm
  */
 class AStar {
+    //details of the A* algorithm -> see pseudocode at the english wikipedia page
 
     private static final String TAG = "AStar"; //$NON-NLS
 
-    //TODO Was ist die PriorityQueue? Wo kommt das floorCellGrid her, Bedeutung? Warum ist closedCells ein 2D-Array?
-
     //Variables
-    //The set of discovered nodes that may need to be (re-)expanded. Sorted by costsPathToCell
+
+    //the set of nodes discovered but not closed by the AStar Algorithm
+    //sorted by costsPathToCell because the algorithm should always consider the cheapest path' first
     private PriorityQueue<Cell> openCells;
-    //Zellen im Zustand "fertig"
+    //the set of nodes that have been fully looked at/processed by the AStar algorithm (had been in added to openCells, looked at again and then removed from the openCells Queue)
+    //entry [x][y] contains the boolean whether the cell at x,y has status "closed" or not
     private boolean[][] closedCells;
+
     //Startzelle für den kürzesten Weg auf diesem Stockwerk; kann auch eine Treppe, Aufzug etc sein
     private Cell startCell;
     //Endzelle für den kürzesten Weg auf diesem Stockwerk; kann auch eine Treppe, Aufzug etc sein
     private Cell endCell;
+
     //Koordinatensystem aus allen begehbaren und nicht-begehbaren Zellen des Stockwerks
+    //generated from the information from the json files of each building and floor (building_xx_floor_xx_.json in eah\assets)
     private Cell[][] floorCellGrid;
 
     /**
@@ -86,11 +91,11 @@ class AStar {
 
             //initialize startcell
             startCell.setCostsPathToCell(-1);
-            //add startCell to priority queue (cells with status "open")
+            //add startCell to priority queue (cells the A* algorithm has discovered)
             openCells.add(startCell);
-            //set size of closed array (cells with status "closed")
+            //set size of closed array (cells the A* algorithm has processed and removed from openCells)
             closedCells = new boolean[(int) cellgrid_width][(int) cellgrid_height];
-            //set costs of endcell to 0
+            //set costs of endcell to 0 to force algorithm to "enter" the destination room when reaching a neigboring cell of the room cell
             floorCellGrid[endCell.getXCoordinate()][endCell.getYCoordinate()].setCostPassingCell(0);
             floorCellGrid[startCell.getXCoordinate()][(startCell.getYCoordinate())].setCostPassingCell(0);
             //run A* algorithm
