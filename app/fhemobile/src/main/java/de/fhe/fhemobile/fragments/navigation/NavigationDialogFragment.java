@@ -139,7 +139,7 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
     }
 
     /**
-     *
+     * Reads room list from json files and generates person list
      * @return RoomNames[] Persons[]
      */
     private ArrayList[] loadRoomNamesAndPersons(){

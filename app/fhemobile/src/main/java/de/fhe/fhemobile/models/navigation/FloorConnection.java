@@ -57,7 +57,7 @@ public class FloorConnection extends Cell{
 
             //case building = 04 or 05
             if (connectedCells.get(index).getBuilding().equals(building)
-                    && connectedCells.get(index).getFloor().equals(floor)) {
+                    && connectedCells.get(index).getFloorString().equals(floor)) {
 
                 cell = connectedCells.get(index);
             }
@@ -66,7 +66,7 @@ public class FloorConnection extends Cell{
                     || connectedCells.get(index).getBuilding().equals(BUILDING_02)
                     || connectedCells.get(index).getBuilding().equals(BUILDING_01)) &&
                     (building.equals(BUILDING_03) || building.equals(BUILDING_02) || building.equals(BUILDING_01))
-                    && connectedCells.get(index).getFloor().equals(floor)) {
+                    && connectedCells.get(index).getFloorString().equals(floor)) {
 
                 cell = connectedCells.get(index);
             } else {

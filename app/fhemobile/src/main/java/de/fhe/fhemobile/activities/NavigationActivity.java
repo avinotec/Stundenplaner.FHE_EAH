@@ -163,7 +163,7 @@ public class NavigationActivity extends BaseActivity {
 
         try {
             //draws maps, navigation and route
-            drawNavigationAndRoute(startLocation.getBuilding(), startLocation.getFloor());
+            drawNavigationAndRoute(startLocation.getBuilding(), startLocation.getFloorString());
         } catch (Exception e) {
             Log.e(TAG,"error drawing floor plan or navigation:", e);
         }
@@ -263,13 +263,13 @@ public class NavigationActivity extends BaseActivity {
             if (!destinationQRCode.equals(JUST_LOCATION)) {
                 for (int j = 0; j < cellsToWalk.size(); j++) {
                     if (cellsToWalk.get(j).getBuilding().equals(building)
-                            && cellsToWalk.get(j).getFloor().equals(floor)) {
+                            && cellsToWalk.get(j).getFloorString().equals(floor)) {
 
                         drawPathCell(j);
                     }else if ((cellsToWalk.get(j).getBuilding().equals(BUILDING_03)
                                 || cellsToWalk.get(j).getBuilding().equals(BUILDING_02)
                                 || cellsToWalk.get(j).getBuilding().equals(BUILDING_01))
-                            && buildingsThreeTwoOne && cellsToWalk.get(j).getFloor().equals(floor)) {
+                            && buildingsThreeTwoOne && cellsToWalk.get(j).getFloorString().equals(floor)) {
 
                         drawPathCell(j);
                     }
@@ -310,13 +310,13 @@ public class NavigationActivity extends BaseActivity {
         try {
             //check if input valid
             boolean valid = false;
-            if (startLocation.getBuilding().equals(building) && startLocation.getFloor().equals(floor)) {
+            if (startLocation.getBuilding().equals(building) && startLocation.getFloorString().equals(floor)) {
                 valid = true;
             }else if ((startLocation.getBuilding().equals(BUILDING_03)
                         || startLocation.getBuilding().equals(BUILDING_02)
                         || startLocation.getBuilding().equals(BUILDING_01))
                         && (buildingsThreeTwoOne)
-                        && startLocation.getFloor().equals(floor)) {
+                        && startLocation.getFloorString().equals(floor)) {
 
                 valid = true;
             }
@@ -351,12 +351,12 @@ public class NavigationActivity extends BaseActivity {
             //check if input valid
             boolean valid = false;
             if (!destinationQRCode.equals(JUST_LOCATION)) {
-                if (destinationLocation.getBuilding().equals(building) && floor.equals(destinationLocation.getFloor())) {
+                if (destinationLocation.getBuilding().equals(building) && floor.equals(destinationLocation.getFloorString())) {
                     valid = true;
                 }else if ((destinationLocation.getBuilding().equals(BUILDING_03)
                         || destinationLocation.getBuilding().equals(BUILDING_02)
                         || destinationLocation.getBuilding().equals(BUILDING_01))
-                        && buildingsThreeTwoOne && floor.equals(destinationLocation.getFloor())) {
+                        && buildingsThreeTwoOne && floor.equals(destinationLocation.getFloorString())) {
                     valid = true;
                 }
 
@@ -414,7 +414,7 @@ public class NavigationActivity extends BaseActivity {
     private void drawFloorConnection(String building, String floor, int i, int j) {
 
         if (floorConnections.get(i).getConnectedCells().get(j).getBuilding().equals(building)
-                && floorConnections.get(i).getConnectedCells().get(j).getFloor().equals(floor)) {
+                && floorConnections.get(i).getConnectedCells().get(j).getFloorString().equals(floor)) {
 
             if (floorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_STAIR)) {
                 ImageView stairIcon = new ImageView(this);

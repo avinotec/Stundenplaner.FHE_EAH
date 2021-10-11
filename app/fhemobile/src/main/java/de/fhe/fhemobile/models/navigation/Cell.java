@@ -2,6 +2,8 @@ package de.fhe.fhemobile.models.navigation;
 
 import static de.fhe.fhemobile.utils.Define.Navigation.COSTS_CELL;
 
+import de.fhe.fhemobile.utils.navigation.NavigationUtils.Complex;
+
 /**
  * Model for a cell of the navigation route
  */
@@ -11,13 +13,17 @@ public class Cell {
     private static final String TAG = "Cell"; //$NON-NLS
 
     //Variables
-    private int costPassingCell; //Kosten für Nutzung/Durquerung einer Zelle
-    private int costsPathToCell = 0; // Kosten für den Weg bis zu dieser Zelle + Kosten für aktuelle Zelle
-    private String building;
+    private Building building;
     private String floor;
     private int xCoordinate;
     private int yCoordinate;
-    private Cell parentCell; // auf dem Weg davor liegende Zelle (für Rückverfolgung benötigt)
+    //Kosten für Nutzung/Durchquerung einer Zelle
+    private int costPassingCell;
+    //Kosten für den Weg bis zu dieser Zelle + Kosten für aktuelle Zelle
+    private int costsPathToCell = 0;
+    // parent cell auf dem Weg davor liegende Zelle (für Rückverfolgung benötigt)
+    private Cell parentCell;
+    //Ist die Zelle begehbar?
     private boolean walkable;
 
     //Constructors
@@ -27,7 +33,7 @@ public class Cell {
     public Cell(int xCoordinate, int yCoordinate, String building, String floor, boolean walkable) {
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
-        this. building = building;
+        this.building = new Building(building);
         this.floor = floor;
         this.walkable = walkable;
         this.costPassingCell = COSTS_CELL;
@@ -53,7 +59,7 @@ public class Cell {
                 boolean walkable, int costPassingCell) {
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
-        this. building = building;
+        this.building = new Building(building);
         this.floor = floor;
         this.walkable = walkable;
         this.costPassingCell = costPassingCell;
@@ -68,38 +74,26 @@ public class Cell {
         return costsPathToCell;
     }
 
+    /**
+     * Returns the building of the Cell ("01", "02", "03", "04", "05")
+     * Complex 3, 2 and 1 are not considered as the same building
+     * @return
+     */
     public String getBuilding() {
-        return building;
+        return building.getBuilding();
     }
 
-    public String getFloor() {
+    public String getFloorString() {
         return floor;
     }
 
-    public int getBuildingAsInteger() {
-
-        int buildingAsInteger = 0;
-
-        switch (building) {
-            case "01":
-                buildingAsInteger = 1;
-                break;
-            case "02":
-                buildingAsInteger = 2;
-                break;
-            case "03":
-                buildingAsInteger = 3;
-                break;
-            case "04":
-                buildingAsInteger = 4;
-                break;
-            case "05":
-                buildingAsInteger = 5;
-                break;
-            default:
-                break;
-        }
-        return buildingAsInteger;
+    /**
+     * Returns an instance of the {@link Complex} enum class
+     * Complex 3, 2 and 1 are considered as the same (Building_321)
+     * @return the building complex of the cell
+     */
+    public Complex getComplex() {
+        return building.getComplex();
     }
 
     public int getFloorAsInteger() {
@@ -155,7 +149,7 @@ public class Cell {
     }
 
     public void setBuilding(String building) {
-        this.building = building;
+        this.building = new Building(building);
     }
 
     public void setFloor(String floor) {
