@@ -18,6 +18,15 @@ public class Building {
     }
 
     /**
+     * Constructor for non-walkable cells without a building
+     * @param complex
+     */
+    Building(Complex complex){
+        this.mBuilding = "_";
+        this.mComplex = complex;
+    }
+
+    /**
      * Get the complex ({@link Complex}) the building belongs to (BUILDING_4, BUILDING_5, BUILDING_321)
      * @return complex
      */

@@ -33,6 +33,7 @@ import java.util.HashMap;
 
 import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.models.navigation.FloorConnection;
+import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
 import de.fhe.fhemobile.models.navigation.Room;
 
 public class JSONHandler {
@@ -203,17 +204,18 @@ public class JSONHandler {
 
                 final JSONObject jEntry = jsonArray.getJSONObject(i);
 
-                final ArrayList<Cell> connectedCells = new ArrayList<>();
+                final ArrayList<FloorConnectionCell> connectedCells = new ArrayList<>();
                 final JSONArray connectedCellsJSON = jEntry.getJSONArray(CONNECTED_CELLS);
 
                 for (int j = 0; j < connectedCellsJSON.length(); j++) {
 
                     final JSONObject cellJSON = connectedCellsJSON.getJSONObject(j);
-                    final Cell cell = new Cell(cellJSON.optInt(X_COORDINATE),
+                    final FloorConnectionCell cell = new FloorConnectionCell(cellJSON.optInt(X_COORDINATE),
                             cellJSON.optInt(Y_COORDINATE),
                             cellJSON.optString(BUILDING),
                             cellJSON.optString(FLOOR),
-                            cellJSON.optBoolean(WALKABLE));
+                            cellJSON.optBoolean(WALKABLE),
+                            jEntry.optString(TYPE));
 
                     connectedCells.add(cell);
                 }

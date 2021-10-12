@@ -23,8 +23,10 @@ public class Cell {
     private int costsPathToCell = 0;
     // parent cell auf dem Weg davor liegende Zelle (für Rückverfolgung benötigt)
     private Cell parentCell;
-    //Ist die Zelle begehbar?
+    //boolean ob die Zelle begehbar ist
     private boolean walkable;
+    //Eindeutigen Key für Zelle
+    private String key;
 
     //Constructors
     public Cell() {
@@ -37,14 +39,17 @@ public class Cell {
         this.floor = floor;
         this.walkable = walkable;
         this.costPassingCell = COSTS_CELL;
+        this.key = building + getFloorString() + xCoordinate + yCoordinate;
     }
 
-    /**
-     * Overloaded constructor for inheriting cell type {@link FloorConnection}
-     * @param costPassingCell
-     */
-    public Cell(int costPassingCell) {
-        this.costPassingCell = costPassingCell;
+    public Cell(int xCoordinate, int yCoordinate, Complex complex, String floor, boolean walkable) {
+        this.xCoordinate = xCoordinate;
+        this.yCoordinate = yCoordinate;
+        this.building = new Building(complex);
+        this.floor = floor;
+        this.walkable = walkable;
+        this.costPassingCell = COSTS_CELL;
+        this.key = building + getFloorString() + xCoordinate + yCoordinate;
     }
 
     /**
@@ -63,6 +68,7 @@ public class Cell {
         this.floor = floor;
         this.walkable = walkable;
         this.costPassingCell = costPassingCell;
+        this.key = this.building.getBuilding() + getFloorString() +"-" + xCoordinate +"-"+ yCoordinate;
     }
 
     //Getter
@@ -96,7 +102,7 @@ public class Cell {
         return building.getComplex();
     }
 
-    public int getFloorAsInteger() {
+    public int getFloorInt() {
 
         int floorAsInteger = 0;
 
@@ -166,6 +172,14 @@ public class Cell {
 
     public void setParentCell(Cell parentCell) {
         this.parentCell = parentCell;
+    }
+
+    /**
+     * Compose a key for the cell for use in a hash map
+     * @return unique key
+     */
+    public String getKey(){
+        return this.key;
     }
 
     public void setWalkability(boolean walkable) {

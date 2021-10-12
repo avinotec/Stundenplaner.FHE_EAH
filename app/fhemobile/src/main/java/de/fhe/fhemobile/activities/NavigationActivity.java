@@ -17,32 +17,13 @@
 
 package de.fhe.fhemobile.activities;
 
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_01;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_02;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03_02_01_FLOOR_00;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03_02_01_FLOOR_01;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03_02_01_FLOOR_02;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03_02_01_FLOOR_03;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03_02_01_FLOOR_04;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03_02_01_FLOOR_UG;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_04;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_04_FLOOR_00;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_04_FLOOR_01;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_04_FLOOR_02;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_04_FLOOR_03;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_04_FLOOR_UG;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_05;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_05_FLOOR_00;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_05_FLOOR_01;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_05_FLOOR_02;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_05_FLOOR_03;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_05_FLOOR_UG;
 import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_ELEVATOR;
 import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_STAIR;
 import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_WAY;
 import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_height;
 import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_width;
+import static de.fhe.fhemobile.utils.navigation.NavigationUtils.Complex;
+import static de.fhe.fhemobile.utils.navigation.NavigationUtils.getFloorPlanName;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -66,6 +47,7 @@ import java.util.Locale;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.models.navigation.FloorConnection;
+import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
 import de.fhe.fhemobile.models.navigation.Room;
 import de.fhe.fhemobile.utils.navigation.JSONHandler;
 import de.fhe.fhemobile.utils.navigation.RouteCalculator;
@@ -131,7 +113,7 @@ public class NavigationActivity extends BaseActivity {
                     try {
                         ArrayList<String> helperBuildingAndFloor = getBuildingAndFloor((String) item);
 
-                        drawNavigationAndRoute(helperBuildingAndFloor.get(0), helperBuildingAndFloor.get(1));
+                        drawNavigationAndRoute(Complex.getEnum(helperBuildingAndFloor.get(0)), helperBuildingAndFloor.get(1));
                     } catch (Exception e) {
                         Log.e(TAG, " error changing map:", e);
                     }
@@ -163,7 +145,7 @@ public class NavigationActivity extends BaseActivity {
 
         try {
             //draws maps, navigation and route
-            drawNavigationAndRoute(startLocation.getBuilding(), startLocation.getFloorString());
+            drawNavigationAndRoute(startLocation.getComplex(), startLocation.getFloorString());
         } catch (Exception e) {
             Log.e(TAG,"error drawing floor plan or navigation:", e);
         }
@@ -183,17 +165,17 @@ public class NavigationActivity extends BaseActivity {
     /**
      * Draw floorplan, navigation and route
      * by adding the corresponding elements to the relativeLayout (navigationLayout)
-     * @param building to be displayed (floorplan)
+     * @param displayedComplex that currently should be displayed
      * @param floor to be displayed (floorplan)
      */
-    private void drawNavigationAndRoute(final String building, final String floor) {
+    private void drawNavigationAndRoute(final Complex displayedComplex, final String floor) {
         //Remove views from layouts before redrawing
         if (navigationLayout != null) navigationLayout.removeAllViews();
 
         //Set the floor plan ImageView in the relative layout where the whole navigation is drawn in
         ImageView floorPlanView = new ImageView(this);
         floorPlanView.setImageResource(getResources().getIdentifier("drawable/" +
-                getFloorPlan(building, floor), null, getPackageName()));
+                getFloorPlanName(displayedComplex, floor), null, getPackageName()));
         //grid for debugging
         //floorPlanView.setImageResource(getResources().getIdentifier("drawable/grid_for_debug", null, getPackageName()));
         if (navigationLayout != null) navigationLayout.addView(floorPlanView);
@@ -224,10 +206,10 @@ public class NavigationActivity extends BaseActivity {
                 floorPlanView.setScaleType(ImageView.ScaleType.FIT_XY);
 
                 //Draw navigation
-                drawPathCells(building, floor); // add route (path of cells) to overlay
-                drawStartLocation(building, floor); //Add icon for current user location room to overlay
-                drawDestinationLocation(building, floor); //Add destination location room icon to overlay
-                drawFloorConnections(building, floor); //Add floorConnection icons (like stairs, lifts, ...) to overlay
+                drawPathCells(displayedComplex, floor); // add route (path of cells) to overlay
+                drawStartLocation(displayedComplex, floor); //Add icon for current user location room to overlay
+                drawDestinationLocation(displayedComplex, floor); //Add destination location room icon to overlay
+                drawFloorConnections(displayedComplex, floor); //Add floorConnection icons (like stairs, lifts, ...) to overlay
             }
         });
 
@@ -253,84 +235,58 @@ public class NavigationActivity extends BaseActivity {
 
     /**
      * Draw all path cells of the calculated route
-     * @param building that is displayed (floorplan)
+     * @param complex that is displayed (floorplan)
      * @param floor that is displayed (floorplan)
      */
-    private void drawPathCells(String building, String floor) {
-        boolean buildingsThreeTwoOne = building.equals(BUILDING_03) || building.equals(BUILDING_02)
-                || building.equals(BUILDING_01);
+    private void drawPathCells(Complex complex, String floor) {
         try {
             if (!destinationQRCode.equals(JUST_LOCATION)) {
                 for (int j = 0; j < cellsToWalk.size(); j++) {
-                    if (cellsToWalk.get(j).getBuilding().equals(building)
+                    if (cellsToWalk.get(j).getComplex().equals(complex)
                             && cellsToWalk.get(j).getFloorString().equals(floor)) {
 
-                        drawPathCell(j);
-                    }else if ((cellsToWalk.get(j).getBuilding().equals(BUILDING_03)
-                                || cellsToWalk.get(j).getBuilding().equals(BUILDING_02)
-                                || cellsToWalk.get(j).getBuilding().equals(BUILDING_01))
-                            && buildingsThreeTwoOne && cellsToWalk.get(j).getFloorString().equals(floor)) {
-
-                        drawPathCell(j);
+                        drawPathCell(cellsToWalk.get(j));
                     }
                 }
             }
         } catch (Exception e) {
             Log.e(TAG, "error drawing route:",e);
         }
-
     }
 
 
     /**
      * Add a cell icon to display a walkable cell of the calculated route
-     * @param index
+     * @param cell to draw
      */
-    private void drawPathCell(int index){
+    private void drawPathCell(Cell cell){
         ImageView pathCellIcon = new ImageView(this);
+        pathCellIcon.setImageResource(R.drawable.path_cell_icon);
         if (navigationLayout != null) navigationLayout.addView(pathCellIcon);
 
         fitOneCell(pathCellIcon);
-        pathCellIcon.setImageResource(R.drawable.path_cell_icon);
-        pathCellIcon.setX(convertCellCoordX(cellsToWalk.get(index).getXCoordinate()));
-        pathCellIcon.setY(convertCellCoordY(cellsToWalk.get(index).getYCoordinate()));
+        pathCellIcon.setX(convertCellCoordX(cell.getXCoordinate()));
+        pathCellIcon.setY(convertCellCoordY(cell.getYCoordinate()));
 
 
     }
 
     /**
      * Draw start location
-     * @param building that is displayed (floorplan)
+     * @param complex that is displayed (floorplan)
      * @param floor that is displayed (floorplan)
      */
-    private void drawStartLocation(String building, String floor) {
-        boolean buildingsThreeTwoOne = building.equals(BUILDING_03) || building.equals(BUILDING_02)
-                || building.equals(BUILDING_01);
-
+    private void drawStartLocation(Complex complex, String floor) {
         try {
             //check if input valid
-            boolean valid = false;
-            if (startLocation.getBuilding().equals(building) && startLocation.getFloorString().equals(floor)) {
-                valid = true;
-            }else if ((startLocation.getBuilding().equals(BUILDING_03)
-                        || startLocation.getBuilding().equals(BUILDING_02)
-                        || startLocation.getBuilding().equals(BUILDING_01))
-                        && (buildingsThreeTwoOne)
-                        && startLocation.getFloorString().equals(floor)) {
-
-                valid = true;
-            }
-
-            //add start icon
-            if(valid){
+            if (startLocation.getComplex().equals(complex) && startLocation.getFloorString().equals(floor)) {
+                //add start icon
                 ImageView startIcon = new ImageView(this);
                 startIcon.setImageResource(R.drawable.start_icon);
                 if (navigationLayout != null) navigationLayout.addView(startIcon);
                 fitOneCell(startIcon);
                 startIcon.setX(convertCellCoordX(startLocation.getXCoordinate()));
                 startIcon.setY(convertCellCoordY(startLocation.getYCoordinate()));
-
-
             }
         } catch (Exception e) {
             Log.e(TAG, "error drawing current location room:", e);
@@ -340,37 +296,25 @@ public class NavigationActivity extends BaseActivity {
 
     /**
      * Draw destination location
-     * @param building that is displayed (floorplan)
+     * @param complex that is displayed (floorplan)
      * @param floor that is displayed (floorplan)
      */
-    private void drawDestinationLocation(String building, String floor) {
+    private void drawDestinationLocation(Complex complex, String floor) {
         try {
-            boolean buildingsThreeTwoOne = building.equals(BUILDING_03) || building.equals(BUILDING_02)
-                    || building.equals(BUILDING_01);
 
             //check if input valid
             boolean valid = false;
             if (!destinationQRCode.equals(JUST_LOCATION)) {
-                if (destinationLocation.getBuilding().equals(building) && floor.equals(destinationLocation.getFloorString())) {
-                    valid = true;
-                }else if ((destinationLocation.getBuilding().equals(BUILDING_03)
-                        || destinationLocation.getBuilding().equals(BUILDING_02)
-                        || destinationLocation.getBuilding().equals(BUILDING_01))
-                        && buildingsThreeTwoOne && floor.equals(destinationLocation.getFloorString())) {
-                    valid = true;
+                if (destinationLocation.getComplex().equals(complex) && floor.equals(destinationLocation.getFloorString())) {
+                    //add destination icon
+                    ImageView destinationIcon = new ImageView(this);
+                    destinationIcon.setImageResource(R.drawable.destination_icon);
+                    if (navigationLayout != null) navigationLayout.addView(destinationIcon);
+                    fitOneCell(destinationIcon);
+                    destinationIcon.setX(convertCellCoordX(destinationLocation.getXCoordinate()));
+                    destinationIcon.setY(convertCellCoordY(destinationLocation.getYCoordinate()));
+
                 }
-
-            }
-            //add destination icon
-            if(valid){
-                ImageView destinationIcon = new ImageView(this);
-                destinationIcon.setImageResource(R.drawable.destination_icon);
-                if (navigationLayout != null) navigationLayout.addView(destinationIcon);
-                fitOneCell(destinationIcon);
-                destinationIcon.setX(convertCellCoordX(destinationLocation.getXCoordinate()));
-                destinationIcon.setY(convertCellCoordY(destinationLocation.getYCoordinate()));
-
-
             }
         } catch (Exception e) {
             Log.e(TAG,"error drawing destination location room:", e);
@@ -379,24 +323,14 @@ public class NavigationActivity extends BaseActivity {
 
     /**
      * Add all elevators, staircases and crossings
-     * @param building that is displayed (floorplan)
+     * @param buildingcomplex that is displayed (floorplan)
      * @param floor that is displayed (floorplan)
      */
-    private void drawFloorConnections(String building, String floor){
+    private void drawFloorConnections(Complex complex, String floor){
         try {
-            for (int i = 0; i < floorConnections.size(); i++) {
-
-                for (int j = 0; j < floorConnections.get(i).getConnectedCells().size(); j++) {
-
-                    if (building.equals(BUILDING_01) || building.equals(BUILDING_02) || building.equals(BUILDING_03)) {
-                        drawFloorConnection(BUILDING_01, floor, i, j);
-                        drawFloorConnection(BUILDING_02, floor, i, j);
-                        drawFloorConnection(BUILDING_03, floor, i, j);
-                    }
-
-                    if (building.equals(BUILDING_04) || building.equals(BUILDING_05)) {
-                        drawFloorConnection(building, floor, i, j);
-                    }
+            for (FloorConnection fc : floorConnections) {
+                for (FloorConnectionCell cell : fc.getConnectedCells()) {
+                    drawFloorConnection(complex, floor, cell);
                 }
             }
         } catch (Exception e) {
@@ -406,44 +340,43 @@ public class NavigationActivity extends BaseActivity {
 
     /**
      * Draw floorconnection icon corresponding to the floorconnection type (staircaise, elevator, crossings)
-     * @param building that is displayed (floorplan)
+     * @param complex that is displayed (floorplan)
      * @param floor that is displayed (floorplan)
-     * @param i
-     * @param j
+     * @param fCell FloorConnectionCell to draw
      */
-    private void drawFloorConnection(String building, String floor, int i, int j) {
+    private void drawFloorConnection(Complex complex, String floor, FloorConnectionCell fCell) {
 
-        if (floorConnections.get(i).getConnectedCells().get(j).getBuilding().equals(building)
-                && floorConnections.get(i).getConnectedCells().get(j).getFloorString().equals(floor)) {
+        if (fCell.getComplex().equals(complex)
+                && fCell.getFloorString().equals(floor)) {
 
-            if (floorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_STAIR)) {
+            if (fCell.getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_STAIR)) {
                 ImageView stairIcon = new ImageView(this);
                 stairIcon.setImageResource(R.drawable.stairs_icon);
                 if (navigationLayout != null) navigationLayout.addView(stairIcon);
 
                 fitOneCell(stairIcon);
-                stairIcon.setX(convertCellCoordX(floorConnections.get(i).getConnectedCells().get(j).getXCoordinate()));
-                stairIcon.setY(convertCellCoordY(floorConnections.get(i).getConnectedCells().get(j).getYCoordinate()));
+                stairIcon.setX(convertCellCoordX(fCell.getXCoordinate()));
+                stairIcon.setY(convertCellCoordY(fCell.getYCoordinate()));
             }
 
-            if (floorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_ELEVATOR)) {
+            if (fCell.getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_ELEVATOR)) {
                 ImageView elevatorIcon = new ImageView(this);
                 elevatorIcon.setImageResource(R.drawable.elevator_icon);
                 if (navigationLayout != null) navigationLayout.addView(elevatorIcon);
 
                 fitOneCell(elevatorIcon);
-                elevatorIcon.setX(convertCellCoordX(floorConnections.get(i).getConnectedCells().get(j).getXCoordinate()));
-                elevatorIcon.setY(convertCellCoordY(floorConnections.get(i).getConnectedCells().get(j).getYCoordinate()));
+                elevatorIcon.setX(convertCellCoordX(fCell.getXCoordinate()));
+                elevatorIcon.setY(convertCellCoordY(fCell.getYCoordinate()));
             }
 
-            if (floorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_WAY)) {
+            if (fCell.getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_WAY)) {
                 ImageView crossingIcon = new ImageView(this);
                 //crossingIcon.setImageResource(R.drawable.bridge_icon); //todo make new bridge icon
                 if (navigationLayout != null) navigationLayout.addView(crossingIcon);
 
                 fitOneCell(crossingIcon);
-                crossingIcon.setX(convertCellCoordX(floorConnections.get(i).getConnectedCells().get(j).getXCoordinate()));
-                crossingIcon.setY(convertCellCoordY(floorConnections.get(i).getConnectedCells().get(j).getYCoordinate()));
+                crossingIcon.setX(convertCellCoordX(fCell.getXCoordinate()));
+                crossingIcon.setY(convertCellCoordY(fCell.getYCoordinate()));
             }
         }
     }
@@ -519,7 +452,6 @@ public class NavigationActivity extends BaseActivity {
      * Globally set the user's current location room
      */
     private void getCurrentLocation() {
-
         try {
             for (int i = 0; i < rooms.size(); i++) {
                 if (rooms.get(i).getQRCode().equals(currentLocation)) {
@@ -560,88 +492,6 @@ public class NavigationActivity extends BaseActivity {
         } catch (Exception e) {
             Log.e(TAG,"error calculating route:", e);
         }
-    }
-
-
-    /**
-     * Get floor plan String without ending (.jpeg) from building and floor
-     * @param building
-     * @param floor
-     * @return
-     */
-    private static String getFloorPlan(final String building, final String floor) {
-
-        String floorPlan = "";
-
-        try {
-            switch (building + "." + floor) {
-                case "01.ug":
-                case "02.ug":
-                case "03.ug":
-                    floorPlan = BUILDING_03_02_01_FLOOR_UG;
-                    break;
-                case "01.00":
-                case "02.00":
-                case "03.00":
-                    floorPlan = BUILDING_03_02_01_FLOOR_00;
-                    break;
-                case "01.01":
-                case "02.01":
-                case "03.01":
-                    floorPlan = BUILDING_03_02_01_FLOOR_01;
-                    break;
-                case "01.02":
-                case "02.02":
-                case "03.02":
-                    floorPlan = BUILDING_03_02_01_FLOOR_02;
-                    break;
-                case "01.03":
-                case "02.03":
-                case "03.03":
-                    floorPlan = BUILDING_03_02_01_FLOOR_03;
-                    break;
-                case "01.04":
-                case "02.04":
-                case "03.04":
-                    floorPlan = BUILDING_03_02_01_FLOOR_04;
-                    break;
-                case "04.ug":
-                    floorPlan = BUILDING_04_FLOOR_UG;
-                    break;
-                case "04.00":
-                    floorPlan = BUILDING_04_FLOOR_00;
-                    break;
-                case "04.01":
-                    floorPlan = BUILDING_04_FLOOR_01;
-                    break;
-                case "04.02":
-                    floorPlan = BUILDING_04_FLOOR_02;
-                    break;
-                case "04.03":
-                    floorPlan = BUILDING_04_FLOOR_03;
-                    break;
-                case "05.ug":
-                    floorPlan = BUILDING_05_FLOOR_UG;
-                    break;
-                case "05.00":
-                    floorPlan = BUILDING_05_FLOOR_00;
-                    break;
-                case "05.01":
-                    floorPlan = BUILDING_05_FLOOR_01;
-                    break;
-                case "05.02":
-                    floorPlan = BUILDING_05_FLOOR_02;
-                    break;
-                case "05.03":
-                    floorPlan = BUILDING_05_FLOOR_03;
-                    break;
-                default:
-                    floorPlan = null;
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "error getting floor plan:", e);
-        }
-        return floorPlan;
     }
 
 
