@@ -50,8 +50,11 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
     private TextInputLayout destinationLocationDisplayedErrorText;
     private TextInputEditText startLocationInputText;
     private TextInputEditText destinationLocationInputText;
-    private int roomsIndex = 0; //roomsIndex und personsIndex dienen zur Überprüfung zulässiger Eingabekombination (start + destination)
+    //roomsIndex und personsIndex dienen zur Ueberpruefung zulaessiger Eingabekombination (start + destination)
+    private int roomsIndex = 0;
     private int personsIndex = 0;
+    //json string containing rooms, to send rooms via intent
+    private String roomsJson;
 
     private View      mView;
 
@@ -142,12 +145,16 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
     private ArrayList[] loadRoomNamesAndPersons(){
         //Get lists of rooms and names for spinners
         JSONHandler jsonHandler = new JSONHandler();
-        String json;
-//TODO loadRooms ist schon in NavigationActivity enthalten
+/*TODO loadRooms ist schon in NavigationActivity enthalten -> NavigationDialogFragment müsste die Raumliste dafür an Navigation Activity schicken
+ArrayList<Room> kann aber nicht per Intent versendet werden, da Room eine eigene Klasse ist und es keine String-Repräsentation gibt
+mögliche Lösung: Implementierung von Parcable nutzen (ähnlich bei Timetable -> s. TimeTableWeekVo etc.),
+könnte sein dass dann sowohl Room als auch die Arrayliste (z.B. als neue Klasse RoomListVo) beide Parcable implementieren müssen
+andere aktuelle Lösung: json-String senden und zweimal in Rooms parsen
+ */
         if (rooms.isEmpty()) {
             try {
-                json = JSONHandler.readJsonFromAssets(getContext(), JSON_FILE_ROOMS);
-                rooms = jsonHandler.parseJsonRooms(json);
+                roomsJson = JSONHandler.readRoomsFromAssets(getContext());
+                rooms = jsonHandler.parseJsonRooms(roomsJson);
             } catch (Exception e) {
                 Log.e(TAG, "error reading or parsing JSON file:", e);
             }
@@ -409,6 +416,7 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
             Intent intentNavigationActivity = new Intent(getActivity(), NavigationActivity.class);
             intentNavigationActivity.putExtra("startLocation", userInputStartLocation);
             intentNavigationActivity.putExtra("destinationLocation", destinationQRCode);
+            intentNavigationActivity.putExtra("rooms", roomsJson);
             startActivity(intentNavigationActivity);
         }
         if(!skipScanner){ //determine startLocation by scanning QR code
