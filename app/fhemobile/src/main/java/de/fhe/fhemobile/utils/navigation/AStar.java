@@ -16,6 +16,7 @@
  */
 
 package de.fhe.fhemobile.utils.navigation;
+
 import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_height;
 import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_width;
 
@@ -23,42 +24,57 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.PriorityQueue;
 
 import de.fhe.fhemobile.models.navigation.Cell;
+import de.fhe.fhemobile.models.navigation.FloorConnection;
+import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
+import de.fhe.fhemobile.utils.navigation.NavigationUtils.Complex;
 
 /**
  * Class for route calculation at a single floor using the A* algorithm
  */
 class AStar {
+    //details of the A* algorithm -> see pseudocode at the english wikipedia page
 
     private static final String TAG = "AStar"; //$NON-NLS
 
-    //TODO Was ist die PriorityQueue? Wo kommt das floorCellGrid her, Bedeutung? Warum ist closedCells ein 2D-Array?
-
     //Variables
-    //The set of discovered nodes that may need to be (re-)expanded. Sorted by costsPathToCell
+
+    //the set of nodes discovered but not closed by the AStar Algorithm
+    //sorted by costsPathToCell because the algorithm should always consider the cheapest path' first
     private PriorityQueue<Cell> openCells;
-    //Zellen im Zustand "fertig"
-    private boolean[][] closedCells;
-    //Startzelle für den kürzesten Weg auf diesem Stockwerk; kann auch eine Treppe, Aufzug etc sein
+    //the set of nodes that have been fully looked at/processed by the AStar algorithm (had been in added to openCells, looked at again and then removed from the openCells Queue)
+    //information needed to avoid running in circles (I guess)
+    //stores only cell key (building+floor+x+y)
+    private ArrayList<String> closedCells;
+
     private Cell startCell;
-    //Endzelle für den kürzesten Weg auf diesem Stockwerk; kann auch eine Treppe, Aufzug etc sein
-    private Cell endCell;
-    //Koordinatensystem aus allen begehbaren und nicht-begehbaren Zellen des Stockwerks
-    private Cell[][] floorCellGrid;
+    private Cell destCell;
+
+    //Koordinatensystem aus allen begehbaren und nicht-begehbaren Zellen aller Stockwerke und Häuser
+    //generated from the information from the json files of each building and floor (building_xx_floor_xx_.json in eah\assets)
+    //for each building (key = building as string e.g. "01") and for each floor (key = floor as int) a grid of cells is stored
+    private HashMap<Complex, HashMap<Integer, Cell[][]>> floorGrids;
+    //ArrayList of all floorconnections storing the particular set of connected cells
+    private ArrayList<FloorConnection> floorConnections;
 
     /**
      * Constructs an AStar Object
      * @param startCell
      * @param endCell
-     * @param floorCellGrid
+     * @param floorCellGrids
      */
-    AStar(final Cell startCell, final Cell endCell, final Cell[][] floorCellGrid) {
+    AStar(final Cell startCell, final Cell endCell,
+          final HashMap<Complex, HashMap<Integer, Cell[][]>> floorCellGrids,
+          final ArrayList<FloorConnection> floorConnections) {
         this.startCell = startCell;
-        this.endCell = endCell;
-        this.floorCellGrid = floorCellGrid;
+        this.destCell = endCell;
+        this.floorGrids = floorCellGrids;
+        this.floorConnections = floorConnections;
     }
+
 
     /**
      * Calculates the cells to walk using the shortest way
@@ -71,7 +87,6 @@ class AStar {
         try {
             //Set priority queue with comparator (prioritize cells based on their costsPathToCell)
             openCells = new PriorityQueue<>(16, new Comparator<Cell>() {
-
                 /**
                  *
                  * @param cellOne
@@ -86,20 +101,26 @@ class AStar {
 
             //initialize startcell
             startCell.setCostsPathToCell(-1);
-            //add startCell to priority queue (cells with status "open")
+            //add startCell to priority queue (cells the A* algorithm has discovered)
             openCells.add(startCell);
-            //set size of closed array (cells with status "closed")
-            closedCells = new boolean[(int) cellgrid_width][(int) cellgrid_height];
-            //set costs of endcell to 0
-            floorCellGrid[endCell.getXCoordinate()][endCell.getYCoordinate()].setCostPassingCell(0);
-            floorCellGrid[startCell.getXCoordinate()][(startCell.getYCoordinate())].setCostPassingCell(0);
+            //initialize set of closed cells (cells the A* algorithm has processed and removed from openCells)
+            closedCells = new ArrayList<>();
+            //set costs of endcell to 0 to force algorithm to "enter" the destination room when reaching a neigboring cell of the room cell
+            floorGrids.get(destCell.getComplex()).get(destCell.getFloorInt())
+                    [destCell.getXCoordinate()][destCell.getYCoordinate()]
+                    .setCostPassingCell(0);
+            //set startcell costs to 0
+            floorGrids.get(startCell.getComplex()).get(startCell.getFloorInt())
+                    [startCell.getXCoordinate()][(startCell.getYCoordinate())].setCostPassingCell(0);
             //run A* algorithm
             performAStarAlgorithm();
 
             //backtracing to reconstruct navigation path
             //get end cell as start cell for backtracing
-            Cell currentCell = floorCellGrid[endCell.getXCoordinate()][endCell.getYCoordinate()];
-
+            Cell currentCell = floorGrids.get(destCell.getComplex()).get(destCell.getFloorInt())
+                    [destCell.getXCoordinate()][destCell.getYCoordinate()];
+            //do not add destination (and startcell) to walkable cells (displayed with rout path icon)
+            currentCell = currentCell.getParentCell();
             //reconstruct path
             while (currentCell.getParentCell() != null) {
                 navigationCells.add(currentCell);
@@ -123,42 +144,66 @@ class AStar {
             final Cell currentCell = openCells.poll();
 
             if (currentCell != null && currentCell.getWalkability()) {
-                closedCells[currentCell.getXCoordinate()][currentCell.getYCoordinate()] = true;
+                //add currentCell to closedCells
+                closedCells.add(currentCell.getKey());
 
                 //current cell is not destination
-                if (!currentCell.equals(endCell)) {
+                if (!currentCell.equals(destCell)) {
 
-                    //Überprüft die Kosten der 4 direkt angrenzenden Zellen der aktuellen Zelle (Diagonale wird nicht betrachtet)
-                    //Check left
-                        //check that cell is not at edge of grid
+                    //Überprüft die Kosten der direkt angrenzenden Nachbarzellen der aktuellen Zelle (Diagonale wird nicht betrachtet)
+                    // und setzt ggf. die CostsPathToCell dieser Zellen
+
+                    //if currentCell is floorconnection than all cells connected by the floorconnection are also considered as neighbors
+                    if(currentCell instanceof FloorConnectionCell){
+
+                        //floorconnections should not be considered if start and destination are located at the same floor
+                        if((!startCell.getComplex().equals(destCell.getComplex())
+                                || startCell.getFloorInt() != destCell.getFloorInt())){
+                            //todo: add special case 03.ug to 01.ug to if statement
+
+                            ArrayList<FloorConnectionCell> connectedCells = findConnectedCells((FloorConnectionCell) currentCell);
+                            for(FloorConnectionCell neighborCell : connectedCells){
+                                //get corresponding cell in floorGrid
+                                Cell neighborInGrid = floorGrids.get(neighborCell.getComplex()).get(neighborCell.getFloorInt())
+                                        [neighborCell.getXCoordinate()][neighborCell.getYCoordinate()];
+                                updateParentAndPathToCellCosts(neighborInGrid, currentCell);
+                            }
+                        }
+                    }
+                    //todo: consider case when changing building or complex
+                    //note: always check that cell is not at edge of grid
+                    //left neighbor
                     if (currentCell.getXCoordinate() > 0) {
-                        Cell neighbouringCell = floorCellGrid[currentCell.getXCoordinate() - 1][currentCell.getYCoordinate()];
+                        Cell neighbouringCell = floorGrids.get(currentCell.getComplex()).get(currentCell.getFloorInt())
+                                [currentCell.getXCoordinate() - 1][currentCell.getYCoordinate()];
                         updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
 
-                    //Check right
+                    //right neighbor
                     if (currentCell.getXCoordinate() < cellgrid_width) {
                         //check that cell is not at edge of grid
-                        Cell neighbouringCell = floorCellGrid[currentCell.getXCoordinate() + 1][currentCell.getYCoordinate()];
+                        Cell neighbouringCell = floorGrids.get(currentCell.getComplex()).get(currentCell.getFloorInt())
+                                [currentCell.getXCoordinate() + 1][currentCell.getYCoordinate()];
                         updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
 
-                    //Check below
+                    //neigbor below
                     if (currentCell.getYCoordinate() > 0) {
                         //check that cell is not at edge of grid
-                        Cell neighbouringCell = floorCellGrid[currentCell.getXCoordinate()][currentCell.getYCoordinate() - 1];
+                        Cell neighbouringCell = floorGrids.get(currentCell.getComplex()).get(currentCell.getFloorInt())
+                                [currentCell.getXCoordinate()][currentCell.getYCoordinate() - 1];
                         updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
 
-                    //Check above
+                    //neighbor above
                     if (currentCell.getYCoordinate() < cellgrid_height) {
                         //check that cell is not at edge of grid
-                        Cell neighbouringCell = floorCellGrid[currentCell.getXCoordinate()][currentCell.getYCoordinate() + 1];
+                        Cell neighbouringCell = floorGrids.get(currentCell.getComplex()).get(currentCell.getFloorInt())
+                                [currentCell.getXCoordinate()][currentCell.getYCoordinate() + 1];
                         updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
-                } // end of current cell is not destination
-                else
-                    return;
+                }
+                else return;
             }
         }
     }
@@ -175,8 +220,8 @@ class AStar {
                 cell.getCostPassingCell() + parentCellPathCosts : cell.getCostPassingCell();
         final boolean isInOpenQueue = openCells.contains(cell); // cell has already status "open"
 
-        //check if cell is walkable and does not have status "closed"
-        if (cell.getWalkability() && !closedCells[cell.getXCoordinate()][cell.getYCoordinate()]) {
+        //check if cell is walkable and does not have status "closed" (not contained in closedCells)
+        if (cell.getWalkability() && !closedCells.contains(cell.getKey())) {
 
             // cell has status "unknown" or this path to the cell is cheaper than the path currently known
             if (!isInOpenQueue || costsPathToCell < cell.getCostsPathToCell()) {
@@ -192,4 +237,19 @@ class AStar {
         }
     }
 
+    /**
+     * Finds the {@link FloorConnection} object the cell belongs to
+     * @param _cell
+     * @return List of all FloorConnectionCells connected with the cell
+     */
+    private ArrayList<FloorConnectionCell> findConnectedCells(FloorConnectionCell _cell){
+        for (FloorConnection fc : floorConnections){
+            for(FloorConnectionCell cell :  fc.getConnectedCells()){
+                if (cell.getKey().equals(_cell.getKey())){
+                    return fc.getConnectedCells();
+                }
+            }
+        }
+        return null;
+    }
 }

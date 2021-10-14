@@ -3,7 +3,6 @@ package de.fhe.fhemobile.models.navigation;
 import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_01;
 import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_02;
 import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03;
-import static de.fhe.fhemobile.utils.Define.Navigation.COSTS_FLOORCONNECTION;
 
 import android.util.Log;
 
@@ -14,22 +13,17 @@ import java.util.ArrayList;
  * created: Bachelor Thesis from Tim Münziger from SS2020
  * edited by Nadja 15.09.21
  */
-public class FloorConnection extends Cell{
+public class FloorConnection{
 
     //Constants
     private static final String TAG = "FloorConnection"; //$NON-NLS
 
     //Variables
     private String typeOfFloorConnection; //stairs, elevator, way outside building, bridge
-    private ArrayList<Cell> connectedCells;
+    private ArrayList<FloorConnectionCell> connectedCells;
 
-    //Constructor
-    public FloorConnection() {
-        super(COSTS_FLOORCONNECTION);
-    }
 
-    public FloorConnection(String type, ArrayList<Cell> connectedCells){
-        super(COSTS_FLOORCONNECTION);
+    public FloorConnection(String type, ArrayList<FloorConnectionCell> connectedCells){
         this.connectedCells = connectedCells;
         this.typeOfFloorConnection = type;
     }
@@ -39,7 +33,7 @@ public class FloorConnection extends Cell{
         return typeOfFloorConnection;
     }
 
-    public ArrayList<Cell> getConnectedCells() {
+    public ArrayList<FloorConnectionCell> getConnectedCells() {
         return connectedCells;
     }
 
@@ -53,22 +47,22 @@ public class FloorConnection extends Cell{
 
         Cell cell = null;
 
-        for (int index = 0; index < connectedCells.size(); index++) {
+        for (int i = 0; i < connectedCells.size(); i++) {
 
             //case building = 04 or 05
-            if (connectedCells.get(index).getBuilding().equals(building)
-                    && connectedCells.get(index).getFloor().equals(floor)) {
+            if (connectedCells.get(i).getBuilding().equals(building)
+                    && connectedCells.get(i).getFloorString().equals(floor)) {
 
-                cell = connectedCells.get(index);
+                cell = connectedCells.get(i);
             }
             //case building = 03-02-01
-            else if ((connectedCells.get(index).getBuilding().equals(BUILDING_03)
-                    || connectedCells.get(index).getBuilding().equals(BUILDING_02)
-                    || connectedCells.get(index).getBuilding().equals(BUILDING_01)) &&
+            else if ((connectedCells.get(i).getBuilding().equals(BUILDING_03)
+                    || connectedCells.get(i).getBuilding().equals(BUILDING_02)
+                    || connectedCells.get(i).getBuilding().equals(BUILDING_01)) &&
                     (building.equals(BUILDING_03) || building.equals(BUILDING_02) || building.equals(BUILDING_01))
-                    && connectedCells.get(index).getFloor().equals(floor)) {
+                    && connectedCells.get(i).getFloorString().equals(floor)) {
 
-                cell = connectedCells.get(index);
+                cell = connectedCells.get(i);
             } else {
                 Log.e(TAG, "FloorConnection does not connected any cells at the requested building and floor");
             }

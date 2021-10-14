@@ -61,7 +61,9 @@ public class Define {
 		//für A-Star Algorithmus
 		public static final int COSTS_CELL = 1;
 		public static final int COSTS_ROOM = 3;
-		public static final int COSTS_FLOORCONNECTION = 2;
+		// floorconnections already count twice
+		// because the cell at the entered floor and the one at the reached floor are both counted
+		public static final int COSTS_FLOORCONNECTION = 1;
 
 	}
 
