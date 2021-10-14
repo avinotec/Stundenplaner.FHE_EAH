@@ -55,7 +55,7 @@ public class SemesterDataUtils {
             result = _time.getDate().getDate();
         }
         else if(_time.getPeriod() != null) {
-            result = _time.getPeriod().getBegin() + "  -  " + _time.getPeriod().getEnd();
+            result = _time.getPeriod().getBegin() + " – " + _time.getPeriod().getEnd();
         }
 
         return result;
