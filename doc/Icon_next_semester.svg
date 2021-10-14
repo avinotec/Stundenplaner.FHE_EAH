@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="1000"
+   height="1000"
+   viewBox="0 0 264.58333 264.58333"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="Icon_next_semester.svg"
+   inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable-xxhdpi\ic_next_semester.png"
+   inkscape:export-xdpi="9.2159996"
+   inkscape:export-ydpi="9.2159996"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     width="500mm"
+     units="px"
+     inkscape:zoom="0.67081229"
+     inkscape:cx="295.16454"
+     inkscape:cy="407.71465"
+     inkscape:window-width="2467"
+     inkscape:window-height="1411"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Ebene 2">
+    <g
+       id="g11417"
+       transform="matrix(0.90264249,0,0,0.90264249,21.656663,22.773411)"
+       style="stroke:#d3d3d3;stroke-opacity:1">
+      <g
+         id="g15307"
+         transform="matrix(1.1612036,0,0,1.1612036,-19.758388,-19.558948)">
+        <path
+           style="fill:none;stroke:#e6e6e6;stroke-width:12;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="M 57.585657,83.814739 H 218.31275"
+           id="path3772" />
+        <path
+           style="fill:none;stroke:#e6e6e6;stroke-width:12;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="M 96.239043,33.131474 V 60.149401"
+           id="path3920" />
+        <path
+           style="fill:none;stroke:#e6e6e6;stroke-width:12;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="M 137.8506,33.624503 V 60.64243"
+           id="path3920-4" />
+        <path
+           style="fill:none;stroke:#e6e6e6;stroke-width:12;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="M 180.251,33.821714 V 60.839641"
+           id="path3920-4-5" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:78.0863px;line-height:1.25;font-family:sans-serif;fill:#e6e6e6;fill-opacity:1;stroke:none;stroke-width:0.585646;stroke-opacity:1"
+           x="71.30864"
+           y="173.24683"
+           id="text4575"><tspan
+             sodipodi:role="line"
+             id="tspan4573"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:78.0863px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';fill:#e6e6e6;stroke:none;stroke-width:0.585646;stroke-opacity:1"
+             x="71.30864"
+             y="173.24683">&gt;&gt;&gt;</tspan></text>
+        <path
+           style="fill:none;stroke:#e6e6e6;stroke-width:12;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="M 177.88446,186.95617 26.820717,185.77291 c 0,0 37.185354,-50.88058 30.764842,-137.259067 L 216.42004,48.107095 c 0,0 14.22235,90.272565 -38.53558,138.849075 z"
+           id="path1178"
+           sodipodi:nodetypes="ccccc" />
+        <path
+           style="fill:none;stroke:#e6e6e6;stroke-width:12;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m 216.62958,100.38038 0.19721,109.14957 H 57.78277 v -22.57378"
+           id="path2302"
+           sodipodi:nodetypes="cccc" />
+      </g>
+    </g>
+  </g>
+</svg>
