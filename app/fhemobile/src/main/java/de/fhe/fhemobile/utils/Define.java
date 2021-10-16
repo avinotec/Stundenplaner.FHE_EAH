@@ -67,4 +67,10 @@ public class Define {
 
 	}
 
+	/**
+	 * milliseconds within a double-click has to be executed
+	 */
+	public static final long APP_CLOSING_DOUBLECLICK_DELAY_TIME = 2000L;
+
+
 }

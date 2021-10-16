@@ -18,14 +18,17 @@ package de.fhe.fhemobile.activities;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -45,12 +48,14 @@ import de.fhe.fhemobile.fragments.DrawerFragment;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
 import de.fhe.fhemobile.fragments.impressum.ImpressumFragment;
+import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdata.SemesterDataWebViewFragment;
 import de.fhe.fhemobile.models.timeTableChanges.RequestModel;
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.services.PushNotificationService;
+import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.feature.FeatureFragmentFactory;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
@@ -331,16 +336,62 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             }else if(mCurrentFragment instanceof EventsWebViewFragment){
                 webview = ((EventsWebViewFragment) mCurrentFragment).getWebView();
             }
-
             if(webview != null && webview.canGoBack()){
                 // if there is previous page open it
                 webview.goBack();
-            }else {
-                super.onBackPressed();//if there is no previous page, close app
+                return;
             }
+
+            //Sonderbehandlung für myTimetable (Mein Stundenplan)
+            // im Fragment MyTimeTableCalendarFragment wird im ---R.id.container--- das Fragment zum
+            // Editieren der Courses eingeblendet "MyTimeTabelFragment". Und nicht das gesamte Fragment ausgetauscht.
+            // Wenn das Fragment MyTimeTableFragment irgendwo eingeblendet ist, dann wollen wir einfach auf dem Backstack wieder zurück,
+            //
+            final FragmentManager fragmentManager = getSupportFragmentManager();
+            final Fragment aFragment = fragmentManager.findFragmentByTag(MyTimeTableFragment.TAG);
+            if ( aFragment != null) {
+                // go back
+                super.onBackPressed();
+                return;
+            }
+
+            // in all other cases: leave the app
+
+            //if there is no previous page, close app
+            /**
+             * Zum Beenden der App muss zwei Mal zurück gedrückt werden.
+             ' Damit wird vermieden, dass man aus Versehen beim Klicken auf "zurück" aus der App herausgeht.
+             */
+            if (backPressedTwice) {
+
+                // we go really one step back and destroy the app
+                super.onBackPressed();
+                return;
+            }
+
+            this.backPressedTwice = true;
+            Toast.makeText(this, getString(R.string.reallyClose), Toast.LENGTH_SHORT).show();
+
+            mHandler.postDelayed(mRunnable, Define.APP_CLOSING_DOUBLECLICK_DELAY_TIME);
         } else super.onBackPressed();
 
     }
+
+    /*
+    Hier wird dafuer gesorgt, dass wenn in der Root-Activity der Back-Button gedrückt wird, erst beim 2. Mal Back-Button die App geschlossen wird.
+    Die Variable backPressedTwice wird beim ersten Betätigen gesetzt und es wird ein Thread verzögert gestartet. In dem Thread wird die Variable
+    wieder zurückgesetzt. Nur wenn "backPressedTwice" gesetzt ist, und der Back-Button ein zweites mal betätigt wird, wird die App beendet.
+    APP_CLOSING_DOUBLECLICK_DELAY_TIME (Standard 2000 ms)
+    */
+    private boolean backPressedTwice = false;
+    private final Handler mHandler = new Handler();
+
+    private final Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            backPressedTwice = false;
+        }
+    };
 
 
 
