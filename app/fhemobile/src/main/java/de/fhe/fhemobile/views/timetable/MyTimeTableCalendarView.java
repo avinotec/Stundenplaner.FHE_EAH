@@ -38,6 +38,8 @@ import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableFragment;
  */
 public class MyTimeTableCalendarView extends LinearLayout {
 
+    private static final String TAG = "MyTimeTableCalendarView";
+
     public MyTimeTableCalendarView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
@@ -50,22 +52,21 @@ public class MyTimeTableCalendarView extends LinearLayout {
         mFragmentManager = _Manager;
     }
 
-
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mEditButton = (Button)            findViewById(R.id.timetableEdit);
+        mBtnModifySchedule = (Button)            findViewById(R.id.btnMyTimetableModifySchedule);
         mCalendarList = (ListView)          findViewById(R.id.lvCalendar);
 
-        mEditButton.setOnClickListener(new OnClickListener() {
+        // "modify schedule"
+        mBtnModifySchedule.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {
                 FragmentTransaction transaction= mFragmentManager.beginTransaction();
                 transaction.replace(R.id.container,new MyTimeTableFragment(),MyTimeTableFragment.TAG)
                         .addToBackStack(MyTimeTableFragment.TAG)
                         .commit();
-                //Todo: Wechsle zum EditorFragment (MyTimeTableFragment)
-                //backstack berücksichtigen!
+                //Wechsle zum EditorFragment (MyTimeTableFragment) mittels backstack
             }
         });
 
@@ -108,7 +109,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
     //deprecated: private final Context           mContext;
     private FragmentManager   mFragmentManager;
 
-    private Button mEditButton;
+    private Button mBtnModifySchedule;
     private ListView mCalendarList;
 
     private CalendarAdapter calendarAdapter;
