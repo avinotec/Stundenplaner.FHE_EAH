@@ -22,10 +22,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
-import com.applidium.headerlistview.SectionAdapter;
-
 import java.util.List;
 
+import de.fhe.fhemobile.utils.headerlistview.SectionAdapter;
 import de.fhe.fhemobile.widgets.stickyHeaderList.IHeaderItem;
 import de.fhe.fhemobile.widgets.stickyHeaderList.IRowItem;
 

@@ -22,8 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.applidium.headerlistview.HeaderListView;
-
 import java.util.ArrayList;
 
 import de.fhe.fhemobile.R;
@@ -31,6 +29,7 @@ import de.fhe.fhemobile.adapters.StickyHeaderAdapter;
 import de.fhe.fhemobile.events.Event;
 import de.fhe.fhemobile.events.EventListener;
 import de.fhe.fhemobile.models.mensa.MensaFoodModel;
+import de.fhe.fhemobile.utils.headerlistview.HeaderListView;
 import de.fhe.fhemobile.vos.mensa.MensaFoodItemCollectionVo;
 import de.fhe.fhemobile.vos.mensa.MensaFoodItemVo;
 import de.fhe.fhemobile.widgets.stickyHeaderList.DefaultHeaderItem;

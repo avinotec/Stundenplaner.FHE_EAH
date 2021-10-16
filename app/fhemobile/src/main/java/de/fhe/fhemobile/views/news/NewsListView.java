@@ -23,8 +23,6 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.applidium.headerlistview.HeaderListView;
-
 import java.util.ArrayList;
 
 import de.fhe.fhemobile.R;
@@ -32,6 +30,7 @@ import de.fhe.fhemobile.adapters.StickyHeaderAdapter;
 import de.fhe.fhemobile.events.Event;
 import de.fhe.fhemobile.events.EventListener;
 import de.fhe.fhemobile.models.news.NewsModel;
+import de.fhe.fhemobile.utils.headerlistview.HeaderListView;
 import de.fhe.fhemobile.vos.news.NewsItemVo;
 import de.fhe.fhemobile.widgets.stickyHeaderList.DefaultHeaderItem;
 import de.fhe.fhemobile.widgets.stickyHeaderList.IHeaderItem;
