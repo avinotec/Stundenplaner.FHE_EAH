@@ -31,12 +31,14 @@
     <string name="drawer_events" >Veranstaltungskalender</string>
     <string name="drawer_navigation" >Campusnavigation</string>
 
+    <string name="reallyClose">Drücken Sie zweimal Zurück zum Verlassen</string>
+
     <string name="phonebook_firstname" >Vorname</string>
     <string name="phonebook_lastname" >Nachname</string>
     <string name="phonebook_search" >Suchen</string>
 
     <string name="semester_course_times" >Eckdaten</string>
-    <string name="semester_holidays">Urlaub</string>
+    <string name="semester_holidays">Ferien</string>
 	<string name="semester_important_dates" >Wichtige Termine</string>
 
     <string name="title_activity_settings" >Einstellungen</string>
@@ -57,11 +59,11 @@
     <string name="timetable_study_course" >Studiengang</string>
     <string name="timetable_study_group" >Gruppe</string>
     <string name="timetable_term" >Fachsemester</string>
-    <string name="timetable_button" >Eingabe</string>
+    <string name="timetable_button" >Übernehmen</string>
     <string name="timetable_input" >Bitte auswählen</string>
     <string name="timetable_error" >Dieser Kurs enthält keine Elemente.</string>
-    <string name="timetable_switch" >Favorit speichern</string>
-    <string name="timetable_reset" >Favorit löschen</string>
+    <string name="timetable_switch" >Auswahl speichern</string>
+    <string name="timetable_reset" >Auswahl löschen</string>
     <string name="timetable_week" >Kalenderwoche</string>
     <string name="timetable_error_incomplete" >Bitte triff eine Wahl für jedes Feld</string>
 
@@ -136,5 +138,6 @@
     <string name="text_view_explanation_navigation_title">Navigation starten:</string>
     <string name="text_view_explanation_navigation_description">Wähle eine Raumnummer oder eine Person aus oder gib die Raumnummer direkt ein, zu der du navigiert werden möchtest. Dann bestimme deine aktuelle Position wie oben beschrieben.</string>
     <string name="text_view_oder">oder</string>
+    <string name="role">Aufgabe</string>
 
 </resources>

@@ -32,6 +32,8 @@
     <string name="drawer_events" >Event Calender</string>
     <string name="drawer_navigation" >Campus Navigation</string>
 
+    <string name="reallyClose">Please click back twice to exit</string>
+
     <string name="phonebook_firstname" >First name</string>
     <string name="phonebook_lastname" >Last name</string>
     <string name="phonebook_search" >Search</string>
@@ -58,11 +60,11 @@
     <string name="timetable_study_course" >Study course</string>
     <string name="timetable_study_group" >Group</string>
     <string name="timetable_term" >Semester</string>
-    <string name="timetable_button" >Input</string>
+    <string name="timetable_button" >Apply</string>
     <string name="timetable_input" >Please select</string>
     <string name="timetable_error" >This course is empty.</string>
-    <string name="timetable_switch" >Save favorite</string>
-    <string name="timetable_reset" >Delete favorite</string>
+    <string name="timetable_switch" >Save choice</string>
+    <string name="timetable_reset" >Delete choice</string>
     <string name="timetable_week" >Calender Week</string>
     <string name="timetable_error_incomplete" >Please set all fields.</string>
 
@@ -87,7 +89,7 @@
     <string name="selbst_zusammenstellen">Configure your own set on your own</string>
     <string name="edit">Modify schedule</string>
     <string name="professor_name">Professor</string>
-    <string name="role" translatable="false">Role</string>
+    <string name="role">Role</string>
     <string name="leider_sind_keine_daten_verfuegbar">No data available</string>
     <string name="add_lesson">Add Lesson</string>
     <string name="loading">Loading…</string>
