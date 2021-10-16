@@ -43,7 +43,7 @@
         android:visibility="gone"
         />
 
-    <com.applidium.headerlistview.HeaderListView
+    <de.fhe.fhemobile.utils.headerlistview.HeaderListView
         android:id="@+id/mensaListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

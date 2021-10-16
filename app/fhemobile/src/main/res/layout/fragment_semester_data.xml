@@ -31,7 +31,7 @@
         android:indeterminate="false"
         />
 
-    <com.applidium.headerlistview.HeaderListView
+    <de.fhe.fhemobile.utils.headerlistview.HeaderListView
         android:id="@+id/semesterListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
