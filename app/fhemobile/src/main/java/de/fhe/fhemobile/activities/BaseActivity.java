@@ -42,6 +42,8 @@ import de.fhe.fhemobile.R;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
+    private static final String TAG = "BaseActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,7 +110,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-//                NavUtils.navigateUpFromSameTask(this);
+                // das zurück gehen mit dem Pfeil oben links
         }
 
         return super.onOptionsItemSelected(item);
