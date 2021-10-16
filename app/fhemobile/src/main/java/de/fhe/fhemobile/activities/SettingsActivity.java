@@ -30,6 +30,8 @@ import de.fhe.fhemobile.utils.feature.FeatureId;
 
 public class SettingsActivity extends BaseActivity {
 
+    private static final String TAG = "SettingsActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
