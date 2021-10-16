@@ -123,7 +123,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (AddLessonView) inflater.inflate(R.layout.add_time_table, container, false);
+        mView = (AddLessonView) inflater.inflate(R.layout.view_my_time_table_add_course, container, false);
 
         mView.initializeView(getChildFragmentManager());
         mView.setViewListener(mViewListener);

@@ -75,7 +75,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		mView = (MyTimeTableCalendarView) inflater.inflate(R.layout.fragment_calendar_my_time_table, container, false);
+		mView = (MyTimeTableCalendarView) inflater.inflate(R.layout.fragment_my_time_table_list, container, false);
 		mView.initializeView(getActivity().getSupportFragmentManager());
 		SharedPreferences sharedPreferences = getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
 
