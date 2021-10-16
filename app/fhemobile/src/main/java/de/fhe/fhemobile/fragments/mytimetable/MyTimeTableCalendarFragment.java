@@ -145,6 +145,8 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 			MyTimeTableView.setLessons(new ArrayList<FlatDataStructure>(Arrays.asList(list)));
 		}
 
+		//unterhalb der Liste wird immer "Kein Kurs gewählt" eingebaut. Dieser Text ist aber nicht immer sichtbar.
+		// Daher ist das Feld in den Fragment Ressourcen vorhanden
 		final String emptyText = getResources().getString(R.string.empty_text_calendar);
 		mView.setEmptyText(emptyText);
 
