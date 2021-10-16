@@ -20,15 +20,7 @@
 	android:orientation="vertical"
 	android:background="@color/background">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/header_image_height"
-        android:src="@drawable/th_phonebook"
-        android:scaleType="centerCrop"
-	    android:contentDescription="TODO" />
-
-    <androidx.viewpager.widget.ViewPager
+	<androidx.viewpager.widget.ViewPager
         android:id="@+id/eventPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
