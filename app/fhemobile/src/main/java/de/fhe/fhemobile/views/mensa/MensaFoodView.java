@@ -106,7 +106,10 @@ public class MensaFoodView extends LinearLayout {
 
         // To prevent crashing.
         // See: https://github.com/applidium/HeaderListView/issues/28
-        mListView.getListView().setId(R.id.listMode);
+        //MS neue Lösung, da ab 2021 die Ressourcen nun in separaten Namensräumen verwendet werden
+        //mListView.getListView().setId(R.id.listMode);
+        HeaderListView yourListView = (HeaderListView) findViewWithTag("HeaderListViewTag");
+        mListView.getListView().setId( yourListView.getId() );
 
     }
 

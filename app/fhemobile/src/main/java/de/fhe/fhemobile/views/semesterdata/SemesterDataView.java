@@ -77,7 +77,10 @@ public class SemesterDataView extends LinearLayout {
 
         // To prevent crashing.
         // See: https://github.com/applidium/HeaderListView/issues/28
-        mListView.getListView().setId(R.id.listMode);
+        //mListView.getListView().setId(R.id.listMode);
+        //MS neue Lösung, da ab 2021 die Ressourcen nun in separaten Namensräumen verwendet werden
+        HeaderListView yourListView = (HeaderListView) findViewWithTag("HeaderListViewTag");
+        mListView.getListView().setId( yourListView.getId() );
     }
 
     private void initializeList() {
