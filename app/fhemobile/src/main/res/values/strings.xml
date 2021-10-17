@@ -20,7 +20,7 @@
 
     <string name="navigation_drawer_open" >Open navigation drawer</string>
     <string name="navigation_drawer_close" >Close navigation drawer</string>
-        <string name="action_settings" >Einstellungen</string>
+    <string name="action_settings" >Einstellungen</string>
     <string name="drawer_news" >News</string>
     <string name="drawer_mensa" >Canteen</string>
     <string name="drawer_persons" >Persons</string>
@@ -53,9 +53,6 @@
     <string name="employee_mail" >Email</string>
     <string name="employee_room" >Room</string>
 
-    <string name="maps_up" >One floor up</string>
-    <string name="maps_down" >One floor down</string>
-
     <string name="timetable_headline" >Please select your study course. (You can always change it under settings)</string>
     <string name="timetable_study_course" >Study course</string>
     <string name="timetable_study_group" >Group</string>
@@ -77,7 +74,7 @@
     <string name="network_error" >No data found.</string>
 
     <string name="title_activity_maps_single" >Map</string>
-        <string name="title_activity_time_table_events" >Schedule</string>
+    <string name="title_activity_time_table_events" >Schedule</string>
 
     <string name="appwidget_news" >News list</string>
     <string name="appwidget_news_empty" >No data available\nClick to refresh</string>
@@ -85,19 +82,17 @@
     <string name="configure" >Configure</string>
     <string name="add_widget" >Add widget</string>
 
-	<string name="komplettes_set_waehlen">Select a full set</string>
-    <string name="selbst_zusammenstellen">Configure your own set on your own</string>
-    <string name="edit">Modify schedule</string>
-    <string name="professor_name">Professor</string>
+    <string name="timetable_modify_course">Modify schedule</string>
+    <string name="professor">Professor</string>
     <string name="role">Role</string>
-    <string name="leider_sind_keine_daten_verfuegbar">No data available</string>
-    <string name="add_lesson">Add Lesson</string>
+    <string name="mensa_food_no_data_available">No data available</string>
+    <string name="my_time_table_add_lesson">Add Lesson</string>
     <string name="loading">Loading…</string>
-    <string name="empty_text_calendar">You did not compose a schedule.</string>
-    <string name="empty_text_edit">You did not choose a lesson.</string>
-    <string name="empty_text_select">Choose study course and semester.</string>
+    <string name="my_time_table_empty_text_calendar">You did not compose a schedule.</string>
+    <string name="my_time_table_empty_text_edit">You did not choose a lesson.</string>
+    <string name="my_time_table_empty_text_select">Choose study course and semester.</string>
 
-    <string name="data_protection_link"><a href="https://www.eah-jena.de/datenschutz">Data protection</a></string>
+    <string name="impress_data_protection_link"><a href="https://www.eah-jena.de/datenschutz">Data protection</a></string>
     <string name="notification_error_ssl_cert_invalid">A SSL-Certificate occurred. Do you want to proceed?</string>
     <string name="ssl_error_continue">Continue</string>
     <string name="ssl_error_cancel">Cancel</string>
@@ -133,11 +128,16 @@
     <string name="hint_search_room">xx.xx.xx</string>
     <string name="error_message_room_input">Room not found!</string>
     <string name="text_view_button_destination_location">Your destination:</string>
-    <string name="button_location_qr">QR-Code</string>
+    <string name="btn_location_qr_code">QR-Code</string>
     <string name="text_view_search_or_qr">or</string>
     <string name="text_view_explanation_location_title">Determine my position:</string>
     <string name="text_view_explanation_location_description">Directly press the QR-Code button to scan the QR-Code or manually enter your position and search.</string>
     <string name="text_view_explanation_navigation_title">Perform navigation:</string>
     <string name="text_view_explanation_navigation_description">Select a room or a person or enter a room number you want to be navigated to. Then determine your position like described above.</string>
     <string name="text_view_oder">or</string>
+    <string name="maps_up" >One floor up</string>
+    <string name="maps_down" >One floor down</string>
+
+
+
 </resources>

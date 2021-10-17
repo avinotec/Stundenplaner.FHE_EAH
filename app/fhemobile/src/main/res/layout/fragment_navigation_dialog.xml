@@ -257,7 +257,7 @@
                 android:id="@+id/button_location_qr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/button_location_qr"
+                android:text="@string/btn_location_qr_code"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/text_size_header"
                 android:textStyle="bold"

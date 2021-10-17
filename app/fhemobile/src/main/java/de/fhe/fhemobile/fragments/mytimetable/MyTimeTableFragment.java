@@ -97,7 +97,7 @@ public class MyTimeTableFragment extends FeatureFragment {
 		mView = (MyTimeTableView) inflater.inflate(R.layout.fragment_my_time_table, container, false);
 		mView.initializeView(getChildFragmentManager());
 
-		String emptyText = getResources().getString(R.string.empty_text_edit);
+		String emptyText = getResources().getString(R.string.my_time_table_empty_text_edit);
 		mView.setEmptyText(emptyText);
 		return mView;
 	}

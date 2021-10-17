@@ -129,7 +129,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         mView.setViewListener(mViewListener);
 
         initSelectionSite();
-        final String emptyText = getResources().getString(R.string.empty_text_select);
+        final String emptyText = getResources().getString(R.string.my_time_table_empty_text_select);
         mView.setEmptyText(emptyText);
 
         return mView;

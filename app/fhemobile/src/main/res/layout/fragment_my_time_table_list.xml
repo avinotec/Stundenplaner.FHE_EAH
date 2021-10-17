@@ -45,7 +45,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/buttonshape"
-                android:text="@string/edit"
+                android:text="@string/timetable_modify_course"
                 android:textColor="@color/drawer_item_text"
                 android:textSize="12sp"
                  />

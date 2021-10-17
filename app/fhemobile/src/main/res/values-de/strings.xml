@@ -84,18 +84,16 @@
     <string name="configure" >Konfiguration</string>
     <string name="add_widget" >Widget ergänzen</string>
 
-	<string name="komplettes_set_waehlen">Komplettes Set wählen</string>
-	<string name="selbst_zusammenstellen">Set selbst zusammenstellen</string>
-	<string name="edit">Stundenplan ändern</string>
-    <string name="professor_name">Professor</string>
-	<string name="leider_sind_keine_daten_verfuegbar">Keine Daten verfügbar</string>
-	<string name="add_lesson">Kurs hinzufügen</string>
+	<string name="timetable_modify_course">Stundenplan ändern</string>
+    <string name="professor">Professor</string>
+	<string name="mensa_food_no_data_available">Keine Daten verfügbar</string>
+	<string name="my_time_table_add_lesson">Kurs hinzufügen</string>
 	<string name="loading">Loading…</string>
-    <string name="empty_text_calendar">Du hast noch keinen Stundenplan erstellt.</string>
-	<string name="empty_text_edit">Du hast noch keine Vorlesungen ausgewählt.</string>
-	<string name="empty_text_select">Wähle Studiengang und Semester aus.</string>
+    <string name="my_time_table_empty_text_calendar">Du hast noch keinen Stundenplan erstellt.</string>
+	<string name="my_time_table_empty_text_edit">Du hast noch keine Vorlesungen ausgewählt.</string>
+	<string name="my_time_table_empty_text_select">Wähle Studiengang und Semester aus.</string>
 
-    <string name="data_protection_link"><a href="https://www.eah-jena.de/datenschutz">Datenschutz</a></string>
+    <string name="impress_data_protection_link"><a href="https://www.eah-jena.de/datenschutz">Datenschutz</a></string>
     <string name="notification_error_ssl_cert_invalid">Es ist ein Zertifikat-Fehler aufgetreten. Möchtest du die Seite trotzdem öffnen?</string>
     <string name="ssl_error_cancel">Abbrechen</string>
     <string name="ssl_error_continue">Fortfahren</string>
@@ -131,7 +129,7 @@
     <string name="hint_search_room">xx.xx.xx</string>
     <string name="error_message_room_input">Raum nicht gefunden!</string>
     <string name="text_view_button_destination_location">Dein Ziel:</string>
-    <string name="button_location_qr">QR-Code</string>
+    <string name="btn_location_qr_code">QR-Code</string>
     <string name="text_view_search_or_qr">oder</string>
     <string name="text_view_explanation_location_title">Meine Position bestimmmen:</string>
     <string name="text_view_explanation_location_description">Scanne den QR-Code über den Button oder gib eine Raumnummer ein und drücke "Suchen".</string>
