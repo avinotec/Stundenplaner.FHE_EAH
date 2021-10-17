@@ -63,8 +63,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 17
-        versionName '1.4'
+        versionCode 19
+        versionName '1.6'
 
         multiDexEnabled = true
 
@@ -77,7 +77,7 @@ android {
         app is translated to the same languages or not. If you'd like to keep only the languages that your app officially supports,
         you can specify those languages using the resConfig property. Any resources for languages not specified are removed.
          */
-        resConfigs "de", "en", "fr", "ru", "es"
+        resConfigs "de", "en"
     }
     
     
@@ -165,20 +165,27 @@ android {
         release {
             // Enables code shrinking, obfuscation, and optimization for only
             // your project's release build type.
-            minifyEnabled false
             //TODO minifyEnabled true
 
             // Enables resource shrinking, which is performed by the
             // Android Gradle plugin.
-            //shrinkResources true    //TODO requires code shrinking, too
+            //TODO requires code shrinking, too
+            //shrinkResources true
     
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt', 'proguard-project.txt'
+            // Includes the default ProGuard rules files that are packaged with
+            // the Android Gradle plugin. To learn more, go to the section about
+            // R8 configuration files.
+            proguardFiles getDefaultProguardFile(
+                    'proguard-android-optimize.txt'),
+                    'proguard-rules.txt',
+                    'proguard-project.txt'
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt', 'proguard-project.txt'
             debuggable false
             jniDebuggable false
             signingConfig signingConfigs.release
             //pseudoLocalesEnabled true     MS
             pseudoLocalesEnabled false
-            renderscriptOptimLevel = 4
+            renderscriptOptimLevel = 3
     
     
             //schöneren APK Namen
@@ -238,7 +245,7 @@ dependencies {
     //implementation "com.viewpagerindicator:library:2.4.1@aar.jar"
     implementation 'com.darwinsys:hirondelle-date4j:1.5.1'
 
-    implementation 'com.github.applidium:HeaderListView:f9c33c21ae'
+    //implementation 'com.github.applidium:HeaderListView:'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     
@@ -276,6 +283,9 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
     implementation 'androidx.navigation:navigation-ui:2.3.5'
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
+    
+    
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.31'
 }
 
 configurations.all {
@@ -289,9 +299,9 @@ configurations.all {
     //Duplicate class org.xmlpull.mxp1.MXParser found in modules xpp3-1.1.4c.jar (xpp3:xpp3:1.1.4c) and xpp3_min-1.1.4c.jar (xpp3:xpp3_min:1.1.4c)
     //Duplicate class org.xmlpull.v1.XmlPullParserFactory found in modules kxml2-2.3.0.jar (net.sf.kxml:kxml2:2.3.0) and xpp3-1.1.4c.jar (xpp3:xpp3:1.1.4c)
     //Duplicate class org.xmlpull.v1.XmlSerializer found in modules kxml2-2.3.0.jar (net.sf.kxml:kxml2:2.3.0) and xpp3-1.1.4c.jar (xpp3:xpp3:1.1.4c)
-    exclude group: 'net.sf.kxml', module: 'kxml2'
+//    exclude group: 'net.sf.kxml', module: 'kxml2'
     // exclude all from xpp3. Not only xpp3 or xpp3_min. '' is a wildcard
-    exclude group: 'xpp3', module: ''
+//    exclude group: 'xpp3', module: ''
 
 
     exclude group: 'com.android.support', module: ''
