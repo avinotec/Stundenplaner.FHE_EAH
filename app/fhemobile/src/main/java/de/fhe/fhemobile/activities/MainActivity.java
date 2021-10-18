@@ -173,19 +173,19 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                     final String json = gson.toJson(response.body());
                     Assert.assertTrue( !json.isEmpty() );
 
-                    Log.d(TAG, "onResponse: "+response.raw().request().url());
-                    Log.d(TAG, "onResponse code: "+response.code()+" geparsed: "+ json );
+                    Log.d(TAG, "onResponse: " + response.raw().request().url());
+                    Log.d(TAG, "onResponse code: " + response.code() + " geparsed: " + json );
 
                     final List<ResponseModel.Change> changes = response.body().getChanges();
 
                     final List<String[]> negativeList = MyTimeTableView.generateNegativeLessons();
-                    final Iterator<ResponseModel.Change> iterator= changes.iterator();
+                    final Iterator<ResponseModel.Change> iterator = changes.iterator();
 
                     while(iterator.hasNext()){
 
-                        final ResponseModel.Change change=iterator.next();
+                        final ResponseModel.Change change = iterator.next();
                         boolean isInNegativeList = false;
-                        for(String[] negativeEvent:negativeList){
+                        for(String[] negativeEvent : negativeList){
                             if ( change.getNewEventJson().getTitle().contains(negativeEvent[0])
                                     && change.getSetSplusKey().equals( negativeEvent[1] ) ) {
                                 isInNegativeList = true;
@@ -220,13 +220,15 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 //                        // A null listener allows the button to dismiss the dialog and take no further action.
 //                        .show();
 
+                    //todo: folgender Code basiert auf generateNegativeList welche wie es scheint nur Änderungen der Veranstaltungen in selectedLessons berücksichtigt
+                    // --> auch Änderungen die nicht selectedLessons betreffen aber Veranstaltungen in completeLessons müssen eingebunden werden
 
                     for(ResponseModel.Change change : changes){
 
                         // Shortcut to the list
                         final List<FlatDataStructure> myTimetableList = MyTimeTableView.getLessons();
 
-                        //Aenderung eines Events: suche den Event und ueberschreibe seine Daten
+                        //Aenderung einer Veranstaltung: suche das Event (= einzelne Veranstaltung) und ueberschreibe ihre Daten
                         if(change.getChangesReason() == CHANGEREASON_EDIT) {
                             final FlatDataStructure event = FlatDataStructure.getEventByID(
                                     myTimetableList, change.getNewEventJson().getUid());
@@ -234,22 +236,29 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                                 event.setEvent(change.getNewEventJson());
                             }
                         }
-                        //Hinzufuegen eines neuen Events: Erstelle ein neues Element vom Typ FlatDataStructure, schreibe alle Set-, Semester- und Studiengangdaten in diesen
+                        //Hinzufuegen einer neuen veranstaltung:
+                        // Erstelle ein neues Element vom Typ FlatDataStructure, schreibe alle Set-, Semester- und Studiengangdaten in diesen
                         //und fuege dann die Eventdaten des neuen Events hinzu. Anschliessend in die Liste hinzufuegen.
                         if(change.getChangesReason() == CHANGEREASON_NEW) {
-                            final FlatDataStructure event
-                                    = FlatDataStructure.queryGetEventsByStudyGroupTitle(
+                            final FlatDataStructure event =
+                                    FlatDataStructure.queryGetEventsByStudyGroupTitle(
                                             myTimetableList, change.getSetSplusKey()).get(0).copy();
                             event.setEvent(change.getNewEventJson());
-                            MyTimeTableView.getLessons().add(event);
+
+                            MyTimeTableView.addLesson(event);
+                            completeLessons.add(event);
 
                         }
-                        //Loeschen eines Events: Suche den Event mit der SplusID und lösche ihn aus der Liste.
+                        //Loeschen einer Veranstaltung: Suche die Veranstaltung mit der SplusID und lösche sie aus der Liste.
                         if(change.getChangesReason() == CHANGEREASON_DELETE){
                             final FlatDataStructure event = FlatDataStructure.getEventByID(
                                     myTimetableList, change.getNewEventJson().getUid());
-                            MyTimeTableView.getLessons().remove(event);
+
+                            MyTimeTableView.removeLesson(event);
+                            completeLessons.remove(event);
                         }
+
+
                     }
 
                 }

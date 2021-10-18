@@ -225,7 +225,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         editor = sharedPreferences.edit();
 
         if(sharedPreferences.contains(PREFS_CHOSEN_COURSE)){
-            final String chosenCourseJson=sharedPreferences.getString(PREFS_CHOSEN_COURSE,"");
+            final String chosenCourseJson = sharedPreferences.getString(PREFS_CHOSEN_COURSE,"");
             final StudyCourseVo chosenCourse = gson.fromJson(chosenCourseJson,StudyCourseVo.class);
             mChosenCourse = chosenCourse;
             mView.setTermsItems(mChosenCourse.getTerms());

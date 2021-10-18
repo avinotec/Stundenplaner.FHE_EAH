@@ -226,11 +226,11 @@ public class FlatDataStructure implements Parcelable {
 		return false;
 	}
 
-	private FlatStudyCourse getCourse() {
+	public final FlatStudyCourse getCourse() {
 		return course;
 	}
 
-	private FlatTerms getSemester() {
+	public final FlatTerms getSemester() {
 		return semester;
 	}
 

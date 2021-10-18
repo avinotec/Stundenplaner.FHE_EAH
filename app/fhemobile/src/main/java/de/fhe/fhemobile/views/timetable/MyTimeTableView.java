@@ -130,36 +130,52 @@ public class MyTimeTableView extends LinearLayout {
         return MainActivity.selectedLessons;
     }
 
-    public static List<String[]>generateNegativeLessons(){
+    /**
+     *
+     * @return
+     */
+    public static List<String[]> generateNegativeLessons(){
 
-    	final List<String[]> negativeList= new ArrayList<>();
+    	final List<String[]> negativeList = new ArrayList<>();
 
-    	for(FlatDataStructure eventInCompleteList: MainActivity.completeLessons){
-            boolean exists=false;
+    	//Durchsuche alle Vorlesungen
+    	for(FlatDataStructure eventInCompleteList : MainActivity.completeLessons){
+            boolean exists = false;
 
+            //überspringe einzelne Vorlesungsevents wenn der Vorlesungstitel schon zur negativeList hinzugefügt wurde
     		for(String[] eventdata : negativeList){
     		    if(eventdata[0].equals(FlatDataStructure.cutEventTitle(eventInCompleteList.getEvent().getTitle()))
                 && eventdata[1].equals(eventInCompleteList.getStudyGroup().getTimeTableId())){
-                    exists=true;
+                    exists = true;
                     break;
                 }
             }
+
+    		//dieses eventInCompleteList gibt es noch nicht in der negativeList
     		if(!exists) {
-    		    boolean isSelected=false;
+    		    boolean isSelected = false;
+    		    //durchsuche selectedLessons nach dem eventInCompletedList
                 for (FlatDataStructure eventInSelectedList : MainActivity.selectedLessons) {
-                    if (FlatDataStructure.cutEventTitle(eventInCompleteList.getEvent().getTitle()).equals(FlatDataStructure.cutEventTitle(eventInSelectedList.getEvent().getTitle()))
-                    && eventInCompleteList.getStudyGroup().getTimeTableId().equals(eventInSelectedList.getStudyGroup().getTimeTableId())){
-                        isSelected=true;
+
+                    if (FlatDataStructure.cutEventTitle(eventInCompleteList.getEvent().getTitle())
+                            .equals(FlatDataStructure.cutEventTitle(eventInSelectedList.getEvent().getTitle()))
+                    && eventInCompleteList.getStudyGroup().getTimeTableId()
+                            .equals(eventInSelectedList.getStudyGroup().getTimeTableId())){
+                        isSelected = true;
                     }
+
                 }
+                //add event to negative List if eventInCompletedList is in selectedLessons
                 if(!isSelected){
                     final String[] eventdata = new String[2];
-                    eventdata[0]=FlatDataStructure.cutEventTitle(eventInCompleteList.getEvent().getTitle());
-                    eventdata[1]=eventInCompleteList.getStudyGroup().getTimeTableId();
+                    //add an event (title + id) to negativeList
+                    eventdata[0] = FlatDataStructure.cutEventTitle(eventInCompleteList.getEvent().getTitle());
+                    eventdata[1] = eventInCompleteList.getStudyGroup().getTimeTableId();
                     negativeList.add(eventdata);
                 }
             }
 	    }
+
        return negativeList;
     }
 
@@ -167,13 +183,13 @@ public class MyTimeTableView extends LinearLayout {
 
     public static void removeLesson(final FlatDataStructure lesson){
         MainActivity.selectedLessons.remove(lesson);
-        MainActivity.sortedLessons=getSortedList(new Date_Comparator());
+        MainActivity.sortedLessons = getSortedList(new Date_Comparator());
 
         final Gson gson = new Gson();
         final String json = correctUmlauts(gson.toJson(MyTimeTableView.getLessons()));
         final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("list",json);
+        editor.putString("list", json);
         editor.apply();
 
         selectedLessonAdapter.notifyDataSetChanged();
@@ -187,7 +203,7 @@ public class MyTimeTableView extends LinearLayout {
         final String json = correctUmlauts(gson.toJson(MyTimeTableView.getLessons()));
         final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences("prefs",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("list",json);
+        editor.putString("list", json);
         editor.apply();
         selectedLessonAdapter.notifyDataSetChanged();
     }
