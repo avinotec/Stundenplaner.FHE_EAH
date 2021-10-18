@@ -16,7 +16,8 @@
   ~
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="de.fhe.fhemobile">
+    package="de.fhe.fhemobile"
+    android:installLocation="auto" >
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -25,6 +26,11 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
      <!--    for scanning QR-Code  -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <!-- is there a cam available -->
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <!-- standard is to request an autofocus. A lot of cams does not have one -->
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
+
     <!-- for Firebase/Google-Play-Services -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -52,7 +58,8 @@
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -135,7 +142,8 @@
                 android:value="de.fhe.fhemobile.activities.MainActivity" />
         </activity>
 
-        <activity android:name=".widgets.homescreen.NewsListWidgetConfigureActivity">
+        <activity android:name=".widgets.homescreen.NewsListWidgetConfigureActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -144,7 +152,8 @@
         <receiver
             android:name=".widgets.homescreen.NewsListWidget"
             android:enabled="@bool/newsWidgetEnabled"
-            android:label="@string/appwidget_news">
+            android:label="@string/appwidget_news"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="de.fhe.fhemobile.DATA_FETCHED" />
@@ -157,7 +166,9 @@
 
         <service
             android:name=".services.PushNotificationService"
-            android:permission="TODO">
+            android:exported="true">
+            <!-- android:permission="TODO" -->
+
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -170,8 +181,9 @@
         <service
             android:name=".widgets.homescreen.NewsListRemoteFetchService"
             android:enabled="true"
-            android:exported="true"
-            android:permission="TODO" />
+            android:exported="true" />
+        <!-- android:permission="TODO" -->
+
     </application>
 
 </manifest>
