@@ -97,7 +97,7 @@
     <string name="notification_error_ssl_cert_invalid">Es ist ein Zertifikat-Fehler aufgetreten. Möchtest du die Seite trotzdem öffnen?</string>
     <string name="ssl_error_cancel">Abbrechen</string>
     <string name="ssl_error_continue">Fortfahren</string>
-    <string name="jump_current_lesson"> >>Heute</string>
+    <string name="jump_current_lesson">>> Heute</string>
     <string name="deleteTimetableTitle">Stundenplan löschen?</string>
     <string name="deleteTimetableMessage">Das Semester ist zu Ende. Möchtest du den Stundenplan löschen?</string>
 
