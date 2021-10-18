@@ -55,15 +55,15 @@ public class MyTimeTableCalendarView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mBtnModifySchedule = (Button)            findViewById(R.id.btnMyTimetableModifySchedule);
-        mCalendarList = (ListView)          findViewById(R.id.lvCalendar);
+        mBtnModifySchedule = (Button)       findViewById(R.id.btnMyTimetableModifySchedule);
+        mCalendarList =     (ListView)      findViewById(R.id.lvCalendar);
 
         // "modify schedule"
         mBtnModifySchedule.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {
-                FragmentTransaction transaction= mFragmentManager.beginTransaction();
-                transaction.replace(R.id.container,new MyTimeTableFragment(),MyTimeTableFragment.TAG)
+                FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                transaction.replace(R.id.container, new MyTimeTableFragment(), MyTimeTableFragment.TAG)
                         .addToBackStack(MyTimeTableFragment.TAG)
                         .commit();
                 //Wechsle zum EditorFragment (MyTimeTableFragment) mittels backstack
@@ -71,7 +71,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
         });
 
         //TODO Behelf, soll automatisch auf den aktuellen Eintrag vorgesprungen werden
-        Button mJumpCurrentLesson = (Button)            findViewById(R.id.jumpCurrentLesson);
+        Button mJumpCurrentLesson = (Button) findViewById(R.id.jumpCurrentLesson);
         mJumpCurrentLesson.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {

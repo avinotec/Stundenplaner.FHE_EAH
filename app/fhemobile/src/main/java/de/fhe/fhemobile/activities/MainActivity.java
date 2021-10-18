@@ -344,9 +344,9 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
             //Sonderbehandlung für myTimetable (Mein Stundenplan)
             // im Fragment MyTimeTableCalendarFragment wird im ---R.id.container--- das Fragment zum
-            // Editieren der Courses eingeblendet "MyTimeTabelFragment". Und nicht das gesamte Fragment ausgetauscht.
+            // Editieren des Courses eingeblendet "MyTimeTableFragment". Und nicht das gesamte Fragment ausgetauscht.
             // Wenn das Fragment MyTimeTableFragment irgendwo eingeblendet ist, dann wollen wir einfach auf dem Backstack wieder zurück,
-            //
+
             final FragmentManager fragmentManager = getSupportFragmentManager();
             final Fragment aFragment = fragmentManager.findFragmentByTag(MyTimeTableFragment.TAG);
             if ( aFragment != null) {
@@ -424,21 +424,27 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
     //gehe durch die Liste, bis die Startzeit eines Events größer ist als die angegebene Zeit und nehme den vorherigen Event
     //und gebe den Index zurück.
+    /**
+     *
+     * @return
+     */
     public static int getCurrentEventIndex(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
 
         for(int i = 0; i < sortedLessons.size(); i++){
             TimeTableEventVo event = sortedLessons.get(i).getEvent();
+            Date now = new Date();
             try {
-                if(sdf.parse(event.getDate() + " "
-                        + event.getStartTime()).compareTo(new Date()) >= 0) {
-                    if(sdf.parse(event.getDate() + " "
-                            + event.getEndTime()).compareTo(new Date()) < 0) {
+                //lesson starts now or in the future
+                if(sdf.parse(event.getDate() + " " + event.getStartTime())
+                        .compareTo(now) >= 0) {
+                    //lesson already ended //todo:????
+                    if(sdf.parse(event.getDate() + " " + event.getEndTime())
+                            .compareTo(now) < 0) {
                         return (i);
                     }
-                    if(i == 0){
-                        return i;
-                    }
+
+                    if(i == 0) return i;
                     return (i - 1);
                 }
             } catch (ParseException e) {

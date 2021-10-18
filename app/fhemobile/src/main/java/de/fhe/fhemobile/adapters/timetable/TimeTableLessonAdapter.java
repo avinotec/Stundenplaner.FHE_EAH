@@ -70,15 +70,22 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 					inflate(R.layout.row_layout_events, parent, false);
 		}
 		final FlatDataStructure currentItem = MyTimeTableView.getCompleteLessons().get(position);
-		final RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.singleRowLayout);
+		final RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.singleRowLayout);
 
 		convertView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
-				final List<FlatDataStructure> lessonTitleFilteredList = FlatDataStructure.queryGetEventsByEventTitle(MyTimeTableView.getCompleteLessons(),FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
-				final List <FlatDataStructure> filteredList = FlatDataStructure.queryGetEventsByStudyGroupTitle(lessonTitleFilteredList,currentItem.getSetString());
-				for (FlatDataStructure event:filteredList){
+				final List<FlatDataStructure> lessonTitleFilteredList =
+						FlatDataStructure.queryGetEventsByEventTitle(
+								MyTimeTableView.getCompleteLessons(),
+								FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
+
+				final List <FlatDataStructure> filteredList =
+						FlatDataStructure.queryGetEventsByStudyGroupTitle(
+								lessonTitleFilteredList, currentItem.getSetString());
+
+				for (FlatDataStructure event : filteredList){
 					event.setVisible(!event.isVisible());
 				}
 				((ListView)parent).invalidateViews();
@@ -96,7 +103,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 			convertView.setVisibility(View.GONE);
 		}
 
-		final TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvLessonTitle);
+		final TextView lessonTitle = (TextView) convertView.findViewById(R.id.tvLessonTitle);
 		final RelativeLayout headerLayout = convertView.findViewById(R.id.headerBackground);
 
 		if(position == 0){
@@ -121,9 +128,9 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		}
 
 
-		final TextView studyGroupLabel = (TextView)convertView.findViewById(R.id.tvStudyGroupLabel);
-		final TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.tvStudyGroupTitle);
-		final ImageButton btnAddLesson = (ImageButton)convertView.findViewById(R.id.ibAddLesson);
+		final TextView studyGroupLabel = (TextView) convertView.findViewById(R.id.tvStudyGroupLabel);
+		final TextView studyGroupTitle = (TextView) convertView.findViewById(R.id.tvStudyGroupTitle);
+		final ImageButton btnAddLesson = (ImageButton) convertView.findViewById(R.id.ibAddLesson);
 		if(currentItem.isAdded() == true){
 			btnAddLesson.setEnabled(false);
 			btnAddLesson.setImageResource(R.drawable.ic_input_add_gray);
@@ -156,11 +163,9 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 				btnAddLesson.setBackgroundResource(R.drawable.buttonshape_disabled);
 				TimeTableLessonAdapter.this.notifyDataSetChanged();
 
-
 			}
 
 		});
-
 
 
 		String combinedStudyGroups = currentItem.getSetString();
@@ -168,14 +173,11 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		studyGroupTitle.setText(combinedStudyGroups);
 
 		if(position == 0){
-
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			studyGroupLabel.setVisibility(View.VISIBLE);
 			btnAddLesson.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
-
-
 		}
 
 		else if(!FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()).equals(
@@ -188,6 +190,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 			convertView.setVisibility(View.VISIBLE);
 
 		}
+
 		else if(!currentItem.getSetString().equals(
 				MyTimeTableView.getCompleteLessons().get(position-1).getSetString()))
 		{
@@ -197,6 +200,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
 		}
+
 		else{
 			studyGroupTitle.setVisibility(View.GONE);
 			studyGroupLabel.setVisibility(View.GONE);
@@ -207,7 +211,8 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		final Date df = new java.util.Date(currentItem.getEvent().getStartDate());
 		final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
 		final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(df);
-		tvTime.setText(dayOfWeek + ", " + date + " " + currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime());
+		tvTime.setText(dayOfWeek + ", " + date + "  "
+				+ currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime());
 
 		final TextView tvRoom = (TextView)convertView.findViewById(R.id.tvRoom);
 		tvRoom.setText(currentItem.getEvent().getRoom());

@@ -156,14 +156,17 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         if (weekList != null) {
             try {
 
-                for(int weekIndex=0;weekIndex<weekList.size();weekIndex++){
+                for(int weekIndex = 0; weekIndex < weekList.size(); weekIndex++){
 
                     List<TimeTableDayVo> dayList = weekList.get(weekIndex).getDays();
-                    for(int dayIndex=0;dayIndex<dayList.size();dayIndex++){
+
+                    for(int dayIndex = 0; dayIndex<dayList.size(); dayIndex++){
                         List<TimeTableEventVo> eventList = dayList.get(dayIndex).getEvents();
-                        for(int eventIndex=0;eventIndex<eventList.size();eventIndex++){
-                            for(FlatDataStructure addedEvent:MyTimeTableView.getLessons()){
-                                if (addedEvent.getEvent().getUid().equals(eventList.get(eventIndex).getUid())){
+
+                        for(int eventIndex = 0; eventIndex < eventList.size(); eventIndex++){
+                            for(FlatDataStructure addedEvent : MyTimeTableView.getLessons()){
+                                if (addedEvent.getEvent().getUid()
+                                        .equals(eventList.get(eventIndex).getUid())){
                                     data.setAdded(true);
                                     break;
                                 }
@@ -173,7 +176,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                         	for(FlatDataStructure savedEvent:dataList){
 //		                        Log.d(TAG, "EventUID1: "+savedEvent.getEvent().getUid()+" EventUID2: "+eventList.get(eventIndex).getUid()+" setTitle: "+ savedEvent.getStudyGroup().getTitle()+" result: "+savedEvent.getEvent().getUid().equals(eventList.get(eventIndex).getUid()));
                         		if (savedEvent.getEvent().getUid().equals(eventList.get(eventIndex).getUid())){
-                        			exists=savedEvent;
+                        			exists = savedEvent;
                         			break;
 		                        }
 	                        }
@@ -187,8 +190,9 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 		                        datacopy.getSets().add(datacopy.getStudyGroup().getTitle().split("\\.")[1]);
 		                        boolean found=false;
 		                        for(FlatDataStructure selectedItem:MyTimeTableView.getLessons()){
-		                            if(datacopy.getEvent().getUid().equals(selectedItem.getEvent().getUid())){
-		                                found=true;
+		                            if(datacopy.getEvent().getUid()
+                                            .equals(selectedItem.getEvent().getUid())){
+		                                found = true;
 		                                break;
                                     }
                                 }
@@ -215,7 +219,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
     //Setzt die beim letzten mal ausgewählten Werte und die letzen Suchergebnisse.
     private void initSelectionSite(){
-        final Gson gson= new Gson();
+        final Gson gson = new Gson();
 
         sharedPreferences = this.getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -244,7 +248,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                     boolean found = false;
                     for(FlatDataStructure selectedItem:MyTimeTableView.getLessons()){
                         if(loadedElement.getEvent().getUid().equals(selectedItem.getEvent().getUid())){
-                            found=true;
+                            found = true;
                             break;
                         }
                     }
@@ -355,7 +359,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                                    Response<List<TimeTableWeekVo>> response) {
 
                                 super.onResponse(call, response);
-                                if(response.code()>=200) {
+                                if(response.code() >= 200) {
                                     List<TimeTableWeekVo> weekList=response.body();
 
 //                                    Log.d(TAG, "success: Request wurde ausgefuehrt: " + response.raw().request().url() + " Status: " + response.code());

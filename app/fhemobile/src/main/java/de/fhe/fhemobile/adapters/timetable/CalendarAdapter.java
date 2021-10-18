@@ -53,7 +53,7 @@ public class CalendarAdapter extends BaseAdapter {
 		return position;
 	}
 
-	private final static SimpleDateFormat sdf= new SimpleDateFormat("dd.MM.yyyy");
+	private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -93,7 +93,8 @@ public class CalendarAdapter extends BaseAdapter {
 			lessonDay.setVisibility(View.VISIBLE);
 			lessonDate.setVisibility(View.VISIBLE);
 		}
-		else if(!currentItem.getEvent().getDate().equals(MyTimeTableView.getSortedLessons().get(position-1).getEvent().getDate())){
+		else if(!currentItem.getEvent().getDate()
+				.equals(MyTimeTableView.getSortedLessons().get(position - 1).getEvent().getDate())){
 			headerLayout.setVisibility(View.VISIBLE);
 			lessonDay.setVisibility(View.VISIBLE);
 			lessonDate.setVisibility(View.VISIBLE);
@@ -103,7 +104,7 @@ public class CalendarAdapter extends BaseAdapter {
 			lessonDay.setVisibility(View.GONE);
 			lessonDate.setVisibility(View.GONE);
 		}
-		if(sdf.format(df).compareTo(sdf.format(new Date()))==0){
+		if(sdf.format(df).compareTo(sdf.format(new Date())) == 0){
 			lessonDay.setText("Heute " + "("+currentItem.getEvent().getDayOfWeek() + ")");
 		}
 

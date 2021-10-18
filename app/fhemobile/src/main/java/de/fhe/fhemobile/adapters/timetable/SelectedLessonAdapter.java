@@ -77,7 +77,7 @@ public class SelectedLessonAdapter extends BaseAdapter {
 								FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 				List <FlatDataStructure> filteredList
 						= FlatDataStructure.queryGetEventsByStudyGroupTitle(
-								lessonTitleFilteredList,currentItem.getSetString());
+								lessonTitleFilteredList, currentItem.getSetString());
 				for (FlatDataStructure event:filteredList){
 					event.setVisible(!event.isVisible());
 				}
@@ -96,7 +96,7 @@ public class SelectedLessonAdapter extends BaseAdapter {
 			convertView.setVisibility(View.GONE);
 		}
 
-		final TextView lessonTitle = (TextView)convertView.findViewById(R.id.tvLessonTitle);
+		final TextView lessonTitle = (TextView) convertView.findViewById(R.id.tvLessonTitle);
 		final RelativeLayout headerBackground = convertView.findViewById(R.id.headerBackground);
 		lessonTitle.setText(FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 		if(position == 0){
@@ -154,7 +154,7 @@ public class SelectedLessonAdapter extends BaseAdapter {
 		else if(!FlatDataStructure.cutEventTitle(
 				currentItem.getEvent().getTitle())
 				.equals(FlatDataStructure.cutEventTitle(
-						MyTimeTableView.getLessons().get(position-1).getEvent().getTitle()))){
+						MyTimeTableView.getLessons().get(position - 1).getEvent().getTitle()))){
 			studyGroupTitle.setText(currentItem.getSetString());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			studyGroupLabel.setVisibility(View.VISIBLE);
@@ -164,7 +164,7 @@ public class SelectedLessonAdapter extends BaseAdapter {
 
 		}
 		else if(!currentItem.getSetString()
-				.equals( MyTimeTableView.getLessons().get(position-1).getSetString() )){
+				.equals( MyTimeTableView.getLessons().get(position - 1).getSetString() )){
 			studyGroupTitle.setText(currentItem.getSetString());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			studyGroupLabel.setVisibility(View.VISIBLE);
@@ -182,7 +182,7 @@ public class SelectedLessonAdapter extends BaseAdapter {
 		final Date df = new java.util.Date(currentItem.getEvent().getStartDate());
 		final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
 		final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(df);
-		tvTime.setText(dayOfWeek + ", " + date + " "
+		tvTime.setText(dayOfWeek + ", " + date + "  "
 				+ currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime());
 
 		final TextView tvRoom = (TextView) convertView.findViewById(R.id.tvRoom);

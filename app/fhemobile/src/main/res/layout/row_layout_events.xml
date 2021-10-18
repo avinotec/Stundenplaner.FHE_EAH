@@ -34,6 +34,7 @@
         android:paddingTop="@dimen/list_item_vertical_padding"
         android:paddingBottom="@dimen/list_item_vertical_padding"
         android:background="@color/list_header_background">
+
         <TextView
             android:id="@+id/tvLessonTitle"
             android:layout_width="wrap_content"
@@ -76,23 +77,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvStudyGroupTitle"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:layout_marginLeft="16dp" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     <TextView
         android:id="@+id/tvRoom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
         android:layout_below="@+id/tvStudyGroupTitle"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
+        android:layout_toLeftOf="@id/ibAddLesson"
         android:layout_toEndOf="@+id/tvLessonTime"
         android:layout_toRightOf="@+id/tvLessonTime"
-        android:layout_toLeftOf="@id/ibAddLesson"
         android:text="TextView" />
 
 
@@ -110,6 +111,6 @@
         android:background="@drawable/buttonshape"
         android:layout_below="@+id/headerBackground"
         app:srcCompat="@android:drawable/ic_input_add"
-	    android:contentDescription="TODO" />
+	    android:contentDescription="Button to add a lesson" />
 
 </RelativeLayout>

@@ -44,11 +44,11 @@
             android:id="@+id/timeTableWeekRange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
             android:text="Heading"
             android:textColor="@color/list_header_text"
-            android:textSize="@dimen/abc_text_size_small_material"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"/>
+            android:textSize="@dimen/abc_text_size_small_material" />
 
     </RelativeLayout>
 
