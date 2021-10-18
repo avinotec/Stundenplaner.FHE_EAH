@@ -74,13 +74,13 @@
     <string name="network_error" >No data found.</string>
 
     <string name="title_activity_maps_single" >Map</string>
-    <string name="title_activity_time_table_events" >Schedule</string>
+    <!-- string name="title_activity_time_table_events" >Schedule</string -->
 
     <string name="appwidget_news" >News list</string>
     <string name="appwidget_news_empty" >No data available\nClick to refresh</string>
 
-    <string name="configure" >Configure</string>
-    <string name="add_widget" >Add widget</string>
+    <!-- string name="configure" >Configure</string -->
+    <!-- string name="add_widget" >Add widget</string -->
 
     <string name="timetable_modify_course">Modify schedule</string>
     <string name="professor">Professor</string>
@@ -96,7 +96,7 @@
     <string name="notification_error_ssl_cert_invalid">A SSL-Certificate occurred. Do you want to proceed?</string>
     <string name="ssl_error_continue">Continue</string>
     <string name="ssl_error_cancel">Cancel</string>
-    <string name="jump_current_lesson">Jump to current lesson</string>
+    <string name="jump_current_lesson"> >>Today</string>
     <string name="deleteTimetableTitle">Delete timetable?</string>
     <string name="deleteTimetableMessage">The semester is over. Do you want to delete the timetable?</string>
 
@@ -106,7 +106,7 @@
     <string name="text_view_by_room">Room:</string>
     <string name="text_view_by_name">Person:</string>
     <string name="text_view_button_start_location">Your current position:</string>
-    <string name="action_language">Language</string>
+    <!-- string name="action_language">Language</string -->
     <string name="select_from_spinner">Please select</string>
     <string name="building_03_02_01_floor_ug">House 3, 2 and 1: basement</string>
     <string name="building_03_02_01_floor_00">House 3, 2 and 1: ground floor</string>

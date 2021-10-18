@@ -44,6 +44,7 @@
         />
 
     <de.fhe.fhemobile.utils.headerlistview.HeaderListView
+	    android:tag="HeaderListViewTag"
         android:id="@+id/mensaListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

@@ -105,7 +105,11 @@ public class NewsListView extends LinearLayout {
 
         // To prevent crashing.
         // See: https://github.com/applidium/HeaderListView/issues/28
-        mNewsList.getListView().setId(R.id.listMode);
+        //MS neue Lösung, da ab 2021 die Ressourcen nun in separaten Namensräumen verwendet werden
+        //mNewsList.getListView().setId(R.id.listMode);
+        HeaderListView yourListView = (HeaderListView) findViewWithTag("HeaderListViewTag");
+        mNewsList.getListView().setId( yourListView.getId() );
+
     }
 
     private final EventListener mReceivedNewsListener = new EventListener() {

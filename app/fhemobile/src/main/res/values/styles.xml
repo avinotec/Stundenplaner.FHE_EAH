@@ -28,7 +28,6 @@
     </style>
 
     <!--    Campus Navigation-->
-
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -37,8 +36,7 @@
 
     <style name="SpinnerTextViewItem" parent="@android:style/Widget.TextView">
         <item name="android:fontFamily">@font/roboto_condensed_regular</item>
-        <item name="android:textSize">20dp</item>
-
+        <item name="android:textSize">20sp</item>
     </style>
 
 </resources>

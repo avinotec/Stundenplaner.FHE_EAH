@@ -85,9 +85,12 @@
 -dontwarn javax.annotation.ParametersAreNonnullByDefault
 
 # for xmlpull
--dontwarn org.xmlpull.v1.**
--dontnote org.xmlpull.v1.**
--keep class org.xmlpull.** { *; }
+#-dontwarn org.xmlpull.v1.**
+#-dontnote org.xmlpull.v1.**
+#-keep class org.xmlpull.** { *; }
+#-keep class org.xmlpull.v1.XmlPullParser
+#-keep class org.xmlpull.v1.XmlPullParserException
+
 
 #-libraryjars /libs/Parse-1.5.1.jar
 #-libraryjars /libs/crashlytics.jar
@@ -117,6 +120,8 @@
 #-addconfigurationdebugging
 #-overloadaggressively		not for DVK 1.9/1.5
 -printusage
+# You can specify any path and filename.
+-printconfiguration ~/tmp/full-r8-config.txt
 
 
 #### from Android SDK

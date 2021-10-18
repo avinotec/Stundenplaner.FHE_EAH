@@ -76,13 +76,13 @@
     <string name="network_error" >Es konnten keine Daten gefunden werden.</string>
 
     <string name="title_activity_maps_single" >Lageplan</string>
-        <string name="title_activity_time_table_events" >Stundenplan</string>
+    <!-- string name="title_activity_time_table_events" >Stundenplan</string -->
 
     <string name="appwidget_news" >FH News Listen</string>
     <string name="appwidget_news_empty" >Keine Daten vorhanden\nKlicken zum neu laden</string>
 
-    <string name="configure" >Konfiguration</string>
-    <string name="add_widget" >Widget ergänzen</string>
+    <!-- string name="configure" >Konfiguration</string -->
+    <!-- string name="add_widget" >Widget ergänzen</string -->
 
 	<string name="timetable_modify_course">Stundenplan ändern</string>
     <string name="professor">Professor</string>
@@ -97,7 +97,7 @@
     <string name="notification_error_ssl_cert_invalid">Es ist ein Zertifikat-Fehler aufgetreten. Möchtest du die Seite trotzdem öffnen?</string>
     <string name="ssl_error_cancel">Abbrechen</string>
     <string name="ssl_error_continue">Fortfahren</string>
-    <string name="jump_current_lesson">Springe zur aktuellen Vorlesung</string>
+    <string name="jump_current_lesson"> >>Heute</string>
     <string name="deleteTimetableTitle">Stundenplan löschen?</string>
     <string name="deleteTimetableMessage">Das Semester ist zu Ende. Möchtest du den Stundenplan löschen?</string>
 
@@ -105,7 +105,7 @@
     <string name="text_view_by_room">Raum:</string>
     <string name="text_view_by_name">Person:</string>
     <string name="text_view_button_start_location">Deine aktuelle Position:</string>
-    <string name="action_language">Sprache</string>
+    <!-- string name="action_language">Sprache</string -->
     <string name="title_scanner_activity">Scanner</string>
     <string name="title_navigation_activity">Navigation</string>
     <string name="select_from_spinner">Bitte wählen</string>
