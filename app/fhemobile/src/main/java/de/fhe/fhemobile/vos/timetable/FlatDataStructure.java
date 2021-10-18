@@ -16,6 +16,8 @@
  */
 package de.fhe.fhemobile.vos.timetable;
 
+import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -81,7 +83,7 @@ public class FlatDataStructure implements Parcelable {
 	public FlatDataStructure copy(){
 		final FlatDataStructure copy = new FlatDataStructure();
 		//		Log.d(TAG, "FlatDataStructure: incID: "+FlatDataStructure.incId);
-		copy.id=FlatDataStructure.incId++;
+		copy.id = FlatDataStructure.incId++;
 		copy.setCourse(this.getCourse());
 		copy.setSemester(this.getSemester());
 		copy.setStudyGroup(this.getStudyGroup());
@@ -95,11 +97,11 @@ public class FlatDataStructure implements Parcelable {
 	public static String cutEventTitle(final String title) {
 
 		// WI/WIEC(BA)Cloudtech./V/01
-		String changeEventTitle = title;
+		String changeEventTitle = correctUmlauts(title);
 		try {
 			final Matcher m = p.matcher(title);
 			if (m.find() ) {
-				changeEventTitle =m.group(1);
+				changeEventTitle = m.group(1);
 //				Log.d(TAG, "eventTitle: "+changeEventTitle);
 			}
 			else {
