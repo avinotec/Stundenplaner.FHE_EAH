@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
@@ -86,16 +87,16 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 			// in Sekunden seit 1970, Unixtime
 			final long lastAppOpened = sharedPreferences.getLong(PREFS_LAST_APP_OPENED, 0);
 
-			Calendar calLastOpened = Calendar.getInstance();
+			Calendar calLastOpened = Calendar.getInstance(new Locale("de", "DE"));
 			calLastOpened.setTimeInMillis(lastAppOpened);
 
 			// Löschen des alten Kalenders mitten in den Semesterferien
 			// 1. März
-			Calendar calSemester1FerienStart = Calendar.getInstance();
+			Calendar calSemester1FerienStart = Calendar.getInstance(new Locale("de", "DE"));
 			calSemester1FerienStart.set(Calendar.MONTH, Calendar.MARCH);
 			calSemester1FerienStart.set(Calendar.DAY_OF_MONTH, 1);
 			// 1. September
-			Calendar calSemester2FerienStart = Calendar.getInstance();
+			Calendar calSemester2FerienStart = Calendar.getInstance(new Locale("de", "DE"));
 			calSemester2FerienStart.set(Calendar.MONTH, Calendar.SEPTEMBER);
 			calSemester2FerienStart.set(Calendar.DAY_OF_MONTH, 1);
 

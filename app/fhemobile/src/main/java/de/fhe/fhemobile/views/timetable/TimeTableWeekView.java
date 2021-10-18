@@ -60,17 +60,21 @@ public class TimeTableWeekView extends LinearLayout {
 
     private void calculateWeekRange(final TimeTableWeekVo _Data) {
 
-        final Calendar calendar = Calendar.getInstance();
+        //initialize calendar with german locale to ensure correct week numbers
+        final Calendar calendar = Calendar.getInstance(new Locale("de", "DE"));
         calendar.clear();
-        calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        calendar.set(Calendar.WEEK_OF_YEAR, _Data.getWeekInYear());
         calendar.set(Calendar.YEAR, _Data.getYear());
+        //calendar values are not really set until calling getTime() so uncomment for true debugging values
+        //calendar.getTime();
+        calendar.set(Calendar.WEEK_OF_YEAR, _Data.getWeekInYear());
+        //calendar.getTime();
 
         final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.", Locale.getDefault()); // PST`
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         final Date startDate = calendar.getTime();
         final String startDateInStr = formatter.format(startDate);
 
-        calendar.add(Calendar.DATE, 4);
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
         final Date endDate = calendar.getTime();
         final String endDaString = formatter.format(endDate);
 
