@@ -75,7 +75,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
         mJumpCurrentLesson.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {
-                jumpCurrentLesson();
+                jumpToToday();
             }
         });
 
@@ -85,7 +85,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
     }
 
     // Springen auf den aktuellen Tag
-    public void jumpCurrentLesson(){
+    public void jumpToToday(){
         final int currentDayIndex = MainActivity.getCurrentEventIndex();
         if(currentDayIndex >= 0){
             mCalendarList.setSelection(currentDayIndex);

@@ -163,7 +163,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 
 		// es sind alle Views initialisiert, Fragmente sind alle inflated
 
-		mView.jumpCurrentLesson();
+		mView.jumpToToday();
 	}
 	
 }
