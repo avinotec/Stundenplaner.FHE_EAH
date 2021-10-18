@@ -16,6 +16,8 @@
  */
 package de.fhe.fhemobile.vos.timetable;
 
+import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -33,7 +35,7 @@ public class TimeTableResponse {
     }
 
     public void setTitle(String _title) {
-        mTitle = _title;
+        mTitle = correctUmlauts(_title);
     }
 
     public String getModified() {

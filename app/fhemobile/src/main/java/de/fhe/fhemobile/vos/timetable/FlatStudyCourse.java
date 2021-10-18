@@ -16,6 +16,8 @@
  */
 package de.fhe.fhemobile.vos.timetable;
 
+import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -31,7 +33,7 @@ public class FlatStudyCourse implements Parcelable {
 
     FlatStudyCourse(Parcel in) {
         mId = in.readString();
-        mTitle = in.readString();
+        mTitle = correctUmlauts(in.readString());
     }
 
     public static final Creator<FlatStudyCourse> CREATOR = new Creator<FlatStudyCourse>() {

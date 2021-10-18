@@ -16,6 +16,8 @@
  */
 package de.fhe.fhemobile.vos.timetable;
 
+import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -173,15 +175,15 @@ public class TimeTableEventVo implements Parcelable {
 
     private TimeTableEventVo(Parcel in) {
         this.mStartDate = in.readLong();
-        this.mTitle = in.readString();
-        this.mShortTitle = in.readString();
+        this.mTitle = correctUmlauts(in.readString());
+        this.mShortTitle = correctUmlauts(in.readString());
         this.mDate = in.readString();
         this.mDayOfWeek = in.readString();
         this.mWeekOfYear = in.readInt();
         this.mStartTime = in.readString();
         this.mEndTime = in.readString();
-        this.mLecturer = in.readString();
-        this.mRoom = in.readString();
+        this.mLecturer = correctUmlauts(in.readString());
+        this.mRoom = correctUmlauts(in.readString());
         this.mUid = in.readString();
     }
 

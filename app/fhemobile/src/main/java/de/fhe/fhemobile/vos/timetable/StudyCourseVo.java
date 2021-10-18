@@ -16,6 +16,8 @@
  */
 package de.fhe.fhemobile.vos.timetable;
 
+import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -30,12 +32,13 @@ import java.util.List;
  */
 public class StudyCourseVo implements Parcelable {
     private static final String TAG = "StudyCourseVo";
+
     public StudyCourseVo() {
     }
 
     protected StudyCourseVo(Parcel in) {
         mId = in.readString();
-        mTitle = in.readString();
+        mTitle = correctUmlauts(in.readString());
         mTerms = in.createTypedArrayList(TermsVo.CREATOR);
     }
 

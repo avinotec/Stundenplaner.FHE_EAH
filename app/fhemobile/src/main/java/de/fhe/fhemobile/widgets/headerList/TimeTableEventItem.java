@@ -42,7 +42,7 @@ public class TimeTableEventItem implements IBaseItem {
     public TimeTableEventItem(String _Time, String _Title, String _Room, String _Person) {
         mTime   = _Time;
         mTitle  = correctUmlauts(_Title);
-        mRoom   = _Room;
+        mRoom   = correctUmlauts(_Room);
         mPerson = prettifyName(correctUmlauts(_Person));
     }
 

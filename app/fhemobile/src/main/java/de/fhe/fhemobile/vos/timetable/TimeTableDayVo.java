@@ -16,6 +16,8 @@
  */
 package de.fhe.fhemobile.vos.timetable;
 
+import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -79,7 +81,7 @@ public class TimeTableDayVo implements Parcelable {
 
     private TimeTableDayVo(Parcel in) {
         mDayInWeek = in.readInt();
-        mName = in.readString();
+        mName = correctUmlauts(in.readString());
         in.readTypedList(mEvents, TimeTableEventVo.CREATOR);
     }
 
