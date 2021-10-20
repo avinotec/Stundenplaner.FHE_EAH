@@ -23,6 +23,9 @@ import android.widget.Toast;
 
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.multidex.BuildConfig;
+
+import org.junit.Assert;
 
 import de.fhe.fhemobile.Main;
 
@@ -43,14 +46,20 @@ public class Utils {
     public static String correctUmlauts(String str){
         //method added by Nadja - 05.01.2021
 
-        str = str.replaceAll("Ã„", "Ä");
-        str = str.replaceAll("Ã\u009C", "Ü");
-        str = str.replaceAll("Ã–", "Ö");
-        str = str.replaceAll("Ã\u009F", "ß");
-        str = str.replaceAll("Ã¼", "ü");
-        str = str.replaceAll("Ã¶", "ö");
-        str = str.replaceAll("Ã¤", "ä");
+        if ( BuildConfig.DEBUG ) Assert.assertTrue( str != null );
 
+        // falls der übergebene String tatsächlich null sein sollte :-(
+        if ( str != null ) {
+
+            str = str.replaceAll("Ã„", "Ä");
+            str = str.replaceAll("Ã\u009C", "Ü");
+            str = str.replaceAll("Ã–", "Ö");
+            str = str.replaceAll("Ã\u009F", "ß");
+            str = str.replaceAll("Ã¼", "ü");
+            str = str.replaceAll("Ã¶", "ö");
+            str = str.replaceAll("Ã¤", "ä");
+
+        }
         return str;
     }
 

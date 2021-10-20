@@ -22,6 +22,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.multidex.BuildConfig;
+
+import org.junit.Assert;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -88,13 +92,17 @@ public class TimeTableWeekView extends LinearLayout {
 
             mData.add(new HeaderItem(dayVo.getName()));
             for (TimeTableEventVo eventVo : dayVo.getEvents()) {
-                mData.add(new TimeTableEventItem(
-                        eventVo.getStartTime() + " – " + eventVo.getEndTime(),
-                        eventVo.getShortTitle(),
-                        eventVo.getRoom(),
-                        eventVo.getLecturer()
-                        )
-                );
+
+                if ( BuildConfig.DEBUG ) Assert.assertTrue( eventVo != null );
+                if ( eventVo != null ) {
+                    mData.add(new TimeTableEventItem(
+                                    eventVo.getStartTime() + " – " + eventVo.getEndTime(),
+                                    eventVo.getShortTitle(),
+                                    eventVo.getRoom(),
+                                    eventVo.getLecturer()
+                            )
+                    );
+                }
             }
         }
     }

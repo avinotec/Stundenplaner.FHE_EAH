@@ -37,13 +37,19 @@ public class TimeTableEventItem implements IBaseItem {
     private final String mRoom;
     private final String mPerson;
 
+    /**
+     *
+     * @param _Time
+     * @param _Title
+     * @param _Room
+     * @param _Person
+     */
+    public TimeTableEventItem(final String _Time, final String _Title, final String _Room, final String _Person) {
 
-
-    public TimeTableEventItem(String _Time, String _Title, String _Room, String _Person) {
         mTime   = _Time;
-        mTitle  = correctUmlauts(_Title);
-        mRoom   = correctUmlauts(_Room);
-        mPerson = prettifyName(correctUmlauts(_Person));
+        mTitle  = (_Title != null) ? correctUmlauts(_Title) : "";  // Was auch immer das für eine Vorlesung ist, die keinen Titel hat.
+        mRoom   = (_Room != null) ? correctUmlauts(_Room) : "";
+        mPerson = (_Person != null) ? prettifyName(correctUmlauts(_Person)) : "";
     }
 
     @Override
@@ -78,7 +84,7 @@ public class TimeTableEventItem implements IBaseItem {
         return _convertView;
     }
 
-    static class ViewHolder {
+    private class ViewHolder {
         TextView mTime;
         TextView mTitle;
         TextView mRoom;
