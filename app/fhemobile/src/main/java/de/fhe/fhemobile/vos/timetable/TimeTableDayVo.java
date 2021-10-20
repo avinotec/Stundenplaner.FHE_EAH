@@ -16,8 +16,6 @@
  */
 package de.fhe.fhemobile.vos.timetable;
 
-import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -42,11 +40,11 @@ public class TimeTableDayVo implements Parcelable {
     }
 
     public String getName() {
-        return mName;
+        return mWeekDayName;
     }
 
     public void setName(String _name) {
-        mName = _name;
+        mWeekDayName = _name;
     }
 
     public ArrayList<TimeTableEventVo> getEvents() {
@@ -61,7 +59,7 @@ public class TimeTableDayVo implements Parcelable {
     private int mDayInWeek;
 
     @SerializedName("name")
-    private String mName;
+    private String mWeekDayName;
 
     @SerializedName("events")
     private ArrayList<TimeTableEventVo> mEvents = new ArrayList<>();
@@ -75,13 +73,13 @@ public class TimeTableDayVo implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(mDayInWeek);
-        dest.writeString(mName);
+        dest.writeString(mWeekDayName);
         dest.writeTypedList(mEvents);
     }
 
     private TimeTableDayVo(Parcel in) {
         mDayInWeek = in.readInt();
-        mName = correctUmlauts(in.readString());
+        mWeekDayName = in.readString();
         in.readTypedList(mEvents, TimeTableEventVo.CREATOR);
     }
 

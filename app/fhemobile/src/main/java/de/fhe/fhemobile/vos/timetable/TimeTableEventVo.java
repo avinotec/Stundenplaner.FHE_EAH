@@ -21,6 +21,8 @@ import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -47,8 +49,9 @@ public class TimeTableEventVo implements Parcelable {
         mTitle = _title;
     }
 
-    public String getShortTitle() {
-        return mShortTitle;
+    public @NonNull String getShortTitle() {
+        //Todo: vorübergehender Fix für Veranstaltungen mit shortTitle = null
+        return mShortTitle != null ? mShortTitle : mTitle;
     }
 
     public void setShortTitle(String _shortTitle) {
