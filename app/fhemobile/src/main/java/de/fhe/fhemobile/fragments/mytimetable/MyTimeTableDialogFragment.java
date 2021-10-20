@@ -288,7 +288,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             boolean errorOccurred = false;
 
             for (StudyCourseVo courseVo : mResponse.getStudyCourses()) {
-                if (courseVo.getId() != null && courseVo.getId().equals(_TermId)) {
+                if (courseVo != null && courseVo.getId() != null && courseVo.getId().equals(_TermId)) {
                     mChosenCourse = courseVo;
                     Gson gson = new Gson();
                     String chosenCourseJson = correctUmlauts(gson.toJson(courseVo));
