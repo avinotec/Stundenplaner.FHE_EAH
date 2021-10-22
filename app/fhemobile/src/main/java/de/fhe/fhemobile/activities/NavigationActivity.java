@@ -302,10 +302,10 @@ public class NavigationActivity extends BaseActivity {
     private void drawDestinationLocation(Complex complex, String floor) {
         try {
 
-            //check if input valid
-            boolean valid = false;
             if (!destinationQRCode.equals(JUST_LOCATION)) {
+
                 if (destinationLocation.getComplex().equals(complex) && floor.equals(destinationLocation.getFloorString())) {
+
                     //add destination icon
                     ImageView destinationIcon = new ImageView(this);
                     destinationIcon.setImageResource(R.drawable.destination_icon);
@@ -323,7 +323,7 @@ public class NavigationActivity extends BaseActivity {
 
     /**
      * Add all elevators, staircases and crossings
-     * @param buildingcomplex that is displayed (floorplan)
+     * @param complex that is displayed (floorplan)
      * @param floor that is displayed (floorplan)
      */
     private void drawFloorConnections(Complex complex, String floor){
@@ -504,75 +504,69 @@ public class NavigationActivity extends BaseActivity {
 
         ArrayList<String> helperBuildingAndFloor = new ArrayList<>();
 
-        Locale currentLocale;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            currentLocale = getResources().getConfiguration().getLocales().get(0);
-        } else {
-            currentLocale = getResources().getConfiguration().locale;
-        }
 
         try {
-            if (in.equals(getLocaleStringResource(currentLocale, R.string.building_03_02_01_floor_ug))) {
+            if (in.equals(getLocaleStringResource(R.string.building_03_02_01_floor_ug))) {
                 helperBuildingAndFloor.add("03");
                 helperBuildingAndFloor.add("ug");
             }
-            if (in.equals(getLocaleStringResource(currentLocale, R.string.building_03_02_01_floor_00))) {
+            else if (in.equals(getLocaleStringResource(R.string.building_03_02_01_floor_00))) {
                 helperBuildingAndFloor.add("03");
                 helperBuildingAndFloor.add("00");
             }
-            if (in.equals(getLocaleStringResource(currentLocale, R.string.building_03_02_01_floor_01))) {
+            else if (in.equals(getLocaleStringResource(R.string.building_03_02_01_floor_01))) {
                 helperBuildingAndFloor.add("03");
                 helperBuildingAndFloor.add("01");
             }
-            if (in.equals(getLocaleStringResource(currentLocale, R.string.building_03_02_01_floor_02))) {
+            else if (in.equals(getLocaleStringResource(R.string.building_03_02_01_floor_02))) {
                 helperBuildingAndFloor.add("03");
                 helperBuildingAndFloor.add("02");
             }
-            if (in.equals(getLocaleStringResource(currentLocale, R.string.building_03_02_01_floor_03))) {
+            else if (in.equals(getLocaleStringResource(R.string.building_03_02_01_floor_03))) {
                 helperBuildingAndFloor.add("03");
                 helperBuildingAndFloor.add("03");
             }
-            if (in.equals(getLocaleStringResource(currentLocale, R.string.building_03_02_01_floor_04))) {
+            else if (in.equals(getLocaleStringResource(R.string.building_03_02_01_floor_04))) {
                 helperBuildingAndFloor.add("03");
                 helperBuildingAndFloor.add("04");
             }
-            if (in.equals(getLocaleStringResource(currentLocale, R.string.building_04_floor_ug))) {
+            else if (in.equals(getLocaleStringResource(R.string.building_04_floor_ug))) {
                 helperBuildingAndFloor.add("04");
                 helperBuildingAndFloor.add("ug");
             }
-            if (in.equals(getLocaleStringResource(currentLocale, R.string.building_04_floor_00))) {
+            else if (in.equals(getLocaleStringResource(R.string.building_04_floor_00))) {
                 helperBuildingAndFloor.add("04");
                 helperBuildingAndFloor.add("00");
             }
-            if (in.equals(getLocaleStringResource(currentLocale, R.string.building_04_floor_01))) {
+            else if (in.equals(getLocaleStringResource(R.string.building_04_floor_01))) {
                 helperBuildingAndFloor.add("04");
                 helperBuildingAndFloor.add("01");
             }
-            if (in.equals(getLocaleStringResource(currentLocale, R.string.building_04_floor_02))) {
+            else if (in.equals(getLocaleStringResource(R.string.building_04_floor_02))) {
                 helperBuildingAndFloor.add("04");
                 helperBuildingAndFloor.add("02");
             }
-            if (in.equals(getLocaleStringResource(currentLocale, R.string.building_04_floor_03))) {
+            else if (in.equals(getLocaleStringResource(R.string.building_04_floor_03))) {
                 helperBuildingAndFloor.add("04");
                 helperBuildingAndFloor.add("03");
             }
-            if (in.equals(getLocaleStringResource(currentLocale, R.string.building_05_floor_ug))) {
+            else if (in.equals(getLocaleStringResource(R.string.building_05_floor_ug))) {
                 helperBuildingAndFloor.add("05");
                 helperBuildingAndFloor.add("ug");
             }
-            if (in.equals(getLocaleStringResource(currentLocale, R.string.building_05_floor_00))) {
+            else if (in.equals(getLocaleStringResource(R.string.building_05_floor_00))) {
                 helperBuildingAndFloor.add("05");
                 helperBuildingAndFloor.add("00");
             }
-            if (in.equals(getLocaleStringResource(currentLocale, R.string.building_05_floor_01))) {
+            else if (in.equals(getLocaleStringResource(R.string.building_05_floor_01))) {
                 helperBuildingAndFloor.add("05");
                 helperBuildingAndFloor.add("01");
             }
-            if (in.equals(getLocaleStringResource(currentLocale, R.string.building_05_floor_02))) {
+            else if (in.equals(getLocaleStringResource(R.string.building_05_floor_02))) {
                 helperBuildingAndFloor.add("05");
                 helperBuildingAndFloor.add("02");
             }
-            if (in.equals(getLocaleStringResource(currentLocale, R.string.building_05_floor_03))) {
+            else if (in.equals(getLocaleStringResource(R.string.building_05_floor_03))) {
                 helperBuildingAndFloor.add("05");
                 helperBuildingAndFloor.add("03");
             }
@@ -585,13 +579,21 @@ public class NavigationActivity extends BaseActivity {
 
     /**
      * get locale
-     * @param currentLocale
-     * @param floorPlan
+     * @param floorPlan ResourceID from Floorplan i.e. R.string.floorplan ....
      * @return
      */
-    private String getLocaleStringResource(Locale currentLocale, int floorPlan) {
+    private String getLocaleStringResource(int floorPlan) {
 
         String localeString = "";
+
+        final Locale currentLocale;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            currentLocale = getResources().getConfiguration().getLocales().get(0);
+        } else {
+            currentLocale = getResources().getConfiguration().locale;
+        }
+
+
 
         try {
             Configuration configuration = new Configuration(this.getResources().getConfiguration());

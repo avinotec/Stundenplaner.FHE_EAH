@@ -52,7 +52,8 @@
             android:text="TextView"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/list_header_text"
-            android:visibility="visible" />
+            android:visibility="visible"
+	        android:layout_alignParentEnd="true" />
     </RelativeLayout>
 
 

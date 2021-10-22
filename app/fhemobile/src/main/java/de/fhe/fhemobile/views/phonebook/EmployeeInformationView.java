@@ -58,7 +58,7 @@ public class EmployeeInformationView extends FrameLayout {
 
         mName.setText(_Employee.getFullName());
         mPhone.setText(phone);
-        mFax.setText(PhonebookModel.PHONE_NUMBER_PREFIX + _Employee.getFax());
+        mFax.setText(PhonebookModel.PHONE_NUMBER_PREFIX + _Employee.getFax()); // $NON-NLS
         mRole.setText(_Employee.getRole());
         mMail.setText(mail);
         mDivision.setText(_Employee.getDivision());

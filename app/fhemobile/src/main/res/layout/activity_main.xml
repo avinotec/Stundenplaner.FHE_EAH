@@ -57,7 +57,7 @@
          android:layout_gravity="left" instead. -->
     <!-- The drawer is given a fixed width in dp and extends the full height of
          the container. -->
-    <fragment 
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/navigation_drawer"
         android:layout_width="@dimen/drawer_width"
         android:layout_height="match_parent"

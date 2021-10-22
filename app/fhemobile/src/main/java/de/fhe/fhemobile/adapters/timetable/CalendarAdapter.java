@@ -24,6 +24,7 @@ import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -53,7 +54,8 @@ public class CalendarAdapter extends BaseAdapter {
 		return position;
 	}
 
-	private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+	//private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+	private final static DateFormat sdf = SimpleDateFormat.getDateInstance();
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -80,7 +82,7 @@ public class CalendarAdapter extends BaseAdapter {
 		final TextView lessonTime = (TextView) convertView.findViewById(R.id.tvLessonTime);
 		final Date df = new Date(currentItem.getEvent().getStartDate());
 		//String date = sdf.format(df);
-		lessonTime.setText(currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime());
+		lessonTime.setText(currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime()); // $NON-NLS
 
 		TextView lessonRoom = (TextView)convertView.findViewById(R.id.tvRoom);
 		lessonRoom.setText(currentItem.getEvent().getRoom());
@@ -105,7 +107,7 @@ public class CalendarAdapter extends BaseAdapter {
 			lessonDate.setVisibility(View.GONE);
 		}
 		if(sdf.format(df).compareTo(sdf.format(new Date())) == 0){
-			lessonDay.setText("Heute " + "("+currentItem.getEvent().getDayOfWeek() + ")");
+			lessonDay.setText(context.getString(R.string.today) + "("+currentItem.getEvent().getDayOfWeek() + ")");
 		}
 
 		return convertView;

@@ -16,6 +16,7 @@
  */
 package de.fhe.fhemobile.views.news;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.webkit.WebView;
@@ -40,6 +41,7 @@ public class NewsWebView extends FrameLayout {
         mContext = context;
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();

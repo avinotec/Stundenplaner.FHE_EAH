@@ -26,6 +26,7 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -138,7 +139,8 @@ public class FlatDataStructure implements Parcelable {
 		return filteredEvents;
 	}
 
-	private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
+	//private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
+	private final static DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
 
 	public static List<FlatDataStructure> queryfutureEvents(final List<FlatDataStructure>list){
 

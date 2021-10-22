@@ -37,7 +37,7 @@
         android:textColor="@color/list_item_text"
         android:textSize="@dimen/list_single_item_text_size"
         android:layout_toLeftOf="@+id/phoneItemDivision"
-        />
+	    android:layout_toStartOf="@+id/phoneItemDivision" />
 
     <TextView
         android:id="@+id/phoneItemDivision"
@@ -47,7 +47,7 @@
         android:textColor="@color/list_item_text_secondary"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        />
+	    android:layout_alignParentEnd="true" />
     
     <TextView
         android:id="@+id/phoneItemRoom"
@@ -57,6 +57,6 @@
         android:textColor="@color/list_item_text_secondary"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        />
+	    android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

@@ -16,6 +16,7 @@
  */
 package de.fhe.fhemobile.views.impressum;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
@@ -42,6 +43,7 @@ public class ImpressumView extends FrameLayout {
         mContext = context;
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();

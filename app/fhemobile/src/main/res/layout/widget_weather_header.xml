@@ -28,7 +28,7 @@
         android:layout_height="match_parent"
         android:src="@drawable/wetter_bg1"
         android:scaleType="centerCrop"
-	    android:contentDescription="TODO" />
+	    android:contentDescription="Weather background logo" />
     
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
             android:text="-"
             android:textColor="@color/weather_text"
             android:textSize="26sp"
-            />
+            android:layout_toStartOf="@+id/weatherIcon" />
 
         <ImageView
             android:id="@+id/weatherIcon"
@@ -63,7 +63,7 @@
             android:layout_centerInParent="true"
             android:layout_marginRight="8dp"
             android:layout_marginLeft="8dp"
-	        android:contentDescription="TODO" />
+	        android:contentDescription="Weather header logo" />
             <!--android:src="@drawable/wetter_icon1"-->
 
         <LinearLayout
@@ -72,7 +72,7 @@
             android:layout_toRightOf="@+id/weatherIcon"
             android:layout_centerVertical="true"
             android:orientation="vertical"
-            >
+            android:layout_toEndOf="@+id/weatherIcon">
             
             <TextView
                 android:id="@+id/weatherDayOfWeek"

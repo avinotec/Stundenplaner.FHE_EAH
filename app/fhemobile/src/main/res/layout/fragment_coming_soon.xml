@@ -13,10 +13,10 @@ android:layout_height="wrap_content"
         android:gravity="center"
         android:rotation="15"
         android:text="COMING\nSOON"
-        android:lineHeight="80dp"
+        android:lineHeight="80sp"
 
         android:textColor="@color/design_default_color_secondary_variant"
-        android:textSize="60dp"
+        android:textSize="60sp"
         />
 
 

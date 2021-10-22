@@ -33,7 +33,7 @@
             android:id="@+id/imageView"
             android:src="@drawable/th_maps"
             android:scaleType="centerCrop"
-	        android:contentDescription="TODO" />
+	        android:contentDescription="Maps Background Logo" />
 
         <ListView
             android:id="@+id/mapsChoiceList"

@@ -57,7 +57,9 @@
         android:layout_alignParentLeft="true"
         android:text="Sets:"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:visibility="visible" />
+        android:visibility="visible"
+	    android:layout_marginStart="16dp"
+	    android:layout_alignParentStart="true" />
     <TextView
         android:id="@+id/tvStudyGroupTitle"
         android:layout_width="wrap_content"
@@ -70,7 +72,10 @@
 
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:visibility="visible" />
+        android:visibility="visible"
+	    android:layout_toEndOf="@id/tvStudyGroupLabel"
+	    android:layout_toStartOf="@+id/ibAddLesson"
+	    android:layout_marginStart="16dp" />
 
     <TextView
         android:id="@+id/tvLessonTime"
@@ -81,7 +86,8 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+	    android:layout_marginStart="16dp" />
 
     <TextView
         android:id="@+id/tvRoom"
@@ -94,7 +100,8 @@
         android:layout_toLeftOf="@id/ibAddLesson"
         android:layout_toEndOf="@+id/tvLessonTime"
         android:layout_toRightOf="@+id/tvLessonTime"
-        android:text="TextView" />
+        android:text="TextView"
+	    android:layout_toStartOf="@id/ibAddLesson" />
 
 
 
