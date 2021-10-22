@@ -137,5 +137,6 @@
     <string name="text_view_explanation_navigation_description">Wähle eine Raumnummer oder eine Person aus oder gib die Raumnummer direkt ein, zu der du navigiert werden möchtest. Dann bestimme deine aktuelle Position wie oben beschrieben.</string>
     <string name="text_view_oder">oder</string>
     <string name="role">Aufgabe</string>
+	<string name="today">Heute</string>
 
 </resources>

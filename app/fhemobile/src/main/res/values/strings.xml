@@ -137,7 +137,7 @@
     <string name="text_view_oder">or</string>
     <string name="maps_up" >One floor up</string>
     <string name="maps_down" >One floor down</string>
-
+	<string name="today">Today</string>
 
 
 </resources>

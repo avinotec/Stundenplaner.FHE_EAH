@@ -54,7 +54,7 @@ public class TimeTableWeekView extends LinearLayout {
     }
 
     public void initializeView(final TimeTableWeekVo _Data) {
-        mHeading.setText(Main.getSafeString(R.string.timetable_week) + " " + _Data.getWeekInYear());
+        mHeading.setText(Main.getSafeString(R.string.timetable_week) + " " + _Data.getWeekInYear()); // $NON-NLS
         buildListEntries(_Data);
         calculateWeekRange(_Data);
 
@@ -82,7 +82,7 @@ public class TimeTableWeekView extends LinearLayout {
         final Date endDate = calendar.getTime();
         final String endDaString = formatter.format(endDate);
 
-        mWeekRange.setText(startDateInStr + " – " + endDaString);
+        mWeekRange.setText(startDateInStr + " – " + endDaString); // $NON-NLS
     }
 
     private void buildListEntries(final TimeTableWeekVo _Data) {

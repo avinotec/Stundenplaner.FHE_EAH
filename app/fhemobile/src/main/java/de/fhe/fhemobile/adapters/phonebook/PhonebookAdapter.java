@@ -85,10 +85,10 @@ public class PhonebookAdapter extends BaseAdapter {
         final EmployeeVo employee = mListElements.get(position);
         final String title = employee.getTitle();
         if(title.length() == 0) {
-            viewHolder.mFullName.setText(employee.getFirstName() + " " + employee.getLastName());
+            viewHolder.mFullName.setText(employee.getFirstName() + " " + employee.getLastName()); // $NON-NLS
         }
         else {
-            viewHolder.mFullName.setText(title + " " + employee.getFirstName() + " " + employee.getLastName());
+            viewHolder.mFullName.setText(title + " " + employee.getFirstName() + " " + employee.getLastName()); // $NON-NLS
         }
         viewHolder.mRoom.setText(employee.getRoom());
         viewHolder.mDivision.setText(employee.getDivision());
