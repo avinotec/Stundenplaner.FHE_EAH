@@ -24,6 +24,7 @@ import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -53,7 +54,8 @@ public class CalendarAdapter extends BaseAdapter {
 		return position;
 	}
 
-	private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+	//private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+	private final static DateFormat sdf = SimpleDateFormat.getDateInstance();
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {

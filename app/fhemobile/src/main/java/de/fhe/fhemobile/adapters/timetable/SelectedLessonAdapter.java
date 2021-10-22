@@ -27,6 +27,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -179,9 +180,10 @@ public class SelectedLessonAdapter extends BaseAdapter {
 		}
 
 		final TextView tvTime = (TextView) convertView.findViewById(R.id.tvLessonTime);
-		final Date df = new java.util.Date(currentItem.getEvent().getStartDate());
-		final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
-		final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(df);
+		final Date dateStartDate = new java.util.Date(currentItem.getEvent().getStartDate());
+		//final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
+		final String date = sdf.format(dateStartDate);
+		final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(dateStartDate);
 		tvTime.setText(dayOfWeek + ", " + date + "  "
 				+ currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime());
 
@@ -190,4 +192,6 @@ public class SelectedLessonAdapter extends BaseAdapter {
 
 		return convertView;
 	}
+
+	private static final DateFormat sdf = SimpleDateFormat.getDateInstance();
 }
