@@ -46,6 +46,6 @@
         android:layout_toRightOf="@+id/drawerSelectedItem"
         android:layout_marginLeft="@dimen/list_item_horizontal_padding"
         android:layout_marginRight="@dimen/list_item_horizontal_padding"
-        />
+        android:layout_toEndOf="@+id/drawerSelectedItem" />
 
 </RelativeLayout>

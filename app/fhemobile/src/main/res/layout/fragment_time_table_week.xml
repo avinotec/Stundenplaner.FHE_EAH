@@ -48,7 +48,8 @@
             android:layout_alignParentBottom="true"
             android:text="Heading"
             android:textColor="@color/list_header_text"
-            android:textSize="@dimen/abc_text_size_small_material" />
+            android:textSize="@dimen/abc_text_size_small_material"
+	        android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 

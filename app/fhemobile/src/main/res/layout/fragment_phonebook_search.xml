@@ -68,7 +68,8 @@
                         android:ems="10"
                         android:hint="@string/phonebook_firstname"
                         android:textColor="@color/primary_color"
-                        android:autofillHints="" />
+                        android:autofillHints=""
+                        android:layout_marginStart="5dp" />
                     
                 </de.fhe.fhemobile.widgets.FloatLabelLayout>
 
@@ -88,7 +89,8 @@
                         android:ems="10"
                         android:hint="@string/phonebook_lastname"
                         android:textColor="@color/primary_color"
-	                    android:autofillHints="" />
+	                    android:autofillHints=""
+                        android:layout_marginStart="5dp" />
                 </de.fhe.fhemobile.widgets.FloatLabelLayout>
 
                 <Button
