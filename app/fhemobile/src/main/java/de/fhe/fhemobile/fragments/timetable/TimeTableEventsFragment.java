@@ -109,18 +109,22 @@ public class TimeTableEventsFragment extends FeatureFragment {
 	//onOptionsItemSelected-------------------------------------------------------------------------
 	@Override
 	public boolean onOptionsItemSelected(MenuItem _item) {
-		switch (_item.getItemId()) {
-			case R.id.action_reset_selection:
-				TimeTableSettings.saveTimeTableSelection(null);
+        /* Checks use of resource IDs in places requiring constants
+            Avoid the usage of resource IDs where constant expressions are required.
+            A future version of the Android Gradle Plugin will generate R classes with
+            non-constant IDs in order to improve the performance of incremental compilation.
+            Issue id: NonConstantResourceId
+         */
+		if (_item.getItemId() == R.id.action_reset_selection) {
+			TimeTableSettings.saveTimeTableSelection(null);
 
-				((MainActivity) getActivity()).changeFragment(TimeTableFragment.newInstance(), false);
+			((MainActivity) getActivity()).changeFragment(TimeTableFragment.newInstance(), false);
 
-				return true;
+			return true;
 
 			//other item
-			default:
-				return super.onOptionsItemSelected(_item);
 		}
+		return super.onOptionsItemSelected(_item);
 	}
 
 	private final Callback<ArrayList<TimeTableWeekVo>> mCallback = new Callback<ArrayList<TimeTableWeekVo>>() {

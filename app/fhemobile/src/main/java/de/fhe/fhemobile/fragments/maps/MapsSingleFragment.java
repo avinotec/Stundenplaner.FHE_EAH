@@ -229,31 +229,36 @@ public class MapsSingleFragment extends Fragment {
     //onOptionsItemSelected-------------------------------------------------------------------------
     @Override
     public boolean onOptionsItemSelected(MenuItem _item) {
-        switch (_item.getItemId()) {
-            case R.id.action_up:
-                if (mCurrentMapIndex < mMap.getMaps().size() - 1) {
-                    mCurrentMapIndex++;
-                    MapVo map = mMap.getMaps().get(mCurrentMapIndex);
 
-                    mView.initializeView(map);
-                    updateActionBarTitle(map.getName());
-                }
-                return true;
+        /* Checks use of resource IDs in places requiring constants
+            Avoid the usage of resource IDs where constant expressions are required.
+            A future version of the Android Gradle Plugin will generate R classes with
+            non-constant IDs in order to improve the performance of incremental compilation.
+            Issue id: NonConstantResourceId
+         */
+        final int itemId = _item.getItemId();
+        if (itemId == R.id.action_up) {
+            if (mCurrentMapIndex < mMap.getMaps().size() - 1) {
+                mCurrentMapIndex++;
+                MapVo map = mMap.getMaps().get(mCurrentMapIndex);
 
-            case R.id.action_down:
-                if (mCurrentMapIndex > 0) {
-                    mCurrentMapIndex--;
-                    MapVo map = mMap.getMaps().get(mCurrentMapIndex);
+                mView.initializeView(map);
+                updateActionBarTitle(map.getName());
+            }
+            return true;
+        } else if (itemId == R.id.action_down) {
+            if (mCurrentMapIndex > 0) {
+                mCurrentMapIndex--;
+                MapVo map = mMap.getMaps().get(mCurrentMapIndex);
 
-                    mView.initializeView(map);
-                    updateActionBarTitle(map.getName());
-                }
-                return true;
+                mView.initializeView(map);
+                updateActionBarTitle(map.getName());
+            }
+            return true;
 
             //other item
-            default:
-                return super.onOptionsItemSelected(_item);
         }
+        return super.onOptionsItemSelected(_item);
     }
 
     @Override

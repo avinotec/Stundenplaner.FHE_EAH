@@ -103,17 +103,22 @@ public class MensaFoodFragment extends FeatureFragment {
     //onOptionsItemSelected-------------------------------------------------------------------------
     @Override
     public boolean onOptionsItemSelected(MenuItem _item) {
-        switch (_item.getItemId()) {
-            case R.id.action_settings:
-                Intent intent = new Intent(getActivity(), SettingsActivity.class);
-                intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, FeatureId.MENSA);
-                startActivity(intent);
-                return true;
+
+        /* Checks use of resource IDs in places requiring constants
+            Avoid the usage of resource IDs where constant expressions are required.
+            A future version of the Android Gradle Plugin will generate R classes with
+            non-constant IDs in order to improve the performance of incremental compilation.
+            Issue id: NonConstantResourceId
+         */
+        if (_item.getItemId() == R.id.action_settings) {
+            Intent intent = new Intent(getActivity(), SettingsActivity.class);
+            intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, FeatureId.MENSA);
+            startActivity(intent);
+            return true;
 
             //other item
-            default:
-                return super.onOptionsItemSelected(_item);
         }
+        return super.onOptionsItemSelected(_item);
     }
 
     @Override

@@ -89,22 +89,26 @@ public class SemesterDataFragment extends FeatureFragment {
     //onOptionsItemSelected-------------------------------------------------------------------------
     @Override
     public boolean onOptionsItemSelected(MenuItem _item) {
-        switch (_item.getItemId()) {
-            case R.id.action_settings:
-                if(null != mModel && null != mModel.getSemesterData()) {
-                    if (mModel.getChosenSemester() < mModel.getSemesterData().length - 1) {
-                        mModel.setChosenSemester(mModel.getChosenSemester() + 1);
-                    } else {
-                        mModel.setChosenSemester(0);
-                    }
+        /* Checks use of resource IDs in places requiring constants
+            Avoid the usage of resource IDs where constant expressions are required.
+            A future version of the Android Gradle Plugin will generate R classes with
+            non-constant IDs in order to improve the performance of incremental compilation.
+            Issue id: NonConstantResourceId
+         */
+        if (_item.getItemId() == R.id.action_settings) {
+            if (null != mModel && null != mModel.getSemesterData()) {
+                if (mModel.getChosenSemester() < mModel.getSemesterData().length - 1) {
+                    mModel.setChosenSemester(mModel.getChosenSemester() + 1);
+                } else {
+                    mModel.setChosenSemester(0);
                 }
+            }
 
-                return true;
+            return true;
 
             //other item
-            default:
-                return super.onOptionsItemSelected(_item);
         }
+        return super.onOptionsItemSelected(_item);
     }
 
     @Override
