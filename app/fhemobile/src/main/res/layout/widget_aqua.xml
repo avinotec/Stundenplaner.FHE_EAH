@@ -27,6 +27,6 @@
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:src="@drawable/cafe_aqua_closed"
-	    android:contentDescription="TODO" />
+	    android:contentDescription="Background Logo" />
 
 </RelativeLayout>

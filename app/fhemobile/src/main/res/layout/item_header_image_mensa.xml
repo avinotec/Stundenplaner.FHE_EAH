@@ -25,6 +25,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/header_image_height"
         android:scaleType="centerCrop"
-	    android:contentDescription="TODO" />
+	    android:contentDescription="Background Logo" />
 
 </RelativeLayout>

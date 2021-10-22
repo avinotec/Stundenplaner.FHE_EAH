@@ -102,6 +102,7 @@
     android:layout_below="@+id/baseActivityTabHost"
     android:background="@drawable/shadow"
     android:visibility="gone"
-    android:contentDescription="TODO" />
+    android:contentDescription="baseActivityTabHostBackground"
+    />
 
 </RelativeLayout>

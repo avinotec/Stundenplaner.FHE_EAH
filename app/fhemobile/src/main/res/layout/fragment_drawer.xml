@@ -27,7 +27,8 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/drawer_image_height"
         android:layout_marginHorizontal="20dp"
-        android:src="@drawable/drawer_bg" />
+        android:src="@drawable/drawer_bg"
+        android:contentDescription="EAH Logo" />
 
     <ListView 
         android:id="@+id/drawerListView"

@@ -34,7 +34,7 @@
             android:src="@drawable/th_impress"
             android:layout_alignParentTop="true"
             android:scaleType="centerCrop"
-	        android:contentDescription="TODO" />
+	        android:contentDescription="Impress Background Logo" />
 
         <WebView
             android:id="@+id/impressumWebView"
