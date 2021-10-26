@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Locale;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.views.timetable.MyTimeTableView;
+import de.fhe.fhemobile.views.mytimetable.MyTimeTableView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
 public class TimeTableLessonAdapter extends BaseAdapter {
@@ -221,6 +221,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 
 		return convertView;
 	}
+
 
 	private static final DateFormat sdf = SimpleDateFormat.getDateInstance();
 }

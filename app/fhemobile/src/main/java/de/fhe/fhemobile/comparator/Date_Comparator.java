@@ -28,19 +28,19 @@ import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
 public class Date_Comparator implements Comparator<FlatDataStructure> {
 	private static final String TAG = "LessonTitle_StudyGroupT";
-	private final static int GREATER=1;
-	private final static int EQUAL=0;
-	private final static int LESSER=-1;
+	private final static int GREATER = 1;
+	private final static int EQUAL = 0;
+	private final static int LESSER = -1;
 
 	@Override
 	public int compare(final FlatDataStructure o1, final FlatDataStructure o2) {
-		//SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
-		DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
+		//don't use SimpleDateFormat.getDateTimeInstance() because it includes seconds
 		Date lessonDate1 = null;
 		Date lessonDate2 = null;
 		try {
-			lessonDate1= sdf.parse(o1.getEvent().getDate()+" "+o1.getEvent().getStartTime());
-			lessonDate2= sdf.parse(o2.getEvent().getDate()+" "+o2.getEvent().getStartTime());
+			lessonDate1 = sdf.parse(o1.getEvent().getDate()+" "+o1.getEvent().getStartTime());
+			lessonDate2 = sdf.parse(o2.getEvent().getDate()+" "+o2.getEvent().getStartTime());
 		} catch (ParseException e) {
 			Log.e(TAG, "Fehler beim Parsen der Daten: ",e );
 			return EQUAL;

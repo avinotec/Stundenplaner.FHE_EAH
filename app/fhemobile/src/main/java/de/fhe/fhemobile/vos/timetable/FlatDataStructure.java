@@ -26,7 +26,6 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -117,7 +116,12 @@ public class FlatDataStructure implements Parcelable {
 		return changeEventTitle;
 	}
 
-
+	/**
+	 *
+	 * @param list
+	 * @param eventTitle
+	 * @return
+	 */
 	public static List<FlatDataStructure> queryGetEventsByEventTitle(final List<FlatDataStructure> list, final String eventTitle){
 
 		final List<FlatDataStructure> filteredEvents = new ArrayList<>();
@@ -129,6 +133,12 @@ public class FlatDataStructure implements Parcelable {
 		return filteredEvents;
 	}
 
+	/**
+	 *
+	 * @param list
+	 * @param studyGroupTitle
+	 * @return
+	 */
 	public static List<FlatDataStructure> queryGetEventsByStudyGroupTitle(final List<FlatDataStructure>list, final String studyGroupTitle){
 		final List<FlatDataStructure> filteredEvents = new ArrayList<>();
 		for(final FlatDataStructure event : list){
@@ -139,8 +149,8 @@ public class FlatDataStructure implements Parcelable {
 		return filteredEvents;
 	}
 
-	//private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
-	private final static DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
+	private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
+	//don't use SimpleDateFormat.getDateTimeInstance() because it includes seconds
 
 	public static List<FlatDataStructure> queryfutureEvents(final List<FlatDataStructure>list){
 
@@ -160,6 +170,12 @@ public class FlatDataStructure implements Parcelable {
 		return filteredEvents;
 	}
 
+	/**
+	 *
+	 * @param list
+	 * @param ID
+	 * @return
+	 */
 	public static final FlatDataStructure getEventByID (final List<FlatDataStructure> list, final String ID){
 		for ( final FlatDataStructure event:list ) {
 			if(ID.equals(event.getEvent().getUid())){
@@ -193,6 +209,12 @@ public class FlatDataStructure implements Parcelable {
 	]
 	 */
 
+	/**
+	 *
+	 * @param list
+	 * @param data
+	 * @return
+	 */
 	public final static boolean listContainsEvent(final List<FlatDataStructure> list, final FlatDataStructure data){
 		for(FlatDataStructure event:list){
 //			Log.d(TAG, "Eventvergleich1: "+event);
@@ -312,6 +334,10 @@ public class FlatDataStructure implements Parcelable {
 		this.sets = sets;
 	}
 
+	/**
+	 * adds all set names to one long string
+	 * @return
+	 */
 	public String getSetString(){
 		Collections.sort(sets);
 		StringBuilder combinedStudyGroups = new StringBuilder();

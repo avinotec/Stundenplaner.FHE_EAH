@@ -14,7 +14,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.views.timetable;
+package de.fhe.fhemobile.views.mytimetable;
 
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
@@ -39,7 +39,7 @@ import java.util.List;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
-import de.fhe.fhemobile.adapters.timetable.SelectedLessonAdapter;
+import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableSelectedLessonAdapter;
 import de.fhe.fhemobile.comparator.Date_Comparator;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableDialogFragment;
 import de.fhe.fhemobile.network.NetworkHandler;
@@ -50,12 +50,16 @@ import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
  */
 public class MyTimeTableView extends LinearLayout {
 
+    /** sortedLessons: Liste der selectedLessons sortiert für die Ausgabe im view, ausschließlich dafür benötigt. */
+    public static List<FlatDataStructure> sortedLessons = new ArrayList<>();
+    public static List<FlatDataStructure> selectedLessons = new ArrayList();
+
     private FragmentManager   mFragmentManager;
 
     private Button            mAddButton;
     private ListView          mLessonList;
 
-    private static SelectedLessonAdapter selectedLessonAdapter;
+    private static MyTimeTableSelectedLessonAdapter myTimeTableSelectedLessonAdapter;
 
     public MyTimeTableView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
@@ -82,8 +86,8 @@ public class MyTimeTableView extends LinearLayout {
                 createAddDialog();
             }
         });
-        selectedLessonAdapter = new SelectedLessonAdapter(Main.getAppContext());
-        mLessonList.setAdapter(selectedLessonAdapter);
+        myTimeTableSelectedLessonAdapter = new MyTimeTableSelectedLessonAdapter(Main.getAppContext());
+        mLessonList.setAdapter(myTimeTableSelectedLessonAdapter);
     }
 
 
@@ -95,7 +99,7 @@ public class MyTimeTableView extends LinearLayout {
 
 
     private static List<FlatDataStructure> getSortedList(Comparator<FlatDataStructure> comparator){
-        List<FlatDataStructure> sortedList = new ArrayList<FlatDataStructure>(MainActivity.selectedLessons);
+        List<FlatDataStructure> sortedList = new ArrayList<FlatDataStructure>(selectedLessons);
         if(sortedList.isEmpty() == false){
             Collections.sort(sortedList,comparator);
         }
@@ -117,17 +121,17 @@ public class MyTimeTableView extends LinearLayout {
 
     public static void setLessons(final List<FlatDataStructure> lessons){
         if(lessons == null){
-            MainActivity.selectedLessons = new ArrayList<>();
+            selectedLessons = new ArrayList<>();
         } else {
 
-            MainActivity.selectedLessons = lessons;
-            MainActivity.sortedLessons = getSortedList(new Date_Comparator());
+            selectedLessons = lessons;
+            sortedLessons = getSortedList(new Date_Comparator());
         }
 
     }
 
     public static List<FlatDataStructure> getLessons(){
-        return MainActivity.selectedLessons;
+        return selectedLessons;
     }
 
     /**
@@ -155,7 +159,7 @@ public class MyTimeTableView extends LinearLayout {
     		if(!exists) {
     		    boolean isSelected = false;
     		    //durchsuche selectedLessons nach dem eventInCompletedList
-                for (FlatDataStructure eventInSelectedList : MainActivity.selectedLessons) {
+                for (FlatDataStructure eventInSelectedList : selectedLessons) {
 
                     if (FlatDataStructure.cutEventTitle(eventInCompleteList.getEvent().getTitle())
                             .equals(FlatDataStructure.cutEventTitle(eventInSelectedList.getEvent().getTitle()))
@@ -179,11 +183,11 @@ public class MyTimeTableView extends LinearLayout {
        return negativeList;
     }
 
-    public static List<FlatDataStructure> getSortedLessons(){  return MainActivity.sortedLessons;  }
+    public static List<FlatDataStructure> getSortedLessons(){  return sortedLessons;  }
 
     public static void removeLesson(final FlatDataStructure lesson){
-        MainActivity.selectedLessons.remove(lesson);
-        MainActivity.sortedLessons = getSortedList(new Date_Comparator());
+        selectedLessons.remove(lesson);
+        sortedLessons = getSortedList(new Date_Comparator());
 
         final Gson gson = new Gson();
         final String json = correctUmlauts(gson.toJson(MyTimeTableView.getLessons()));
@@ -192,12 +196,12 @@ public class MyTimeTableView extends LinearLayout {
         editor.putString("list", json);
         editor.apply();
 
-        selectedLessonAdapter.notifyDataSetChanged();
+        myTimeTableSelectedLessonAdapter.notifyDataSetChanged();
     }
 
     public static void addLesson(final FlatDataStructure lesson){
-        MainActivity.selectedLessons.add(lesson);
-        MainActivity.sortedLessons = getSortedList(new Date_Comparator());
+        selectedLessons.add(lesson);
+        sortedLessons = getSortedList(new Date_Comparator());
 
         final Gson gson = new Gson();
         final String json = correctUmlauts(gson.toJson(MyTimeTableView.getLessons()));
@@ -205,7 +209,7 @@ public class MyTimeTableView extends LinearLayout {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("list", json);
         editor.apply();
-        selectedLessonAdapter.notifyDataSetChanged();
+        myTimeTableSelectedLessonAdapter.notifyDataSetChanged();
     }
 
     public static List<FlatDataStructure> loadSelectedList(final List<FlatDataStructure> selectedLessons){
