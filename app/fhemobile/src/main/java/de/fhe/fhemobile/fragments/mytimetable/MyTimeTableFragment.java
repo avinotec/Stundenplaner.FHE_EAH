@@ -38,6 +38,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.comparator.LessonTitle_StudyGroupTitle_Comparator;
 import de.fhe.fhemobile.fragments.FeatureFragment;
@@ -112,7 +113,7 @@ public class MyTimeTableFragment extends FeatureFragment {
 	@Override
 	public void onAttach(@NonNull Context context) {
 		super.onAttach(context);
-		if(MyTimeTableView.getLessons().isEmpty()==false){
+		if(!MyTimeTableView.getLessons().isEmpty()){
 			Collections.sort(MyTimeTableView.getLessons(),new LessonTitle_StudyGroupTitle_Comparator());
 		}
 	}
@@ -150,10 +151,10 @@ public class MyTimeTableFragment extends FeatureFragment {
 				@Override
 				public void onResponse(final Call<ResponseModel> call, final Response<ResponseModel> response) {
 
-					Assert.assertTrue(response != null);
+					if (BuildConfig.DEBUG) Assert.assertTrue(response != null);
 					//wieso assert und damit einen Absturz produzieren, wenn das einfach auftreten kann, wenn der Server nicht verfügbar ist?
 					//vorallem wenn darunter eh ein if das gleiche abfragt.
-//				Assert.assertTrue( response.body() != null );
+					//	Assert.assertTrue( response.body() != null );
 
 					//DEBUG
 					if (response.body() == null) {
@@ -181,7 +182,7 @@ public class MyTimeTableFragment extends FeatureFragment {
 
 					final Gson gson = new Gson();
 					final String json = gson.toJson(response.body());
-					Assert.assertTrue(!json.isEmpty());
+					if (BuildConfig.DEBUG) Assert.assertTrue(!json.isEmpty());
 
 					Log.d(TAG, "onResponse: " + response.raw().request().url());
 					Log.d(TAG, "onResponse code: " + response.code() + " geparsed: " + json);
