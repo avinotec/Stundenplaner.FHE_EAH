@@ -105,7 +105,7 @@ public class HeaderListView extends RelativeLayout {
         private int            prevH;
         private View           previous;
         private View           next;
-        private AlphaAnimation fadeOut                  = new AlphaAnimation(1f, 0f);
+        private final AlphaAnimation fadeOut                  = new AlphaAnimation(1f, 0f);
         private boolean        noHeaderUpToHeader       = false;
         private boolean        didScroll = false;
 
@@ -283,11 +283,12 @@ public class HeaderListView extends RelativeLayout {
             if (visibleItemCount == 0) {
                 return -1;
             }
-            int relativeIndex = 0, totalHeight = mListView.getChildAt(0).getTop();
-            for (relativeIndex = 0; relativeIndex < visibleItemCount && totalHeight < mHeader.getHeight(); relativeIndex++) {
+            int relativeIndex = 0;
+            int totalHeight = mListView.getChildAt(0).getTop();
+            for (; relativeIndex < visibleItemCount && totalHeight < mHeader.getHeight(); relativeIndex++) {
                 totalHeight += mListView.getChildAt(relativeIndex).getHeight();
             }
-            int realFVI = Math.max(firstVisibleItem, firstVisibleItem + relativeIndex - 1);
+            final int realFVI = Math.max(firstVisibleItem, firstVisibleItem + relativeIndex - 1);
             return realFVI;
         }
     }
