@@ -62,7 +62,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mBtnModifySchedule = (Button)       findViewById(R.id.btnMyTimetableModifySchedule);
+        Button mBtnModifySchedule = (Button) findViewById(R.id.btnMyTimetableModifySchedule);
         mCalendarList =     (ListView)      findViewById(R.id.lvCalendar);
 
         // "modify schedule"
@@ -149,7 +149,6 @@ public class MyTimeTableCalendarView extends LinearLayout {
     //deprecated: private final Context           mContext;
     private FragmentManager   mFragmentManager;
 
-    private Button mBtnModifySchedule;
     private ListView mCalendarList;
 
     private MyTimeTableCalendarAdapter myTimeTableCalendarAdapter;
