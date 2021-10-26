@@ -100,7 +100,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
     }
 
     private static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
-    //TODO private static final DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
+    //don't use SimpleDateFormat.getDateTimeInstance() because it includes seconds
 
     /**
      *    gehe durch die Liste, bis die Startzeit eines Events größer ist als die angegebene Zeit und nehme den vorherigen Event

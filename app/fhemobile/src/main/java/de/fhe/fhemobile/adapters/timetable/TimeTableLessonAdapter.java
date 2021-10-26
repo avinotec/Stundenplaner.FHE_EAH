@@ -222,6 +222,6 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 		return convertView;
 	}
 
-	//TODO getDateInstance
+
 	private static final DateFormat sdf = SimpleDateFormat.getDateInstance();
 }

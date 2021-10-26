@@ -150,7 +150,7 @@ public class FlatDataStructure implements Parcelable {
 	}
 
 	private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
-	//TODO private final static DateFormat sdf = SimpleDateFormat.getDateTimeInstance(); Format ergänzen
+	//don't use SimpleDateFormat.getDateTimeInstance() because it includes seconds
 
 	public static List<FlatDataStructure> queryfutureEvents(final List<FlatDataStructure>list){
 

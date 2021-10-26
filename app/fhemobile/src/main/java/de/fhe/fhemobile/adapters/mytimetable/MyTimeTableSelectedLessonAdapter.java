@@ -193,6 +193,6 @@ public class MyTimeTableSelectedLessonAdapter extends BaseAdapter {
 		return convertView;
 	}
 
-	//TODO getDateInstance
+
 	private static final DateFormat sdf = SimpleDateFormat.getDateInstance();
 }

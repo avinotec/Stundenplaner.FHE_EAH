@@ -24,6 +24,7 @@ import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -55,8 +56,8 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 		return position;
 	}
 
-	private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-	//TODO private final static DateFormat sdf = SimpleDateFormat.getDateInstance(); ergänzen
+	//private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+	private final static DateFormat sdf = SimpleDateFormat.getDateInstance();
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -107,6 +108,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 			lessonDay.setVisibility(View.GONE);
 			lessonDate.setVisibility(View.GONE);
 		}
+
 		if(sdf.format(df).compareTo(sdf.format(new Date())) == 0){
 			lessonDay.setText(context.getString(R.string.today) + "("+currentItem.getEvent().getDayOfWeek() + ")");
 		}
