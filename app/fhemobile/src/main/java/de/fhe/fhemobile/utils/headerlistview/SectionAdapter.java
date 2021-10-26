@@ -52,10 +52,10 @@ public abstract class SectionAdapter extends BaseAdapter implements OnItemClickL
         return 0;
     }
 
-    @Override
     /**
-     * Dispatched to call onRowItemClick
+     * Dispatched to call onItemClick
      */
+    @Override
     public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         onRowItemClick(parent, view, getSection(position), getRowInSection(position), id);
     }
@@ -64,10 +64,10 @@ public abstract class SectionAdapter extends BaseAdapter implements OnItemClickL
 
     }
 
-    @Override
     /**
      * Counts the amount of cells = headers + rows
      */
+    @Override
     public final int getCount() {
         if (mCount < 0) {
             mCount = numberOfCellsBeforeSection(numberOfSections());
@@ -80,10 +80,10 @@ public abstract class SectionAdapter extends BaseAdapter implements OnItemClickL
         return getCount() == 0;
     }
 
-    @Override
     /**
      * Dispatched to call getRowItem or getSectionHeaderItem
      */
+    @Override
     public final Object getItem(int position) {
         int section = getSection(position);
         if (isSectionHeader(position)) {
@@ -100,10 +100,10 @@ public abstract class SectionAdapter extends BaseAdapter implements OnItemClickL
         return position;
     }
 
-    @Override
     /**
      * Dispatched to call getRowView or getSectionHeaderView
      */
+    @Override
     public final View getView(int position, View convertView, ViewGroup parent) {
         int section = getSection(position);
         if (isSectionHeader(position)) {
@@ -178,10 +178,10 @@ public abstract class SectionAdapter extends BaseAdapter implements OnItemClickL
         super.notifyDataSetInvalidated();
     }
 
-    @Override
     /**
      * Dispatched to call getRowItemViewType or getSectionHeaderItemViewType
      */
+    @Override
     public final int getItemViewType(int position) {
         int section = getSection(position);
         if (isSectionHeader(position)) {
@@ -191,27 +191,20 @@ public abstract class SectionAdapter extends BaseAdapter implements OnItemClickL
         }
     }
 
-    @Override
     /**
      * Dispatched to call getRowViewTypeCount and getSectionHeaderViewTypeCount
      */
+    @Override
     public final int getViewTypeCount() {
         return getRowViewTypeCount() + getSectionHeaderViewTypeCount();
     }
 
-    @Override
     /**
      * By default, disables section headers
      */
+    @Override
     public boolean isEnabled(int position) {
-        return (disableHeaders() || !isSectionHeader(position)) && isRowEnabled(getSection(position), getRowInSection(position));
+        return (!isSectionHeader(position));
     }
 
-    public boolean disableHeaders() {
-        return false;
-    }
-
-    public boolean isRowEnabled(int section, int row) {
-        return true;
-    }
 }

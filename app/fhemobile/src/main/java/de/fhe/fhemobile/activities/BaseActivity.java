@@ -108,9 +108,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                // das zurück gehen mit dem Pfeil oben links
+        // das zurück gehen mit dem Pfeil oben links
+        if (item.getItemId() == android.R.id.home) {
         }
 
         return super.onOptionsItemSelected(item);

@@ -143,9 +143,9 @@ public class MyTimeTableView extends LinearLayout {
             boolean exists = false;
 
             //überspringe einzelne Vorlesungsevents wenn der Vorlesungstitel schon zur negativeList hinzugefügt wurde
-    		for(String[] eventdata : negativeList){
-    		    if(eventdata[0].equals(FlatDataStructure.cutEventTitle(eventInCompleteList.getEvent().getTitle()))
-                && eventdata[1].equals(eventInCompleteList.getStudyGroup().getTimeTableId())){
+    		for(String[] eventdata : negativeList) {
+    		    if(eventdata[0].equals( FlatDataStructure.cutEventTitle(eventInCompleteList.getEvent().getTitle()))
+                && eventdata[1].equals( eventInCompleteList.getStudyGroup().getTimeTableId())){
                     exists = true;
                     break;
                 }
