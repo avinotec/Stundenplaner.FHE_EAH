@@ -148,11 +148,11 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     }
     /**
      * @param weekList ist der Datensatz, der beim Request erhalten wird (alle events eines Sets)
-     * @param dataList ist die Liste, die am Ende alle Daten der verschiedenen Requests beinhaltet.
+     * @param _completeLessons ist die Liste, die am Ende alle Daten der verschiedenen Requests beinhaltet.
      * @param data ist der neue Datensatz, der in die Liste eingepflegt werden soll.
      **/
     private static void getAllEvents(final List<TimeTableWeekVo> weekList,
-                                     final List<FlatDataStructure> dataList ,
+                                     final List<FlatDataStructure> _completeLessons ,
                                      final FlatDataStructure data) {
         if (weekList != null) {
             try {
@@ -174,7 +174,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                             }
                             //durchsuche die komplette Liste nach der EventUID, des momentan hinzuzufügenden Event.
                         	FlatDataStructure exists = null;
-                        	for(FlatDataStructure savedEvent:dataList){
+                        	for ( FlatDataStructure savedEvent : _completeLessons ) {
 //		                        Log.d(TAG, "EventUID1: "+savedEvent.getEvent().getUid()+" EventUID2: "+eventList.get(eventIndex).getUid()+" setTitle: "+ savedEvent.getStudyGroup().getTitle()+" result: "+savedEvent.getEvent().getUid().equals(eventList.get(eventIndex).getUid()));
                         		if (savedEvent.getEvent().getUid().equals(eventList.get(eventIndex).getUid())){
                         			exists = savedEvent;
@@ -182,7 +182,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 		                        }
 	                        }
                             //Kommt die UID schon in der Liste vor, braucht der Event nicht hinzugefügt werden, da es ein Duplikat wäre.
-                        	if(exists == null){
+                        	if ( exists == null ) {
 		                        FlatDataStructure datacopy = data.copy();
 		                        datacopy
 				                        .setEventWeek(weekList.get(weekIndex))
@@ -200,7 +200,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
                                 datacopy.setAdded( found ) ;
 
-		                        dataList.add(datacopy);
+		                        _completeLessons.add(datacopy);
 	                        }
                             //Stattdessen füge bei dem existierenden Eintrag das Set des neuen Events hinzu.
                         	else{
@@ -369,10 +369,13 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
                                     getAllEvents(weekList, MyTimeTableView.getCompleteLessons(), this.getData());
 //                                    Log.d(TAG, "success: length"+courseEvents.size());
+
+
+                                    // es gibt zu jedem Request unterschiedliche Anzahl von Anforderungen und Antworten
+                                    // wir warten, bis alle Antworten eingetroffen sind.
                                     //Wir sortieren diesen letzten Stand der Liste
                                     //Wichtig: --requestCounter nicht requestCounter--! Hier muss erst decrementiert werden und dann der vergleich stattfinden.
                                     if( (requestCounter.decrementAndGet()) <= 0) {
-
 
                                         try {
                                             Collections.sort(MyTimeTableView.getCompleteLessons(),
