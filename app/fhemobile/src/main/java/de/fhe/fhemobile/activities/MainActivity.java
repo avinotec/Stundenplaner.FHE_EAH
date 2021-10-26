@@ -368,7 +368,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             // in all other cases: leave the app
 
             //if there is no previous page, close app
-            /**
+            /*
              * Zum Beenden der App muss zwei Mal zurück gedrückt werden.
              ' Damit wird vermieden, dass man aus Versehen beim Klicken auf "zurück" aus der App herausgeht.
              */
@@ -433,7 +433,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     private FeatureFragment mCurrentFragment;
 
     //private static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
-    private static DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
+    private static final DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
 
     //gehe durch die Liste, bis die Startzeit eines Events größer ist als die angegebene Zeit und nehme den vorherigen Event
     //und gebe den Index zurück.
