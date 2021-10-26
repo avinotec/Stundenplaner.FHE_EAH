@@ -18,7 +18,6 @@ package de.fhe.fhemobile.comparator;
 
 import android.util.Log;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
@@ -34,8 +33,8 @@ public class Date_Comparator implements Comparator<FlatDataStructure> {
 
 	@Override
 	public int compare(final FlatDataStructure o1, final FlatDataStructure o2) {
-		//SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
-		DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
+		//TODO DateFormat sdf = SimpleDateFormat.getDateTimeInstance(); Format ergänzen
 		Date lessonDate1 = null;
 		Date lessonDate2 = null;
 		try {

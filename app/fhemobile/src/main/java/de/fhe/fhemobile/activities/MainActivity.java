@@ -36,7 +36,6 @@ import com.google.gson.Gson;
 
 import org.junit.Assert;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -432,8 +431,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     private int             mCurrentFragmentId = -1;
     private FeatureFragment mCurrentFragment;
 
-    //private static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
-    private static final DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
+    private static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
+    //TODO private static final DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
 
     //gehe durch die Liste, bis die Startzeit eines Events größer ist als die angegebene Zeit und nehme den vorherigen Event
     //und gebe den Index zurück.
@@ -447,7 +446,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             TimeTableEventVo event = sortedLessons.get(i).getEvent();
             Date now = new Date();
             try {
-                //lesson starts now or in the future
+//XXX                //lesson starts now or in the future
                 if(sdf.parse(event.getDate() + " " + event.getStartTime())
                         .compareTo(now) >= 0) {
                     //lesson already ended //todo:????

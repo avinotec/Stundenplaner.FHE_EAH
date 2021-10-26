@@ -193,5 +193,6 @@ public class SelectedLessonAdapter extends BaseAdapter {
 		return convertView;
 	}
 
+	//TODO getDateInstance
 	private static final DateFormat sdf = SimpleDateFormat.getDateInstance();
 }
