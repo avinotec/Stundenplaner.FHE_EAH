@@ -14,7 +14,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.views.timetable;
+package de.fhe.fhemobile.views.mytimetable;
 
 import android.content.Context;
 import android.util.AttributeSet;

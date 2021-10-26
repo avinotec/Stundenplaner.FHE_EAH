@@ -46,7 +46,7 @@ import de.fhe.fhemobile.models.timeTableChanges.RequestModel;
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.services.PushNotificationService;
-import de.fhe.fhemobile.views.timetable.MyTimeTableView;
+import de.fhe.fhemobile.views.mytimetable.MyTimeTableView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
 import retrofit2.Call;

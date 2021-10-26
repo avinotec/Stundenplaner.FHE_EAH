@@ -28,7 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.views.timetable.MyTimeTableView;
+import de.fhe.fhemobile.views.mytimetable.MyTimeTableView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
 public class MyTimeTableCalendarAdapter extends BaseAdapter {

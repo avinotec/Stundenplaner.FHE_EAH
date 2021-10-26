@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.timetable.TimeTableLessonAdapter;
@@ -48,7 +49,7 @@ import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.network.TimeTableCallback;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.timetable.AddLessonView;
-import de.fhe.fhemobile.views.timetable.MyTimeTableView;
+import de.fhe.fhemobile.views.mytimetable.MyTimeTableView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
 import de.fhe.fhemobile.vos.timetable.StudyGroupVo;
@@ -324,7 +325,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
         // es gibt zu jedem Request unterschiedliche Anzahl von Anforderungen und Antworten
         // wir warten, bis alle Antworten eingetroffen sind.
-        public volatile int requestCounter=0;
+        private volatile AtomicInteger requestCounter;
         @Override
         public void onSemesterChosen(String _GroupId) {
             //mView.toggleButtonEnabled(false);
@@ -370,7 +371,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 //                                    Log.d(TAG, "success: length"+courseEvents.size());
                                     //Wir sortieren diesen letzten Stand der Liste
                                     //Wichtig: --requestCounter nicht requestCounter--! Hier muss erst decrementiert werden und dann der vergleich stattfinden.
-                                    if( (--requestCounter) <= 0) {
+                                    if( (requestCounter.decrementAndGet()) <= 0) {
 
 
                                         try {
@@ -422,7 +423,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                         };
 
                         synchronized (this){proceedToTimetable(studyGroupVo.getTimeTableId(), callback);}
-                        requestCounter++;
+                        requestCounter.getAndIncrement();
                     }
                 }
             }

@@ -57,7 +57,7 @@ import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.feature.FeatureFragmentFactory;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
-import de.fhe.fhemobile.views.timetable.MyTimeTableView;
+import de.fhe.fhemobile.views.mytimetable.MyTimeTableView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -66,7 +66,6 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements DrawerFragment.NavigationDrawerCallbacks {
     private static final String TAG = "MainActivity";
 
-	public static List<FlatDataStructure> selectedLessons = new ArrayList();
     public static List<FlatDataStructure> completeLessons = new ArrayList<>();
     private final int CHANGEREASON_EDIT = 1;
     private final int CHANGEREASON_NEW = 3;

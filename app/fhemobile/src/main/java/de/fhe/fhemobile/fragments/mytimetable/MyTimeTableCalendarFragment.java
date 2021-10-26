@@ -40,8 +40,8 @@ import java.util.Locale;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.views.timetable.MyTimeTableCalendarView;
-import de.fhe.fhemobile.views.timetable.MyTimeTableView;
+import de.fhe.fhemobile.views.mytimetable.MyTimeTableCalendarView;
+import de.fhe.fhemobile.views.mytimetable.MyTimeTableView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
 public class MyTimeTableCalendarFragment extends FeatureFragment {
@@ -120,7 +120,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 							public void onClick(DialogInterface dialog, int which) {
 								//Stundenplan löschen (die Listen leer machen und aus den Preferences entfernen)
 								MyTimeTableView.sortedLessons.clear();
-								MainActivity.selectedLessons.clear();
+								MyTimeTableView.selectedLessons.clear();
 								MainActivity.completeLessons.clear();
 								sharedPreferences.edit()
 										.remove("list")
