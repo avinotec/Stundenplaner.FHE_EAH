@@ -14,7 +14,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.adapters.timetable;
+package de.fhe.fhemobile.adapters.mytimetable;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -37,11 +37,11 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.views.timetable.MyTimeTableView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
-public class SelectedLessonAdapter extends BaseAdapter {
-	private static final String TAG = "SelectedLessonAdapter";
+public class MyTimeTableSelectedLessonAdapter extends BaseAdapter {
+	private static final String TAG = "MyTimeTableSelectedLessonAdapter";
 	private final Context context;
 
-	public SelectedLessonAdapter(Context context) {
+	public MyTimeTableSelectedLessonAdapter(Context context) {
 		this.context=context;
 	}
 

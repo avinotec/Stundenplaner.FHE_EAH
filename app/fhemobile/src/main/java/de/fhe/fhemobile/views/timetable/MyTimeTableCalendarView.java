@@ -18,6 +18,7 @@ package de.fhe.fhemobile.views.timetable;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -27,11 +28,15 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.activities.MainActivity;
-import de.fhe.fhemobile.adapters.timetable.CalendarAdapter;
+import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableCalendarAdapter;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableDialogFragment;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableFragment;
+import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
 /**
  * Created by paul on 12.03.15.
@@ -47,6 +52,8 @@ public class MyTimeTableCalendarView extends LinearLayout {
     public MyTimeTableCalendarView(final Context context) {
         super(context);
     }
+
+
 
     public void initializeView(final FragmentManager _Manager) {
         mFragmentManager = _Manager;
@@ -80,16 +87,49 @@ public class MyTimeTableCalendarView extends LinearLayout {
         });
 
         //deprecated: calendarAdapter = new CalendarAdapter(mContext);
-        calendarAdapter = new CalendarAdapter( getContext() );
-        mCalendarList.setAdapter(calendarAdapter);
+        myTimeTableCalendarAdapter = new MyTimeTableCalendarAdapter( getContext() );
+        mCalendarList.setAdapter(myTimeTableCalendarAdapter);
     }
 
     // Springen auf den aktuellen Tag
     public void jumpToToday(){
-        final int currentDayIndex = MainActivity.getCurrentEventIndex();
+        final int currentDayIndex = getCurrentEventIndex();
         if(currentDayIndex >= 0){
             mCalendarList.setSelection(currentDayIndex);
         }
+    }
+
+    private static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
+    //TODO private static final DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
+
+    /**
+     *    gehe durch die Liste, bis die Startzeit eines Events größer ist als die angegebene Zeit und nehme den vorherigen Event
+     *    und gebe den Index zurück.
+     * @return
+     */
+    public static int getCurrentEventIndex(){
+
+        for(int i = 0; i < MyTimeTableView.sortedLessons.size(); i++){
+            TimeTableEventVo event = MyTimeTableView.sortedLessons.get(i).getEvent();
+            Date now = new Date();
+            try {
+                //lesson starts now or in the future
+                if(sdf.parse(event.getDate() + " " + event.getStartTime())
+                        .compareTo(now) >= 0) {
+                    //lesson already ended //todo:????
+                    if(sdf.parse(event.getDate() + " " + event.getEndTime())
+                            .compareTo(now) < 0) {
+                        return (i);
+                    }
+
+                    if(i == 0) return i;
+                    return (i - 1);
+                }
+            } catch (ParseException e) {
+                Log.e(TAG, "getCurrentEventIndex: ",e );
+            }
+        }
+        return -1;
     }
 
 
@@ -112,6 +152,6 @@ public class MyTimeTableCalendarView extends LinearLayout {
     private Button mBtnModifySchedule;
     private ListView mCalendarList;
 
-    private CalendarAdapter calendarAdapter;
+    private MyTimeTableCalendarAdapter myTimeTableCalendarAdapter;
 
 }

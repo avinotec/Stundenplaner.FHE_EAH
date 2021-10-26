@@ -119,7 +119,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 						.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
 								//Stundenplan löschen (die Listen leer machen und aus den Preferences entfernen)
-								MainActivity.sortedLessons.clear();
+								MyTimeTableView.sortedLessons.clear();
 								MainActivity.selectedLessons.clear();
 								MainActivity.completeLessons.clear();
 								sharedPreferences.edit()

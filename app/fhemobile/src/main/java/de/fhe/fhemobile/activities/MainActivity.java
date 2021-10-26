@@ -36,8 +36,6 @@ import com.google.gson.Gson;
 
 import org.junit.Assert;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -61,7 +59,6 @@ import de.fhe.fhemobile.utils.feature.FeatureFragmentFactory;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
 import de.fhe.fhemobile.views.timetable.MyTimeTableView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
-import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -70,8 +67,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     private static final String TAG = "MainActivity";
 
 	public static List<FlatDataStructure> selectedLessons = new ArrayList();
-	public static List<FlatDataStructure> sortedLessons = new ArrayList<>();
-	public static List<FlatDataStructure> completeLessons = new ArrayList<>();
+    public static List<FlatDataStructure> completeLessons = new ArrayList<>();
     private final int CHANGEREASON_EDIT = 1;
     private final int CHANGEREASON_NEW = 3;
     private final int CHANGEREASON_DELETE = 2;
@@ -431,37 +427,5 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     private int             mCurrentFragmentId = -1;
     private FeatureFragment mCurrentFragment;
 
-    private static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
-    //TODO private static final DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
 
-    //gehe durch die Liste, bis die Startzeit eines Events größer ist als die angegebene Zeit und nehme den vorherigen Event
-    //und gebe den Index zurück.
-    /**
-     *
-     * @return
-     */
-    public static int getCurrentEventIndex(){
-
-        for(int i = 0; i < sortedLessons.size(); i++){
-            TimeTableEventVo event = sortedLessons.get(i).getEvent();
-            Date now = new Date();
-            try {
-//XXX                //lesson starts now or in the future
-                if(sdf.parse(event.getDate() + " " + event.getStartTime())
-                        .compareTo(now) >= 0) {
-                    //lesson already ended //todo:????
-                    if(sdf.parse(event.getDate() + " " + event.getEndTime())
-                            .compareTo(now) < 0) {
-                        return (i);
-                    }
-
-                    if(i == 0) return i;
-                    return (i - 1);
-                }
-            } catch (ParseException e) {
-                Log.e(TAG, "getCurrentEventIndex: ",e );
-            }
-        }
-        return -1;
-    }
 }
