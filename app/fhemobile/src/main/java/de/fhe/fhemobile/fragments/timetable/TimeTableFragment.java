@@ -33,7 +33,7 @@ import de.fhe.fhemobile.utils.TimeTableSettings;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.timetable.TimeTableView;
 import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
-import de.fhe.fhemobile.vos.timetable.TermsVo;
+import de.fhe.fhemobile.vos.timetable.SemesterVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -117,9 +117,9 @@ public class TimeTableFragment extends FeatureFragment {
                     mChosenCourse = courseVo;
 
                     // Check if course has any terms available
-                    if (courseVo.getTerms() != null) {
+                    if (courseVo.getSemesters() != null) {
                         errorOccurred = false;
-                        mView.setTermsItems(courseVo.getTerms());
+                        mView.setTermsItems(courseVo.getSemesters());
                     }
                     else {
                         // No terms are available
@@ -151,10 +151,10 @@ public class TimeTableFragment extends FeatureFragment {
 
             mChosenTerm = null;
 
-            for (TermsVo termsVo : mChosenCourse.getTerms()) {
-                if (termsVo.getId().equals(_GroupId)) {
-                    mChosenTerm = termsVo;
-                    mView.setStudyGroupItems(termsVo.getStudyGroups());
+            for (SemesterVo semesterVo : mChosenCourse.getSemesters()) {
+                if (semesterVo.getId().equals(_GroupId)) {
+                    mChosenTerm = semesterVo;
+                    mView.setStudyGroupItems(semesterVo.getStudyGroups());
                 }
             }
         }
@@ -202,6 +202,6 @@ public class TimeTableFragment extends FeatureFragment {
 
     private TimeTableResponse mResponse;
     private StudyCourseVo     mChosenCourse;
-    private TermsVo           mChosenTerm;
+    private SemesterVo mChosenTerm;
     private String            mChosenTimetableId;
 }

@@ -53,7 +53,7 @@ import de.fhe.fhemobile.views.mytimetable.MyTimeTableView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
 import de.fhe.fhemobile.vos.timetable.StudyGroupVo;
-import de.fhe.fhemobile.vos.timetable.TermsVo;
+import de.fhe.fhemobile.vos.timetable.SemesterVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableDayVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
@@ -72,7 +72,7 @@ import retrofit2.Response;
 public class MyTimeTableDialogFragment extends DialogFragment {
 
 
-    public static final String PREFS_CHOSEN_TERM = "_ChosenTerm";
+    public static final String PREFS_CHOSEN_SEMESTER = "_ChosenTerm";
     public static final String PREFS_CHOSEN_COURSE = "_ChosenCourse";
     public static final String PREFS_CHOSEN_RESULT = "_Result";
 
@@ -112,7 +112,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
 
         mChosenCourse       = null;
-        mChosenTerm         = null;
+        mChosenSemester = null;
 
 //        if (getArguments() != null) {
 //
@@ -181,7 +181,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                         			break;
 		                        }
 	                        }
-                            //Kommt die UID schon in der Liste vor, braucht der Event nicht hinzugefügt werden, da es ein Duplikat wäre.
+                            // Kommt die UID noch nicht in der Liste vor, hinzufügen
                         	if ( exists == null ) {
 		                        FlatDataStructure datacopy = data.copy();
 		                        datacopy
@@ -204,6 +204,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 	                        }
                             //Stattdessen füge bei dem existierenden Eintrag das Set des neuen Events hinzu.
                         	else{
+                                //Kommt die UID schon in der Liste vor, braucht der Event nicht hinzugefügt werden, da es ein Duplikat wäre.
                         	    exists.getSets().add(data.getStudyGroup().getTitle().split("\\.")[1]);
 	                        }
                         }
@@ -217,8 +218,9 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     }
 
 
-
-    //Setzt die beim letzten mal ausgewählten Werte und die letzen Suchergebnisse.
+    /** Setzt die beim letzten mal ausgewählten Werte und die letzen Suchergebnisse.
+     *
+     */
     private void initSelectionSite(){
         final Gson gson = new Gson();
 
@@ -229,17 +231,17 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             final String chosenCourseJson = sharedPreferences.getString(PREFS_CHOSEN_COURSE,"");
             final StudyCourseVo chosenCourse = gson.fromJson(chosenCourseJson,StudyCourseVo.class);
             mChosenCourse = chosenCourse;
-            mView.setTermsItems(mChosenCourse.getTerms());
+            mView.setSemesterItems(mChosenCourse.getSemesters());
             mView.setSelectedGroupText(chosenCourse.getTitle());
         }
 
-        if(sharedPreferences.contains(PREFS_CHOSEN_TERM)) {
-            final String chosenTermJson = sharedPreferences.getString(PREFS_CHOSEN_TERM, "");
-            final TermsVo chosenTerm = gson.fromJson(chosenTermJson, TermsVo.class);
-            mChosenTerm = chosenTerm;
-            mView.setSelectedTermText(chosenTerm.getTitle());
-            mView.toggleTermsPickerVisibility(true);
-            mView.setmTermsPickerEnabled(true);
+        if(sharedPreferences.contains(PREFS_CHOSEN_SEMESTER)) {
+            final String chosenSemesterJson = sharedPreferences.getString(PREFS_CHOSEN_SEMESTER, "");
+            final SemesterVo chosenSemester = gson.fromJson(chosenSemesterJson, SemesterVo.class);
+            mChosenSemester = chosenSemester;
+            mView.setSelectedSemesterText(chosenSemester.getTitle());
+            mView.toggleSemesterPickerVisibility(true);
+            mView.setmSemesterPickerEnabled(true);
 
 
             if (sharedPreferences.contains(PREFS_CHOSEN_RESULT)) {
@@ -267,16 +269,19 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         }
     }
 
+    /**
+     *
+     */
     private final AddLessonView.IViewListener mViewListener = new AddLessonView.IViewListener() {
 
         // Auswahl des Semesters (Term)
         // löschen aller Listen und aus der DropDownliste auswählen lassen
         @Override
-        public void onStudyCourseChosen(final String _TermId ) {
+        public void onStudyCourseChosen(final String _SemesterId ) {
 
-            Log.d(TAG, "onTermChosen: "+_TermId+" ausgewählt");
+            Log.d(TAG, "onTermChosen: "+_SemesterId+" ausgewählt");
             //TODO ???
-            // mView.resetTermsPicker();
+            // mView.resetSemesterPicker();
             //mView.toggleLessonListVisibility(false);
 
             MyTimeTableView.getCompleteLessons().clear();
@@ -284,22 +289,22 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             //timeTableLessonAdapter.notifyDataSetChanged();
 
             mChosenCourse = null;
-            mChosenTerm   = null;
+            mChosenSemester = null;
 
             boolean errorOccurred = false;
 
             for (StudyCourseVo courseVo : mResponse.getStudyCourses()) {
-                if (courseVo != null && courseVo.getId() != null && courseVo.getId().equals(_TermId)) {
+                if (courseVo != null && courseVo.getId() != null && courseVo.getId().equals(_SemesterId)) {
                     mChosenCourse = courseVo;
                     Gson gson = new Gson();
                     String chosenCourseJson = correctUmlauts(gson.toJson(courseVo));
 
                     // Check if course has any terms available
-                    if (courseVo.getTerms() != null) {
+                    if (courseVo.getSemesters() != null) {
                         errorOccurred = false;
                         editor.putString(PREFS_CHOSEN_COURSE, chosenCourseJson);
                         editor.commit();
-                        mView.setTermsItems(courseVo.getTerms());
+                        mView.setSemesterItems(courseVo.getSemesters());
                     }
                     else {
                         // No terms are available
@@ -314,18 +319,24 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             }
 
             if (errorOccurred) {
-                mView.toggleTermsPickerVisibility(false);
+                mView.toggleSemesterPickerVisibility(false);
                 Utils.showToast(R.string.timetable_error);
             }
             else {
-                mView.toggleTermsPickerVisibility(true);
+                mView.toggleSemesterPickerVisibility(true);
             }
 
         }
 
-        // es gibt zu jedem Request unterschiedliche Anzahl von Anforderungen und Antworten
-        // wir warten, bis alle Antworten eingetroffen sind.
+        /** es gibt zu EINEM Request unterschiedliche Anzahl von Anforderungen und Antworten
+         *  wir warten, bis alle Antworten eingetroffen sind.
+         */
         private volatile AtomicInteger requestCounter;
+
+        /**
+         *
+         * @param _GroupId
+         */
         @Override
         public void onSemesterChosen(String _GroupId) {
             //mView.toggleButtonEnabled(false);
@@ -335,21 +346,21 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
             // mView.resetGroupsPicker();
 
-            mChosenTerm = null;
+            mChosenSemester = null;
 
-            for (TermsVo termsVo : mChosenCourse.getTerms()) {
-                if (termsVo.getId().equals(_GroupId)) {
+            for (SemesterVo semesterVo : mChosenCourse.getSemesters()) {
+                if (semesterVo.getId().equals(_GroupId)) {
 
-                    mChosenTerm = termsVo;
+                    mChosenSemester = semesterVo;
                     final Gson gson = new Gson();
-                    final String chosenTermJson = correctUmlauts(gson.toJson(mChosenTerm));
-                    editor.putString(PREFS_CHOSEN_TERM,chosenTermJson);
+                    final String chosenSemesterJson = correctUmlauts(gson.toJson(mChosenSemester));
+                    editor.putString(PREFS_CHOSEN_SEMESTER,chosenSemesterJson);
                     editor.commit();
 
-                    for (StudyGroupVo studyGroupVo : mChosenTerm.getStudyGroups()) {
+                    for (StudyGroupVo studyGroupVo : mChosenSemester.getStudyGroups()) {
                         FlatDataStructure data = new FlatDataStructure()
                                 .setCourse(mChosenCourse)
-                                .setSemester(mChosenTerm)
+                                .setSemester(mChosenSemester)
                                 .setStudyGroup(studyGroupVo);
 
 
@@ -408,9 +419,9 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                         mView.toggleLessonListVisibility(true);
                                         timeTableLessonAdapter.notifyDataSetChanged();
                                         final Gson gson = new Gson();
-                                        final String chosenTermJson = correctUmlauts(
+                                        final String chosenSemesterJson = correctUmlauts(
                                                 gson.toJson(MyTimeTableView.getCompleteLessons()));
-                                        editor.putString(PREFS_CHOSEN_RESULT, chosenTermJson);
+                                        editor.putString(PREFS_CHOSEN_RESULT, chosenSemesterJson);
                                         editor.commit();
 
                                     }
@@ -510,6 +521,6 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     private AddLessonView     mView;
     private TimeTableResponse mResponse;
     private StudyCourseVo     mChosenCourse;
-    private TermsVo           mChosenTerm;
+    private SemesterVo mChosenSemester;
 	private TimeTableLessonAdapter timeTableLessonAdapter;
 }

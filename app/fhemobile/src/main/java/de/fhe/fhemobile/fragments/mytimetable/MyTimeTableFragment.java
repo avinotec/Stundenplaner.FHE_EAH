@@ -48,7 +48,6 @@ import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
-import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,9 +60,7 @@ import retrofit2.Response;
 public class MyTimeTableFragment extends FeatureFragment {
 	public static final String TAG = "MyTimeTableFragment";
 
-	private MyTimeTableView     mView;
-
-	private TimeTableResponse mResponse;
+	//unused: private TimeTableResponse mResponse;
 
 	/**
 	 * Use this factory method to create a new instance of
@@ -95,7 +92,7 @@ public class MyTimeTableFragment extends FeatureFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		mView = (MyTimeTableView) inflater.inflate(R.layout.fragment_my_time_table, container, false);
+		MyTimeTableView mView = (MyTimeTableView) inflater.inflate(R.layout.fragment_my_time_table, container, false);
 		mView.initializeView(getChildFragmentManager());
 
 		String emptyText = getResources().getString(R.string.my_time_table_empty_text_edit);
@@ -118,9 +115,9 @@ public class MyTimeTableFragment extends FeatureFragment {
 		}
 	}
 
-	private final int CHANGEREASON_EDIT = 1;
-	private final int CHANGEREASON_NEW = 3;
-	private final int CHANGEREASON_DELETE = 2;
+	private final static int CHANGEREASON_EDIT = 1;
+	private final static int CHANGEREASON_NEW = 3;
+	private final static int CHANGEREASON_DELETE = 2;
 
 	@Override
 	public void onDetach() {

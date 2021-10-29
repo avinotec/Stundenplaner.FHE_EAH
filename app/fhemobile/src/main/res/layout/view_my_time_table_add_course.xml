@@ -49,8 +49,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"/>
 
-            <de.fhe.fhemobile.widgets.picker.TermsPicker
-                android:id="@+id/add_timetableTermsPicker"
+            <de.fhe.fhemobile.widgets.picker.SemesterPicker
+                android:id="@+id/add_timetableSemesterPicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/list_single_item_height"

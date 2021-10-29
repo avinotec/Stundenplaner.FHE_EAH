@@ -97,7 +97,11 @@ public class MyTimeTableView extends LinearLayout {
         myTimeTableDialogFragment.show(fm, "fragment_edit_name");
     }
 
-
+    /**
+     * returns the "selectedLessons" in sorted order
+     * @param comparator
+     * @return
+     */
     private static List<FlatDataStructure> getSortedList(Comparator<FlatDataStructure> comparator){
         List<FlatDataStructure> sortedList = new ArrayList<FlatDataStructure>(selectedLessons);
         if(sortedList.isEmpty() == false){
@@ -106,15 +110,22 @@ public class MyTimeTableView extends LinearLayout {
         return sortedList;
     }
 
-
-    public static void setCompleteLessons(List<FlatDataStructure> lessons){
-        if(lessons == null){
+    /**
+     * Stores the list of completeLessons
+     * @param completeLessons
+     */
+    public static void setCompleteLessons(List<FlatDataStructure> completeLessons){
+        if(completeLessons == null){
             MainActivity.completeLessons = new ArrayList<>();
         } else {
-            MainActivity.completeLessons = lessons;
+            MainActivity.completeLessons = completeLessons;
         }
     }
 
+    /**
+     * returns the complete lessons list
+     * @return
+     */
     public static List<FlatDataStructure> getCompleteLessons(){
         return MainActivity.completeLessons;
     }
@@ -183,8 +194,16 @@ public class MyTimeTableView extends LinearLayout {
        return negativeList;
     }
 
+    /**
+     *
+     * @return sorted Lessons list
+     */
     public static List<FlatDataStructure> getSortedLessons(){  return sortedLessons;  }
 
+    /**
+     *
+     * @param lesson
+     */
     public static void removeLesson(final FlatDataStructure lesson){
         selectedLessons.remove(lesson);
         sortedLessons = getSortedList(new Date_Comparator());
@@ -199,6 +218,10 @@ public class MyTimeTableView extends LinearLayout {
         myTimeTableSelectedLessonAdapter.notifyDataSetChanged();
     }
 
+    /**
+     *
+     * @param lesson
+     */
     public static void addLesson(final FlatDataStructure lesson){
         selectedLessons.add(lesson);
         sortedLessons = getSortedList(new Date_Comparator());
@@ -212,6 +235,11 @@ public class MyTimeTableView extends LinearLayout {
         myTimeTableSelectedLessonAdapter.notifyDataSetChanged();
     }
 
+    /**
+     *
+     * @param selectedLessons
+     * @return
+     */
     public static List<FlatDataStructure> loadSelectedList(final List<FlatDataStructure> selectedLessons){
 
         final List<FlatDataStructure> completeSelectedList = new ArrayList();
@@ -226,7 +254,12 @@ public class MyTimeTableView extends LinearLayout {
 
         return completeSelectedList;
     }
-    public void setEmptyText(String text){
+
+    /**
+     *
+     * @param text
+     */
+    public void setEmptyText(final String text){
         TextView emptyView = findViewById(R.id.emptyView);
         emptyView.setText(text);
         mLessonList.setEmptyView(emptyView);

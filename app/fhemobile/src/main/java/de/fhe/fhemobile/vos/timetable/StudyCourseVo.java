@@ -39,7 +39,7 @@ public class StudyCourseVo implements Parcelable {
     protected StudyCourseVo(Parcel in) {
         mId = in.readString();
         mTitle = correctUmlauts(in.readString());
-        mTerms = in.createTypedArrayList(TermsVo.CREATOR);
+        mTerms = in.createTypedArrayList(SemesterVo.CREATOR);
     }
 
     public static final Creator<StudyCourseVo> CREATOR = new Creator<StudyCourseVo>() {
@@ -70,11 +70,11 @@ public class StudyCourseVo implements Parcelable {
         mTitle = _title;
     }
 
-    public ArrayList<TermsVo> getTerms() {
+    public ArrayList<SemesterVo> getSemesters() {
         return mTerms;
     }
 
-    public void setTerms(ArrayList<TermsVo> _terms) {
+    public void setTerms(ArrayList<SemesterVo> _terms) {
         mTerms = _terms;
     }
     final static String BACHELOR_BEFORE="Bachelor: ";
@@ -105,7 +105,7 @@ public class StudyCourseVo implements Parcelable {
     private String              mTitle;
 
     @SerializedName("terms")
-    private ArrayList<TermsVo>  mTerms;
+    private ArrayList<SemesterVo>  mTerms;
 
     @Override
     public int describeContents() {

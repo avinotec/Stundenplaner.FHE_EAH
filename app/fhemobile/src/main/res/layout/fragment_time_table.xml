@@ -55,7 +55,7 @@
                     app:idpHeadline="@string/timetable_study_course"
                     />
 
-                <de.fhe.fhemobile.widgets.picker.TermsPicker
+                <de.fhe.fhemobile.widgets.picker.SemesterPicker
                     android:id="@+id/timetableTermsPicker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

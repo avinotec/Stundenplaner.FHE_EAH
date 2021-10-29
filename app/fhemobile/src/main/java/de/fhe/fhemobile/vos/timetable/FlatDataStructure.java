@@ -284,7 +284,7 @@ public class FlatDataStructure implements Parcelable {
 		this.course = course;
 	}
 
-	public final FlatDataStructure setSemester(final TermsVo semester) {
+	public final FlatDataStructure setSemester(final SemesterVo semester) {
 		this.semester = new FlatTerms();
 		this.semester.setId(semester.getId());
 		this.semester.setTitle(semester.getTitle());

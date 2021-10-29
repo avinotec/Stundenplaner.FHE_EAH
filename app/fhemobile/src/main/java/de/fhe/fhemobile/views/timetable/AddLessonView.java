@@ -31,9 +31,9 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.timetable.TimeTableLessonAdapter;
 import de.fhe.fhemobile.comparator.StudyCourseComperator;
 import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
-import de.fhe.fhemobile.vos.timetable.TermsVo;
+import de.fhe.fhemobile.vos.timetable.SemesterVo;
 import de.fhe.fhemobile.widgets.picker.StudyCoursePicker;
-import de.fhe.fhemobile.widgets.picker.TermsPicker;
+import de.fhe.fhemobile.widgets.picker.SemesterPicker;
 import de.fhe.fhemobile.widgets.picker.base.OnItemChosenListener;
 
 /**
@@ -54,15 +54,14 @@ public class AddLessonView extends LinearLayout {
     }
 
     public void initializeView(final FragmentManager _Manager) {
-        mFragmentManager = _Manager;
 
-        mStudyCoursePicker.setFragmentManager(mFragmentManager);
+        mStudyCoursePicker.setFragmentManager(_Manager);
         mStudyCoursePicker.toggleEnabled(false);
         mStudyCoursePicker.setOnItemChosenListener(mCourseListener);
 
-        mTermsPicker.setFragmentManager(mFragmentManager);
-        mTermsPicker.toggleEnabled(false);
-        mTermsPicker.setOnItemChosenListener(mTermsListener);
+        mSemesterPicker.setFragmentManager(_Manager);
+        mSemesterPicker.toggleEnabled(false);
+        mSemesterPicker.setOnItemChosenListener(mTermsListener);
 
     }
 
@@ -73,14 +72,14 @@ public class AddLessonView extends LinearLayout {
         mStudyCoursePicker.toggleEnabled(true);
     }
 
-    public void setTermsItems(final List<TermsVo> _Items) {
-        mTermsPicker.setItems(_Items);
-        mTermsPicker.toggleEnabled(true);
+    public void setSemesterItems(final List<SemesterVo> _Items) {
+        mSemesterPicker.setItems(_Items);
+        mSemesterPicker.toggleEnabled(true);
     }
 
 
-    public void toggleTermsPickerVisibility(final boolean _Visible) {
-        mTermsPicker.setVisibility(_Visible ? VISIBLE : GONE);
+    public void toggleSemesterPickerVisibility(final boolean _Visible) {
+        mSemesterPicker.setVisibility(_Visible ? VISIBLE : GONE);
     }
 
     public void toggleLessonListVisibility(final boolean _Visible){
@@ -92,12 +91,12 @@ public class AddLessonView extends LinearLayout {
     }
 
     // if study course changes, reset the Terms
-    public void resetTermsPicker() {
-        mTermsPicker.reset(true);
+    public void resetSemesterPicker() {
+        mSemesterPicker.reset(true);
     }
-    public void setmTermsPickerEnabled(boolean enabled){
+    public void setmSemesterPickerEnabled(boolean enabled){
 
-        mTermsPicker.toggleEnabled(enabled);
+        mSemesterPicker.toggleEnabled(enabled);
     }
 
 
@@ -107,7 +106,7 @@ public class AddLessonView extends LinearLayout {
         super.onFinishInflate();
 
         mStudyCoursePicker = (StudyCoursePicker) findViewById(R.id.add_timetableStudyCoursePicker);
-        mTermsPicker       = (TermsPicker)       findViewById(R.id.add_timetableTermsPicker);
+        mSemesterPicker = (SemesterPicker)       findViewById(R.id.add_timetableSemesterPicker);
 
         mLessonList        = (ListView)          findViewById(R.id.add_lvLessons);
     }
@@ -141,24 +140,23 @@ public class AddLessonView extends LinearLayout {
         void onSearchClicked();
     }
 
-    public void setSelectedTermText(String text){
-        mTermsPicker.setDisplayValue(text);
+    public void setSelectedSemesterText(String text){
+        mSemesterPicker.setDisplayValue(text);
     }
     public void setSelectedGroupText(String text){
         mStudyCoursePicker.setDisplayValue(text);
     }
 
-    public void setEmptyText(String text){
+    public void setEmptyText(final String text){
         TextView emptyView = new TextView( getContext() );
         emptyView.setText(text);
         mLessonList.setEmptyView(emptyView);
     }
 
-    private FragmentManager   mFragmentManager;
     private IViewListener     mViewListener;
 
     private StudyCoursePicker mStudyCoursePicker;
-    private TermsPicker       mTermsPicker;
+    private SemesterPicker mSemesterPicker;
     private ListView          mLessonList;
 
 

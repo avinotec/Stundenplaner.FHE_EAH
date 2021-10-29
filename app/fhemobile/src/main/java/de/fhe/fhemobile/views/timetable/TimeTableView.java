@@ -32,10 +32,10 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.comparator.StudyCourseComperator;
 import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
 import de.fhe.fhemobile.vos.timetable.StudyGroupVo;
-import de.fhe.fhemobile.vos.timetable.TermsVo;
+import de.fhe.fhemobile.vos.timetable.SemesterVo;
 import de.fhe.fhemobile.widgets.picker.StudyCoursePicker;
 import de.fhe.fhemobile.widgets.picker.StudyGroupPicker;
-import de.fhe.fhemobile.widgets.picker.TermsPicker;
+import de.fhe.fhemobile.widgets.picker.SemesterPicker;
 import de.fhe.fhemobile.widgets.picker.base.OnItemChosenListener;
 
 /**
@@ -64,9 +64,9 @@ public class TimeTableView extends LinearLayout {
         mStudyCoursePicker.toggleEnabled(false);
         mStudyCoursePicker.setOnItemChosenListener(mCourseListener);
 
-        mTermsPicker.setFragmentManager(mFragmentManager);
-        mTermsPicker.toggleEnabled(false);
-        mTermsPicker.setOnItemChosenListener(mTermsListener);
+        mSemesterPicker.setFragmentManager(mFragmentManager);
+        mSemesterPicker.toggleEnabled(false);
+        mSemesterPicker.setOnItemChosenListener(mTermsListener);
 
         mStudyGroupPicker.setFragmentManager(mFragmentManager);
         mStudyGroupPicker.toggleEnabled(false);
@@ -83,9 +83,9 @@ public class TimeTableView extends LinearLayout {
         mStudyCoursePicker.toggleEnabled(true);
     }
 
-    public void setTermsItems(final List<TermsVo> _Items) {
-        mTermsPicker.setItems(_Items);
-        mTermsPicker.toggleEnabled(true);
+    public void setTermsItems(final List<SemesterVo> _Items) {
+        mSemesterPicker.setItems(_Items);
+        mSemesterPicker.toggleEnabled(true);
     }
 
     public void setStudyGroupItems(final List<StudyGroupVo> _Items) {
@@ -94,7 +94,7 @@ public class TimeTableView extends LinearLayout {
     }
 
     public void toggleTermsPickerVisibility(final boolean _Visible) {
-        mTermsPicker.setVisibility(_Visible ? VISIBLE : GONE);
+        mSemesterPicker.setVisibility(_Visible ? VISIBLE : GONE);
     }
 
     public void toggleGroupsPickerVisibility(final boolean _Visible) {
@@ -102,7 +102,7 @@ public class TimeTableView extends LinearLayout {
     }
 
     public void resetTermsPicker() {
-        mTermsPicker.reset(true);
+        mSemesterPicker.reset(true);
     }
 
     public void resetGroupsPicker() {
@@ -132,7 +132,7 @@ public class TimeTableView extends LinearLayout {
         //Studiengang
         mStudyCoursePicker = (StudyCoursePicker) findViewById(R.id.timetableStudyCoursePicker);
         //Semester
-        mTermsPicker       = (TermsPicker)       findViewById(R.id.timetableTermsPicker);
+        mSemesterPicker = (SemesterPicker)       findViewById(R.id.timetableTermsPicker);
         //Set
         mStudyGroupPicker  = (StudyGroupPicker)  findViewById(R.id.timetableStudyGroupPicker);
         mRememberSwitch    = (SwitchCompat)      findViewById(R.id.timetableRememberSelection);
@@ -190,7 +190,7 @@ public class TimeTableView extends LinearLayout {
     private IViewListener     mViewListener;
 
     private StudyCoursePicker mStudyCoursePicker;
-    private TermsPicker       mTermsPicker;
+    private SemesterPicker mSemesterPicker;
     private StudyGroupPicker  mStudyGroupPicker;
 
     private SwitchCompat      mRememberSwitch;

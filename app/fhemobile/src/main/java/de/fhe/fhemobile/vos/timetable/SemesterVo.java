@@ -29,26 +29,26 @@ import java.util.ArrayList;
  * Created by paul on 12.03.15.
  * Value Object für das Semester eines Studiengangs, speichert die verfügbaren Sets
  */
-public class TermsVo implements Parcelable {
+public class SemesterVo implements Parcelable {
 
-    public TermsVo() {
+    public SemesterVo() {
     }
 
-    protected TermsVo(Parcel in) {
+    protected SemesterVo(Parcel in) {
         mId = in.readString();
         mTitle = correctUmlauts(in.readString());
         mStudyGroups = in.createTypedArrayList(StudyGroupVo.CREATOR);
     }
 
-    public static final Creator<TermsVo> CREATOR = new Creator<TermsVo>() {
+    public static final Creator<SemesterVo> CREATOR = new Creator<SemesterVo>() {
         @Override
-        public TermsVo createFromParcel(Parcel in) {
-            return new TermsVo(in);
+        public SemesterVo createFromParcel(Parcel in) {
+            return new SemesterVo(in);
         }
 
         @Override
-        public TermsVo[] newArray(int size) {
-            return new TermsVo[size];
+        public SemesterVo[] newArray(int size) {
+            return new SemesterVo[size];
         }
     };
 
