@@ -121,7 +121,7 @@
 #-overloadaggressively		not for DVK 1.9/1.5
 -printusage
 # You can specify any path and filename.
--printconfiguration ~/tmp/full-r8-config.txt
+-printconfiguration tmp/full-r8-config.txt
 
 
 #### from Android SDK
