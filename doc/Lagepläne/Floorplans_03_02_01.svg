@@ -30,14 +30,14 @@
      units="px"
      inkscape:snap-page="true"
      inkscape:zoom="1.3316499"
-     inkscape:cx="590.99618"
-     inkscape:cy="360.07963"
+     inkscape:cx="748.69528"
+     inkscape:cy="336.80024"
      inkscape:window-width="2467"
      inkscape:window-height="1411"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g333530"
+     inkscape:current-layer="layer2"
      showguides="false"
      inkscape:snap-others="true"
      inkscape:snap-global="true"
@@ -838,7 +838,7 @@
        id="text136204"><tspan
          sodipodi:role="line"
          id="tspan136202"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Bold';fill:#e6e6e6;stroke-width:0.328058"
+         style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Bold Italic';fill:#e6e6e6;stroke-width:0.328058"
          x="89.264725"
          y="57.018379">Haus 3</tspan></text>
     <text
@@ -849,7 +849,7 @@
        id="text136204-4"><tspan
          sodipodi:role="line"
          id="tspan136202-0"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Bold';fill:#e6e6e6;stroke-width:0.328058"
+         style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Bold Italic';fill:#e6e6e6;stroke-width:0.328058"
          x="219.20403"
          y="54.591034">Haus 2</tspan></text>
     <text
@@ -861,7 +861,7 @@
        transform="rotate(90)"><tspan
          sodipodi:role="line"
          id="tspan136202-0-5"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Bold';fill:#e6e6e6;stroke-width:0.328058"
+         style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Bold Italic';fill:#e6e6e6;stroke-width:0.328058"
          x="81.180481"
          y="-268.45868">Haus 1</tspan></text>
   </g>
@@ -1038,7 +1038,7 @@
      inkscape:groupmode="layer"
      id="g333530"
      inkscape:label="321-ug"
-     style="display:inline;opacity:1"
+     style="display:none;opacity:1"
      sodipodi:insensitive="true">
     <path
        style="display:inline;opacity:1;fill:#b3b3b3;stroke:#ffffff;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter145812)"
@@ -1543,6 +1543,46 @@
        x="104.26287"
        y="36.163448"
        rx="0.0032992219" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.530967;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 280.80636,131.10975 h 0.90792 v -0.9987 h 0.81712 v -0.90791 h 0.87765 v -0.81713 h 1.02896 v -0.87764 h 0.87766"
+       id="path164243-0-8-8-3"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.747592;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 267.42492,59.127034 h -1.27833 v -1.406152 h -1.15049 v -1.278321 h -1.23572 v -1.150504 h -1.44876 v -1.23571 h -1.23573"
+       id="path164243-0-8-8-3-8"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.530967;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 94.930861,26.809024 h 0.90792 v -0.9987 h 0.81712 v -0.90791 h 0.87765 v -0.81713 h 1.02896 v -0.877646 h 0.87766"
+       id="path164243-0-8-8-3-7"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.530967;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 43.049756,30.419182 h 0.90792 v -0.9987 h 0.81712 v -0.90791 h 0.87765 v -0.81713 h 1.02896 v -0.877646 h 0.87766"
+       id="path164243-0-8-8-3-72"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.530967;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 153.88672,77.992957 h 0.90792 v -0.9987 h 0.81712 v -0.90791 h 0.87765 v -0.81713 h 1.02896 v -0.877646 h 0.87766"
+       id="path164243-0-8-8-3-5"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -1833,15 +1873,15 @@
        transform="matrix(1.0318138,0,0,0.96916709,-24.398574,4.3522483)"><tspan
          x="223.51404"
          y="57.047047"
-         id="tspan5186"><tspan
+         id="tspan2101"><tspan
            style="font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';text-align:center;text-anchor:middle;fill:#ffffff"
-           id="tspan5184">Haupt-
+           id="tspan2099">Haupt-
 </tspan></tspan><tspan
          x="223.51404"
          y="64.693069"
-         id="tspan5190"><tspan
+         id="tspan2105"><tspan
            style="font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';text-align:center;text-anchor:middle;fill:#ffffff"
-           id="tspan5188">eingang</tspan></tspan></text>
+           id="tspan2103">eingang</tspan></tspan></text>
     <rect
        style="opacity:1;fill:#34495b;fill-opacity:1;stroke:#ffffff;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:32.6929;stroke-opacity:1"
        id="rect163754"
@@ -2012,6 +2052,54 @@
        d="m 258.82307,37.216707 -12.63839,-2.855171 0.14094,6.287767 12.53132,0.127231 -0.0339,-3.559829"
        id="path14186-8-2"
        sodipodi:nodetypes="ccccc" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.530967;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 94.930861,26.809024 h 0.90792 v -0.9987 h 0.81712 v -0.90791 h 0.87765 v -0.81713 h 1.02896 v -0.877646 h 0.87766"
+       id="path164243-0-8-8-3-4"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.530967;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 43.049756,30.419182 h 0.90792 v -0.9987 h 0.81712 v -0.90791 h 0.87765 v -0.81713 h 1.02896 v -0.877646 h 0.87766"
+       id="path164243-0-8-8-3-50"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.530967;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 280.80636,131.10975 h 0.90792 v -0.9987 h 0.81712 v -0.90791 h 0.87765 v -0.81713 h 1.02896 v -0.87764 h 0.87766"
+       id="path164243-0-8-8-3-6"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.747592;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 267.42492,59.127034 h -1.27833 v -1.406152 h -1.15049 v -1.278321 h -1.23572 v -1.150504 h -1.44876 v -1.23571 h -1.23573"
+       id="path164243-0-8-8-3-8-1"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.953678;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 205.14578,36.52435 h 1.63071 v -1.79378 h 1.46765 v -1.630717 h 1.57636 v -1.467655 h 1.84812 v -1.576364 h 1.57638"
+       id="path164243-0-3-85-4-3-7"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.530967;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 153.88672,77.992957 h 0.90792 v -0.9987 h 0.81712 v -0.90791 h 0.87765 v -0.81713 h 1.02896 v -0.877646 h 0.87766"
+       id="path164243-0-8-8-3-5-8"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -2448,6 +2536,54 @@
        y="34.315208"
        style="display:inline"
        transform="rotate(4.30673)" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.530967;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 280.80636,131.10975 h 0.90792 v -0.9987 h 0.81712 v -0.90791 h 0.87765 v -0.81713 h 1.02896 v -0.87764 h 0.87766"
+       id="path164243-0-8-8-3-0"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.747592;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 267.42492,59.127034 h -1.27833 v -1.406152 h -1.15049 v -1.278321 h -1.23572 v -1.150504 h -1.44876 v -1.23571 h -1.23573"
+       id="path164243-0-8-8-3-8-7"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.953678;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 205.14578,36.52435 h 1.63071 v -1.79378 h 1.46765 v -1.630717 h 1.57636 v -1.467655 h 1.84812 v -1.576364 h 1.57638"
+       id="path164243-0-3-85-4-3-9"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.530967;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 153.88672,77.992957 h 0.90792 v -0.9987 h 0.81712 v -0.90791 h 0.87765 v -0.81713 h 1.02896 v -0.877646 h 0.87766"
+       id="path164243-0-8-8-3-5-0"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.530967;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 94.930861,26.809024 h 0.90792 v -0.9987 h 0.81712 v -0.90791 h 0.87765 v -0.81713 h 1.02896 v -0.877646 h 0.87766"
+       id="path164243-0-8-8-3-7-8"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.530967;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 43.049756,30.419182 h 0.90792 v -0.9987 h 0.81712 v -0.90791 h 0.87765 v -0.81713 h 1.02896 v -0.877646 h 0.87766"
+       id="path164243-0-8-8-3-72-1"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -2819,6 +2955,54 @@
        y="34.315208"
        style="display:inline"
        transform="rotate(4.30673)" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.530967;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 280.80636,131.10975 h 0.90792 v -0.9987 h 0.81712 v -0.90791 h 0.87765 v -0.81713 h 1.02896 v -0.87764 h 0.87766"
+       id="path164243-0-8-8-3-07"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.747592;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 267.42492,59.127034 h -1.27833 v -1.406152 h -1.15049 v -1.278321 h -1.23572 v -1.150504 h -1.44876 v -1.23571 h -1.23573"
+       id="path164243-0-8-8-3-8-4"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.953678;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 205.14578,36.52435 h 1.63071 v -1.79378 h 1.46765 v -1.630717 h 1.57636 v -1.467655 h 1.84812 v -1.576364 h 1.57638"
+       id="path164243-0-3-85-4-3-4"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.530967;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 153.88672,77.992957 h 0.90792 v -0.9987 h 0.81712 v -0.90791 h 0.87765 v -0.81713 h 1.02896 v -0.877646 h 0.87766"
+       id="path164243-0-8-8-3-5-5"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.530967;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 94.930861,26.809024 h 0.90792 v -0.9987 h 0.81712 v -0.90791 h 0.87765 v -0.81713 h 1.02896 v -0.877646 h 0.87766"
+       id="path164243-0-8-8-3-7-7"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.530967;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 43.049756,30.419182 h 0.90792 v -0.9987 h 0.81712 v -0.90791 h 0.87765 v -0.81713 h 1.02896 v -0.877646 h 0.87766"
+       id="path164243-0-8-8-3-72-8"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -2926,8 +3110,8 @@
     <rect
        style="opacity:1;fill:#00b9e4;fill-opacity:1;stroke:#ffffff;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:32.6929;stroke-opacity:1"
        id="rect2410"
-       width="8.1295767"
-       height="24.930372"
+       width="8.658823"
+       height="24.930424"
        x="278.42142"
        y="111.55215"
        rx="0.0087907147" />
@@ -3219,12 +3403,61 @@
        y="34.315208"
        style="display:inline"
        transform="rotate(4.30673)" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.530967;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 280.80636,131.10975 h 0.90792 v -0.9987 h 0.81712 v -0.90791 h 0.87765 v -0.81713 h 1.02896 v -0.87764 h 0.87766"
+       id="path164243-0-8-8-3-79"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.747592;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 267.42492,59.127034 h -1.27833 v -1.406152 h -1.15049 v -1.278321 h -1.23572 v -1.150504 h -1.44876 v -1.23571 h -1.23573"
+       id="path164243-0-8-8-3-8-8"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.953678;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 205.14578,36.52435 h 1.63071 v -1.79378 h 1.46765 v -1.630717 h 1.57636 v -1.467655 h 1.84812 v -1.576364 h 1.57638"
+       id="path164243-0-3-85-4-3-6"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.530967;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 153.88672,77.992957 h 0.90792 v -0.9987 h 0.81712 v -0.90791 h 0.87765 v -0.81713 h 1.02896 v -0.877646 h 0.87766"
+       id="path164243-0-8-8-3-5-3"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.530967;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 94.930861,26.809024 h 0.90792 v -0.9987 h 0.81712 v -0.90791 h 0.87765 v -0.81713 h 1.02896 v -0.877646 h 0.87766"
+       id="path164243-0-8-8-3-7-9"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.530967;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 43.049756,30.419182 h 0.90792 v -0.9987 h 0.81712 v -0.90791 h 0.87765 v -0.81713 h 1.02896 v -0.877646 h 0.87766"
+       id="path164243-0-8-8-3-72-4"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="g408080"
      inkscape:label="321-04"
-     style="display:none;opacity:1">
+     style="display:none;opacity:1"
+     sodipodi:insensitive="true">
     <path
        style="display:inline;opacity:1;fill:#b3b3b3;stroke:#ffffff;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter145812)"
        d="m 201.45834,61.319376 57.59258,-0.418348 V 136.4826 h 28.02932 V 60.901009 h -7.94864 c 0.0881,-5.671427 -1.80445,-20.013238 -20.22015,-20.220154 v -3.486232 l -13.44239,-3.335075 -27.11457,-6.727158 -14.52553,-3.603804 -2.64954,9.622005 -0.13945,2.928435 c 2e-5,0 0.41837,25.24035 0.41837,25.24035 z"
@@ -3413,6 +3646,30 @@
        d="m 258.82307,37.216707 -12.63839,-2.855171 0.14094,6.287767 12.53132,0.127231 -0.0339,-3.559829"
        id="path14186-8-5"
        sodipodi:nodetypes="ccccc" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.530967;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 280.80636,131.10975 h 0.90792 v -0.9987 h 0.81712 v -0.90791 h 0.87765 v -0.81713 h 1.02896 v -0.87764 h 0.87766"
+       id="path164243-0-8-8-3-9"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.747592;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 267.42492,59.127034 h -1.27833 v -1.406152 h -1.15049 v -1.278321 h -1.23572 v -1.150504 h -1.44876 v -1.23571 h -1.23573"
+       id="path164243-0-8-8-3-8-3"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
+    <path
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:0.953678;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 205.14578,36.52435 h 1.63071 v -1.79378 h 1.46765 v -1.630717 h 1.57636 v -1.467655 h 1.84812 v -1.576364 h 1.57638"
+       id="path164243-0-3-85-4-3"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:export-filename="C:\Users\Nadja\Stundenplan App EAH\Stundenplaner.FHE_EAH\app\fhemobile\src\main\res\drawable\stair_icon.jpg"
+       inkscape:export-xdpi="19.793217"
+       inkscape:export-ydpi="19.793217" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -3452,10 +3709,10 @@
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26.6667px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;font-variation-settings:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;white-space:normal;shape-inside:url(#rect93042);shape-padding:0;shape-margin:0;inline-size:0;opacity:1;vector-effect:none;fill:#00ff00;fill-opacity:1;stroke:none;stroke-width:0.999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"><tspan
          x="0"
          y="616.5182"
-         id="tspan5194"><tspan
+         id="tspan2109"><tspan
            dx="0 14.830748 14.830748 14.830746"
            style="baseline-shift:baseline;vector-effect:none;stop-color:#000000;stop-opacity:1"
-           id="tspan5192">1234</tspan></tspan></text>
+           id="tspan2107">1234</tspan></tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:5.29167px;line-height:7px;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
