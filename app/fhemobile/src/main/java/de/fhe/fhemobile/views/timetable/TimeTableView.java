@@ -45,12 +45,10 @@ public class TimeTableView extends LinearLayout {
 
     public TimeTableView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
-        mContext = context;
     }
 
     public TimeTableView(final Context context) {
         super(context);
-        mContext = context;
     }
 
     public void setViewListener(final IViewListener _Listener) {
@@ -58,17 +56,16 @@ public class TimeTableView extends LinearLayout {
     }
 
     public void initializeView(final FragmentManager _Manager) {
-        mFragmentManager = _Manager;
 
-        mStudyCoursePicker.setFragmentManager(mFragmentManager);
+        mStudyCoursePicker.setFragmentManager(_Manager);
         mStudyCoursePicker.toggleEnabled(false);
         mStudyCoursePicker.setOnItemChosenListener(mCourseListener);
 
-        mSemesterPicker.setFragmentManager(mFragmentManager);
+        mSemesterPicker.setFragmentManager(_Manager);
         mSemesterPicker.toggleEnabled(false);
         mSemesterPicker.setOnItemChosenListener(mTermsListener);
 
-        mStudyGroupPicker.setFragmentManager(mFragmentManager);
+        mStudyGroupPicker.setFragmentManager(_Manager);
         mStudyGroupPicker.toggleEnabled(false);
         mStudyGroupPicker.setOnItemChosenListener(mGroupsListener);
 
@@ -185,8 +182,6 @@ public class TimeTableView extends LinearLayout {
         void onSearchClicked();
     }
 
-    private final Context           mContext;
-    private FragmentManager   mFragmentManager;
     private IViewListener     mViewListener;
 
     private StudyCoursePicker mStudyCoursePicker;

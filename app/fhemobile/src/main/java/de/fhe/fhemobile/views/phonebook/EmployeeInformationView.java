@@ -40,7 +40,6 @@ public class EmployeeInformationView extends FrameLayout {
 
     public EmployeeInformationView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mContext = context;
     }
 
     public void initializeView(ViewListener _Listener) {
@@ -96,7 +95,7 @@ public class EmployeeInformationView extends FrameLayout {
         }
     };
 
-    private final Context mContext;
+    // --Commented out by Inspection (02.11.2021 16:50):private final Context mContext;
 
     private ViewListener mViewListener;
 

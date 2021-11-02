@@ -35,25 +35,31 @@ public class TimeTableWeekVo implements Parcelable {
         return mWeekInYear;
     }
 
-    public void setWeekInYear(int _weekInYear) {
-        mWeekInYear = _weekInYear;
-    }
+// --Commented out by Inspection START (02.11.2021 17:38):
+//    public void setWeekInYear(int _weekInYear) {
+//        mWeekInYear = _weekInYear;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:38)
 
     public int getYear() {
         return mYear;
     }
 
-    public void setYear(int _year) {
-        mYear = _year;
-    }
+// --Commented out by Inspection START (02.11.2021 17:38):
+//    public void setYear(int _year) {
+//        mYear = _year;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:38)
 
     public ArrayList<TimeTableDayVo> getDays() {
         return mDays;
     }
 
-    public void setDays(ArrayList<TimeTableDayVo> _days) {
-        mDays = _days;
-    }
+// --Commented out by Inspection START (02.11.2021 17:38):
+//    public void setDays(ArrayList<TimeTableDayVo> _days) {
+//        mDays = _days;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:38)
 
     @SerializedName("weekInYear")
     private int mWeekInYear;

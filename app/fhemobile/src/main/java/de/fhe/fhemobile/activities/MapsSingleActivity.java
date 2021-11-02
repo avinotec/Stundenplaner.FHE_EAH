@@ -31,17 +31,17 @@ public class MapsSingleActivity extends BaseActivity {
     public static final String STATE_MAPS_ID = "stateMapsId";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBaseContent(R.layout.activity_maps_single);
 
-        mModel = MapsModel.getInstance();
+        //not used: mModel = MapsModel.getInstance();
 
         if (savedInstanceState != null) {
             mMapId = savedInstanceState.getInt(STATE_MAPS_ID);
         }
         else {
-            Intent intent = getIntent();
+            final Intent intent = getIntent();
             mMapId = intent.getIntExtra(EXTRA_MAP_ID, -1);
         }
 
@@ -52,13 +52,13 @@ public class MapsSingleActivity extends BaseActivity {
 
             getSupportActionBar().setTitle(MapsModel.getInstance().getMaps().get(mMapId).getName());
         }
-        catch (Exception e){
+        catch (final Exception e){
             Log.e(TAG, "Fehler beim Aufrufen des Fragments: ",e );
         }
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
+    public void onSaveInstanceState(@NonNull final Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(STATE_MAPS_ID, mMapId);
     }
@@ -68,7 +68,7 @@ public class MapsSingleActivity extends BaseActivity {
 
     public static final String EXTRA_MAP_ID = "extraMapId";
 
-    private MapsModel           mModel;
+    // --Commented out by Inspection (02.11.2021 17:02):private MapsModel           mModel;
 
     private Integer             mMapId;
 

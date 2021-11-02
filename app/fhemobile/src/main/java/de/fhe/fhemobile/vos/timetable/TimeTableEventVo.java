@@ -37,9 +37,11 @@ public class TimeTableEventVo implements Parcelable {
         return mStartDate;
     }
 
-    public void setStartDate(long _startDate) {
-        mStartDate = _startDate;
-    }
+// --Commented out by Inspection START (02.11.2021 17:34):
+//    public void setStartDate(long _startDate) {
+//        mStartDate = _startDate;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:34)
 
     public String getTitle() {
         return mTitle;
@@ -54,15 +56,17 @@ public class TimeTableEventVo implements Parcelable {
         return mShortTitle != null ? mShortTitle : mTitle;
     }
 
-    public void setShortTitle(String _shortTitle) {
-        mShortTitle = _shortTitle;
-    }
+// --Commented out by Inspection START (02.11.2021 17:34):
+//    public void setShortTitle(String _shortTitle) {
+//        mShortTitle = _shortTitle;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:34)
 
     public String getDate() {
         return mDate;
     }
 
-    public void setDate(String _date) {
+    public void setDate(final String _date) {
         mDate = _date;
     }
 
@@ -70,33 +74,43 @@ public class TimeTableEventVo implements Parcelable {
         return mDayOfWeek;
     }
 
-    public void setDayOfWeek(String _dayOfWeek) {
-        mDayOfWeek = _dayOfWeek;
-    }
+// --Commented out by Inspection START (02.11.2021 17:34):
+//    public void setDayOfWeek(String _dayOfWeek) {
+//        mDayOfWeek = _dayOfWeek;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:34)
 
-    public int getWeekOfYear() {
-        return mWeekOfYear;
-    }
+// --Commented out by Inspection START (02.11.2021 17:35):
+//    public int getWeekOfYear() {
+//        return mWeekOfYear;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:35)
 
-    public void setWeekOfYear(int _weekOfYear) {
-        mWeekOfYear = _weekOfYear;
-    }
+// --Commented out by Inspection START (02.11.2021 17:34):
+//    public void setWeekOfYear(int _weekOfYear) {
+//        mWeekOfYear = _weekOfYear;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:34)
 
     public String getStartTime() {
         return mStartTime;
     }
 
-    public void setStartTime(String _startTime) {
-        mStartTime = _startTime;
-    }
+// --Commented out by Inspection START (02.11.2021 17:34):
+//    public void setStartTime(String _startTime) {
+//        mStartTime = _startTime;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:34)
 
     public String getEndTime() {
         return mEndTime;
     }
 
-    public void setEndTime(String _endTime) {
-        mEndTime = _endTime;
-    }
+// --Commented out by Inspection START (02.11.2021 17:34):
+//    public void setEndTime(String _endTime) {
+//        mEndTime = _endTime;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:34)
 
     public String getLecturer() {
         return mLecturer;
@@ -118,9 +132,11 @@ public class TimeTableEventVo implements Parcelable {
         return mUid;
     }
 
-    public void setUid(String _uid) {
-        mUid = _uid;
-    }
+// --Commented out by Inspection START (02.11.2021 17:34):
+//    public void setUid(String _uid) {
+//        mUid = _uid;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:34)
 
     @SerializedName("startDate")
     private long mStartDate;

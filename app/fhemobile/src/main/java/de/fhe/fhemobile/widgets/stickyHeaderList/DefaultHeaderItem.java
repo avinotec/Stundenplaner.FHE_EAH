@@ -47,7 +47,7 @@ public class DefaultHeaderItem extends IHeaderItem {
     }
 
     @Override
-    public View getView(LayoutInflater _inflater, View _convertView, ViewGroup _parent) {
+    public View getView(final LayoutInflater _inflater, View _convertView, final ViewGroup _parent) {
 
         ViewHolder viewHolder;
         if (_convertView == null) {

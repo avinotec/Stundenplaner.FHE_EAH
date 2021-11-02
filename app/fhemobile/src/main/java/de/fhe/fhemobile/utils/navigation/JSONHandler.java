@@ -92,7 +92,7 @@ public class JSONHandler {
             for (String line; (line = br.readLine()) != null; ) {
                 text.append(line).append("\n");
             }
-        }catch (Exception e){
+        }catch (final Exception e){
             Log.e(TAG, "reading floorplan from json failed", e);
         }
 
@@ -113,12 +113,12 @@ public class JSONHandler {
             final InputStream input = context.getResources().getAssets().open(FILE_ROOMS);
             final InputStreamReader reader = new InputStreamReader(input, "UTF-8"); //$NON-NLS
 
-            BufferedReader br = new BufferedReader(reader);
+            final BufferedReader br = new BufferedReader(reader);
 
             for (String line; (line = br.readLine()) != null; ) {
                 text.append(line).append("\n");
             }
-        }catch (Exception e){
+        }catch (final Exception e){
             Log.e(TAG, "reading rooms from json failed", e);
         }
 
@@ -143,7 +143,7 @@ public class JSONHandler {
             for (String line; (line = br.readLine()) != null; ) {
                 text.append(line).append("\n");
             }
-        } catch (Exception e){
+        } catch (final Exception e){
             Log.e(TAG, "reading floorconnections from json failed", e);
         }
 
@@ -171,7 +171,7 @@ public class JSONHandler {
                 for (int j = 0; j < personsJSON.length(); j++) {
                     persons.add(personsJSON.optString(j));
                 }
-                Room newRoom = new Room(jEntry.optString(ROOM_NUMBER),
+                final Room newRoom = new Room(jEntry.optString(ROOM_NUMBER),
                         jEntry.optString(BUILDING),
                         jEntry.optString(FLOOR),
                         jEntry.optString(QR_CODE),
@@ -219,11 +219,11 @@ public class JSONHandler {
 
                     connectedCells.add(cell);
                 }
-                String type = jEntry.optString(TYPE);
-                FloorConnection newConnection = new FloorConnection(type, connectedCells);
+                final String type = jEntry.optString(TYPE);
+                final FloorConnection newConnection = new FloorConnection(type, connectedCells);
                 floorConnections.add(newConnection);
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.e(TAG, "error parsing JSON floorConnections array", e);
         }
         return floorConnections;

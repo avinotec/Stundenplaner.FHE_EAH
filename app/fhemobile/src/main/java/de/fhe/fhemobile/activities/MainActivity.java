@@ -41,6 +41,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.DrawerFragment;
 import de.fhe.fhemobile.fragments.FeatureFragment;
@@ -122,10 +123,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             final RequestModel request = new RequestModel(RequestModel.ANDROID_DEVICE,
                     PushNotificationService.getFirebaseToken(),
                     new Date().getTime() - 86400000);
-            String title = "";
-            String setID = "";
 
-            String json = request.toJson();
+            final String json = request.toJson();
 
             NetworkHandler.getInstance().getTimeTableChanges(json, new Callback<ResponseModel>() {
                 /**
@@ -149,13 +148,13 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                         // 400: Bad request
                         if ( response != null && response.code() == 400 )
                         {
-                            String sErrorText = response.errorBody().toString();
+                            final String sErrorText = response.errorBody().toString();
                             Log.d( TAG, "Error in Schedule Change Server: " + sErrorText );
 
-                            AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
+                            final AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
                             builder1.setMessage(
                                     "Push Notifications: Error in Schedule Change Server: " + sErrorText);
-                            AlertDialog alert11 = builder1.create();
+                            final AlertDialog alert11 = builder1.create();
                             alert11.show();
                         }
 
@@ -166,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
                     final Gson gson = new Gson();
                     final String json = gson.toJson(response.body());
-                    Assert.assertTrue( !json.isEmpty() );
+                    if (BuildConfig.DEBUG) Assert.assertTrue( !json.isEmpty() );
 
                     Log.d(TAG, "onResponse: " + response.raw().request().url());
                     Log.d(TAG, "onResponse code: " + response.code() + " geparsed: " + json );
@@ -180,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
                         final ResponseModel.Change change = iterator.next();
                         boolean isInNegativeList = false;
-                        for(String[] negativeEvent : negativeList){
+                        for(final String[] negativeEvent : negativeList){
                             if ( change.getNewEventJson().getTitle().contains(negativeEvent[0])
                                     && change.getSetSplusKey().equals( negativeEvent[1] ) ) {
                                 isInNegativeList = true;
@@ -218,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                     //todo: folgender Code basiert auf generateNegativeList welche wie es scheint nur Änderungen der Veranstaltungen in selectedLessons berücksichtigt
                     // --> auch Änderungen die nicht selectedLessons betreffen aber Veranstaltungen in completeLessons müssen eingebunden werden
 
-                    for(ResponseModel.Change change : changes){
+                    for(final ResponseModel.Change change : changes){
 
                         // Shortcut to the list
                         final List<FlatDataStructure> myTimetableList = MyTimeTableView.getLessons();
@@ -259,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                 }
 
                 @Override
-                public void onFailure(Call<ResponseModel> call, Throwable t) {
+                public void onFailure(final Call<ResponseModel> call, final Throwable t) {
                     Log.d(TAG, "onFailure: "+t.toString());
                 }
             });
@@ -275,9 +274,9 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(int position, int id) {
+    public void onNavigationDrawerItemSelected(final int position, final int id) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        final FragmentManager fragmentManager = getSupportFragmentManager();
 
         if(mCurrentFragmentId != id) {
             mCurrentFragmentId = id;
@@ -297,7 +296,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     }
 
     private void restoreActionBar() {
-        ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
@@ -307,8 +306,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         }
     }
 
-    public void changeFragment(FeatureFragment _Fragment, boolean _AddToBackStack) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+    public void changeFragment(final FeatureFragment _Fragment, final boolean _AddToBackStack) {
+        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, _Fragment);
         mCurrentFragment = _Fragment;
 //        transaction.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.abc_fade_in, R.anim.abc_fade_out);

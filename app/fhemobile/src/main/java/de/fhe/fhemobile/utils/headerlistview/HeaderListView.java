@@ -37,21 +37,21 @@ public class HeaderListView extends RelativeLayout {
         init(context, null);
     }
 
-    public HeaderListView(Context context, AttributeSet attrs) {
+    public HeaderListView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    private void init(Context context, AttributeSet attrs) {
+    private void init(final Context context, final AttributeSet attrs) {
         mListView = new InternalListView(getContext(), attrs);
-        LayoutParams listParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        final LayoutParams listParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         listParams.addRule(ALIGN_PARENT_TOP);
         mListView.setLayoutParams(listParams);
         mListView.setOnScrollListener(new HeaderListViewOnScrollListener());
         mListView.setVerticalScrollBarEnabled(false);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
                 if (mAdapter != null) {
                     mAdapter.onItemClick(parent, view, position, id);
                 }
@@ -60,21 +60,21 @@ public class HeaderListView extends RelativeLayout {
         addView(mListView);
 
         mHeader = new RelativeLayout(getContext());
-        LayoutParams headerParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        final LayoutParams headerParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         headerParams.addRule(ALIGN_PARENT_TOP);
         mHeader.setLayoutParams(headerParams);
         mHeader.setGravity(Gravity.BOTTOM);
         addView(mHeader);
 
         // The list view's scroll bar can be hidden by the header, so we display our own scroll bar instead
-        Drawable scrollBarDrawable = getResources().getDrawable(R.drawable.scrollbar_handle_holo_light);
+        final Drawable scrollBarDrawable = getResources().getDrawable(R.drawable.scrollbar_handle_holo_light);
         mScrollView = new FrameLayout(getContext());
-        LayoutParams scrollParams = new LayoutParams(scrollBarDrawable.getIntrinsicWidth(), LayoutParams.MATCH_PARENT);
+        final LayoutParams scrollParams = new LayoutParams(scrollBarDrawable.getIntrinsicWidth(), LayoutParams.MATCH_PARENT);
         scrollParams.addRule(ALIGN_PARENT_RIGHT);
         scrollParams.rightMargin = (int) dpToPx(2);
         mScrollView.setLayoutParams(scrollParams);
 
-        ImageView scrollIndicator = new ImageView(context);
+        final ImageView scrollIndicator = new ImageView(context);
         scrollIndicator.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         scrollIndicator.setImageDrawable(scrollBarDrawable);
         scrollIndicator.setScaleType(ScaleType.FIT_XY);
@@ -307,10 +307,11 @@ public class HeaderListView extends RelativeLayout {
 
     protected class InternalListView extends ListView {
 
-        public InternalListView(Context context, AttributeSet attrs) {
+        public InternalListView(final Context context, final AttributeSet attrs) {
             super(context, attrs);
         }
 
+        // Die folgenden Methoden ermöglichen den Zugriff auf Internas durch die Ableitung.
         @Override
         protected int computeVerticalScrollExtent() {
             return super.computeVerticalScrollExtent();

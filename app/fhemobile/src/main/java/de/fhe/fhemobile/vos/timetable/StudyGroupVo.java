@@ -50,7 +50,7 @@ public class StudyGroupVo implements Parcelable {
         return mTitle;
     }
 
-    public void setTitle(String _title) {
+    public void setTitle(final String _title) {
         mTitle = _title;
     }
 
@@ -58,9 +58,11 @@ public class StudyGroupVo implements Parcelable {
         return mTimeTableId;
     }
 
-    public void setTimeTableId(String _timeTableId) {
-        mTimeTableId = _timeTableId;
-    }
+// --Commented out by Inspection START (02.11.2021 17:32):
+//    public void setTimeTableId(final String _timeTableId) {
+//        mTimeTableId = _timeTableId;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:32)
 
     @SerializedName("title")
     private String mTitle;

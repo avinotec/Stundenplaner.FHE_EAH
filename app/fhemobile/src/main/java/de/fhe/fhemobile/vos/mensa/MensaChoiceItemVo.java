@@ -40,13 +40,17 @@ public class MensaChoiceItemVo {
         this.mName = mName;
     }
 
-    public String getUrlPath() {
-        return mUrlPath;
-    }
+// --Commented out by Inspection START (02.11.2021 17:10):
+//    public String getUrlPath() {
+//        return mUrlPath;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:10)
 
-    public void setUrlPath(String mUrl) {
-        this.mUrlPath = mUrl;
-    }
+// --Commented out by Inspection START (02.11.2021 17:10):
+//    public void setUrlPath(String mUrl) {
+//        this.mUrlPath = mUrl;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:10)
 
     @SerializedName("id")
     private Integer mId;

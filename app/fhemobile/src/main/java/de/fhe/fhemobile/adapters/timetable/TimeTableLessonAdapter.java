@@ -71,7 +71,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 					inflate(R.layout.row_layout_events, parent, false);
 		}
 		final FlatDataStructure currentItem = MyTimeTableView.getCompleteLessons().get(position);
-		final RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.singleRowLayout);
+		//final RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.singleRowLayout);
 
 		convertView.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -86,7 +86,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 						FlatDataStructure.queryGetEventsByStudyGroupTitle(
 								lessonTitleFilteredList, currentItem.getSetString());
 
-				for (FlatDataStructure event : filteredList){
+				for (final FlatDataStructure event : filteredList){
 					event.setVisible(!event.isVisible());
 				}
 				((ListView)parent).invalidateViews();
@@ -157,7 +157,7 @@ public class TimeTableLessonAdapter extends BaseAdapter {
 						FlatDataStructure.queryGetEventsByStudyGroupTitle(
 								eventFilteredList, currentItem.getSetString());
 
-				for(FlatDataStructure event : studyGroupFilteredList){
+				for(final FlatDataStructure event : studyGroupFilteredList){
 					MyTimeTableView.addLesson(event);
 				}
 				btnAddLesson.setImageResource(R.drawable.ic_input_add_gray);

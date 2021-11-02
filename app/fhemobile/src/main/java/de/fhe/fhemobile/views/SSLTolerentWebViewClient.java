@@ -32,30 +32,30 @@ import de.fhe.fhemobile.R;
 public class SSLTolerentWebViewClient extends WebViewClient {
 	private static final String TAG = "SSLTolerentWebViewClien";
 	private Context context;
-	public SSLTolerentWebViewClient(Context context){
+	public SSLTolerentWebViewClient(final Context context){
 
 	}
 	@Override
-	public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+	public void onReceivedSslError(final WebView view, final SslErrorHandler handler, final SslError error) {
 
 		try {
 			final AlertDialog.Builder builder = new AlertDialog.Builder(context);
 			builder.setMessage(R.string.notification_error_ssl_cert_invalid);
 			builder.setPositiveButton(context.getString(R.string.ssl_error_continue), new DialogInterface.OnClickListener() {
 				@Override
-				public void onClick(DialogInterface dialog, int which) {
+				public void onClick(final DialogInterface dialog, final int which) {
 					handler.proceed();
 				}
 			});
 			builder.setNegativeButton(context.getString(R.string.ssl_error_cancel), new DialogInterface.OnClickListener() {
 				@Override
-				public void onClick(DialogInterface dialog, int which) {
+				public void onClick(final DialogInterface dialog, final int which) {
 					handler.cancel();
 				}
 			});
 			final AlertDialog dialog = builder.create();
 			dialog.show();
-		}catch (Exception e){
+		}catch (final Exception e){
 			Log.d(TAG, "onReceivedSslError: ",e);
 			handler.proceed();
 		}

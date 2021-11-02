@@ -28,22 +28,26 @@ import java.util.ArrayList;
  */
 public class TimeTableDayVo implements Parcelable {
 
-    public TimeTableDayVo() {
-    }
+// --Commented out by Inspection START (02.11.2021 17:33):
+//    public TimeTableDayVo() {
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:33)
 
     public Integer getDayInWeek() {
         return mDayInWeek;
     }
 
-    public void setDayInWeek(Integer _dayInWeek) {
-        mDayInWeek = _dayInWeek;
-    }
+// --Commented out by Inspection START (02.11.2021 17:32):
+//    public void setDayInWeek(Integer _dayInWeek) {
+//        mDayInWeek = _dayInWeek;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:32)
 
     public String getName() {
         return mWeekDayName;
     }
 
-    public void setName(String _name) {
+    public void setName(final String _name) {
         mWeekDayName = _name;
     }
 
@@ -51,9 +55,11 @@ public class TimeTableDayVo implements Parcelable {
         return mEvents;
     }
 
-    public void setEvents(ArrayList<TimeTableEventVo> _events) {
-        mEvents = _events;
-    }
+// --Commented out by Inspection START (02.11.2021 17:33):
+//    public void setEvents(ArrayList<TimeTableEventVo> _events) {
+//        mEvents = _events;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:33)
 
     @SerializedName("dayInWeek")
     private int mDayInWeek;

@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class MapCollectionVo {
 
-    public MapCollectionVo(String _name, List<MapVo> _maps) {
+    public MapCollectionVo(final String _name, final List<MapVo> _maps) {
         mName = _name;
         mMaps = _maps;
     }
@@ -32,7 +32,7 @@ public class MapCollectionVo {
         return mName;
     }
 
-    public void setName(String _name) {
+    public void setName(final String _name) {
         mName = _name;
     }
 
@@ -40,7 +40,7 @@ public class MapCollectionVo {
         return mMaps;
     }
 
-    public void setMaps(List<MapVo> _maps) {
+    public void setMaps(final List<MapVo> _maps) {
         mMaps = _maps;
     }
 

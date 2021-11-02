@@ -32,7 +32,7 @@ public class Cell {
     public Cell() {
     }
 
-    public Cell(int xCoordinate, int yCoordinate, String building, String floor, boolean walkable) {
+    public Cell(final int xCoordinate, final int yCoordinate, final String building, final String floor, final boolean walkable) {
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.building = new Building(building);
@@ -42,7 +42,7 @@ public class Cell {
         this.key = building + getFloorString() + xCoordinate + yCoordinate;
     }
 
-    public Cell(int xCoordinate, int yCoordinate, Complex complex, String floor, boolean walkable) {
+    public Cell(final int xCoordinate, final int yCoordinate, final Complex complex, final String floor, final boolean walkable) {
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.building = new Building(complex);
@@ -60,8 +60,8 @@ public class Cell {
      * @param floor
      * @param walkable
      */
-    public Cell(int xCoordinate, int yCoordinate, String building, String floor,
-                boolean walkable, int costPassingCell) {
+    public Cell(final int xCoordinate, final int yCoordinate, final String building, final String floor,
+                final boolean walkable, final int costPassingCell) {
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.building = new Building(building);
@@ -146,31 +146,31 @@ public class Cell {
     public boolean getWalkability() { return walkable; }
 
     //Setter
-    public void setCostPassingCell(int costPassingCell) {
+    public void setCostPassingCell(final int costPassingCell) {
         this.costPassingCell = costPassingCell;
     }
 
-    public void setCostsPathToCell(int costsPathToCell) {
+    public void setCostsPathToCell(final int costsPathToCell) {
         this.costsPathToCell =+costsPathToCell;
     }
 
-    public void setBuilding(String building) {
+    public void setBuilding(final String building) {
         this.building = new Building(building);
     }
 
-    public void setFloor(String floor) {
+    public void setFloor(final String floor) {
         this.floor = floor;
     }
 
-    public void setXCoordinate(int xCoordinate) {
+    public void setXCoordinate(final int xCoordinate) {
         this.xCoordinate = xCoordinate;
     }
 
-    public void setYCoordinate(int yCoordinate) {
+    public void setYCoordinate(final int yCoordinate) {
         this.yCoordinate = yCoordinate;
     }
 
-    public void setParentCell(Cell parentCell) {
+    public void setParentCell(final Cell parentCell) {
         this.parentCell = parentCell;
     }
 
@@ -182,7 +182,7 @@ public class Cell {
         return this.key;
     }
 
-    public void setWalkability(boolean walkable) {
+    public void setWalkability(final boolean walkable) {
         this.walkable = walkable;
     }
 }

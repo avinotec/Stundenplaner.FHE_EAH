@@ -33,7 +33,7 @@ import de.fhe.fhemobile.R;
  */
 public class DrawerAdapter extends BaseAdapter {
 
-    public DrawerAdapter(Context _Context, List<DrawerItem> _Items) {
+    public DrawerAdapter(final Context _Context, final List<DrawerItem> _Items) {
         mContext = _Context;
         mItems   = _Items;
     }
@@ -44,18 +44,18 @@ public class DrawerAdapter extends BaseAdapter {
     }
 
     @Override
-    public DrawerItem getItem(int position) {
+    public DrawerItem getItem(final int position) {
         return mItems.get(position);
     }
 
     @Override
-    public long getItemId(int position) {
+    public long getItemId(final int position) {
         return getItem(position).getId();
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) mContext
+    public View getView(final int position, View convertView, final ViewGroup parent) {
+        final LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         ViewHolder viewHolder;

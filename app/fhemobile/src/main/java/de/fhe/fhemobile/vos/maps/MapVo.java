@@ -24,7 +24,7 @@ public class MapVo {
     public MapVo() {
     }
 
-    public MapVo(String _name, String _imageUrl) {
+    public MapVo(final String _name, final String _imageUrl) {
         mName = _name;
         mImageUrl = _imageUrl;
     }
@@ -33,7 +33,7 @@ public class MapVo {
         return mName;
     }
 
-    public void setName(String _name) {
+    public void setName(final String _name) {
         mName = _name;
     }
 
@@ -41,9 +41,11 @@ public class MapVo {
         return mImageUrl;
     }
 
-    public void setImageUrl(String _imageUrl) {
-        mImageUrl = _imageUrl;
-    }
+// --Commented out by Inspection START (02.11.2021 17:09):
+//    public void setImageUrl(String _imageUrl) {
+//        mImageUrl = _imageUrl;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:09)
 
     private String mName;
     private String mImageUrl;

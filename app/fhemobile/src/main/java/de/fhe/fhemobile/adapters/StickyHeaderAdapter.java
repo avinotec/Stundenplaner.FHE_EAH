@@ -33,17 +33,17 @@ import de.fhe.fhemobile.widgets.stickyHeaderList.IRowItem;
  */
 public class StickyHeaderAdapter extends SectionAdapter {
 
-    public StickyHeaderAdapter(Context _context, List<IHeaderItem> _items) {
+    public StickyHeaderAdapter(final Context _context, final List<IHeaderItem> _items) {
         mContext        = _context;
         mItems          = _items;
         mLayoutInflater = LayoutInflater.from(mContext);
     }
 
-    public void setOnItemClickListener(AdapterView.OnItemClickListener _onItemClickListener) {
+    public void setOnItemClickListener(final AdapterView.OnItemClickListener _onItemClickListener) {
         mOnItemClickListener = _onItemClickListener;
     }
 
-    public void setItems(List<IHeaderItem> _items) {
+    public void setItems(final List<IHeaderItem> _items) {
         mItems = _items;
     }
 
@@ -53,7 +53,7 @@ public class StickyHeaderAdapter extends SectionAdapter {
     }
 
     @Override
-    public int numberOfRows(int _section) {
+    public int numberOfRows(final int _section) {
         return _section < 0 ? 0 : mItems.get(_section).getItems().size();
     }
 
@@ -68,42 +68,42 @@ public class StickyHeaderAdapter extends SectionAdapter {
     }
 
     @Override
-    public int getSectionHeaderItemViewType(int _section) {
+    public int getSectionHeaderItemViewType(final int _section) {
         return mItems.get(_section).getViewType();
     }
 
     @Override
-    public int getRowItemViewType(int _section, int _row) {
+    public int getRowItemViewType(final int _section, final int _row) {
         return mItems.get(_section).getItems().get(_row).getViewType();
     }
 
     @Override
-    public View getRowView(int _section, int _row, View _convertView, ViewGroup _parent) {
+    public View getRowView(final int _section, final int _row, final View _convertView, final ViewGroup _parent) {
         return mItems.get(_section).getItems().get(_row).getView(mLayoutInflater, _convertView, _parent);
     }
 
     @Override
-    public View getSectionHeaderView(int _section, View _convertView, ViewGroup _parent) {
+    public View getSectionHeaderView(final int _section, final View _convertView, final ViewGroup _parent) {
         return mItems.get(_section).getView(mLayoutInflater, _convertView, _parent);
     }
 
     @Override
-    public Object getRowItem(int _section, int _row) {
+    public Object getRowItem(final int _section, final int _row) {
         return mItems.get(_section).getItems().get(_row);
     }
 
     @Override
-    public Object getSectionHeaderItem(int _section) {
+    public Object getSectionHeaderItem(final int _section) {
         return mItems.get(_section);
     }
 
     @Override
-    public boolean hasSectionHeaderView(int _section) {
+    public boolean hasSectionHeaderView(final int _section) {
         return _section < 0 || _section > mItems.size() - 1 || mItems.get(_section).hasSectionHeader();
     }
 
     @Override
-    public void onRowItemClick(AdapterView<?> parent, View view, int section, int row, long id) {
+    public void onRowItemClick(final AdapterView<?> parent, final View view, final int section, final int row, final long id) {
         super.onRowItemClick(parent, view, section, row, id);
 
         if (mOnItemClickListener != null) {

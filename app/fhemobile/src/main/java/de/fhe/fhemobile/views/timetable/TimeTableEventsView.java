@@ -27,6 +27,7 @@ import org.junit.Assert;
 
 import java.util.ArrayList;
 
+import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.timetable.TimeTableWeekPagerAdapter;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
@@ -44,11 +45,10 @@ public class TimeTableEventsView extends LinearLayout {
 
     public TimeTableEventsView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
-        mContext = context;
     }
 
     public void setViewListener(final IViewListener _Listener) {
-        mListener = _Listener;
+        // --Commented out by Inspection (02.11.2021 17:33):private final Context                     mContext;
     }
 
     public void initializeView(final FragmentManager _Manager) {
@@ -58,10 +58,10 @@ public class TimeTableEventsView extends LinearLayout {
     public void setPagerItems(final ArrayList<TimeTableWeekVo> _Items) {
 
         mAdapter = new TimeTableWeekPagerAdapter(mFragmentManager, _Items);
-        Assert.assertTrue( mAdapter != null );
+        if (BuildConfig.DEBUG) Assert.assertTrue( mAdapter != null );
         mPager.setAdapter(mAdapter);
-        Assert.assertTrue( mPager != null );
-        //Assert.assertTrue( mPageIndicator != null );
+        if (BuildConfig.DEBUG) Assert.assertTrue( mPager != null );
+        //if (BuildConfig.DEBUG) Assert.assertTrue( mPageIndicator != null );
 
         //TODO Simon, warum ist das null?
         //mPageIndicator.setViewPager(mPager);
@@ -70,13 +70,9 @@ public class TimeTableEventsView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
         mPager         = (ViewPager)           findViewById(R.id.eventPager);
-
     }
 
-    private final Context                     mContext;
-    private IViewListener               mListener;
     private FragmentManager             mFragmentManager;
 
     private ViewPager                   mPager;

@@ -26,10 +26,13 @@ import com.google.gson.annotations.SerializedName;
  */
 public class MensaFoodItemVo implements Parcelable {
 
-    public MensaFoodItemVo() {
-    }
+// --Commented out by Inspection START (02.11.2021 17:19):
+//    public MensaFoodItemVo() {
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:19)
 
-    public MensaFoodItemVo(String mTitle, String mDescription, String mIngredients, String mPrice, long mDate, String mDateString, String mMensaName, Integer mMensaId) {
+    public MensaFoodItemVo(final String mTitle, final String mDescription, final String mIngredients, final String mPrice, final long mDate,
+                           final String mDateString, final String mMensaName, final Integer mMensaId) {
         this.mTitle         = mTitle;
         this.mDescription   = mDescription;
         this.mIngredients   = mIngredients;
@@ -40,7 +43,7 @@ public class MensaFoodItemVo implements Parcelable {
         this.mMensaId       = mMensaId;
     }
 
-    public MensaFoodItemVo(Parcel _In) {
+    public MensaFoodItemVo(final Parcel _In) {
         mTitle          = _In.readString();
         mDescription    = _In.readString();
         mIngredients    = _In.readString();
@@ -97,65 +100,87 @@ public class MensaFoodItemVo implements Parcelable {
         return mTitle;
     }
 
-    public void setTitle(String mTitle) {
-        this.mTitle = mTitle;
-    }
+// --Commented out by Inspection START (02.11.2021 17:19):
+//    public void setTitle(String mTitle) {
+//        this.mTitle = mTitle;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:19)
 
     public String getDescription() {
         return mDescription;
     }
 
-    public void setDescription(String mDescription) {
-        this.mDescription = mDescription;
-    }
+// --Commented out by Inspection START (02.11.2021 17:18):
+//    public void setDescription(String mDescription) {
+//        this.mDescription = mDescription;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:18)
 
-    public String getIngredients() {
-        return mIngredients;
-    }
+// --Commented out by Inspection START (02.11.2021 17:19):
+//    public String getIngredients() {
+//        return mIngredients;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:19)
 
-    public void setIngredients(String mIngredients) {
-        this.mIngredients = mIngredients;
-    }
+// --Commented out by Inspection START (02.11.2021 17:18):
+//    public void setIngredients(String mIngredients) {
+//        this.mIngredients = mIngredients;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:18)
 
     public String getPrice() {
         return mPrice;
     }
 
-    public void setPrice(String mPrice) {
-        this.mPrice = mPrice;
-    }
+// --Commented out by Inspection START (02.11.2021 17:18):
+//    public void setPrice(String mPrice) {
+//        this.mPrice = mPrice;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:18)
 
     public long getDate() {
         return mDate;
     }
 
-    public void setDate(long mDate) {
-        this.mDate = mDate;
-    }
+// --Commented out by Inspection START (02.11.2021 17:18):
+//    public void setDate(long mDate) {
+//        this.mDate = mDate;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:18)
 
     public String getDateString() {
         return mDateString;
     }
 
-    public void setDateString(String mDateString) {
-        this.mDateString = mDateString;
-    }
+// --Commented out by Inspection START (02.11.2021 17:18):
+//    public void setDateString(String mDateString) {
+//        this.mDateString = mDateString;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:18)
 
-    public String getMensaName() {
-        return mMensaName;
-    }
+// --Commented out by Inspection START (02.11.2021 17:19):
+//    public String getMensaName() {
+//        return mMensaName;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:19)
 
-    public void setMensaName(String mMensaName) {
-        this.mMensaName = mMensaName;
-    }
+// --Commented out by Inspection START (02.11.2021 17:18):
+//    public void setMensaName(String mMensaName) {
+//        this.mMensaName = mMensaName;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:18)
 
-    public Integer getMensaId() {
-        return mMensaId;
-    }
+// --Commented out by Inspection START (02.11.2021 17:19):
+//    public Integer getMensaId() {
+//        return mMensaId;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:19)
 
-    public void setMensaId(Integer mMensaId) {
-        this.mMensaId = mMensaId;
-    }
+// --Commented out by Inspection START (02.11.2021 17:18):
+//    public void setMensaId(Integer mMensaId) {
+//        this.mMensaId = mMensaId;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:18)
 
 
     //********************************************************************************************

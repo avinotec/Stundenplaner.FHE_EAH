@@ -85,15 +85,15 @@ public class DrawerFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_drawer, container, false);
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_drawer, container, false);
         mDrawerListView = (ListView) view.findViewById(R.id.drawerListView);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
                 selectItem(position, (int) id);
-                DrawerAdapter.ViewHolder viewHolder = (DrawerAdapter.ViewHolder) view.getTag();
+                //DrawerAdapter.ViewHolder viewHolder = (DrawerAdapter.ViewHolder) view.getTag();
 //                viewHolder.mCheckedIndicator.setVisibility(View.VISIBLE);
             }
         });
@@ -201,9 +201,9 @@ public class DrawerFragment extends Fragment {
         }
     }
 
-    public Integer getCurrentFragmentId() {
-        return mCurrentSelectedId;
-    }
+//    public Integer getCurrentFragmentId() {
+//        return mCurrentSelectedId;
+//    }
 
     @Override
     public void onAttach(@NonNull Activity activity) {

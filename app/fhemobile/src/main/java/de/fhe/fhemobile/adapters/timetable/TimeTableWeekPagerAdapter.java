@@ -31,7 +31,7 @@ import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
  */
 public class TimeTableWeekPagerAdapter extends FragmentStatePagerAdapter {
 
-    public TimeTableWeekPagerAdapter(FragmentManager fm, ArrayList<TimeTableWeekVo> _Data) {
+    public TimeTableWeekPagerAdapter(final FragmentManager fm, final ArrayList<TimeTableWeekVo> _Data) {
         super(fm);
         mData = _Data;
     }
@@ -43,7 +43,7 @@ public class TimeTableWeekPagerAdapter extends FragmentStatePagerAdapter {
      */
     @NonNull
     @Override
-    public Fragment getItem(int position) {
+    public Fragment getItem(final int position) {
         return TimeTableWeekFragment.newInstance(mData.get(position));
     }
 

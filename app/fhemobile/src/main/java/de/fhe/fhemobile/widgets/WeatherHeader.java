@@ -69,7 +69,7 @@ public class WeatherHeader extends RelativeLayout {
         NetworkHandler.getInstance().fetchWeather(mWeatherResponseCallback);
     }
     
-    private void update(String _Temperature, int _BackgroundId, int _IconId) {
+    private void update(final String _Temperature, final int _BackgroundId, int _IconId) {
         mTemperature.setText(_Temperature);
         mBackground.setImageResource(Utils.getResourceId("wetter_bg" + _BackgroundId, "drawable"));
         mIcon.setImageResource(Utils.getResourceId("wetter_icon" + _BackgroundId, "drawable"));
@@ -91,7 +91,7 @@ public class WeatherHeader extends RelativeLayout {
     
     private final Callback<WeatherResponse> mWeatherResponseCallback = new Callback<WeatherResponse>() {
         @Override
-        public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
+        public void onResponse(final Call<WeatherResponse> call, final Response<WeatherResponse> response) {
             // MS: Bei den News sind die news/0 kaputt
             if ( response.body() != null ) {
                 update(response.body().getTemperature(), response.body().getBackgroundId(), response.body().getIconId());

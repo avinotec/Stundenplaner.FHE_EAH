@@ -36,20 +36,20 @@ public class StudyCourseVo implements Parcelable {
     public StudyCourseVo() {
     }
 
-    protected StudyCourseVo(Parcel in) {
+    protected StudyCourseVo(final Parcel in) {
         mId = in.readString();
         mTitle = correctUmlauts(in.readString());
-        mTerms = in.createTypedArrayList(SemesterVo.CREATOR);
+        mSemesters = in.createTypedArrayList(SemesterVo.CREATOR);
     }
 
     public static final Creator<StudyCourseVo> CREATOR = new Creator<StudyCourseVo>() {
         @Override
-        public StudyCourseVo createFromParcel(Parcel in) {
+        public StudyCourseVo createFromParcel(final Parcel in) {
             return new StudyCourseVo(in);
         }
 
         @Override
-        public StudyCourseVo[] newArray(int size) {
+        public StudyCourseVo[] newArray(final int size) {
             return new StudyCourseVo[size];
         }
     };
@@ -58,7 +58,7 @@ public class StudyCourseVo implements Parcelable {
         return mId;
     }
 
-    public void setId(String _id) {
+    public void setId(final String _id) {
         mId = _id;
     }
 
@@ -66,30 +66,30 @@ public class StudyCourseVo implements Parcelable {
         return mTitle;
     }
 
-    public void setTitle(String _title) {
+    public void setTitle(final String _title) {
         mTitle = _title;
     }
 
     public ArrayList<SemesterVo> getSemesters() {
-        return mTerms;
+        return mSemesters;
     }
 
-    public void setTerms(ArrayList<SemesterVo> _terms) {
-        mTerms = _terms;
+    public void setTerms(final ArrayList<SemesterVo> _semesters) {
+        mSemesters = _semesters;
     }
-    final static String BACHELOR_BEFORE="Bachelor: ";
-    final static String BACHELOR_AFTER=": B";
-    final static String MASTER_BEFORE ="Master: ";
-    final static String MASTER_AFTER =": M";
+    static final String BACHELOR_BEFORE="Bachelor: ";
+    static final String BACHELOR_AFTER=": B";
+    static final String MASTER_BEFORE ="Master: ";
+    static final String MASTER_AFTER =": M";
 
-    public static void alterTitle(List<StudyCourseVo> list){
-        for (StudyCourseVo term:list){
-            Log.d(TAG, "alterTitle: "+ term.getTitle());
-            if(term.getTitle().contains(BACHELOR_BEFORE)){
-                term.setTitle(term.getTitle().replace(BACHELOR_BEFORE,"")+BACHELOR_AFTER);
+    public static void alterTitle(final List<StudyCourseVo> list){
+        for (final StudyCourseVo semester:list){
+            Log.d(TAG, "alterTitle: "+ semester.getTitle());
+            if(semester.getTitle().contains(BACHELOR_BEFORE)){
+                semester.setTitle(semester.getTitle().replace(BACHELOR_BEFORE,"")+BACHELOR_AFTER);
             }
-            else if(term.getTitle().contains(MASTER_BEFORE)){
-                term.setTitle(term.getTitle().replace(MASTER_BEFORE,"")+MASTER_AFTER);
+            else if(semester.getTitle().contains(MASTER_BEFORE)){
+                semester.setTitle(semester.getTitle().replace(MASTER_BEFORE,"")+MASTER_AFTER);
             }
 //            else {
 //                //nothing
@@ -105,7 +105,7 @@ public class StudyCourseVo implements Parcelable {
     private String              mTitle;
 
     @SerializedName("terms")
-    private ArrayList<SemesterVo>  mTerms;
+    private ArrayList<SemesterVo> mSemesters;
 
     @Override
     public int describeContents() {
@@ -113,9 +113,9 @@ public class StudyCourseVo implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(mId);
         dest.writeString(mTitle);
-        dest.writeTypedList(mTerms);
+        dest.writeTypedList(mSemesters);
     }
 }

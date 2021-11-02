@@ -56,9 +56,9 @@ class AStar {
     //Koordinatensystem aus allen begehbaren und nicht-begehbaren Zellen aller Stockwerke und Häuser
     //generated from the information from the json files of each building and floor (building_xx_floor_xx_.json in eah\assets)
     //for each building (key = building as string e.g. "01") and for each floor (key = floor as int) a grid of cells is stored
-    private HashMap<Complex, HashMap<Integer, Cell[][]>> floorGrids;
+    private final HashMap<Complex, HashMap<Integer, Cell[][]>> floorGrids;
     //ArrayList of all floorconnections storing the particular set of connected cells
-    private ArrayList<FloorConnection> floorConnections;
+    private final ArrayList<FloorConnection> floorConnections;
 
     /**
      * Constructs an AStar Object

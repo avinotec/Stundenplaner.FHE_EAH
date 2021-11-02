@@ -42,7 +42,7 @@ public class TimeTableResponse {
         return mModified;
     }
 
-    public void setModified(String _modified) {
+    public void setModified(final String _modified) {
         mModified = _modified;
     }
 
@@ -50,7 +50,7 @@ public class TimeTableResponse {
         return mStudyCourses;
     }
 
-    public void setStudyCourses(ArrayList<StudyCourseVo> _studyCourses) {
+    public void setStudyCourses(final ArrayList<StudyCourseVo> _studyCourses) {
         mStudyCourses = _studyCourses;
     }
 

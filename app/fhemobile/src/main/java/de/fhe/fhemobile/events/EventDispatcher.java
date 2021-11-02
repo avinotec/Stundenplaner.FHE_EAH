@@ -32,13 +32,13 @@ public class EventDispatcher implements Dispatcher {
 	protected EventDispatcher() {
 		this(null);
 	}
-	private EventDispatcher(Dispatcher target) {
+	private EventDispatcher(final Dispatcher target) {
 		listenerMap = new HashMap<String, CopyOnWriteArrayList<EventListener>>();
 		this.target = (target != null) ? target : this;
 	}
 	
 	@Override
-	public void addListener(String type, EventListener listener) {
+	public void addListener(final String type, final EventListener listener) {
 		synchronized (listenerMap) {
 			CopyOnWriteArrayList<EventListener> list = listenerMap.get(type);
 			if (list == null) {
@@ -50,40 +50,40 @@ public class EventDispatcher implements Dispatcher {
 	}
 	
 	@Override
-	public void removeListener(String type, EventListener listener) {
+	public void removeListener(final String type, final EventListener listener) {
 		synchronized (listenerMap) {
-			CopyOnWriteArrayList<EventListener> list = listenerMap.get(type);
+			final CopyOnWriteArrayList<EventListener> list = listenerMap.get(type);
 			if (list == null) return;
 			list.remove(listener);
-			if (list.size() == 0) {
+			if (list.isEmpty()) {
 				listenerMap.remove(type);
 			}
 		}
 	}
 	
 	@Override
-	public boolean hasListener(String type, EventListener listener) {
+	public boolean hasListener(final String type, final EventListener listener) {
 		synchronized (listenerMap) {
-			CopyOnWriteArrayList<EventListener> list = listenerMap.get(type);
+			final CopyOnWriteArrayList<EventListener> list = listenerMap.get(type);
 			if (list == null) return false;
 			return list.contains(listener);
 		}
 	}
 	
 	@Override
-	public void dispatchEvent(Event event) {
+	public void dispatchEvent(final Event event) {
 		if (event == null) {
 			Log.e(TAG, "can not dispatch null event");
 			return;
 		}
-		String type = event.getType();
+		final String type = event.getType();
 		event.setSource(target);
-		CopyOnWriteArrayList<EventListener> list;
+		final CopyOnWriteArrayList<EventListener> list;
 		synchronized (listenerMap) {
 			list = listenerMap.get(type);
 		}
 		if (list == null) return;
-		for (EventListener l : list) {
+		for (final EventListener l : list) {
 			l.onEvent(event);
 		}
 	}

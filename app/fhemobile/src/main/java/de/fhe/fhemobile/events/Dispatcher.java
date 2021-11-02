@@ -16,10 +16,35 @@
  */
 package de.fhe.fhemobile.events;
 
-
+/**
+ *
+ */
 public interface Dispatcher {
+	/**
+	 *
+	 * @param type
+	 * @param listener
+	 */
 	void addListener(String type, EventListener listener);
+
+	/**
+	 *
+	 * @param type
+	 * @param listener
+	 */
 	void removeListener(String type, EventListener listener);
+
+	/**
+	 *
+	 * @param type
+	 * @param listener
+	 * @return
+	 */
 	boolean hasListener(String type, EventListener listener);
+
+	/**
+	 *
+	 * @param event
+	 */
 	void dispatchEvent(Event event);
 }

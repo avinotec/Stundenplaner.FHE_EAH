@@ -82,25 +82,31 @@ public class PeriodVo implements Parcelable {
         return mBegin;
     }
 
-    public void setBegin(String mBegin) {
-        this.mBegin = mBegin;
-    }
+// --Commented out by Inspection START (02.11.2021 17:27):
+//    public void setBegin(String mBegin) {
+//        this.mBegin = mBegin;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:27)
 
     public String getEnd() {
         return mEnd;
     }
 
-    public void setEnd(String mEnd) {
-        this.mEnd = mEnd;
-    }
+// --Commented out by Inspection START (02.11.2021 17:27):
+//    public void setEnd(String mEnd) {
+//        this.mEnd = mEnd;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:27)
 
     public String getName() {
         return mName;
     }
 
-    public void setName(String mName) {
-        this.mName = mName;
-    }
+// --Commented out by Inspection START (02.11.2021 17:27):
+//    public void setName(String mName) {
+//        this.mName = mName;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:27)
 
     //**********************************************************************
     @SerializedName("begin")

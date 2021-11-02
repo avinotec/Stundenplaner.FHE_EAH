@@ -245,7 +245,7 @@ public class MyTimeTableView extends LinearLayout {
         final List<FlatDataStructure> completeSelectedList = new ArrayList();
         final List<String> studygroups = new ArrayList();
 
-        for(FlatDataStructure event:selectedLessons){
+        for(final FlatDataStructure event:selectedLessons){
             if(!studygroups.contains(event.getStudyGroup().getTimeTableId())){
                 studygroups.add(event.getStudyGroup().getTimeTableId());
                 completeSelectedList.addAll(NetworkHandler.getInstance().reloadEvents(event));
@@ -260,7 +260,7 @@ public class MyTimeTableView extends LinearLayout {
      * @param text
      */
     public void setEmptyText(final String text){
-        TextView emptyView = findViewById(R.id.emptyView);
+        final TextView emptyView = findViewById(R.id.emptyView);
         emptyView.setText(text);
         mLessonList.setEmptyView(emptyView);
     }

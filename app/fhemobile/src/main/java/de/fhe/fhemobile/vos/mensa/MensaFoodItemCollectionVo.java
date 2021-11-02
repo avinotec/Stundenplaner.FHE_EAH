@@ -27,12 +27,12 @@ import java.util.List;
  */
 public class MensaFoodItemCollectionVo implements Parcelable {
 
-    public MensaFoodItemCollectionVo(List<MensaFoodItemVo> mItems, String mHeadline) {
+    public MensaFoodItemCollectionVo(final List<MensaFoodItemVo> mItems, final String mHeadline) {
         this.mItems = mItems;
         this.mHeadline = mHeadline;
     }
 
-    public MensaFoodItemCollectionVo(Parcel _In) {
+    public MensaFoodItemCollectionVo(final Parcel _In) {
         _In.readTypedList(mItems, MensaFoodItemVo.CREATOR);
         mHeadline = _In.readString();
     }
@@ -57,18 +57,18 @@ public class MensaFoodItemCollectionVo implements Parcelable {
      *              May be 0 or {@link #PARCELABLE_WRITE_RETURN_VALUE}.
      */
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeTypedList(mItems);
         dest.writeString(mHeadline);
     }
 
     public static final Parcelable.Creator<MensaFoodItemCollectionVo> CREATOR
             = new Parcelable.Creator<MensaFoodItemCollectionVo>() {
-        public MensaFoodItemCollectionVo createFromParcel(Parcel in) {
+        public MensaFoodItemCollectionVo createFromParcel(final Parcel in) {
             return new MensaFoodItemCollectionVo(in);
         }
 
-        public MensaFoodItemCollectionVo[] newArray(int size) {
+        public MensaFoodItemCollectionVo[] newArray(final int size) {
             return new MensaFoodItemCollectionVo[size];
         }
     };
@@ -77,17 +77,21 @@ public class MensaFoodItemCollectionVo implements Parcelable {
         return mItems;
     }
 
-    public void setItems(List<MensaFoodItemVo> mItems) {
-        this.mItems = mItems;
-    }
+// --Commented out by Inspection START (02.11.2021 17:12):
+//    public void setItems(final List<MensaFoodItemVo> mItems) {
+//        this.mItems = mItems;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:12)
 
     public String getHeadline() {
         return mHeadline;
     }
 
-    public void setHeadline(String mHeadline) {
-        this.mHeadline = mHeadline;
-    }
+// --Commented out by Inspection START (02.11.2021 17:11):
+//    public void setHeadline(final String mHeadline) {
+//        this.mHeadline = mHeadline;
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:11)
 
     private List<MensaFoodItemVo> mItems = new ArrayList<MensaFoodItemVo>();
     private String mHeadline;

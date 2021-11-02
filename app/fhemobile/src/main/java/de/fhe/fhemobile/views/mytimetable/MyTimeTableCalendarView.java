@@ -34,7 +34,6 @@ import java.util.Date;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableCalendarAdapter;
-import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableDialogFragment;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableFragment;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
@@ -99,7 +98,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
         }
     }
 
-    private static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
     //don't use SimpleDateFormat.getDateTimeInstance() because it includes seconds
 
     /**
@@ -110,8 +109,8 @@ public class MyTimeTableCalendarView extends LinearLayout {
     public static int getCurrentEventIndex(){
 
         for(int i = 0; i < MyTimeTableView.sortedLessons.size(); i++){
-            TimeTableEventVo event = MyTimeTableView.sortedLessons.get(i).getEvent();
-            Date now = new Date();
+            final TimeTableEventVo event = MyTimeTableView.sortedLessons.get(i).getEvent();
+            final Date now = new Date();
             try {
                 //lesson starts now or in the future
                 if(sdf.parse(event.getDate() + " " + event.getStartTime())
@@ -122,7 +121,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
                         return (i);
                     }
 
-                    if(i == 0) return i;
+                    if(i == 0) return 0;
                     return (i - 1);
                 }
             } catch (ParseException e) {
@@ -133,12 +132,14 @@ public class MyTimeTableCalendarView extends LinearLayout {
     }
 
 
-    private void createAddDialog(){
-        final FragmentManager fm = mFragmentManager;
-        MyTimeTableDialogFragment myTimeTableDialogFragment = MyTimeTableDialogFragment.newInstance();
-        myTimeTableDialogFragment.show(fm, "fragment_edit_name");
-
-    }
+// --Commented out by Inspection START (02.11.2021 17:22):
+//    private void createAddDialog(){
+//        final FragmentManager fm = mFragmentManager;
+//        MyTimeTableDialogFragment myTimeTableDialogFragment = MyTimeTableDialogFragment.newInstance();
+//        myTimeTableDialogFragment.show(fm, "fragment_edit_name");
+//
+//    }
+// --Commented out by Inspection STOP (02.11.2021 17:22)
 
     public void setEmptyText(final String text){
         TextView emptyView = findViewById(R.id.emptyView);

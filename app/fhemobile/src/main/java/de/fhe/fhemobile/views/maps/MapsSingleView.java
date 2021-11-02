@@ -30,7 +30,6 @@ import de.fhe.fhemobile.vos.maps.MapVo;
 public class MapsSingleView extends FrameLayout {
     public MapsSingleView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mContext = context;
     }
 
     public void initializeView(MapVo _Map) {
@@ -57,7 +56,7 @@ public class MapsSingleView extends FrameLayout {
 
     private static final String LOG_TAG = MapsSingleView.class.getSimpleName();
 
-    private final Context mContext;
+    // --Commented out by Inspection (02.11.2021 17:08):private final Context mContext;
 
     private WebView mMapView;
 }

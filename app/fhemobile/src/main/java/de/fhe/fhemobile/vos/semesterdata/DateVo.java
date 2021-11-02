@@ -59,18 +59,18 @@ public class DateVo implements Parcelable {
      *              May be 0 or {@link #PARCELABLE_WRITE_RETURN_VALUE}.
      */
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(mDate);
         dest.writeString(mName);
     }
 
     public static final Parcelable.Creator<DateVo> CREATOR
             = new Parcelable.Creator<DateVo>() {
-        public DateVo createFromParcel(Parcel in) {
+        public DateVo createFromParcel(final Parcel in) {
             return new DateVo(in);
         }
 
-        public DateVo[] newArray(int size) {
+        public DateVo[] newArray(final int size) {
             return new DateVo[size];
         }
     };
@@ -79,7 +79,7 @@ public class DateVo implements Parcelable {
         return mDate;
     }
 
-    public void setDate(String mDate) {
+    public void setDate(final String mDate) {
         this.mDate = mDate;
     }
 
@@ -87,7 +87,7 @@ public class DateVo implements Parcelable {
         return mName;
     }
 
-    public void setName(String mName) {
+    public void setName(final String mName) {
         this.mName = mName;
     }
 

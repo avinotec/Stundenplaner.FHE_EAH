@@ -36,7 +36,7 @@ public class TimeTableSettings {
      * @param _TimeTableId
      */
     public static void saveTimeTableSelection(final String _TimeTableId) {
-        SharedPreferences sp = Main.getAppContext().getSharedPreferences(SP_DATABASE, Context.MODE_PRIVATE);
+        final SharedPreferences sp = Main.getAppContext().getSharedPreferences(SP_DATABASE, Context.MODE_PRIVATE);
         sp.edit().putString(PREF_CHOSEN_TIMETABLE_ID, _TimeTableId).apply();
     }
 
@@ -46,7 +46,7 @@ public class TimeTableSettings {
      */
     public static String fetchTimeTableSelection() {
 
-        SharedPreferences sp = Main.getAppContext().getSharedPreferences(SP_DATABASE, Context.MODE_PRIVATE);
+        final SharedPreferences sp = Main.getAppContext().getSharedPreferences(SP_DATABASE, Context.MODE_PRIVATE);
         final String result = sp.getString(PREF_CHOSEN_TIMETABLE_ID, null);
 
         return result;

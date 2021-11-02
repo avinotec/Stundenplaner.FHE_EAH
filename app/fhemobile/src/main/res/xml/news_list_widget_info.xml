@@ -17,7 +17,8 @@
   -->
 
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:minWidth="250dp"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:minWidth="250dp"
                     android:minHeight="110dp"
                     android:updatePeriodMillis="1800000"
                     android:previewImage="@drawable/ic_launcher"
@@ -25,5 +26,6 @@
                     android:configure="de.fhe.fhemobile.widgets.homescreen.NewsListWidgetConfigureActivity"
                     android:resizeMode="horizontal|vertical"
                     android:widgetCategory="home_screen"
-                    android:initialKeyguardLayout="@layout/news_list_widget">
+                    android:initialKeyguardLayout="@layout/news_list_widget"
+	tools:ignore="UnusedAttribute">
 </appwidget-provider>

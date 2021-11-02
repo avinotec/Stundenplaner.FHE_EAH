@@ -18,9 +18,6 @@
 package de.fhe.fhemobile.utils.navigation;
 
 
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_01;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_02;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03;
 import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_height;
 import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_width;
 import static de.fhe.fhemobile.utils.navigation.NavigationUtils.floorIntToString;
@@ -418,11 +415,11 @@ public class RouteCalculator {
      */
     private Cell[][] buildFloorGrid(final Complex complex, final int floorInt) {
 
-        Cell[][] floorGrid = new Cell[(int)cellgrid_width][(int)cellgrid_height];
-        String floor = floorIntToString(floorInt);
+        final Cell[][] floorGrid = new Cell[(int)cellgrid_width][(int)cellgrid_height];
+        final String floor = floorIntToString(floorInt);
 
         try {
-            JSONHandler jsonHandler = new JSONHandler();
+            final JSONHandler jsonHandler = new JSONHandler();
             String json;
 
             //Get floor plan JSON from assets
@@ -430,14 +427,14 @@ public class RouteCalculator {
             final HashMap<String, Cell> walkableCells = jsonHandler.parseJsonWalkableCells(json);
 
             //fill in rooms
-            for(Room r : rooms){
+            for(final Room r : rooms){
                 if(r.getComplex().equals(complex) && r.getFloorString().equals(floor)){
                     floorGrid[r.getXCoordinate()][r.getYCoordinate()] = r;
                 }
             }
             //fill in floorconnections
-            for(FloorConnection fc : floorConnections){
-                for(FloorConnectionCell cell : fc.getConnectedCells())
+            for(final FloorConnection fc : floorConnections){
+                for(final FloorConnectionCell cell : fc.getConnectedCells())
                     if(cell.getComplex().equals(complex) && cell.getFloorString().equals(floor)){
                         floorGrid[cell.getXCoordinate()][cell.getYCoordinate()] = cell;
                     }
@@ -461,7 +458,7 @@ public class RouteCalculator {
                     }
                 }
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.e(TAG, "error building the floor floorGrid", e);
         }
         return floorGrid;
@@ -477,14 +474,14 @@ public class RouteCalculator {
      */
     private ArrayList<FloorConnection> getFloorConnections(final Cell startCell, final int floor) {
 
-        ArrayList<FloorConnection> availableFloorConnectionsHelper = new ArrayList<>();
-        ArrayList<FloorConnection> adjustedAvailableFloorConnections = new ArrayList<>();
+        //final ArrayList<FloorConnection> availableFloorConnectionsHelper = new ArrayList<>();
+        final ArrayList<FloorConnection> adjustedAvailableFloorConnections = new ArrayList<>();
 
-        Complex complexStartCell = startCell.getComplex();
+        final Complex complexStartCell = startCell.getComplex();
 
         try {
             //check if floor grid for building and floor exists
-            Cell[][] floorgrid = floorGrids.get(complexStartCell).get(floor);
+            final Cell[][] floorgrid = floorGrids.get(complexStartCell).get(floor);
 
 //            // get all reachable floor connections at this floor
 //            for (int i = 0; i < floorConnections.size(); i++) {
@@ -533,7 +530,7 @@ public class RouteCalculator {
 //                    adjustedAvailableFloorConnections.add(availableFloorConnectionsHelper.get(j));
 //                }
 //            }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.e(TAG, "error getting reachable floorconnections", e);
         }
         return adjustedAvailableFloorConnections;
@@ -547,36 +544,36 @@ public class RouteCalculator {
      * @param startCell
      * @return
      */
-    private ArrayList<FloorConnection> getAvailableFloorConnectionsHelper(final int i, final int j, final int index, final Cell startCell) {
+//    private ArrayList<FloorConnection> getAvailableFloorConnectionsHelper(final int i, final int j, final int index, final Cell startCell) {
+//
+//        final ArrayList<FloorConnection> availableFloorConnectionsHelper = new ArrayList<>();
+//
+        //        for (int k = 0; k < floorConnections.get(i).getConnectedCells().size(); k++) {
+        //            String buildingFloorconnection = floorConnections.get(i).getConnectedCells().get(k).getBuilding();
+        //            String buildingFloorgrid = floorGrids.get(index + 1)[0][0].getBuilding();
+        //            String floorFloorconnection = floorConnections.get(i).getConnectedCells().get(k).getFloorString();
+        //            String floorFloorgrid = floorGrids.get(index + 1)[0][0].getFloorString();
+        //
+        //            if ((buildingFloorconnection.equals(buildingFloorgrid)
+        //                    || (isBuilding321(buildingFloorconnection) && isBuilding321(buildingFloorgrid)))
+        //                    && floorFloorconnection.equals(floorFloorgrid)) {
+        //
+        //                final AStar aStar = new AStar(startCell, floorConnections.get(i).getConnectedCells().get(j), floorGrids.get(index));
+        //                final ArrayList<Cell> navigationCells = aStar.getCellsToWalk();
+        //
+        //                final FloorConnection floorConnectionHelper = floorConnections.get(i);
+        //                floorConnectionHelper.setCostsPathToCell(navigationCells.size());
+        //                availableFloorConnectionsHelper.add(floorConnectionHelper);
+        //            }
+        //
+        //        }
+//        return availableFloorConnectionsHelper;
+//    }
 
-        final ArrayList<FloorConnection> availableFloorConnectionsHelper = new ArrayList<>();
-
-//        for (int k = 0; k < floorConnections.get(i).getConnectedCells().size(); k++) {
-//            String buildingFloorconnection = floorConnections.get(i).getConnectedCells().get(k).getBuilding();
-//            String buildingFloorgrid = floorGrids.get(index + 1)[0][0].getBuilding();
-//            String floorFloorconnection = floorConnections.get(i).getConnectedCells().get(k).getFloorString();
-//            String floorFloorgrid = floorGrids.get(index + 1)[0][0].getFloorString();
-//
-//            if ((buildingFloorconnection.equals(buildingFloorgrid)
-//                    || (isBuilding321(buildingFloorconnection) && isBuilding321(buildingFloorgrid)))
-//                    && floorFloorconnection.equals(floorFloorgrid)) {
-//
-//                final AStar aStar = new AStar(startCell, floorConnections.get(i).getConnectedCells().get(j), floorGrids.get(index));
-//                final ArrayList<Cell> navigationCells = aStar.getCellsToWalk();
-//
-//                final FloorConnection floorConnectionHelper = floorConnections.get(i);
-//                floorConnectionHelper.setCostsPathToCell(navigationCells.size());
-//                availableFloorConnectionsHelper.add(floorConnectionHelper);
-//            }
-//
+//    private static boolean isBuilding321(final String building){
+//        if(building.equals(BUILDING_01) || building.equals(BUILDING_02) || building.equals(BUILDING_03)){
+//            return true;
 //        }
-        return availableFloorConnectionsHelper;
-    }
-
-    private static boolean isBuilding321(final String building){
-        if(building.equals(BUILDING_01) || building.equals(BUILDING_02) || building.equals(BUILDING_03)){
-            return true;
-        }
-        return false;
-    }
+//        return false;
+//    }
 }
