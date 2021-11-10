@@ -94,6 +94,7 @@ for file_name in os.listdir(fp_csv_folder):
         #get building and floor
         building = file_name[9:11]
         floor = file_name[12:14] #todo: Ermittlung des Floors für 05.03 Ebene 1 und EBene 2 überprüfen
+        #todo correct ug to -1
 
         with open(fp_csv_folder + str(file_name)) as file:
             floorplan_csv = csv.reader(file, delimiter=';')
