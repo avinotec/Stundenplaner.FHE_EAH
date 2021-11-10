@@ -129,7 +129,7 @@ public class RouteCalculator {
 //
 //                        for (int i = 0; i < availableFloorConnections.size(); i++) {
 //
-//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_WAY)) {
+//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_EXIT)) {
 //
 //                                for (int j = 0; j < availableFloorConnections.get(i).getConnectedCells().size(); j++) {
 //                                    if (availableFloorConnections.get(i).getConnectedCells().get(j).getBuilding().equals(BUILDING_04)) {
@@ -146,7 +146,7 @@ public class RouteCalculator {
 //
 //                        for (int i = 0; i < availableFloorConnections.size(); i++) {
 //
-//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_WAY)) {
+//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_EXIT)) {
 //
 //                                for (int j = 0; j < availableFloorConnections.get(i).getConnectedCells().size(); j++) {
 //
@@ -164,7 +164,7 @@ public class RouteCalculator {
 //
 //                        for (int i = 0; i < availableFloorConnections.size(); i++) {
 //
-//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_WAY)) {
+//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_EXIT)) {
 //
 //                                for (int j = 0; j < availableFloorConnections.get(i).getConnectedCells().size(); j++) {
 //
@@ -182,7 +182,7 @@ public class RouteCalculator {
 //
 //                        for (int i = 0; i < availableFloorConnections.size(); i++) {
 //
-//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_WAY)) {
+//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_EXIT)) {
 //
 //                                for (int j = 0; j < availableFloorConnections.get(i).getConnectedCells().size(); j++) {
 //
@@ -226,7 +226,7 @@ public class RouteCalculator {
 //
 //                        for (int i = 0; i < availableFloorConnections.size(); i++) {
 //
-//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_WAY)) {
+//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_EXIT)) {
 //
 //                                for (int j = 0; j < availableFloorConnections.get(i).getConnectedCells().size(); j++) {
 //
@@ -244,7 +244,7 @@ public class RouteCalculator {
 //
 //                        for (int i = 0; i < availableFloorConnections.size(); i++) {
 //
-//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_WAY)) {
+//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_EXIT)) {
 //
 //                                for (int j = 0; j < availableFloorConnections.get(i).getConnectedCells().size(); j++) {
 //
@@ -262,7 +262,7 @@ public class RouteCalculator {
 //
 //                        for (int i = 0; i < availableFloorConnections.size(); i++) {
 //
-//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_WAY)) {
+//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_EXIT)) {
 //
 //                                for (int j = 0; j < availableFloorConnections.get(i).getConnectedCells().size(); j++) {
 //                                    if (availableFloorConnections.get(i).getConnectedCells().get(j).getBuilding().equals(BUILDING_04)) {
@@ -279,7 +279,7 @@ public class RouteCalculator {
 //
 //                        for (int i = 0; i < availableFloorConnections.size(); i++) {
 //
-//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_WAY)) {
+//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_EXIT)) {
 //
 //                                for (int j = 0; j < availableFloorConnections.get(i).getConnectedCells().size(); j++) {
 //                                    if (availableFloorConnections.get(i).getConnectedCells().get(j).getBuilding().equals(BUILDING_05)) {
@@ -520,13 +520,13 @@ public class RouteCalculator {
 //
 //            //Put crossings to the end, crossings not allowed on floor = 0
 //            for (int j = 0; j < availableFloorConnectionsHelper.size(); j++) {
-//                if (!availableFloorConnectionsHelper.get(j).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_WAY)) {
+//                if (!availableFloorConnectionsHelper.get(j).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_EXIT)) {
 //                    adjustedAvailableFloorConnections.add(availableFloorConnectionsHelper.get(j));
 //                }
 //            }
 //
 //            for (int j = 0; j < availableFloorConnectionsHelper.size(); j++) {
-//                if (availableFloorConnectionsHelper.get(j).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_WAY)) {
+//                if (availableFloorConnectionsHelper.get(j).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_EXIT)) {
 //                    adjustedAvailableFloorConnections.add(availableFloorConnectionsHelper.get(j));
 //                }
 //            }

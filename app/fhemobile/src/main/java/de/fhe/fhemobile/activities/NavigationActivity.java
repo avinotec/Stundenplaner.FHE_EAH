@@ -17,9 +17,10 @@
 
 package de.fhe.fhemobile.activities;
 
+import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_BRIDGE;
 import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_ELEVATOR;
 import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_STAIR;
-import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_WAY;
+import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_EXIT;
 import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_height;
 import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_width;
 import static de.fhe.fhemobile.utils.navigation.NavigationUtils.Complex;
@@ -126,7 +127,7 @@ public class NavigationActivity extends BaseActivity {
             }
         });
 
-        //Get rooms, stairs, elevators and entrances (inkl. bridge) from JSON
+        //Get rooms, stairs, elevators, exits, bridge from JSON
         // lädt die verfügbaren Räume und Aufgänge aus den entsprechenden JSON-Dateien
         getFloorConnections();
 
@@ -322,7 +323,7 @@ public class NavigationActivity extends BaseActivity {
     }
 
     /**
-     * Add all elevators, staircases and crossings
+     * Add all elevators, staircases, exits and bridge
      * @param complex that is displayed (floorplan)
      * @param floor that is displayed (floorplan)
      */
@@ -339,7 +340,7 @@ public class NavigationActivity extends BaseActivity {
     }
 
     /**
-     * Draw floorconnection icon corresponding to the floorconnection type (staircaise, elevator, crossings)
+     * Draw floorconnection icon corresponding to the floorconnection type (stairs, elevator, exits, birdge)
      * @param complex that is displayed (floorplan)
      * @param floor that is displayed (floorplan)
      * @param fCell FloorConnectionCell to draw
@@ -369,14 +370,24 @@ public class NavigationActivity extends BaseActivity {
                 elevatorIcon.setY(convertCellCoordY(fCell.getYCoordinate()));
             }
 
-            if (fCell.getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_WAY)) {
-                ImageView crossingIcon = new ImageView(this);
-                //crossingIcon.setImageResource(R.drawable.bridge_icon); //todo make new bridge icon
-                if (navigationLayout != null) navigationLayout.addView(crossingIcon);
+            if (fCell.getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_EXIT)) {
+                ImageView exitIcon = new ImageView(this);
+                exitIcon.setImageResource(R.drawable.exit_icon);
+                if (navigationLayout != null) navigationLayout.addView(exitIcon);
 
-                fitOneCell(crossingIcon);
-                crossingIcon.setX(convertCellCoordX(fCell.getXCoordinate()));
-                crossingIcon.setY(convertCellCoordY(fCell.getYCoordinate()));
+                fitOneCell(exitIcon);
+                exitIcon.setX(convertCellCoordX(fCell.getXCoordinate()));
+                exitIcon.setY(convertCellCoordY(fCell.getYCoordinate()));
+            }
+
+            if (fCell.getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_BRIDGE)) {
+                ImageView bridgeIcon = new ImageView(this);
+                bridgeIcon.setImageResource(R.drawable.bridge_icon);
+                if (navigationLayout != null) navigationLayout.addView(bridgeIcon);
+
+                fitOneCell(bridgeIcon);
+                bridgeIcon.setX(convertCellCoordX(fCell.getXCoordinate()));
+                bridgeIcon.setY(convertCellCoordY(fCell.getYCoordinate()));
             }
         }
     }
@@ -429,7 +440,7 @@ public class NavigationActivity extends BaseActivity {
 
 
     /**
-     * Load stairs, elevators and the bridge from JSON
+     * Load stairs, elevators, exits and bridge from JSON
      */
     private void getFloorConnections() {
         try {

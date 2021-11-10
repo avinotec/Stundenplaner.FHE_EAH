@@ -54,9 +54,8 @@ public class Define {
 
 		public static final String FLOORCONNECTION_TYPE_STAIR = "staircase";    //$NON-NLS
 		public static final String FLOORCONNECTION_TYPE_ELEVATOR = "elevator";  //$NON-NLS
-		//ways outside buildings + bridge
-		//todo icons neu machen und Positionierung festlegen
-		public static final String FLOORCONNECTION_TYPE_WAY = "way"; //$NON-NLS
+		public static final String FLOORCONNECTION_TYPE_EXIT = "exit"; //$NON-NLS
+		public static final String FLOORCONNECTION_TYPE_BRIDGE = "bridge"; //$NON-NLS
 
 		//Size of the grid overlying the floorplan (unit: cells - needs to be integer)
 		//Note: cell numbering at gridded PNGs (docs folder) starts at 0 -> width/height = number + 1
