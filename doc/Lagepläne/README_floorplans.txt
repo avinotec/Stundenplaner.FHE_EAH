@@ -15,6 +15,7 @@
 # Anmerkungen für späteres Editieren:
 - Export der einzelnen PNGs der Pläne aus floorplans_x.svg in die App unter app\fhemobile\src\eah\res\drawable-nodpi
 	! Für die Dateinamen der Untergeschosse müssen "ug" bzw. "ug1" und "ug2" genutzt werden da "-" nach Android Koneventionen nicht in Dateinamen der Ressourcen vorkommen darf. 
+	! Die exportierte CSV kann mit Excel geöffnet leer aussehen -> Texteditor verwenden
 - Excel-Pläne: 
 	* Bilder einfügen mit Transparenz 30% (Bildformat>Transparenz in Excel)
 	* Da das Bild die Zellen versperrt, sind diese nicht mehr per Klick sondern nur noch per Pfeiltasten erreichbar

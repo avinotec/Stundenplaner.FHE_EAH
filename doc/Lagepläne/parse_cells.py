@@ -39,7 +39,7 @@ def generateJson(csv_reader, building, floor):
                     elevators[(x,y)] = [connected_cell]
 
             #bridge
-            elif row[x] == 'bridge':
+            elif row[x] == "bridge":
                 bridge_cell = { "building": building, "floor": floor,
                                     "xCoordinate": x, "yCoordinate": y,
                                     "walkable": True
@@ -59,11 +59,11 @@ def generateJson(csv_reader, building, floor):
                 rooms.append(room)
 
             #exit/entry
-            elif row[x] == 'exit':
-                entry = {"building": building, "floor": floor,
+            elif row[x] == "exit":
+                exit = {"building": building, "floor": floor,
                                     "xCoordinate": x, "yCoordinate": y,
                                     "walkable": True}
-                #todo: save exit cells in a way usable fot the A* algorithm
+                exits.append(exit)
 
             #error
             elif row[x] != '':
@@ -85,16 +85,22 @@ def generateJson(csv_reader, building, floor):
 elevators = {}
 stairs = {}
 rooms = []
-bridgeCells = {}
-exitCells = []
+bridgeCells = []
+exits = []
+
 
 #read in csv files
 for file_name in os.listdir(fp_csv_folder):
-    if re.match(r'cellplan_0[12345]-((0[01234])|(ug))\.CSV',file_name): #check correct file name pattern
+    if re.match(r'cellplan_0[12345]-((0[01234])|(ug))(_level1|2)?\.CSV', file_name): #check correct file name pattern
+        #todo check if ug_level 1 and ug_ level 2 are read in
+        print(file_name)
         #get building and floor
-        building = file_name[9:11]
-        floor = file_name[12:14] #todo: Ermittlung des Floors für 05.03 Ebene 1 und EBene 2 überprüfen
-        #todo correct ug to -1
+        building = file_name[9:11] #todo: Ermittlung des Floors für 05.03 Ebene 1 und EBene 2 überprüfen
+        floor = file_name[12:14]
+        # correct ug to -1
+        if floor == "ug": 
+            floor = "-1"
+        
 
         with open(fp_csv_folder + str(file_name)) as file:
             floorplan_csv = csv.reader(file, delimiter=';')
@@ -107,7 +113,8 @@ with open('json/rooms.json', 'w') as f:
 #save all floorconnections
 floorconnections = [{"type": "staircase", "connectedCells": value} for key, value in stairs.items()] + \
     [{"type": "elevator", "connectedCells": value} for key, value in elevators.items()] + \
-    [{"type": "bridge", "connectedCells": value} for key, value in bridgeCells.items()]
+    [{"type": "bridge", "connectedCells": bridgeCells}] + \
+    [{"type": "exit", "cell": value} for value in exits]
 with open('json/floorconnections.json', 'w') as f:
     json.dump(floorconnections, f)
 

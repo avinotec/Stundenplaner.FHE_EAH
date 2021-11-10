@@ -18,6 +18,11 @@
 package de.fhe.fhemobile.utils.navigation;
 
 
+import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_BRIDGE;
+import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_ELEVATOR;
+import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_EXIT;
+import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_STAIR;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -25,7 +30,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -50,6 +54,7 @@ public class JSONHandler {
     public static final String QR_CODE = "qrCode";              //$NON-NLS
     public static final String PERSONS = "persons";             //$NON-NLS
     public static final String CONNECTED_CELLS = "connectedCells";  //$NON-NLS
+    public static final String EXITCELLS = "cells";             //$NON-NLS
 
     //Constructor
     public JSONHandler() {
@@ -80,7 +85,7 @@ public class JSONHandler {
         }
         return json;
     } */
-    public static String readFloorPlanFromAssets(final Context context, final String jsonFile) throws IOException {
+    public static String readFloorGridFromAssets(final Context context, final String jsonFile){
         final StringBuffer text = new StringBuffer();
 
         try {
@@ -203,25 +208,38 @@ public class JSONHandler {
             for (int i = 0; i < jsonArray.length(); i++) {
 
                 final JSONObject jEntry = jsonArray.getJSONObject(i);
+                final String floorConnectionType = jEntry.optString(TYPE);
 
-                final ArrayList<FloorConnectionCell> connectedCells = new ArrayList<>();
-                final JSONArray connectedCellsJSON = jEntry.getJSONArray(CONNECTED_CELLS);
+                // floorconnection is a staircase or elevator or bridge
+                if(floorConnectionType.equals(FLOORCONNECTION_TYPE_ELEVATOR)
+                        || floorConnectionType.equals(FLOORCONNECTION_TYPE_STAIR)
+                        || floorConnectionType.equals(FLOORCONNECTION_TYPE_BRIDGE)){
 
-                for (int j = 0; j < connectedCellsJSON.length(); j++) {
+                    final ArrayList<FloorConnectionCell> connectedCells = new ArrayList<>();
+                    final JSONArray connectedCellsJSON = jEntry.getJSONArray(CONNECTED_CELLS);
 
-                    final JSONObject cellJSON = connectedCellsJSON.getJSONObject(j);
-                    final FloorConnectionCell cell = new FloorConnectionCell(cellJSON.optInt(X_COORDINATE),
-                            cellJSON.optInt(Y_COORDINATE),
-                            cellJSON.optString(BUILDING),
-                            cellJSON.optString(FLOOR),
-                            cellJSON.optBoolean(WALKABLE),
-                            jEntry.optString(TYPE));
+                    for (int j = 0; j < connectedCellsJSON.length(); j++) {
 
-                    connectedCells.add(cell);
+                        final JSONObject cellJSON = connectedCellsJSON.getJSONObject(j);
+                        final FloorConnectionCell cell = new FloorConnectionCell(cellJSON.optInt(X_COORDINATE),
+                                cellJSON.optInt(Y_COORDINATE),
+                                cellJSON.optString(BUILDING),
+                                cellJSON.optString(FLOOR),
+                                cellJSON.optBoolean(WALKABLE),
+                                floorConnectionType);
+
+                        connectedCells.add(cell);
+                    }
+
+                    final FloorConnection newConnection = new FloorConnection(floorConnectionType, connectedCells);
+                    floorConnections.add(newConnection);
+
+                }else if(floorConnectionType.equals(FLOORCONNECTION_TYPE_EXIT)){
+
+                    //todo model data structure for exit
                 }
-                final String type = jEntry.optString(TYPE);
-                final FloorConnection newConnection = new FloorConnection(type, connectedCells);
-                floorConnections.add(newConnection);
+
+
             }
         } catch (final Exception e) {
             Log.e(TAG, "error parsing JSON floorConnections array", e);
