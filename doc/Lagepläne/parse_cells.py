@@ -104,6 +104,9 @@ for file_name in os.listdir(fp_csv_folder):
 
         with open(fp_csv_folder + str(file_name)) as file:
             floorplan_csv = csv.reader(file, delimiter=';')
+            floorname = floor
+            if floorname == "-1":
+                floorname = "ug"
             generateJson(floorplan_csv, building, floor);
 
 #save rooms.json
