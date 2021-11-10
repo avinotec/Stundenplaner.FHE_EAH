@@ -23,7 +23,7 @@ import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_WAY;
 import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_height;
 import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_width;
 import static de.fhe.fhemobile.utils.navigation.NavigationUtils.Complex;
-import static de.fhe.fhemobile.utils.navigation.NavigationUtils.getFloorPlanName;
+import static de.fhe.fhemobile.utils.navigation.NavigationUtils.getPathToFloorPlanPNG;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -174,8 +174,8 @@ public class NavigationActivity extends BaseActivity {
 
         //Set the floor plan ImageView in the relative layout where the whole navigation is drawn in
         ImageView floorPlanView = new ImageView(this);
-        floorPlanView.setImageResource(getResources().getIdentifier("drawable/" +
-                getFloorPlanName(displayedComplex, floor), null, getPackageName()));
+        floorPlanView.setImageResource(getResources().getIdentifier(
+                getPathToFloorPlanPNG(displayedComplex, floor), null, getPackageName()));
         //grid for debugging
         //floorPlanView.setImageResource(getResources().getIdentifier("drawable/grid_for_debug", null, getPackageName()));
         if (navigationLayout != null) navigationLayout.addView(floorPlanView);

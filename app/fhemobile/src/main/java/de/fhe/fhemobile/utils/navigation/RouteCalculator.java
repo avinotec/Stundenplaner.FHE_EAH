@@ -21,7 +21,7 @@ package de.fhe.fhemobile.utils.navigation;
 import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_height;
 import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_width;
 import static de.fhe.fhemobile.utils.navigation.NavigationUtils.floorIntToString;
-import static de.fhe.fhemobile.utils.navigation.NavigationUtils.getFloorPlanName;
+import static de.fhe.fhemobile.utils.navigation.NavigationUtils.getNameOfFloorPlanGrid;
 
 import android.content.Context;
 import android.util.Log;
@@ -423,7 +423,7 @@ public class RouteCalculator {
             String json;
 
             //Get floor plan JSON from assets
-            json = JSONHandler.readFloorPlanFromAssets(context, getFloorPlanName(complex, floor) + ".json");
+            json = JSONHandler.readFloorPlanFromAssets(context, getNameOfFloorPlanGrid(complex, floor) + ".json");
             final HashMap<String, Cell> walkableCells = jsonHandler.parseJsonWalkableCells(json);
 
             //fill in rooms

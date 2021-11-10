@@ -35,74 +35,153 @@ public class NavigationUtils {
     }
 
     /**
-     * Get name of file for the floor plan - corresponds to file name without ending (.json / .jpeg /.png)
+     * Get path to floorplan png
      * @param complex
      * @param floor
-     * @return Name as String
+     * @return filepath to png
      */
-    public static String getFloorPlanName(final Complex complex, final String floor) {
-        String floorPlan = "";
+    public static String getPathToFloorPlanPNG(final Complex complex, final String floor) {
+        String filename = "";
+        String folder = "drawable/";
 
         if(complex.equals(Complex.COMPLEX_321)){
             switch (floor) {
                 case "ug":
-                    floorPlan = BUILDING_03_02_01_FLOOR_UG;
+                    filename = BUILDING_03_02_01_FLOOR_UG;
                     break;
                 case "00":
-                    floorPlan = BUILDING_03_02_01_FLOOR_00;
+                    filename = BUILDING_03_02_01_FLOOR_00;
                     break;
                 case "01":
-                    floorPlan = BUILDING_03_02_01_FLOOR_01;
+                    filename = BUILDING_03_02_01_FLOOR_01;
                     break;
                 case "02":
-                    floorPlan = BUILDING_03_02_01_FLOOR_02;
+                    filename = BUILDING_03_02_01_FLOOR_02;
                     break;
                 case "03":
-                    floorPlan = BUILDING_03_02_01_FLOOR_03;
+                    filename = BUILDING_03_02_01_FLOOR_03;
                     break;
                 case "04":
-                    floorPlan = BUILDING_03_02_01_FLOOR_04;
+                    filename = BUILDING_03_02_01_FLOOR_04;
                     break;
             }
         }
         else if(complex.equals(Complex.COMPLEX_4)){
             switch(floor){
                 case "ug":
-                    floorPlan = BUILDING_04_FLOOR_UG;
+                    filename = BUILDING_04_FLOOR_UG;
+
                     break;
                 case "00":
-                    floorPlan = BUILDING_04_FLOOR_00;
+                    filename = BUILDING_04_FLOOR_00;
                     break;
                 case "01":
-                    floorPlan = BUILDING_04_FLOOR_01;
+                    filename = BUILDING_04_FLOOR_01;
                     break;
                 case "02":
-                    floorPlan = BUILDING_04_FLOOR_02;
+                    filename = BUILDING_04_FLOOR_02;
                     break;
                 case "03":
-                    floorPlan = BUILDING_04_FLOOR_03;
+                    filename = BUILDING_04_FLOOR_03;
                     break;
             }
         } else if(complex.equals(Complex.COMPLEX_5)){
             switch (floor){
                 case "ug":
-                    floorPlan = BUILDING_05_FLOOR_UG;
+                    filename = BUILDING_05_FLOOR_UG_1;
+                    //todo: somehow check if level 1 or level 2 is needed
                     break;
                 case "00":
-                    floorPlan = BUILDING_05_FLOOR_00;
+                    filename = BUILDING_05_FLOOR_00;
                     break;
                 case "01":
-                    floorPlan = BUILDING_05_FLOOR_01;
+                    filename = BUILDING_05_FLOOR_01;
                     break;
                 case "02":
-                    floorPlan = BUILDING_05_FLOOR_02;
+                    filename = BUILDING_05_FLOOR_02;
                     break;
                 case "03":
-                    floorPlan = BUILDING_05_FLOOR_03;
+                    filename = BUILDING_05_FLOOR_03_1;
+                    //todo: somehow check if level 1 or level 2 is needed
                     break;
             }
         }
-        return floorPlan;
+        return folder + filename;
+    }
+
+    /**
+     * Get path to floorplan grid as json
+     * @param complex
+     * @param floor
+     * @return filepath to json
+     */
+    public static String getNameOfFloorPlanGrid(final Complex complex, final String floor) {
+        String filename = "";
+        String ending = ".json";
+
+        if(complex.equals(Complex.COMPLEX_321)){
+            switch (floor) {
+                case "ug":
+                    filename = BUILDING_03_02_01_FLOOR_UG;
+                    break;
+                case "00":
+                    filename = BUILDING_03_02_01_FLOOR_00;
+                    break;
+                case "01":
+                    filename = BUILDING_03_02_01_FLOOR_01;
+                    break;
+                case "02":
+                    filename = BUILDING_03_02_01_FLOOR_02;
+                    break;
+                case "03":
+                    filename = BUILDING_03_02_01_FLOOR_03;
+                    break;
+                case "04":
+                    filename = BUILDING_03_02_01_FLOOR_04;
+                    break;
+            }
+        }
+        else if(complex.equals(Complex.COMPLEX_4)){
+            switch(floor){
+                case "ug":
+                    filename = BUILDING_04_FLOOR_UG;
+
+                    break;
+                case "00":
+                    filename = BUILDING_04_FLOOR_00;
+                    break;
+                case "01":
+                    filename = BUILDING_04_FLOOR_01;
+                    break;
+                case "02":
+                    filename = BUILDING_04_FLOOR_02;
+                    break;
+                case "03":
+                    filename = BUILDING_04_FLOOR_03;
+                    break;
+            }
+        } else if(complex.equals(Complex.COMPLEX_5)){
+            switch (floor){
+                case "ug":
+                    filename = BUILDING_05_FLOOR_UG_1;
+                    //todo: somehow check if level 1 or level 2 is needed
+                    break;
+                case "00":
+                    filename = BUILDING_05_FLOOR_00;
+                    break;
+                case "01":
+                    filename = BUILDING_05_FLOOR_01;
+                    break;
+                case "02":
+                    filename = BUILDING_05_FLOOR_02;
+                    break;
+                case "03":
+                    filename = BUILDING_05_FLOOR_03_1;
+                    //todo: somehow check if level 1 or level 2 is needed
+                    break;
+            }
+        }
+        return filename + ending;
     }
 
     /**
@@ -116,7 +195,7 @@ public class NavigationUtils {
 
         switch (index) {
             case -1:
-                currentFloor = "ug";
+                currentFloor = "-1";
                 break;
             case 0:
                 currentFloor = "00";
