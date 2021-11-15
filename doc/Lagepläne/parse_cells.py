@@ -11,6 +11,10 @@ def generateJson(csv_reader, building, floor):
     for row in csv_reader:
         for x in range(len(row)):
 
+            floornumber = floor
+            if floornumber == "-1":
+                floornumber = "ug"
+
             #walkable cell    
             if row[x] == 'w':
                 cell = { "xCoordinate": x, "yCoordinate": y, "walkable": True }
@@ -18,7 +22,7 @@ def generateJson(csv_reader, building, floor):
 
             #stairs
             elif row[x] == 's':
-                connected_cell = { "building": building, "floor": floor,
+                connected_cell = { "building": building, "floor": floornumber,
                                         "xCoordinate": x, "yCoordinate": y,
                                         "walkable": True
                                 }
@@ -29,7 +33,7 @@ def generateJson(csv_reader, building, floor):
 
             #elevator
             elif row[x] == 'e':
-                connected_cell = { "building": building, "floor": floor,
+                connected_cell = { "building": building, "floor": floornumber,
                                     "xCoordinate": x, "yCoordinate": y,
                                     "walkable": True
                                     }
@@ -40,7 +44,7 @@ def generateJson(csv_reader, building, floor):
 
             #bridge
             elif row[x] == "bridge":
-                bridge_cell = { "building": building, "floor": floor,
+                bridge_cell = { "building": building, "floor": floornumber,
                                     "xCoordinate": x, "yCoordinate": y,
                                     "walkable": True
                                     }
@@ -50,7 +54,7 @@ def generateJson(csv_reader, building, floor):
             #room
             elif re.match('\d+', row[x]):
                 roomnumber = row[x]
-                room = { "roomNumber": roomnumber, "building": building, "floor": floor,
+                room = { "roomNumber": roomnumber, "building": building, "floor": floornumber,
             	            "persons": [],
                             "qrCode": building + floor + roomnumber,
                             "xCoordinate": x, "yCoordinate": y,
@@ -60,7 +64,7 @@ def generateJson(csv_reader, building, floor):
 
             #exit/entry
             elif row[x] == "exit":
-                exit = {"building": building, "floor": floor,
+                exit = {"building": building, "floor": floornumber,
                                     "xCoordinate": x, "yCoordinate": y,
                                     "walkable": True}
                 exits.append(exit)
@@ -91,22 +95,17 @@ exits = []
 
 #read in csv files
 for file_name in os.listdir(fp_csv_folder):
-    if re.match(r'cellplan_0[12345]-((0[01234])|(ug))(_level1|2)?\.CSV', file_name): #check correct file name pattern
-        #todo check if ug_level 1 and ug_ level 2 are read in
+    if re.match(r'cellplan_0[12345]-((0[01234])|(ug))(_level1|_level2)?\.CSV', file_name): #check correct file name pattern
+        #todo check if ug_level 1 and ug_level 2 are read in
         print(file_name)
         #get building and floor
         building = file_name[9:11] #todo: Ermittlung des Floors für 05.03 Ebene 1 und EBene 2 überprüfen
         floor = file_name[12:14]
-        # correct ug to -1
-        if floor == "ug": 
-            floor = "-1"
         
 
         with open(fp_csv_folder + str(file_name)) as file:
             floorplan_csv = csv.reader(file, delimiter=';')
             floorname = floor
-            if floorname == "-1":
-                floorname = "ug"
             generateJson(floorplan_csv, building, floor);
 
 #save rooms.json
@@ -133,7 +132,7 @@ for i in ['ug', '00', '01', '02', '03', '04']:
     
     json_building321 = json_building03 + json_building02 + json_building03
 
-    with open('json/building_03_02_01_floor_'+i+'.json', 'w') as f:
+    with open('json/building_03_02_01_floor_'+ i +'.json', 'w') as f:
         json.dump(json_building321, f)
 
         
