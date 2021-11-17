@@ -433,7 +433,8 @@ public class NavigationActivity extends BaseActivity {
         spinnerItems.add(resource.getString(R.string.building_05_floor_00));
         spinnerItems.add(resource.getString(R.string.building_05_floor_01));
         spinnerItems.add(resource.getString(R.string.building_05_floor_02));
-        spinnerItems.add(resource.getString(R.string.building_05_floor_03));
+        spinnerItems.add(resource.getString(R.string.building_05_floor_03_level1));
+        spinnerItems.add(resource.getString(R.string.building_05_floor_03_level2));
 
         return spinnerItems;
     }
@@ -577,9 +578,14 @@ public class NavigationActivity extends BaseActivity {
                 helperBuildingAndFloor.add("05");
                 helperBuildingAndFloor.add("02");
             }
-            else if (in.equals(getLocaleStringResource(R.string.building_05_floor_03))) {
+            else if (in.equals(getLocaleStringResource(R.string.building_05_floor_03_level1))) {
                 helperBuildingAndFloor.add("05");
                 helperBuildingAndFloor.add("03");
+            }
+            else if (in.equals(getLocaleStringResource(R.string.building_05_floor_03_level2))) {
+                helperBuildingAndFloor.add("05");
+                helperBuildingAndFloor.add("03");
+                //todo: Unterscheidung level1 und level2
             }
         } catch (Exception e) {
             Log.e(TAG, "error getting building and floor:", e);

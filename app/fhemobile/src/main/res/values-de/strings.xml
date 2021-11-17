@@ -52,7 +52,7 @@
     <string name="employee_mail" >E-Mail</string>
     <string name="employee_room" >Raum</string>
 
-    <string name="maps_up" >Etage hoch</string>
+    <string name="maps_up" >Etage höher</string>
     <string name="maps_down" >Etage runter</string>
 
     <string name="timetable_headline" >Bitte wähle deinen Studiengang. (Deine Auswahl kannst du jederzeit in den Einstellungen ändern)</string>
@@ -65,7 +65,7 @@
     <string name="timetable_switch" >Auswahl speichern</string>
     <string name="timetable_reset" >Auswahl löschen</string>
     <string name="timetable_week" >Kalenderwoche</string>
-    <string name="timetable_error_incomplete" >Bitte triff eine Wahl für jedes Feld</string>
+    <string name="timetable_error_incomplete" >Bitte füll alle benötigten Felder aus.</string>
 
     <string name="aqua_open" >Geöffnet</string>
     <string name="aqua_closed" >Geschlossen</string>
@@ -73,7 +73,7 @@
     <string name="mail_default_subject" >Betreff</string>
     <string name="mail_default_text" >Mit freundlichen Grüßen aus der EAH App</string>
 
-    <string name="network_error" >Es konnten keine Daten gefunden werden.</string>
+    <string name="network_error" >Keine Daten gefunden.</string>
 
     <string name="title_activity_maps_single" >Lageplan</string>
     <!-- string name="title_activity_time_table_events" >Stundenplan</string -->
@@ -88,12 +88,11 @@
     <string name="professor">Professor</string>
 	<string name="mensa_food_no_data_available">Keine Daten verfügbar</string>
 	<string name="my_time_table_add_lesson">Kurs hinzufügen</string>
-	<string name="loading">Loading…</string>
-    <string name="my_time_table_empty_text_calendar">Du hast noch keinen Stundenplan erstellt.</string>
+	<string name="loading">Lädt…</string>
+    <string name="my_time_table_empty_text_calendar">Du hast noch keinen Stundenplan zusammengestellt.</string>
 	<string name="my_time_table_empty_text_edit">Du hast noch keine Vorlesungen ausgewählt.</string>
 	<string name="my_time_table_empty_text_select">Wähle Studiengang und Semester aus.</string>
 
-    <string name="impress_data_protection_link"><a href="https://www.eah-jena.de/datenschutz">Datenschutz</a></string>
     <string name="notification_error_ssl_cert_invalid">Es ist ein Zertifikat-Fehler aufgetreten. Möchtest du die Seite trotzdem öffnen?</string>
     <string name="ssl_error_cancel">Abbrechen</string>
     <string name="ssl_error_continue">Fortfahren</string>
@@ -124,7 +123,6 @@
     <string name="building_05_floor_00">Haus 5: Erdgeschoss</string>
     <string name="building_05_floor_01">Haus 5: 1. Stockwerk</string>
     <string name="building_05_floor_02">Haus 5: 2. Stockwerk</string>
-    <string name="building_05_floor_03">Haus 5: 3. Stockwerk</string>
     <string name="button_location_text">Suchen</string>
     <string name="hint_search_room">xx.xx.xx</string>
     <string name="error_message_room_input">Raum nicht gefunden!</string>
@@ -138,5 +136,14 @@
     <string name="text_view_oder">oder</string>
     <string name="role">Aufgabe</string>
 	<string name="today">Heute</string>
+    <string name="building_03_02_01_ground">Haus 3, 2 und 1</string>
+    <string name="building_04_ground">Haus 4</string>
+    <string name="building_05_floor_ground">Haus 5</string>
+    <string name="building_05_floor_03_level1">Haus 5: 3. Stockwerk, Ebene 1</string>
+    <string name="building_05_floor_03_level2">Haus 5: 3. Stockwerk, Ebene 2</string>
+    <string name="building_04">Haus 4</string>
+    <string name="building_03_02_01">Haus 3, 2 und 1</string>
+    <string name="building_05">Haus 5</string>
+    <string name="campus_overview">Campus Übersicht</string>
 
 </resources>

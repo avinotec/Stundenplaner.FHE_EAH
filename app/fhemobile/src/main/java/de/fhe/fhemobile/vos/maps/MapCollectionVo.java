@@ -23,17 +23,22 @@ import java.util.List;
  */
 public class MapCollectionVo {
 
-    public MapCollectionVo(final String _name, final List<MapVo> _maps) {
-        mName = _name;
+    /**
+     *
+     * @param _stringID string resource ID of the name's string e.g. "House 4"
+     * @param _maps
+     */
+    public MapCollectionVo(final int _stringID, final List<MapVo> _maps) {
+        mNameID = _stringID;
         mMaps = _maps;
     }
 
-    public String getName() {
-        return mName;
+    public int getNameID() {
+        return mNameID;
     }
 
-    public void setName(final String _name) {
-        mName = _name;
+    public void setNameID(final int _stringID) {
+        mNameID = _stringID;
     }
 
     public List<MapVo> getMaps() {
@@ -44,6 +49,6 @@ public class MapCollectionVo {
         mMaps = _maps;
     }
 
-    private String      mName;
+    private int mNameID;
     private List<MapVo> mMaps;
 }

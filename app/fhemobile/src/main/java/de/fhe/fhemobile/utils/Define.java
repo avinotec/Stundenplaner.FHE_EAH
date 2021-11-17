@@ -23,7 +23,7 @@ package de.fhe.fhemobile.utils;
  */
 public class Define {
 
-	public static class Navigation {
+	public static class Maps{
 		public static final String BUILDING_03_02_01_FLOOR_UG = "building_03_02_01_floor_ug";   //$NON-NLS
 		public static final String BUILDING_03_02_01_FLOOR_00 = "building_03_02_01_floor_00";   //$NON-NLS
 		public static final String BUILDING_03_02_01_FLOOR_01 = "building_03_02_01_floor_01";   //$NON-NLS
@@ -37,15 +37,20 @@ public class Define {
 		public static final String BUILDING_04_FLOOR_02 = "building_04_floor_02";   //$NON-NLS
 		public static final String BUILDING_04_FLOOR_03 = "building_04_floor_03";   //$NON-NLS
 		public static final String BUILDING_04_GROUND = "building_04_ground";   	//$NON-NLS
-		public static final String BUILDING_05_FLOOR_UG_1 = "building_05_floor_ug";   //$NON-NLS
-		public static final String BUILDING_05_FLOOR_UG_2 = "building_05_floor_ug";   //$NON-NLS
+		public static final String BUILDING_05_FLOOR_UG = "building_05_floor_ug";   //$NON-NLS
 		public static final String BUILDING_05_FLOOR_00 = "building_05_floor_00";   //$NON-NLS
 		public static final String BUILDING_05_FLOOR_01 = "building_05_floor_01";   //$NON-NLS
 		public static final String BUILDING_05_FLOOR_02 = "building_05_floor_02";   //$NON-NLS
+		public static final String BUILDING_05_GROUND = "building_05_ground";   //$NON-NLS
+		// filename for floorgrid for 05.03.xx
+		public static final String BUILDING_05_FLOOR_03 = "building_05_floor_03";   //$NON-NLS
+		//filenames for PNG for 05.03.xx
 		public static final String BUILDING_05_FLOOR_03_1 = "building_05_floor_03_level1";   //$NON-NLS
 		public static final String BUILDING_05_FLOOR_03_2 = "building_05_floor_03_level2";   //$NON-NLS
-		public static final String BUILDING_05_GROUND = "building_05_ground";   //$NON-NLS
+	}
 
+
+	public static class Navigation {
 		public static final String BUILDING_01 = "01";  //$NON-NLS
 		public static final String BUILDING_02 = "02";  //$NON-NLS
 		public static final String BUILDING_03 = "03";  //$NON-NLS

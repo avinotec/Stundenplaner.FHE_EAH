@@ -24,17 +24,26 @@ public class MapVo {
     public MapVo() {
     }
 
-    public MapVo(final String _name, final String _imageUrl) {
-        mName = _name;
+    /**
+     * Map Value Object
+     * @param _stringID id of the string resource for the name of the map e.g. "House 4: 1st floor"
+     * @param _imageUrl
+     */
+    public MapVo(final int _stringID, final String _imageUrl) {
+        mNameID = _stringID;
         mImageUrl = _imageUrl;
     }
 
-    public String getName() {
-        return mName;
+    /**
+     * returns resource ID for the name's string
+     * @return string resource ID
+     */
+    public int getNameID() {
+        return mNameID;
     }
 
-    public void setName(final String _name) {
-        mName = _name;
+    public void setNameID(final int _nameID) {
+        mNameID = _nameID;
     }
 
     public String getImageUrl() {
@@ -47,6 +56,6 @@ public class MapVo {
 //    }
 // --Commented out by Inspection STOP (02.11.2021 17:09)
 
-    private String mName;
+    private int mNameID;
     private String mImageUrl;
 }

@@ -1,6 +1,6 @@
 package de.fhe.fhemobile.utils.navigation;
 
-import static de.fhe.fhemobile.utils.Define.Navigation.*;
+import de.fhe.fhemobile.utils.Define;
 
 public class NavigationUtils {
 
@@ -47,61 +47,60 @@ public class NavigationUtils {
         if(complex.equals(Complex.COMPLEX_321)){
             switch (floor) {
                 case "ug":
-                    filename = BUILDING_03_02_01_FLOOR_UG;
+                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_UG;
                     break;
                 case "00":
-                    filename = BUILDING_03_02_01_FLOOR_00;
+                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_00;
                     break;
                 case "01":
-                    filename = BUILDING_03_02_01_FLOOR_01;
+                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_01;
                     break;
                 case "02":
-                    filename = BUILDING_03_02_01_FLOOR_02;
+                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_02;
                     break;
                 case "03":
-                    filename = BUILDING_03_02_01_FLOOR_03;
+                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_03;
                     break;
                 case "04":
-                    filename = BUILDING_03_02_01_FLOOR_04;
+                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_04;
                     break;
             }
         }
         else if(complex.equals(Complex.COMPLEX_4)){
             switch(floor){
                 case "ug":
-                    filename = BUILDING_04_FLOOR_UG;
+                    filename = Define.Maps.BUILDING_04_FLOOR_UG;
 
                     break;
                 case "00":
-                    filename = BUILDING_04_FLOOR_00;
+                    filename = Define.Maps.BUILDING_04_FLOOR_00;
                     break;
                 case "01":
-                    filename = BUILDING_04_FLOOR_01;
+                    filename = Define.Maps.BUILDING_04_FLOOR_01;
                     break;
                 case "02":
-                    filename = BUILDING_04_FLOOR_02;
+                    filename = Define.Maps.BUILDING_04_FLOOR_02;
                     break;
                 case "03":
-                    filename = BUILDING_04_FLOOR_03;
+                    filename = Define.Maps.BUILDING_04_FLOOR_03;
                     break;
             }
         } else if(complex.equals(Complex.COMPLEX_5)){
             switch (floor){
                 case "ug":
-                    filename = BUILDING_05_FLOOR_UG_1;
-                    //todo: somehow check if level 1 or level 2 is needed
+                    filename = Define.Maps.BUILDING_05_FLOOR_UG;
                     break;
                 case "00":
-                    filename = BUILDING_05_FLOOR_00;
+                    filename = Define.Maps.BUILDING_05_FLOOR_00;
                     break;
                 case "01":
-                    filename = BUILDING_05_FLOOR_01;
+                    filename = Define.Maps.BUILDING_05_FLOOR_01;
                     break;
                 case "02":
-                    filename = BUILDING_05_FLOOR_02;
+                    filename = Define.Maps.BUILDING_05_FLOOR_02;
                     break;
                 case "03":
-                    filename = BUILDING_05_FLOOR_03_1;
+                    filename = Define.Maps.BUILDING_05_FLOOR_03_1;
                     //todo: somehow check if level 1 or level 2 is needed
                     break;
             }
@@ -122,62 +121,60 @@ public class NavigationUtils {
         if(complex.equals(Complex.COMPLEX_321)){
             switch (floor) {
                 case "ug":
-                    filename = BUILDING_03_02_01_FLOOR_UG;
+                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_UG;
                     break;
                 case "00":
-                    filename = BUILDING_03_02_01_FLOOR_00;
+                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_00;
                     break;
                 case "01":
-                    filename = BUILDING_03_02_01_FLOOR_01;
+                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_01;
                     break;
                 case "02":
-                    filename = BUILDING_03_02_01_FLOOR_02;
+                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_02;
                     break;
                 case "03":
-                    filename = BUILDING_03_02_01_FLOOR_03;
+                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_03;
                     break;
                 case "04":
-                    filename = BUILDING_03_02_01_FLOOR_04;
+                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_04;
                     break;
             }
         }
         else if(complex.equals(Complex.COMPLEX_4)){
             switch(floor){
                 case "ug":
-                    filename = BUILDING_04_FLOOR_UG;
+                    filename = Define.Maps.BUILDING_04_FLOOR_UG;
 
                     break;
                 case "00":
-                    filename = BUILDING_04_FLOOR_00;
+                    filename = Define.Maps.BUILDING_04_FLOOR_00;
                     break;
                 case "01":
-                    filename = BUILDING_04_FLOOR_01;
+                    filename = Define.Maps.BUILDING_04_FLOOR_01;
                     break;
                 case "02":
-                    filename = BUILDING_04_FLOOR_02;
+                    filename = Define.Maps.BUILDING_04_FLOOR_02;
                     break;
                 case "03":
-                    filename = BUILDING_04_FLOOR_03;
+                    filename = Define.Maps.BUILDING_04_FLOOR_03;
                     break;
             }
         } else if(complex.equals(Complex.COMPLEX_5)){
             switch (floor){
                 case "ug":
-                    filename = BUILDING_05_FLOOR_UG_1;
-                    //todo: somehow check if level 1 or level 2 is needed
+                    filename = Define.Maps.BUILDING_05_FLOOR_UG;
                     break;
                 case "00":
-                    filename = BUILDING_05_FLOOR_00;
+                    filename = Define.Maps.BUILDING_05_FLOOR_00;
                     break;
                 case "01":
-                    filename = BUILDING_05_FLOOR_01;
+                    filename = Define.Maps.BUILDING_05_FLOOR_01;
                     break;
                 case "02":
-                    filename = BUILDING_05_FLOOR_02;
+                    filename = Define.Maps.BUILDING_05_FLOOR_02;
                     break;
                 case "03":
-                    filename = BUILDING_05_FLOOR_03_1;
-                    //todo: somehow check if level 1 or level 2 is needed
+                    filename = Define.Maps.BUILDING_05_FLOOR_03_1;
                     break;
             }
         }

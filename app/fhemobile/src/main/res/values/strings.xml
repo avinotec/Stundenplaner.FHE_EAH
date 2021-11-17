@@ -92,7 +92,7 @@
     <string name="my_time_table_empty_text_edit">You did not choose a lesson.</string>
     <string name="my_time_table_empty_text_select">Choose study course and semester.</string>
 
-    <string name="impress_data_protection_link"><a href="https://www.eah-jena.de/datenschutz">Data protection</a></string>
+    <string name="impress_data_protection_link" translatable="false"><a href="https://www.eah-jena.de/datenschutz">Data protection</a></string>
     <string name="notification_error_ssl_cert_invalid">A SSL-Certificate occurred. Do you want to proceed?</string>
     <string name="ssl_error_continue">Continue</string>
     <string name="ssl_error_cancel">Cancel</string>
@@ -108,22 +108,26 @@
     <string name="text_view_button_start_location">Your current position:</string>
     <!-- string name="action_language">Language</string -->
     <string name="select_from_spinner">Please select</string>
-    <string name="building_03_02_01_floor_ug">House 3, 2 and 1: basement</string>
-    <string name="building_03_02_01_floor_00">House 3, 2 and 1: ground floor</string>
-    <string name="building_03_02_01_floor_01">House 3, 2 and 1: 1st floor</string>
-    <string name="building_03_02_01_floor_02">House 3, 2 and 1: 2nd floor</string>
-    <string name="building_03_02_01_floor_03">House 3, 2 and 1: 3rd floor</string>
-    <string name="building_03_02_01_floor_04">House 3, 2 and 1: 4th floor </string>
-    <string name="building_04_floor_ug">House 4: basement</string>
-    <string name="building_04_floor_00">House 4: ground floor</string>
-    <string name="building_04_floor_01">House 4: 1st floor</string>
-    <string name="building_04_floor_02">House 4: 2nd floor</string>
-    <string name="building_04_floor_03">House 4: 3rd floor</string>
-    <string name="building_05_floor_ug">House 5: basement</string>
-    <string name="building_05_floor_00">House 5: ground floor</string>
-    <string name="building_05_floor_01">House 5: 1st floor</string>
-    <string name="building_05_floor_02">House 5: 2nd floor</string>
-    <string name="building_05_floor_03">House 5: 3rd floor</string>
+    <string name="building_03_02_01_ground">Building 3, 2 and 1</string>
+    <string name="building_03_02_01_floor_ug">Building 3, 2 and 1: basement</string>
+    <string name="building_03_02_01_floor_00">Building 3, 2 and 1: ground floor</string>
+    <string name="building_03_02_01_floor_01">Building 3, 2 and 1: 1st floor</string>
+    <string name="building_03_02_01_floor_02">Building 3, 2 and 1: 2nd floor</string>
+    <string name="building_03_02_01_floor_03">Building 3, 2 and 1: 3rd floor</string>
+    <string name="building_03_02_01_floor_04">"Building 3, 2 and 1: 4th floor "</string>
+    <string name="building_04_ground">Building 4: basement</string>
+    <string name="building_04_floor_ug">Building 4: basement</string>
+    <string name="building_04_floor_00">Building 4: ground floor</string>
+    <string name="building_04_floor_01">Building 4: 1st floor</string>
+    <string name="building_04_floor_02">Building 4: 2nd floor</string>
+    <string name="building_04_floor_03">Building 4: 3rd floor</string>
+    <string name="building_05_floor_ground">Building 5</string>
+    <string name="building_05_floor_ug">Building 5: basement</string>
+    <string name="building_05_floor_00">Building 5: ground floor</string>
+    <string name="building_05_floor_01">Building 5: 1st floor</string>
+    <string name="building_05_floor_02">Building 5: 2nd floor</string>
+    <string name="building_05_floor_03_level1">Building 5: 3rd floor, level 1</string>
+    <string name="building_05_floor_03_level2">Building 5: 3rd floor, level 2</string>
     <string name="button_location_text">Search</string>
     <string name="hint_search_room">xx.xx.xx</string>
     <string name="error_message_room_input">Room not found!</string>
@@ -138,6 +142,10 @@
     <string name="maps_up" >One floor up</string>
     <string name="maps_down" >One floor down</string>
 	<string name="today">Today</string>
+    <string name="building_04">Building 4</string>
+    <string name="building_03_02_01">Building 3, 2 and 1</string>
+    <string name="building_05">Building 5</string>
+    <string name="campus_overview">Campus Overview</string>
 
 
 </resources>

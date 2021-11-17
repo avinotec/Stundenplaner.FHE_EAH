@@ -50,7 +50,8 @@ public class MapsSingleActivity extends BaseActivity {
                     .add(R.id.container, MapsSingleFragment.newInstance(mMapId))
                     .commit();
 
-            getSupportActionBar().setTitle(MapsModel.getInstance().getMaps().get(mMapId).getName());
+            String title = getResources().getString(MapsModel.getInstance().getMaps().get(mMapId).getNameID());
+            getSupportActionBar().setTitle(title);
         }
         catch (final Exception e){
             Log.e(TAG, "Fehler beim Aufrufen des Fragments: ",e );

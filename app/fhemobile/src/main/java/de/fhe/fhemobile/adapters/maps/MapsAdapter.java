@@ -112,7 +112,7 @@ public class MapsAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.mMapName.setText(mItems.get(position).getName());
+        viewHolder.mMapName.setText(mContext.getResources().getString(mItems.get(position).getNameID()));
 
         return convertView;
     }

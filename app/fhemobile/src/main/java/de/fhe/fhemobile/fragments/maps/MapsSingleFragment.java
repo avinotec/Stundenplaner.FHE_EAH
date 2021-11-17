@@ -91,7 +91,7 @@ public class MapsSingleFragment extends Fragment {
                 mView.initializeView(map);
             }
 
-            updateActionBarTitle(map.getName());
+            updateActionBarTitle(getContext().getResources().getString(map.getNameID()));
         }catch (Exception e){
             mView = new MapsSingleView(getContext(), new AttributeSet() {
                 @Override
@@ -243,7 +243,7 @@ public class MapsSingleFragment extends Fragment {
                 MapVo map = mMap.getMaps().get(mCurrentMapIndex);
 
                 mView.initializeView(map);
-                updateActionBarTitle(map.getName());
+                updateActionBarTitle(getContext().getResources().getString(map.getNameID()));
             }
             return true;
         } else if (itemId == R.id.action_down) {
@@ -252,7 +252,7 @@ public class MapsSingleFragment extends Fragment {
                 MapVo map = mMap.getMaps().get(mCurrentMapIndex);
 
                 mView.initializeView(map);
-                updateActionBarTitle(map.getName());
+                updateActionBarTitle(getContext().getResources().getString(map.getNameID()));
             }
             return true;
 
