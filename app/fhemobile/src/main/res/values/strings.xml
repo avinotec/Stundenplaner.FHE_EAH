@@ -108,6 +108,10 @@
     <string name="text_view_button_start_location">Your current position:</string>
     <!-- string name="action_language">Language</string -->
     <string name="select_from_spinner">Please select</string>
+    <string name="campus_overview">Campus Overview</string>
+    <string name="building_03_02_01">Building 3, 2 and 1</string>
+    <string name="building_04">Building 4</string>
+    <string name="building_05">Building 5</string>
     <string name="building_03_02_01_ground">Building 3, 2 and 1</string>
     <string name="building_03_02_01_floor_ug">Building 3, 2 and 1: basement</string>
     <string name="building_03_02_01_floor_00">Building 3, 2 and 1: ground floor</string>
@@ -115,7 +119,7 @@
     <string name="building_03_02_01_floor_02">Building 3, 2 and 1: 2nd floor</string>
     <string name="building_03_02_01_floor_03">Building 3, 2 and 1: 3rd floor</string>
     <string name="building_03_02_01_floor_04">"Building 3, 2 and 1: 4th floor "</string>
-    <string name="building_04_ground">Building 4: basement</string>
+    <string name="building_04_ground">Building 4</string>
     <string name="building_04_floor_ug">Building 4: basement</string>
     <string name="building_04_floor_00">Building 4: ground floor</string>
     <string name="building_04_floor_01">Building 4: 1st floor</string>
@@ -142,10 +146,8 @@
     <string name="maps_up" >One floor up</string>
     <string name="maps_down" >One floor down</string>
 	<string name="today">Today</string>
-    <string name="building_04">Building 4</string>
-    <string name="building_03_02_01">Building 3, 2 and 1</string>
-    <string name="building_05">Building 5</string>
-    <string name="campus_overview">Campus Overview</string>
+
+
 
 
 </resources>

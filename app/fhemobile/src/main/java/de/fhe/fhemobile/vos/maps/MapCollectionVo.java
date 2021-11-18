@@ -29,7 +29,7 @@ public class MapCollectionVo {
      * @param _maps
      */
     public MapCollectionVo(final int _stringID, final List<MapVo> _maps) {
-        mNameID = _stringID;
+        mNameID = _stringID;        //edited by Nadja 17.11.2021
         mMaps = _maps;
     }
 

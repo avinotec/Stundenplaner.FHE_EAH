@@ -108,21 +108,30 @@
     <string name="title_scanner_activity">Scanner</string>
     <string name="title_navigation_activity">Navigation</string>
     <string name="select_from_spinner">Bitte wählen</string>
+    <string name="campus_overview">Campus Übersicht</string>
+    <string name="building_03_02_01">Haus 3, 2 und 1</string>
+    <string name="building_04">Haus 4</string>
+    <string name="building_05">Haus 5</string>
+    <string name="building_03_02_01_ground">Haus 3, 2 und 1</string>
     <string name="building_03_02_01_floor_ug">Haus 3, 2 und 1: Untergeschoss</string>
     <string name="building_03_02_01_floor_00">Haus 3, 2 und 1: Erdgeschoss</string>
     <string name="building_03_02_01_floor_01">Haus 3, 2 und 1: 1. Stockwerk</string>
     <string name="building_03_02_01_floor_02">Haus 3, 2 und 1: 2. Stockwerk</string>
     <string name="building_03_02_01_floor_03">Haus 3, 2 und 1: 3. Stockwerk</string>
     <string name="building_03_02_01_floor_04">Haus 3, 2 und 1: 4. Stockwerk</string>
+    <string name="building_04_ground">Haus 4</string>
     <string name="building_04_floor_ug">Haus 4: Untergeschoss</string>
     <string name="building_04_floor_00">Haus 4: Erdgeschoss</string>
     <string name="building_04_floor_01">Haus 4: 1. Stockwerk</string>
     <string name="building_04_floor_02">Haus 4: 2. Stockwerk</string>
     <string name="building_04_floor_03">Haus 4: 3. Stockwerk</string>
+    <string name="building_05_floor_ground">Haus 5</string>
     <string name="building_05_floor_ug">Haus 5: Untergeschoss</string>
     <string name="building_05_floor_00">Haus 5: Erdgeschoss</string>
     <string name="building_05_floor_01">Haus 5: 1. Stockwerk</string>
     <string name="building_05_floor_02">Haus 5: 2. Stockwerk</string>
+    <string name="building_05_floor_03_level1">Haus 5: 3. Stockwerk, Ebene 1</string>
+    <string name="building_05_floor_03_level2">Haus 5: 3. Stockwerk, Ebene 2</string>
     <string name="button_location_text">Suchen</string>
     <string name="hint_search_room">xx.xx.xx</string>
     <string name="error_message_room_input">Raum nicht gefunden!</string>
@@ -136,14 +145,7 @@
     <string name="text_view_oder">oder</string>
     <string name="role">Aufgabe</string>
 	<string name="today">Heute</string>
-    <string name="building_03_02_01_ground">Haus 3, 2 und 1</string>
-    <string name="building_04_ground">Haus 4</string>
-    <string name="building_05_floor_ground">Haus 5</string>
-    <string name="building_05_floor_03_level1">Haus 5: 3. Stockwerk, Ebene 1</string>
-    <string name="building_05_floor_03_level2">Haus 5: 3. Stockwerk, Ebene 2</string>
-    <string name="building_04">Haus 4</string>
-    <string name="building_03_02_01">Haus 3, 2 und 1</string>
-    <string name="building_05">Haus 5</string>
-    <string name="campus_overview">Campus Übersicht</string>
+
+
 
 </resources>

@@ -30,7 +30,7 @@ public class MapVo {
      * @param _imageUrl
      */
     public MapVo(final int _stringID, final String _imageUrl) {
-        mNameID = _stringID;
+        mNameID = _stringID;        //edited by Nadja 17.11.2021
         mImageUrl = _imageUrl;
     }
 
