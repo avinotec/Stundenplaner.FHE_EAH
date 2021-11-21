@@ -60,6 +60,7 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
     private static final String JUST_LOCATION = "location";
     // --Commented out by Inspection (02.11.2021 17:27):private static final String JSON_FILE_ROOMS = "rooms.json";
 
+
     //Variables
     private String destinationQRCode;
     private ArrayList<Room> rooms = new ArrayList<>();
@@ -72,6 +73,8 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
     private int personsIndex = 0;
     //json string containing rooms, to send rooms via intent
     private String roomsJson;
+    final private ArrayList<String> roomNames = new ArrayList<>();
+    final private ArrayList<String> persons = new ArrayList<>();
 
     private View      mView;
 
@@ -94,17 +97,16 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_navigation_dialog, container, false);
 
+        loadRoomNamesAndPersons();
         //Spinners
-        final ArrayList[] roomNamesAndPersons = loadRoomNamesAndPersons();
-        final Spinner[] spinners = getSpinners(roomNamesAndPersons[0], roomNamesAndPersons[1]);
-        final Spinner searchByRoomSpinner = spinners[0];
-        final Spinner searchByPersonSpinner = spinners[1];
+        Spinner[] spinners = getSpinners();
+        Spinner searchByRoomSpinner = spinners[0];
+        Spinner searchByPersonSpinner = spinners[1];
 
         //Start location input field
         startLocationDisplayedErrorText = mView.findViewById(R.id.input_field_search_start_room_layout);
         startLocationInputText = mView.findViewById(R.id.input_field_search_start_room_edit);
         startLocationInputText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
             @Override
             public boolean onEditorAction(final TextView textView, final int actionId, final KeyEvent keyEvent) {
 
@@ -136,8 +138,8 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
         findCurrentLocationByQRButton.setOnClickListener(this);
 
         //Find current location button text
-        final Button findCurrentLocationbyTextinputButton = mView.findViewById(R.id.button_location_text);
-        findCurrentLocationbyTextinputButton.setOnClickListener(this);
+        final Button findCurrentLocationByTextInputButton = mView.findViewById(R.id.button_location_text);
+        findCurrentLocationByTextInputButton.setOnClickListener(this);
 
         return mView;
     }
@@ -156,10 +158,9 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
     }
 
     /**
-     * Reads room list from json files and generates person list
-     * @return RoomNames[] Persons[]
+     * Reads room list from json files, generates person list and saves both to global variables roomNames and persons
      */
-    private ArrayList[] loadRoomNamesAndPersons(){
+    private void loadRoomNamesAndPersons(){
         //Get lists of rooms and names for spinners
         final JSONHandler jsonHandler = new JSONHandler();
 /*TODO loadRooms ist schon in NavigationActivity enthalten -> NavigationDialogFragment müsste die Raumliste dafür an Navigation Activity schicken
@@ -179,8 +180,6 @@ andere aktuelle Lösung: json-String senden und zweimal in Rooms parsen
 
         //Get lists of room names and persons for spinners
         Resources resource = getResources();
-        final ArrayList<String> roomNames = new ArrayList<>();
-        final ArrayList<String> persons = new ArrayList<>();
 
         try {
             for (int i = 0; i < rooms.size(); i++) {
@@ -189,11 +188,7 @@ andere aktuelle Lösung: json-String senden und zweimal in Rooms parsen
                 roomNames.add(name);
 
                 if (!rooms.get(i).getPersons().isEmpty()) {
-
-                    for (int j = 0; j < rooms.get(i).getPersons().size(); j++) {
-                        final String person = rooms.get(i).getPersons().get(j);
-                        persons.add(person);
-                    }
+                    persons.addAll(rooms.get(i).getPersons());
                 }
             }
         } catch (Exception e) {
@@ -201,32 +196,34 @@ andere aktuelle Lösung: json-String senden und zweimal in Rooms parsen
         }
 
         //Sort rooms and persons alphabetically
-        Collections.sort(roomNames, new Comparator<String>() {
-            @Override
-            public int compare(final String stringOne, final String stringTwo) {
-                return stringOne.compareTo(stringTwo);
-            }
-        });
-        Collections.sort(persons, new Comparator<String>() {
-            @Override
-            public int compare(final String stringOne, final String stringTwo) {
-                return stringOne.compareTo(stringTwo);
-            }
-        });
+        if(!roomNames.isEmpty()){
+            Collections.sort(roomNames, new Comparator<String>() {
+                @Override
+                public int compare(final String stringOne, final String stringTwo) {
+                    return stringOne.compareTo(stringTwo);
+                }
+            });
+        }
+        if(!persons.isEmpty()){
+            Collections.sort(persons, new Comparator<String>() {
+                @Override
+                public int compare(final String stringOne, final String stringTwo) {
+                    return stringOne.compareTo(stringTwo);
+                }
+            });
+        }
 
         //Default elements
         final String defaultSelection = resource.getString(R.string.select_from_spinner);
         roomNames.add(0, defaultSelection);
         persons.add(0, defaultSelection);
 
-        final ArrayList[] result = {roomNames, persons};
-        return result;
     }
 
 
     //set roomNames and persons as options at searchByRoomSpinner and at searchByPersonSpinner
     //returns configured spinners as array: {searchByRoomSpinner,searchByPersonSpinner}
-    private Spinner[] getSpinners(final ArrayList<String> roomNames, final ArrayList<String> persons){
+    private Spinner[] getSpinners(){
         final Spinner searchByRoomSpinner = mView.findViewById(R.id.spinner_by_room);
         final Spinner searchByPersonSpinner = mView.findViewById(R.id.spinner_by_person);
 
@@ -417,15 +414,15 @@ andere aktuelle Lösung: json-String senden und zweimal in Rooms parsen
             }
 
             if(inputValid) {
-                doIntentAndStartActivity(userInputStartLocation, roomNames, skipScanner);
+                startNavigationActivity(userInputStartLocation, roomNames, skipScanner);
             }
 
         }
     }
 
 
-    //Intent
-    private void doIntentAndStartActivity(final String userInputStartLocation, final ArrayList<String> roomNames, final boolean skipScanner) {
+    //start Navigation activity and send intent
+    private void startNavigationActivity(final String userInputStartLocation, final ArrayList<String> roomNames, final boolean skipScanner) {
 
         if(skipScanner){ //start location determined by user input
             final Intent intentNavigationActivity = new Intent(getActivity(), NavigationActivity.class);
