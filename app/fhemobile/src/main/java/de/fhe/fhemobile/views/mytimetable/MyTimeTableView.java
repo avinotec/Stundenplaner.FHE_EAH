@@ -42,7 +42,7 @@ import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableSelectedLessonAdapter;
 import de.fhe.fhemobile.comparator.Date_Comparator;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableDialogFragment;
-import de.fhe.fhemobile.network.NetworkHandler;
+import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
 /**
@@ -212,7 +212,7 @@ public class MyTimeTableView extends LinearLayout {
         final String json = correctUmlauts(gson.toJson(MyTimeTableView.getLessons()));
         final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("list", json);
+        editor.putString(Define.SHARED_PREFERENCES_KEY_LESSON_LIST, json);
         editor.apply();
 
         myTimeTableSelectedLessonAdapter.notifyDataSetChanged();
@@ -230,7 +230,7 @@ public class MyTimeTableView extends LinearLayout {
         final String json = correctUmlauts(gson.toJson(MyTimeTableView.getLessons()));
         final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences("prefs",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("list", json);
+        editor.putString(Define.SHARED_PREFERENCES_KEY_LESSON_LIST, json);
         editor.apply();
         myTimeTableSelectedLessonAdapter.notifyDataSetChanged();
     }
@@ -240,20 +240,21 @@ public class MyTimeTableView extends LinearLayout {
      * @param selectedLessons
      * @return
      */
-    public static List<FlatDataStructure> loadSelectedList(final List<FlatDataStructure> selectedLessons){
-
-        final List<FlatDataStructure> completeSelectedList = new ArrayList();
-        final List<String> studygroups = new ArrayList();
-
-        for(final FlatDataStructure event:selectedLessons){
-            if(!studygroups.contains(event.getStudyGroup().getTimeTableId())){
-                studygroups.add(event.getStudyGroup().getTimeTableId());
-                completeSelectedList.addAll(NetworkHandler.getInstance().reloadEvents(event));
-            }
-        }
-
-        return completeSelectedList;
-    }
+// not used
+//    public static List<FlatDataStructure> loadSelectedList(final List<FlatDataStructure> selectedLessons){
+//
+//        final List<FlatDataStructure> completeSelectedList = new ArrayList();
+//        final List<String> studygroups = new ArrayList();
+//
+//        for(final FlatDataStructure event:selectedLessons){
+//            if(!studygroups.contains(event.getStudyGroup().getTimeTableId())){
+//                studygroups.add(event.getStudyGroup().getTimeTableId());
+//                completeSelectedList.addAll(NetworkHandler.getInstance().reloadEvents(event));
+//            }
+//        }
+//
+//        return completeSelectedList;
+//    }
 
     /**
      *

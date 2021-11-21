@@ -40,6 +40,7 @@ import java.util.Locale;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableCalendarView;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
@@ -123,7 +124,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 								MyTimeTableView.selectedLessons.clear();
 								MainActivity.completeLessons.clear();
 								sharedPreferences.edit()
-										.remove("list")
+										.remove(Define.SHARED_PREFERENCES_KEY_LESSON_LIST)
 										.apply();
 							}
 						})
@@ -138,7 +139,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		}
 
 		// den Stundenplan laden
-		final String json = sharedPreferences.getString("list","");
+		final String json = sharedPreferences.getString(Define.SHARED_PREFERENCES_KEY_LESSON_LIST,"");
 		final Gson gson = new Gson();
 		final FlatDataStructure[] list = gson.fromJson(json, FlatDataStructure[].class);
 		if(list != null) {

@@ -17,11 +17,16 @@
 
 package de.fhe.fhemobile.utils;
 
+import org.jetbrains.annotations.NonNls;
+
 /**
  * we define all static defines centrally here.
  * constants etc.
  */
 public class Define {
+
+	@NonNls
+	public static final String SHARED_PREFERENCES_KEY_LESSON_LIST = "list";
 
 	//created by Nadja 17.11.2021
 	public static class Maps{
