@@ -17,10 +17,9 @@
 
 package de.fhe.fhemobile.activities;
 
-import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_BRIDGE;
 import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_ELEVATOR;
-import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_STAIR;
 import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_EXIT;
+import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_STAIR;
 import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_height;
 import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_width;
 import static de.fhe.fhemobile.utils.navigation.NavigationUtils.Complex;
@@ -323,7 +322,7 @@ public class NavigationActivity extends BaseActivity {
     }
 
     /**
-     * Add all elevators, staircases, exits and bridge
+     * Add all elevators, staircases, exits
      * @param complex that is displayed (floorplan)
      * @param floor that is displayed (floorplan)
      */
@@ -380,15 +379,16 @@ public class NavigationActivity extends BaseActivity {
                 exitIcon.setY(convertCellCoordY(fCell.getYCoordinate()));
             }
 
-            if (fCell.getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_BRIDGE)) {
-                ImageView bridgeIcon = new ImageView(this);
-                bridgeIcon.setImageResource(R.drawable.bridge_icon);
-                if (navigationLayout != null) navigationLayout.addView(bridgeIcon);
-
-                fitOneCell(bridgeIcon);
-                bridgeIcon.setX(convertCellCoordX(fCell.getXCoordinate()));
-                bridgeIcon.setY(convertCellCoordY(fCell.getYCoordinate()));
-            }
+            //bridge is ignored
+//            if (fCell.getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_BRIDGE)) {
+//                ImageView bridgeIcon = new ImageView(this);
+//                bridgeIcon.setImageResource(R.drawable.bridge_icon);
+//                if (navigationLayout != null) navigationLayout.addView(bridgeIcon);
+//
+//                fitOneCell(bridgeIcon);
+//                bridgeIcon.setX(convertCellCoordX(fCell.getXCoordinate()));
+//                bridgeIcon.setY(convertCellCoordY(fCell.getYCoordinate()));
+//            }
         }
     }
 

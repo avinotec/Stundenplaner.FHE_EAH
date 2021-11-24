@@ -42,14 +42,15 @@ def generateJson(csv_reader, building, floor):
                 else:
                     elevators[(x,y)] = [connected_cell]
 
-            #bridge
-            elif row[x] == "bridge":
-                bridge_cell = { "building": building, "floor": floornumber,
-                                    "xCoordinate": x, "yCoordinate": y,
-                                    "walkable": True
-                                    }
-                bridgeCells.append(bridge_cell)
-                #todo: how to save cells and process bridge in the A* algorithm in a good way?
+            #bridge - ignore to simplify navigation
+            #elif row[x] == "bridge":
+
+                # bridge_cell = { "building": building, "floor": floornumber,
+                #                     "xCoordinate": x, "yCoordinate": y,
+                #                     "walkable": True
+                #                     }
+                # bridgeCells.append(bridge_cell)
+                
                 
             #room
             elif re.match('\d+', row[x]):
@@ -64,9 +65,16 @@ def generateJson(csv_reader, building, floor):
 
             #exit/entry
             elif row[x] == "exit":
+                exitTo = []
+                #use exit when changing buildings
+                if(building == "01" and x == 40 and y == 19): exitTo = ["05"]
+                elif(building == "03" and x == 13 and y == 2): exitTo = ["04"]
+                elif(building == "04" and x == 23 and y == 19): exitTo = ["03", "05"]
+                elif(building == "05" and x == 24 and y == 5): exitTo == ["03", "04"]
+
                 exit = {"building": building, "floor": floornumber,
-                                    "xCoordinate": x, "yCoordinate": y,
-                                    "walkable": True}
+                        "xCoordinate": x, "yCoordinate": y,
+                        "exitTo": exitTo}
                 exits.append(exit)
 
             #error
@@ -114,12 +122,14 @@ with open('json/rooms.json', 'w') as f:
 
 #save all floorconnections
 floorconnections = [{"type": "staircase", "connectedCells": value} for key, value in stairs.items()] + \
-    [{"type": "elevator", "connectedCells": value} for key, value in elevators.items()] + \
-    [{"type": "bridge", "connectedCells": bridgeCells}] + \
-    [{"type": "exit", "cell": value} for value in exits]
+    [{"type": "elevator", "connectedCells": value} for key, value in elevators.items()] #+ \
+    #[{"type": "bridge", "connectedCells": bridgeCells}]
 with open('json/floorconnections.json', 'w') as f:
     json.dump(floorconnections, f)
 
+#save exits
+with open('json/exits.json', 'w') as f:
+    json.dump(exits, f)
 
 #merge building 3, 2 and 1
 for i in ['ug', '00', '01', '02', '03', '04']:

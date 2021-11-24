@@ -467,7 +467,6 @@ public class RouteCalculator {
 
     /**
      * Get all usable floor connections on floor, sorted by distance
-     * ways outside buildings and bridge are not allowed on floor = 0 //todo ???
      * @param startCell
      * @param floor
      * @return list of available stairs, elevator etc as {@link FloorConnection} objects

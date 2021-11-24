@@ -18,15 +18,11 @@
 package de.fhe.fhemobile.utils.navigation;
 
 
-import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_BRIDGE;
-import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_ELEVATOR;
-import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_EXIT;
-import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_STAIR;
-
 import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -36,6 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.fhe.fhemobile.models.navigation.Cell;
+import de.fhe.fhemobile.models.navigation.Exit;
 import de.fhe.fhemobile.models.navigation.FloorConnection;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
 import de.fhe.fhemobile.models.navigation.Room;
@@ -53,6 +50,7 @@ public class JSONHandler {
     public static final String ROOM_NUMBER = "roomNumber";      //$NON-NLS
     public static final String QR_CODE = "qrCode";              //$NON-NLS
     public static final String PERSONS = "persons";             //$NON-NLS
+    public static final String EXITTO = "exitTo";             //$NON-NLS
     public static final String CONNECTED_CELLS = "connectedCells";  //$NON-NLS
     public static final String EXITCELLS = "cells";             //$NON-NLS
 
@@ -155,11 +153,49 @@ public class JSONHandler {
         return text.toString();
     }
 
+    /**
+     * Reads exits from assets
+     * @param json
+     * @return ArrayList of {@link Exit} objects
+     */
+    public static ArrayList<Exit> readExitsFromAssets(final String json){
+        final ArrayList<Exit> exits = new ArrayList<>();
+
+        try{
+            final JSONArray jsonArray = new JSONArray(json);
+
+            for(int i = 0; i < jsonArray.length(); i++){
+
+                final JSONObject jEntry = jsonArray.getJSONObject(i);
+                final JSONArray exitToJSON = jEntry.getJSONArray(EXITTO);
+                final ArrayList<String> exitTo = new ArrayList<>();
+
+                for(int j = 0; j < exitToJSON.length(); j++){
+                    exitTo.add(exitToJSON.optString(j));
+                }
+
+                final Exit newExit = new Exit(jEntry.optInt(X_COORDINATE),
+                        jEntry.getInt(Y_COORDINATE),
+                        jEntry.getString(BUILDING),
+                        jEntry.getString(FLOOR),
+                        exitTo);
+
+                exits.add(newExit);
+
+            }
+        } catch (JSONException e) {
+            Log.e(TAG, "error parsing JSON exits", e);
+        }
+
+        return exits;
+
+    }
+
 
     /**
      * Parse rooms from JSON
      * @param json
-     * @return ArrayList fo rooms
+     * @return ArrayList of {@link Room} objects
      */
     public ArrayList<Room> parseJsonRooms(final String json) {
 
@@ -196,7 +232,7 @@ public class JSONHandler {
     /**
      * Parse floor connections from JSON
      * @param json
-     * @return ArrayList of floor connections
+     * @return ArrayList of {@link FloorConnection} objects
      */
     public ArrayList<FloorConnection> parseJsonFloorConnection(final String json) {
 
@@ -210,36 +246,25 @@ public class JSONHandler {
                 final JSONObject jEntry = jsonArray.getJSONObject(i);
                 final String floorConnectionType = jEntry.optString(TYPE);
 
-                // floorconnection is a staircase or elevator or bridge
-                if(floorConnectionType.equals(FLOORCONNECTION_TYPE_ELEVATOR)
-                        || floorConnectionType.equals(FLOORCONNECTION_TYPE_STAIR)
-                        || floorConnectionType.equals(FLOORCONNECTION_TYPE_BRIDGE)){
+                // floorconnection is a staircase or elevator
+                final ArrayList<FloorConnectionCell> connectedCells = new ArrayList<>();
+                final JSONArray connectedCellsJSON = jEntry.getJSONArray(CONNECTED_CELLS);
 
-                    final ArrayList<FloorConnectionCell> connectedCells = new ArrayList<>();
-                    final JSONArray connectedCellsJSON = jEntry.getJSONArray(CONNECTED_CELLS);
+                for (int j = 0; j < connectedCellsJSON.length(); j++) {
 
-                    for (int j = 0; j < connectedCellsJSON.length(); j++) {
+                    final JSONObject cellJSON = connectedCellsJSON.getJSONObject(j);
+                    final FloorConnectionCell cell = new FloorConnectionCell(cellJSON.optInt(X_COORDINATE),
+                            cellJSON.optInt(Y_COORDINATE),
+                            cellJSON.optString(BUILDING),
+                            cellJSON.optString(FLOOR),
+                            cellJSON.optBoolean(WALKABLE),
+                            floorConnectionType);
 
-                        final JSONObject cellJSON = connectedCellsJSON.getJSONObject(j);
-                        final FloorConnectionCell cell = new FloorConnectionCell(cellJSON.optInt(X_COORDINATE),
-                                cellJSON.optInt(Y_COORDINATE),
-                                cellJSON.optString(BUILDING),
-                                cellJSON.optString(FLOOR),
-                                cellJSON.optBoolean(WALKABLE),
-                                floorConnectionType);
-
-                        connectedCells.add(cell);
-                    }
-
-                    final FloorConnection newConnection = new FloorConnection(floorConnectionType, connectedCells);
-                    floorConnections.add(newConnection);
-
-                }else if(floorConnectionType.equals(FLOORCONNECTION_TYPE_EXIT)){
-
-                    //todo model data structure for exit
+                    connectedCells.add(cell);
                 }
 
-
+                final FloorConnection newConnection = new FloorConnection(floorConnectionType, connectedCells);
+                floorConnections.add(newConnection);
             }
         } catch (final Exception e) {
             Log.e(TAG, "error parsing JSON floorConnections array", e);
