@@ -6,4 +6,4 @@
     android:layout_height="wrap_content"
     style="@style/SpinnerTextViewItem"
     xmlns:android="http://schemas.android.com/apk/res/android"
-	android:textIsSelectable="true" />
+	/>
