@@ -171,7 +171,7 @@ andere aktuelle Lösung: json-String senden und zweimal in Rooms parsen
  */
         if (rooms.isEmpty()) {
             try {
-                roomsJson = JSONHandler.readRoomsFromAssets(getContext());
+                roomsJson = JSONHandler.readFromAssets(getContext(), "rooms");
                 rooms = jsonHandler.parseJsonRooms(roomsJson);
             } catch (Exception e) {
                 Log.e(TAG, "error reading or parsing JSON file:", e);

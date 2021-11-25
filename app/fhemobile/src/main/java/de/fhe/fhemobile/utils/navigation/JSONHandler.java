@@ -50,9 +50,15 @@ public class JSONHandler {
     public static final String ROOM_NUMBER = "roomNumber";      //$NON-NLS
     public static final String QR_CODE = "qrCode";              //$NON-NLS
     public static final String PERSONS = "persons";             //$NON-NLS
-    public static final String EXITTO = "exitTo";             //$NON-NLS
+    public static final String EXITTO = "exitTo";               //$NON-NLS
+    public static final String ENTRYFROM = "entryFrom";          //$NON-NLS
     public static final String CONNECTED_CELLS = "connectedCells";  //$NON-NLS
     public static final String EXITCELLS = "cells";             //$NON-NLS
+
+    //asset file names
+    final static String FILE_FLOORCONNECTIONS = "floorconnections.json"; //$NON-NLS
+    final static String FILE_ROOMS = "rooms.json"; //$NON-NLS
+    final static String FILE_EXITS = "exits.json"; //$NON-NLS
 
     //Constructor
     public JSONHandler() {
@@ -103,42 +109,28 @@ public class JSONHandler {
         return text.toString();
     }
 
+
     /**
-     * Read json containing all rooms
+     * Read in certain json file from assets
      * @param context
-     * @return json as string
+     * @param toRead name of json file that should be read in ("rooms", "exits", "floorconnections")
+     * @return json string
      */
-    public static String readRoomsFromAssets(final Context context){
-        final String FILE_ROOMS = "rooms.json"; //$NON-NLS
-        final StringBuffer text = new StringBuffer();
-
-        try {
-            final InputStream input = context.getResources().getAssets().open(FILE_ROOMS);
-            final InputStreamReader reader = new InputStreamReader(input, "UTF-8"); //$NON-NLS
-
-            final BufferedReader br = new BufferedReader(reader);
-
-            for (String line; (line = br.readLine()) != null; ) {
-                text.append(line).append("\n");
-            }
-        }catch (final Exception e){
-            Log.e(TAG, "reading rooms from json failed", e);
+    public static String readFromAssets(final Context context, final String toRead){
+        String filename = "";
+        switch(toRead){
+            case "rooms":
+                filename = FILE_ROOMS; break;
+            case "exits":
+                filename = FILE_EXITS; break;
+            case "floorconnections":
+                filename = FILE_FLOORCONNECTIONS; break;
         }
 
-        return text.toString();
-    }
-
-    /**
-     * Read json containing all floor connections of all buildings
-     * @param context
-     * @return json as string
-     */
-    public static String readFloorConnectionsFromAssets(final Context context){
-        final String FILE_FLOORCONNECTIONS = "floorconnections.json"; //$NON-NLS
         final StringBuffer text = new StringBuffer();
 
         try {
-            final InputStream input = context.getResources().getAssets().open(FILE_FLOORCONNECTIONS);
+            final InputStream input = context.getResources().getAssets().open(filename);
             final InputStreamReader reader = new InputStreamReader(input, "UTF-8"); //$NON-NLS
 
             BufferedReader br = new BufferedReader(reader);
@@ -147,18 +139,18 @@ public class JSONHandler {
                 text.append(line).append("\n");
             }
         } catch (final Exception e){
-            Log.e(TAG, "reading floorconnections from json failed", e);
+            Log.e(TAG, "reading" +toRead+ "from json failed", e);
         }
 
         return text.toString();
     }
 
     /**
-     * Reads exits from assets
+     *
      * @param json
      * @return ArrayList of {@link Exit} objects
      */
-    public static ArrayList<Exit> readExitsFromAssets(final String json){
+    public ArrayList<Exit> parseJsonExits(final String json){
         final ArrayList<Exit> exits = new ArrayList<>();
 
         try{
@@ -174,11 +166,19 @@ public class JSONHandler {
                     exitTo.add(exitToJSON.optString(j));
                 }
 
+                final JSONArray entryFromJSON = jEntry.getJSONArray(ENTRYFROM);
+                final ArrayList<String> entryFrom = new ArrayList<>();
+
+                for(int j = 0; j < entryFromJSON.length(); j++){
+                    entryFrom.add(entryFromJSON.optString(j));
+                }
+
                 final Exit newExit = new Exit(jEntry.optInt(X_COORDINATE),
                         jEntry.getInt(Y_COORDINATE),
                         jEntry.getString(BUILDING),
                         jEntry.getString(FLOOR),
-                        exitTo);
+                        exitTo,
+                        entryFrom);
 
                 exits.add(newExit);
 

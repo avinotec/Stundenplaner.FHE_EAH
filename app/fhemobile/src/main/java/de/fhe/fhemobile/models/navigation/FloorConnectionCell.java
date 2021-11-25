@@ -21,7 +21,7 @@ import static de.fhe.fhemobile.utils.Define.Navigation.COSTS_FLOORCONNECTION;
 
 public class FloorConnectionCell extends Cell{
 
-    private String type;
+    private final String type;
 
     public FloorConnectionCell(final int xCoordinate, final int yCoordinate, final String building, final String floor,
                                final boolean walkable, final String type){

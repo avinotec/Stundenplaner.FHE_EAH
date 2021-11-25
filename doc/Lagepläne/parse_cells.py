@@ -72,9 +72,16 @@ def generateJson(csv_reader, building, floor):
                 elif(building == "04" and x == 23 and y == 19): exitTo = ["03", "05"]
                 elif(building == "05" and x == 24 and y == 5): exitTo == ["03", "04"]
 
+                entryFrom = []
+                #use this entry when changing buildings #only one specific entry for each building due to Corona
+                if(building == "04" and x == 9 and y == 20): entryFrom = ["03", "05"] 
+                elif(building == "02" and x == 33 and y == 10): entryFrom = ["04", "05"]
+                elif(building == "05" and x == 24 and y == 5): entryFrom = ["03", "04"]
+
                 exit = {"building": building, "floor": floornumber,
                         "xCoordinate": x, "yCoordinate": y,
-                        "exitTo": exitTo}
+                        "exitTo": exitTo,
+                        "entryFrom": entryFrom}
                 exits.append(exit)
 
             #error

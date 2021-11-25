@@ -46,6 +46,7 @@ import java.util.Locale;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.models.navigation.Cell;
+import de.fhe.fhemobile.models.navigation.Exit;
 import de.fhe.fhemobile.models.navigation.FloorConnection;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
 import de.fhe.fhemobile.models.navigation.Room;
@@ -71,6 +72,7 @@ public class NavigationActivity extends BaseActivity {
     private Room destinationLocation;
 
     private static ArrayList<Room> rooms;
+    private static ArrayList<Exit> exits;
     private static ArrayList<FloorConnection> floorConnections = new ArrayList<>();
     private ArrayList<Cell> cellsToWalk = new ArrayList<>();
 
@@ -128,7 +130,7 @@ public class NavigationActivity extends BaseActivity {
 
         //Get rooms, stairs, elevators, exits, bridge from JSON
         // lädt die verfügbaren Räume und Aufgänge aus den entsprechenden JSON-Dateien
-        getFloorConnections();
+        getFloorConnectionsAndExits();
 
         //Get current user location room
         //setzt den übermittelten Standort den Startraums, bzw. die aktuelle Position des Nutzers
@@ -441,17 +443,21 @@ public class NavigationActivity extends BaseActivity {
 
 
     /**
-     * Load stairs, elevators, exits and bridge from JSON
+     * Load stairs, elevators and exits from JSON
      */
-    private void getFloorConnections() {
+    private void getFloorConnectionsAndExits() {
         try {
             JSONHandler jsonHandler = new JSONHandler();
             String json;
 
             // read only once
             if (floorConnections.isEmpty()) {
-                json = JSONHandler.readFloorConnectionsFromAssets(this);
+                json = JSONHandler.readFromAssets(this, "floorconnection");
                 floorConnections = jsonHandler.parseJsonFloorConnection(json);
+            }
+            if(exits.isEmpty()){
+                json = JSONHandler.readFromAssets(this, "exits");
+                exits = jsonHandler.parseJsonExits(json);
             }
 
         } catch (Exception e) {
