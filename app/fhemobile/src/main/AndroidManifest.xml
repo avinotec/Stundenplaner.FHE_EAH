@@ -78,7 +78,7 @@
                 <data
                     android:scheme="https"
                     android:host="www.eah-jena.de"
-                    android:pathPrefix="/mobile" />
+                    android:pathPrefix="/navigation" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -89,7 +89,7 @@
                 <data
                     android:scheme="https"
                     android:host="www.eah-jena.de"
-                    android:pathPrefix="/mobile" />
+                    android:pathPrefix="/navigation" />
             </intent-filter>
         </activity>
 
