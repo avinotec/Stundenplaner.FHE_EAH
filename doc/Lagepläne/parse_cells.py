@@ -12,8 +12,12 @@ def generateJson(csv_reader, building, floor):
         for x in range(len(row)):
 
             floornumber = floor
-            if floornumber == "-1":
-                floornumber = "ug"
+            if floornumber == "ug1":
+                floornumber = "-1"
+            elif floornumber == "ug2":
+                floornumber = "-2"
+            elif floornumber == "03_level1" or floornumber == "03_level2":
+                floornumber = "03"
 
             #walkable cell    
             if row[x] == 'w':
@@ -91,7 +95,7 @@ def generateJson(csv_reader, building, floor):
         y = y + 1    
     
     #save walkable cells to json for this building and floor
-    if (building == '04') | (building == '05'):
+    if (building == '04') or (building == '05'):
         with open('json/building_'+ building +'_floor_'+ floor + '.json', 'w') as f:
             json.dump(walkable_cells, f)
     #write json in tmp folder to merge building 3, 2 and 1
@@ -110,12 +114,12 @@ exits = []
 
 #read in csv files
 for file_name in os.listdir(fp_csv_folder):
-    if re.match(r'cellplan_0[12345]-((0[01234])|(ug))(_level1|_level2)?\.CSV', file_name): #check correct file name pattern
+    if re.match(r'cellplan_0[12345]-((0[01234])|(ug1|ug2))(_level1|_level2)?\.CSV', file_name): #check correct file name pattern
         #todo check if ug_level 1 and ug_level 2 are read in
         print(file_name)
         #get building and floor
         building = file_name[9:11] #todo: Ermittlung des Floors für 05.03 Ebene 1 und EBene 2 überprüfen
-        floor = file_name[12:14]
+        floor = file_name[12:-4]
         
 
         with open(fp_csv_folder + str(file_name)) as file:
@@ -139,7 +143,7 @@ with open('json/exits.json', 'w') as f:
     json.dump(exits, f)
 
 #merge building 3, 2 and 1
-for i in ['ug', '00', '01', '02', '03', '04']:
+for i in ['ug1', '00', '01', '02', '03', '04']:
     with open('json/tmp/building_03_floor_' + i + '.json', 'r') as f:
         json_building03 = json.load(f)
     with open('json/tmp/building_02_floor_' + i + '.json', 'r') as f:
