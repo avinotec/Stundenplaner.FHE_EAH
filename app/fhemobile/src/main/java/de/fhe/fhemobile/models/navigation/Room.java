@@ -58,8 +58,7 @@ public class Room extends Cell{
     }
 
     public String getRoomName() {
-        String roomName;
-        roomName = getBuilding() + "." + getFloorString() + "." + roomNumber;
+        final String roomName = getBuilding() + "." + getFloorString() + "." + roomNumber;
 
         return roomName;
     }
