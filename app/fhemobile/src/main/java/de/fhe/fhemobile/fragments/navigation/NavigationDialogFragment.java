@@ -18,7 +18,6 @@
 package de.fhe.fhemobile.fragments.navigation;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -99,9 +98,10 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
 
         loadRoomNamesAndPersons();
         //Spinners
-        Spinner[] spinners = getSpinners();
-        Spinner searchByRoomSpinner = spinners[0];
-        Spinner searchByPersonSpinner = spinners[1];
+        fillSpinners();
+        final Spinner searchByRoomSpinner = mView.findViewById(R.id.spinner_by_room);
+        final Spinner searchByPersonSpinner = mView.findViewById(R.id.spinner_by_person);
+
 
         //Start location input field
         startLocationDisplayedErrorText = mView.findViewById(R.id.input_field_search_start_room_layout);
@@ -179,7 +179,6 @@ andere aktuelle Lösung: json-String senden und zweimal in Rooms parsen
         }
 
         //Get lists of room names and persons for spinners
-        Resources resource = getResources();
 
         try {
             for (int i = 0; i < rooms.size(); i++) {
@@ -214,7 +213,7 @@ andere aktuelle Lösung: json-String senden und zweimal in Rooms parsen
         }
 
         //Default elements
-        final String defaultSelection = resource.getString(R.string.select_from_spinner);
+        final String defaultSelection = getResources().getString(R.string.select_from_spinner);
         roomNames.add(0, defaultSelection);
         persons.add(0, defaultSelection);
 
@@ -223,7 +222,7 @@ andere aktuelle Lösung: json-String senden und zweimal in Rooms parsen
 
     //set roomNames and persons as options at searchByRoomSpinner and at searchByPersonSpinner
     //returns configured spinners as array: {searchByRoomSpinner,searchByPersonSpinner}
-    private Spinner[] getSpinners(){
+    private void fillSpinners(){
         final Spinner searchByRoomSpinner = mView.findViewById(R.id.spinner_by_room);
         final Spinner searchByPersonSpinner = mView.findViewById(R.id.spinner_by_person);
 
@@ -231,31 +230,40 @@ andere aktuelle Lösung: json-String senden und zweimal in Rooms parsen
         final ArrayAdapter<String> searchByRoomAdapter = new ArrayAdapter<>(getContext(), R.layout.spinner_item_text, roomNames);
         searchByRoomSpinner.setAdapter(searchByRoomAdapter);
         searchByRoomSpinner.setSelection(0, false);
+        searchByRoomSpinner.setEnabled(true);
         searchByRoomSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
+            /**
+             *
+             * @param adapterView
+             * @param view
+             * @param index Position im Spinner, die der Anwender angeklickt hat.
+             * @param id
+             */
             @Override
-            public void onItemSelected(final AdapterView<?> adapterView, final View view, final int index, final long id) {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int index, long id) {
 
                 final Object item = adapterView.getItemAtPosition(index);
 
                 if (item != null && index != 0) {
 
+                    // bspw. "03.03.33"
+                    String roomName = item.toString();
+                    String checkQRCode = roomName.replace(".", "");
+
                     for (int i = 0; i < rooms.size(); i++) {
 
-                        String checkQRCode = item.toString();
-                        checkQRCode = checkQRCode.replace(".", "");
 
-                        if (checkQRCode.equals(rooms.get(i).getRoomName())) {
+                        if (roomName.equals(rooms.get(i).getRoomName())) {
 
-                            destinationQRCode = rooms.get(i).getQRCode();
+                            destinationQRCode = checkQRCode;
                             roomsIndex = i;
-                            searchByPersonSpinner.setSelection(0);
+                            //searchByPersonSpinner.setSelection(0);
                             destinationLocationInputText.setText("");
+                            break;
                         }
                     }
-                }
-
-                if (item != null && index == 0) {
+                } else {
                     roomsIndex = 0;
                 }
             }
@@ -287,8 +295,9 @@ andere aktuelle Lösung: json-String senden und zweimal in Rooms parsen
 
                                 destinationQRCode = rooms.get(i).getQRCode();
                                 personsIndex = i;
-                                searchByRoomSpinner.setSelection(0);
+                                //searchByRoomSpinner.setSelection(0);
                                 destinationLocationInputText.setText("");
+                                break;
                             }
                         }
                     }
@@ -305,12 +314,18 @@ andere aktuelle Lösung: json-String senden und zweimal in Rooms parsen
             }
         });
 
-        final Spinner[] spinners = {searchByRoomSpinner,searchByPersonSpinner};
-        return spinners;
     }
 
     //validate user input for start and destination location and set Error Messages if needed
-    private void validateUserInput(final ArrayList<String> availableRooms){
+    private void validateUserInput(){
+
+        final ArrayList<String> availableRooms = new ArrayList<>();
+
+        //Get available rooms
+        for (int index = 0; index < rooms.size(); index++) {
+            availableRooms.add(rooms.get(index).getRoomName());
+        }
+
         //User start location input error handling
         if (!"".equals(startLocationInputText.getText().toString())
                 && !availableRooms.contains(startLocationInputText.getText().toString())) {
@@ -345,14 +360,8 @@ andere aktuelle Lösung: json-String senden und zweimal in Rooms parsen
         String userInputStartLocation = Objects.requireNonNull(startLocationInputText.getText()).toString().replace(".", "");
         String userInputDestinationLocation = Objects.requireNonNull(destinationLocationInputText.getText()).toString().replace(".", "");
 
-        final ArrayList<String> roomNames = new ArrayList<>();
 
-        //Get available rooms
-        for (int index = 0; index < rooms.size(); index++) {
-            roomNames.add(rooms.get(index).getRoomName());
-        }
-
-        validateUserInput(roomNames);
+        validateUserInput();
 
         //user input was correct - finding position or navigation can be performed
         if (destinationLocationDisplayedErrorText.getError() == null
