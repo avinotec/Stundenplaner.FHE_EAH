@@ -19,7 +19,6 @@ package de.fhe.fhemobile.fragments.mytimetable;
 
 
 import static android.content.ContentValues.TAG;
-
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
 import android.app.Dialog;
@@ -40,7 +39,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.timetable.TimeTableLessonAdapter;
@@ -48,12 +46,12 @@ import de.fhe.fhemobile.comparator.LessonTitle_StudyGroupTitle_Comparator;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.network.TimeTableCallback;
 import de.fhe.fhemobile.utils.Utils;
-import de.fhe.fhemobile.views.timetable.AddLessonView;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableView;
+import de.fhe.fhemobile.views.timetable.AddLessonView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.timetable.SemesterVo;
 import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
 import de.fhe.fhemobile.vos.timetable.StudyGroupVo;
-import de.fhe.fhemobile.vos.timetable.SemesterVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableDayVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
@@ -331,7 +329,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         /** es gibt zu EINEM Request unterschiedliche Anzahl von Anforderungen und Antworten
          *  wir warten, bis alle Antworten eingetroffen sind.
          */
-        private volatile AtomicInteger requestCounter;
+        private volatile int requestCounter=0;
 
         /**
          *
@@ -386,7 +384,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                     // wir warten, bis alle Antworten eingetroffen sind.
                                     //Wir sortieren diesen letzten Stand der Liste
                                     //Wichtig: --requestCounter nicht requestCounter--! Hier muss erst decrementiert werden und dann der vergleich stattfinden.
-                                    if( (requestCounter.decrementAndGet()) <= 0) {
+                                    if (--requestCounter <= 0) {
 
                                         try {
                                             Collections.sort(MyTimeTableView.getCompleteLessons(),
@@ -436,8 +434,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                             }
                         };
 
-                        synchronized (this){proceedToTimetable(studyGroupVo.getTimeTableId(), callback);}
-                        requestCounter.getAndIncrement();
+                        proceedToTimetable(studyGroupVo.getTimeTableId(), callback);
+                        requestCounter++;
                     }
                 }
             }
