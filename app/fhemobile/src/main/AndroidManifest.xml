@@ -36,6 +36,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <!-- newer firebase libraries have minSDK of 19 -->
+    <uses-sdk tools:overrideLibrary="com.google.firebase.firebase_analytics, com.google.firebase.messaging, com.google.firebase.measurement" />
+
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
