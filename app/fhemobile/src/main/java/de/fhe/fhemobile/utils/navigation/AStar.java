@@ -50,8 +50,8 @@ class AStar {
     //stores only cell key (building+floor+x+y)
     private ArrayList<String> closedCells;
 
-    private Cell startCell;
-    private Cell destCell;
+    private final Cell startCell;
+    private final Cell destCell;
 
     //Koordinatensystem aus allen begehbaren und nicht-begehbaren Zellen aller Stockwerke und Häuser
     //generated from the information from the json files of each building and floor (building_xx_floor_xx_.json in eah\assets)
@@ -77,12 +77,12 @@ class AStar {
 
 
     /**
-     * Calculates the cells to walk using the shortest way
-     * @return List of cells to walk at the floor
+     * Calculates the cells to walk from start to destination using the shortest path
+     * @return List of cells to walk
      */
     final ArrayList<Cell> getCellsToWalk() {
 
-        final ArrayList<Cell> navigationCells = new ArrayList<>();
+        final ArrayList<Cell> cellsToWalk = new ArrayList<>();
 
         try {
             //Set priority queue with comparator (prioritize cells based on their costsPathToCell)
@@ -123,14 +123,14 @@ class AStar {
             currentCell = currentCell.getParentCell();
             //reconstruct path
             while (currentCell.getParentCell() != null) {
-                navigationCells.add(currentCell);
+                cellsToWalk.add(currentCell);
                 currentCell = currentCell.getParentCell();
             }
 
         } catch (Exception e) {
             Log.e(TAG, "error calculating route ", e);
         }
-        return navigationCells;
+        return cellsToWalk;
     }
 
     /**
@@ -238,14 +238,14 @@ class AStar {
     }
 
     /**
-     * Finds the {@link FloorConnection} object the cell belongs to
-     * @param _cell
-     * @return List of all FloorConnectionCells connected with the cell
+     * Finds the {@link FloorConnection} object the {@link FloorConnectionCell} belongs to
+     * @param cell floorconnectionCell of a floorconnection object
+     * @return List of all {@link FloorConnectionCell} objects connected with the cell
      */
-    private ArrayList<FloorConnectionCell> findConnectedCells(FloorConnectionCell _cell){
+    private ArrayList<FloorConnectionCell> findConnectedCells(FloorConnectionCell cell){
         for (FloorConnection fc : floorConnections){
-            for(FloorConnectionCell cell :  fc.getConnectedCells()){
-                if (cell.getKey().equals(_cell.getKey())){
+            for(FloorConnectionCell _cell :  fc.getConnectedCells()){
+                if (_cell.getKey().equals(cell.getKey())){
                     return fc.getConnectedCells();
                 }
             }

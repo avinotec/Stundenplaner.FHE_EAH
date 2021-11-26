@@ -431,7 +431,8 @@ public class NavigationActivity extends BaseActivity {
         spinnerItems.add(resource.getString(R.string.building_04_floor_01));
         spinnerItems.add(resource.getString(R.string.building_04_floor_02));
         spinnerItems.add(resource.getString(R.string.building_04_floor_03));
-        spinnerItems.add(resource.getString(R.string.building_05_floor_ug));
+        spinnerItems.add(resource.getString(R.string.building_05_floor_ug2));
+        spinnerItems.add(resource.getString(R.string.building_05_floor_ug1));
         spinnerItems.add(resource.getString(R.string.building_05_floor_00));
         spinnerItems.add(resource.getString(R.string.building_05_floor_01));
         spinnerItems.add(resource.getString(R.string.building_05_floor_02));
@@ -570,9 +571,13 @@ public class NavigationActivity extends BaseActivity {
                 helperBuildingAndFloor.add("04");
                 helperBuildingAndFloor.add("03");
             }
-            else if (in.equals(getLocaleStringResource(R.string.building_05_floor_ug))) {
+            else if (in.equals(getLocaleStringResource(R.string.building_05_floor_ug1))) {
                 helperBuildingAndFloor.add("05");
-                helperBuildingAndFloor.add("ug");
+                helperBuildingAndFloor.add("ug1");
+            }
+            else if (in.equals(getLocaleStringResource(R.string.building_05_floor_ug2))) {
+                helperBuildingAndFloor.add("05");
+                helperBuildingAndFloor.add("ug2");
             }
             else if (in.equals(getLocaleStringResource(R.string.building_05_floor_00))) {
                 helperBuildingAndFloor.add("05");

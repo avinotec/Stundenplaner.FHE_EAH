@@ -34,7 +34,8 @@ import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_FLOOR_00;
 import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_FLOOR_01;
 import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_FLOOR_02;
 import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_FLOOR_03_1;
-import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_FLOOR_UG;
+import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_FLOOR_UG1;
+import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_FLOOR_UG2;
 import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_GROUND;
 
 import java.util.ArrayList;
@@ -76,15 +77,15 @@ public class MapsModel {
         
         // -----------------------------------------------------------------------------------------
 
-        final List<MapVo> building3Maps = new ArrayList<>();
-        building3Maps.add(new MapVo(R.string.building_03_02_01_ground,BUILDING_03_02_01_GROUND+".png"));
-        building3Maps.add(new MapVo(R.string.building_03_02_01_floor_ug,  BUILDING_03_02_01_FLOOR_UG+".png"));
-        building3Maps.add(new MapVo(R.string.building_03_02_01_floor_00,  BUILDING_03_02_01_FLOOR_00+".png"));
-        building3Maps.add(new MapVo(R.string.building_03_02_01_floor_01, BUILDING_03_02_01_FLOOR_01+".png"));
-        building3Maps.add(new MapVo(R.string.building_03_02_01_floor_02, BUILDING_03_02_01_FLOOR_02+".png"));
-        building3Maps.add(new MapVo(R.string.building_03_02_01_floor_03, BUILDING_03_02_01_FLOOR_03+".png"));
-        building3Maps.add(new MapVo(R.string.building_03_02_01_floor_04, BUILDING_03_02_01_FLOOR_04+".png"));
-        final MapCollectionVo building3 = new MapCollectionVo(R.string.building_03_02_01, building3Maps);
+        final List<MapVo> building321Maps = new ArrayList<>();
+        building321Maps.add(new MapVo(R.string.building_03_02_01_ground,BUILDING_03_02_01_GROUND+".png"));
+        building321Maps.add(new MapVo(R.string.building_03_02_01_floor_ug,  BUILDING_03_02_01_FLOOR_UG+".png"));
+        building321Maps.add(new MapVo(R.string.building_03_02_01_floor_00,  BUILDING_03_02_01_FLOOR_00+".png"));
+        building321Maps.add(new MapVo(R.string.building_03_02_01_floor_01, BUILDING_03_02_01_FLOOR_01+".png"));
+        building321Maps.add(new MapVo(R.string.building_03_02_01_floor_02, BUILDING_03_02_01_FLOOR_02+".png"));
+        building321Maps.add(new MapVo(R.string.building_03_02_01_floor_03, BUILDING_03_02_01_FLOOR_03+".png"));
+        building321Maps.add(new MapVo(R.string.building_03_02_01_floor_04, BUILDING_03_02_01_FLOOR_04+".png"));
+        final MapCollectionVo building321 = new MapCollectionVo(R.string.building_03_02_01, building321Maps);
 
 
         // -----------------------------------------------------------------------------------------
@@ -104,7 +105,8 @@ public class MapsModel {
 
         final List<MapVo> building5Maps = new ArrayList<>();
         building5Maps.add(new MapVo(R.string.building_05_floor_ground,  BUILDING_05_GROUND+".png"));
-        building5Maps.add(new MapVo(R.string.building_05_floor_ug,  BUILDING_05_FLOOR_UG+".png"));
+        building5Maps.add(new MapVo(R.string.building_05_floor_ug2,  BUILDING_05_FLOOR_UG2+".png"));
+        building5Maps.add(new MapVo(R.string.building_05_floor_ug1,  BUILDING_05_FLOOR_UG1+".png"));
         building5Maps.add(new MapVo(R.string.building_05_floor_00,  BUILDING_05_FLOOR_00+".png"));
         building5Maps.add(new MapVo(R.string.building_05_floor_01,  BUILDING_05_FLOOR_01+".png"));
         building5Maps.add(new MapVo(R.string.building_05_floor_02,  BUILDING_05_FLOOR_02+".png"));
@@ -127,7 +129,7 @@ public class MapsModel {
 
 
         mMaps.add(campusOverview);
-        mMaps.add(building3);
+        mMaps.add(building321);
         mMaps.add(building4);
         mMaps.add(building5);
         //mMaps.add(hitAula);

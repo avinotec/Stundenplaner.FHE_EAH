@@ -66,6 +66,8 @@ public class FloorConnection{
 
         for (int i = 0; i < connectedCells.size(); i++) {
 
+            //TODO: überarbeiten und an Einführung von complex anpassen
+
             //case building = 04 or 05
             if (connectedCells.get(i).getBuilding().equals(building)
                     && connectedCells.get(i).getFloorString().equals(floor)) {

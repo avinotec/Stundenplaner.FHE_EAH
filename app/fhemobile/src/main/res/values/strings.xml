@@ -126,7 +126,8 @@
     <string name="building_04_floor_02">Building 4: 2nd floor</string>
     <string name="building_04_floor_03">Building 4: 3rd floor</string>
     <string name="building_05_floor_ground">Building 5</string>
-    <string name="building_05_floor_ug">Building 5: basement</string>
+    <string name="building_05_floor_ug2">Building 5: 2nd basement</string>
+    <string name="building_05_floor_ug1">Building 5: 1st basement</string>
     <string name="building_05_floor_00">Building 5: ground floor</string>
     <string name="building_05_floor_01">Building 5: 1st floor</string>
     <string name="building_05_floor_02">Building 5: 2nd floor</string>

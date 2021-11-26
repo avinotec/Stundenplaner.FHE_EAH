@@ -126,7 +126,8 @@
     <string name="building_04_floor_02">Haus 4: 2. Stockwerk</string>
     <string name="building_04_floor_03">Haus 4: 3. Stockwerk</string>
     <string name="building_05_floor_ground">Haus 5</string>
-    <string name="building_05_floor_ug">Haus 5: Untergeschoss</string>
+    <string name="building_05_floor_ug2">Haus 5: 2. Untergeschoss</string>
+    <string name="building_05_floor_ug1">Haus 5: 1. Untergeschoss</string>
     <string name="building_05_floor_00">Haus 5: Erdgeschoss</string>
     <string name="building_05_floor_01">Haus 5: 1. Stockwerk</string>
     <string name="building_05_floor_02">Haus 5: 2. Stockwerk</string>

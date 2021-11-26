@@ -43,7 +43,8 @@ public class Define {
 		public static final String BUILDING_04_FLOOR_02 = "building_04_floor_02";   //$NON-NLS
 		public static final String BUILDING_04_FLOOR_03 = "building_04_floor_03";   //$NON-NLS
 		public static final String BUILDING_04_GROUND = "building_04_ground";   	//$NON-NLS
-		public static final String BUILDING_05_FLOOR_UG = "building_05_floor_ug";   //$NON-NLS
+		public static final String BUILDING_05_FLOOR_UG1 = "building_05_floor_ug1";   //$NON-NLS
+		public static final String BUILDING_05_FLOOR_UG2 = "building_05_floor_ug2";   //$NON-NLS
 		public static final String BUILDING_05_FLOOR_00 = "building_05_floor_00";   //$NON-NLS
 		public static final String BUILDING_05_FLOOR_01 = "building_05_floor_01";   //$NON-NLS
 		public static final String BUILDING_05_FLOOR_02 = "building_05_floor_02";   //$NON-NLS

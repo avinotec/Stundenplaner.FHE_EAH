@@ -55,74 +55,10 @@ public class NavigationUtils {
      * Get path to floorplan png
      * @param complex
      * @param floor
-     * @return filepath to png
+     * @return filepath to png (without ".png" file extension)
      */
     public static String getPathToFloorPlanPNG(final Complex complex, final String floor) {
-        String filename = "";
-        String folder = "drawable/";
-
-        if(complex.equals(Complex.COMPLEX_321)){
-            switch (floor) {
-                case "ug":
-                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_UG;
-                    break;
-                case "00":
-                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_00;
-                    break;
-                case "01":
-                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_01;
-                    break;
-                case "02":
-                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_02;
-                    break;
-                case "03":
-                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_03;
-                    break;
-                case "04":
-                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_04;
-                    break;
-            }
-        }
-        else if(complex.equals(Complex.COMPLEX_4)){
-            switch(floor){
-                case "ug":
-                    filename = Define.Maps.BUILDING_04_FLOOR_UG;
-
-                    break;
-                case "00":
-                    filename = Define.Maps.BUILDING_04_FLOOR_00;
-                    break;
-                case "01":
-                    filename = Define.Maps.BUILDING_04_FLOOR_01;
-                    break;
-                case "02":
-                    filename = Define.Maps.BUILDING_04_FLOOR_02;
-                    break;
-                case "03":
-                    filename = Define.Maps.BUILDING_04_FLOOR_03;
-                    break;
-            }
-        } else if(complex.equals(Complex.COMPLEX_5)){
-            switch (floor){
-                case "ug":
-                    filename = Define.Maps.BUILDING_05_FLOOR_UG;
-                    break;
-                case "00":
-                    filename = Define.Maps.BUILDING_05_FLOOR_00;
-                    break;
-                case "01":
-                    filename = Define.Maps.BUILDING_05_FLOOR_01;
-                    break;
-                case "02":
-                    filename = Define.Maps.BUILDING_05_FLOOR_02;
-                    break;
-                case "03":
-                    filename = Define.Maps.BUILDING_05_FLOOR_03_1;
-                    //todo: somehow check if level 1 or level 2 is needed
-                    break;
-            }
-        }
-        return folder + filename;
+        return "drawable/" + getFloorPlanFileName(complex, floor);
     }
 
     /**
@@ -132,70 +68,9 @@ public class NavigationUtils {
      * @return filepath to json
      */
     public static String getNameOfFloorPlanGrid(final Complex complex, final String floor) {
-        String filename = "";
         String ending = ".json";
 
-        if(complex.equals(Complex.COMPLEX_321)){
-            switch (floor) {
-                case "ug":
-                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_UG;
-                    break;
-                case "00":
-                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_00;
-                    break;
-                case "01":
-                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_01;
-                    break;
-                case "02":
-                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_02;
-                    break;
-                case "03":
-                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_03;
-                    break;
-                case "04":
-                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_04;
-                    break;
-            }
-        }
-        else if(complex.equals(Complex.COMPLEX_4)){
-            switch(floor){
-                case "ug":
-                    filename = Define.Maps.BUILDING_04_FLOOR_UG;
-
-                    break;
-                case "00":
-                    filename = Define.Maps.BUILDING_04_FLOOR_00;
-                    break;
-                case "01":
-                    filename = Define.Maps.BUILDING_04_FLOOR_01;
-                    break;
-                case "02":
-                    filename = Define.Maps.BUILDING_04_FLOOR_02;
-                    break;
-                case "03":
-                    filename = Define.Maps.BUILDING_04_FLOOR_03;
-                    break;
-            }
-        } else if(complex.equals(Complex.COMPLEX_5)){
-            switch (floor){
-                case "ug":
-                    filename = Define.Maps.BUILDING_05_FLOOR_UG;
-                    break;
-                case "00":
-                    filename = Define.Maps.BUILDING_05_FLOOR_00;
-                    break;
-                case "01":
-                    filename = Define.Maps.BUILDING_05_FLOOR_01;
-                    break;
-                case "02":
-                    filename = Define.Maps.BUILDING_05_FLOOR_02;
-                    break;
-                case "03":
-                    filename = Define.Maps.BUILDING_05_FLOOR_03_1;
-                    break;
-            }
-        }
-        return filename + ending;
+        return getFloorPlanFileName(complex, floor) + ending;
     }
 
     /**
@@ -208,6 +83,9 @@ public class NavigationUtils {
         String currentFloor = "";
 
         switch (index) {
+            case -2:
+                currentFloor = "-2";
+                break;
             case -1:
                 currentFloor = "-1";
                 break;
@@ -231,5 +109,84 @@ public class NavigationUtils {
         }
         return currentFloor;
     }
+
+    /**
+     * All files concerning the floorplan of a certain complex and floor have the same name
+     * (just different file extension e.g. json or png and different locations)
+     * @param complex
+     * @param floor
+     * @return name of the floorplan file
+     */
+    private static String getFloorPlanFileName(final Complex complex, final String floor){
+        String filename = "";
+
+        if(complex.equals(Complex.COMPLEX_321)){
+            switch (floor) {
+                case "-1":
+                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_UG;
+                    break;
+                case "00":
+                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_00;
+                    break;
+                case "01":
+                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_01;
+                    break;
+                case "02":
+                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_02;
+                    break;
+                case "03":
+                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_03;
+                    break;
+                case "04":
+                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_04;
+                    break;
+            }
+        }
+        else if(complex.equals(Complex.COMPLEX_4)){
+            switch(floor){
+                case "-1":
+                    filename = Define.Maps.BUILDING_04_FLOOR_UG;
+                    break;
+                case "00":
+                    filename = Define.Maps.BUILDING_04_FLOOR_00;
+                    break;
+                case "01":
+                    filename = Define.Maps.BUILDING_04_FLOOR_01;
+                    break;
+                case "02":
+                    filename = Define.Maps.BUILDING_04_FLOOR_02;
+                    break;
+                case "03":
+                    filename = Define.Maps.BUILDING_04_FLOOR_03;
+                    break;
+            }
+        } else if(complex.equals(Complex.COMPLEX_5)){
+            switch (floor){
+                case "-2":
+                    filename = Define.Maps.BUILDING_05_FLOOR_UG2;
+                    break;
+                case "-1":
+                    filename = Define.Maps.BUILDING_05_FLOOR_UG1;
+                    break;
+                case "00":
+                    filename = Define.Maps.BUILDING_05_FLOOR_00;
+                    break;
+                case "01":
+                    filename = Define.Maps.BUILDING_05_FLOOR_01;
+                    break;
+                case "02":
+                    filename = Define.Maps.BUILDING_05_FLOOR_02;
+                    break;
+                case "03":
+                    filename = Define.Maps.BUILDING_05_FLOOR_03_1;
+                    filename = Define.Maps.BUILDING_05_FLOOR_03_2;
+                    break;
+                //Todo:Lösung finden für 03 Ebene 1 und Ebene2
+            }
+        }
+
+        return filename;
+    }
+
 
 }
