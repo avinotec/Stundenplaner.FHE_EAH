@@ -68,8 +68,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter android:autoVerify="true"
-                tools:ignore="UnusedAttribute">
+            <intent-filter android:autoVerify="false">
+                <!-- start this app when clicking on a link like: www.eah-jena.de/navigation -->
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -81,6 +81,7 @@
                     android:pathPrefix="/navigation" />
             </intent-filter>
             <intent-filter>
+                <!-- start this app when clicking on a link like: www.eah-jena.de/navigation -->
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
