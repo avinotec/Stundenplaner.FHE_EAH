@@ -505,7 +505,8 @@ public class NavigationActivity extends BaseActivity {
      */
     private void getRoute() {
         try {
-            RouteCalculator routeCalculator = new RouteCalculator(this, startLocation, destinationLocation, floorConnections, rooms);
+            RouteCalculator routeCalculator = new RouteCalculator(this,
+                    startLocation, destinationLocation, floorConnections, rooms, exits);
             cellsToWalk.addAll(routeCalculator.getWholeRoute());
         } catch (Exception e) {
             Log.e(TAG,"error calculating route:", e);
