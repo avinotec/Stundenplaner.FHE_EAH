@@ -97,7 +97,7 @@ public class NavigationActivity extends BaseActivity {
         rooms = jsonHandler.parseJsonRooms(roomsJSON);
 
         //Spinner select floor plans
-        final ArrayList<String> floorPlans = new ArrayList<>(getItemsSpinner());
+        final ArrayList<String> floorPlans = new ArrayList<>(getSpinnerItemsList());
 
         final Spinner floorPlansSpinner = findViewById(R.id.spinner_floor_plans);
         ArrayAdapter<String> floorPlansAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_text, floorPlans);
@@ -208,7 +208,7 @@ public class NavigationActivity extends BaseActivity {
                 floorPlanView.setScaleType(ImageView.ScaleType.FIT_XY);
 
                 //Draw navigation
-                drawPathCells(displayedComplex, floor); // add route (path of cells) to overlay
+                drawAllPathCells(displayedComplex, floor); // add route (path of cells) to overlay
                 drawStartLocation(displayedComplex, floor); //Add icon for current user location room to overlay
                 drawDestinationLocation(displayedComplex, floor); //Add destination location room icon to overlay
                 drawFloorConnections(displayedComplex, floor); //Add floorConnection icons (like stairs, lifts, ...) to overlay
@@ -240,7 +240,7 @@ public class NavigationActivity extends BaseActivity {
      * @param complex that is displayed (floorplan)
      * @param floor that is displayed (floorplan)
      */
-    private void drawPathCells(Complex complex, String floor) {
+    private void drawAllPathCells(Complex complex, String floor) {
         try {
             if (!destinationQRCode.equals(JUST_LOCATION)) {
                 for (int j = 0; j < cellsToWalk.size(); j++) {
@@ -413,7 +413,7 @@ public class NavigationActivity extends BaseActivity {
      * Loads resources to get the items for the floorplan spinner
      * @return list of spinner items
      */
-    private ArrayList<String> getItemsSpinner() {
+    private ArrayList<String> getSpinnerItemsList() {
 
         ArrayList<String> spinnerItems = new ArrayList<>();
         Resources resource = getResources();
@@ -515,10 +515,11 @@ public class NavigationActivity extends BaseActivity {
 
     /**
      * Get building and floor Strings from floor plan String
-     * @param in
+     * @param in name of the building and floor in the Spinner
      * @return
      */
     private ArrayList<String> getBuildingAndFloor(final String in) {
+        //TODO: Methode umstrukturieren im Zuge der Spinnerüberarbeitung
 
         ArrayList<String> helperBuildingAndFloor = new ArrayList<>();
 
@@ -615,7 +616,6 @@ public class NavigationActivity extends BaseActivity {
         } else {
             currentLocale = getResources().getConfiguration().locale;
         }
-
 
 
         try {

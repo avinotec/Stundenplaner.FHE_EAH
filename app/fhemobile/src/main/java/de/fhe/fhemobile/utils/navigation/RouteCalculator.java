@@ -47,11 +47,11 @@ public class RouteCalculator {
     private static final String TAG = "RouteCalculator"; //$NON-NLS
 
     //Variables
-    private Context context;
-    private ArrayList<FloorConnection> floorConnections;
-    private ArrayList<Room> rooms;
-    private Cell startLocation;
-    private Cell destLocation;
+    private final Context context;
+    private final ArrayList<FloorConnection> floorConnections;
+    private final ArrayList<Room> rooms;
+    private final Cell startLocation;
+    private final Cell destLocation;
     //gesamte Route
     private ArrayList<Cell> cellsToWalk = new ArrayList<>();
     //Koordinatensysteme aller Stockwerke
@@ -67,7 +67,7 @@ public class RouteCalculator {
      * @param floorConnections
      * @param rooms
      */
-    public RouteCalculator(Context context, final Room startLocation, final Room destLocation,
+    public RouteCalculator(final Context context, final Room startLocation, final Room destLocation,
                            final ArrayList<FloorConnection> floorConnections, final ArrayList<Room> rooms) {
         this.context = context;
         this.startLocation = startLocation;
@@ -82,215 +82,24 @@ public class RouteCalculator {
      */
     public ArrayList<Cell> getWholeRoute() {
 
-        Cell startCell = startLocation;
-        Cell destCell = destLocation;
-
         //Get grids of floors to use - fills in variable floorGrids
-        getAllFloorGrids();
+        getNeededFloorGrids();
 
         try {
-//            //Get paths through all grids
-//            for (int k = 0; k < floorGrids.size(); k++) {
-//
-//                //Get all floorconnections at floor k and sort by distance
-//                ArrayList<FloorConnection> availableFloorConnections
-//                        = getFloorConnections(startCell, k);
-//
-//                //Set destCell
-//                //Set destCell with destLocation on same floor plan
-//                //destination floor == current floor and current building == destination building
-//                if (startCell.getComplex().equals(destLocation.getComplex())
-//                        && startCell.getFloorString().equals(destLocation.getFloorString())) {
-//
-//                    destCell = destLocation;
-//
-//                }
 
-//                if (k + 1 < floorGrids.size()) {
-//
-//                    //Set destCell with destLocation on different floor plans
-//                    //FloorConnection as destCell, same building
-//                    if (floorGrids.get(k)[0][0].getBuilding().equals(
-//                            floorGrids.get(k + 1)[0][0].getBuilding())) {
-//                        destCell = availableFloorConnections.get(0).getConnectedCell(startCell.getBuilding(), startCell.getFloorString());
-//                    }
-//                    else if (isBuilding321(floorGrids.get(k)[0][0].getBuilding())
-//                            && isBuilding321(floorGrids.get(k + 1)[0][0].getBuilding())) {
-//
-//                        destCell = availableFloorConnections.get(0).getConnectedCell(startCell.getBuilding(), startCell.getFloorString());
-//                    }
-//
-//                    //FloorConnection as destCell, different buildings
-//                    //if building 4 -> floor -1 to floor 0 in building 3/2/1
-//                    if (floorGrids.get(k)[0][0].getBuilding().equals(BUILDING_04)
-//                            && (floorGrids.get(k + 1)[0][0].getBuilding().equals(BUILDING_03)
-//                            || floorGrids.get(k + 1)[0][0].getBuilding().equals(BUILDING_02)
-//                            || floorGrids.get(k + 1)[0][0].getBuilding().equals(BUILDING_01))) {
-//
-//                        for (int i = 0; i < availableFloorConnections.size(); i++) {
-//
-//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_EXIT)) {
-//
-//                                for (int j = 0; j < availableFloorConnections.get(i).getConnectedCells().size(); j++) {
-//                                    if (availableFloorConnections.get(i).getConnectedCells().get(j).getBuilding().equals(BUILDING_04)) {
-//                                        destCell = availableFloorConnections.get(i).getConnectedCells().get(j);
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//
-//                    //if building 5 -> floor 1 to floor 1 in building 3/2/1
-//                    if (floorGrids.get(k)[0][0].getBuilding().equals(BUILDING_05)
-//                            && isBuilding321(floorGrids.get(k + 1)[0][0].getBuilding())) {
-//
-//                        for (int i = 0; i < availableFloorConnections.size(); i++) {
-//
-//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_EXIT)) {
-//
-//                                for (int j = 0; j < availableFloorConnections.get(i).getConnectedCells().size(); j++) {
-//
-//                                    if (availableFloorConnections.get(i).getConnectedCells().get(j).getBuilding().equals(BUILDING_05)) {
-//                                        destCell = availableFloorConnections.get(i).getConnectedCells().get(j);
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//
-//                    //if building 3 -> floor 0 to floor -1 in building 4
-//                    if (isBuilding321(floorGrids.get(k)[0][0].getBuilding())
-//                            && floorGrids.get(k + 1)[0][0].getBuilding().equals(BUILDING_04)) {
-//
-//                        for (int i = 0; i < availableFloorConnections.size(); i++) {
-//
-//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_EXIT)) {
-//
-//                                for (int j = 0; j < availableFloorConnections.get(i).getConnectedCells().size(); j++) {
-//
-//                                    if (isBuilding321(availableFloorConnections.get(i).getConnectedCells().get(j).getBuilding())) {
-//                                        destCell = availableFloorConnections.get(i).getConnectedCells().get(j);
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//
-//                    //if building 3 -> floor 1 to floor 1 in building 5
-//                    if (isBuilding321(floorGrids.get(k)[0][0].getBuilding())
-//                            && floorGrids.get(k + 1)[0][0].getBuilding().equals(BUILDING_05)) {
-//
-//                        for (int i = 0; i < availableFloorConnections.size(); i++) {
-//
-//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_EXIT)) {
-//
-//                                for (int j = 0; j < availableFloorConnections.get(i).getConnectedCells().size(); j++) {
-//
-//                                    if (isBuilding321(availableFloorConnections.get(i).getConnectedCells().get(j).getBuilding())) {
-//                                        destCell = availableFloorConnections.get(i).getConnectedCells().get(j);
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-
-                //Get path through floor
-                AStar aStar = new AStar(startCell, destCell, floorGrids, floorConnections); //to floor 4 no new cells added, when from building with no 4th floor
+            //route just within one complex, user does not have to change between complexes
+            if(startLocation.getComplex().equals(destLocation.getComplex())){
+                //construct an instance of the Navigation Algorithm (AStar)
+                AStar aStar = new AStar(startLocation, destLocation, floorGrids, floorConnections); //to floor 4 no new cells added, when from building with no 4th floor
+                //compute route and save it to cellsToWalk
                 cellsToWalk.addAll(aStar.getCellsToWalk());
+            }
+            //start and destination complex differ -> user has to change between complexes
+            else{
+                //todo: Routenzusammensetzung mit Gebäudewechsel
+            }
 
-                //Log.i("_____CELLS_TO_WALK_part_____", String.valueOf(aStar.getCellsToWalk()));
 
-//                //Set next startCell
-//                if (k + 1 < floorGrids.size()) {
-//
-//                    //Same building
-//                    if (floorGrids.get(k)[0][0].getBuilding().equals(
-//                            floorGrids.get(k + 1)[0][0].getBuilding())) {
-//
-//                        startCell = availableFloorConnections.get(0).getConnectedCell(
-//                                floorGrids.get(k + 1)[0][0].getBuilding(),
-//                                floorGrids.get(k + 1)[0][0].getFloorString());
-//                    }
-//                    else if (isBuilding321(floorGrids.get(k)[0][0].getBuilding())
-//                            && isBuilding321(floorGrids.get(k + 1)[0][0].getBuilding())) {
-//
-//                        startCell = availableFloorConnections.get(0).getConnectedCell(floorGrids.get(k + 1)[0][0].getBuilding(),
-//                                floorGrids.get(k + 1)[0][0].getFloorString());
-//                    }
-//
-//                    //Different building
-//                    //if building 4 -> floor -1 to floor 0 in building 3/2/1
-//                    if (floorGrids.get(k)[0][0].getBuilding().equals(BUILDING_04)
-//                            && floorGrids.get(k + 1)[0][0].getBuilding().equals(BUILDING_03)) {
-//
-//                        for (int i = 0; i < availableFloorConnections.size(); i++) {
-//
-//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_EXIT)) {
-//
-//                                for (int j = 0; j < availableFloorConnections.get(i).getConnectedCells().size(); j++) {
-//
-//                                    if (isBuilding321(availableFloorConnections.get(i).getConnectedCells().get(j).getBuilding())) {
-//                                        startCell = availableFloorConnections.get(i).getConnectedCells().get(j);
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//
-//                    //if building 5 -> floor 1 to floor  1 in building 3/2/1
-//                    if (floorGrids.get(k)[0][0].getBuilding().equals(BUILDING_05)
-//                            && floorGrids.get(k + 1)[0][0].getBuilding().equals(BUILDING_03)) {
-//
-//                        for (int i = 0; i < availableFloorConnections.size(); i++) {
-//
-//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_EXIT)) {
-//
-//                                for (int j = 0; j < availableFloorConnections.get(i).getConnectedCells().size(); j++) {
-//
-//                                    if (isBuilding321(availableFloorConnections.get(i).getConnectedCells().get(j).getBuilding())) {
-//                                        startCell = availableFloorConnections.get(i).getConnectedCells().get(j);
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//
-//                    //if building 3/2/1 -> floor 0 to floor -1 in building 4
-//                    if (isBuilding321(floorGrids.get(k)[0][0].getBuilding())
-//                            && floorGrids.get(k + 1)[0][0].getBuilding().equals(BUILDING_04)) {
-//
-//                        for (int i = 0; i < availableFloorConnections.size(); i++) {
-//
-//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_EXIT)) {
-//
-//                                for (int j = 0; j < availableFloorConnections.get(i).getConnectedCells().size(); j++) {
-//                                    if (availableFloorConnections.get(i).getConnectedCells().get(j).getBuilding().equals(BUILDING_04)) {
-//                                        startCell = availableFloorConnections.get(i).getConnectedCells().get(j);
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//
-//                    //if building 3/2/1 -> floor 1 to floor 1 in building 5
-//                    if (isBuilding321(floorGrids.get(k)[0][0].getBuilding())
-//                            && floorGrids.get(k + 1)[0][0].getBuilding().equals(BUILDING_05)) {
-//
-//                        for (int i = 0; i < availableFloorConnections.size(); i++) {
-//
-//                            if (availableFloorConnections.get(i).getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_EXIT)) {
-//
-//                                for (int j = 0; j < availableFloorConnections.get(i).getConnectedCells().size(); j++) {
-//                                    if (availableFloorConnections.get(i).getConnectedCells().get(j).getBuilding().equals(BUILDING_05)) {
-//                                        startCell = availableFloorConnections.get(i).getConnectedCells().get(j);
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
         } catch (Exception e) {
             Log.e(TAG, "error getting navigation cells", e);
         }
@@ -308,110 +117,55 @@ public class RouteCalculator {
 
 
     /**
-     * Get grids of all needed floors in all buildings
-     * @return
+     * Builds grids of all needed floors in all used buildings and saves it to variable "floorGrids"
      */
-    private void getAllFloorGrids() {
+    private void getNeededFloorGrids() {
 
-        final int startFloorInt = startLocation.getFloorInt();
-        final int destinationFloorInt = destLocation.getFloorInt();
         Complex startComplex = startLocation.getComplex();
         Complex destinationComplex = destLocation.getComplex();
 
-        try {
-            floorGrids.put(Complex.COMPLEX_321, new HashMap<>());
-            for(int i = -1; i <= 4; i++){
-                floorGrids.get(Complex.COMPLEX_321).put(i, buildFloorGrid(Complex.COMPLEX_321,i));
-            }
-            //todo: uncomment if json files for building 4and 5 were added
-//            floorGrids.put(Complex.COMPLEX_4, new HashMap<>());
-//            for(int i = -1; i <= 5; i++){
-//                floorGrids.get(Complex.COMPLEX_4).put(i, buildFloorGrid(Complex.COMPLEX_4,i));
-//            }
-//            floorGrids.put(Complex.COMPLEX_5, new HashMap<>());
-//            for(int i = -1; i <= 5; i++){
-//                floorGrids.get(Complex.COMPLEX_5).put(i, buildFloorGrid(Complex.COMPLEX_5,i));
-//            }
 
-//            //Start and destination location are in same building
-//            //note: building 3,2 and 1 are considered as same building
-//            if (startComplex.equals(destinationComplex)) {
-//
-//                //im Kellergeschoss gibt es keinen Durchgang von Haus 3 nach Haus 1
-//                if (startFloorInt == -1 && destinationFloorInt == -1
-//                        && startLocation.getComplex().equals(Complex.COMPLEX_321)
-//                        && destLocation.getComplex().equals(Complex.COMPLEX_321)
-//                        && !(startLocation.getBuilding().equals(destLocation.getBuilding()))) {
-//
-//                    //todo house 3.ug nach 1.ug
-//                    String startBuilding = startLocation.getBuilding();
-//                    floorGrids.get(startBuilding).put(destinationFloorInt,
-//                            buildFloorGrid(startComplex, destinationFloorInt));
-//                    floorGrids.get(BUILDING_03).put(0, buildFloorGrid(BUILDING_03, 0));
-//                    floorGrids.get(BUILDING_02).put(0, buildFloorGrid(BUILDING_02, 0));
-//                    floorGrids.get(BUILDING_01).put(0, buildFloorGrid(BUILDING_01, 0));
-//                }
-//                // add grids for all floors from start floor till destination floor
-//                else {
-//                    int i = startFloorInt;
-//                    while(i != destinationFloorInt) {
-//
-//                        Cell[][] floorGrid = buildFloorGrid(startLocation.getBuilding(), i);
-//                        floorGrids.get(startLocation.getBuilding()).put(startFloorInt, floorGrid);
-//
-//                        if (startFloorInt < destinationFloorInt) i++;
-//                        else if (startFloorInt > destinationFloorInt) i--;
-//                        else if (startFloorInt == destinationFloorInt) break;
-//                    }
-//                    //add floor grid for destination floor
-//                    floorGrids.get(destLocation.getBuilding()).put(destinationFloorInt,
-//                            buildFloorGrid(destLocation.getBuilding(), destinationFloorInt));
-//                }
-//            }
-//
-//            //start and destination location are in different buildings/complexes
-//            else {
-//
-//                //add all grids for the way from start floor to ground floor (to get out of building)
-//                for (int i = startFloorInt; i > -1; i--) {
-//                    floorGrids.get(startLocation.getBuilding())
-//                            .put(i, buildFloorGrid(startLocation.getBuilding(), i));
-//                }
-//
-//                //add grids for way from ground floor to destination floor in destination building
-//                int i = 0;
-//                while(true){
-//                    floorGrids.get(destLocation.getBuilding())
-//                            .put(i, buildFloorGrid(destLocation.getBuilding(), i));
-//                    //end while loop if destination floor reached
-//                    if (i == destinationFloorInt) break;
-//                    //counting i up or down depending on destination floor equals -1, ug or upper floors
-//                    if (destinationFloorInt > 0) i++;
-//                    else if (destinationFloorInt < 0) i--;
-//                }
-//
-//                //walk from building 4 to 5 (or vice versa) passing building 3-2-1
-//                if((startComplex.equals(Complex.COMPLEX_4) && destinationComplex.equals(Complex.COMPLEX_5))
-//                        || (startComplex.equals(Complex.COMPLEX_5) && destinationComplex.equals(Complex.COMPLEX_4))){
-//
-//                    floorGrids.get(BUILDING_03).put(0, buildFloorGrid(BUILDING_03, 0));
-//                }
-//
-//                //todo take bridge between 321 and 5 into account
-//
-//            }
+        //add floorgrids of the start and destination building,
+        //für einen Komplex/Gebäude werden immer alle floorgrids hinzugefügt,
+        //es werden nur Gebäude ausgelassen die weder Start noch Ziel enthalten
+        try {
+            if(startComplex.equals(Complex.COMPLEX_321)
+                    || destinationComplex.equals(Complex.COMPLEX_321)){
+                floorGrids.put(Complex.COMPLEX_321, new HashMap<>());
+
+                for(int i = -1; i <= 4; i++){
+                    floorGrids.get(Complex.COMPLEX_321).put(i, buildFloorGrid(Complex.COMPLEX_321, i));
+                }
+            }
+            if(startComplex.equals(Complex.COMPLEX_4)
+                    || destinationComplex.equals(Complex.COMPLEX_4)){
+                floorGrids.put(Complex.COMPLEX_4, new HashMap<>());
+
+                for(int i = -1; i <= 5; i++){
+                    floorGrids.get(Complex.COMPLEX_4).put(i, buildFloorGrid(Complex.COMPLEX_4, i));
+
+                }
+            }
+            if(startComplex.equals(Complex.COMPLEX_5)
+                    || destinationComplex.equals(Complex.COMPLEX_5)){
+                floorGrids.put(Complex.COMPLEX_5, new HashMap<>());
+
+                for(int i = -2; i <= 3; i++){
+                    floorGrids.get(Complex.COMPLEX_5).put(i, buildFloorGrid(Complex.COMPLEX_5, i));
+                }
+            }
         } catch (Exception e) {
             Log.e(TAG, "error building floor grids", e);
         }
+
     }
 
 
-
     /**
-     * Build a grid of all cells as a floor plan
-     * @paramcomplex
+     * Builds a grid of all cells of a floorplan
+     * @param complex {@link Complex}
      * @param floorInt floor as integer (ug = -1)
-     * @return 2D Arraylist with all cells of the floor
+     * @return floorgrid as 2D Arraylist with all cells of the floor
      */
     private Cell[][] buildFloorGrid(final Complex complex, final int floorInt) {
 
@@ -459,7 +213,7 @@ public class RouteCalculator {
                 }
             }
         } catch (final Exception e) {
-            Log.e(TAG, "error building the floor floorGrid", e);
+            Log.e(TAG, "error building the floorGrid (" + complex.toString() + "," + floorInt+")", e);
         }
         return floorGrid;
     }
@@ -469,7 +223,7 @@ public class RouteCalculator {
      * Get all usable floor connections on floor, sorted by distance
      * @param startCell
      * @param floor
-     * @return list of available stairs, elevator etc as {@link FloorConnection} objects
+     * @return list of available stairs and elevators as {@link FloorConnection} objects
      */
     private ArrayList<FloorConnection> getFloorConnections(final Cell startCell, final int floor) {
 
