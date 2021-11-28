@@ -17,6 +17,7 @@
 
 package de.fhe.fhemobile.utils.navigation;
 
+import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.utils.Define;
 
 public class NavigationUtils {
@@ -62,12 +63,12 @@ public class NavigationUtils {
     }
 
     /**
-     * Get path to floorplan grid as json
+     * Get path to json file of floorplan grid (incl. ".json")
      * @param complex
      * @param floor
      * @return filepath to json
      */
-    public static String getNameOfFloorPlanGrid(final Complex complex, final String floor) {
+    public static String getPathFloorPlanGrid(final Complex complex, final String floor) {
         String ending = ".json";
 
         return getFloorPlanFileName(complex, floor) + ending;
@@ -188,5 +189,20 @@ public class NavigationUtils {
         return filename;
     }
 
-
+    /**
+     * Checks whether cell1 and cell2 are both at floor -1 at complex 321,
+     * but cell1 in building 1 and cell2 in building 3, or vice versa
+     * (reason: building 2 has no floor -1 -> building 3 and 1 are not connected via basement of building 2)
+     * @param cell1 start cell
+     * @param cell2 cell to reach from the start cell
+     */
+    public static boolean checkExceptCaseBuild321FloorUG(Cell cell1, Cell cell2){
+        if((cell1.getFloorInt() == -1 && cell2.getFloorInt() == -1) &&
+                ((cell1.getBuilding().equals("03") && cell2.getBuilding().equals("01"))
+                    || (cell1.getBuilding().equals("01") && cell2.getBuilding().equals("03")))){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

@@ -19,12 +19,14 @@ package de.fhe.fhemobile.utils.navigation;
 
 import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_height;
 import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_width;
+import static de.fhe.fhemobile.utils.navigation.NavigationUtils.checkExceptCaseBuild321FloorUG;
 
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.PriorityQueue;
 
 import de.fhe.fhemobile.models.navigation.Cell;
@@ -150,16 +152,20 @@ class AStar {
                 //current cell is not destination
                 if (!currentCell.equals(destCell)) {
 
-                    //Überprüft die Kosten der direkt angrenzenden Nachbarzellen der aktuellen Zelle (Diagonale wird nicht betrachtet)
+                    //Überprüft die Kosten der direkt angrenzenden Nachbarzellen der aktuellen Zelle
+                    // (diagonale Nachbarn werden nicht betrachtet)
                     // und setzt ggf. die CostsPathToCell dieser Zellen
 
-                    //if currentCell is floorconnection than all cells connected by the floorconnection are also considered as neighbors
+
+                    //if currentCell is floorconnection then all cells connected by the floorconnection are also considered as neighbors
                     if(currentCell instanceof FloorConnectionCell){
 
-                        //floorconnections should not be considered if start and destination are located at the same floor
+                        //if start and destination are located at the same floor,
+                        // floorconnections are not need and thus should not be considered to save runtime
+                        // check exceptional case building 3 and 1, floor -1
                         if((!startCell.getComplex().equals(destCell.getComplex())
-                                || startCell.getFloorInt() != destCell.getFloorInt())){
-                            //todo: add special case 03.ug to 01.ug to if statement
+                                || startCell.getFloorInt() != destCell.getFloorInt())
+                                || checkExceptCaseBuild321FloorUG(startCell, destCell)){
 
                             ArrayList<FloorConnectionCell> connectedCells = findConnectedCells((FloorConnectionCell) currentCell);
                             for(FloorConnectionCell neighborCell : connectedCells){
@@ -170,36 +176,39 @@ class AStar {
                             }
                         }
                     }
-                    //todo: consider case when changing building or complex
-                    //note: always check that cell is not at edge of grid
+
+                    Cell[][] currentFloorgrid = Objects.requireNonNull(
+                            floorGrids.get(currentCell.getComplex()).get(currentCell.getFloorInt()));
+
+                    //if-conditions ensures that current cell is not at edge of grid (so the left/right/... neighbor cell is valid)
                     //left neighbor
                     if (currentCell.getXCoordinate() > 0) {
-                        Cell neighbouringCell = floorGrids.get(currentCell.getComplex()).get(currentCell.getFloorInt())
-                                [currentCell.getXCoordinate() - 1][currentCell.getYCoordinate()];
+                        Cell neighbouringCell =
+                                currentFloorgrid[currentCell.getXCoordinate() - 1][currentCell.getYCoordinate()];
                         updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
 
                     //right neighbor
                     if (currentCell.getXCoordinate() < cellgrid_width) {
                         //check that cell is not at edge of grid
-                        Cell neighbouringCell = floorGrids.get(currentCell.getComplex()).get(currentCell.getFloorInt())
-                                [currentCell.getXCoordinate() + 1][currentCell.getYCoordinate()];
+                        Cell neighbouringCell =
+                                currentFloorgrid[currentCell.getXCoordinate() + 1][currentCell.getYCoordinate()];
                         updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
 
                     //neigbor below
                     if (currentCell.getYCoordinate() > 0) {
                         //check that cell is not at edge of grid
-                        Cell neighbouringCell = floorGrids.get(currentCell.getComplex()).get(currentCell.getFloorInt())
-                                [currentCell.getXCoordinate()][currentCell.getYCoordinate() - 1];
+                        Cell neighbouringCell =
+                                currentFloorgrid[currentCell.getXCoordinate()][currentCell.getYCoordinate() - 1];
                         updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
 
                     //neighbor above
                     if (currentCell.getYCoordinate() < cellgrid_height) {
                         //check that cell is not at edge of grid
-                        Cell neighbouringCell = floorGrids.get(currentCell.getComplex()).get(currentCell.getFloorInt())
-                                [currentCell.getXCoordinate()][currentCell.getYCoordinate() + 1];
+                        Cell neighbouringCell =
+                                currentFloorgrid[currentCell.getXCoordinate()][currentCell.getYCoordinate() + 1];
                         updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
                 }

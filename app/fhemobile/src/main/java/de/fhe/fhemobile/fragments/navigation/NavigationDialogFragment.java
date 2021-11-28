@@ -145,6 +145,13 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        //todo: Wenn bereits eine Navigation durchgeführt wurde, dann wird diese wieder aufgrufen
+        // und nicht die Navigation für das eventuell neue Ziel (Nutzer kann also keine zweite Navigation mit neuen Eingaben durchführen)
+    }
+
+    @Override
     public void onClick(final View view) {
         try {
             //QR button or search button

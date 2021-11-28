@@ -211,7 +211,7 @@ public class NavigationActivity extends BaseActivity {
                 drawAllPathCells(displayedComplex, floor); // add route (path of cells) to overlay
                 drawStartLocation(displayedComplex, floor); //Add icon for current user location room to overlay
                 drawDestinationLocation(displayedComplex, floor); //Add destination location room icon to overlay
-                drawFloorConnections(displayedComplex, floor); //Add floorConnection icons (like stairs, lifts, ...) to overlay
+                drawAllFloorConnections(displayedComplex, floor); //Add floorConnection icons (like stairs, lifts, ...) to overlay
             }
         });
 
@@ -324,11 +324,11 @@ public class NavigationActivity extends BaseActivity {
     }
 
     /**
-     * Add all elevators, staircases, exits
+     * Add all elevators, staircases, exits on displayed floorplan image
      * @param complex that is displayed (floorplan)
      * @param floor that is displayed (floorplan)
      */
-    private void drawFloorConnections(Complex complex, String floor){
+    private void drawAllFloorConnections(Complex complex, String floor){
         try {
             for (FloorConnection fc : floorConnections) {
                 for (FloorConnectionCell cell : fc.getConnectedCells()) {
@@ -453,7 +453,7 @@ public class NavigationActivity extends BaseActivity {
 
             // read only once
             if (floorConnections.isEmpty()) {
-                json = JSONHandler.readFromAssets(this, "floorconnection");
+                json = JSONHandler.readFromAssets(this, "floorconnections");
                 floorConnections = jsonHandler.parseJsonFloorConnection(json);
             }
             if(exits.isEmpty()){
@@ -529,7 +529,7 @@ public class NavigationActivity extends BaseActivity {
         try {
             if (in.equals(getLocaleStringResource(R.string.building_03_02_01_floor_ug))) {
                 helperBuildingAndFloor.add("03");
-                helperBuildingAndFloor.add("ug");
+                helperBuildingAndFloor.add("ug1");
             }
             else if (in.equals(getLocaleStringResource(R.string.building_03_02_01_floor_00))) {
                 helperBuildingAndFloor.add("03");
@@ -553,7 +553,7 @@ public class NavigationActivity extends BaseActivity {
             }
             else if (in.equals(getLocaleStringResource(R.string.building_04_floor_ug))) {
                 helperBuildingAndFloor.add("04");
-                helperBuildingAndFloor.add("ug");
+                helperBuildingAndFloor.add("ug1");
             }
             else if (in.equals(getLocaleStringResource(R.string.building_04_floor_00))) {
                 helperBuildingAndFloor.add("04");

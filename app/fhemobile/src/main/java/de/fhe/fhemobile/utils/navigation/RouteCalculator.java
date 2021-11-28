@@ -21,7 +21,7 @@ package de.fhe.fhemobile.utils.navigation;
 import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_height;
 import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_width;
 import static de.fhe.fhemobile.utils.navigation.NavigationUtils.floorIntToString;
-import static de.fhe.fhemobile.utils.navigation.NavigationUtils.getNameOfFloorPlanGrid;
+import static de.fhe.fhemobile.utils.navigation.NavigationUtils.getPathFloorPlanGrid;
 
 import android.content.Context;
 import android.util.Log;
@@ -108,7 +108,7 @@ public class RouteCalculator {
             //start and destination complex differ -> user has to change between complexes
             else{
 
-                //determine Exit to use for leaving complex the start complex
+                //determine Exit to use for leaving complex to the start complex
                 // and determine Exit to use for entering the destination complex
                 Exit exit = null;
                 Exit entry = null;
@@ -229,7 +229,8 @@ public class RouteCalculator {
             String json;
 
             //Get floor plan JSON from assets
-            json = JSONHandler.readFloorGridFromAssets(context, getNameOfFloorPlanGrid(complex, floor) + ".json");
+            String filename = getPathFloorPlanGrid(complex, floor);
+            json = JSONHandler.readFloorGridFromAssets(context, filename);
             final HashMap<String, Cell> walkableCells = jsonHandler.parseJsonWalkableCells(json);
 
             //fill in rooms

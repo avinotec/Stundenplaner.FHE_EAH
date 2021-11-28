@@ -30,14 +30,14 @@ public class Define {
 
 	//created by Nadja 17.11.2021
 	public static class Maps{
-		public static final String BUILDING_03_02_01_FLOOR_UG = "building_03_02_01_floor_ug";   //$NON-NLS
+		public static final String BUILDING_03_02_01_FLOOR_UG = "building_03_02_01_floor_ug1";   //$NON-NLS
 		public static final String BUILDING_03_02_01_FLOOR_00 = "building_03_02_01_floor_00";   //$NON-NLS
 		public static final String BUILDING_03_02_01_FLOOR_01 = "building_03_02_01_floor_01";   //$NON-NLS
 		public static final String BUILDING_03_02_01_FLOOR_02 = "building_03_02_01_floor_02";   //$NON-NLS
 		public static final String BUILDING_03_02_01_FLOOR_03 = "building_03_02_01_floor_03";   //$NON-NLS
 		public static final String BUILDING_03_02_01_FLOOR_04 = "building_03_02_01_floor_04";   //$NON-NLS
 		public static final String BUILDING_03_02_01_GROUND = "building_03_02_01_ground";   	//$NON-NLS
-		public static final String BUILDING_04_FLOOR_UG = "building_04_floor_ug";   //$NON-NLS
+		public static final String BUILDING_04_FLOOR_UG = "building_04_floor_ug1";   //$NON-NLS
 		public static final String BUILDING_04_FLOOR_00 = "building_04_floor_00";   //$NON-NLS
 		public static final String BUILDING_04_FLOOR_01 = "building_04_floor_01";   //$NON-NLS
 		public static final String BUILDING_04_FLOOR_02 = "building_04_floor_02";   //$NON-NLS
