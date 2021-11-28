@@ -151,7 +151,7 @@ for i in ['ug1', '00', '01', '02', '03', '04']:
     with open('json/tmp/building_01_floor_' + i + '.json', 'r') as f:
         json_building01 = json.load(f)
     
-    json_building321 = json_building03 + json_building02 + json_building03
+    json_building321 = json_building03 + json_building02 + json_building01
 
     with open('json/building_03_02_01_floor_'+ i +'.json', 'w') as f:
         json.dump(json_building321, f)
