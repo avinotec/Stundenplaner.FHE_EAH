@@ -21,7 +21,8 @@ import de.fhe.fhemobile.utils.navigation.NavigationUtils.Complex;
 
 
 /**
- * Class for distinguishing between names of buildings (3, 2, 1) and buildings considered as one unit (3-2-1)
+ * Class for distinguishing between names of buildings (03, 02, 01, 04, 05) and
+ * buildings considered as one unit (3-2-1, 4, 5)
  * needed for route calculation
  */
 public class Building {
@@ -52,7 +53,7 @@ public class Building {
     }
 
     /**
-     * Returns the String of the building ("ug", "00", "01" ,...)
+     * Returns the String of the building ("01", "02", ...)
      * @return building as String
      */
     public String getBuilding() {

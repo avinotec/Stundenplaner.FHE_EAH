@@ -124,7 +124,7 @@ public class NavigationUtils {
         if(complex.equals(Complex.COMPLEX_321)){
             switch (floor) {
                 case "-1":
-                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_UG;
+                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_UG1;
                     break;
                 case "00":
                     filename = Define.Maps.BUILDING_03_02_01_FLOOR_00;
@@ -146,7 +146,7 @@ public class NavigationUtils {
         else if(complex.equals(Complex.COMPLEX_4)){
             switch(floor){
                 case "-1":
-                    filename = Define.Maps.BUILDING_04_FLOOR_UG;
+                    filename = Define.Maps.BUILDING_04_FLOOR_UG1;
                     break;
                 case "00":
                     filename = Define.Maps.BUILDING_04_FLOOR_00;
@@ -179,10 +179,12 @@ public class NavigationUtils {
                     filename = Define.Maps.BUILDING_05_FLOOR_02;
                     break;
                 case "03":
-                    filename = Define.Maps.BUILDING_05_FLOOR_03_1;
-                    filename = Define.Maps.BUILDING_05_FLOOR_03_2;
+                    filename = Define.Maps.BUILDING_05_FLOOR_03;
+                    //Todo:Lösung finden für 03 Ebene 1 und Ebene2
+                    //2 PNGs aber nur ein JSON für 03
+                    filename = Define.Maps.BUILDING_05_FLOOR_03_LEVEL2;
                     break;
-                //Todo:Lösung finden für 03 Ebene 1 und Ebene2
+
             }
         }
 

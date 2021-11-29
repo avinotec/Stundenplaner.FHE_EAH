@@ -124,7 +124,8 @@ public class RouteCalculator {
                             }
                             else Log.i(TAG,"More than one possible exit for complex "+startComplex.toString()+" to "+destComplex.toString());
 
-                            break;
+                            //exit and entry found
+                            if (entry != null) break;
                         }
                     }
 
@@ -137,7 +138,8 @@ public class RouteCalculator {
                             } else
                                 Log.i(TAG, "More than one possible entry to complex " + destComplex.toString() + " from complex " + startComplex.toString());
 
-                            break;
+                            //exit and entry found
+                            if(exit != null) break;
                         }
                     }
                 }
@@ -237,6 +239,12 @@ public class RouteCalculator {
             for(final Room r : rooms){
                 if(r.getComplex().equals(complex) && r.getFloorString().equals(floor)){
                     floorGrid[r.getXCoordinate()][r.getYCoordinate()] = r;
+                }
+            }
+            //fill in exits
+            for(final Exit ex : exits){
+                if(ex.getComplex().equals(complex) && ex.getFloorString().equals(floor)){
+                    floorGrid[ex.getXCoordinate()][ex.getYCoordinate()] = ex;
                 }
             }
             //fill in floorconnections

@@ -30,14 +30,14 @@ public class Define {
 
 	//created by Nadja 17.11.2021
 	public static class Maps{
-		public static final String BUILDING_03_02_01_FLOOR_UG = "building_03_02_01_floor_ug1";   //$NON-NLS
+		public static final String BUILDING_03_02_01_FLOOR_UG1 = "building_03_02_01_floor_ug1";   //$NON-NLS
 		public static final String BUILDING_03_02_01_FLOOR_00 = "building_03_02_01_floor_00";   //$NON-NLS
 		public static final String BUILDING_03_02_01_FLOOR_01 = "building_03_02_01_floor_01";   //$NON-NLS
 		public static final String BUILDING_03_02_01_FLOOR_02 = "building_03_02_01_floor_02";   //$NON-NLS
 		public static final String BUILDING_03_02_01_FLOOR_03 = "building_03_02_01_floor_03";   //$NON-NLS
 		public static final String BUILDING_03_02_01_FLOOR_04 = "building_03_02_01_floor_04";   //$NON-NLS
 		public static final String BUILDING_03_02_01_GROUND = "building_03_02_01_ground";   	//$NON-NLS
-		public static final String BUILDING_04_FLOOR_UG = "building_04_floor_ug1";   //$NON-NLS
+		public static final String BUILDING_04_FLOOR_UG1 = "building_04_floor_ug1";   //$NON-NLS
 		public static final String BUILDING_04_FLOOR_00 = "building_04_floor_00";   //$NON-NLS
 		public static final String BUILDING_04_FLOOR_01 = "building_04_floor_01";   //$NON-NLS
 		public static final String BUILDING_04_FLOOR_02 = "building_04_floor_02";   //$NON-NLS
@@ -49,11 +49,11 @@ public class Define {
 		public static final String BUILDING_05_FLOOR_01 = "building_05_floor_01";   //$NON-NLS
 		public static final String BUILDING_05_FLOOR_02 = "building_05_floor_02";   //$NON-NLS
 		public static final String BUILDING_05_GROUND = "building_05_ground";   //$NON-NLS
-		// filename for floorgrid for 05.03.xx
-		public static final String BUILDING_05_FLOOR_03 = "building_05_floor_03";   //$NON-NLS
+		// filename for FLOORGRID for 05.03.xx
+		public static final String BUILDING_05_FLOOR_03 = "building_05_floor_03";   //$NON-NLS//$NON-NLS
 		//filenames for PNG for 05.03.xx
-		public static final String BUILDING_05_FLOOR_03_1 = "building_05_floor_03_level1";   //$NON-NLS
-		public static final String BUILDING_05_FLOOR_03_2 = "building_05_floor_03_level2";   //$NON-NLS
+		public static final String BUILDING_05_FLOOR_03_LEVEL1 = "building_05_floor_03_level1";   //$NON-NLS
+		public static final String BUILDING_05_FLOOR_03_LEVEL2 = "building_05_floor_03_level2";   //$NON-NLS
 	}
 
 
@@ -66,7 +66,6 @@ public class Define {
 
 		public static final String FLOORCONNECTION_TYPE_STAIR = "staircase";    //$NON-NLS
 		public static final String FLOORCONNECTION_TYPE_ELEVATOR = "elevator";  //$NON-NLS
-		public static final String FLOORCONNECTION_TYPE_EXIT = "exit"; //$NON-NLS
 		public static final String FLOORCONNECTION_TYPE_BRIDGE = "bridge"; //$NON-NLS
 
 		//Size of the grid overlying the floorplan (unit: cells - needs to be integer)

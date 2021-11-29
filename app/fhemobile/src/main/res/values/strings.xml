@@ -113,14 +113,14 @@
     <string name="building_04">Building 4</string>
     <string name="building_05">Building 5</string>
     <string name="building_03_02_01_ground">Building 3, 2 and 1</string>
-    <string name="building_03_02_01_floor_ug">Building 3, 2 and 1: basement</string>
+    <string name="building_03_02_01_floor_ug1">Building 3, 2 and 1: basement</string>
     <string name="building_03_02_01_floor_00">Building 3, 2 and 1: ground floor</string>
     <string name="building_03_02_01_floor_01">Building 3, 2 and 1: 1st floor</string>
     <string name="building_03_02_01_floor_02">Building 3, 2 and 1: 2nd floor</string>
     <string name="building_03_02_01_floor_03">Building 3, 2 and 1: 3rd floor</string>
     <string name="building_03_02_01_floor_04">"Building 3, 2 and 1: 4th floor "</string>
     <string name="building_04_ground">Building 4</string>
-    <string name="building_04_floor_ug">Building 4: basement</string>
+    <string name="building_04_floor_ug1">Building 4: basement</string>
     <string name="building_04_floor_00">Building 4: ground floor</string>
     <string name="building_04_floor_01">Building 4: 1st floor</string>
     <string name="building_04_floor_02">Building 4: 2nd floor</string>

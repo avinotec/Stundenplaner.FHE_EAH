@@ -108,18 +108,18 @@ class AStar {
             //initialize set of closed cells (cells the A* algorithm has processed and removed from openCells)
             closedCells = new ArrayList<>();
             //set costs of endcell to 0 to force algorithm to "enter" the destination room when reaching a neigboring cell of the room cell
-            floorGrids.get(destCell.getComplex()).get(destCell.getFloorInt())
+            Objects.requireNonNull(floorGrids.get(destCell.getComplex()).get(destCell.getFloorInt()))
                     [destCell.getXCoordinate()][destCell.getYCoordinate()]
                     .setCostPassingCell(0);
             //set startcell costs to 0
-            floorGrids.get(startCell.getComplex()).get(startCell.getFloorInt())
+            Objects.requireNonNull(floorGrids.get(startCell.getComplex()).get(startCell.getFloorInt()))
                     [startCell.getXCoordinate()][(startCell.getYCoordinate())].setCostPassingCell(0);
             //run A* algorithm
             performAStarAlgorithm();
 
             //backtracing to reconstruct navigation path
             //get end cell as start cell for backtracing
-            Cell currentCell = floorGrids.get(destCell.getComplex()).get(destCell.getFloorInt())
+            Cell currentCell = Objects.requireNonNull(floorGrids.get(destCell.getComplex()).get(destCell.getFloorInt()))
                     [destCell.getXCoordinate()][destCell.getYCoordinate()];
             //do not add destination (and startcell) to walkable cells (displayed with rout path icon)
             currentCell = currentCell.getParentCell();
@@ -224,10 +224,17 @@ class AStar {
      */
     private void updateParentAndPathToCellCosts(final Cell cell, final Cell parentCell) {
 
-        final int parentCellPathCosts = parentCell.getCostsPathToCell(); //is initialized with -1
+        final int parentCellPathCosts = parentCell.getCostsPathToCell();
+        //note: CostsPathToCell is initialized with -1
+
+        //if CostsPathToCell of parent has not been set yet (just initialized with -1),
+        // then set it to the costs for passing the "cell",
+        // otherwise add those costs to the previous costsPathToCell of the parent cell
         final int costsPathToCell = parentCellPathCosts >= 0 ?
                 cell.getCostPassingCell() + parentCellPathCosts : cell.getCostPassingCell();
-        final boolean isInOpenQueue = openCells.contains(cell); // cell has already status "open"
+
+        // cell has already status "open"
+        final boolean isInOpenQueue = openCells.contains(cell);
 
         //check if cell is walkable and does not have status "closed" (not contained in closedCells)
         if (cell.getWalkability() && !closedCells.contains(cell.getKey())) {

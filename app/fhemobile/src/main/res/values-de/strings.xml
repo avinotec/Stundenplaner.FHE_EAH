@@ -113,14 +113,14 @@
     <string name="building_04">Haus 4</string>
     <string name="building_05">Haus 5</string>
     <string name="building_03_02_01_ground">Haus 3, 2 und 1</string>
-    <string name="building_03_02_01_floor_ug">Haus 3, 2 und 1: Untergeschoss</string>
+    <string name="building_03_02_01_floor_ug1">Haus 3, 2 und 1: Untergeschoss</string>
     <string name="building_03_02_01_floor_00">Haus 3, 2 und 1: Erdgeschoss</string>
     <string name="building_03_02_01_floor_01">Haus 3, 2 und 1: 1. Stockwerk</string>
     <string name="building_03_02_01_floor_02">Haus 3, 2 und 1: 2. Stockwerk</string>
     <string name="building_03_02_01_floor_03">Haus 3, 2 und 1: 3. Stockwerk</string>
     <string name="building_03_02_01_floor_04">Haus 3, 2 und 1: 4. Stockwerk</string>
     <string name="building_04_ground">Haus 4</string>
-    <string name="building_04_floor_ug">Haus 4: Untergeschoss</string>
+    <string name="building_04_floor_ug1">Haus 4: Untergeschoss</string>
     <string name="building_04_floor_00">Haus 4: Erdgeschoss</string>
     <string name="building_04_floor_01">Haus 4: 1. Stockwerk</string>
     <string name="building_04_floor_02">Haus 4: 2. Stockwerk</string>

@@ -18,7 +18,6 @@
 package de.fhe.fhemobile.activities;
 
 import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_ELEVATOR;
-import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_EXIT;
 import static de.fhe.fhemobile.utils.Define.Navigation.FLOORCONNECTION_TYPE_STAIR;
 import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_height;
 import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_width;
@@ -72,7 +71,7 @@ public class NavigationActivity extends BaseActivity {
     private Room destinationLocation;
 
     private static ArrayList<Room> rooms;
-    private static ArrayList<Exit> exits;
+    private static ArrayList<Exit> exits = new ArrayList<>();
     private static ArrayList<FloorConnection> floorConnections = new ArrayList<>();
     private ArrayList<Cell> cellsToWalk = new ArrayList<>();
 
@@ -211,7 +210,7 @@ public class NavigationActivity extends BaseActivity {
                 drawAllPathCells(displayedComplex, floor); // add route (path of cells) to overlay
                 drawStartLocation(displayedComplex, floor); //Add icon for current user location room to overlay
                 drawDestinationLocation(displayedComplex, floor); //Add destination location room icon to overlay
-                drawAllFloorConnections(displayedComplex, floor); //Add floorConnection icons (like stairs, lifts, ...) to overlay
+                //drawAllFloorConnections(displayedComplex, floor); //Add floorConnection icons (like stairs, lifts, ...) to overlay
             }
         });
 
@@ -247,7 +246,15 @@ public class NavigationActivity extends BaseActivity {
                     if (cellsToWalk.get(j).getComplex().equals(complex)
                             && cellsToWalk.get(j).getFloorString().equals(floor)) {
 
-                        drawPathCell(cellsToWalk.get(j));
+                        if(cellsToWalk.get(j) instanceof FloorConnectionCell){
+                            drawFloorConnection((FloorConnectionCell) cellsToWalk.get(j));
+                        }
+                        else if(cellsToWalk.get(j) instanceof Exit){
+                            drawExit((Exit) cellsToWalk.get(j));
+                        }
+                        else{
+                            drawPathCell(cellsToWalk.get(j));
+                        }
                     }
                 }
             }
@@ -269,8 +276,6 @@ public class NavigationActivity extends BaseActivity {
         fitOneCell(pathCellIcon);
         pathCellIcon.setX(convertCellCoordX(cell.getXCoordinate()));
         pathCellIcon.setY(convertCellCoordY(cell.getYCoordinate()));
-
-
     }
 
     /**
@@ -332,7 +337,7 @@ public class NavigationActivity extends BaseActivity {
         try {
             for (FloorConnection fc : floorConnections) {
                 for (FloorConnectionCell cell : fc.getConnectedCells()) {
-                    drawFloorConnection(complex, floor, cell);
+                    drawFloorConnection(cell);
                 }
             }
         } catch (Exception e) {
@@ -341,12 +346,12 @@ public class NavigationActivity extends BaseActivity {
     }
 
     /**
-     * Draw floorconnection icon corresponding to the floorconnection type (stairs, elevator, exits, birdge)
-     * @param complex that is displayed (floorplan)
-     * @param floor that is displayed (floorplan)
-     * @param fCell FloorConnectionCell to draw
+     * Draw floorconnection icon corresponding to the floorconnection type (stairs, elevator)
+     * @param fCell {@link FloorConnectionCell} to draw
      */
-    private void drawFloorConnection(Complex complex, String floor, FloorConnectionCell fCell) {
+    private void drawFloorConnection(FloorConnectionCell fCell) {
+        Complex complex = fCell.getComplex();
+        String floor = fCell.getFloorString();
 
         if (fCell.getComplex().equals(complex)
                 && fCell.getFloorString().equals(floor)) {
@@ -371,16 +376,6 @@ public class NavigationActivity extends BaseActivity {
                 elevatorIcon.setY(convertCellCoordY(fCell.getYCoordinate()));
             }
 
-            if (fCell.getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_EXIT)) {
-                ImageView exitIcon = new ImageView(this);
-                exitIcon.setImageResource(R.drawable.exit_icon);
-                if (navigationLayout != null) navigationLayout.addView(exitIcon);
-
-                fitOneCell(exitIcon);
-                exitIcon.setX(convertCellCoordX(fCell.getXCoordinate()));
-                exitIcon.setY(convertCellCoordY(fCell.getYCoordinate()));
-            }
-
             //bridge is ignored
 //            if (fCell.getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_BRIDGE)) {
 //                ImageView bridgeIcon = new ImageView(this);
@@ -392,6 +387,20 @@ public class NavigationActivity extends BaseActivity {
 //                bridgeIcon.setY(convertCellCoordY(fCell.getYCoordinate()));
 //            }
         }
+    }
+
+    /**
+     * Draw exit icon corresponding to the exitCell
+     * @param exitCell exit to display
+     */
+    private void drawExit(Exit exitCell){
+        ImageView exitIcon = new ImageView(this);
+        exitIcon.setImageResource(R.drawable.exit_icon);
+        if (navigationLayout != null) navigationLayout.addView(exitIcon);
+
+        fitOneCell(exitIcon);
+        exitIcon.setX(convertCellCoordX(exitCell.getXCoordinate()));
+        exitIcon.setY(convertCellCoordY(exitCell.getYCoordinate()));
     }
 
     /**
@@ -420,13 +429,13 @@ public class NavigationActivity extends BaseActivity {
         String defaultSelection = resource.getString(R.string.select_from_spinner);
 
         spinnerItems.add(defaultSelection);
-        spinnerItems.add(resource.getString(R.string.building_03_02_01_floor_ug));
+        spinnerItems.add(resource.getString(R.string.building_03_02_01_floor_ug1));
         spinnerItems.add(resource.getString(R.string.building_03_02_01_floor_00));
         spinnerItems.add(resource.getString(R.string.building_03_02_01_floor_01));
         spinnerItems.add(resource.getString(R.string.building_03_02_01_floor_02));
         spinnerItems.add(resource.getString(R.string.building_03_02_01_floor_03));
         spinnerItems.add(resource.getString(R.string.building_03_02_01_floor_04));
-        spinnerItems.add(resource.getString(R.string.building_04_floor_ug));
+        spinnerItems.add(resource.getString(R.string.building_04_floor_ug1));
         spinnerItems.add(resource.getString(R.string.building_04_floor_00));
         spinnerItems.add(resource.getString(R.string.building_04_floor_01));
         spinnerItems.add(resource.getString(R.string.building_04_floor_02));
@@ -527,7 +536,7 @@ public class NavigationActivity extends BaseActivity {
 
 
         try {
-            if (in.equals(getLocaleStringResource(R.string.building_03_02_01_floor_ug))) {
+            if (in.equals(getLocaleStringResource(R.string.building_03_02_01_floor_ug1))) {
                 helperBuildingAndFloor.add("03");
                 helperBuildingAndFloor.add("ug1");
             }
@@ -551,7 +560,7 @@ public class NavigationActivity extends BaseActivity {
                 helperBuildingAndFloor.add("03");
                 helperBuildingAndFloor.add("04");
             }
-            else if (in.equals(getLocaleStringResource(R.string.building_04_floor_ug))) {
+            else if (in.equals(getLocaleStringResource(R.string.building_04_floor_ug1))) {
                 helperBuildingAndFloor.add("04");
                 helperBuildingAndFloor.add("ug1");
             }

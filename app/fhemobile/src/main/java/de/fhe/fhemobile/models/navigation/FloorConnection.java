@@ -25,8 +25,10 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import de.fhe.fhemobile.utils.navigation.NavigationUtils;
+
 /**
- * Modellklasse für Stockwerk- und Gebäudeverbindungen wie Treppenhäuser, Aufzüge und die Brücke
+ * Modellklasse für Stockwerk- und Gebäudeverbindungen wie Treppenhäuser, Aufzüge (und die Brücke)
  * created: Bachelor Thesis from Tim Münziger from SS2020
  * edited by Nadja 15.09.21
  */
@@ -66,8 +68,6 @@ public class FloorConnection{
 
         for (int i = 0; i < connectedCells.size(); i++) {
 
-            //TODO: überarbeiten und an Einführung von complex anpassen
-
             //case building = 04 or 05
             if (connectedCells.get(i).getBuilding().equals(building)
                     && connectedCells.get(i).getFloorString().equals(floor)) {
@@ -75,9 +75,8 @@ public class FloorConnection{
                 cell = connectedCells.get(i);
             }
             //case building = 03-02-01
-            else if ((connectedCells.get(i).getBuilding().equals(BUILDING_03)
-                    || connectedCells.get(i).getBuilding().equals(BUILDING_02)
-                    || connectedCells.get(i).getBuilding().equals(BUILDING_01)) &&
+            else if (connectedCells.get(i).getComplex().equals(NavigationUtils.Complex.COMPLEX_321)
+                     &&
                     (building.equals(BUILDING_03) || building.equals(BUILDING_02) || building.equals(BUILDING_01))
                     && connectedCells.get(i).getFloorString().equals(floor)) {
 

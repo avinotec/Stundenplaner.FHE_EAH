@@ -159,16 +159,15 @@ public class JSONHandler {
             for(int i = 0; i < jsonArray.length(); i++){
 
                 final JSONObject jEntry = jsonArray.getJSONObject(i);
+
                 final JSONArray exitToJSON = jEntry.getJSONArray(EXITTO);
                 final ArrayList<String> exitTo = new ArrayList<>();
-
                 for(int j = 0; j < exitToJSON.length(); j++){
                     exitTo.add(exitToJSON.optString(j));
                 }
 
                 final JSONArray entryFromJSON = jEntry.getJSONArray(ENTRYFROM);
                 final ArrayList<String> entryFrom = new ArrayList<>();
-
                 for(int j = 0; j < entryFromJSON.length(); j++){
                     entryFrom.add(entryFromJSON.optString(j));
                 }
