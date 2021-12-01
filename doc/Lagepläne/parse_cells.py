@@ -16,7 +16,7 @@ def generateJson(csv_reader, building, floor):
                 floornumber = "-1"
             elif floornumber == "ug2":
                 floornumber = "-2"
-            elif floornumber == "03_level1" or floornumber == "03_level2":
+            elif floornumber == "3z":
                 floornumber = "03"
 
             #walkable cell    
@@ -114,7 +114,7 @@ exits = []
 
 #read in csv files
 for file_name in os.listdir(fp_csv_folder):
-    if re.match(r'cellplan_0[12345]-((0[01234])|(ug1|ug2))(_level1|_level2)?\.CSV', file_name): #check correct file name pattern
+    if re.match(r'cellplan_0[12345]-((0[01234])|ug1|ug2|3Z)\.CSV', file_name): #check correct file name pattern
         #todo check if ug_level 1 and ug_level 2 are read in
         print(file_name)
         #get building and floor

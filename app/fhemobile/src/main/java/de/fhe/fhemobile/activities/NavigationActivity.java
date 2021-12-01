@@ -27,6 +27,7 @@ import static de.fhe.fhemobile.utils.navigation.NavigationUtils.getPathToFloorPl
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,6 +41,8 @@ import android.widget.Spinner;
 
 import androidx.appcompat.widget.Toolbar;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -175,8 +178,15 @@ public class NavigationActivity extends BaseActivity {
 
         //Set the floor plan ImageView in the relative layout where the whole navigation is drawn in
         ImageView floorPlanView = new ImageView(this);
-        floorPlanView.setImageResource(getResources().getIdentifier(
-                getPathToFloorPlanPNG(displayedComplex, floor), null, getPackageName()));
+        try {
+            String path = getPathToFloorPlanPNG(displayedComplex, floor);
+            InputStream input = getAssets().open(path);
+            Drawable image = Drawable.createFromStream(input, null);
+            floorPlanView.setImageDrawable(image);
+        } catch (IOException e) {
+            Log.e(TAG, "error loading floorplan PNGs from assets", e);
+        }
+
         //grid for debugging
         //floorPlanView.setImageResource(getResources().getIdentifier("drawable/grid_for_debug", null, getPackageName()));
         if (navigationLayout != null) navigationLayout.addView(floorPlanView);
@@ -445,8 +455,8 @@ public class NavigationActivity extends BaseActivity {
         spinnerItems.add(resource.getString(R.string.building_05_floor_00));
         spinnerItems.add(resource.getString(R.string.building_05_floor_01));
         spinnerItems.add(resource.getString(R.string.building_05_floor_02));
-        spinnerItems.add(resource.getString(R.string.building_05_floor_03_level1));
-        spinnerItems.add(resource.getString(R.string.building_05_floor_03_level2));
+        spinnerItems.add(resource.getString(R.string.building_05_floor_03));
+        spinnerItems.add(resource.getString(R.string.building_05_floor_3Z));
 
         return spinnerItems;
     }
@@ -600,14 +610,13 @@ public class NavigationActivity extends BaseActivity {
                 helperBuildingAndFloor.add("05");
                 helperBuildingAndFloor.add("02");
             }
-            else if (in.equals(getLocaleStringResource(R.string.building_05_floor_03_level1))) {
+            else if (in.equals(getLocaleStringResource(R.string.building_05_floor_03))) {
                 helperBuildingAndFloor.add("05");
                 helperBuildingAndFloor.add("03");
             }
-            else if (in.equals(getLocaleStringResource(R.string.building_05_floor_03_level2))) {
+            else if (in.equals(getLocaleStringResource(R.string.building_05_floor_3Z))) {
                 helperBuildingAndFloor.add("05");
-                helperBuildingAndFloor.add("03");
-                //todo: Unterscheidung level1 und level2
+                helperBuildingAndFloor.add("3Z");
             }
         } catch (Exception e) {
             Log.e(TAG, "error getting building and floor:", e);

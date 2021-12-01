@@ -18,6 +18,7 @@
 package de.fhe.fhemobile.models.navigation;
 
 import static de.fhe.fhemobile.utils.Define.Navigation.COSTS_CELL;
+import static de.fhe.fhemobile.utils.navigation.NavigationUtils.floorStringToInt;
 
 import de.fhe.fhemobile.utils.navigation.NavigationUtils.Complex;
 
@@ -121,31 +122,7 @@ public class Cell {
 
     public int getFloorInt() {
 
-        int floorAsInteger = 0;
-
-        switch (floor) {
-            case "ug":
-                floorAsInteger = -1;
-                break;
-            case "00":
-                floorAsInteger = 0;
-                break;
-            case "01":
-                floorAsInteger = 1;
-                break;
-            case "02":
-                floorAsInteger = 2;
-                break;
-            case "03":
-                floorAsInteger = 3;
-                break;
-            case "04":
-                floorAsInteger = 4;
-                break;
-            default:
-                break;
-        }
-        return floorAsInteger;
+        return floorStringToInt(floor);
     }
 
     public int getXCoordinate() {

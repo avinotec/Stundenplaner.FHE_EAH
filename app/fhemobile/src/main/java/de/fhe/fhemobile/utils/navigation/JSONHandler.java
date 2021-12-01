@@ -105,7 +105,7 @@ public class JSONHandler {
             Log.e(TAG, "reading floorplan from json failed", e);
         }
 
-        //TODO ist das nötig - Nadja: ja weil ein String und kein StringBuffer returned wird
+        //Ist das nötig? - Antwort Nadja: ja weil ein String und kein StringBuffer returned werden soll
         return text.toString();
     }
 

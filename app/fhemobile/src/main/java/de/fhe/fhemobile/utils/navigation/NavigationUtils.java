@@ -17,8 +17,9 @@
 
 package de.fhe.fhemobile.utils.navigation;
 
+import androidx.annotation.NonNull;
+
 import de.fhe.fhemobile.models.navigation.Cell;
-import de.fhe.fhemobile.utils.Define;
 
 public class NavigationUtils {
 
@@ -32,7 +33,6 @@ public class NavigationUtils {
         COMPLEX_4,
         COMPLEX_321,
         COMPLEX_5;
-
 
         public static Complex getEnum(String building){
             switch(building){
@@ -49,7 +49,34 @@ public class NavigationUtils {
             }
         }
 
+        @NonNull
+        @Override
+        public String toString() {
+            switch(this){
+                case COMPLEX_321:
+                    return "03_02_01";
+                case COMPLEX_4:
+                    return "04";
+                case COMPLEX_5:
+                    return "05";
+                default:
+                    return "";
+            }
+        }
+    }
 
+    /**
+     * All files concerning the floorplan of a certain complex and floor have the same name
+     * (just different file extension e.g. json or png and different locations)
+     * e.g. "building_05_floor_ug1" or "building_03_02_01_floor_02"
+     * @param complex
+     * @param floor (e.g. "ug1", "00", "02", "3Z")
+     * @return name of the floorplan file
+     */
+    private static String getFileNameOfFloorPlan(final Complex complex, final String floor){
+        String filename = "building_" + complex.toString() + "_floor_" + floor;
+
+        return filename;
     }
 
     /**
@@ -59,7 +86,7 @@ public class NavigationUtils {
      * @return filepath to png (without ".png" file extension)
      */
     public static String getPathToFloorPlanPNG(final Complex complex, final String floor) {
-        return "drawable/" + getFloorPlanFileName(complex, floor);
+        return "floorplan_images/" + getFileNameOfFloorPlan(complex, floor) +".png";
     }
 
     /**
@@ -68,22 +95,22 @@ public class NavigationUtils {
      * @param floor
      * @return filepath to json
      */
-    public static String getPathFloorPlanGrid(final Complex complex, final String floor) {
-        String ending = ".json";
-
-        return getFloorPlanFileName(complex, floor) + ending;
+    public static String getPathToFloorPlanGrid(final Complex complex, final String floor) {
+        return "floorgrids/" + getFileNameOfFloorPlan(complex, floor) + ".json";
     }
+
 
     /**
      * Get the string representation of the floor
-     * @param index
+     * @param complex complex of the floor (because in building 05: "3Z" = 4)
+     * @param floorInt floor as integer
      * @return floor name as string
      */
-    public static String floorIntToString(final int index) {
+    public static String floorIntToString(final Complex complex, final int floorInt) {
 
         String currentFloor = "";
 
-        switch (index) {
+        switch (floorInt) {
             case -2:
                 currentFloor = "-2";
                 break;
@@ -103,7 +130,11 @@ public class NavigationUtils {
                 currentFloor = "03";
                 break;
             case 4:
-                currentFloor = "04";
+                if(complex.equals(Complex.COMPLEX_5)){
+                    currentFloor = "3Z";
+                } else {
+                    currentFloor = "04";
+                }
                 break;
             default:
                 break;
@@ -111,85 +142,47 @@ public class NavigationUtils {
         return currentFloor;
     }
 
+
     /**
-     * All files concerning the floorplan of a certain complex and floor have the same name
-     * (just different file extension e.g. json or png and different locations)
-     * @param complex
-     * @param floor
-     * @return name of the floorplan file
+     * Returns floor as integer (special case in building 5: "3Z" = 4)
+     * @param floor floor as string
+     * @return floor as integer
      */
-    private static String getFloorPlanFileName(final Complex complex, final String floor){
-        String filename = "";
+    public static int floorStringToInt(String floor) {
 
-        if(complex.equals(Complex.COMPLEX_321)){
-            switch (floor) {
-                case "-1":
-                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_UG1;
-                    break;
-                case "00":
-                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_00;
-                    break;
-                case "01":
-                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_01;
-                    break;
-                case "02":
-                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_02;
-                    break;
-                case "03":
-                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_03;
-                    break;
-                case "04":
-                    filename = Define.Maps.BUILDING_03_02_01_FLOOR_04;
-                    break;
-            }
+        int floorAsInteger = 0;
+
+        switch (floor) {
+            case "-2":
+            case "ug2":
+                floorAsInteger = -2;
+                break;
+            case "-1":
+            case "ug1":
+                floorAsInteger = -1;
+                break;
+            case "00":
+                floorAsInteger = 0;
+                break;
+            case "01":
+                floorAsInteger = 1;
+                break;
+            case "02":
+                floorAsInteger = 2;
+                break;
+            case "03":
+                floorAsInteger = 3;
+                break;
+            case "3Z":
+            case "04":
+                floorAsInteger = 4;
+                break;
+            default:
+                break;
         }
-        else if(complex.equals(Complex.COMPLEX_4)){
-            switch(floor){
-                case "-1":
-                    filename = Define.Maps.BUILDING_04_FLOOR_UG1;
-                    break;
-                case "00":
-                    filename = Define.Maps.BUILDING_04_FLOOR_00;
-                    break;
-                case "01":
-                    filename = Define.Maps.BUILDING_04_FLOOR_01;
-                    break;
-                case "02":
-                    filename = Define.Maps.BUILDING_04_FLOOR_02;
-                    break;
-                case "03":
-                    filename = Define.Maps.BUILDING_04_FLOOR_03;
-                    break;
-            }
-        } else if(complex.equals(Complex.COMPLEX_5)){
-            switch (floor){
-                case "-2":
-                    filename = Define.Maps.BUILDING_05_FLOOR_UG2;
-                    break;
-                case "-1":
-                    filename = Define.Maps.BUILDING_05_FLOOR_UG1;
-                    break;
-                case "00":
-                    filename = Define.Maps.BUILDING_05_FLOOR_00;
-                    break;
-                case "01":
-                    filename = Define.Maps.BUILDING_05_FLOOR_01;
-                    break;
-                case "02":
-                    filename = Define.Maps.BUILDING_05_FLOOR_02;
-                    break;
-                case "03":
-                    filename = Define.Maps.BUILDING_05_FLOOR_03;
-                    //Todo:Lösung finden für 03 Ebene 1 und Ebene2
-                    //2 PNGs aber nur ein JSON für 03
-                    filename = Define.Maps.BUILDING_05_FLOOR_03_LEVEL2;
-                    break;
-
-            }
-        }
-
-        return filename;
+        return floorAsInteger;
     }
+
 
     /**
      * Checks whether cell1 and cell2 are both at floor -1 at complex 321,

@@ -17,15 +17,9 @@
 
 package de.fhe.fhemobile.models.navigation;
 
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_01;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_02;
-import static de.fhe.fhemobile.utils.Define.Navigation.BUILDING_03;
-
-import android.util.Log;
 
 import java.util.ArrayList;
 
-import de.fhe.fhemobile.utils.navigation.NavigationUtils;
 
 /**
  * Modellklasse für Stockwerk- und Gebäudeverbindungen wie Treppenhäuser, Aufzüge (und die Brücke)
@@ -56,37 +50,5 @@ public class FloorConnection{
         return connectedCells;
     }
 
-    /**
-     * Returns the connected cell at the particular building and floor
-     * @param building
-     * @param floor
-     * @return connected cell at this building and floor
-     */
-    public Cell getConnectedCell(final String building, final String floor) {
-
-        Cell cell = null;
-
-        for (int i = 0; i < connectedCells.size(); i++) {
-
-            //case building = 04 or 05
-            if (connectedCells.get(i).getBuilding().equals(building)
-                    && connectedCells.get(i).getFloorString().equals(floor)) {
-
-                cell = connectedCells.get(i);
-            }
-            //case building = 03-02-01
-            else if (connectedCells.get(i).getComplex().equals(NavigationUtils.Complex.COMPLEX_321)
-                     &&
-                    (building.equals(BUILDING_03) || building.equals(BUILDING_02) || building.equals(BUILDING_01))
-                    && connectedCells.get(i).getFloorString().equals(floor)) {
-
-                cell = connectedCells.get(i);
-            } else {
-                Log.e(TAG, "FloorConnection does not connected any cells at the requested building and floor");
-            }
-        }
-
-        return cell;
-    }
 
 }

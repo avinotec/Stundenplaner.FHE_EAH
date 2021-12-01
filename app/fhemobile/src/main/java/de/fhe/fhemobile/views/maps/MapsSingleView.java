@@ -43,7 +43,7 @@ public class MapsSingleView extends FrameLayout {
         mMapView.getSettings().setLoadWithOverviewMode(true);
         mMapView.getSettings().setUseWideViewPort(true);
 //        mMapView.getSettings().setDisplayZoomControls(false);
-        mMapView.loadDataWithBaseURL("file:///android_asset/maps/", htmlData, "text/html", "UTF-8", "");
+        mMapView.loadDataWithBaseURL("file:///android_asset/floorplan_images/", htmlData, "text/html", "UTF-8", "");
     }
 
     @Override

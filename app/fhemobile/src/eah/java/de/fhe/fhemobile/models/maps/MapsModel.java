@@ -33,8 +33,8 @@ import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_04_GROUND;
 import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_FLOOR_00;
 import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_FLOOR_01;
 import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_FLOOR_02;
-import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_FLOOR_03_LEVEL1;
-import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_FLOOR_03_LEVEL2;
+import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_FLOOR_03;
+import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_FLOOR_3Z;
 import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_FLOOR_UG1;
 import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_FLOOR_UG2;
 import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_GROUND;
@@ -111,8 +111,8 @@ public class MapsModel {
         building5Maps.add(new MapVo(R.string.building_05_floor_00,  BUILDING_05_FLOOR_00+".png"));
         building5Maps.add(new MapVo(R.string.building_05_floor_01,  BUILDING_05_FLOOR_01+".png"));
         building5Maps.add(new MapVo(R.string.building_05_floor_02,  BUILDING_05_FLOOR_02+".png"));
-        building5Maps.add(new MapVo(R.string.building_05_floor_03_level1,  BUILDING_05_FLOOR_03_LEVEL1 +".png"));
-        building5Maps.add(new MapVo(R.string.building_05_floor_03_level2,  BUILDING_05_FLOOR_03_LEVEL2 +".png"));
+        building5Maps.add(new MapVo(R.string.building_05_floor_03,  BUILDING_05_FLOOR_03 +".png"));
+        building5Maps.add(new MapVo(R.string.building_05_floor_3Z,  BUILDING_05_FLOOR_3Z +".png"));
         final MapCollectionVo building5 = new MapCollectionVo(R.string.building_05, building5Maps);
 
 

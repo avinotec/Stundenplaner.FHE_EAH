@@ -131,8 +131,8 @@
     <string name="building_05_floor_00">Building 5: ground floor</string>
     <string name="building_05_floor_01">Building 5: 1st floor</string>
     <string name="building_05_floor_02">Building 5: 2nd floor</string>
-    <string name="building_05_floor_03_level1">Building 5: 3rd floor, level 1</string>
-    <string name="building_05_floor_03_level2">Building 5: 3rd floor, level 2</string>
+    <string name="building_05_floor_03">Building 5: 3rd floor</string>
+    <string name="building_05_floor_3Z">Building 5: 3rd floor, level Z</string>
     <string name="button_location_text">Search</string>
     <string name="hint_search_room">xx.xx.xx</string>
     <string name="error_message_room_input">Room not found!</string>
