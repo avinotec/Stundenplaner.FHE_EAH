@@ -53,7 +53,6 @@ public class JSONHandler {
     public static final String EXITTO = "exitTo";               //$NON-NLS
     public static final String ENTRYFROM = "entryFrom";          //$NON-NLS
     public static final String CONNECTED_CELLS = "connectedCells";  //$NON-NLS
-    public static final String EXITCELLS = "cells";             //$NON-NLS
 
     //asset file names
     final static String FILE_FLOORCONNECTIONS = "floorconnections.json"; //$NON-NLS

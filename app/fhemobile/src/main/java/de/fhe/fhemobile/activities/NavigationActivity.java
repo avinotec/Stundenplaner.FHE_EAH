@@ -177,19 +177,21 @@ public class NavigationActivity extends BaseActivity {
         if (navigationLayout != null) navigationLayout.removeAllViews();
 
         //Set the floor plan ImageView in the relative layout where the whole navigation is drawn in
-        ImageView floorPlanView = new ImageView(this);
+        //ImageView floorPlanView = new ImageView(this);
+        ImageView floorPlanView = (ImageView) findViewById(R.id.imageview_floorplan);
         try {
             String path = getPathToFloorPlanPNG(displayedComplex, floor);
+            //grid for debugging: path = "floorplan_images/grid_for_debug.png"
             InputStream input = getAssets().open(path);
             Drawable image = Drawable.createFromStream(input, null);
             floorPlanView.setImageDrawable(image);
+
         } catch (IOException e) {
             Log.e(TAG, "error loading floorplan PNGs from assets", e);
         }
 
-        //grid for debugging
-        //floorPlanView.setImageResource(getResources().getIdentifier("drawable/grid_for_debug", null, getPackageName()));
-        if (navigationLayout != null) navigationLayout.addView(floorPlanView);
+
+        //if (navigationLayout != null) navigationLayout.addView(floorPlanView);
         floorPlanView.setX(0);
         floorPlanView.setY(0);
 
