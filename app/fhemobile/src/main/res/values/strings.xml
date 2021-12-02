@@ -73,7 +73,7 @@
 
     <string name="network_error" >No data found.</string>
 
-    <string name="title_activity_maps_single" >Map</string>
+    <string name="title_activity_maps" >Map</string>
     <!-- string name="title_activity_time_table_events" >Schedule</string -->
 
     <string name="appwidget_news" >News list</string>

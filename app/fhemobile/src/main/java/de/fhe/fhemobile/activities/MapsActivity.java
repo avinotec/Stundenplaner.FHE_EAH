@@ -23,17 +23,22 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.fragments.maps.MapsSingleFragment;
+import de.fhe.fhemobile.fragments.maps.MapsFragment;
 import de.fhe.fhemobile.models.maps.MapsModel;
 
-public class MapsSingleActivity extends BaseActivity {
-    private static final String TAG = "MapsSingleActivity";
+/**
+ * Activity for showing and navigating through maps/floorplans of a certain building
+ *
+ * Edit by Nadja 02.12.2021: rename from MapsSingleActivity to MapsActivity
+ */
+public class MapsActivity extends BaseActivity {
+    private static final String TAG = "MapsActivity";
     public static final String STATE_MAPS_ID = "stateMapsId";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setBaseContent(R.layout.activity_maps_single);
+        setBaseContent(R.layout.activity_maps);
 
         //not used: mModel = MapsModel.getInstance();
 
@@ -47,7 +52,7 @@ public class MapsSingleActivity extends BaseActivity {
 
         try {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, MapsSingleFragment.newInstance(mMapId))
+                    .add(R.id.container, MapsFragment.newInstance(mMapId))
                     .commit();
 
             String title = getResources().getString(MapsModel.getInstance().getMaps().get(mMapId).getNameID());
@@ -64,7 +69,7 @@ public class MapsSingleActivity extends BaseActivity {
         outState.putInt(STATE_MAPS_ID, mMapId);
     }
 
-    private static final String LOG_TAG = MapsSingleActivity.class.getSimpleName();
+    private static final String LOG_TAG = MapsActivity.class.getSimpleName();
 
 
     public static final String EXTRA_MAP_ID = "extraMapId";

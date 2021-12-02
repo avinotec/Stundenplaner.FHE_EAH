@@ -75,7 +75,7 @@
 
     <string name="network_error" >Keine Daten gefunden.</string>
 
-    <string name="title_activity_maps_single" >Lageplan</string>
+    <string name="title_activity_maps" >Lageplan</string>
     <!-- string name="title_activity_time_table_events" >Stundenplan</string -->
 
     <string name="appwidget_news" >FH News Listen</string>

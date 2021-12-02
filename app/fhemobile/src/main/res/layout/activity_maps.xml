@@ -14,18 +14,11 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ~
   -->
-<de.fhe.fhemobile.views.maps.MapsSingleView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="de.fhe.fhemobile.fragments.maps.MapsSingleFragment"
-    >
-
-    <WebView
-        android:id="@+id/mapsWebView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-
-</de.fhe.fhemobile.views.maps.MapsSingleView>
+    android:background="@android:color/white"
+    tools:context="de.fhe.fhemobile.activities.MapsActivity"
+    tools:ignore="MergeRootFrame" />

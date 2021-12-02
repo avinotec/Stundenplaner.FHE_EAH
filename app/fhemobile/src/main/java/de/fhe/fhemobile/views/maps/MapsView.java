@@ -18,62 +18,48 @@ package de.fhe.fhemobile.views.maps;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.AdapterView;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
-import android.widget.ListView;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.adapters.maps.MapsAdapter;
-import de.fhe.fhemobile.models.maps.MapsModel;
+import de.fhe.fhemobile.vos.maps.MapVo;
 
 /**
+ * View for showing and navigating through maps/floorplans of a certain building
+ *
  * Created by paul on 23.02.14.
+ * Edit by Nadja: rename from MapsSingleView to MapsView
  */
 public class MapsView extends FrameLayout {
-
-    public interface ViewListener {
-        void onMapItemClicked(Integer _Position);
-    }
-
     public MapsView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mContext = context;
-        mModel = MapsModel.getInstance();
     }
 
-    public void initializeView(ViewListener _Listener) {
-        mViewListener = _Listener;
-
-        mAdapter = new MapsAdapter(mContext, mModel.getMaps());
-
-        mMapsChoiceList.setAdapter(mAdapter);
-        mMapsChoiceList.setOnItemClickListener(mMapsClickListener);
+    public void initializeView(MapVo _Map) {
+        String htmlData = "<!DOCTYPE html>" +
+                "<html>" +
+                "<head></head>" +
+                "<body>" +
+                "<img src=\"" + _Map.getImageUrl() + "\">" +
+                "</body></html>";
+        mMapView.getSettings().setBuiltInZoomControls(true);
+        mMapView.getSettings().setLoadWithOverviewMode(true);
+        mMapView.getSettings().setUseWideViewPort(true);
+//        mMapView.getSettings().setDisplayZoomControls(false);
+        mMapView.loadDataWithBaseURL("file:///android_asset/floorplan_images/", htmlData, "text/html", "UTF-8", "");
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mMapsChoiceList = (ListView) findViewById(R.id.mapsChoiceList);
+        mMapView = (WebView) findViewById(R.id.mapsWebView);
 
     }
 
-    private final AdapterView.OnItemClickListener mMapsClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            mViewListener.onMapItemClicked(position);
-        }
-    };
-
     private static final String LOG_TAG = MapsView.class.getSimpleName();
 
-    private final Context mContext;
-    private ViewListener mViewListener;
+    // --Commented out by Inspection (02.11.2021 17:08):private final Context mContext;
 
-    private final MapsModel mModel;
-
-    private MapsAdapter mAdapter;
-
-    private ListView mMapsChoiceList;
+    private WebView mMapView;
 }

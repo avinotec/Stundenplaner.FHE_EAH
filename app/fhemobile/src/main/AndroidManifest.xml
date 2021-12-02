@@ -125,9 +125,9 @@
                 android:value="de.fhe.fhemobile.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.MapsSingleActivity"
+            android:name=".activities.MapsActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/title_activity_maps_single"
+            android:label="@string/title_activity_maps"
             android:parentActivityName=".activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

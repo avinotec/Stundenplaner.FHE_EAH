@@ -19,7 +19,7 @@ package de.fhe.fhemobile.utils.feature;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
 import de.fhe.fhemobile.fragments.impressum.ImpressumFragment;
-import de.fhe.fhemobile.fragments.maps.MapsFragment;
+import de.fhe.fhemobile.fragments.maps.MapsDialogFragment;
 import de.fhe.fhemobile.fragments.mensa.MensaFoodFragment;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableCalendarFragment;
 import de.fhe.fhemobile.fragments.navigation.NavigationDialogFragment;
@@ -40,7 +40,7 @@ public class FeatureFragmentFactory {
         switch (_FeatureId) {
             case FeatureId.PHONEBOOK:       fragment = PhonebookSearchFragment.newInstance();   break;
             case FeatureId.MENSA:           fragment = MensaFoodFragment.newInstance();         break;
-            case FeatureId.MAPS:            fragment = MapsFragment.newInstance();              break;
+            case FeatureId.MAPS:            fragment = MapsDialogFragment.newInstance();              break;
             case FeatureId.SEMESTER_DATA:   fragment = SemesterDataFragment.newInstance();      break;
             //case FeatureId.SEMESTER_DATA:   fragment = SemesterDataWebViewFragment.newInstance();      break; //display from Browser/as Webview - Nadja 07.09.21
             case FeatureId.IMPRESS:         fragment = ImpressumFragment.newInstance();         break;
