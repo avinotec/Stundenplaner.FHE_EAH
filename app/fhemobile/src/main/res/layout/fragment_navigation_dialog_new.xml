@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<de.fhe.fhemobile.views.navigation.NavigationDialogView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="de.fhe.fhemobile.fragments.navigation.NavigationDialogFragmentNEW"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/navigation_dialog_tablayout"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="@color/color_primary"
+        app:tabSelectedTextColor="@android:color/white"
+        app:tabTextColor="@android:color/black">
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/navigation_dialog_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:layoutDirection="rtl"/>
+
+
+
+</de.fhe.fhemobile.views.navigation.NavigationDialogView>

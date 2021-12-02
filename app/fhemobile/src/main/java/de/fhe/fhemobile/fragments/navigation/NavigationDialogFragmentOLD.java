@@ -51,7 +51,7 @@ import de.fhe.fhemobile.utils.navigation.JSONHandler;
  * source: Bachelor Thesis from Tim Münziger from SS2020
  * edit and integration: Nadja 09.2021
  */
-public class NavigationDialogFragment extends FeatureFragment implements View.OnClickListener{
+public class NavigationDialogFragmentOLD extends FeatureFragment implements View.OnClickListener{
 
     //Constants
     private static final String TAG = "NavigationDialogFrag"; //$NON-NLS //nur "Frag" weil Tag sonst zu lang
@@ -77,12 +77,12 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
 
     private View      mView;
 
-    public NavigationDialogFragment(){
+    public NavigationDialogFragmentOLD(){
         // Required empty public constructor
     }
 
-    public static NavigationDialogFragment newInstance() {
-        final NavigationDialogFragment fragment = new NavigationDialogFragment();
+    public static NavigationDialogFragmentOLD newInstance() {
+        final NavigationDialogFragmentOLD fragment = new NavigationDialogFragmentOLD();
         final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -170,7 +170,7 @@ public class NavigationDialogFragment extends FeatureFragment implements View.On
     private void loadRoomNamesAndPersons(){
         //Get lists of rooms and names for spinners
         final JSONHandler jsonHandler = new JSONHandler();
-/*TODO loadRooms ist schon in NavigationActivity enthalten -> NavigationDialogFragment müsste die Raumliste dafür an Navigation Activity schicken
+/*TODO loadRooms ist schon in NavigationActivity enthalten -> NavigationDialogFragmentOLD müsste die Raumliste dafür an Navigation Activity schicken
 ArrayList<Room> kann aber nicht per Intent versendet werden, da Room eine eigene Klasse ist und es keine String-Repräsentation gibt
 mögliche Lösung: Implementierung von Parcable nutzen (ähnlich bei Timetable -> s. TimeTableWeekVo etc.),
 könnte sein dass dann sowohl Room als auch die Arrayliste (z.B. als neue Klasse RoomListVo) beide Parcable implementieren müssen
