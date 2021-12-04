@@ -21,6 +21,7 @@ package de.fhe.fhemobile.utils.navigation;
 import android.content.Context;
 import android.util.Log;
 
+import org.jetbrains.annotations.NonNls;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,6 +59,12 @@ public class JSONHandler {
     final static String FILE_FLOORCONNECTIONS = "floorconnections.json"; //$NON-NLS
     final static String FILE_ROOMS = "rooms.json"; //$NON-NLS
     final static String FILE_EXITS = "exits.json"; //$NON-NLS
+    @NonNls
+    public static final String NAVIGATION_ROOMS = "rooms";
+    @NonNls
+    public static final String NAVIGATION_EXITS = "exits";
+    @NonNls
+    public static final String NAVIGATION_FLOORCONNECTIONS = "floorconnections";
 
     //Constructor
     public JSONHandler() {
@@ -95,7 +102,7 @@ public class JSONHandler {
             final InputStream input = context.getResources().getAssets().open(jsonFile);
             final InputStreamReader reader = new InputStreamReader(input, "UTF-8"); //$NON-NLS
 
-            BufferedReader br = new BufferedReader(reader);
+            final BufferedReader br = new BufferedReader(reader);
 
             for (String line; (line = br.readLine()) != null; ) {
                 text.append(line).append("\n");
@@ -116,15 +123,17 @@ public class JSONHandler {
      * @return json string
      */
     public static String readFromAssets(final Context context, final String toRead){
-        String filename = "";
+/*        String filename = "";
         switch(toRead){
-            case "rooms":
+            case NAVIGATION_ROOMS:
                 filename = FILE_ROOMS; break;
-            case "exits":
+            case NAVIGATION_EXITS:
                 filename = FILE_EXITS; break;
-            case "floorconnections":
+            case NAVIGATION_FLOORCONNECTIONS:
                 filename = FILE_FLOORCONNECTIONS; break;
         }
+ */
+        final String filename = toRead + ".json";
 
         final StringBuffer text = new StringBuffer();
 
@@ -132,7 +141,7 @@ public class JSONHandler {
             final InputStream input = context.getResources().getAssets().open(filename);
             final InputStreamReader reader = new InputStreamReader(input, "UTF-8"); //$NON-NLS
 
-            BufferedReader br = new BufferedReader(reader);
+            final BufferedReader br = new BufferedReader(reader);
 
             for (String line; (line = br.readLine()) != null; ) {
                 text.append(line).append("\n");
@@ -181,7 +190,7 @@ public class JSONHandler {
                 exits.add(newExit);
 
             }
-        } catch (JSONException e) {
+        } catch (final JSONException e) {
             Log.e(TAG, "error parsing JSON exits", e);
         }
 
@@ -280,14 +289,14 @@ public class JSONHandler {
         final HashMap<String, Cell> walkableCells = new HashMap<>();
 
         try {
-            JSONArray jsonArray = new JSONArray(json);
+            final JSONArray jsonArray = new JSONArray(json);
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 final Cell entry = new Cell();
 
                 final JSONObject jEntry = jsonArray.getJSONObject(i);
-                int x = jEntry.optInt(X_COORDINATE);
-                int y = jEntry.optInt(Y_COORDINATE);
+                final int x = jEntry.optInt(X_COORDINATE);
+                final int y = jEntry.optInt(Y_COORDINATE);
                 entry.setXCoordinate(x);
                 entry.setYCoordinate(y);
                 entry.setWalkability(jEntry.optBoolean(WALKABLE));
@@ -296,7 +305,7 @@ public class JSONHandler {
                 walkableCells.put("" + x + '_' + y, entry);
 
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.e(TAG, "error parsing JSON walkableCells", e);
         }
         return walkableCells;
