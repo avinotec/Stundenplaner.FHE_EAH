@@ -75,8 +75,18 @@ public class Define {
 
 	}
 
+/** Push notifications from Google Firebase to the App */
+	@NonNls
+	public final static String PUSH_NOTIFICATION_CHANNEL_ID = "de.fhe.fhemobile.push";
+	@NonNls
+	public static final String PUSH_NOTIFICATION_CHANNEL_NAME = "Notification";
+	@NonNls
+	public static final String PUSH_NOTIFICATION_STUNDENPLANAENDERUNG_TITLE_NOTIFICATION = "Stundenplanänderung";
+	public static final long[] PUSH_NOTIFICATION_VIBRATION_PATTERN = {1000, 500, 1000, 0};
+
+
 	/**
-	 * milliseconds within a double-click has to be executed
+	 * milliseconds within a double-click has to be executed to leave application
 	 */
 	public static final long APP_CLOSING_DOUBLECLICK_DELAY_TIME = 2000L;
 

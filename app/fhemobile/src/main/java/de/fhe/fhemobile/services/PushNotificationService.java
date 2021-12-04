@@ -33,6 +33,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Random;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.utils.Define;
 
 public class PushNotificationService extends FirebaseMessagingService {
 	private static final String TAG = "PushNotificationService";
@@ -53,18 +54,20 @@ public class PushNotificationService extends FirebaseMessagingService {
 
 	}
 
-	private void showNotification(String title, String body) {
-		NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		String NOTIFICATION_CHANNEL_ID = "de.fhe.fhemobile.push";
+	private void showNotification(final String title, final String body) {
+		final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+		//TODO was bedeutet das?
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-			NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,"Notification",NotificationManager.IMPORTANCE_DEFAULT);
-			notificationChannel.setDescription("Stundenplanänderung");
+			NotificationChannel notificationChannel = new NotificationChannel(Define.PUSH_NOTIFICATION_CHANNEL_ID, Define.PUSH_NOTIFICATION_CHANNEL_NAME,NotificationManager.IMPORTANCE_DEFAULT);
+			notificationChannel.setDescription(Define.PUSH_NOTIFICATION_STUNDENPLANAENDERUNG_TITLE_NOTIFICATION);
 			notificationChannel.enableLights(true);
 			notificationChannel.setLightColor(Color.RED);
-			notificationChannel.setVibrationPattern(new long[]{1000,500,1000,0});
+			notificationChannel.setVibrationPattern(Define.PUSH_NOTIFICATION_VIBRATION_PATTERN);
 			notificationManager.createNotificationChannel(notificationChannel);
 		}
-		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this,NOTIFICATION_CHANNEL_ID);
+
+		final NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, Define.PUSH_NOTIFICATION_CHANNEL_ID);
 		notificationBuilder.setAutoCancel(true)
 				.setDefaults(Notification.DEFAULT_ALL)
 				.setWhen(System.currentTimeMillis())
@@ -78,7 +81,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 	}
 
 	@Override
-	public void onNewToken(@NonNull String token) {
+	public void onNewToken(@NonNull final String token) {
 		Log.d(TAG, "Refreshed token: " + token);
 
 		// If you want to send messages to this application instance or
