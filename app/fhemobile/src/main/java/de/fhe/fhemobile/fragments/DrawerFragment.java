@@ -41,8 +41,8 @@ import androidx.fragment.app.Fragment;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.drawer.DrawerAdapter;
 import de.fhe.fhemobile.utils.Utils;
-import de.fhe.fhemobile.utils.feature.FeatureId;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
+import de.fhe.fhemobile.utils.feature.Features;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -66,7 +66,7 @@ public class DrawerFragment extends Fragment {
         mUserLearnedDrawer = mSP.getBoolean(PREF_USER_LEARNED_DRAWER, false);
 
         mCurrentSelectedPosition = mSP.getInt(PREF_SELECTED_POSITION, 0);
-        mCurrentSelectedId       = mSP.getInt(PREF_SELECTED_ID, FeatureId.NEWS);
+        mCurrentSelectedId       = mSP.getInt(PREF_SELECTED_ID, Features.FeatureId.NEWS);
 
         if (savedInstanceState != null) {
 //            mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
@@ -308,7 +308,7 @@ public class DrawerFragment extends Fragment {
     private View mFragmentContainerView;
 
     private int mCurrentSelectedPosition = 0;
-    private int mCurrentSelectedId = FeatureId.NEWS;
+    private int mCurrentSelectedId = Features.FeatureId.NEWS;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
     private SharedPreferences mSP;

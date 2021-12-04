@@ -34,7 +34,7 @@ import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.models.mensa.MensaFoodModel;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.UserSettings;
-import de.fhe.fhemobile.utils.feature.FeatureId;
+import de.fhe.fhemobile.utils.feature.Features;
 import de.fhe.fhemobile.views.mensa.MensaFoodView;
 
 
@@ -112,7 +112,7 @@ public class MensaFoodFragment extends FeatureFragment {
          */
         if (_item.getItemId() == R.id.action_settings) {
             Intent intent = new Intent(getActivity(), SettingsActivity.class);
-            intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, FeatureId.MENSA);
+            intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.MENSA);
             startActivity(intent);
             return true;
 

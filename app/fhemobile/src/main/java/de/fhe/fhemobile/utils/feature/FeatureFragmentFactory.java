@@ -38,19 +38,19 @@ public class FeatureFragmentFactory {
 
         //TODO Features
         switch (_FeatureId) {
-            case FeatureId.PHONEBOOK:       fragment = PhonebookSearchFragment.newInstance();   break;
-            case FeatureId.MENSA:           fragment = MensaFoodFragment.newInstance();         break;
-            case FeatureId.MAPS:            fragment = MapsDialogFragment.newInstance();              break;
-            case FeatureId.SEMESTER_DATA:   fragment = SemesterDataFragment.newInstance();      break;
+            case Features.FeatureId.PHONEBOOK:       fragment = PhonebookSearchFragment.newInstance();   break;
+            case Features.FeatureId.MENSA:           fragment = MensaFoodFragment.newInstance();         break;
+            case Features.FeatureId.MAPS:            fragment = MapsDialogFragment.newInstance();              break;
+            case Features.FeatureId.SEMESTER_DATA:   fragment = SemesterDataFragment.newInstance();      break;
             //case FeatureId.SEMESTER_DATA:   fragment = SemesterDataWebViewFragment.newInstance();      break; //display from Browser/as Webview - Nadja 07.09.21
-            case FeatureId.IMPRESS:         fragment = ImpressumFragment.newInstance();         break;
-            case FeatureId.TIMETABLE:       fragment = TimeTableFactory.getTimeTableFragment(); break;
-            case FeatureId.MYTIMETABLE:     fragment = MyTimeTableCalendarFragment.newInstance();       break;
-            case FeatureId.EVENTS:          fragment = EventsWebViewFragment.newInstance();       break; //added by Nadja 07.09.21
-            case FeatureId.NAVIGATION:      fragment = NavigationDialogFragmentOLD.newInstance();       break; //added by Nadja 09.09.21
+            case Features.FeatureId.IMPRESS:         fragment = ImpressumFragment.newInstance();         break;
+            case Features.FeatureId.TIMETABLE:       fragment = TimeTableFactory.getTimeTableFragment(); break;
+            case Features.FeatureId.MYTIMETABLE:     fragment = MyTimeTableCalendarFragment.newInstance();       break;
+            case Features.FeatureId.EVENTS:          fragment = EventsWebViewFragment.newInstance();       break; //added by Nadja 07.09.21
+            case Features.FeatureId.NAVIGATION:      fragment = NavigationDialogFragmentOLD.newInstance();       break; //added by Nadja 09.09.21
             //case FeatureId.NAVIGATION:      fragment = NavigationDialogFragmentNEW.newInstance();       break; //added by Nadja 02.12.21
             //case FeatureId.NAVIGATION:      fragment = ComingSoonFragment.newInstance(); break;
-            case FeatureId.NEWS:
+            case Features.FeatureId.NEWS:
             //default:                        fragment = NewsListFragment.newInstance();
             default:                        fragment = NewsWebViewFragment.newInstance(); //display from Browser/as Webview - Nadja 6.9.21
 

@@ -33,4 +33,19 @@ class Features {
     public static boolean EVENTS          = false;
     public static boolean NAVIGATION      = false;
 
+    /**
+     *
+     */
+    public static interface FeatureId {
+        int NEWS            = 0;
+        int PHONEBOOK       = 1;
+        int MENSA           = 2;
+        int MAPS            = 3;
+        int SEMESTER_DATA   = 4;
+        int TIMETABLE       = 5;
+        int IMPRESS         = 6;
+        int MYTIMETABLE     = 7;
+        int EVENTS          = 8;
+        int NAVIGATION      = 9;
+    }
 }

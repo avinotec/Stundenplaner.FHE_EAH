@@ -33,7 +33,7 @@ import de.fhe.fhemobile.activities.news.NewsSingleActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.network.NetworkHandler;
-import de.fhe.fhemobile.utils.feature.FeatureId;
+import de.fhe.fhemobile.utils.feature.Features;
 import de.fhe.fhemobile.views.news.NewsListView;
 
 public class NewsListFragment extends FeatureFragment {
@@ -109,7 +109,7 @@ public class NewsListFragment extends FeatureFragment {
          */
         if (_item.getItemId() == R.id.action_settings) {
             Intent intent = new Intent(getActivity(), SettingsActivity.class);
-            intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, FeatureId.NEWS);
+            intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.NEWS);
             startActivity(intent);
             return true;
 

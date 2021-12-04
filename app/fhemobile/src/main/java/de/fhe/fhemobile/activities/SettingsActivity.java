@@ -26,7 +26,7 @@ import androidx.annotation.NonNull;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.mensa.MensaSettingsFragment;
 import de.fhe.fhemobile.fragments.news.NewsCategoriesFragment;
-import de.fhe.fhemobile.utils.feature.FeatureId;
+import de.fhe.fhemobile.utils.feature.Features;
 
 public class SettingsActivity extends BaseActivity {
 
@@ -47,12 +47,12 @@ public class SettingsActivity extends BaseActivity {
 
     public void loadFragments(Integer _Id) {
         switch(_Id) {
-            case FeatureId.NEWS:
+            case Features.FeatureId.NEWS:
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.container, NewsCategoriesFragment.newInstance())
                         .commit();
                 break;
-            case FeatureId.MENSA:
+            case Features.FeatureId.MENSA:
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.container, MensaSettingsFragment.newInstance())
                         .commit();
