@@ -103,7 +103,7 @@ public class MyTimeTableView extends LinearLayout {
      * @return
      */
     private static List<FlatDataStructure> getSortedList(Comparator<FlatDataStructure> comparator){
-        List<FlatDataStructure> sortedList = new ArrayList<FlatDataStructure>(selectedLessons);
+        final List<FlatDataStructure> sortedList = new ArrayList<FlatDataStructure>(selectedLessons);
         if(sortedList.isEmpty() == false){
             Collections.sort(sortedList,comparator);
         }
@@ -124,12 +124,16 @@ public class MyTimeTableView extends LinearLayout {
 
     /**
      * returns the complete lessons list
-     * @return
+     * @return completeLessons
      */
     public static List<FlatDataStructure> getCompleteLessons(){
         return MainActivity.completeLessons;
     }
 
+    /**
+     *
+     * @param lessons
+     */
     public static void setLessons(final List<FlatDataStructure> lessons){
         if(lessons == null){
             selectedLessons = new ArrayList<>();
@@ -141,12 +145,16 @@ public class MyTimeTableView extends LinearLayout {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public static List<FlatDataStructure> getLessons(){
         return selectedLessons;
     }
 
     /**
-     *
+     * finde die Lessons heraus, die nicht mehr enthalten sind.
      * @return
      */
     public static List<String[]> generateNegativeLessons(){

@@ -61,14 +61,14 @@ public class MyTimeTableCalendarView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        Button mBtnModifySchedule = (Button) findViewById(R.id.btnMyTimetableModifySchedule);
+        final Button mBtnModifySchedule = (Button) findViewById(R.id.btnMyTimetableModifySchedule);
         mCalendarList =     (ListView)      findViewById(R.id.lvCalendar);
 
         // "modify schedule"
         mBtnModifySchedule.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {
-                FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                final FragmentTransaction transaction = mFragmentManager.beginTransaction();
                 transaction.replace(R.id.container, new MyTimeTableFragment(), MyTimeTableFragment.TAG)
                         .addToBackStack(MyTimeTableFragment.TAG)
                         .commit();
@@ -77,7 +77,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
         });
 
         //TODO Behelf, soll automatisch auf den aktuellen Eintrag vorgesprungen werden
-        Button mJumpCurrentLesson = (Button) findViewById(R.id.jumpCurrentLesson);
+        final Button mJumpCurrentLesson = (Button) findViewById(R.id.jumpCurrentLesson);
         mJumpCurrentLesson.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -127,6 +127,9 @@ public class MyTimeTableCalendarView extends LinearLayout {
             } catch (ParseException e) {
                 Log.e(TAG, "getCurrentEventIndex: ",e );
             }
+            catch (NullPointerException e) {
+                Log.e(TAG, "wrong Date format", e);
+            }
         }
         return -1;
     }
@@ -142,7 +145,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
 // --Commented out by Inspection STOP (02.11.2021 17:22)
 
     public void setEmptyText(final String text){
-        TextView emptyView = findViewById(R.id.emptyView);
+        final TextView emptyView = findViewById(R.id.emptyView);
         emptyView.setText(text);
         mCalendarList.setEmptyView(emptyView);
     }

@@ -129,7 +129,7 @@ class AStar {
                 currentCell = currentCell.getParentCell();
             }
 
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.e(TAG, "error calculating route ", e);
         }
         return cellsToWalk;
@@ -140,6 +140,7 @@ class AStar {
      */
     private void performAStarAlgorithm() {
 
+        // while there are cells to walk through
         while (!openCells.isEmpty()) {
 
             //get the cell that's path to it is the cheapest and remove it from the priority queue
@@ -177,13 +178,13 @@ class AStar {
                         }
                     }
 
-                    Cell[][] currentFloorgrid = Objects.requireNonNull(
-                            floorGrids.get(currentCell.getComplex()).get(currentCell.getFloorInt()));
+                    final Cell[][] currentFloorgrid = Objects.requireNonNull(
+                            Objects.requireNonNull(floorGrids.get(currentCell.getComplex())).get(currentCell.getFloorInt()));
 
                     //if-conditions ensures that current cell is not at edge of grid (so the left/right/... neighbor cell is valid)
                     //left neighbor
                     if (currentCell.getXCoordinate() > 0) {
-                        Cell neighbouringCell =
+                        final Cell neighbouringCell =
                                 currentFloorgrid[currentCell.getXCoordinate() - 1][currentCell.getYCoordinate()];
                         updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
@@ -191,24 +192,21 @@ class AStar {
                     //right neighbor
                     if (currentCell.getXCoordinate() < cellgrid_width) {
                         //check that cell is not at edge of grid
-                        Cell neighbouringCell =
-                                currentFloorgrid[currentCell.getXCoordinate() + 1][currentCell.getYCoordinate()];
+                        final Cell neighbouringCell = currentFloorgrid[currentCell.getXCoordinate() + 1][currentCell.getYCoordinate()];
                         updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
 
                     //neigbor below
                     if (currentCell.getYCoordinate() > 0) {
                         //check that cell is not at edge of grid
-                        Cell neighbouringCell =
-                                currentFloorgrid[currentCell.getXCoordinate()][currentCell.getYCoordinate() - 1];
+                        final Cell neighbouringCell = currentFloorgrid[currentCell.getXCoordinate()][currentCell.getYCoordinate() - 1];
                         updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
 
                     //neighbor above
                     if (currentCell.getYCoordinate() < cellgrid_height) {
                         //check that cell is not at edge of grid
-                        Cell neighbouringCell =
-                                currentFloorgrid[currentCell.getXCoordinate()][currentCell.getYCoordinate() + 1];
+                        final Cell neighbouringCell = currentFloorgrid[currentCell.getXCoordinate()][currentCell.getYCoordinate() + 1];
                         updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
                 }
@@ -258,9 +256,9 @@ class AStar {
      * @param cell floorconnectionCell of a floorconnection object
      * @return List of all {@link FloorConnectionCell} objects connected with the cell
      */
-    private ArrayList<FloorConnectionCell> findConnectedCells(FloorConnectionCell cell){
-        for (FloorConnection fc : floorConnections){
-            for(FloorConnectionCell _cell :  fc.getConnectedCells()){
+    private ArrayList<FloorConnectionCell> findConnectedCells(final FloorConnectionCell cell){
+        for (final FloorConnection fc : floorConnections){
+            for(final FloorConnectionCell _cell :  fc.getConnectedCells()){
                 if (_cell.getKey().equals(cell.getKey())){
                     return fc.getConnectedCells();
                 }
