@@ -29,4 +29,3 @@ define("SlimdisplayErrorDetails", false);
 // Zeitzone Einstellung
 define('TIMEZONE', 'Europe/Berlin');
 date_default_timezone_set(TIMEZONE);
-?> 

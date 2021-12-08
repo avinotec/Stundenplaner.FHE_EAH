@@ -19,7 +19,7 @@
 // All diese Funktion in diesem Skript kümmern sich, um das Einlesen und Verarbeiten der OPML Datei
 
 // Übergeordnete Funktion, welche mehrere Unterfunktiopnen nacheinander ansteuert
-function get_all_studiengang_start($opml_file_link, $db_time) {
+function get_all_studiengang_start(String $opml_file_link, String $db_time) : void {
     // Holet die OPML Datei und wandelt diese in ein Array
     $array_all_studiengang = all_studiengang($opml_file_link);
     // Sammelt alle Studiengänge, Semester und Semestert Sets zusammen und prüft die Verfügbrkeit in der DB
@@ -37,7 +37,7 @@ Unterfunktionen
 #####################
 */
 // Holt die OPML Datei und wandelt diese in ein Array
-function all_studiengang($link) {
+function all_studiengang(String $link) : array {
     $omp = file_contents_exist($link);
     // // Wenn die omp Datei geholt werden konnte
     if ($omp) {
@@ -58,7 +58,7 @@ function all_studiengang($link) {
 }
 // Sammelt alle Studiengänge, Semester und Semestert Sets zusammen und prüft die Verfügbrkeit in der DB
 // Diese Funktion geht mit mehreren Foreach-Schleifen durch das OPML Array und sucht nach allen Studiengängen, Semestern und Sets
-function check_newer_or_invalid_studiengang($array) {
+function check_newer_or_invalid_studiengang(array $array) : void {
     $log = new PDOLog();
     foreach ($array['body']['outline'] as $num => $studiengang_data) {
         // Check and Get studiengang name
@@ -122,12 +122,12 @@ function check_newer_or_invalid_studiengang($array) {
             }
         }
     }
-    return;
+
 }
 /*
 Diese Funktion erhält ein Array und versucht den SPlus Key zu finden
 */
-function get_splus_key($array) {
+function get_splus_key(array $array) : String {
     // Foreach über das Array
     foreach ($array as $num => $set_links) {
         // Check ob es ein key @attributes und @attributes['text'] gibt
@@ -152,7 +152,7 @@ function get_splus_key($array) {
 // Checkt, ob dieser Studiengang schon in der DB ist
 // Wenn nein wird er eingefügt
 // Rückgabe = studiengang ID
-function import_studiengang_id($name) {
+function import_studiengang_id(String $name) : String {
     // Aufbau DB Con
     $DB     = new Db(DBHost, DBPort, DBName, DBUser, DBPassword);
     // DB query, ob dieser studiengang schon in DB ist
@@ -182,7 +182,7 @@ function import_studiengang_id($name) {
 // Check ob dieses Semester schon in der DB ist
 // Wenn nein, wird es eingefügt
 // Rückgabe = Semestser ID
-function import_semester_id($studiengang_id, $semester_name) {
+function import_semester_id(String $studiengang_id, String $semester_name) : String {
     // Aufbau DB Con
     $DB     = new Db(DBHost, DBPort, DBName, DBUser, DBPassword);
     // DB query, ob dieses Semester schon in DB ist
@@ -210,10 +210,12 @@ function import_semester_id($studiengang_id, $semester_name) {
         return $DB->lastInsertId();
     }
 }
+
+
 // Check ob dieses Set schon in der DB ist
 // Wenn nein wird es eingefügt
 // Rückgabe = Set ID
-function import_set_id($studiengang_id, $semester_id, $set_name, $splus_key) {
+function import_set_id($studiengang_id, String $semester_id, String $set_name, String $splus_key) {
     // Aufbau DB Con
     $DB     = new Db(DBHost, DBPort, DBName, DBUser, DBPassword);
     // DB query, ob dieses Semester-Set schon in DB ist
@@ -244,7 +246,7 @@ function import_set_id($studiengang_id, $semester_id, $set_name, $splus_key) {
     }
 }
 // Nicht mehr verfügbare Studiengänge aus DB entfernen
-function remove_old_studiengang($db_time) {
+function remove_old_studiengang(String $db_time) : void {
     $log    = new PDOLog();
     $DB     = new Db(DBHost, DBPort, DBName, DBUser, DBPassword);
     // Holen aller Studiengänge, welche ein zu altes change_date haben
@@ -261,10 +263,10 @@ function remove_old_studiengang($db_time) {
         }
     }
     $DB->closeConnection();
-    return;
 }
+
 // Nicht mehr verfügbare Semester aus DB entfernen
-function remove_old_semester($db_time) {
+function remove_old_semester($db_time) : void {
     $log    = new PDOLog();
     $DB     = new Db(DBHost, DBPort, DBName, DBUser, DBPassword);
     // Holen aller Semester, welche ein zu altes change_date haben
@@ -281,8 +283,8 @@ function remove_old_semester($db_time) {
         }
     }
     $DB->closeConnection();
-    return;
 }
+
 // Nicht mehr verfügbare Sets aus DB entfernen
 // Hierbei werden auch alle Änderungshinweise, aus der Tabelle changes, dieses Sets aus der Datenbank gelöscht 
 // Darüber hinaus auch alle Abonnements aus der Device_module Tabelle. 
@@ -318,6 +320,5 @@ function remove_old_semester_sets($db_time) {
         }
     }
     $DB->closeConnection();
-    return;
 }
-?> 
+

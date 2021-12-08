@@ -1,4 +1,7 @@
 <?php
+
+global $app;
+
 // DIC configuration
 $container = $app->getContainer();
 

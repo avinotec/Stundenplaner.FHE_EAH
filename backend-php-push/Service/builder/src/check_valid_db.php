@@ -21,7 +21,7 @@
 // Hierbei wird gepürft, ob eine DB Verbindung möglich ist.
 // Es wird überprüft, ob die benötigte Datenbank vorhanden ist.
 // Wenn sie nicht vorhanden ist (z.b. beim erstmaligen nutzen dieses Tools), wird die Datenbank mittels DB_Dump (src/stundenplan.sql) generiert
-function check_db_con() {
+function check_db_con() : void {
     // Aufbau DB Con
     // Wenn die Verbindung nicht aufgebaut werden kann, wird das Skript beendet und der Fehler in den Log geschrieben
     $conn = new mysqli(DBHost, DBUser, DBPassword);
@@ -29,9 +29,9 @@ function check_db_con() {
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    return;
 }
-function check_db_available() {
+
+function check_db_available() : void {
     global $first_start;
     $DB     = new Db(DBHost, DBPort, "", DBUser, DBPassword);
     $log    = new PDOLog();
@@ -71,5 +71,5 @@ function check_db_available() {
         $log->write("Tables imported successfully", DBName . md5(DBPassword));
         $con->close();
     }
-    return;
-} 
+
+}

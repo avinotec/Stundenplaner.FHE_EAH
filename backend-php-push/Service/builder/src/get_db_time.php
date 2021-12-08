@@ -20,7 +20,7 @@
 
 // Diese kleine Funktion gibt die DB Zeit zurück.
 // Wird benötigt, um zu überprüfen, welche Studiengänge, Semester, Sets, Module und EVents nicht mehr verfügbar sind.
-function get_db_time() {
+function get_db_time() : String {
     // Aufbau DB Con
     $DB     = new Db(DBHost, DBPort, DBName, DBUser, DBPassword);
     // SQL zur Db Time
@@ -37,4 +37,3 @@ function get_db_time() {
         exit;
     }
 }
-?> 

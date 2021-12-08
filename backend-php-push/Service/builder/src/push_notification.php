@@ -153,7 +153,7 @@ Unterfunktionen
 */
 
 // Diese Funktion holt alle Device Ids, welche ein gewisses Modul abonniert hat.
-function hol_alle_device_ids_fuer_modul($module_title, $set_splus_key) {
+function hol_alle_device_ids_fuer_modul(String $module_title, String $set_splus_key) : array {
     // neue DB Con
     $DB               = new Db(DBHost, DBPort, DBName, DBUser, DBPassword);
     $encryption_class = new Encryption();
@@ -173,4 +173,3 @@ function hol_alle_device_ids_fuer_modul($module_title, $set_splus_key) {
     }
     return false;
 }
-?> 

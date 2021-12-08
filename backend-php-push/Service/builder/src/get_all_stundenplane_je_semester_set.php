@@ -55,6 +55,4 @@ function get_all_stundenplane_je_semester_set($link) {
             }
         }
     }
-    return;
 }
-?> 

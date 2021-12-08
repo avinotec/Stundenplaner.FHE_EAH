@@ -21,12 +21,10 @@
 // Hierbei wird vorher geprüft ob der Server ein Status Code 200 zurück gibt, für die angefragte URL.
 // Wenn ja: Rückgabe des file_get_contents
 // Wenn nein: Rückgabe = FALSE
-function file_contents_exist($url, $response_code = 200) {
+function file_contents_exist(String $url, ?int $response_code = 200) : String {
     $headers = get_headers($url);
     if (substr($headers[0], 9, 3) == $response_code) {
         return file_get_contents($url);
-    } else {
-        return FALSE;
     }
+    throw ( FileNotFoundException );
 }
-?> 
