@@ -152,6 +152,7 @@
     <string name="navigation_dialog_floor">Etage</string>
     <string name="navigation_dialog_room">Raum</string>
     <string name="navigation_dialog_headline">Bitte wähle dein Ziel.</string>
+    <string name="navigation_dialog_empty_building">Hier gibt es keine Räume.</string>
 
 
 </resources>

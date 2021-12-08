@@ -17,8 +17,6 @@
 
 package de.fhe.fhemobile.models.navigation;
 
-import java.util.ArrayList;
-
 import de.fhe.fhemobile.vos.navigation.NavigationDialogVo;
 
 /**
@@ -27,7 +25,6 @@ import de.fhe.fhemobile.vos.navigation.NavigationDialogVo;
 public class NavigationDialogModel {
 
     private static NavigationDialogModel ourInstance = null;
-    private ArrayList<Room> mRooms;
     //todo: add list for person search
     private NavigationDialogVo mDialogVo;
 

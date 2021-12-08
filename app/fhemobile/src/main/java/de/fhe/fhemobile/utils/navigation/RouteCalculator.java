@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.models.navigation.Exit;
 import de.fhe.fhemobile.models.navigation.FloorConnection;
@@ -51,7 +52,6 @@ public class RouteCalculator {
     //Variables
     private final Context context;
     private final ArrayList<FloorConnection> floorConnections;
-    private final ArrayList<Room> rooms;
     private final ArrayList<Exit> exits;
     private final Cell startLocation;
     private final Cell destLocation;
@@ -68,16 +68,13 @@ public class RouteCalculator {
      * @param startLocation
      * @param destLocation
      * @param floorConnections
-     * @param rooms
      */
     public RouteCalculator(final Context context, final Room startLocation, final Room destLocation,
-                           final ArrayList<FloorConnection> floorConnections, final ArrayList<Room> rooms,
-                           final ArrayList<Exit> exits) {
+                           final ArrayList<FloorConnection> floorConnections, final ArrayList<Exit> exits) {
         this.context = context;
         this.startLocation = startLocation;
         this.destLocation = destLocation;
         this.floorConnections = floorConnections;
-        this.rooms = rooms;
         this.exits = exits;
     }
 
@@ -236,7 +233,8 @@ public class RouteCalculator {
             final HashMap<String, Cell> walkableCells = jsonHandler.parseJsonWalkableCells(json);
 
             //fill in rooms
-            for(final Room r : rooms){
+            if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(context);
+            for(final Room r : MainActivity.rooms){
                 if(r.getComplex().equals(complex) && r.getFloorString().equals(floor)){
                     floorGrid[r.getXCoordinate()][r.getYCoordinate()] = r;
                 }

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<de.fhe.fhemobile.views.navigation.RoomSearchView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="de.fhe.fhemobile.fragments.navigation.NavigationDialogFragmentNEW"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context="de.fhe.fhemobile.fragments.navigation.RoomSearchFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +26,7 @@
             android:textSize="@dimen/timetable_headline_textsize"
             />
 
-        <de.fhe.fhemobile.widgets.picker.StudyCoursePicker
+        <de.fhe.fhemobile.widgets.picker.BuildingPicker
             android:id="@+id/navigationPickerBuilding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +34,7 @@
             app:idpHeadline="@string/navigation_dialog_building"
             />
 
-        <de.fhe.fhemobile.widgets.picker.SemesterPicker
+        <de.fhe.fhemobile.widgets.picker.FloorPicker
             android:id="@+id/navigationPickerFloor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,7 +43,7 @@
             app:idpHeadline="@string/navigation_dialog_floor"
             />
 
-        <de.fhe.fhemobile.widgets.picker.StudyGroupPicker
+        <de.fhe.fhemobile.widgets.picker.RoomPicker
             android:id="@+id/navigationPickerRoom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,4 +54,4 @@
 
 
     </LinearLayout>
-</FrameLayout>
+</de.fhe.fhemobile.views.navigation.RoomSearchView>

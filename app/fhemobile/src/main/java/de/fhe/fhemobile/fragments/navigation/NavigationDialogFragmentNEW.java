@@ -26,7 +26,6 @@ import androidx.annotation.Nullable;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.models.navigation.Room;
 import de.fhe.fhemobile.views.navigation.NavigationDialogView;
 import de.fhe.fhemobile.vos.navigation.NavigationDialogVo;
 
@@ -38,8 +37,6 @@ public class NavigationDialogFragmentNEW extends FeatureFragment {
 
     private NavigationDialogView mView = null;
     private NavigationDialogVo mVo;
-
-    private Room[] rooms;
 
 
     //Constants

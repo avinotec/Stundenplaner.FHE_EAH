@@ -49,7 +49,7 @@ public class RoomSearchView extends LinearLayout {
         mViewListener = _Listener;
     }
 
-    public void intializeView(final FragmentManager _Manager){
+    public void initializeView(final FragmentManager _Manager){
         mBuildingPicker.setFragmentManager(_Manager);
         mBuildingPicker.toggleEnabled(false);
         mBuildingPicker.setOnItemChosenListener(mBuildingListener);
@@ -98,9 +98,12 @@ public class RoomSearchView extends LinearLayout {
         mRoomPicker.setVisibility(_Visible ? VISIBLE : GONE);
     }
 
+    public void resetBuildingPicker(){ mBuildingPicker.reset(true);}
+
     public void resetFloorPicker(){ mFloorPicker.reset(true);}
 
     public void resetRoomPicker(){ mRoomPicker.reset(true);}
+
 
     @Override
     protected void onFinishInflate() {

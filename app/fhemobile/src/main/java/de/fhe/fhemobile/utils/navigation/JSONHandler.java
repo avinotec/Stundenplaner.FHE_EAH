@@ -32,6 +32,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.models.navigation.Exit;
 import de.fhe.fhemobile.models.navigation.FloorConnection;
@@ -66,9 +67,6 @@ public class JSONHandler {
     @NonNls
     public static final String NAVIGATION_FLOORCONNECTIONS = "floorconnections";
 
-    //Constructor
-    public JSONHandler() {
-    }
 
     /**
      * Read floorplan as json from assets
@@ -76,25 +74,6 @@ public class JSONHandler {
      * @param jsonFile file name in assets
      * @return read floor plan as json string
      */
-    /*
-    public String readJsonFromAssets(final Context context, final String jsonFile) {
-
-        final AssetManager assetManager = context.getAssets();
-        String json = "";
-
-        try {
-            final InputStream inputStream = assetManager.open(jsonFile);
-            final int size = inputStream.available();
-            final byte[] buffer = new byte[size];
-            inputStream.read(buffer);
-            inputStream.close();
-            json = new String(buffer, StandardCharsets.UTF_8);
-
-        } catch (Exception e) {
-            Log.e(TAG, "error reading JSON file", e);
-        }
-        return json;
-    } */
     public static String readFloorGridFromAssets(final Context context, final String jsonFile){
         final StringBuffer text = new StringBuffer();
 
@@ -158,7 +137,7 @@ public class JSONHandler {
      * @param json
      * @return ArrayList of {@link Exit} objects
      */
-    public ArrayList<Exit> parseJsonExits(final String json){
+    public static ArrayList<Exit> parseJsonExits(final String json){
         final ArrayList<Exit> exits = new ArrayList<>();
 
         try{
@@ -204,7 +183,7 @@ public class JSONHandler {
      * @param json
      * @return ArrayList of {@link Room} objects
      */
-    public ArrayList<Room> parseJsonRooms(final String json) {
+    public static ArrayList<Room> parseJsonRooms(final String json) {
 
         final ArrayList<Room> rooms = new ArrayList<>();
 
@@ -241,7 +220,7 @@ public class JSONHandler {
      * @param json
      * @return ArrayList of {@link FloorConnection} objects
      */
-    public ArrayList<FloorConnection> parseJsonFloorConnection(final String json) {
+    public static ArrayList<FloorConnection> parseJsonFloorConnection(final String json) {
 
         final ArrayList<FloorConnection> floorConnections = new ArrayList<>();
 
@@ -284,7 +263,7 @@ public class JSONHandler {
      * @param json
      * @return ArrayList of walkable cells
      */
-    public HashMap<String, Cell>  parseJsonWalkableCells(final String json) {
+    public static HashMap<String, Cell> parseJsonWalkableCells(final String json) {
 
         final HashMap<String, Cell> walkableCells = new HashMap<>();
 
@@ -309,5 +288,20 @@ public class JSONHandler {
             Log.e(TAG, "error parsing JSON walkableCells", e);
         }
         return walkableCells;
+    }
+
+    /**
+     * Reads rooms from Assets and saves list to MainActivity.rooms
+     * @param context
+     */
+    public static void loadRooms(Context context){
+        if (MainActivity.rooms.isEmpty()) {
+            try {
+                String roomsJson = JSONHandler.readFromAssets(context, "rooms");
+                MainActivity.rooms = JSONHandler.parseJsonRooms(roomsJson);
+            } catch (Exception e) {
+                Log.e(TAG, "error reading or parsing rooms from JSON files:", e);
+            }
+        }
     }
 }

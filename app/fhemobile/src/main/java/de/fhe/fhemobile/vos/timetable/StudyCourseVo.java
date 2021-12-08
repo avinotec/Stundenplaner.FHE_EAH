@@ -74,7 +74,7 @@ public class StudyCourseVo implements Parcelable {
         return mSemesters;
     }
 
-    public void setTerms(final ArrayList<SemesterVo> _semesters) {
+    public void setSemesters(final ArrayList<SemesterVo> _semesters) {
         mSemesters = _semesters;
     }
     static final String BACHELOR_BEFORE="Bachelor: ";

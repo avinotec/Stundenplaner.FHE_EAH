@@ -25,7 +25,13 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.models.navigation.Building;
+import de.fhe.fhemobile.models.navigation.Room;
+import de.fhe.fhemobile.utils.Utils;
+import de.fhe.fhemobile.utils.navigation.JSONHandler;
+import de.fhe.fhemobile.views.navigation.RoomSearchView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,52 +40,130 @@ import de.fhe.fhemobile.fragments.FeatureFragment;
  */
 public class RoomSearchFragment extends FeatureFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private RoomSearchView mView;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Room mChosenRoom;
+    private Building mChosenBuilding;
+    private String mChosenFloor;
 
-    public RoomSearchFragment() {
-        // Required empty public constructor
-    }
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment RoomSearchFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static RoomSearchFragment newInstance(String param1, String param2) {
+    public static RoomSearchFragment newInstance() {
         RoomSearchFragment fragment = new RoomSearchFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public RoomSearchFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+        mChosenRoom = null;
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_room_search, container, false);
+        mView = (RoomSearchView) inflater.inflate(R.layout.fragment_room_search, container, false);
+        mView.setViewListener(mViewListener);
+        mView.initializeView(getChildFragmentManager());
+
+        return mView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //todo: fetch last input from shared-preferences
     }
 
 
+    private final RoomSearchView.IViewListener mViewListener = new RoomSearchView.IViewListener() {
+        @Override
+        public void onBuildingSelected(String _building) {
+            mView.toggleFloorPickerVisibility(true);
+            mView.resetBuildingPicker();
+            mView.resetFloorPicker();
+            mView.resetRoomPicker();
+
+            mChosenBuilding = null;
+            mChosenRoom = null;
+
+            //check if building has any rooms
+            boolean buildingValid = false;
+            if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
+            for(Room room : MainActivity.rooms){
+                if(room.getBuilding() != null && room.getBuilding().equals(_building)){
+                    //todo: set floor picker items
+                    buildingValid = true;
+                    break;
+                }
+            }
+
+            //if building has rooms then enable the floor picker
+            if (buildingValid) {
+                mChosenBuilding = new Building(_building);
+
+                mView.toggleFloorPickerVisibility(true);
+            } else {
+                Utils.showToast(R.string.navigation_dialog_empty_building);
+                mView.toggleFloorPickerVisibility(false);
+            }
+        }
+
+        @Override
+        public void onFloorSelected(String _floor) {
+            mView.toggleFloorPickerVisibility(true);
+            mView.resetFloorPicker();
+            mView.resetRoomPicker();
+
+            mChosenRoom = null;
+
+            //check if floor has any rooms
+            boolean floorValid = false;
+            if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
+            for(Room room : MainActivity.rooms){
+                if(room.getFloorString() != null && room.getFloorString().equals(_floor)){
+                    floorValid = true;
+                    //todo: set room picker items
+                    break;
+                }
+            }
+
+            //if floor has rooms then enable the room picker
+            if (floorValid) {
+                mChosenFloor = _floor;
+                mView.toggleRoomPickerVisibility(true);
+            } else {
+                Utils.showToast(R.string.navigation_dialog_empty_building);
+                mView.toggleRoomPickerVisibility(false);
+            }
+        }
+
+        @Override
+        public void onRoomSelected(String _room) {
+            mView.toggleRoomPickerVisibility(true);
+            mView.resetRoomPicker();
+
+            //search for room object
+            if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
+            for(Room room : MainActivity.rooms){
+                if(room.getRoomName() != null && room.getRoomName().equals(_room)){
+                    mChosenRoom = room;
+                    break;
+                }
+            }
+        }
+    };
 }

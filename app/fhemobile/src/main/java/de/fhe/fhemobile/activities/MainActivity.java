@@ -50,6 +50,7 @@ import de.fhe.fhemobile.fragments.impressum.ImpressumFragment;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdata.SemesterDataWebViewFragment;
+import de.fhe.fhemobile.models.navigation.Room;
 import de.fhe.fhemobile.models.timeTableChanges.RequestModel;
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.network.NetworkHandler;
@@ -71,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     private final int CHANGEREASON_EDIT = 1;
     private final int CHANGEREASON_NEW = 3;
     private final int CHANGEREASON_DELETE = 2;
+
+    public static ArrayList<Room> rooms = new ArrayList<>();
 
 
     @Override

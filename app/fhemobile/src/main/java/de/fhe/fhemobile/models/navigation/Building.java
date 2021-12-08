@@ -30,7 +30,7 @@ public class Building {
     private Complex mComplex;
     private String mBuilding;
 
-    Building(String building){
+    public Building(String building){
         this.mBuilding = building;
         this.mComplex = Complex.getEnum(building);
     }

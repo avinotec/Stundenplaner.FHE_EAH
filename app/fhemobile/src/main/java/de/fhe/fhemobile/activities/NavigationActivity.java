@@ -73,7 +73,6 @@ public class NavigationActivity extends BaseActivity {
     private Room startLocation;
     private Room destinationLocation;
 
-    private static ArrayList<Room> rooms;
     private static ArrayList<Exit> exits = new ArrayList<>();
     private static ArrayList<FloorConnection> floorConnections = new ArrayList<>();
     private ArrayList<Cell> cellsToWalk = new ArrayList<>();
@@ -94,9 +93,6 @@ public class NavigationActivity extends BaseActivity {
         Intent intendActivity = getIntent();
         currentLocation = intendActivity.getStringExtra("startLocation");
         destinationQRCode = intendActivity.getStringExtra("destinationLocation");
-        final String roomsJSON = intendActivity.getStringExtra("rooms");
-        JSONHandler jsonHandler = new JSONHandler();
-        rooms = jsonHandler.parseJsonRooms(roomsJSON);
 
         //Spinner select floor plans
         final ArrayList<String> floorPlans = new ArrayList<>(getSpinnerItemsList());
@@ -493,9 +489,10 @@ public class NavigationActivity extends BaseActivity {
      */
     private void getCurrentLocation() {
         try {
-            for (int i = 0; i < rooms.size(); i++) {
-                if (rooms.get(i).getQRCode().equals(currentLocation)) {
-                    startLocation = rooms.get(i);
+            if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(getApplicationContext());
+            for (int i = 0; i < MainActivity.rooms.size(); i++) {
+                if (MainActivity.rooms.get(i).getQRCode().equals(currentLocation)) {
+                    startLocation = MainActivity.rooms.get(i);
                 }
             }
         } catch (Exception e) {
@@ -508,11 +505,11 @@ public class NavigationActivity extends BaseActivity {
      * Globally set the user's destination room
      */
     private void getDestinationLocation() {
-
         try {
-            for (int i = 0; i < rooms.size(); i++) {
-                if (rooms.get(i).getQRCode().equals(destinationQRCode)) {
-                    destinationLocation = rooms.get(i);
+            if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(getApplicationContext());
+            for (int i = 0; i < MainActivity.rooms.size(); i++) {
+                if (MainActivity.rooms.get(i).getQRCode().equals(destinationQRCode)) {
+                    destinationLocation = MainActivity.rooms.get(i);
                 }
             }
         } catch (Exception e) {
@@ -528,7 +525,7 @@ public class NavigationActivity extends BaseActivity {
     private void getRoute() {
         try {
             RouteCalculator routeCalculator = new RouteCalculator(this,
-                    startLocation, destinationLocation, floorConnections, rooms, exits);
+                    startLocation, destinationLocation, floorConnections, exits);
             cellsToWalk.addAll(routeCalculator.getWholeRoute());
         } catch (Exception e) {
             Log.e(TAG,"error calculating route:", e);

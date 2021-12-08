@@ -152,7 +152,7 @@
     <string name="maps_up" >One floor up</string>
     <string name="maps_down" >One floor down</string>
 	<string name="today">Today</string>
-
+    <string name="navigation_dialog_empty_building">No rooms here.</string>
 
 
 </resources>

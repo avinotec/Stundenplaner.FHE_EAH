@@ -40,6 +40,7 @@ import java.util.Comparator;
 import java.util.Objects;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.activities.NavigationActivity;
 import de.fhe.fhemobile.activities.ScannerActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
@@ -97,6 +98,7 @@ public class NavigationDialogFragmentOLD extends FeatureFragment implements View
         mView = inflater.inflate(R.layout.fragment_navigation_dialog, container, false);
 
         loadRoomNamesAndPersons();
+
         //Spinners
         fillSpinners();
         final Spinner searchByRoomSpinner = mView.findViewById(R.id.spinner_by_room);
@@ -176,10 +178,10 @@ mögliche Lösung: Implementierung von Parcable nutzen (ähnlich bei Timetable -
 könnte sein dass dann sowohl Room als auch die Arrayliste (z.B. als neue Klasse RoomListVo) beide Parcable implementieren müssen
 andere aktuelle Lösung: json-String senden und zweimal in Rooms parsen
  */
-        if (rooms.isEmpty()) {
+        if (MainActivity.rooms.isEmpty()) {
             try {
                 roomsJson = JSONHandler.readFromAssets(getContext(), "rooms");
-                rooms = jsonHandler.parseJsonRooms(roomsJson);
+                MainActivity.rooms = jsonHandler.parseJsonRooms(roomsJson);
             } catch (Exception e) {
                 Log.e(TAG, "error reading or parsing JSON file:", e);
             }

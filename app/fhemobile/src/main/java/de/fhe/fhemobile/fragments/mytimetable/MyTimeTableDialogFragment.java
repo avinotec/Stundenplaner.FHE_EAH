@@ -70,7 +70,7 @@ import retrofit2.Response;
 public class MyTimeTableDialogFragment extends DialogFragment {
 
 
-    public static final String PREFS_CHOSEN_SEMESTER = "_ChosenTerm";
+    public static final String PREFS_CHOSEN_SEMESTER = "_ChosenSemester";
     public static final String PREFS_CHOSEN_COURSE = "_ChosenCourse";
     public static final String PREFS_CHOSEN_RESULT = "_Result";
 
@@ -358,7 +358,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                     for (StudyGroupVo studyGroupVo : mChosenSemester.getStudyGroups()) {
                         FlatDataStructure data = new FlatDataStructure()
                                 .setCourse(mChosenCourse)
-                                .setSemester(mChosenSemester)
+                                .setSemesters(mChosenSemester)
                                 .setStudyGroup(studyGroupVo);
 
 

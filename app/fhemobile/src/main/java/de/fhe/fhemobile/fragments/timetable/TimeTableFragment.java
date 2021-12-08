@@ -72,10 +72,6 @@ public class TimeTableFragment extends FeatureFragment {
         mChosenCourse       = null;
         mChosenSemester = null;
         mChosenTimetableId  = null;
-
-//        if (getArguments() != null) {
-//
-//        }
     }
 
     @Override
@@ -202,6 +198,6 @@ public class TimeTableFragment extends FeatureFragment {
 
     private TimeTableResponse mResponse;
     private StudyCourseVo     mChosenCourse;
-    private SemesterVo mChosenSemester;
+    private SemesterVo        mChosenSemester;
     private String            mChosenTimetableId;
 }

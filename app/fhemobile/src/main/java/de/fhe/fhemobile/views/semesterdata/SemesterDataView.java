@@ -89,7 +89,7 @@ public class SemesterDataView extends LinearLayout {
         ArrayList<IHeaderItem> sectionList = new ArrayList<>();
 
         DefaultHeaderItem headerSection = new DefaultHeaderItem("", false);
-        headerSection.addItem(new ImageRowItem(R.drawable.th_termdates));
+        headerSection.addItem(new ImageRowItem(R.drawable.th_semesterdates));
 
         sectionList.add(headerSection);
 
