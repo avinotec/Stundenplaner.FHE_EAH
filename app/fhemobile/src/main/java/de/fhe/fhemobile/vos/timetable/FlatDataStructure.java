@@ -43,7 +43,7 @@ public class FlatDataStructure implements Parcelable {
 
 	private FlatDataStructure(final Parcel in) {
 		course = in.readParcelable(FlatStudyCourse.class.getClassLoader());
-		semester = in.readParcelable(FlatTerms.class.getClassLoader());
+		semester = in.readParcelable(FlatSemesters.class.getClassLoader());
 		studyGroup = in.readParcelable(StudyGroupVo.class.getClassLoader());
 		eventWeek = in.readParcelable(FlatTimeTableWeek.class.getClassLoader());
 		eventDay = in.readParcelable(FlatTimeTableDay.class.getClassLoader());
@@ -254,7 +254,7 @@ public class FlatDataStructure implements Parcelable {
 		return course;
 	}
 
-	public final FlatTerms getSemester() {
+	public final FlatSemesters getSemester() {
 		return semester;
 	}
 
@@ -285,12 +285,12 @@ public class FlatDataStructure implements Parcelable {
 	}
 
 	public final FlatDataStructure setSemester(final SemesterVo semester) {
-		this.semester = new FlatTerms();
+		this.semester = new FlatSemesters();
 		this.semester.setId(semester.getId());
 		this.semester.setTitle(semester.getTitle());
 		return this;
 	}
-	private void setSemester(final FlatTerms semester) {
+	private void setSemester(final FlatSemesters semester) {
 		this.semester = semester;
 	}
 
@@ -357,7 +357,7 @@ public class FlatDataStructure implements Parcelable {
 	@SerializedName("course")
 	private FlatStudyCourse course;
 	@SerializedName("semester")
-	private FlatTerms semester;
+	private FlatSemesters semester;
 	@SerializedName("studyGroup")
 	private StudyGroupVo studyGroup;
 	@SerializedName("eventWeek")

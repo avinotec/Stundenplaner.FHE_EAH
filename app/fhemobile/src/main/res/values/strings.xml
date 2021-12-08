@@ -56,7 +56,7 @@
     <string name="timetable_headline" >Please select your study course. (You can always change it under settings)</string>
     <string name="timetable_study_course" >Study course</string>
     <string name="timetable_study_group" >Group</string>
-    <string name="timetable_term" >Semester</string>
+    <string name="timetable_semester" >Semester</string>
     <string name="timetable_button" >Apply</string>
     <string name="timetable_input" >Please select</string>
     <string name="timetable_error" >This course is empty.</string>
