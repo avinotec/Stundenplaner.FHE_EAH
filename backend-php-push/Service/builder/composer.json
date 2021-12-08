@@ -1,6 +1,7 @@
 {
   
     "require": {
-        "edwinhoksberg/php-fcm": "^1.0"
+        "edwinhoksberg/php-fcm": "^1.0",
+      "ext-mysqli": "*"
     }
 }

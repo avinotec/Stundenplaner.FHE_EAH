@@ -106,4 +106,3 @@ get_module_and_module_event($db_time);
 // Ende
 $log->write("Cron End" . date('c'), DBName . md5(DBPassword));
 exit;
-?> 

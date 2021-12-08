@@ -27,6 +27,7 @@ function getBetween($content, $start, $end) {
     }
     return '';
 }
+
 class iCal {
     /**
      * @var string
@@ -154,6 +155,7 @@ class iCal {
         return $this;
     }
 }
+
 class iCal_Event {
     /**
      * @var string
