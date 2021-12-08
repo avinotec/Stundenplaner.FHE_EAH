@@ -19,9 +19,9 @@ public class NavigationDialogPagerAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch (position){
-            case 1:
+            case 0:
                 return new RoomSearchFragment();
-            case 2:
+            case 1:
                 return new PersonSearchFragment();
         }
         return null;
