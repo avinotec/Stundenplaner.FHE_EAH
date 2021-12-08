@@ -63,7 +63,7 @@ public class TimeTableView extends LinearLayout {
 
         mSemesterPicker.setFragmentManager(_Manager);
         mSemesterPicker.toggleEnabled(false);
-        mSemesterPicker.setOnItemChosenListener(mTermsListener);
+        mSemesterPicker.setOnItemChosenListener(mSemesterListener);
 
         mStudyGroupPicker.setFragmentManager(_Manager);
         mStudyGroupPicker.toggleEnabled(false);
@@ -80,7 +80,7 @@ public class TimeTableView extends LinearLayout {
         mStudyCoursePicker.toggleEnabled(true);
     }
 
-    public void setTermsItems(final List<SemesterVo> _Items) {
+    public void setSemesterItems(final List<SemesterVo> _Items) {
         mSemesterPicker.setItems(_Items);
         mSemesterPicker.toggleEnabled(true);
     }
@@ -90,7 +90,7 @@ public class TimeTableView extends LinearLayout {
         mStudyGroupPicker.toggleEnabled(true);
     }
 
-    public void toggleTermsPickerVisibility(final boolean _Visible) {
+    public void toggleSemesterPickerVisibility(final boolean _Visible) {
         mSemesterPicker.setVisibility(_Visible ? VISIBLE : GONE);
     }
 
@@ -98,7 +98,7 @@ public class TimeTableView extends LinearLayout {
         mStudyGroupPicker.setVisibility(_Visible ? VISIBLE : GONE);
     }
 
-    public void resetTermsPicker() {
+    public void resetSemesterPicker() {
         mSemesterPicker.reset(true);
     }
 
@@ -129,25 +129,25 @@ public class TimeTableView extends LinearLayout {
         //Studiengang
         mStudyCoursePicker = (StudyCoursePicker) findViewById(R.id.timetableStudyCoursePicker);
         //Semester
-        mSemesterPicker = (SemesterPicker)       findViewById(R.id.timetableTermsPicker);
+        mSemesterPicker = (SemesterPicker)       findViewById(R.id.timetableSemesterPicker);
         //Set
         mStudyGroupPicker  = (StudyGroupPicker)  findViewById(R.id.timetableStudyGroupPicker);
         mRememberSwitch    = (SwitchCompat)      findViewById(R.id.timetableRememberSelection);
         mSearchButton      = (Button)            findViewById(R.id.timetableSearchButton);
     }
 
-    // Returns the chosen TermsId
+    // Returns the chosen SemesterId
     private final OnItemChosenListener mCourseListener = new OnItemChosenListener() {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
-                mViewListener.onTermChosen(_ItemId);
+                mViewListener.onSemesterChosen(_ItemId);
             }
         }
     };
 
     // Returns the GroupId
-    private final OnItemChosenListener mTermsListener = new OnItemChosenListener() {
+    private final OnItemChosenListener mSemesterListener = new OnItemChosenListener() {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
@@ -176,7 +176,7 @@ public class TimeTableView extends LinearLayout {
     };
 
     public interface IViewListener {
-        void onTermChosen(String _TermId);
+        void onSemesterChosen(String _SemesterId);
         void onGroupChosen(String _GroupId);
         void onTimeTableChosen(String _TimeTableId);
         void onSearchClicked();
@@ -185,7 +185,7 @@ public class TimeTableView extends LinearLayout {
     private IViewListener     mViewListener;
 
     private StudyCoursePicker mStudyCoursePicker;
-    private SemesterPicker mSemesterPicker;
+    private SemesterPicker    mSemesterPicker;
     private StudyGroupPicker  mStudyGroupPicker;
 
     private SwitchCompat      mRememberSwitch;

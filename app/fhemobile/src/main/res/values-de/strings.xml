@@ -58,7 +58,7 @@
     <string name="timetable_headline" >Bitte wähle deinen Studiengang. (Deine Auswahl kannst du jederzeit in den Einstellungen ändern)</string>
     <string name="timetable_study_course" >Studiengang</string>
     <string name="timetable_study_group" >Gruppe</string>
-    <string name="timetable_term" >Fachsemester</string>
+    <string name="timetable_semester" >Fachsemester</string>
     <string name="timetable_button" >Übernehmen</string>
     <string name="timetable_input" >Bitte auswählen</string>
     <string name="timetable_error" >Dieser Kurs enthält keine Elemente.</string>
@@ -146,7 +146,12 @@
     <string name="text_view_oder">oder</string>
     <string name="role">Aufgabe</string>
 	<string name="today">Heute</string>
-
+    <string name="tablayout_tabtext_roomsearch">Raumsuche</string>
+    <string name="tablayout_tabtext_personsearch">Personensuche</string>
+    <string name="navigation_dialog_building">Haus</string>
+    <string name="navigation_dialog_floor">Etage</string>
+    <string name="navigation_dialog_room">Raum</string>
+    <string name="navigation_dialog_headline">Bitte wähle dein Ziel.</string>
 
 
 </resources>

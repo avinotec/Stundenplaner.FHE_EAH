@@ -59,4 +59,10 @@ public class Building {
     public String getBuilding() {
         return mBuilding;
     }
+
+    /**
+     * Returns ID of the building which equals the string (e.g. "-1", "01", "04, ...)
+     * @return id of the building
+     */
+    public String getId(){ return mBuilding;}
 }

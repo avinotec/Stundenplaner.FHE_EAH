@@ -8,13 +8,14 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.fragments.FeatureFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link PersonSearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PersonSearchFragment extends Fragment {
+public class PersonSearchFragment extends FeatureFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

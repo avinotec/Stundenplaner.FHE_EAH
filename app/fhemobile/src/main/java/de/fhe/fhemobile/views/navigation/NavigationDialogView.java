@@ -70,11 +70,12 @@ public class NavigationDialogView extends LinearLayout {
     public void initializeView(@NonNull final FragmentManager _Manager, @NonNull Lifecycle _Lifecycle) {
 
         //set up tab layout
-        TabLayout tabLayout = findViewById(R.id.navigation_dialog_tablayout);
-        ViewPager2 viewPager = findViewById(R.id.navigation_dialog_viewpager);
+        TabLayout tabLayout = findViewById(R.id.navigationDialogTablayout);
+        ViewPager2 viewPager = findViewById(R.id.navigationDialogViewpager);
         viewPager.setAdapter(new NavigationDialogPagerAdapter(_Manager, _Lifecycle));
-        tabLayout.addTab(tabLayout.newTab().setText("Raumsuche"));
-        tabLayout.addTab(tabLayout.newTab().setText("Personensuche"));
+
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tablayout_tabtext_roomsearch));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tablayout_tabtext_personsearch));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -95,6 +96,9 @@ public class NavigationDialogView extends LinearLayout {
                 tabLayout.selectTab(tabLayout.getTabAt(position));
             }
         });
+
+
+
     }
 
     @Override
@@ -114,5 +118,7 @@ public class NavigationDialogView extends LinearLayout {
 //        mContext.startActivity();
 
     }
+
+
 
 }

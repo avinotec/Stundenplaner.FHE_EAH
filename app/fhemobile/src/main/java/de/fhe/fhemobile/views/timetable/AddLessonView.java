@@ -61,7 +61,7 @@ public class AddLessonView extends LinearLayout {
 
         mSemesterPicker.setFragmentManager(_Manager);
         mSemesterPicker.toggleEnabled(false);
-        mSemesterPicker.setOnItemChosenListener(mTermsListener);
+        mSemesterPicker.setOnItemChosenListener(mSemesterListener);
 
     }
 
@@ -90,7 +90,7 @@ public class AddLessonView extends LinearLayout {
 
     }
 
-    // if study course changes, reset the Terms
+    // if study course changes, reset the Semesters
     public void resetSemesterPicker() {
         mSemesterPicker.reset(true);
     }
@@ -111,7 +111,7 @@ public class AddLessonView extends LinearLayout {
         mLessonList        = (ListView)          findViewById(R.id.add_lvLessons);
     }
 
-    // Returns the chosen TermsId
+    // Returns the chosen SemesterId
     private final OnItemChosenListener mCourseListener = new OnItemChosenListener() {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
@@ -122,7 +122,7 @@ public class AddLessonView extends LinearLayout {
     };
 
     // Returns the GroupId
-    private final OnItemChosenListener mTermsListener = new OnItemChosenListener() {
+    private final OnItemChosenListener mSemesterListener = new OnItemChosenListener() {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
@@ -133,7 +133,7 @@ public class AddLessonView extends LinearLayout {
 
 
     public interface IViewListener {
-        void onStudyCourseChosen(String _TermId);
+        void onStudyCourseChosen(String _SemesterId);
         void onSemesterChosen(String _GroupId);
         //TODO not yet implemented?
         void onStudyGroupChosen(String _TimeTableId);

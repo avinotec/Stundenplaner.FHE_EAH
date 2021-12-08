@@ -56,12 +56,12 @@
                     />
 
                 <de.fhe.fhemobile.widgets.picker.SemesterPicker
-                    android:id="@+id/timetableTermsPicker"
+                    android:id="@+id/timetableSemesterPicker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/list_single_item_height"
                     android:visibility="gone"
-                    app:idpHeadline="@string/timetable_term"
+                    app:idpHeadline="@string/timetable_semester"
                     />
 
                 <de.fhe.fhemobile.widgets.picker.StudyGroupPicker
