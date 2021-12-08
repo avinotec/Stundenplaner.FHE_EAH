@@ -43,7 +43,7 @@ public class FlatDataStructure implements Parcelable {
 
 	private FlatDataStructure(final Parcel in) {
 		course = in.readParcelable(FlatStudyCourse.class.getClassLoader());
-		semesters = in.readParcelable(FlatSemesters.class.getClassLoader());
+		semester = in.readParcelable(FlatTerms.class.getClassLoader());
 		studyGroup = in.readParcelable(StudyGroupVo.class.getClassLoader());
 		eventWeek = in.readParcelable(FlatTimeTableWeek.class.getClassLoader());
 		eventDay = in.readParcelable(FlatTimeTableDay.class.getClassLoader());
@@ -54,7 +54,7 @@ public class FlatDataStructure implements Parcelable {
 	@Override
 	public void writeToParcel(final Parcel dest, final int flags) {
 		dest.writeParcelable(course, flags);
-		dest.writeParcelable(semesters, flags);
+		dest.writeParcelable(semester, flags);
 		dest.writeParcelable(studyGroup, flags);
 		dest.writeParcelable(eventWeek, flags);
 		dest.writeParcelable(eventDay, flags);
@@ -85,13 +85,14 @@ public class FlatDataStructure implements Parcelable {
 		//		Log.d(TAG, "FlatDataStructure: incID: "+FlatDataStructure.incId);
 		copy.id = FlatDataStructure.incId++;
 		copy.setCourse(this.getCourse());
-		copy.setSemester(this.getSemesters());
+		copy.setSemester(this.getSemester());
 		copy.setStudyGroup(this.getStudyGroup());
 		copy.setSets(new ArrayList<>(this.getSets()));
 		return copy;
 	}
 
 	// "Bachelor: E-Commerce-->EC(BA)7-->EC(BA)7.01-->45-->3-->SPLUSA3E2FAs-2-->WI(BA)ERP-Sys.GPA/P/S/01"
+	@SuppressWarnings("Annotator")
 	private final static Pattern p = Pattern.compile("^(.*[a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß])"); //$NON-NLS
 	public static String cutEventTitle(final String title) {
 
@@ -222,7 +223,7 @@ public class FlatDataStructure implements Parcelable {
 //			Log.d(TAG, "listContainsEvent: "+event.getEventDay().getDayInWeek()+" "+data.getEventDay().getDayInWeek());
 //			Log.d(TAG, "listContainsEvent: "+event.getEventWeek().getWeekInYear()+" "+data.getEventWeek().getWeekInYear());
 //			Log.d(TAG, "listContainsEvent: "+event.getStudyGroup().getTimeTableId()+" "+data.getStudyGroup().getTimeTableId());
-//			Log.d(TAG, "listContainsEvent: "+event.getSemesters().getId()+" "+data.getSemesters().getId());
+//			Log.d(TAG, "listContainsEvent: "+event.getSemester().getId()+" "+data.getSemester().getId());
 //			Log.d(TAG, "listContainsEvent: "+event.getCourse().getId()+" "+data.getCourse().getId());
 			if(event.getEvent().getTitle().equals(data.getEvent().getTitle())){
 //				Log.d(TAG, "EventTitle: true");
@@ -232,7 +233,7 @@ public class FlatDataStructure implements Parcelable {
 //						Log.d(TAG, "EventWeek: true");
 						if(event.getStudyGroup().getTimeTableId().equals(data.getStudyGroup().getTimeTableId())){
 //							Log.d(TAG, "StudyGroup: true");
-							if(event.getSemesters().getId().equals(data.getSemesters().getId())){
+							if(event.getSemester().getId().equals(data.getSemester().getId())){
 //								Log.d(TAG, "Semester: true");
 								if(event.getCourse().getId().equals(data.getCourse().getId())){
 //									Log.d(TAG, "Course: true");
@@ -253,8 +254,8 @@ public class FlatDataStructure implements Parcelable {
 		return course;
 	}
 
-	public final FlatSemesters getSemesters() {
-		return semesters;
+	public final FlatTerms getSemester() {
+		return semester;
 	}
 
 	public final StudyGroupVo getStudyGroup() {
@@ -283,14 +284,14 @@ public class FlatDataStructure implements Parcelable {
 		this.course = course;
 	}
 
-	public final FlatDataStructure setSemesters(final SemesterVo semesters) {
-		this.semesters = new FlatSemesters();
-		this.semesters.setId(semesters.getId());
-		this.semesters.setTitle(semesters.getTitle());
+	public final FlatDataStructure setSemester(final SemesterVo semester) {
+		this.semester = new FlatTerms();
+		this.semester.setId(semester.getId());
+		this.semester.setTitle(semester.getTitle());
 		return this;
 	}
-	private void setSemester(final FlatSemesters semester) {
-		this.semesters = semester;
+	private void setSemester(final FlatTerms semester) {
+		this.semester = semester;
 	}
 
 
@@ -355,8 +356,8 @@ public class FlatDataStructure implements Parcelable {
 	private int id;
 	@SerializedName("course")
 	private FlatStudyCourse course;
-	@SerializedName("semesters")
-	private FlatSemesters semesters;
+	@SerializedName("semester")
+	private FlatTerms semester;
 	@SerializedName("studyGroup")
 	private StudyGroupVo studyGroup;
 	@SerializedName("eventWeek")
@@ -397,7 +398,7 @@ public class FlatDataStructure implements Parcelable {
 	@Override
 	public final String toString() {
 		return this.getCourse().getTitle() + "-->"
-				+ this.getSemesters().getTitle() + "-->"
+				+ this.getSemester().getTitle() + "-->"
 				+ this.getStudyGroup().getTitle() + "-->"
 				+ this.getEventWeek().getWeekInYear() + "-->"
 				+ this.getEventDay().getDayInWeek() + "-->"

@@ -63,7 +63,7 @@ public class TimeTableView extends LinearLayout {
 
         mSemesterPicker.setFragmentManager(_Manager);
         mSemesterPicker.toggleEnabled(false);
-        mSemesterPicker.setOnItemChosenListener(mSemesterListener);
+        mSemesterPicker.setOnItemChosenListener(mTermsListener);
 
         mStudyGroupPicker.setFragmentManager(_Manager);
         mStudyGroupPicker.toggleEnabled(false);
@@ -80,7 +80,7 @@ public class TimeTableView extends LinearLayout {
         mStudyCoursePicker.toggleEnabled(true);
     }
 
-    public void setSemesterItems(final List<SemesterVo> _Items) {
+    public void setTermsItems(final List<SemesterVo> _Items) {
         mSemesterPicker.setItems(_Items);
         mSemesterPicker.toggleEnabled(true);
     }
@@ -90,7 +90,7 @@ public class TimeTableView extends LinearLayout {
         mStudyGroupPicker.toggleEnabled(true);
     }
 
-    public void toggleSemesterPickerVisibility(final boolean _Visible) {
+    public void toggleTermsPickerVisibility(final boolean _Visible) {
         mSemesterPicker.setVisibility(_Visible ? VISIBLE : GONE);
     }
 
@@ -98,7 +98,7 @@ public class TimeTableView extends LinearLayout {
         mStudyGroupPicker.setVisibility(_Visible ? VISIBLE : GONE);
     }
 
-    public void resetSemesterPicker() {
+    public void resetTermsPicker() {
         mSemesterPicker.reset(true);
     }
 
@@ -136,18 +136,18 @@ public class TimeTableView extends LinearLayout {
         mSearchButton      = (Button)            findViewById(R.id.timetableSearchButton);
     }
 
-    // Returns the chosen SemesterId
+    // Returns the chosen TermsId
     private final OnItemChosenListener mCourseListener = new OnItemChosenListener() {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
-                mViewListener.onSemesterChosen(_ItemId);
+                mViewListener.onTermChosen(_ItemId);
             }
         }
     };
 
     // Returns the GroupId
-    private final OnItemChosenListener mSemesterListener = new OnItemChosenListener() {
+    private final OnItemChosenListener mTermsListener = new OnItemChosenListener() {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
@@ -176,7 +176,7 @@ public class TimeTableView extends LinearLayout {
     };
 
     public interface IViewListener {
-        void onSemesterChosen(String _SemesterId);
+        void onTermChosen(String _TermId);
         void onGroupChosen(String _GroupId);
         void onTimeTableChosen(String _TimeTableId);
         void onSearchClicked();
@@ -185,7 +185,7 @@ public class TimeTableView extends LinearLayout {
     private IViewListener     mViewListener;
 
     private StudyCoursePicker mStudyCoursePicker;
-    private SemesterPicker    mSemesterPicker;
+    private SemesterPicker mSemesterPicker;
     private StudyGroupPicker  mStudyGroupPicker;
 
     private SwitchCompat      mRememberSwitch;

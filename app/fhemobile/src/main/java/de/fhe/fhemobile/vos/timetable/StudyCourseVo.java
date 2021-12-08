@@ -104,7 +104,7 @@ public class StudyCourseVo implements Parcelable {
     @SerializedName("title")
     private String              mTitle;
 
-    @SerializedName("semesters")
+    @SerializedName("terms")
     private ArrayList<SemesterVo> mSemesters;
 
     @Override

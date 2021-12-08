@@ -26,25 +26,25 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by paul on 12.03.15.
  */
-public class FlatSemesters implements Parcelable {
+public class FlatTerms implements Parcelable {
 
-    public FlatSemesters() {
+    public FlatTerms() {
     }
 
-    FlatSemesters(Parcel in) {
+    FlatTerms(Parcel in) {
         mId = in.readString();
         mTitle = correctUmlauts(in.readString());
     }
 
-    public static final Creator<FlatSemesters> CREATOR = new Creator<FlatSemesters>() {
+    public static final Creator<FlatTerms> CREATOR = new Creator<FlatTerms>() {
         @Override
-        public FlatSemesters createFromParcel(Parcel in) {
-            return new FlatSemesters(in);
+        public FlatTerms createFromParcel(Parcel in) {
+            return new FlatTerms(in);
         }
 
         @Override
-        public FlatSemesters[] newArray(int size) {
-            return new FlatSemesters[size];
+        public FlatTerms[] newArray(int size) {
+            return new FlatTerms[size];
         }
     };
 
