@@ -12,9 +12,11 @@
         android:id="@+id/navigation_dialog_tablayout"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:background="@color/color_primary"
-        app:tabSelectedTextColor="@android:color/white"
-        app:tabTextColor="@android:color/black">
+        android:background="@color/tablayout_background"
+        app:tabSelectedTextColor="@color/tablayout_selected_text"
+        app:tabIndicatorColor="@color/tablayout_indicator"
+        app:tabTextColor="@color/tablayout_text"
+        app:tabTextAppearance="@style/TabLayoutStyle">
 
     </com.google.android.material.tabs.TabLayout>
 

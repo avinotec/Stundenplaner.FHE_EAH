@@ -51,4 +51,13 @@
     <color name="list_header_text">@color/primary_color</color>
     <color name="list_header_background">#12009990</color>
     
+    <!--Navigation Dialog-->
+    
+    <color name="tablayout_text">#50009990</color>
+    <color name="tablayout_selected_text">#000000</color>
+    <color name="tablayout_indicator">@color/primary_color</color>
+    <color name="tablayout_background">#20009990</color>
+
+    <color name="text_color">#000000</color>
+    
 </resources>

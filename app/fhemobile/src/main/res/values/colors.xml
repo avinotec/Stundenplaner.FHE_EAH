@@ -43,12 +43,4 @@
 
     <color name="background">#FFFFFF</color>
 
-
-    <!--    Campus Navigation -->
-
-    <color name="color_primary">#008577</color>
-    <color name="color_primary_dark">#00574B</color>
-    <color name="color_accent">#03DAC5</color>
-    <color name="text_color">#000000</color>
-
 </resources>
