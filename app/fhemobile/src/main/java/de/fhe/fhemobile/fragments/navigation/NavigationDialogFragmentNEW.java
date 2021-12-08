@@ -41,6 +41,7 @@ public class NavigationDialogFragmentNEW extends FeatureFragment {
 
     private Room[] rooms;
 
+
     //Constants
     private static final String TAG = "NavigDialogFragment"; //$NON-NLS
 

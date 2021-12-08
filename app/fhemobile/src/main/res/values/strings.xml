@@ -106,7 +106,6 @@
     <string name="text_view_by_room">Room:</string>
     <string name="text_view_by_name">Person:</string>
     <string name="text_view_button_start_location">Your current position:</string>
-    <!-- string name="action_language">Language</string -->
     <string name="select_from_spinner">Please select</string>
     <string name="campus_overview">Campus Overview</string>
     <string name="building_03_02_01">Building 3, 2 and 1</string>
@@ -134,6 +133,12 @@
     <string name="building_05_floor_03">Building 5: 3rd floor</string>
     <string name="building_05_floor_3Z">Building 5: 3rd floor, level Z</string>
     <string name="button_location_text">Search</string>
+    <string name="tablayout_tabtext_roomsearch">Room Search</string>
+    <string name="tablayout_tabtext_personsearch">Person Search</string>
+    <string name="navigation_dialog_headline">Please select your destination.</string>
+    <string name="navigation_dialog_building">Building</string>
+    <string name="navigation_dialog_floor">Floor</string>
+    <string name="navigation_dialog_room">Room</string>
     <string name="hint_search_room">xx.xx.xx</string>
     <string name="error_message_room_input">Room not found!</string>
     <string name="text_view_button_destination_location">Your destination:</string>
@@ -147,7 +152,6 @@
     <string name="maps_up" >One floor up</string>
     <string name="maps_down" >One floor down</string>
 	<string name="today">Today</string>
-
 
 
 

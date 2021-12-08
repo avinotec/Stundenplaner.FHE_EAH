@@ -146,7 +146,12 @@
     <string name="text_view_oder">oder</string>
     <string name="role">Aufgabe</string>
 	<string name="today">Heute</string>
-
+    <string name="tablayout_tabtext_roomsearch">Raumsuche</string>
+    <string name="tablayout_tabtext_personsearch">Personensuche</string>
+    <string name="navigation_dialog_building">Haus</string>
+    <string name="navigation_dialog_floor">Etage</string>
+    <string name="navigation_dialog_room">Raum</string>
+    <string name="navigation_dialog_headline">Bitte wähle dein Ziel.</string>
 
 
 </resources>

@@ -63,4 +63,12 @@ public class Room extends Cell{
         return roomName;
     }
 
+    /**
+     * Returns the ID of the room which equals the roomname
+     * @return id of the room
+     */
+    public String getId(){
+        return getRoomName();
+    }
+
 }

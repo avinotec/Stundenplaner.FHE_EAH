@@ -1,3 +1,20 @@
+/*
+ *  Copyright (c) 2019-2021 Ernst-Abbe-Hochschule Jena
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package de.fhe.fhemobile.fragments.navigation;
 
 import android.os.Bundle;
@@ -8,13 +25,14 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.fragments.FeatureFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link RoomSearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RoomSearchFragment extends Fragment {
+public class RoomSearchFragment extends FeatureFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,4 +80,6 @@ public class RoomSearchFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_room_search, container, false);
     }
+
+
 }
