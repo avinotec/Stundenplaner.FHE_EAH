@@ -8,30 +8,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/navigationDialogTablayout"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:background="@color/tablayout_background"
+        app:tabSelectedTextColor="@color/tablayout_selected_text"
+        app:tabIndicatorColor="@color/tablayout_indicator"
+        app:tabTextColor="@color/tablayout_text"
+        app:tabTextAppearance="@style/TabLayoutStyle">
 
+    </com.google.android.material.tabs.TabLayout>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/navigationDialogTablayout"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:background="@color/tablayout_background"
-            app:tabSelectedTextColor="@color/tablayout_selected_text"
-            app:tabIndicatorColor="@color/tablayout_indicator"
-            app:tabTextColor="@color/tablayout_text"
-            app:tabTextAppearance="@style/TabLayoutStyle">
-
-        </com.google.android.material.tabs.TabLayout>
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/navigationDialogViewpager"
-            android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:layoutDirection="rtl"/>
-
-    </ScrollView>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/navigationDialogViewpager"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:layoutDirection="rtl"/>
 
 
 

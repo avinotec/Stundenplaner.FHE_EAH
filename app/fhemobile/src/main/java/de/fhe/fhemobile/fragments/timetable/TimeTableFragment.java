@@ -70,7 +70,7 @@ public class TimeTableFragment extends FeatureFragment {
         super.onCreate(savedInstanceState);
 
         mChosenCourse       = null;
-        mChosenTerm         = null;
+        mChosenSemester = null;
         mChosenTimetableId  = null;
 
 //        if (getArguments() != null) {
@@ -101,25 +101,25 @@ public class TimeTableFragment extends FeatureFragment {
 
     private final TimeTableView.IViewListener mViewListener = new TimeTableView.IViewListener() {
         @Override
-        public void onTermChosen(String _TermId) {
+        public void onStudyCourseChosen(String _SemesterId) {
             mView.toggleGroupsPickerVisibility(false);
             mView.toggleButtonEnabled(false);
-            mView.resetTermsPicker();
+            mView.resetSemesterPicker();
             mView.resetGroupsPicker();
 
             mChosenCourse = null;
-            mChosenTerm   = null;
+            mChosenSemester = null;
 
             boolean errorOccurred = false;
 
             for (StudyCourseVo courseVo : mResponse.getStudyCourses()) {
-                if (courseVo.getId() != null && courseVo.getId().equals(_TermId)) {
+                if (courseVo.getId() != null && courseVo.getId().equals(_SemesterId)) {
                     mChosenCourse = courseVo;
 
                     // Check if course has any terms available
                     if (courseVo.getSemesters() != null) {
                         errorOccurred = false;
-                        mView.setTermsItems(courseVo.getSemesters());
+                        mView.setSemesterItems(courseVo.getSemesters());
                     }
                     else {
                         // No terms are available
@@ -134,33 +134,37 @@ public class TimeTableFragment extends FeatureFragment {
             }
 
             if (errorOccurred) {
-                mView.toggleTermsPickerVisibility(false);
+                mView.toggleSemesterPickerVisibility(false);
                 Utils.showToast(R.string.timetable_error);
             }
             else {
-                mView.toggleTermsPickerVisibility(true);
+                mView.toggleSemesterPickerVisibility(true);
             }
 
         }
 
         @Override
-        public void onGroupChosen(String _GroupId) {
+        public void onSemesterChosen(String _GroupId) {
             mView.toggleGroupsPickerVisibility(true);
             mView.toggleButtonEnabled(false);
             mView.resetGroupsPicker();
 
-            mChosenTerm = null;
+            mChosenSemester = null;
 
             for (SemesterVo semesterVo : mChosenCourse.getSemesters()) {
                 if (semesterVo.getId().equals(_GroupId)) {
-                    mChosenTerm = semesterVo;
+                    mChosenSemester = semesterVo;
                     mView.setStudyGroupItems(semesterVo.getStudyGroups());
                 }
             }
         }
 
+        /**
+         * Choosing the group determines the timetable
+         * @param _TimeTableId
+         */
         @Override
-        public void onTimeTableChosen(String _TimeTableId) {
+        public void onGroupChosen(String _TimeTableId) {
             mView.toggleButtonEnabled(true);
             mChosenTimetableId = _TimeTableId;
         }
@@ -175,7 +179,7 @@ public class TimeTableFragment extends FeatureFragment {
 
                 mChosenTimetableId = null;
                 mChosenCourse = null;
-                mChosenTerm = null;
+                mChosenSemester = null;
             }
             else {
                 Utils.showToast(R.string.timetable_error_incomplete);
@@ -202,6 +206,6 @@ public class TimeTableFragment extends FeatureFragment {
 
     private TimeTableResponse mResponse;
     private StudyCourseVo     mChosenCourse;
-    private SemesterVo mChosenTerm;
+    private SemesterVo        mChosenSemester;
     private String            mChosenTimetableId;
 }

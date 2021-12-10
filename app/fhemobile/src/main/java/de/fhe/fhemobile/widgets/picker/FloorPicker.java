@@ -20,7 +20,6 @@ package de.fhe.fhemobile.widgets.picker;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.fhe.fhemobile.widgets.picker.base.IdPicker;
@@ -46,7 +45,7 @@ public class FloorPicker extends IdPicker {
 
     @Override
     protected String getName(int _Position) {
-        return mItems.get(_Position).toString();
+        return String.format("%02d", Integer.parseInt(mItems.get(_Position).toString()));
     }
 
     @Override

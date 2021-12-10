@@ -60,6 +60,7 @@ public class Building {
         return mBuilding;
     }
 
+
     /**
      * Returns ID of the building which equals the string (e.g. "-1", "01", "04, ...)
      * @return id of the building

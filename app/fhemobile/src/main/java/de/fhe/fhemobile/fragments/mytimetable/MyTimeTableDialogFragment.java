@@ -358,7 +358,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                     for (StudyGroupVo studyGroupVo : mChosenSemester.getStudyGroups()) {
                         FlatDataStructure data = new FlatDataStructure()
                                 .setCourse(mChosenCourse)
-                                .setSemesters(mChosenSemester)
+                                .setSemester(mChosenSemester)
                                 .setStudyGroup(studyGroupVo);
 
 

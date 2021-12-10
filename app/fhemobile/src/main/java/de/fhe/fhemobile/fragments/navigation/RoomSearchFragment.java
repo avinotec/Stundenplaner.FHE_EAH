@@ -24,6 +24,9 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
@@ -37,13 +40,15 @@ import de.fhe.fhemobile.views.navigation.RoomSearchView;
  * A simple {@link Fragment} subclass.
  * Use the {@link RoomSearchFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
+ * created by Nadja
  */
 public class RoomSearchFragment extends FeatureFragment {
 
     private RoomSearchView mView;
 
     private Room mChosenRoom;
-    private Building mChosenBuilding;
+    private String mChosenBuilding;
     private String mChosenFloor;
 
 
@@ -79,6 +84,15 @@ public class RoomSearchFragment extends FeatureFragment {
         mView.setViewListener(mViewListener);
         mView.initializeView(getChildFragmentManager());
 
+        //set items of building picker
+        List<Building> buildings = new ArrayList<>();
+        buildings.add(new Building("01"));
+        buildings.add(new Building("03"));
+        buildings.add(new Building("02"));
+        buildings.add(new Building("04"));
+        buildings.add(new Building("05"));
+        mView.setBuildingItems(buildings);
+
         return mView;
     }
 
@@ -88,33 +102,43 @@ public class RoomSearchFragment extends FeatureFragment {
         //todo: fetch last input from shared-preferences
     }
 
+//    private void proceedToNavigation(String _roomId){
+//        ((MainActivity) getActivity()).changeFragment(...., true);
+//    }
+
 
     private final RoomSearchView.IViewListener mViewListener = new RoomSearchView.IViewListener() {
         @Override
-        public void onBuildingSelected(String _building) {
+        public void onBuildingChosen(String _building) {
             mView.toggleFloorPickerVisibility(true);
+            mView.toggleRoomPickerVisibility(false);
             mView.resetBuildingPicker();
             mView.resetFloorPicker();
             mView.resetRoomPicker();
 
-            mChosenBuilding = null;
+            mChosenFloor = null;
             mChosenRoom = null;
 
             //check if building has any rooms
             boolean buildingValid = false;
+            List<Integer> floors = new ArrayList<>();
             if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
             for(Room room : MainActivity.rooms){
                 if(room.getBuilding() != null && room.getBuilding().equals(_building)){
-                    //todo: set floor picker items
+
+                    //add floor to floor picker items if not yet contained
+                    if(!floors.contains(room.getFloorInt())){
+                        floors.add(room.getFloorInt());
+                    }
+
                     buildingValid = true;
-                    break;
                 }
             }
 
-            //if building has rooms then enable the floor picker
+            //if building has rooms then enable the floor picker and set its items
             if (buildingValid) {
-                mChosenBuilding = new Building(_building);
-
+                mChosenBuilding = _building;
+                mView.setFloorItems(floors);
                 mView.toggleFloorPickerVisibility(true);
             } else {
                 Utils.showToast(R.string.navigation_dialog_empty_building);
@@ -123,7 +147,7 @@ public class RoomSearchFragment extends FeatureFragment {
         }
 
         @Override
-        public void onFloorSelected(String _floor) {
+        public void onFloorChosen(String _floor) {
             mView.toggleFloorPickerVisibility(true);
             mView.resetFloorPicker();
             mView.resetRoomPicker();
@@ -132,18 +156,23 @@ public class RoomSearchFragment extends FeatureFragment {
 
             //check if floor has any rooms
             boolean floorValid = false;
+            List<Room> rooms = new ArrayList<>();
             if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
+
             for(Room room : MainActivity.rooms){
-                if(room.getFloorString() != null && room.getFloorString().equals(_floor)){
+
+                //String _floor is a single digit "-1" or "3" --> treat as integer
+                if(room.getBuilding().equals(mChosenBuilding)
+                        && room.getFloorInt() == Integer.parseInt(_floor)){
                     floorValid = true;
-                    //todo: set room picker items
-                    break;
+                    rooms.add(room);
                 }
             }
 
             //if floor has rooms then enable the room picker
             if (floorValid) {
                 mChosenFloor = _floor;
+                mView.setRoomItems(rooms);
                 mView.toggleRoomPickerVisibility(true);
             } else {
                 Utils.showToast(R.string.navigation_dialog_empty_building);
@@ -152,9 +181,8 @@ public class RoomSearchFragment extends FeatureFragment {
         }
 
         @Override
-        public void onRoomSelected(String _room) {
+        public void onRoomChosen(String _room) {
             mView.toggleRoomPickerVisibility(true);
-            mView.resetRoomPicker();
 
             //search for room object
             if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(getContext());

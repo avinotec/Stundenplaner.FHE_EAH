@@ -42,7 +42,6 @@ public class RoomSearchView extends LinearLayout {
 
     public RoomSearchView(final Context context, final AttributeSet attrs){ super(context, attrs); }
 
-
     public RoomSearchView(final Context context){ super(context); }
 
     public void setViewListener(final IViewListener _Listener){
@@ -88,6 +87,8 @@ public class RoomSearchView extends LinearLayout {
                 return o1.getRoomName().compareTo(o2.getRoomName());
             }
         });
+        mRoomPicker.setItems(_Items);
+        mRoomPicker.toggleEnabled(true);
     }
 
     public void toggleFloorPickerVisibility(final boolean _Visible){
@@ -109,9 +110,9 @@ public class RoomSearchView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mBuildingPicker = (BuildingPicker) findViewById(R.id.navigationPickerBuilding);
-        mFloorPicker = (FloorPicker) findViewById(R.id.navigationPickerFloor);
-        mRoomPicker = (RoomPicker) findViewById(R.id.navigationPickerRoom);
+        mBuildingPicker = (BuildingPicker)  findViewById(R.id.navigationPickerBuilding);
+        mFloorPicker    = (FloorPicker)     findViewById(R.id.navigationPickerFloor);
+        mRoomPicker     = (RoomPicker)      findViewById(R.id.navigationPickerRoom);
     }
 
     //Returns the selected building
@@ -119,7 +120,7 @@ public class RoomSearchView extends LinearLayout {
         @Override
         public void onItemChosen(String _ItemId, int _ItemPos) {
             if (mViewListener != null){
-                mViewListener.onBuildingSelected(_ItemId);
+                mViewListener.onBuildingChosen(_ItemId);
             }
         }
     };
@@ -129,7 +130,7 @@ public class RoomSearchView extends LinearLayout {
         @Override
         public void onItemChosen(String _ItemId, int _ItemPos) {
             if (mViewListener != null){
-                mViewListener.onFloorSelected(_ItemId);
+                mViewListener.onFloorChosen(_ItemId);
             }
         }
     };
@@ -139,21 +140,21 @@ public class RoomSearchView extends LinearLayout {
         @Override
         public void onItemChosen(String _ItemId, int _ItemPos) {
             if (mViewListener != null){
-                mViewListener.onRoomSelected(_ItemId);
+                mViewListener.onRoomChosen(_ItemId);
             }
         }
     };
 
 
     public interface IViewListener{
-        void onBuildingSelected(String _building);
-        void onFloorSelected(String _floor);
-        void onRoomSelected(String _room);
+        void onBuildingChosen(String _building);
+        void onFloorChosen(String _floor);
+        void onRoomChosen(String _room);
     }
 
-    private IViewListener mViewListener;
-    private BuildingPicker mBuildingPicker;
-    private FloorPicker mFloorPicker;
-    private RoomPicker mRoomPicker;
+    private IViewListener   mViewListener;
+    private BuildingPicker  mBuildingPicker;
+    private FloorPicker     mFloorPicker;
+    private RoomPicker      mRoomPicker;
 
 }
