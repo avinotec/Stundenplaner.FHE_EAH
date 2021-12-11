@@ -61,7 +61,7 @@ def generateJson(csv_reader, building, floor):
                 roomnumber = row[x]
                 room = { "roomNumber": roomnumber, "building": building, "floor": floornumber,
             	            "persons": [],
-                            "qrCode": building + floor + roomnumber,
+                            "qrCode": "https://www.eah-jena.de/navigation?qr="+ building +"."+ floor +"."+ roomnumber,
                             "xCoordinate": x, "yCoordinate": y,
                             "walkable": True 
                         }
