@@ -99,11 +99,38 @@ public class RoomSearchView extends LinearLayout {
         mRoomPicker.setVisibility(_Visible ? VISIBLE : GONE);
     }
 
+    /**
+     * Reset Building Picker to "please select"
+     */
     public void resetBuildingPicker(){ mBuildingPicker.reset(true);}
 
+    /**
+     * Reset Floor Picker to "please select"
+     */
     public void resetFloorPicker(){ mFloorPicker.reset(true);}
 
+    /**
+     * Reset Room Picker to "please select"
+     */
     public void resetRoomPicker(){ mRoomPicker.reset(true);}
+
+    /**
+     * Set displayed value of the Building Picker
+     * @param text to display
+     */
+    public void setBuildingDisplayValue(String text){ mBuildingPicker.setDisplayValue(text); }
+
+    /**
+     * Set displayed value of the Floor Picker
+     * @param text to display
+     */
+    public void setFloorDisplayValue(String text){ mFloorPicker.setDisplayValue(text);}
+
+    /**
+     * Set displayed value of the Room Picker
+     * @param text to display
+     */
+    public void setRoomDisplayValue(String text){ mRoomPicker.setDisplayValue(text);}
 
 
     @Override

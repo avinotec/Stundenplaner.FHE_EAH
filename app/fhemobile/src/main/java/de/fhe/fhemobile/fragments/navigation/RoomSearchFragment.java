@@ -17,6 +17,8 @@
 
 package de.fhe.fhemobile.fragments.navigation;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,9 +26,12 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
@@ -45,11 +50,14 @@ import de.fhe.fhemobile.views.navigation.RoomSearchView;
  */
 public class RoomSearchFragment extends FeatureFragment {
 
+    @NonNls
+    public static final String PREFS_NAVIGATION_ROOM_CHOICE = "room";
+
     private RoomSearchView mView;
 
-    private Room mChosenRoom;
     private String mChosenBuilding;
     private String mChosenFloor;
+    private Room mChosenRoom;
 
 
     /**
@@ -72,6 +80,8 @@ public class RoomSearchFragment extends FeatureFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mChosenBuilding = null;
+        mChosenFloor = null;
         mChosenRoom = null;
 
     }
@@ -99,7 +109,29 @@ public class RoomSearchFragment extends FeatureFragment {
     @Override
     public void onResume() {
         super.onResume();
-        //todo: fetch last input from shared-preferences
+        SharedPreferences mSP = Main.getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        String previousRoomChoice = mSP.getString(PREFS_NAVIGATION_ROOM_CHOICE, "");
+        if(!previousRoomChoice.equals("")){
+            for (Room room : MainActivity.rooms){
+                if(previousRoomChoice.equals(room.getRoomName())){
+                    mChosenBuilding = room.getBuilding();
+                    mChosenFloor = room.getFloorString();
+                    mChosenRoom = room;
+
+                    mView.toggleFloorPickerVisibility(true);
+                    mView.toggleRoomPickerVisibility(true);
+
+                    mView.setBuildingDisplayValue(mChosenBuilding);
+                    mView.setFloorDisplayValue(mChosenFloor);
+                    mView.setRoomDisplayValue(mChosenRoom.getRoomName());
+                }
+            }
+        } else{
+            mChosenBuilding = null;
+            mChosenFloor = null;
+            mChosenRoom = null;
+        }
+
     }
 
 //    private void proceedToNavigation(String _roomId){
@@ -110,9 +142,7 @@ public class RoomSearchFragment extends FeatureFragment {
     private final RoomSearchView.IViewListener mViewListener = new RoomSearchView.IViewListener() {
         @Override
         public void onBuildingChosen(String _building) {
-            mView.toggleFloorPickerVisibility(true);
             mView.toggleRoomPickerVisibility(false);
-            mView.resetBuildingPicker();
             mView.resetFloorPicker();
             mView.resetRoomPicker();
 
@@ -148,8 +178,7 @@ public class RoomSearchFragment extends FeatureFragment {
 
         @Override
         public void onFloorChosen(String _floor) {
-            mView.toggleFloorPickerVisibility(true);
-            mView.resetFloorPicker();
+            mView.toggleFloorPickerVisibility(true);;
             mView.resetRoomPicker();
 
             mChosenRoom = null;
@@ -189,6 +218,11 @@ public class RoomSearchFragment extends FeatureFragment {
             for(Room room : MainActivity.rooms){
                 if(room.getRoomName() != null && room.getRoomName().equals(_room)){
                     mChosenRoom = room;
+
+                    final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(PREFS_NAVIGATION_ROOM_CHOICE, mChosenRoom.getRoomName());
+                    editor.apply();
                     break;
                 }
             }
