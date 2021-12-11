@@ -135,11 +135,14 @@
     <string name="button_location_text">Search</string>
     <string name="tablayout_tabtext_roomsearch">Room Search</string>
     <string name="tablayout_tabtext_personsearch">Person Search</string>
-    <string name="navigation_dialog_headline">Please select your destination.</string>
+    <string name="navigation_dialog_headline_destination">Select your destination.</string>
+    <string name="navigation_dialog_headline_start">Enter your current position.</string>
+    <string name="navigation_dialog_button">Go!</string>
+    <string name="navigation_dialog_button_qr">Scan QR code</string>
     <string name="navigation_dialog_building">Building</string>
     <string name="navigation_dialog_floor">Floor</string>
     <string name="navigation_dialog_room">Room</string>
-    <string name="hint_search_room">xx.xx.xx</string>
+    <string name="navigation_input_start_hint">room number (xx.xx.xx)</string>
     <string name="error_message_room_input">Room not found!</string>
     <string name="text_view_button_destination_location">Your destination:</string>
     <string name="btn_location_qr_code">QR-Code</string>
@@ -153,6 +156,7 @@
     <string name="maps_down" >One floor down</string>
 	<string name="today">Today</string>
     <string name="navigation_dialog_empty_building">No rooms here.</string>
+
 
 
 </resources>
