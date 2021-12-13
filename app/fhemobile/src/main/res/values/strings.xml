@@ -138,6 +138,7 @@
     <string name="navigation_dialog_headline_destination">Select your destination.</string>
     <string name="navigation_dialog_headline_start">Enter your current position.</string>
     <string name="navigation_dialog_button">Go!</string>
+    <string name="error_message_no_room_input">No room entered!</string>
     <string name="navigation_dialog_button_qr">Scan QR code</string>
     <string name="navigation_dialog_building">Building</string>
     <string name="navigation_dialog_floor">Floor</string>
@@ -156,7 +157,7 @@
     <string name="maps_down" >One floor down</string>
 	<string name="today">Today</string>
     <string name="navigation_dialog_empty_building">No rooms here.</string>
-
+    <string name="error_message_room_input_invalid">Room not found!</string>
 
 
 </resources>

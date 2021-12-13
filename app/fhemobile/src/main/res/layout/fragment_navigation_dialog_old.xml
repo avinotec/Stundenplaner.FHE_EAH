@@ -165,7 +165,7 @@
                 android:id="@+id/input_field_search_destination_room_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_search_room"
+                android:hint="@string/navigation_input_start_hint"
                 app:errorEnabled="true"
                 android:layout_marginHorizontal="40dp"
                 app:layout_constraintBottom_toTopOf="@id/group_enter_position"
@@ -206,20 +206,20 @@
                     android:textSize="@dimen/text_size_header"
                     android:textStyle="bold"
                     android:layout_marginTop="@dimen/margin_bottom_explanation_text"
-                    app:layout_constraintBottom_toTopOf="@id/input_field_search_start_room_layout" />
+                    app:layout_constraintBottom_toTopOf="@id/navigation_input_start" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/input_field_search_start_room_layout"
+                    android:id="@+id/navigation_input_start"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/hint_search_room"
+                    android:hint="@string/navigation_input_start_hint"
                     app:errorEnabled="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_view_start_location">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/input_field_search_start_room_edit"
+                        android:id="@+id/navigation_input_edittext_start"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionSearch"
@@ -237,7 +237,7 @@
                     android:textSize="@dimen/text_size_header"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/input_field_search_start_room_layout" />
+                    app:layout_constraintTop_toBottomOf="@id/navigation_input_start" />
 
             </LinearLayout>
 

@@ -95,7 +95,7 @@ public class NavigationDialogFragmentOLD extends FeatureFragment implements View
                              final Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        mView = inflater.inflate(R.layout.fragment_navigation_dialog, container, false);
+        mView = inflater.inflate(R.layout.fragment_navigation_dialog_old, container, false);
 
         loadRoomNamesAndPersons();
 
@@ -106,8 +106,8 @@ public class NavigationDialogFragmentOLD extends FeatureFragment implements View
 
 
         //Start location input field
-        startLocationDisplayedErrorText = mView.findViewById(R.id.input_field_search_start_room_layout);
-        startLocationInputText = mView.findViewById(R.id.input_field_search_start_room_edit);
+        startLocationDisplayedErrorText = mView.findViewById(R.id.navigation_input_layout_start);
+        startLocationInputText = mView.findViewById(R.id.navigation_input_edittext_start);
         startLocationInputText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(final TextView textView, final int actionId, final KeyEvent keyEvent) {

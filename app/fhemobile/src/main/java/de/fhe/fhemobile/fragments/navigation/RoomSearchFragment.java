@@ -57,7 +57,9 @@ public class RoomSearchFragment extends FeatureFragment {
 
     private String mChosenBuilding;
     private String mChosenFloor;
+    // destination and start room
     private Room mChosenRoom;
+    private Room mStartRoom;
 
 
     /**
@@ -76,6 +78,7 @@ public class RoomSearchFragment extends FeatureFragment {
     public RoomSearchFragment() {
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,12 +86,14 @@ public class RoomSearchFragment extends FeatureFragment {
         mChosenBuilding = null;
         mChosenFloor = null;
         mChosenRoom = null;
-
+        mStartRoom = null;
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         mView = (RoomSearchView) inflater.inflate(R.layout.fragment_room_search, container, false);
         mView.setViewListener(mViewListener);
@@ -105,6 +110,7 @@ public class RoomSearchFragment extends FeatureFragment {
 
         return mView;
     }
+
 
     @Override
     public void onResume() {
@@ -126,7 +132,7 @@ public class RoomSearchFragment extends FeatureFragment {
                     mView.setRoomDisplayValue(mChosenRoom.getRoomName());
                 }
             }
-        } else{
+        } else {
             mChosenBuilding = null;
             mChosenFloor = null;
             mChosenRoom = null;
@@ -134,15 +140,17 @@ public class RoomSearchFragment extends FeatureFragment {
 
     }
 
-//    private void proceedToNavigation(String _roomId){
+    private void proceedToNavigation(Room roomStart, Room roomDest){
+        //todo
 //        ((MainActivity) getActivity()).changeFragment(...., true);
-//    }
+    }
 
 
     private final RoomSearchView.IViewListener mViewListener = new RoomSearchView.IViewListener() {
         @Override
         public void onBuildingChosen(String _building) {
             mView.toggleRoomPickerVisibility(false);
+            mView.toggleGoButtonEnabled(false);
             mView.resetFloorPicker();
             mView.resetRoomPicker();
 
@@ -178,7 +186,8 @@ public class RoomSearchFragment extends FeatureFragment {
 
         @Override
         public void onFloorChosen(String _floor) {
-            mView.toggleFloorPickerVisibility(true);;
+            mView.toggleFloorPickerVisibility(true);
+            mView.toggleGoButtonEnabled(false);
             mView.resetRoomPicker();
 
             mChosenRoom = null;
@@ -212,20 +221,75 @@ public class RoomSearchFragment extends FeatureFragment {
         @Override
         public void onRoomChosen(String _room) {
             mView.toggleRoomPickerVisibility(true);
+            mView.toggleGoButtonEnabled(false);
 
             //search for room object
             if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
             for(Room room : MainActivity.rooms){
                 if(room.getRoomName() != null && room.getRoomName().equals(_room)){
+
                     mChosenRoom = room;
+                    mView.toggleGoButtonEnabled(true);
+                    mView.toggleStartInputCardVisibility(true);
 
                     final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString(PREFS_NAVIGATION_ROOM_CHOICE, mChosenRoom.getRoomName());
                     editor.apply();
+
                     break;
                 }
             }
         }
+
+
+        @Override
+        public void onQrClicked() {
+            //todo: open QrScanner
+        }
+
+        @Override
+        public void onGoClicked() {
+            if(mChosenRoom != null && validateStartInput()){
+                proceedToNavigation(mChosenRoom, mStartRoom);
+
+                mChosenRoom = null;
+                mChosenBuilding = null;
+                mChosenFloor = null;
+                mStartRoom = null;
+
+            } else {
+                Utils.showToast(R.string.timetable_error_incomplete);
+            }
+        }
     };
+
+    /**
+     * Checks if the room entered by the user as start is valid
+     * @return true if valid, false if invalid or input missing
+     */
+    private boolean validateStartInput(){
+
+        String input = mView.getStartInputText();
+
+        boolean valid = false;
+        //a room number has been entered
+        if(input != null){
+
+            //check room list for matching names
+            for (Room room : MainActivity.rooms){
+                if (room.getRoomName().equals(input)){
+                    valid = true;
+                }
+            }
+
+            if(!valid) mView.setInputErrorRoumNotFound();
+        }
+        //no start room input
+        else {
+            mView.setInputErrorNoInput();
+        }
+
+        return valid;
+    }
 }
