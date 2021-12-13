@@ -42,7 +42,7 @@ public class NavigationDialogView extends LinearLayout {
 
     private final Context mContext;
     // model for handling room list, person list and Vo (contains start and destination location,
-    // needed for transferring to NavigationActivity)
+    // needed for transferring to NavigationActivityOLD)
     private NavigationDialogModel mModel;
 
 
@@ -111,7 +111,7 @@ public class NavigationDialogView extends LinearLayout {
     private void startNavigationActivity(final String userInputStartLocation, final ArrayList<String> roomNames, final boolean skipScanner) {
 
         //todo: update to new NavigationDialog
-//        final Intent intentNavigationActivity = new Intent(getActivity(), NavigationActivity.class);
+//        final Intent intentNavigationActivity = new Intent(getActivity(), NavigationActivityOLD.class);
 //        intentNavigationActivity.putExtra("startLocation", userInputStartLocation);
 //        intentNavigationActivity.putExtra("destinationLocation", destinationQRCode);
 //        intentNavigationActivity.putExtra("rooms", roomsJson);

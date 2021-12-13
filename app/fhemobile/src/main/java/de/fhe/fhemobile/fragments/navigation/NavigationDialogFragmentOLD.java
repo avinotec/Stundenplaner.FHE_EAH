@@ -41,7 +41,7 @@ import java.util.Objects;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
-import de.fhe.fhemobile.activities.NavigationActivity;
+import de.fhe.fhemobile.activities.NavigationActivityOLD;
 import de.fhe.fhemobile.activities.ScannerActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.models.navigation.Room;
@@ -172,7 +172,7 @@ public class NavigationDialogFragmentOLD extends FeatureFragment implements View
     private void loadRoomNamesAndPersons(){
         //Get lists of rooms and names for spinners
         final JSONHandler jsonHandler = new JSONHandler();
-/*TODO loadRooms ist schon in NavigationActivity enthalten -> NavigationDialogFragmentOLD müsste die Raumliste dafür an Navigation Activity schicken
+/*TODO loadRooms ist schon in NavigationActivityOLD enthalten -> NavigationDialogFragmentOLD müsste die Raumliste dafür an Navigation Activity schicken
 ArrayList<Room> kann aber nicht per Intent versendet werden, da Room eine eigene Klasse ist und es keine String-Repräsentation gibt
 mögliche Lösung: Implementierung von Parcable nutzen (ähnlich bei Timetable -> s. TimeTableWeekVo etc.),
 könnte sein dass dann sowohl Room als auch die Arrayliste (z.B. als neue Klasse RoomListVo) beide Parcable implementieren müssen
@@ -443,7 +443,7 @@ andere aktuelle Lösung: json-String senden und zweimal in Rooms parsen
     private void startNavigationActivity(final String userInputStartLocation, final ArrayList<String> roomNames, final boolean skipScanner) {
 
         if(skipScanner){ //start location determined by user input
-            final Intent intentNavigationActivity = new Intent(getActivity(), NavigationActivity.class);
+            final Intent intentNavigationActivity = new Intent(getActivity(), NavigationActivityOLD.class);
             intentNavigationActivity.putExtra("startLocation", userInputStartLocation);
             intentNavigationActivity.putExtra("destinationLocation", destinationQRCode);
             intentNavigationActivity.putExtra("rooms", roomsJson);

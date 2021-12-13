@@ -105,7 +105,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 
             //If QR-Code is valid -> intent
             if (availableRoomsQRCodes.contains(startLocation)) {
-                Intent intentNavigationActivity = new Intent(getApplicationContext(), NavigationActivity.class);
+                Intent intentNavigationActivity = new Intent(getApplicationContext(), NavigationActivityOLD.class);
                 intentNavigationActivity.putExtra("startLocation", startLocation);
                 intentNavigationActivity.putExtra("destinationLocation", destinationQRCode);
                 intentNavigationActivity.putExtra("rooms", roomsJSON);

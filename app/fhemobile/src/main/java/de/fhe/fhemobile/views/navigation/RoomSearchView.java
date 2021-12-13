@@ -89,7 +89,7 @@ public class RoomSearchView extends LinearLayout {
      * Set error message that is displayed at the start input layout
      * Message: Room not found!
      */
-    public void setInputErrorRoumNotFound(){
+    public void setInputErrorRoomNotFound(){
         mStartInputLayout.setError(
                 getResources().getString(R.string.error_message_room_input_invalid));
     }

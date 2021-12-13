@@ -140,9 +140,9 @@ public class RoomSearchFragment extends FeatureFragment {
 
     }
 
-    private void proceedToNavigation(Room roomStart, Room roomDest){
-        //todo
-//        ((MainActivity) getActivity()).changeFragment(...., true);
+    private void proceedToNavigation(){
+        ((MainActivity) getActivity()).changeFragment(
+                new NavigationFragment().newInstance(mStartRoom, mChosenRoom), true);
     }
 
 
@@ -251,7 +251,7 @@ public class RoomSearchFragment extends FeatureFragment {
         @Override
         public void onGoClicked() {
             if(mChosenRoom != null && validateStartInput()){
-                proceedToNavigation(mChosenRoom, mStartRoom);
+                proceedToNavigation();
 
                 mChosenRoom = null;
                 mChosenBuilding = null;
@@ -283,7 +283,7 @@ public class RoomSearchFragment extends FeatureFragment {
                 }
             }
 
-            if(!valid) mView.setInputErrorRoumNotFound();
+            if(!valid) mView.setInputErrorRoomNotFound();
         }
         //no start room input
         else {

@@ -33,7 +33,7 @@ import de.fhe.fhemobile.vos.navigation.NavigationDialogVo;
 /**
  * Created by Nadja 02.12.2021
  */
-public class NavigationDialogFragmentNEW extends FeatureFragment {
+public class NavigationDialogFragment extends FeatureFragment {
 
     private NavigationDialogView mView = null;
     private NavigationDialogVo mVo;
@@ -43,12 +43,12 @@ public class NavigationDialogFragmentNEW extends FeatureFragment {
     private static final String TAG = "NavigDialogFragment"; //$NON-NLS
 
 
-    public NavigationDialogFragmentNEW(){
+    public NavigationDialogFragment(){
         // Required empty public constructor
     }
 
-    public static NavigationDialogFragmentNEW newInstance(){
-        NavigationDialogFragmentNEW fragment = new NavigationDialogFragmentNEW();
+    public static NavigationDialogFragment newInstance(){
+        NavigationDialogFragment fragment = new NavigationDialogFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -66,7 +66,7 @@ public class NavigationDialogFragmentNEW extends FeatureFragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        mView = (NavigationDialogView) inflater.inflate(R.layout.fragment_navigation_dialog_new,
+        mView = (NavigationDialogView) inflater.inflate(R.layout.fragment_navigation_dialog,
                 container,false);
 
         mView.initializeView(getChildFragmentManager(), getLifecycle());

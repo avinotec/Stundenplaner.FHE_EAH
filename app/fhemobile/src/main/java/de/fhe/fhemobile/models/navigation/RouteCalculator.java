@@ -15,7 +15,7 @@
  *
  */
 
-package de.fhe.fhemobile.utils.navigation;
+package de.fhe.fhemobile.models.navigation;
 
 
 import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_height;
@@ -31,11 +31,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import de.fhe.fhemobile.activities.MainActivity;
-import de.fhe.fhemobile.models.navigation.Cell;
-import de.fhe.fhemobile.models.navigation.Exit;
-import de.fhe.fhemobile.models.navigation.FloorConnection;
-import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
-import de.fhe.fhemobile.models.navigation.Room;
+import de.fhe.fhemobile.utils.navigation.AStar;
+import de.fhe.fhemobile.utils.navigation.JSONHandler;
 import de.fhe.fhemobile.utils.navigation.NavigationUtils.Complex;
 
 

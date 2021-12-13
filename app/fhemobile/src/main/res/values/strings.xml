@@ -158,6 +158,7 @@
 	<string name="today">Today</string>
     <string name="navigation_dialog_empty_building">No rooms here.</string>
     <string name="error_message_room_input_invalid">Room not found!</string>
+    <string name="navigation_button_prev_plan">Previous plan</string>
 
 
 </resources>

@@ -70,7 +70,7 @@ public class TimeTableFragment extends FeatureFragment {
         super.onCreate(savedInstanceState);
 
         mChosenCourse       = null;
-        mChosenSemester = null;
+        mChosenSemester     = null;
         mChosenTimetableId  = null;
     }
 

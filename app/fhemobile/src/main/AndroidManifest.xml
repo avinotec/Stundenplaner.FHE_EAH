@@ -142,7 +142,7 @@
                 android:value="de.fhe.fhemobile.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.NavigationActivity"
+            android:name=".activities.NavigationActivityOLD"
             android:label="@string/title_navigation_activity"
             android:parentActivityName=".activities.MainActivity">
             <meta-data

@@ -37,7 +37,7 @@ import de.fhe.fhemobile.utils.navigation.NavigationUtils.Complex;
 /**
  * Class for route calculation at a single floor using the A* algorithm
  */
-class AStar {
+public class AStar {
     //details of the A* algorithm -> see pseudocode at the english wikipedia page
 
     private static final String TAG = "AStar"; //$NON-NLS
@@ -68,9 +68,9 @@ class AStar {
      * @param endCell
      * @param floorCellGrids
      */
-    AStar(final Cell startCell, final Cell endCell,
-          final HashMap<Complex, HashMap<Integer, Cell[][]>> floorCellGrids,
-          final ArrayList<FloorConnection> floorConnections) {
+    public AStar(final Cell startCell, final Cell endCell,
+                 final HashMap<Complex, HashMap<Integer, Cell[][]>> floorCellGrids,
+                 final ArrayList<FloorConnection> floorConnections) {
         this.startCell = startCell;
         this.destCell = endCell;
         this.floorGrids = floorCellGrids;
@@ -82,7 +82,7 @@ class AStar {
      * Calculates the cells to walk from start to destination using the shortest path
      * @return List of cells to walk
      */
-    final ArrayList<Cell> getCellsToWalk() {
+    public final ArrayList<Cell> getCellsToWalk() {
 
         final ArrayList<Cell> cellsToWalk = new ArrayList<>();
 

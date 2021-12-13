@@ -53,17 +53,17 @@ import de.fhe.fhemobile.models.navigation.FloorConnection;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
 import de.fhe.fhemobile.models.navigation.Room;
 import de.fhe.fhemobile.utils.navigation.JSONHandler;
-import de.fhe.fhemobile.utils.navigation.RouteCalculator;
+import de.fhe.fhemobile.models.navigation.RouteCalculator;
 
 /**
  *  Activity for showing navigation route
  *  source: Bachelor Thesis from Tim Münziger from SS2020
  *  edit and integration: Nadja 09.2021
  */
-public class NavigationActivity extends BaseActivity {
+public class NavigationActivityOLD extends BaseActivity {
 
     //Constants
-    private static final String TAG = "NavigationActivity"; //$NON-NLS
+    private static final String TAG = "NavigationActivityOLD"; //$NON-NLS
     private static final String JUST_LOCATION = "location"; //$NON-NLS
 
 

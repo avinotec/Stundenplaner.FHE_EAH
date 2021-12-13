@@ -158,6 +158,7 @@
     <string name="navigation_dialog_button">Los!</string>
     <string name="error_message_no_room_input">Kein Raum eingegeben!</string>
     <string name="error_message_room_input_invalid">Raum nicht gefunden!</string>
+    <string name="navigation_button_prev_plan">Vorheriger Plan</string>
 
 
 </resources>
