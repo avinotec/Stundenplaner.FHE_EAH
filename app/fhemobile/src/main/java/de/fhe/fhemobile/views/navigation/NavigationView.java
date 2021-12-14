@@ -188,11 +188,9 @@ public class NavigationView extends LinearLayout {
 
     /**
      * Draw start location
-     * @param complex that is displayed (floorplan)
-     * @param floor that is displayed (floorplan)
      * @param startRoom start room of the route
      */
-    public void drawStartLocation(NavigationUtils.Complex complex, String floor, Room startRoom) {
+    public void drawStartLocation(Room startRoom) {
         try {
             //add start icon
             ImageView startIcon = new ImageView(getContext());
@@ -208,11 +206,9 @@ public class NavigationView extends LinearLayout {
 
     /**
      * Draw destination location
-     * @param complex that is displayed (floorplan)
-     * @param floor that is displayed (floorplan)
      * @param destRoom destination room of the route
      */
-    public void drawDestinationLocation(NavigationUtils.Complex complex, String floor, Room destRoom) {
+    public void drawDestinationLocation(Room destRoom) {
         try {
             //add destination icon
             ImageView destinationIcon = new ImageView(getContext());
@@ -299,17 +295,23 @@ public class NavigationView extends LinearLayout {
     }
 
     /**
-     * Make the Icon Picture fit exactly one cell
+     * Make the icon image fit exactly one cell
      * @param icon ImageView containing the icon (view must be added to parent view before calling)
      */
     private void fitOneCell(ImageView icon){
-        //set height and width of the ImageView
-        ViewGroup.LayoutParams layoutParams = icon.getLayoutParams();
-        layoutParams.height = (int) Math.round(cellHeight*0.95); //fill 95% of the cell
-        layoutParams.width = (int) Math.round(cellWidth*0.95);
-        icon.setLayoutParams(layoutParams);
-        //make picture fit image height and width (aspect ratio of the resource is not maintained -> width and height must be set properly)
-        icon.setScaleType(ImageView.ScaleType.FIT_XY);
+        //post-Method needed because otherwise icon is not really drawn yed and thus layoutParams are null
+        icon.post(new Runnable() {
+            @Override
+            public void run() {
+                //set height and width of the ImageView
+                ViewGroup.LayoutParams layoutParams = icon.getLayoutParams();
+                layoutParams.height = (int) Math.round(cellHeight*0.95); //fill 95% of the cell
+                layoutParams.width = (int) Math.round(cellWidth*0.95);
+                icon.setLayoutParams(layoutParams);
+                //make picture fit image height and width (aspect ratio of the resource is not maintained -> width and height must be set properly)
+                icon.setScaleType(ImageView.ScaleType.FIT_XY);
+            }
+        });
     }
 
 

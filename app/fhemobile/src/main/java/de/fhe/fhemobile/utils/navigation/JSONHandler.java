@@ -68,6 +68,7 @@ public class JSONHandler {
     public static final String NAVIGATION_FLOORCONNECTIONS = "floorconnections";
 
 
+    //reading --------------------------------------------------------------------------------------
     /**
      * Read floorplan as json from assets
      * @param context
@@ -132,6 +133,9 @@ public class JSONHandler {
         return text.toString();
     }
 
+
+    //parsing --------------------------------------------------------------------------------------
+
     /**
      *
      * @param json
@@ -174,7 +178,6 @@ public class JSONHandler {
         }
 
         return exits;
-
     }
 
 
@@ -290,6 +293,7 @@ public class JSONHandler {
         return walkableCells;
     }
 
+    //read, parse, save -------------------------------------------------------------------------------
     /**
      * Reads rooms from Assets and saves list to MainActivity.rooms
      * @param context

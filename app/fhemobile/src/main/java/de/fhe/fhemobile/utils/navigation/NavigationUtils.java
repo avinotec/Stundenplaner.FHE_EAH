@@ -74,7 +74,13 @@ public class NavigationUtils {
      * @return name of the floorplan file
      */
     private static String getFileNameOfFloorPlan(final Complex complex, final String floor){
-        String filename = "building_" + complex.toString() + "_floor_" + floor;
+
+        String floorCorrected;
+        if(floor.equals("-1")) floorCorrected = "ug1";
+        else if(floor.equals("-2")) floorCorrected = "ug2";
+        else floorCorrected = floor;
+
+        String filename = "building_" + complex.toString() + "_floor_" + floorCorrected;
 
         return filename;
     }

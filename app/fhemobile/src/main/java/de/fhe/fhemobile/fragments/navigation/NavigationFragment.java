@@ -211,12 +211,12 @@ public class NavigationFragment extends FeatureFragment {
 
         if(mStartRoom.getComplex().equals(displayedComplex)
                 && mStartRoom.getFloorString().equals(displayedFloor) ){
-            mView.drawStartLocation(displayedComplex, displayedFloor, mStartRoom); //Add icon for current user location room to overlay
+            mView.drawStartLocation(mStartRoom); //Add icon for current user location room to overlay
         }
 
         if(mDestRoom.getComplex().equals(displayedComplex)
                 && mDestRoom.getFloorString().equals(displayedFloor)) {
-            mView.drawDestinationLocation(displayedComplex, displayedFloor, mDestRoom); //Add destination location room icon to overlay
+            mView.drawDestinationLocation(mDestRoom); //Add destination location room icon to overlay
         }
         //drawAllFloorConnections(displayedComplex, floor, cellsToWalk); //Add floorConnection icons (like stairs, lifts, ...) to overlay
     }
