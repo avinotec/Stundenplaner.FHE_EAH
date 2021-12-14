@@ -7,7 +7,6 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * VO = value of object
- * needed for data transfer between NavigationDialogFragment and NavigationActivityOLD
  * Implementing Parcelable makes it possible to send via intent
  *
  * Created by Nadja - 02.12.2021

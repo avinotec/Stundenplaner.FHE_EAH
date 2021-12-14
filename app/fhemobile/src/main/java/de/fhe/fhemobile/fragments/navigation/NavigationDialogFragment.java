@@ -22,12 +22,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
-
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.views.navigation.NavigationDialogView;
-import de.fhe.fhemobile.vos.navigation.NavigationDialogVo;
 
 
 /**
@@ -36,8 +33,6 @@ import de.fhe.fhemobile.vos.navigation.NavigationDialogVo;
 public class NavigationDialogFragment extends FeatureFragment {
 
     private NavigationDialogView mView = null;
-    private NavigationDialogVo mVo;
-
 
     //Constants
     private static final String TAG = "NavigDialogFragment"; //$NON-NLS
@@ -55,10 +50,8 @@ public class NavigationDialogFragment extends FeatureFragment {
     }
 
     @Override
-    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mVo = new NavigationDialogVo();
     }
 
     @Override

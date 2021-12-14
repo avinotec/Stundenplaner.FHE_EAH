@@ -250,13 +250,16 @@ public class RoomSearchFragment extends FeatureFragment {
 
         @Override
         public void onGoClicked() {
-            if(mChosenRoom != null && validateStartInput()){
-                proceedToNavigation();
+            if(mChosenRoom != null){
+                if(validateInputAndSetStartRoom()){
+                    proceedToNavigation();
 
-                mChosenRoom = null;
-                mChosenBuilding = null;
-                mChosenFloor = null;
-                mStartRoom = null;
+                    mChosenRoom = null;
+                    mChosenBuilding = null;
+                    mChosenFloor = null;
+                    mStartRoom = null;
+                }
+
 
             } else {
                 Utils.showToast(R.string.timetable_error_incomplete);
@@ -266,9 +269,11 @@ public class RoomSearchFragment extends FeatureFragment {
 
     /**
      * Checks if the room entered by the user as start is valid
+     * if true, then the startRoom variable is set
+     * if false, an error message is shown
      * @return true if valid, false if invalid or input missing
      */
-    private boolean validateStartInput(){
+    private boolean validateInputAndSetStartRoom(){
 
         String input = mView.getStartInputText();
 
@@ -280,6 +285,7 @@ public class RoomSearchFragment extends FeatureFragment {
             for (Room room : MainActivity.rooms){
                 if (room.getRoomName().equals(input)){
                     valid = true;
+                    mStartRoom = room;
                 }
             }
 

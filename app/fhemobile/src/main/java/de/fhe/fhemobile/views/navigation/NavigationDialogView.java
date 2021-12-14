@@ -19,21 +19,18 @@ package de.fhe.fhemobile.views.navigation;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.widget.ViewPager2;
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback;
 
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.ArrayList;
-
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.navigation.NavigationDialogPagerAdapter;
-import de.fhe.fhemobile.models.navigation.NavigationDialogModel;
 
 /**
  * Created by Nadja 02.12.2021
@@ -41,30 +38,10 @@ import de.fhe.fhemobile.models.navigation.NavigationDialogModel;
 public class NavigationDialogView extends LinearLayout {
 
     private final Context mContext;
-    // model for handling room list, person list and Vo (contains start and destination location,
-    // needed for transferring to NavigationActivityOLD)
-    private NavigationDialogModel mModel;
-
-
-    private final OnClickListener mBtnStartNavigationListener;
-    //todo: add listeners for alle textinputs, buttons and spinners
-
-
-    public interface  ViewListener{
-
-    }
 
     public NavigationDialogView(Context context, AttributeSet attrs){
         super(context, attrs);
         mContext = context;
-        mModel = NavigationDialogModel.getInstance();
-
-        mBtnStartNavigationListener = new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //startNavigationActivity();
-            }
-        };
     }
 
     public void initializeView(@NonNull final FragmentManager _Manager, @NonNull Lifecycle _Lifecycle) {
@@ -90,14 +67,12 @@ public class NavigationDialogView extends LinearLayout {
             public void onTabReselected(TabLayout.Tab tab) {            }
         });
 
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+        viewPager.registerOnPageChangeCallback(new OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 tabLayout.selectTab(tabLayout.getTabAt(position));
             }
         });
-
-
 
     }
 
@@ -106,19 +81,6 @@ public class NavigationDialogView extends LinearLayout {
         super.onFinishInflate();
 
     }
-
-    //start Navigation activity and send intent
-    private void startNavigationActivity(final String userInputStartLocation, final ArrayList<String> roomNames, final boolean skipScanner) {
-
-        //todo: update to new NavigationDialog
-//        final Intent intentNavigationActivity = new Intent(getActivity(), NavigationActivityOLD.class);
-//        intentNavigationActivity.putExtra("startLocation", userInputStartLocation);
-//        intentNavigationActivity.putExtra("destinationLocation", destinationQRCode);
-//        intentNavigationActivity.putExtra("rooms", roomsJson);
-//        mContext.startActivity();
-
-    }
-
 
 
 }
