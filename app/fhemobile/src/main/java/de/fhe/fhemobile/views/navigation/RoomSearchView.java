@@ -21,6 +21,7 @@ import android.content.Context;
 import android.text.Editable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -148,6 +149,7 @@ public class RoomSearchView extends LinearLayout {
 
     public void toggleStartInputCardVisibility(final boolean _Visible){
         mStartInputCard.setVisibility(_Visible ? VISIBLE : GONE);
+        mStartInputCard.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_up));
     }
 
     public void toggleGoButtonEnabled(final boolean _Enabled){
