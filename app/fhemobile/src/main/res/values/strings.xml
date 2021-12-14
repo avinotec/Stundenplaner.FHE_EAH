@@ -25,7 +25,7 @@
     <string name="drawer_mensa" >Canteen</string>
     <string name="drawer_persons" >Persons</string>
     <string name="drawer_semesterdates" >Semester Dates</string>
-    <string name="drawer_campus" >Campus Plan</string>
+    <string name="drawer_campus" >Campus Maps</string>
     <string name="drawer_impressum" >Imprint</string>
     <string name="drawer_timetable" >Schedule</string>
     <string name="drawer_mytimetable" >My Schedule</string>
@@ -153,12 +153,15 @@
     <string name="text_view_explanation_navigation_title">Perform navigation:</string>
     <string name="text_view_explanation_navigation_description">Select a room or a person or enter a room number you want to be navigated to. Then determine your position like described above.</string>
     <string name="text_view_oder">or</string>
+    <string name="navigation_button_prev_plan">Previous Map</string>
+    <string name="navigation_button_next_plan">Next Map</string>
     <string name="maps_up" >One floor up</string>
     <string name="maps_down" >One floor down</string>
 	<string name="today">Today</string>
     <string name="navigation_dialog_empty_building">No rooms here.</string>
     <string name="error_message_room_input_invalid">Room not found!</string>
-    <string name="navigation_button_prev_plan">Previous plan</string>
+    <string name="navigation_start">Start: </string>
+    <string name="navigation_dest">Destination: </string>
 
 
 </resources>

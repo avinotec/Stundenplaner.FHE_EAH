@@ -159,6 +159,9 @@
     <string name="error_message_no_room_input">Kein Raum eingegeben!</string>
     <string name="error_message_room_input_invalid">Raum nicht gefunden!</string>
     <string name="navigation_button_prev_plan">Vorheriger Plan</string>
+    <string name="navigation_button_next_plan">Nächster Plan</string>
+    <string name="navigation_start">Start: </string>
+    <string name="navigation_dest">Ziel: </string>
 
 
 </resources>

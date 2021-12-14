@@ -32,6 +32,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -57,31 +58,16 @@ public class NavigationView extends LinearLayout {
     }
 
 
+    public void initializeView(Room startRoom, Room destRoom){
 
-    public void initializeView(Drawable startFloorPlanImage){
+        //set start and dest
+        mTextViewStart.setText(startRoom.getRoomName());
+        mTextViewDest.setText(destRoom.getRoomName());
 
-        //Remove views from layouts before redrawing
-        if (mNavigationLayout != null) mNavigationLayout.removeAllViews();
-        setFloorPlanImage(startFloorPlanImage);
-
-        //get display size of the floorplan's ImageView
-        int floorplanDisplayWidth = getResources().getDisplayMetrics().widthPixels;
-        //Dreisatz Rescaling //getWidth and getHeight deliver the original size of the picture
-        int floorplanDisplayHeight = mFloorPlanImageView.getHeight() * floorplanDisplayWidth / mFloorPlanImageView.getWidth();
-
-        //get height and width of a single cell
-        cellWidth = floorplanDisplayWidth / cellgrid_width;
-        cellHeight = floorplanDisplayHeight / cellgrid_height;
-
-        //rescale floorplan to match display width
-        ViewGroup.LayoutParams layoutParams = mFloorPlanImageView.getLayoutParams();
-        layoutParams.width = floorplanDisplayWidth;
-        layoutParams.height = floorplanDisplayHeight;
-        mFloorPlanImageView.setLayoutParams(layoutParams);
-        //TODO: find solution that also works when rotating the device
-        //fits image height and width (aspect ratio of the original resource is not maintained -> width and height must be set properly)
-        mFloorPlanImageView.setScaleType(ImageView.ScaleType.FIT_XY);
-
+        //set size of a floor plan cell
+        int displayWidth = getResources().getDisplayMetrics().widthPixels;
+        cellWidth = displayWidth / cellgrid_width;
+        cellHeight = cellWidth;
 
         //set listeners for buttons navigating between the floorplans
         mButtonPrevPlan.setOnClickListener(new OnClickListener() {
@@ -114,23 +100,44 @@ public class NavigationView extends LinearLayout {
 
         mFloorPlanImageView = (ImageView) findViewById(R.id.imageview_floorplan);
 
+        mTextViewStart = (TextView) findViewById(R.id.navigation_text_start_value);
+        mTextViewDest = (TextView) findViewById(R.id.navigation_text_dest_value);
     }
+
+
+    public void setFloorPlanImage(Drawable image){
+
+        //Remove views from layouts before redrawing
+        if (mNavigationLayout != null) mNavigationLayout.removeAllViews();
+
+        mFloorPlanImageView.setImageDrawable(image);
+        mFloorPlanImageView.setX(0);
+        mFloorPlanImageView.setY(0);
+
+        //rescale floorplan to match display width
+        ViewGroup.LayoutParams layoutParams = mFloorPlanImageView.getLayoutParams();
+        layoutParams.width = (int) Math.round(cellWidth*cellgrid_width);
+        //intrinsicHeight returns the height of the original floor plan image in the resources
+        int floorPlanImageHeight = image.getIntrinsicHeight();
+        //Dreisatz: imageheight_new / cellheight = intrinsicHeight / cellheight_original
+        //      cellHeight_original = intrinsicHeight / cellgridHeight
+        layoutParams.height = (int) Math.round(floorPlanImageHeight * cellHeight / (floorPlanImageHeight/cellgrid_height)) ;
+        mFloorPlanImageView.setLayoutParams(layoutParams);
+
+        //TODO: find solution that also works when rotating the device
+        //fits image height and width (aspect ratio of the original resource is not maintained -> width and height must be set properly)
+        mFloorPlanImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+
+    }
+
 
     public void setViewListener(final IViewListener _Listener) {
         mViewListener = _Listener;
     }
 
-
-
     public interface IViewListener {
         void onPrevPlanClicked();
         void onNextPlanClicked();
-    }
-
-    private void setFloorPlanImage(Drawable image){
-        mFloorPlanImageView.setImageDrawable(image);
-        mFloorPlanImageView.setX(0);
-        mFloorPlanImageView.setY(0);
     }
 
     /**
@@ -313,6 +320,9 @@ public class NavigationView extends LinearLayout {
 
     private ImageView mFloorPlanImageView;
     private RelativeLayout mNavigationLayout;
+
+    private TextView mTextViewStart;
+    private TextView mTextViewDest;
 
     private double cellWidth;
     private double cellHeight;

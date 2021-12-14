@@ -26,11 +26,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.junit.Assert;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.models.navigation.Exit;
@@ -57,8 +61,8 @@ public class NavigationFragment extends FeatureFragment {
     //Variables
     private NavigationView mView;
 
-    private Room startLocation;
-    private Room destinationLocation;
+    private Room mStartRoom;
+    private Room mDestRoom;
 
     private static ArrayList<Exit> exits                        = new ArrayList<>();
     private static ArrayList<FloorConnection> floorConnections  = new ArrayList<>();
@@ -74,8 +78,10 @@ public class NavigationFragment extends FeatureFragment {
 
     public static NavigationFragment newInstance(Room _startRoom, Room _destRoom) {
         NavigationFragment fragment = new NavigationFragment();
-        fragment.startLocation = _startRoom;
-        fragment.destinationLocation = _destRoom;
+        Bundle args = new Bundle();
+        args.putString(PARAM_START, _startRoom.getRoomName());
+        args.putString(PARAM_DEST, _destRoom.getRoomName());
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -83,6 +89,24 @@ public class NavigationFragment extends FeatureFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (BuildConfig.DEBUG) Assert.assertTrue( getArguments() != null );
+        String start = getArguments().getString(PARAM_START);
+        String dest = getArguments().getString(PARAM_DEST);
+
+        mStartRoom = null;
+        mDestRoom = null;
+
+        for(Room room : MainActivity.rooms){
+            if(room.getRoomName().equals(start)){
+                mStartRoom = room;
+            }
+            if(room.getRoomName().equals(dest)){
+                mDestRoom = room;
+            }
+
+            if(mStartRoom != null && mDestRoom != null) break;
+        }
 
         getFloorConnections();
         getExits();
@@ -100,20 +124,22 @@ public class NavigationFragment extends FeatureFragment {
 
         try {
             //get image of the first displayed floorplan
-            String path = getPathToFloorPlanPNG(startLocation.getComplex(), startLocation.getFloorString());
+            String path = getPathToFloorPlanPNG(mStartRoom.getComplex(), mStartRoom.getFloorString());
             //grid for debugging: path = "floorplan_images/grid_for_debug.png"
             InputStream input = getActivity().getAssets().open(path);
             Drawable image = Drawable.createFromStream(input, null);
-            mView.initializeView(image);
+            mView.initializeView(mStartRoom, mDestRoom);
+            mView.setFloorPlanImage(image);
         } catch (IOException e) {
             Log.e(TAG, "Loading Floorplan Image from assets failed", e);
         }
 
-        drawNavigation(startLocation.getComplex(), startLocation.getFloorString());
+        drawNavigation(mStartRoom.getComplex(), mStartRoom.getFloorString());
 
         return mView;
 
     }
+
 
     @Override
     public void onResume() {
@@ -164,7 +190,7 @@ public class NavigationFragment extends FeatureFragment {
     private void getRoute() {
         try {
             RouteCalculator routeCalculator = new RouteCalculator(getContext(),
-                    startLocation, destinationLocation, floorConnections, exits);
+                    mStartRoom, mDestRoom, floorConnections, exits);
             cellsToWalk.addAll(routeCalculator.getWholeRoute());
         } catch (Exception e) {
             Log.e(TAG,"error calculating route:", e);
@@ -179,18 +205,18 @@ public class NavigationFragment extends FeatureFragment {
      */
     public void drawNavigation(NavigationUtils.Complex displayedComplex, String displayedFloor){
 
-        if(!startLocation.getRoomName().equals(destinationLocation.getRoomName())) {
+        if(!mStartRoom.getRoomName().equals(mDestRoom.getRoomName())) {
             mView.drawAllPathCells(displayedComplex, displayedFloor, cellsToWalk); // add route (path of cells) to overlay
         }
 
-        if(startLocation.getComplex().equals(displayedComplex)
-                && startLocation.getFloorString().equals(displayedFloor) ){
-            mView.drawStartLocation(displayedComplex, displayedFloor, startLocation); //Add icon for current user location room to overlay
+        if(mStartRoom.getComplex().equals(displayedComplex)
+                && mStartRoom.getFloorString().equals(displayedFloor) ){
+            mView.drawStartLocation(displayedComplex, displayedFloor, mStartRoom); //Add icon for current user location room to overlay
         }
 
-        if(destinationLocation.getComplex().equals(displayedComplex)
-                && destinationLocation.getFloorString().equals(displayedFloor)) {
-            mView.drawDestinationLocation(displayedComplex, displayedFloor, destinationLocation); //Add destination location room icon to overlay
+        if(mDestRoom.getComplex().equals(displayedComplex)
+                && mDestRoom.getFloorString().equals(displayedFloor)) {
+            mView.drawDestinationLocation(displayedComplex, displayedFloor, mDestRoom); //Add destination location room icon to overlay
         }
         //drawAllFloorConnections(displayedComplex, floor, cellsToWalk); //Add floorConnection icons (like stairs, lifts, ...) to overlay
     }
