@@ -35,6 +35,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.models.navigation.Cell;
@@ -162,24 +164,29 @@ public class NavigationView extends LinearLayout {
      * Draw all path cells of the calculated route
      * @param complex that is displayed (floorplan)
      * @param floor that is displayed (floorplan)
+     * @param cellsToWalk
      */
     public void drawAllPathCells(NavigationUtils.Complex complex, String floor,
-                                  ArrayList<Cell> cellsToWalk) {
+                                 HashMap<NavigationUtils.BuildingFloorKey, ArrayList<Cell>> cellsToWalk) {
         try {
-            for (int j = 0; j < cellsToWalk.size(); j++) {
-                if (cellsToWalk.get(j).getComplex().equals(complex)
-                        && cellsToWalk.get(j).getFloorString().equals(floor)) {
+            Iterator<ArrayList<Cell>> i = cellsToWalk.values().iterator();
+            while (i.hasNext()) {
+                for(Cell cell : i.next()){
+                    if (cell.getComplex().equals(complex)
+                            && cell.getFloorString().equals(floor)) {
 
-                    if(cellsToWalk.get(j) instanceof FloorConnectionCell){
-                        drawFloorConnection((FloorConnectionCell) cellsToWalk.get(j));
-                    }
-                    else if(cellsToWalk.get(j) instanceof Exit){
-                        drawExit((Exit) cellsToWalk.get(j));
-                    }
-                    else{
-                        drawPathCell(cellsToWalk.get(j));
+                        if(cell instanceof FloorConnectionCell){
+                            drawFloorConnection((FloorConnectionCell) cell);
+                        }
+                        else if(cell instanceof Exit){
+                            drawExit((Exit) cell);
+                        }
+                        else{
+                            drawPathCell(cell);
+                        }
                     }
                 }
+
             }
         } catch (Exception e) {
             Log.e(TAG, "error drawing path cells:",e);

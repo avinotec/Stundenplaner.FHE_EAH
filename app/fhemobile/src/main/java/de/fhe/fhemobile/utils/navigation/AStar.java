@@ -32,6 +32,7 @@ import java.util.PriorityQueue;
 import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.models.navigation.FloorConnection;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
+import de.fhe.fhemobile.utils.navigation.NavigationUtils.BuildingFloorKey;
 import de.fhe.fhemobile.utils.navigation.NavigationUtils.Complex;
 
 /**
@@ -80,11 +81,11 @@ public class AStar {
 
     /**
      * Calculates the cells to walk from start to destination using the shortest path
-     * @return List of cells to walk
+     * @return HashMap of cells to walk
      */
-    public final ArrayList<Cell> getCellsToWalk() {
+    public final HashMap<BuildingFloorKey, ArrayList<Cell>> getCellsToWalk() {
 
-        final ArrayList<Cell> cellsToWalk = new ArrayList<>();
+        final HashMap<BuildingFloorKey, ArrayList<Cell>> cellsToWalk = new HashMap<>();
 
         try {
             //Set priority queue with comparator (prioritize cells based on their costsPathToCell)
@@ -123,9 +124,18 @@ public class AStar {
                     [destCell.getXCoordinate()][destCell.getYCoordinate()];
             //do not add destination (and startcell) to walkable cells (displayed with rout path icon)
             currentCell = currentCell.getParentCell();
+
             //reconstruct path
             while (currentCell.getParentCell() != null) {
-                cellsToWalk.add(currentCell);
+                if(cellsToWalk.containsKey(new BuildingFloorKey(currentCell))){
+                    cellsToWalk.get(new BuildingFloorKey(currentCell)).add(currentCell);
+                }
+                else{
+                    ArrayList<Cell> list = new ArrayList<Cell>();
+                    list.add(currentCell);
+                    cellsToWalk.put(new BuildingFloorKey(currentCell), list);
+                }
+
                 currentCell = currentCell.getParentCell();
             }
 

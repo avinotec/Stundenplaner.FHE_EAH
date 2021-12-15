@@ -31,6 +31,7 @@ import org.junit.Assert;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
@@ -44,6 +45,7 @@ import de.fhe.fhemobile.models.navigation.RouteCalculator;
 import de.fhe.fhemobile.utils.navigation.JSONHandler;
 import de.fhe.fhemobile.utils.navigation.NavigationUtils;
 import de.fhe.fhemobile.views.navigation.NavigationView;
+import de.fhe.fhemobile.utils.navigation.NavigationUtils.BuildingFloorKey;
 
 /**
  *  Fragment for showing navigation route
@@ -66,7 +68,7 @@ public class NavigationFragment extends FeatureFragment {
 
     private static ArrayList<Exit> exits                        = new ArrayList<>();
     private static ArrayList<FloorConnection> floorConnections  = new ArrayList<>();
-    private ArrayList<Cell> cellsToWalk                         = new ArrayList<>();
+    private HashMap<BuildingFloorKey, ArrayList<Cell>> cellsToWalk = new HashMap<>();
 
 
     //TODO: Variablen für Ersatz Spinnerauswahl (Liste aller benötigter Pläne + aktuell angezeigter)
@@ -122,21 +124,11 @@ public class NavigationFragment extends FeatureFragment {
         mView = (NavigationView) inflater.inflate(R.layout.fragment_navigation, container, false);
         mView.setViewListener(mViewListener);
 
-        try {
-            mView.initializeView(mStartRoom, mDestRoom);
-            //TODO: solve how to clear floorplan and navigation without messing up deleting the floorplan image view too (only needs to be replace not removed)
-            //mView.removeRoute();
+        mView.initializeView(mStartRoom, mDestRoom);
+        //TODO: solve how to clear floorplan and navigation without messing up deleting the floorplan image view too (only needs to be replace not removed)
+        //mView.removeRoute();
 
-            //get image of the first displayed floorplan
-            String path = getPathToFloorPlanPNG(mStartRoom.getComplex(), mStartRoom.getFloorString());
-            //grid for debugging: path = "floorplan_images/grid_for_debug.png"
-            InputStream input = getActivity().getAssets().open(path);
-            Drawable image = Drawable.createFromStream(input, null);
-            mView.setFloorPlanImage(image);
-        } catch (IOException e) {
-            Log.e(TAG, "Loading Floorplan Image from assets failed", e);
-        }
-
+        drawFloorPlan(mStartRoom.getComplex(), mStartRoom.getFloorString());
         drawRoute(mStartRoom.getComplex(), mStartRoom.getFloorString());
 
         return mView;
@@ -194,7 +186,7 @@ public class NavigationFragment extends FeatureFragment {
         try {
             RouteCalculator routeCalculator = new RouteCalculator(getContext(),
                     mStartRoom, mDestRoom, floorConnections, exits);
-            cellsToWalk.addAll(routeCalculator.getWholeRoute());
+            cellsToWalk.putAll(routeCalculator.getWholeRoute());
         } catch (Exception e) {
             Log.e(TAG,"error calculating route:", e);
         }
@@ -251,13 +243,15 @@ public class NavigationFragment extends FeatureFragment {
         @Override
         public void onPrevPlanClicked() {
             //TODO: aktuell angezeigten Plan eins runterzählen und Anzeige aktualisieren
-            //drawNavigation()
+//            drawFloorPlan(,);
+//            drawRoute();
         }
 
         @Override
         public void onNextPlanClicked() {
             //TODO: aktuell angezeigten Plan ein hochzählen und Anzeige aktualisieren
-            //drawNavigation()
+//            drawFloorPlan();
+//            drawRoute();
         }
     };
 

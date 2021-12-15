@@ -24,6 +24,37 @@ import de.fhe.fhemobile.models.navigation.Cell;
 public class NavigationUtils {
 
     /**
+     * Key for the HashMap containing the route (all cells to walk)
+     */
+    public static class BuildingFloorKey {
+
+        private Complex mComplex;
+        private int mFloor;
+
+        public BuildingFloorKey(Cell cell){
+            mComplex = cell.getComplex();
+            mFloor = cell.getFloorInt();
+        }
+
+        public Complex getComplex() {
+            return mComplex;
+        }
+
+        public int getFloor() {
+            return mFloor;
+        }
+
+        public boolean equals(BuildingFloorKey otherKey){
+            boolean isEqual = false;
+            if(this.mComplex.equals(otherKey.getComplex())
+                    && this.mFloor == otherKey.getFloor()){
+                isEqual = true;
+            }
+            return isEqual;
+        }
+    }
+
+    /**
      * Complex for RouteCalculator
      * merges buildings 3, 2 and 1 to COMPLEX_321
      */
