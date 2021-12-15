@@ -39,38 +39,35 @@
                 android:id="@+id/navigation_text_start_headline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/navigation_start"
+                android:paddingLeft="15dp"
                 android:paddingTop="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="10dp"
+                android:text="@string/navigation_start"
                 android:textColor="@color/primary_color"
-                android:textSize="@dimen/abc_text_size_medium_material"
-                />
+                android:textSize="@dimen/abc_text_size_medium_material" />
 
             <TextView
                 android:id="@+id/navigation_text_start_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@id/navigation_text_dest_value"
                 android:layout_toRightOf="@id/navigation_text_start_headline"
+                android:paddingLeft="5dp"
                 android:paddingTop="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="5dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="10dp"
                 android:textColor="@color/primary_color"
-                android:textSize="@dimen/abc_text_size_medium_material"
-                />
+                android:textSize="@dimen/abc_text_size_medium_material" />
 
             <TextView
                 android:id="@+id/navigation_text_dest_headline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/navigation_text_start_headline"
+                android:layout_toRightOf="@id/navigation_text_start_value"
                 android:paddingLeft="10dp"
-                android:paddingTop="5dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="15dp"
+                android:paddingTop="10dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="10dp"
                 android:text="@string/navigation_dest"
                 android:textColor="@color/primary_color"
                 android:textSize="@dimen/abc_text_size_medium_material" />
@@ -79,15 +76,13 @@
                 android:id="@+id/navigation_text_dest_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/navigation_text_start_value"
                 android:layout_toRightOf="@id/navigation_text_dest_headline"
-                android:paddingTop="5dp"
-                android:paddingLeft="10dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="10dp"
                 android:paddingRight="10dp"
-                android:paddingBottom="15dp"
+                android:paddingBottom="10dp"
                 android:textColor="@color/primary_color"
-                android:textSize="@dimen/abc_text_size_medium_material"
-                />
+                android:textSize="@dimen/abc_text_size_medium_material" />
 
         </RelativeLayout>
 

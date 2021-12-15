@@ -160,8 +160,8 @@
 	<string name="today">Today</string>
     <string name="navigation_dialog_empty_building">No rooms here.</string>
     <string name="error_message_room_input_invalid">Room not found!</string>
-    <string name="navigation_start">Start: </string>
-    <string name="navigation_dest">Destination: </string>
+    <string name="navigation_start">From: </string>
+    <string name="navigation_dest">To: </string>
 
 
 </resources>
