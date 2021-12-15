@@ -123,18 +123,21 @@ public class NavigationFragment extends FeatureFragment {
         mView.setViewListener(mViewListener);
 
         try {
+            mView.initializeView(mStartRoom, mDestRoom);
+            //TODO: solve how to clear floorplan and navigation without messing up deleting the floorplan image view too (only needs to be replace not removed)
+            //mView.removeRoute();
+
             //get image of the first displayed floorplan
             String path = getPathToFloorPlanPNG(mStartRoom.getComplex(), mStartRoom.getFloorString());
             //grid for debugging: path = "floorplan_images/grid_for_debug.png"
             InputStream input = getActivity().getAssets().open(path);
             Drawable image = Drawable.createFromStream(input, null);
-            mView.initializeView(mStartRoom, mDestRoom);
             mView.setFloorPlanImage(image);
         } catch (IOException e) {
             Log.e(TAG, "Loading Floorplan Image from assets failed", e);
         }
 
-        drawNavigation(mStartRoom.getComplex(), mStartRoom.getFloorString());
+        drawRoute(mStartRoom.getComplex(), mStartRoom.getFloorString());
 
         return mView;
 
@@ -199,11 +202,11 @@ public class NavigationFragment extends FeatureFragment {
 
     //drawing --------------------------------------------------------------------------------------
     /**
-     * Display navigation at the particular floor
+     * Display route at the particular floor
      * @param displayedComplex
      * @param displayedFloor
      */
-    public void drawNavigation(NavigationUtils.Complex displayedComplex, String displayedFloor){
+    public void drawRoute(NavigationUtils.Complex displayedComplex, String displayedFloor){
 
         if(!mStartRoom.getRoomName().equals(mDestRoom.getRoomName())) {
             mView.drawAllPathCells(displayedComplex, displayedFloor, cellsToWalk); // add route (path of cells) to overlay
@@ -219,6 +222,25 @@ public class NavigationFragment extends FeatureFragment {
             mView.drawDestinationLocation(mDestRoom); //Add destination location room icon to overlay
         }
         //drawAllFloorConnections(displayedComplex, floor, cellsToWalk); //Add floorConnection icons (like stairs, lifts, ...) to overlay
+    }
+
+    /**
+     * Sets the floor plan image, old floor plan image and icons are removed
+     * @param complex of the floorplan
+     * @param floor of the floorplan
+     */
+    public void drawFloorPlan(NavigationUtils.Complex complex, String floor){
+        try {
+            //get image of the first displayed floorplan
+            String path = getPathToFloorPlanPNG(complex, floor);
+            //grid for debugging: path = "floorplan_images/grid_for_debug.png"
+            InputStream input = getActivity().getAssets().open(path);
+            Drawable image = Drawable.createFromStream(input, null);
+            //setFloorPlanImage includes removing all old views from the relative layout
+            mView.setFloorPlanImage(image);
+        } catch (IOException e) {
+            Log.e(TAG, "Loading Floorplan Image from assets failed", e);
+        }
     }
 
 

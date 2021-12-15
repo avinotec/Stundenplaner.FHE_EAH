@@ -149,7 +149,7 @@ public class RoomSearchView extends LinearLayout {
 
     public void toggleStartInputCardVisibility(final boolean _Visible){
         mStartInputCard.setVisibility(_Visible ? VISIBLE : GONE);
-        mStartInputCard.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_up));
+        mStartInputCard.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_down));
     }
 
     public void toggleGoButtonEnabled(final boolean _Enabled){

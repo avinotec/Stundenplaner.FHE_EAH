@@ -100,6 +100,8 @@ public class NavigationView extends LinearLayout {
 
         mFloorPlanImageView = (ImageView) findViewById(R.id.imageview_floorplan);
 
+        mNavigationLayout = (RelativeLayout) findViewById(R.id.navigation_placeholder);
+
         mTextViewStart = (TextView) findViewById(R.id.navigation_text_start_value);
         mTextViewDest = (TextView) findViewById(R.id.navigation_text_dest_value);
     }
@@ -107,8 +109,6 @@ public class NavigationView extends LinearLayout {
 
     public void setFloorPlanImage(Drawable image){
 
-        //Remove views from layouts before redrawing
-        if (mNavigationLayout != null) mNavigationLayout.removeAllViews();
 
         mFloorPlanImageView.setImageDrawable(image);
         mFloorPlanImageView.setX(0);
@@ -196,6 +196,7 @@ public class NavigationView extends LinearLayout {
             ImageView startIcon = new ImageView(getContext());
             startIcon.setImageResource(R.drawable.start_icon);
             if (mNavigationLayout != null) mNavigationLayout.addView(startIcon);
+            else Log.d(TAG, "Layout holding navigation route is null");
             fitOneCell(startIcon);
             startIcon.setX(convertCellCoordX(startRoom.getXCoordinate()));
             startIcon.setY(convertCellCoordY(startRoom.getYCoordinate()));
@@ -223,6 +224,14 @@ public class NavigationView extends LinearLayout {
     }
 
     /**
+     * Removes route icons from the floor plan
+     */
+    public void removeRoute(){
+        //Remove views from layouts before redrawing
+        if (mNavigationLayout != null) mNavigationLayout.removeAllViews();
+    }
+
+    /**
      * Add a cell icon to display a walkable cell of the calculated route
      * @param cell to draw
      */
@@ -230,6 +239,7 @@ public class NavigationView extends LinearLayout {
         ImageView pathCellIcon = new ImageView(getContext());
         pathCellIcon.setImageResource(R.drawable.path_cell_icon);
         if (mNavigationLayout != null) mNavigationLayout.addView(pathCellIcon);
+        else Log.d(TAG, "Layout holding navigation route is null");
 
         fitOneCell(pathCellIcon);
         pathCellIcon.setX(convertCellCoordX(cell.getXCoordinate()));
@@ -251,6 +261,7 @@ public class NavigationView extends LinearLayout {
                 ImageView stairIcon = new ImageView(getContext());
                 stairIcon.setImageResource(R.drawable.stairs_icon);
                 if (mNavigationLayout != null) mNavigationLayout.addView(stairIcon);
+                else Log.d(TAG, "Layout holding navigation route is null");
 
                 fitOneCell(stairIcon);
                 stairIcon.setX(convertCellCoordX(fCell.getXCoordinate()));
@@ -261,6 +272,7 @@ public class NavigationView extends LinearLayout {
                 ImageView elevatorIcon = new ImageView(getContext());
                 elevatorIcon.setImageResource(R.drawable.elevator_icon);
                 if (mNavigationLayout != null) mNavigationLayout.addView(elevatorIcon);
+                else Log.d(TAG, "Layout holding navigation route is null");
 
                 fitOneCell(elevatorIcon);
                 elevatorIcon.setX(convertCellCoordX(fCell.getXCoordinate()));
@@ -288,6 +300,7 @@ public class NavigationView extends LinearLayout {
         ImageView exitIcon = new ImageView(getContext());
         exitIcon.setImageResource(R.drawable.exit_icon);
         if (mNavigationLayout != null) mNavigationLayout.addView(exitIcon);
+        else Log.d(TAG, "Layout holding navigation route is null");
 
         fitOneCell(exitIcon);
         exitIcon.setX(convertCellCoordX(exitCell.getXCoordinate()));
