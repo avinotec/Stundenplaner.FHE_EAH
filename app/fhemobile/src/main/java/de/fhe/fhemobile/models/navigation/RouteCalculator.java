@@ -190,7 +190,7 @@ public class RouteCalculator {
                     || destinationComplex.equals(Complex.COMPLEX_4)){
                 floorGrids.put(Complex.COMPLEX_4, new HashMap<>());
 
-                for(int i = -1; i <= 5; i++){
+                for(int i = -1; i <= 3; i++){
                     floorGrids.get(Complex.COMPLEX_4).put(i, buildFloorGrid(Complex.COMPLEX_4, i));
 
                 }
@@ -199,7 +199,8 @@ public class RouteCalculator {
                     || destinationComplex.equals(Complex.COMPLEX_5)){
                 floorGrids.put(Complex.COMPLEX_5, new HashMap<>());
 
-                for(int i = -2; i <= 3; i++){
+                //floorInt = 4 is floor 3Z
+                for(int i = -2; i <= 4; i++){
                     floorGrids.get(Complex.COMPLEX_5).put(i, buildFloorGrid(Complex.COMPLEX_5, i));
                 }
             }

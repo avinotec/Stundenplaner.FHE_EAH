@@ -19,6 +19,8 @@ package de.fhe.fhemobile.utils.navigation;
 
 import androidx.annotation.NonNull;
 
+import java.util.Arrays;
+
 import de.fhe.fhemobile.models.navigation.Cell;
 
 public class NavigationUtils {
@@ -36,21 +38,61 @@ public class NavigationUtils {
             mFloor = cell.getFloorInt();
         }
 
+        public BuildingFloorKey(Complex complex, int floor){
+            mComplex = complex;
+            mFloor = floor;
+        }
+
         public Complex getComplex() {
             return mComplex;
         }
 
-        public int getFloor() {
+        public int getFloorInt() {
             return mFloor;
         }
 
-        public boolean equals(BuildingFloorKey otherKey){
-            boolean isEqual = false;
-            if(this.mComplex.equals(otherKey.getComplex())
-                    && this.mFloor == otherKey.getFloor()){
-                isEqual = true;
+        public String getFloorString() {
+            return floorIntToString(mComplex, mFloor);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (!(other instanceof BuildingFloorKey)) return false;
+            BuildingFloorKey that = (BuildingFloorKey) other;
+            return mFloor == that.mFloor && mComplex.equals(that.mComplex);
+        }
+
+        @Override
+        public int hashCode() {
+            return Arrays.hashCode(new Object[]{mComplex, mFloor});
+        }
+
+        /**
+         * Returns > 0 if otherKey corresponds to floors above this key's floor in the same complex,
+         * Returns 0 if keys are equal,
+         * Return < 0 if otherKey corresponds to floors under this key's floor in the same complex
+         * or to a floor in another complex
+         * @param otherKey
+         * @return int floor differences
+         */
+        public int compareTo(BuildingFloorKey otherKey){
+            //gleiches Gebäude, gleiche Etage
+            if(this.equals(otherKey)) return 0;
+
+            //gleiches Gebäude -> Etage vergleichen
+            else if (this.getComplex().equals(otherKey.getComplex())){
+                return otherKey.getFloorInt() - this.getFloorInt();
             }
-            return isEqual;
+
+            //verschiedene Gebäude -> Anzahl Etagen hoch/runter in dest complex
+            // + 100 (to distinguish between case "same complex" and "different complex",
+            // otherwise 03.03 to 03.01 gets same score as 03.01 to 04.01);
+
+            //+2 to distinguish between destination floor -1 and 01 in different building,
+            // needed because building 04 is entered at -1 and thus a route can contain both floorplans -1 and 01
+
+            //note: number does not correspond to floor difference between otherKey and this anymore
+            else return -(Math.abs(otherKey.mFloor + 2) + 100);
         }
     }
 
@@ -94,6 +136,7 @@ public class NavigationUtils {
                     return "";
             }
         }
+
     }
 
     /**

@@ -35,8 +35,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.TreeMap;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.models.navigation.Cell;
@@ -44,6 +43,7 @@ import de.fhe.fhemobile.models.navigation.Exit;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
 import de.fhe.fhemobile.models.navigation.Room;
 import de.fhe.fhemobile.utils.navigation.NavigationUtils;
+import de.fhe.fhemobile.utils.navigation.NavigationUtils.BuildingFloorKey;
 
 
 /**
@@ -81,7 +81,7 @@ public class NavigationView extends LinearLayout {
             }
         });
 
-        mButtonPrevPlan.setOnClickListener(new OnClickListener() {
+        mButtonNextPlan.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mViewListener != null) {
@@ -89,6 +89,10 @@ public class NavigationView extends LinearLayout {
                 }
             }
         });
+
+        //todo
+//        togglePrevPlanButtonEnabled(false);
+//        toggleNextPlanButtonEnabled(false);
 
     }
 
@@ -108,9 +112,14 @@ public class NavigationView extends LinearLayout {
         mTextViewDest = (TextView) findViewById(R.id.navigation_text_dest_value);
     }
 
+    /**
+     * Removes old floorplan and route and sets new image
+     * @param image new floorplan drawable
+     */
+    public void drawFloorPlanImage(Drawable image){
 
-    public void setFloorPlanImage(Drawable image){
-
+        removeRoute();
+        mNavigationLayout.addView(mFloorPlanImageView);
 
         mFloorPlanImageView.setImageDrawable(image);
         mFloorPlanImageView.setX(0);
@@ -142,6 +151,33 @@ public class NavigationView extends LinearLayout {
         void onNextPlanClicked();
     }
 
+    public void togglePrevPlanButtonEnabled(final boolean _Enabled){
+        mButtonPrevPlan.setEnabled(_Enabled);
+        if(_Enabled){
+            mButtonPrevPlan.setBackgroundResource(R.drawable.buttonshape_rectangle);
+        }else{
+            mButtonPrevPlan.setBackgroundResource(R.drawable.buttonshape_rectangle_disabled);
+        }
+    }
+
+    public void toggleNextPlanButtonEnabled(final boolean _Enabled){
+        mButtonNextPlan.setEnabled(_Enabled);
+        if(_Enabled){
+            mButtonNextPlan.setBackgroundResource(R.drawable.buttonshape_rectangle);
+        }else{
+            mButtonNextPlan.setBackgroundResource(R.drawable.buttonshape_rectangle_disabled);
+        }
+    }
+
+    /**
+     * Removes route icons from the floor plan
+     */
+    public void removeRoute(){
+        //Remove views from layouts before redrawing
+        if (mNavigationLayout != null) mNavigationLayout.removeAllViews();
+    }
+
+
     /**
      * Convert cell position from unit "cell number" to a unit for displaying
      * @param x position in cells
@@ -161,32 +197,38 @@ public class NavigationView extends LinearLayout {
     }
 
     /**
-     * Draw all path cells of the calculated route
-     * @param complex that is displayed (floorplan)
-     * @param floor that is displayed (floorplan)
-     * @param cellsToWalk
+     * Display all cells of the route
+     * @param currentlyDisplayed BuildingFloorKey describing the currently displayed floorplan and route
+     * @param cellsToWalk HashMap of all cells to walk (complete route)
      */
-    public void drawAllPathCells(NavigationUtils.Complex complex, String floor,
-                                 HashMap<NavigationUtils.BuildingFloorKey, ArrayList<Cell>> cellsToWalk) {
+    public void drawAllPathCells(BuildingFloorKey currentlyDisplayed, TreeMap<BuildingFloorKey, ArrayList<Cell>> cellsToWalk) {
         try {
-            Iterator<ArrayList<Cell>> i = cellsToWalk.values().iterator();
-            while (i.hasNext()) {
-                for(Cell cell : i.next()){
-                    if (cell.getComplex().equals(complex)
-                            && cell.getFloorString().equals(floor)) {
-
-                        if(cell instanceof FloorConnectionCell){
-                            drawFloorConnection((FloorConnectionCell) cell);
-                        }
-                        else if(cell instanceof Exit){
-                            drawExit((Exit) cell);
-                        }
-                        else{
-                            drawPathCell(cell);
-                        }
-                    }
+//            Iterator<ArrayList<Cell>> i = cellsToWalk.values().iterator();
+//            while (i.hasNext()) {
+//                for(Cell cell : i.next()){
+//                    if (cell.getComplex().equals(currentlyDisplayed.getComplex())
+//                            && cell.getFloorInt() == currentlyDisplayed.getFloorInt()) {
+//
+//                        if(cell instanceof FloorConnectionCell){
+//                            drawFloorConnection((FloorConnectionCell) cell);
+//                        }
+//                        else if(cell instanceof Exit){
+//                            drawExit((Exit) cell);
+//                        }
+//                        else{
+//                            drawPathCell(cell);
+//                        }
+//                    }
+//                }
+            ArrayList<Cell> cellList = cellsToWalk.get(currentlyDisplayed);
+            for(Cell cell : cellList) {
+                if (cell instanceof FloorConnectionCell) {
+                    drawFloorConnection((FloorConnectionCell) cell);
+                } else if (cell instanceof Exit) {
+                    drawExit((Exit) cell);
+                } else {
+                    drawPathCell(cell);
                 }
-
             }
         } catch (Exception e) {
             Log.e(TAG, "error drawing path cells:",e);
@@ -228,14 +270,6 @@ public class NavigationView extends LinearLayout {
         } catch (Exception e) {
             Log.e(TAG,"error drawing destination room:", e);
         }
-    }
-
-    /**
-     * Removes route icons from the floor plan
-     */
-    public void removeRoute(){
-        //Remove views from layouts before redrawing
-        if (mNavigationLayout != null) mNavigationLayout.removeAllViews();
     }
 
     /**
@@ -314,11 +348,15 @@ public class NavigationView extends LinearLayout {
         exitIcon.setY(convertCellCoordY(exitCell.getYCoordinate()));
     }
 
+
     /**
      * Make the icon image fit exactly one cell
      * @param icon ImageView containing the icon (view must be added to parent view before calling)
      */
     private void fitOneCell(ImageView icon){
+        //visibility set GONE to avoid shortly displaying falsely sized icons
+        icon.setVisibility(GONE);
+
         //post-Method needed because otherwise icon is not really drawn yed and thus layoutParams are null
         icon.post(new Runnable() {
             @Override
@@ -330,6 +368,9 @@ public class NavigationView extends LinearLayout {
                 icon.setLayoutParams(layoutParams);
                 //make picture fit image height and width (aspect ratio of the resource is not maintained -> width and height must be set properly)
                 icon.setScaleType(ImageView.ScaleType.FIT_XY);
+
+                //visibility was set GONE before to avoid shortly displaying falsely sized icons
+                icon.setVisibility(VISIBLE);
             }
         });
     }

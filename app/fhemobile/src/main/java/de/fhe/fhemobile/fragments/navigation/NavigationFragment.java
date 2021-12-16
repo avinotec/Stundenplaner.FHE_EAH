@@ -31,7 +31,7 @@ import org.junit.Assert;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.TreeMap;
 
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
@@ -44,8 +44,8 @@ import de.fhe.fhemobile.models.navigation.Room;
 import de.fhe.fhemobile.models.navigation.RouteCalculator;
 import de.fhe.fhemobile.utils.navigation.JSONHandler;
 import de.fhe.fhemobile.utils.navigation.NavigationUtils;
-import de.fhe.fhemobile.views.navigation.NavigationView;
 import de.fhe.fhemobile.utils.navigation.NavigationUtils.BuildingFloorKey;
+import de.fhe.fhemobile.views.navigation.NavigationView;
 
 /**
  *  Fragment for showing navigation route
@@ -54,7 +54,7 @@ import de.fhe.fhemobile.utils.navigation.NavigationUtils.BuildingFloorKey;
  */
 public class NavigationFragment extends FeatureFragment {
 
-    private static final String TAG = "navigationFragment"; //$NON-NLS
+    private static final String TAG = "NavigationFragment"; //$NON-NLS
 
 
     public static final String PARAM_START = "paramStartRoom"; //$NON-NLS
@@ -68,10 +68,20 @@ public class NavigationFragment extends FeatureFragment {
 
     private static ArrayList<Exit> exits                        = new ArrayList<>();
     private static ArrayList<FloorConnection> floorConnections  = new ArrayList<>();
-    private HashMap<BuildingFloorKey, ArrayList<Cell>> cellsToWalk = new HashMap<>();
 
+    //cellsToWalk here as TreeMap to have a list sorted for flicking through floorplans by buttons
+    private TreeMap<BuildingFloorKey, ArrayList<Cell>> cellsToWalk = new TreeMap<>((o1, o2) -> {
 
-    //TODO: Variablen für Ersatz Spinnerauswahl (Liste aller benötigter Pläne + aktuell angezeigter)
+        int value = o1.compareTo(o2);
+        Log.d(TAG,o1.getComplex().toString() +"."+o1.getFloorString() +" vs "
+                + o2.getComplex().toString() +"."+o2.getFloorString() + " -> "+value);
+        return value;
+
+    });
+
+    //welcher Floorplan gerade angezeigt wird,
+    // mit dem Key kann auf die entsprechenden Navigationszellen in cellsToWalk zugegriffen werden
+    private BuildingFloorKey currentlyDisplayedPlan;
 
 
     public NavigationFragment(){
@@ -125,11 +135,8 @@ public class NavigationFragment extends FeatureFragment {
         mView.setViewListener(mViewListener);
 
         mView.initializeView(mStartRoom, mDestRoom);
-        //TODO: solve how to clear floorplan and navigation without messing up deleting the floorplan image view too (only needs to be replace not removed)
-        //mView.removeRoute();
 
-        drawFloorPlan(mStartRoom.getComplex(), mStartRoom.getFloorString());
-        drawRoute(mStartRoom.getComplex(), mStartRoom.getFloorString());
+        drawNavigation(mStartRoom.getComplex(), mStartRoom.getFloorInt());
 
         return mView;
 
@@ -193,65 +200,137 @@ public class NavigationFragment extends FeatureFragment {
     }
 
     //drawing --------------------------------------------------------------------------------------
+
     /**
-     * Display route at the particular floor
-     * @param displayedComplex
-     * @param displayedFloor
+     * Display floorplan and route on it and sets currentlyDisplayedPlan (overloaded method)
+     * @param complexToDisplay
+     * @param floorToDisplay
      */
-    public void drawRoute(NavigationUtils.Complex displayedComplex, String displayedFloor){
+    public void drawNavigation(NavigationUtils.Complex complexToDisplay, int floorToDisplay){
+        drawNavigation(new BuildingFloorKey(complexToDisplay, floorToDisplay));
+    }
+
+    /**
+     * Display floorplan and route on it, sets currentlyDisplayedPlan
+     * @param buildingFloorKey
+     */
+    public void drawNavigation(BuildingFloorKey buildingFloorKey){
+
+        //removing old image and route icons needed when updating/changing the floor
+        mView.removeRoute();
+
+        currentlyDisplayedPlan = buildingFloorKey;
+
+        //if currentlyDisplayedPlan is first plan on the route, then disable buttonPrevPlan
+        if(currentlyDisplayedPlan.equals(cellsToWalk.firstKey())){
+            mView.togglePrevPlanButtonEnabled(false);
+        } else{
+            mView.togglePrevPlanButtonEnabled(true);
+        }
+
+        //if currentlyDisplayedPlan is last plan on the route, then disable buttonNextPlan
+        if(currentlyDisplayedPlan.equals(cellsToWalk.lastKey())){
+            mView.toggleNextPlanButtonEnabled(false);
+        } else{
+            mView.toggleNextPlanButtonEnabled(true);
+        }
+
+
+        drawFloorPlan();
+        drawRoute();
+    }
+
+
+    /**
+     * Display route at the currently set building and floor (BuildingFloorKey)
+     */
+    private void drawRoute(){
+        if (BuildConfig.DEBUG) Assert.assertTrue( currentlyDisplayedPlan != null );
 
         if(!mStartRoom.getRoomName().equals(mDestRoom.getRoomName())) {
-            mView.drawAllPathCells(displayedComplex, displayedFloor, cellsToWalk); // add route (path of cells) to overlay
+            // add route (path of cells) to overlay
+            mView.drawAllPathCells(currentlyDisplayedPlan, cellsToWalk);
         }
 
-        if(mStartRoom.getComplex().equals(displayedComplex)
-                && mStartRoom.getFloorString().equals(displayedFloor) ){
-            mView.drawStartLocation(mStartRoom); //Add icon for current user location room to overlay
+        if(mStartRoom.getComplex().equals(currentlyDisplayedPlan.getComplex())
+                && mStartRoom.getFloorInt() == (currentlyDisplayedPlan.getFloorInt()) ){
+            //Add icon for current user location room to overlay
+            mView.drawStartLocation(mStartRoom);
         }
 
-        if(mDestRoom.getComplex().equals(displayedComplex)
-                && mDestRoom.getFloorString().equals(displayedFloor)) {
+        if(mDestRoom.getComplex().equals(currentlyDisplayedPlan.getComplex())
+                && mDestRoom.getFloorInt() == currentlyDisplayedPlan.getFloorInt()) {
             mView.drawDestinationLocation(mDestRoom); //Add destination location room icon to overlay
         }
+
         //drawAllFloorConnections(displayedComplex, floor, cellsToWalk); //Add floorConnection icons (like stairs, lifts, ...) to overlay
     }
 
     /**
-     * Sets the floor plan image, old floor plan image and icons are removed
-     * @param complex of the floorplan
-     * @param floor of the floorplan
+     * Sets the floor plan image corresponding to the currently set BuildingFloorKey
      */
-    public void drawFloorPlan(NavigationUtils.Complex complex, String floor){
+    private void drawFloorPlan(){
         try {
             //get image of the first displayed floorplan
-            String path = getPathToFloorPlanPNG(complex, floor);
+            String path = getPathToFloorPlanPNG(currentlyDisplayedPlan.getComplex(),
+                    currentlyDisplayedPlan.getFloorString());
             //grid for debugging: path = "floorplan_images/grid_for_debug.png"
             InputStream input = getActivity().getAssets().open(path);
             Drawable image = Drawable.createFromStream(input, null);
-            //setFloorPlanImage includes removing all old views from the relative layout
-            mView.setFloorPlanImage(image);
+            //setFloorPlanImage
+            mView.drawFloorPlanImage(image);
         } catch (IOException e) {
             Log.e(TAG, "Loading Floorplan Image from assets failed", e);
         }
     }
 
 
-
-
     //Listeners-------------------------------------------------------------------------------------
     private final NavigationView.IViewListener mViewListener = new NavigationView.IViewListener() {
+
         @Override
         public void onPrevPlanClicked() {
-            //TODO: aktuell angezeigten Plan eins runterzählen und Anzeige aktualisieren
-//            drawFloorPlan(,);
-//            drawRoute();
+            //needed to get desired direction (if start is floor-upwards or floor-downwards)
+            //example: startRoom 04.02, destRoom 04.01 -> floorDifference = 1
+            int floorDifference = currentlyDisplayedPlan.compareTo(new BuildingFloorKey(mStartRoom));
+
+            BuildingFloorKey prevFloorPlan = null;
+            if (floorDifference > 0){
+                prevFloorPlan= cellsToWalk.lowerKey(currentlyDisplayedPlan);
+
+            } else if (floorDifference < 0){
+                prevFloorPlan = cellsToWalk.higherKey(currentlyDisplayedPlan);
+            }
+
+            if(prevFloorPlan != null) {
+                Log.d(TAG, "now: " + currentlyDisplayedPlan.getComplex().toString()+"."+currentlyDisplayedPlan.getFloorString() +
+                        ", prev: " + prevFloorPlan.getComplex().toString()+"."+prevFloorPlan.getFloorString());
+                drawNavigation(prevFloorPlan);
+            }
+
         }
+
 
         @Override
         public void onNextPlanClicked() {
-            //TODO: aktuell angezeigten Plan ein hochzählen und Anzeige aktualisieren
-//            drawFloorPlan();
-//            drawRoute();
+
+            //needed to get desired direction (if destination is floor-upwards or floor-downwards)
+            //example: startRoom 03.03, destRoom 03.01 -> floorDifference = -2
+            int floorDifference = currentlyDisplayedPlan.compareTo(new BuildingFloorKey(mDestRoom));
+
+            BuildingFloorKey nextFloorPlan = null;
+            if (floorDifference > 0){
+                 nextFloorPlan = cellsToWalk.lowerKey(currentlyDisplayedPlan);
+
+            } else if (floorDifference < 0){
+                nextFloorPlan = cellsToWalk.higherKey(currentlyDisplayedPlan);
+            }
+
+            if (nextFloorPlan != null) {
+                Log.d(TAG, "now: " + currentlyDisplayedPlan.getComplex().toString()+"."+currentlyDisplayedPlan.getFloorString() +
+                        ", prev: " + nextFloorPlan.getComplex().toString()+"."+nextFloorPlan.getFloorString());
+                drawNavigation(nextFloorPlan);
+            }
         }
     };
 
