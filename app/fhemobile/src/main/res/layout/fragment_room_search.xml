@@ -117,15 +117,19 @@
                         android:layout_marginRight="5dp"
                         android:hint="@string/navigation_input_start_hint"
                         app:errorEnabled="true"
-                        android:layout_gravity="center_vertical">
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="5dp">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/navigation_input_edittext_start"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="48dp"
+                            android:hintTextColor="#757575"
+                            android:textColorHint="#757575"
                             android:imeOptions="actionSearch"
                             android:inputType="number"
-                            android:maxLines="1" />
+                            android:maxLines="1"
+                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -138,7 +142,9 @@
                         android:scaleType="fitCenter"
                         android:src="@drawable/ic_qr_code_scanner"
                         android:background="@drawable/buttonshape_imagebutton"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical"
+                        android:contentDescription="QR Code"
+                        tools:ignore="HardcodedText" />
 
                 </LinearLayout>
 

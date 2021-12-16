@@ -103,6 +103,6 @@
     android:background="@drawable/shadow"
     android:visibility="gone"
     android:contentDescription="baseActivityTabHostBackground"
-    />
+    tools:ignore="HardcodedText" />
 
 </RelativeLayout>
