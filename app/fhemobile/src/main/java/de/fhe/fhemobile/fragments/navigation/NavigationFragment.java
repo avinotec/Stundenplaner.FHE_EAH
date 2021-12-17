@@ -32,7 +32,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.ListIterator;
 
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
@@ -43,8 +42,9 @@ import de.fhe.fhemobile.models.navigation.Exit;
 import de.fhe.fhemobile.models.navigation.FloorConnection;
 import de.fhe.fhemobile.models.navigation.Room;
 import de.fhe.fhemobile.models.navigation.RouteCalculator;
-import de.fhe.fhemobile.utils.navigation.JSONHandler;
 import de.fhe.fhemobile.utils.navigation.BuildingFloorKey;
+import de.fhe.fhemobile.utils.navigation.FloorPlanIterator;
+import de.fhe.fhemobile.utils.navigation.JSONHandler;
 import de.fhe.fhemobile.views.navigation.NavigationView;
 
 /**
@@ -77,7 +77,7 @@ public class NavigationFragment extends FeatureFragment {
     // mit dem Key kann auf die entsprechenden Navigationszellen in cellsToWalk zugegriffen werden,
     // Wert wird vom floorPlanIterator bestimmt
     private BuildingFloorKey currentFloorPlan;
-    private ListIterator<BuildingFloorKey> floorPlanIterator;
+    private FloorPlanIterator floorPlanIterator;
 
 
     public NavigationFragment(){
@@ -136,7 +136,6 @@ public class NavigationFragment extends FeatureFragment {
         drawNextNavigation();
 
         return mView;
-
     }
 
 
@@ -149,8 +148,8 @@ public class NavigationFragment extends FeatureFragment {
      * Set currentFloorPlan to the next one, display floorplan image and navigationroute
      */
     private void drawNextNavigation(){
-        if(floorPlanIterator.hasPrevious()){
-            currentFloorPlan = floorPlanIterator.previous();
+        if(floorPlanIterator.hasNext()){
+            currentFloorPlan = floorPlanIterator.next();
             drawNavigation();
 
             updateButtonStatus();
@@ -161,8 +160,8 @@ public class NavigationFragment extends FeatureFragment {
      * Set currentFloorPlan to the previous one, display floorplan image and navigationroute
      */
     private void drawPrevNavigation(){
-        if(floorPlanIterator.hasNext()){
-            currentFloorPlan = floorPlanIterator.next();
+        if(floorPlanIterator.hasPrevious()){
+            currentFloorPlan = floorPlanIterator.previous();
             drawNavigation();
 
             updateButtonStatus();
@@ -173,13 +172,8 @@ public class NavigationFragment extends FeatureFragment {
      * Update buttons to being enabled or disabled
      */
     private  void updateButtonStatus(){
-        //floorPlanIterator.hasNext() and hasPrevious() do not work because iterator can still
-        // jump behind the start floorplan key and before the destination floorplan key
-        //see java documentation:
-        //                      Element(0)   Element(1)   Element(2)   ... Element(n-1)
-        // cursor positions:  ^            ^            ^            ^                  ^
-        //                    0            1            2            3                  n
-        if (floorPlanIterator.hasNext() && floorPlanIterator.nextIndex() < cellsToWalk.keySet().size()-1) {
+
+        if (floorPlanIterator.hasPrevious()) {
             mView.togglePrevPlanButtonEnabled(true);
         }
         //start floor reached -> disable prevButton
@@ -187,7 +181,7 @@ public class NavigationFragment extends FeatureFragment {
             mView.togglePrevPlanButtonEnabled(false);
         }
 
-        if(floorPlanIterator.hasPrevious() && floorPlanIterator.nextIndex() > 0){
+        if(floorPlanIterator.hasNext()){
             mView.toggleNextPlanButtonEnabled(true);
         }
         //destination floor reached -> disable nextButton
@@ -244,10 +238,7 @@ public class NavigationFragment extends FeatureFragment {
             RouteCalculator routeCalculator = new RouteCalculator(getContext(),
                     mStartRoom, mDestRoom, floorConnections, exits);
             cellsToWalk = routeCalculator.getWholeRoute();
-            floorPlanIterator = new ArrayList<>(cellsToWalk.keySet()).listIterator();
-
-            //set iterator to end (because floorplans are sorted from dest to start)
-            while(floorPlanIterator.hasNext()) floorPlanIterator.next();
+            floorPlanIterator = new FloorPlanIterator(new ArrayList<>(cellsToWalk.keySet()));
 
         } catch (Exception e) {
             Log.e(TAG,"error calculating route:", e);
