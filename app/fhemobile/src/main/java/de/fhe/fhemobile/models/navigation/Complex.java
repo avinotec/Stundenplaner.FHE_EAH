@@ -15,7 +15,7 @@
  *
  */
 
-package de.fhe.fhemobile.utils.navigation;
+package de.fhe.fhemobile.models.navigation;
 
 import androidx.annotation.NonNull;
 

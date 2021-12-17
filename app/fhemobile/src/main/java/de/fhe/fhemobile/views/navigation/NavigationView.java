@@ -42,7 +42,7 @@ import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.models.navigation.Exit;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
 import de.fhe.fhemobile.models.navigation.Room;
-import de.fhe.fhemobile.utils.navigation.Complex;
+import de.fhe.fhemobile.models.navigation.Complex;
 import de.fhe.fhemobile.utils.navigation.BuildingFloorKey;
 
 

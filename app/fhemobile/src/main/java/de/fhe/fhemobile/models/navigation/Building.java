@@ -17,8 +17,6 @@
 
 package de.fhe.fhemobile.models.navigation;
 
-import de.fhe.fhemobile.utils.navigation.Complex;
-
 
 /**
  * Class for distinguishing between names of buildings (03, 02, 01, 04, 05) and

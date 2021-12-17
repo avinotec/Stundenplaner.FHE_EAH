@@ -6,13 +6,21 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import de.fhe.fhemobile.fragments.navigation.PersonSearchFragment;
+import java.util.ArrayList;
+
+import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.navigation.RoomSearchFragment;
 
 public class NavigationDialogPagerAdapter extends FragmentStateAdapter {
 
+    ArrayList<FeatureFragment> fragments = new ArrayList<FeatureFragment>();
+
     public NavigationDialogPagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle){
         super(fragmentManager, lifecycle);
+
+        fragments.add(new RoomSearchFragment());
+        //todo: person search
+        //fragments.add(new PersonSearchFragment());
     }
 
     @NonNull
@@ -20,15 +28,16 @@ public class NavigationDialogPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0:
-                return new RoomSearchFragment();
-            case 1:
-                return new PersonSearchFragment();
+                return fragments.get(0);
+            //todo: person search
+//            case 1:
+//                return fragments.get(1);
         }
         return null;
     }
 
     @Override
     public int getItemCount() {
-        return 2;
+        return fragments.size();
     }
 }

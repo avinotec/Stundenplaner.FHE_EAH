@@ -52,7 +52,8 @@ public class NavigationDialogView extends LinearLayout {
         viewPager.setAdapter(new NavigationDialogPagerAdapter(_Manager, _Lifecycle));
 
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tablayout_tabtext_roomsearch));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tablayout_tabtext_personsearch));
+        //todo: person search
+        //tabLayout.addTab(tabLayout.newTab().setText(R.string.tablayout_tabtext_personsearch));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
