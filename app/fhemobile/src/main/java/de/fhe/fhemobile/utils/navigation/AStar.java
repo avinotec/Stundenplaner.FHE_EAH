@@ -26,6 +26,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Objects;
 import java.util.PriorityQueue;
 
@@ -81,11 +82,11 @@ public class AStar {
 
     /**
      * Calculates the cells to walk from start to destination using the shortest path
-     * @return HashMap of cells to walk
+     * @return sorted Map of cells to walk
      */
-    public final HashMap<BuildingFloorKey, ArrayList<Cell>> getCellsToWalk() {
+    public final LinkedHashMap<BuildingFloorKey, ArrayList<Cell>> getCellsToWalk() {
 
-        final HashMap<BuildingFloorKey, ArrayList<Cell>> cellsToWalk = new HashMap<>();
+        final LinkedHashMap<BuildingFloorKey, ArrayList<Cell>> cellsToWalk = new LinkedHashMap<>();
 
         try {
             //Set priority queue with comparator (prioritize cells based on their costsPathToCell)

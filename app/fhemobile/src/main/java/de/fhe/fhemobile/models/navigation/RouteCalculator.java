@@ -29,6 +29,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.utils.navigation.AStar;
@@ -54,7 +55,7 @@ public class RouteCalculator {
     private final Cell startLocation;
     private final Cell destLocation;
     //gesamte Route
-    private HashMap<BuildingFloorKey, ArrayList<Cell>> cellsToWalk = new HashMap<>();
+    private LinkedHashMap<BuildingFloorKey, ArrayList<Cell>> cellsToWalk = new LinkedHashMap<>();
     //Koordinatensysteme aller Stockwerke
     //for each building (key = complex e.g. BUILDING_321) and for each floor (key = floor as int) a grid of cells is stored
     private HashMap<Complex, HashMap<Integer, Cell[][]>> floorGrids = new HashMap<>();
@@ -78,9 +79,9 @@ public class RouteCalculator {
 
     /**
      * Calculates the route and returns a list of all cells to walk
-     * @return HashMap of all cells at the route
+     * @return Sorted Map of all cells at the route
      */
-    public HashMap<BuildingFloorKey, ArrayList<Cell>> getWholeRoute() {
+    public LinkedHashMap<BuildingFloorKey, ArrayList<Cell>> getWholeRoute() {
 
         //Get grids of floors to use - fills in variable floorGrids
         getNeededFloorGrids();
@@ -139,13 +140,16 @@ public class RouteCalculator {
                     }
                 }
 
+                //first add entry-dest and then exit-start to maintain the order important for prev/next-button navigation in NavigationFragment
+                //route to get to destination within the destination complex
+                AStar aStar2 = new AStar(entry, destLocation, floorGrids, floorConnections);
+                cellsToWalk.putAll(aStar2.getCellsToWalk());
+
                 //route to get out of start complex
                 AStar aStar1 = new AStar(startLocation, exit, floorGrids, floorConnections);
                 cellsToWalk.putAll(aStar1.getCellsToWalk());
 
-                //route to get to destination within the destination complex
-                AStar aStar2 = new AStar(entry, destLocation, floorGrids, floorConnections);
-                cellsToWalk.putAll(aStar2.getCellsToWalk());
+
 
             }
 

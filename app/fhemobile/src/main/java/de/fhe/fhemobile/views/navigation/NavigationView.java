@@ -35,7 +35,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.TreeMap;
+import java.util.Map;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.models.navigation.Cell;
@@ -89,11 +89,6 @@ public class NavigationView extends LinearLayout {
                 }
             }
         });
-
-        //todo
-//        togglePrevPlanButtonEnabled(false);
-//        toggleNextPlanButtonEnabled(false);
-
     }
 
 
@@ -199,9 +194,9 @@ public class NavigationView extends LinearLayout {
     /**
      * Display all cells of the route
      * @param currentlyDisplayed BuildingFloorKey describing the currently displayed floorplan and route
-     * @param cellsToWalk HashMap of all cells to walk (complete route)
+     * @param cellsToWalk Map of all cells to walk (complete route)
      */
-    public void drawAllPathCells(BuildingFloorKey currentlyDisplayed, TreeMap<BuildingFloorKey, ArrayList<Cell>> cellsToWalk) {
+    public void drawAllPathCells(BuildingFloorKey currentlyDisplayed, Map<BuildingFloorKey, ArrayList<Cell>> cellsToWalk) {
         try {
 //            Iterator<ArrayList<Cell>> i = cellsToWalk.values().iterator();
 //            while (i.hasNext()) {
