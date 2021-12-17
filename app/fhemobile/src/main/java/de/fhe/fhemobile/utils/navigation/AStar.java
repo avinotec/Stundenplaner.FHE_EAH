@@ -31,6 +31,7 @@ import java.util.Objects;
 import java.util.PriorityQueue;
 
 import de.fhe.fhemobile.models.navigation.Cell;
+import de.fhe.fhemobile.models.navigation.Exit;
 import de.fhe.fhemobile.models.navigation.FloorConnection;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
 
@@ -121,7 +122,20 @@ public class AStar {
             //get end cell as start cell for backtracing
             Cell currentCell = Objects.requireNonNull(floorGrids.get(destCell.getComplex()).get(destCell.getFloorInt()))
                     [destCell.getXCoordinate()][destCell.getYCoordinate()];
-            //do not add destination (and startcell) to walkable cells (displayed with rout path icon)
+
+
+            // if destination is exit then add it as cellToWalk
+            if(currentCell instanceof Exit){
+                if(cellsToWalk.containsKey(new BuildingFloorKey(currentCell))){
+                    cellsToWalk.get(new BuildingFloorKey(currentCell)).add(currentCell);
+                }
+                else{
+                    ArrayList<Cell> list = new ArrayList<Cell>();
+                    list.add(currentCell);
+                    cellsToWalk.put(new BuildingFloorKey(currentCell), list);
+                }
+            }
+            //do not add destination (and startcell) to walkable cells (displayed with path icon)
             currentCell = currentCell.getParentCell();
 
             //reconstruct path
@@ -136,6 +150,17 @@ public class AStar {
                 }
 
                 currentCell = currentCell.getParentCell();
+            }
+            // if start is exit then add it as cellToWalk
+            if(currentCell.getParentCell() == null && currentCell instanceof Exit){
+                if(cellsToWalk.containsKey(new BuildingFloorKey(currentCell))){
+                    cellsToWalk.get(new BuildingFloorKey(currentCell)).add(currentCell);
+                }
+                else{
+                    ArrayList<Cell> list = new ArrayList<Cell>();
+                    list.add(currentCell);
+                    cellsToWalk.put(new BuildingFloorKey(currentCell), list);
+                }
             }
 
         } catch (final Exception e) {
