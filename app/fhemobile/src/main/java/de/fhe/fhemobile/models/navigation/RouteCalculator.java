@@ -34,8 +34,8 @@ import java.util.LinkedHashMap;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.utils.navigation.AStar;
 import de.fhe.fhemobile.utils.navigation.JSONHandler;
-import de.fhe.fhemobile.utils.navigation.NavigationUtils.BuildingFloorKey;
-import de.fhe.fhemobile.utils.navigation.NavigationUtils.Complex;
+import de.fhe.fhemobile.utils.navigation.BuildingFloorKey;
+import de.fhe.fhemobile.utils.navigation.Complex;
 
 
 /**

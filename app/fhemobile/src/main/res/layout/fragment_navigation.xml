@@ -36,53 +36,30 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/navigation_text_start_headline"
+                android:id="@+id/navigation_text_start"
                 android:layout_width="0dp"
-                android:layout_weight="0.2"
+                android:layout_weight="0.5"
                 android:layout_height="wrap_content"
                 android:text="@string/navigation_start"
                 android:paddingTop="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:paddingBottom="5dp"
+                android:paddingBottom="15dp"
                 android:textColor="@color/primary_color"
                 android:textSize="@dimen/abc_text_size_medium_material"
                 />
 
-            <TextView
-                android:id="@+id/navigation_text_start_value"
-                android:layout_width="0dp"
-                android:layout_weight="0.3"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="5dp"
-                android:textColor="@color/primary_color"
-                android:textSize="@dimen/abc_text_size_medium_material" />
 
             <TextView
-                android:id="@+id/navigation_text_dest_headline"
+                android:id="@+id/navigation_text_dest"
                 android:layout_width="0dp"
-                android:layout_weight="0.2"
+                android:layout_weight="0.5"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:paddingTop="5dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="15dp"
                 android:text="@string/navigation_dest"
-                android:textColor="@color/primary_color"
-                android:textSize="@dimen/abc_text_size_medium_material" />
-
-            <TextView
-                android:id="@+id/navigation_text_dest_value"
-                android:layout_width="0dp"
-                android:layout_weight="0.3"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingTop="5dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="15dp"
                 android:textColor="@color/primary_color"
                 android:textSize="@dimen/abc_text_size_medium_material" />
 
@@ -107,36 +84,52 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center|bottom">
+            android:orientation="vertical"
+            android:gravity="center|bottom"
+            android:layout_weight="1">
 
-            <Button
-                android:id="@+id/navigationButtonPrevPlan"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/navigation_text_current_floorplan"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/navigation_button_prev_plan"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:drawableTop="@drawable/ic_prev_plan"
-                android:background="@drawable/buttonshape_rectangle"
-                android:textAllCaps="false"
-                android:layout_margin="@dimen/margin_top_navigation_dialog_activity"
-                />
+                android:padding="6dp"
+                android:text="@string/navigation_current_floorplan"
+                android:gravity="center"/>
 
-            <Button
-                android:id="@+id/navigationButtonNextPlan"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/navigation_button_next_plan"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:drawableTop="@drawable/ic_next_plan"
-                android:background="@drawable/buttonshape_rectangle"
-                android:textAllCaps="false"
-                android:layout_margin="@dimen/margin_top_navigation_dialog_activity"
-                />
+                android:orientation="horizontal">
+
+
+                <Button
+                    android:id="@+id/navigationButtonPrevPlan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/navigation_button_prev_plan"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:drawableTop="@drawable/ic_prev_plan"
+                    android:background="@drawable/buttonshape_rectangle"
+                    android:textAllCaps="false"
+                    android:layout_margin="@dimen/margin_top_navigation_dialog_activity"
+                    />
+
+                <Button
+                    android:id="@+id/navigationButtonNextPlan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/navigation_button_next_plan"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:drawableTop="@drawable/ic_next_plan"
+                    android:background="@drawable/buttonshape_rectangle"
+                    android:textAllCaps="false"
+                    android:layout_margin="@dimen/margin_top_navigation_dialog_activity"
+                    />
+            </LinearLayout>
 
         </LinearLayout>
 

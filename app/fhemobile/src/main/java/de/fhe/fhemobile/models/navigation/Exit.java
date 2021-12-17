@@ -21,7 +21,7 @@ import static de.fhe.fhemobile.utils.Define.Navigation.COSTS_EXIT;
 
 import java.util.ArrayList;
 
-import de.fhe.fhemobile.utils.navigation.NavigationUtils.Complex;
+import de.fhe.fhemobile.utils.navigation.Complex;
 
 /*
     class created by Nadja, 23.11.2021

@@ -42,8 +42,8 @@ import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.models.navigation.Exit;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
 import de.fhe.fhemobile.models.navigation.Room;
-import de.fhe.fhemobile.utils.navigation.NavigationUtils;
-import de.fhe.fhemobile.utils.navigation.NavigationUtils.BuildingFloorKey;
+import de.fhe.fhemobile.utils.navigation.Complex;
+import de.fhe.fhemobile.utils.navigation.BuildingFloorKey;
 
 
 /**
@@ -63,8 +63,8 @@ public class NavigationView extends LinearLayout {
     public void initializeView(Room startRoom, Room destRoom){
 
         //set start and dest
-        mTextViewStart.setText(startRoom.getRoomName());
-        mTextViewDest.setText(destRoom.getRoomName());
+        mTextViewStart.setText(getResources().getString(R.string.navigation_start) +"   "+ startRoom.getRoomName());
+        mTextViewDest.setText(getResources().getString(R.string.navigation_dest) +"   "+ destRoom.getRoomName());
 
         //set size of a floor plan cell
         int displayWidth = getResources().getDisplayMetrics().widthPixels;
@@ -103,15 +103,16 @@ public class NavigationView extends LinearLayout {
 
         mNavigationLayout = (RelativeLayout) findViewById(R.id.navigation_placeholder);
 
-        mTextViewStart = (TextView) findViewById(R.id.navigation_text_start_value);
-        mTextViewDest = (TextView) findViewById(R.id.navigation_text_dest_value);
+        mTextViewStart = (TextView) findViewById(R.id.navigation_text_start);
+        mTextViewDest = (TextView) findViewById(R.id.navigation_text_dest);
+        mCurrentFloorPlan = (TextView) findViewById(R.id.navigation_text_current_floorplan);
     }
 
     /**
      * Removes old floorplan and route and sets new image
      * @param image new floorplan drawable
      */
-    public void drawFloorPlanImage(Drawable image){
+    public void drawFloorPlanImage(Drawable image, BuildingFloorKey currentFloorPlan){
 
         removeRoute();
         mNavigationLayout.addView(mFloorPlanImageView);
@@ -133,6 +134,14 @@ public class NavigationView extends LinearLayout {
         //TODO: find solution that also works when rotating the device
         //fits image height and width (aspect ratio of the original resource is not maintained -> width and height must be set properly)
         mFloorPlanImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+
+
+        mCurrentFloorPlan.setText(
+                getResources().getString(R.string.navigation_current_floorplan) +" "+
+                        getResources().getString(R.string.navigation_building) + " "+
+                        currentFloorPlan.getComplex().toString() + ", "+
+                        getResources().getString(R.string.navigation_floor) + " "+
+                        currentFloorPlan.getFloorString());
 
     }
 
@@ -198,23 +207,6 @@ public class NavigationView extends LinearLayout {
      */
     public void drawAllPathCells(BuildingFloorKey currentlyDisplayed, Map<BuildingFloorKey, ArrayList<Cell>> cellsToWalk) {
         try {
-//            Iterator<ArrayList<Cell>> i = cellsToWalk.values().iterator();
-//            while (i.hasNext()) {
-//                for(Cell cell : i.next()){
-//                    if (cell.getComplex().equals(currentlyDisplayed.getComplex())
-//                            && cell.getFloorInt() == currentlyDisplayed.getFloorInt()) {
-//
-//                        if(cell instanceof FloorConnectionCell){
-//                            drawFloorConnection((FloorConnectionCell) cell);
-//                        }
-//                        else if(cell instanceof Exit){
-//                            drawExit((Exit) cell);
-//                        }
-//                        else{
-//                            drawPathCell(cell);
-//                        }
-//                    }
-//                }
             ArrayList<Cell> cellList = cellsToWalk.get(currentlyDisplayed);
             for(Cell cell : cellList) {
                 if (cell instanceof FloorConnectionCell) {
@@ -287,7 +279,7 @@ public class NavigationView extends LinearLayout {
      * @param fCell {@link FloorConnectionCell} to draw
      */
     private void drawFloorConnection(FloorConnectionCell fCell) {
-        NavigationUtils.Complex complex = fCell.getComplex();
+        Complex complex = fCell.getComplex();
         String floor = fCell.getFloorString();
 
         if (fCell.getComplex().equals(complex)
@@ -381,6 +373,7 @@ public class NavigationView extends LinearLayout {
 
     private TextView mTextViewStart;
     private TextView mTextViewDest;
+    private TextView mCurrentFloorPlan;
 
     private double cellWidth;
     private double cellHeight;

@@ -33,8 +33,6 @@ import java.util.PriorityQueue;
 import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.models.navigation.FloorConnection;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
-import de.fhe.fhemobile.utils.navigation.NavigationUtils.BuildingFloorKey;
-import de.fhe.fhemobile.utils.navigation.NavigationUtils.Complex;
 
 /**
  * Class for route calculation at a single floor using the A* algorithm

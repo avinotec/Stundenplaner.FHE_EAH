@@ -20,7 +20,7 @@ package de.fhe.fhemobile.models.navigation;
 import static de.fhe.fhemobile.utils.Define.Navigation.COSTS_CELL;
 import static de.fhe.fhemobile.utils.navigation.NavigationUtils.floorStringToInt;
 
-import de.fhe.fhemobile.utils.navigation.NavigationUtils.Complex;
+import de.fhe.fhemobile.utils.navigation.Complex;
 
 /**
  * Model for a cell of the navigation route

@@ -17,7 +17,7 @@
 
 package de.fhe.fhemobile.models.navigation;
 
-import de.fhe.fhemobile.utils.navigation.NavigationUtils.Complex;
+import de.fhe.fhemobile.utils.navigation.Complex;
 
 
 /**

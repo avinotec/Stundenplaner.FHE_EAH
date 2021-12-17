@@ -44,7 +44,7 @@ import de.fhe.fhemobile.models.navigation.FloorConnection;
 import de.fhe.fhemobile.models.navigation.Room;
 import de.fhe.fhemobile.models.navigation.RouteCalculator;
 import de.fhe.fhemobile.utils.navigation.JSONHandler;
-import de.fhe.fhemobile.utils.navigation.NavigationUtils.BuildingFloorKey;
+import de.fhe.fhemobile.utils.navigation.BuildingFloorKey;
 import de.fhe.fhemobile.views.navigation.NavigationView;
 
 /**
@@ -306,7 +306,7 @@ public class NavigationFragment extends FeatureFragment {
             InputStream input = getActivity().getAssets().open(path);
             Drawable image = Drawable.createFromStream(input, null);
             //setFloorPlanImage
-            mView.drawFloorPlanImage(image);
+            mView.drawFloorPlanImage(image, currentFloorPlan);
         } catch (IOException e) {
             Log.e(TAG, "Loading Floorplan Image from assets failed", e);
         }
