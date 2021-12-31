@@ -124,7 +124,6 @@
                             android:id="@+id/navigation_input_edittext_start"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
-                            android:hintTextColor="#757575"
                             android:textColorHint="#757575"
                             android:imeOptions="actionSearch"
                             android:inputType="number"
