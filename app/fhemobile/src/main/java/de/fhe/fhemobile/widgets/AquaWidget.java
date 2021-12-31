@@ -22,12 +22,11 @@ import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import java.util.TimeZone;
+import java.util.Date;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.vos.CafeAquaResponse;
-import hirondelle.date4j.DateTime;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,8 +46,11 @@ public class AquaWidget extends RelativeLayout {
 
     public void update(boolean _forceUpdate) {
 
+        final Date now = new Date();
+        final long nowMilliSeconds = now.getTime();
+
         if (_forceUpdate ||
-            DateTime.now(TimeZone.getDefault()).getMilliseconds(TimeZone.getDefault()) - mLastTimeUpdated > UPDATE_INTERVALL) {
+                ( ( nowMilliSeconds - mLastTimeUpdated ) > UPDATE_INTERVALL ) )  {
 
             if (!mStartedFetching) {
                 mStartedFetching = true;
@@ -90,7 +92,9 @@ public class AquaWidget extends RelativeLayout {
             mStartedFetching = false;
             if (mStatusLabel != null && response.body() != null ) {
                 mStatusLabel.setImageResource(response.body().isOpen() ? R.drawable.cafe_aqua_open : R.drawable.cafe_aqua_closed);
-                mLastTimeUpdated = DateTime.now(TimeZone.getDefault()).getMilliseconds(TimeZone.getDefault());
+
+                final Date now = new Date();
+                mLastTimeUpdated = now.getTime(); // in milliseconds
             }
         }
 

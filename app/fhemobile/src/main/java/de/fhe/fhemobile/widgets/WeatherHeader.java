@@ -23,14 +23,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.Locale;
-import java.util.TimeZone;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.vos.WeatherResponse;
-import hirondelle.date4j.DateTime;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,10 +60,14 @@ public class WeatherHeader extends RelativeLayout {
     }
     
     private void postInitialize() {
-        DateTime dt = DateTime.today(TimeZone.getDefault());
-        
-        mDayOfWeek.setText(dt.format("WWWW", Locale.getDefault()));
-        mDate.setText(dt.format("DD. MMMM", Locale.getDefault()));
+        Date now = new Date();
+        SimpleDateFormat simpleDateformatDoW = new SimpleDateFormat("EEEE"); // the day of the week spelled out completely
+        String sNowDoW = simpleDateformatDoW.format(now);
+        mDayOfWeek.setText(sNowDoW);
+
+        SimpleDateFormat simpleDateformat = new SimpleDateFormat("dd. MMM"); // the day of the week spelled out completely
+        String sNow = simpleDateformat.format(now);
+        mDate.setText(sNow);
 
         NetworkHandler.getInstance().fetchWeather(mWeatherResponseCallback);
     }
