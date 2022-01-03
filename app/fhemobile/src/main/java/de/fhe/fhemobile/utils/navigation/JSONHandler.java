@@ -37,6 +37,7 @@ import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.models.navigation.Exit;
 import de.fhe.fhemobile.models.navigation.FloorConnection;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
+import de.fhe.fhemobile.models.navigation.Person;
 import de.fhe.fhemobile.models.navigation.Room;
 
 public class JSONHandler {
@@ -51,9 +52,10 @@ public class JSONHandler {
     public static final String TYPE = "type";                   //$NON-NLS
     public static final String ROOM_NUMBER = "roomNumber";      //$NON-NLS
     public static final String QR_CODE = "qrCode";              //$NON-NLS
-    public static final String PERSONS = "persons";             //$NON-NLS
+    public static final String ROOM = "room";                   //$NON-NLS
+    public static final String PERSON_NAME = "name";            //$NON-NLS
     public static final String EXITTO = "exitTo";               //$NON-NLS
-    public static final String ENTRYFROM = "entryFrom";          //$NON-NLS
+    public static final String ENTRYFROM = "entryFrom";         //$NON-NLS
     public static final String CONNECTED_CELLS = "connectedCells";  //$NON-NLS
 
     //asset file names
@@ -137,7 +139,36 @@ public class JSONHandler {
     //parsing --------------------------------------------------------------------------------------
 
     /**
-     *
+     * Parse persons from json
+     * @param json
+     * @return ArrayList of {@link Person} objects
+     */
+    public static ArrayList<Person> parseJsonPersons(final String json){
+        final ArrayList<Person> persons = new ArrayList<>();
+
+        try{
+            final JSONArray jsonArray = new JSONArray(json);
+
+            for(int i = 0; i < jsonArray.length(); i++){
+
+                final JSONObject jEntry = jsonArray.getJSONObject(i);
+
+                final Person newPerson = new Person(
+                        jEntry.optString(PERSON_NAME),
+                        jEntry.getString(ROOM));
+
+                persons.add(newPerson);
+
+            }
+        } catch (final JSONException e) {
+            Log.e(TAG, "error parsing JSON persons", e);
+        }
+
+        return persons;
+    }
+
+    /**
+     * Parse exits from json
      * @param json
      * @return ArrayList of {@link Exit} objects
      */
@@ -196,16 +227,10 @@ public class JSONHandler {
             for (int i = 0; i < jsonArray.length(); i++) {
 
                 final JSONObject jEntry = jsonArray.getJSONObject(i);
-                final JSONArray personsJSON = jEntry.getJSONArray(PERSONS);
-                final ArrayList<String> persons = new ArrayList<>();
-                for (int j = 0; j < personsJSON.length(); j++) {
-                    persons.add(personsJSON.optString(j));
-                }
                 final Room newRoom = new Room(jEntry.optString(ROOM_NUMBER),
                         jEntry.optString(BUILDING),
                         jEntry.optString(FLOOR),
                         jEntry.optString(QR_CODE),
-                        persons,
                         jEntry.optInt(X_COORDINATE),
                         jEntry.optInt(Y_COORDINATE),
                         jEntry.optBoolean(WALKABLE));
