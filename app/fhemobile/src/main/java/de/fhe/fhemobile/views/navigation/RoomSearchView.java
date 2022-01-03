@@ -18,19 +18,9 @@
 package de.fhe.fhemobile.views.navigation;
 
 import android.content.Context;
-import android.text.Editable;
 import android.util.AttributeSet;
-import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentManager;
-
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -47,7 +37,7 @@ import de.fhe.fhemobile.widgets.picker.base.OnItemChosenListener;
 /**
  * Created by Nadja - 08.12.2021
  */
-public class RoomSearchView extends LinearLayout {
+public class RoomSearchView extends SearchView {
 
     public RoomSearchView(final Context context, final AttributeSet attrs){ super(context, attrs); }
 
@@ -66,49 +56,18 @@ public class RoomSearchView extends LinearLayout {
         mRoomPicker.toggleEnabled(false);
         mRoomPicker.setOnItemChosenListener(mRoomListener);
 
-        toggleStartInputCardVisibility(false);
-
-        mQrButton.setOnClickListener(mQrClickListener);
-        mGoButton.setOnClickListener(mGoClickListener);
-        toggleGoButtonEnabled(false);
+        super.initializeView();
 
     }
-
-    public String getStartInputText(){
-        Editable text = mStartInputText.getText();
-
-        //getText() returns null if no text was entered -> error message is displayed
-        if(text == null){
-            return null;
-
-        }else{
-            return text.toString();
-        }
-    }
-
-    /**
-     * Set error message that is displayed at the start input layout
-     * Message: Room not found!
-     */
-    public void setInputErrorRoomNotFound(){
-        mStartInputLayout.setError(
-                getResources().getString(R.string.error_message_room_input_invalid));
-    }
-
-    /**
-     * Set error message that is displayed at the start input layout
-     * Message: No Room entered!
-     */
-    public void setInputErrorNoInput(){
-        mStartInputLayout.setError(
-                getResources().getString(R.string.error_message_no_room_input));
-    }
-
 
     public void setViewListener(final IViewListener _Listener){
         mViewListener = _Listener;
     }
 
+    @Override
+    public SearchView.IViewListener getViewListener() {
+        return mViewListener;
+    }
 
     public void setBuildingItems(final List<Building> _Items){
         Collections.sort(_Items, new Comparator<Building>() {
@@ -145,20 +104,6 @@ public class RoomSearchView extends LinearLayout {
 
     public void toggleRoomPickerVisibility(final boolean _Visible){
         mRoomPicker.setVisibility(_Visible ? VISIBLE : GONE);
-    }
-
-    public void toggleStartInputCardVisibility(final boolean _Visible){
-        mStartInputCard.setVisibility(_Visible ? VISIBLE : GONE);
-        mStartInputCard.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_down));
-    }
-
-    public void toggleGoButtonEnabled(final boolean _Enabled){
-        mGoButton.setEnabled(_Enabled);
-        if(_Enabled){
-            mGoButton.setBackgroundResource(R.drawable.buttonshape_filled);
-        }else{
-            mGoButton.setBackgroundResource(R.drawable.buttonshape_filled_disabled);
-        }
     }
 
 
@@ -205,15 +150,6 @@ public class RoomSearchView extends LinearLayout {
         mFloorPicker    = (FloorPicker)     findViewById(R.id.navigationPickerFloor);
         mRoomPicker     = (RoomPicker)      findViewById(R.id.navigationPickerRoom);
 
-        mStartInputCard = (CardView) findViewById(R.id.cardviewStart);
-
-        mStartInputLayout = (TextInputLayout) findViewById(R.id.navigation_input_layout_start);
-        mStartInputText   = (EditText) findViewById(R.id.navigation_input_edittext_start);
-
-        mQrButton   = (ImageButton) findViewById(R.id.navigationButtonQR);
-        mGoButton   = (Button)      findViewById(R.id.navigationDialogButton);
-
-
     }
 
     //Returns the selected building
@@ -246,46 +182,16 @@ public class RoomSearchView extends LinearLayout {
         }
     };
 
-    //Listener for QR-Code button
-    private final OnClickListener mQrClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (mViewListener != null){
-                mViewListener.onQrClicked();
-            }
-        }
-    };
 
-    //Listener for Go! button
-    private final OnClickListener mGoClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (mViewListener != null){
-                mViewListener.onGoClicked();
-            }
-        }
-    };
-
-
-    public interface IViewListener{
+    public interface IViewListener extends SearchView.IViewListener{
         void onBuildingChosen(String _building);
         void onFloorChosen(String _floor);
         void onRoomChosen(String _room);
-        void onQrClicked();
-        void onGoClicked();
     }
 
     private IViewListener   mViewListener;
     private BuildingPicker  mBuildingPicker;
     private FloorPicker     mFloorPicker;
     private RoomPicker      mRoomPicker;
-
-    private CardView mStartInputCard;
-
-    private TextInputLayout mStartInputLayout;
-    private EditText        mStartInputText;
-
-    private ImageButton mQrButton;
-    private Button      mGoButton;
 
 }
