@@ -42,7 +42,7 @@ android {
      * This property is optional because the plugin uses a recommended version of
      * the build tools by default.
      */
-    buildToolsVersion '32.0.0 rc1'
+    buildToolsVersion '32.0.0'
 
     compileOptions {
         // Error: Invoke-customs are only supported starting with Android O (--min-api 26)
@@ -243,7 +243,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.4.0'
     //implementation "com.viewpagerindicator:library:2.4.1@aar.jar"
-    implementation 'com.darwinsys:hirondelle-date4j:1.5.1'
+    //implementation 'com.darwinsys:hirondelle-date4j:1.5.1'            DateTime object, exchanged with deprecated Date class :-(
 
     //implementation 'com.github.applidium:HeaderListView:'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
