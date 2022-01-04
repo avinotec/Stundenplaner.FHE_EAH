@@ -9,6 +9,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import java.util.ArrayList;
 
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.fragments.navigation.PersonSearchFragment;
 import de.fhe.fhemobile.fragments.navigation.RoomSearchFragment;
 
 public class NavigationDialogPagerAdapter extends FragmentStateAdapter {
@@ -20,7 +21,7 @@ public class NavigationDialogPagerAdapter extends FragmentStateAdapter {
 
         fragments.add(new RoomSearchFragment());
         //todo: person search
-        //fragments.add(new PersonSearchFragment());
+        fragments.add(new PersonSearchFragment());
     }
 
     @NonNull
@@ -30,8 +31,8 @@ public class NavigationDialogPagerAdapter extends FragmentStateAdapter {
             case 0:
                 return fragments.get(0);
             //todo: person search
-//            case 1:
-//                return fragments.get(1);
+            case 1:
+                return fragments.get(1);
         }
         return null;
     }

@@ -21,7 +21,6 @@ package de.fhe.fhemobile.utils.navigation;
 import android.content.Context;
 import android.util.Log;
 
-import org.jetbrains.annotations.NonNls;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,17 +57,6 @@ public class JSONHandler {
     public static final String ENTRYFROM = "entryFrom";         //$NON-NLS
     public static final String CONNECTED_CELLS = "connectedCells";  //$NON-NLS
 
-    //asset file names
-    final static String FILE_FLOORCONNECTIONS = "floorconnections.json"; //$NON-NLS
-    final static String FILE_ROOMS = "rooms.json"; //$NON-NLS
-    final static String FILE_EXITS = "exits.json"; //$NON-NLS
-    @NonNls
-    public static final String NAVIGATION_ROOMS = "rooms";
-    @NonNls
-    public static final String NAVIGATION_EXITS = "exits";
-    @NonNls
-    public static final String NAVIGATION_FLOORCONNECTIONS = "floorconnections";
-
 
     //reading --------------------------------------------------------------------------------------
     /**
@@ -101,20 +89,10 @@ public class JSONHandler {
     /**
      * Read in certain json file from assets
      * @param context
-     * @param toRead name of json file that should be read in ("rooms", "exits", "floorconnections")
+     * @param toRead name of json file that should be read in ("rooms", "exits", "floorconnections", "persons)
      * @return json string
      */
     public static String readFromAssets(final Context context, final String toRead){
-/*        String filename = "";
-        switch(toRead){
-            case NAVIGATION_ROOMS:
-                filename = FILE_ROOMS; break;
-            case NAVIGATION_EXITS:
-                filename = FILE_EXITS; break;
-            case NAVIGATION_FLOORCONNECTIONS:
-                filename = FILE_FLOORCONNECTIONS; break;
-        }
- */
         final String filename = toRead + ".json";
 
         final StringBuffer text = new StringBuffer();
@@ -141,10 +119,10 @@ public class JSONHandler {
     /**
      * Parse persons from json
      * @param json
-     * @return ArrayList of {@link Person} objects
+     * @return HashMap of {@link Person} objects, person's name used as key
      */
-    public static ArrayList<Person> parseJsonPersons(final String json){
-        final ArrayList<Person> persons = new ArrayList<>();
+    public static HashMap<String, Person> parseJsonPersons(final String json){
+        final HashMap<String, Person> persons = new HashMap<>();
 
         try{
             final JSONArray jsonArray = new JSONArray(json);
@@ -157,7 +135,7 @@ public class JSONHandler {
                         jEntry.optString(PERSON_NAME),
                         jEntry.getString(ROOM));
 
-                persons.add(newPerson);
+                persons.put(newPerson.getName(), newPerson);
 
             }
         } catch (final JSONException e) {
@@ -320,7 +298,7 @@ public class JSONHandler {
 
     //read, parse, save -------------------------------------------------------------------------------
     /**
-     * Reads rooms from Assets and saves list to MainActivity.rooms
+     * Reads rooms from assets and saves list to MainActivity.rooms
      * @param context
      */
     public static void loadRooms(Context context){
@@ -332,5 +310,21 @@ public class JSONHandler {
                 Log.e(TAG, "error reading or parsing rooms from JSON files:", e);
             }
         }
+    }
+
+    /**
+     * Reads persons from assets and returns them in a HashMap
+     * @param context
+     * @return HashMap of {@link Person} objects, person's names used as key
+     */
+    public static HashMap<String, Person> loadPersons(Context context){
+        HashMap<String,Person> persons = null;
+        try{
+            String personsJson = JSONHandler.readFromAssets(context, "persons");
+            persons = JSONHandler.parseJsonPersons(personsJson);
+        } catch (Exception e){
+            Log.e(TAG, "error reading or parsing persons from JSON files:", e);
+        }
+        return persons;
     }
 }

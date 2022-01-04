@@ -133,6 +133,8 @@ public class RoomSearchFragment extends FeatureFragment {
 
                     mView.toggleStartInputCardVisibility(true);
                     mView.toggleGoButtonEnabled(true);
+
+                    break;
                 }
             }
         } else {

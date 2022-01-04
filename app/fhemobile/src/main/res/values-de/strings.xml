@@ -165,6 +165,6 @@
     <string name="navigation_current_floorplan">aktuell angezeigt:</string>
     <string name="navigation_building">Haus</string>
     <string name="navigation_floor">Etage</string>
-
+    <string name="navigation_dialog_person">Person</string>
 
 </resources>

@@ -53,7 +53,7 @@ public class NavigationDialogView extends LinearLayout {
 
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tablayout_tabtext_roomsearch));
         //todo: person search
-        //tabLayout.addTab(tabLayout.newTab().setText(R.string.tablayout_tabtext_personsearch));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tablayout_tabtext_personsearch));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

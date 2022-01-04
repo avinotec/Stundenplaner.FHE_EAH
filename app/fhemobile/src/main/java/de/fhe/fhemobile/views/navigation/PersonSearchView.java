@@ -34,9 +34,6 @@ public class PersonSearchView extends SearchView {
         mPersonPicker.setOnItemChosenListener(mPersonListener);
 
         super.initializeView();
-
-        //todo: delete when QR codes ready
-        findViewById(R.id.navigationButtonQR).setVisibility(GONE);
     }
 
 

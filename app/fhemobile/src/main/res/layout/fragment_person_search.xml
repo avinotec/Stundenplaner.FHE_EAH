@@ -48,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/list_single_item_height"
-                    app:idpHeadline="@string/navigation_dialog_building"
+                    app:idpHeadline="@string/navigation_dialog_person"
                     />
 
             </LinearLayout>
