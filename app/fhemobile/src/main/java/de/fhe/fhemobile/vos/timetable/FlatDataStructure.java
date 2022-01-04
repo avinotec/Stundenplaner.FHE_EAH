@@ -93,7 +93,7 @@ public class FlatDataStructure implements Parcelable {
 
 	// "Bachelor: E-Commerce-->EC(BA)7-->EC(BA)7.01-->45-->3-->SPLUSA3E2FAs-2-->WI(BA)ERP-Sys.GPA/P/S/01"
 	@SuppressWarnings("Annotator")
-	private final static Pattern p = Pattern.compile("^(.*[a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß])"); //$NON-NLS
+	private static final Pattern p = Pattern.compile("^(.*[a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß])"); //$NON-NLS
 	public static String cutEventTitle(final String title) {
 
 		// WI/WIEC(BA)Cloudtech./V/01
@@ -149,7 +149,7 @@ public class FlatDataStructure implements Parcelable {
 		return filteredEvents;
 	}
 
-	private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
 	//don't use SimpleDateFormat.getDateTimeInstance() because it includes seconds
 
 	public static List<FlatDataStructure> queryfutureEvents(final List<FlatDataStructure>list){
@@ -215,7 +215,7 @@ public class FlatDataStructure implements Parcelable {
 	 * @param data
 	 * @return
 	 */
-	public final static boolean listContainsEvent(final List<FlatDataStructure> list, final FlatDataStructure data){
+	public static final boolean listContainsEvent(final List<FlatDataStructure> list, final FlatDataStructure data){
 		for(FlatDataStructure event:list){
 //			Log.d(TAG, "Eventvergleich1: "+event);
 //			Log.d(TAG, "Eventvergleich2: "+data);
