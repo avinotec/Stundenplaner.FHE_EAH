@@ -51,7 +51,7 @@ import de.fhe.fhemobile.views.navigation.RoomSearchView;
 public class RoomSearchFragment extends FeatureFragment {
 
     @NonNls
-    public static final String PREFS_NAVIGATION_ROOM_CHOICE = "room";
+    public static final String PREFS_NAVIGATION_ROOM_CHOICE = "navigation room";
 
     private RoomSearchView mView;
 
@@ -130,6 +130,9 @@ public class RoomSearchFragment extends FeatureFragment {
                     mView.setBuildingDisplayValue(mChosenBuilding);
                     mView.setFloorDisplayValue(mChosenFloor);
                     mView.setRoomDisplayValue(mChosenRoom.getRoomName());
+
+                    mView.toggleStartInputCardVisibility(true);
+                    mView.toggleGoButtonEnabled(true);
                 }
             }
         } else {
@@ -137,7 +140,6 @@ public class RoomSearchFragment extends FeatureFragment {
             mChosenFloor = null;
             mChosenRoom = null;
         }
-
     }
 
     private void proceedToNavigation(){
@@ -259,7 +261,6 @@ public class RoomSearchFragment extends FeatureFragment {
                     mChosenFloor = null;
                     mStartRoom = null;
                 }
-
 
             } else {
                 Utils.showToast(R.string.timetable_error_incomplete);
