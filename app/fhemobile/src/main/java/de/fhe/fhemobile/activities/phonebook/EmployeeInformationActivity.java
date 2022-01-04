@@ -48,7 +48,7 @@ public class EmployeeInformationActivity extends BaseActivity
             }
         }
 
-        mListFragment     = EmployeeListFragment.newInstance();
+        EmployeeListFragment mListFragment = EmployeeListFragment.newInstance();
         mEmployeeFragment = EmployeeInformationFragment.newInstance();
 
         getSupportFragmentManager().beginTransaction()
@@ -99,7 +99,6 @@ public class EmployeeInformationActivity extends BaseActivity
 
     private PhonebookModel mModel;
 
-    private EmployeeListFragment        mListFragment;
     private EmployeeInformationFragment mEmployeeFragment;
     private EmployeeVo                  mEmployee;
 

@@ -34,9 +34,8 @@ import de.fhe.fhemobile.widgets.stickyHeaderList.IRowItem;
 public class StickyHeaderAdapter extends SectionAdapter {
 
     public StickyHeaderAdapter(final Context _context, final List<IHeaderItem> _items) {
-        mContext        = _context;
         mItems          = _items;
-        mLayoutInflater = LayoutInflater.from(mContext);
+        mLayoutInflater = LayoutInflater.from(_context);
     }
 
     public void setOnItemClickListener(final AdapterView.OnItemClickListener _onItemClickListener) {
@@ -117,7 +116,6 @@ public class StickyHeaderAdapter extends SectionAdapter {
 
     private static final String LOG_TAG = StickyHeaderAdapter.class.getSimpleName();
 
-    private final Context                 mContext;
     private final LayoutInflater          mLayoutInflater;
 
     private List<IHeaderItem>       mItems;
