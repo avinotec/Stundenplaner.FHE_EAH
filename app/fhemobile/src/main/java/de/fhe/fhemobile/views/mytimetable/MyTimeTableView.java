@@ -56,7 +56,6 @@ public class MyTimeTableView extends LinearLayout {
 
     private FragmentManager   mFragmentManager;
 
-    private Button            mAddButton;
     private ListView          mLessonList;
 
     private static MyTimeTableSelectedLessonAdapter myTimeTableSelectedLessonAdapter;
@@ -77,7 +76,7 @@ public class MyTimeTableView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mAddButton      = (Button)            findViewById(R.id.timetableAddLesson);
+        Button mAddButton = (Button) findViewById(R.id.timetableAddLesson);
         mLessonList     = (ListView)          findViewById(R.id.lvLessons);
 
         mAddButton.setOnClickListener(new OnClickListener() {

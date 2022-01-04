@@ -37,7 +37,7 @@ public class NewsListRemoteFactory implements RemoteViewsService.RemoteViewsFact
 
     public NewsListRemoteFactory(Context _context, Intent _intent) {
         mContext  = _context;
-        mWidgetId = _intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+        int mWidgetId = _intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
 
         mItems    = NewsListRemoteFetchService.getNewsItems(mWidgetId).clone();
@@ -108,6 +108,5 @@ public class NewsListRemoteFactory implements RemoteViewsService.RemoteViewsFact
     private static final String LOG_TAG = NewsListRemoteFactory.class.getSimpleName();
 
     private final NewsItemVo[] mItems;
-    private final int          mWidgetId;
     private final Context      mContext;
 }

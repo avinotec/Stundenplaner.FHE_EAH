@@ -40,8 +40,7 @@ public class PhonebookSearchView extends FrameLayout {
     public PhonebookSearchView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        mContext = context;
-        mModel = PhonebookModel.getInstance();
+	    mModel = PhonebookModel.getInstance();
     }
 
     public void initializeView(ViewListener _Listener) {
@@ -102,9 +101,7 @@ public class PhonebookSearchView extends FrameLayout {
 
     private static final String LOG_TAG = PhonebookSearchView.class.getSimpleName();
 
-    private final Context mContext;
-
-    private EditText mFirstName;
+	private EditText mFirstName;
     private EditText mLastName;
     private Button   mSearchButton;
     private ProgressBar mProgressIndicator;

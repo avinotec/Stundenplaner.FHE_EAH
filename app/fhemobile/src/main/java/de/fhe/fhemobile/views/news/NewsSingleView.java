@@ -31,7 +31,6 @@ public class NewsSingleView extends FrameLayout {
 
     public NewsSingleView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mContext = context;
     }
 
     public void setTitle(String _Title) {
@@ -68,8 +67,6 @@ public class NewsSingleView extends FrameLayout {
         mCategories = (TextView) findViewById(R.id.newsSingleCategories);
 
     }
-
-    private final Context mContext;
 
     private TextView mTitle;
     private WebView mText;
