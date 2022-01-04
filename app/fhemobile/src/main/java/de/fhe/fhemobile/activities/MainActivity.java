@@ -277,7 +277,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(final int position, final int id) {
+    public void onNavigationDrawerItemSelected(final int id) {
         // update the main content by replacing fragments
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
