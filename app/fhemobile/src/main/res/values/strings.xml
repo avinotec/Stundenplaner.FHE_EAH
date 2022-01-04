@@ -103,9 +103,6 @@
     <!--    Campus Navigation -->
     <string name="title_scanner_activity">Scanner</string>
     <string name="title_navigation_activity">Navigation</string>
-    <string name="text_view_by_room">Room:</string>
-    <string name="text_view_by_name">Person:</string>
-    <string name="text_view_button_start_location">Your current position:</string>
     <string name="select_from_spinner">Please select</string>
     <string name="campus_overview">Campus Overview</string>
     <string name="building_03_02_01">Building 3, 2 and 1</string>

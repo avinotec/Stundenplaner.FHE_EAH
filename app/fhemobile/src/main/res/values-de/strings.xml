@@ -101,10 +101,6 @@
     <string name="deleteTimetableMessage">Das Semester ist zu Ende. Möchtest du den Stundenplan löschen?</string>
 
     <!--    Campus Navigation-->
-    <string name="text_view_by_room">Raum:</string>
-    <string name="text_view_by_name">Person:</string>
-    <string name="text_view_button_start_location">Deine aktuelle Position:</string>
-    <!-- string name="action_language">Sprache</string -->
     <string name="title_scanner_activity">Scanner</string>
     <string name="title_navigation_activity">Navigation</string>
     <string name="select_from_spinner">Bitte wählen</string>
