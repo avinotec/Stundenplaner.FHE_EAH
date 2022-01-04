@@ -27,6 +27,9 @@ public class Define {
 
 	@NonNls
 	public static final String SHARED_PREFERENCES_KEY_LESSON_LIST = "list";
+	public static final int GREATER=1;
+	private static final int EQUAL=0;
+	public static final int LESSER=-1;
 
 	//created by Nadja 17.11.2021
 	public static class Maps{
@@ -58,7 +61,7 @@ public class Define {
 
 		public static final String FLOORCONNECTION_TYPE_STAIR = "staircase";    //$NON-NLS
 		public static final String FLOORCONNECTION_TYPE_ELEVATOR = "elevator";  //$NON-NLS
-		public static final String FLOORCONNECTION_TYPE_BRIDGE = "bridge"; //$NON-NLS
+		// --Commented out by Inspection (04.01.2022 18:49):public static final String FLOORCONNECTION_TYPE_BRIDGE = "bridge"; //$NON-NLS
 
 		//Size of the grid overlying the floorplan (unit: cells - needs to be integer)
 		//Note: cell numbering at gridded PNGs (docs folder) starts at 0 -> width/height = number + 1
@@ -76,8 +79,8 @@ public class Define {
 	}
 
 /** Push notifications from Google Firebase to the App */
-	@NonNls
-	public final static String PUSH_NOTIFICATION_CHANNEL_ID = "de.fhe.fhemobile.push";
+@NonNls
+public static final String PUSH_NOTIFICATION_CHANNEL_ID = "de.fhe.fhemobile.push";
 	@NonNls
 	public static final String PUSH_NOTIFICATION_CHANNEL_NAME = "Notification";
 	@NonNls
