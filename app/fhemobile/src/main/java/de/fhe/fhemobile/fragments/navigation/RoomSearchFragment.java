@@ -117,7 +117,7 @@ public class RoomSearchFragment extends FeatureFragment {
         super.onResume();
         SharedPreferences mSP = Main.getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         String previousRoomChoice = mSP.getString(PREFS_NAVIGATION_ROOM_CHOICE, "");
-        if(!previousRoomChoice.equals("")){
+        if(!"".equals(previousRoomChoice)){
             for (Room room : MainActivity.rooms){
                 if(previousRoomChoice.equals(room.getRoomName())){
                     mChosenBuilding = room.getBuilding();
