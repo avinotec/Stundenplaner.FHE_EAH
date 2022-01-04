@@ -131,7 +131,7 @@ public class AStar {
                     cellsToWalk.get(new BuildingFloorKey(currentCell)).add(currentCell);
                 }
                 else{
-                    ArrayList<Cell> list = new ArrayList<Cell>();
+                    final ArrayList<Cell> list = new ArrayList<Cell>();
                     list.add(currentCell);
                     cellsToWalk.put(new BuildingFloorKey(currentCell), list);
                 }
@@ -145,7 +145,7 @@ public class AStar {
                     cellsToWalk.get(new BuildingFloorKey(currentCell)).add(currentCell);
                 }
                 else{
-                    ArrayList<Cell> list = new ArrayList<Cell>();
+                    final ArrayList<Cell> list = new ArrayList<Cell>();
                     list.add(currentCell);
                     cellsToWalk.put(new BuildingFloorKey(currentCell), list);
                 }
@@ -158,7 +158,7 @@ public class AStar {
                     cellsToWalk.get(new BuildingFloorKey(currentCell)).add(currentCell);
                 }
                 else{
-                    ArrayList<Cell> list = new ArrayList<Cell>();
+                    final ArrayList<Cell> list = new ArrayList<Cell>();
                     list.add(currentCell);
                     cellsToWalk.put(new BuildingFloorKey(currentCell), list);
                 }
@@ -194,24 +194,22 @@ public class AStar {
 
 
                     //if currentCell is floorconnection then all cells connected by the floorconnection are also considered as neighbors
-                    if(currentCell instanceof FloorConnectionCell){
+                    //if start and destination are located at the same floor,
+                    // floorconnections are not need and thus should not be considered to save runtime
+                    // check exceptional case building 3 and 1, floor -1
+                    if(currentCell instanceof FloorConnectionCell)
+                        if (startCell.getComplex() != destCell.getComplex()
+                                || startCell.getFloorInt() != destCell.getFloorInt()
+                                || checkExceptCaseBuild321FloorUG(startCell, destCell) ) {
 
-                        //if start and destination are located at the same floor,
-                        // floorconnections are not need and thus should not be considered to save runtime
-                        // check exceptional case building 3 and 1, floor -1
-                        if((!startCell.getComplex().equals(destCell.getComplex())
-                                || startCell.getFloorInt() != destCell.getFloorInt())
-                                || checkExceptCaseBuild321FloorUG(startCell, destCell)){
-
-                            ArrayList<FloorConnectionCell> connectedCells = findConnectedCells((FloorConnectionCell) currentCell);
-                            for(FloorConnectionCell neighborCell : connectedCells){
+                            final ArrayList<FloorConnectionCell> connectedCells = findConnectedCells((FloorConnectionCell) currentCell);
+                            for (final FloorConnectionCell neighborCell : connectedCells) {
                                 //get corresponding cell in floorGrid
-                                Cell neighborInGrid = floorGrids.get(neighborCell.getComplex()).get(neighborCell.getFloorInt())
+                                final Cell neighborInGrid = floorGrids.get(neighborCell.getComplex()).get(neighborCell.getFloorInt())
                                         [neighborCell.getXCoordinate()][neighborCell.getYCoordinate()];
                                 updateParentAndPathToCellCosts(neighborInGrid, currentCell);
                             }
                         }
-                    }
 
                     final Cell[][] currentFloorgrid = Objects.requireNonNull(
                             Objects.requireNonNull(floorGrids.get(currentCell.getComplex())).get(currentCell.getFloorInt()));
