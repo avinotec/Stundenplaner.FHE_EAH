@@ -37,11 +37,8 @@ import de.fhe.fhemobile.adapters.navigation.NavigationDialogPagerAdapter;
  */
 public class NavigationDialogView extends LinearLayout {
 
-    private final Context mContext;
-
     public NavigationDialogView(Context context, AttributeSet attrs){
         super(context, attrs);
-        mContext = context;
     }
 
     public void initializeView(@NonNull final FragmentManager _Manager, @NonNull Lifecycle _Lifecycle) {
@@ -77,11 +74,11 @@ public class NavigationDialogView extends LinearLayout {
 
     }
 
-    @Override
-    protected void onFinishInflate(){
-        super.onFinishInflate();
-
-    }
+//    @Override
+//    protected void onFinishInflate(){
+//        super.onFinishInflate();
+//
+//    }
 
 
 }
