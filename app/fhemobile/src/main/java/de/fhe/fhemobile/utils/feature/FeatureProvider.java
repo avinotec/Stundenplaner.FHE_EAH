@@ -87,9 +87,9 @@ public class FeatureProvider {
             list.add(new DrawerItem(Features.FeatureId.SEMESTER_DATA, getFeatureTitle(Features.FeatureId.SEMESTER_DATA)));
         }
 
-        if (Features.PHONEBOOK) {
-            list.add(new DrawerItem(Features.FeatureId.PHONEBOOK, getFeatureTitle(Features.FeatureId.PHONEBOOK)));
-        }
+//        if (Features.PHONEBOOK) {
+//            list.add(new DrawerItem(Features.FeatureId.PHONEBOOK, getFeatureTitle(Features.FeatureId.PHONEBOOK)));
+//        }
 
         if (Features.IMPRESS) {
             list.add(new DrawerItem(Features.FeatureId.IMPRESS, getFeatureTitle(Features.FeatureId.IMPRESS)));
