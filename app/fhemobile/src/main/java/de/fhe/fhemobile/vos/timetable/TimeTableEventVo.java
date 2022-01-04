@@ -51,7 +51,8 @@ public class TimeTableEventVo implements Parcelable {
         mTitle = _title;
     }
 
-    public @NonNull String getShortTitle() {
+    @NonNull
+    public String getShortTitle() {
         //Todo: vorübergehender Fix für Veranstaltungen mit shortTitle = null
         return mShortTitle != null ? mShortTitle : mTitle;
     }

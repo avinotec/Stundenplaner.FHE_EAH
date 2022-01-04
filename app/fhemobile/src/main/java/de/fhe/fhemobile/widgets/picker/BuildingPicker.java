@@ -21,7 +21,6 @@ package de.fhe.fhemobile.widgets.picker;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.fhe.fhemobile.models.navigation.Building;

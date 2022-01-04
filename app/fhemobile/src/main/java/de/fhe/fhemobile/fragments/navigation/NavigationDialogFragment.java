@@ -68,8 +68,8 @@ public class NavigationDialogFragment extends FeatureFragment {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//    }
 }

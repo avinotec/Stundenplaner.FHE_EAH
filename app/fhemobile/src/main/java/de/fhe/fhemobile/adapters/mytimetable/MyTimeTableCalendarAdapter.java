@@ -34,7 +34,7 @@ import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
 public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
-	final private static String TAG = "MyTimeTableCalendarAdapter";
+	private static final String TAG = "MyTimeTableCalendarAdapter";
 
 	private final Context context;
 	public MyTimeTableCalendarAdapter(Context context) {
@@ -57,7 +57,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	}
 
 	//private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-	private final static DateFormat sdf = SimpleDateFormat.getDateInstance();
+	private static final DateFormat sdf = SimpleDateFormat.getDateInstance();
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
