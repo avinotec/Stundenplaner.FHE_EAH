@@ -48,15 +48,17 @@ public class Cell {
     public Cell() {
     }
 
-    public Cell(final int xCoordinate, final int yCoordinate, final String building, final String floor, final boolean walkable) {
-        this.xCoordinate = xCoordinate;
-        this.yCoordinate = yCoordinate;
-        this.building = new Building(building);
-        this.floor = floor;
-        this.walkable = walkable;
-        this.costPassingCell = COSTS_CELL;
-        this.key = building + getFloorString() + xCoordinate + yCoordinate;
-    }
+// --Commented out by Inspection START (04.01.2022 18:46):
+//    public Cell(final int xCoordinate, final int yCoordinate, final String building, final String floor, final boolean walkable) {
+//        this.xCoordinate = xCoordinate;
+//        this.yCoordinate = yCoordinate;
+//        this.building = new Building(building);
+//        this.floor = floor;
+//        this.walkable = walkable;
+//        this.costPassingCell = COSTS_CELL;
+//        this.key = building + getFloorString() + xCoordinate + yCoordinate;
+//    }
+// --Commented out by Inspection STOP (04.01.2022 18:46)
 
     public Cell(final int xCoordinate, final int yCoordinate, final Complex complex, final String floor, final boolean walkable) {
         this.xCoordinate = xCoordinate;
