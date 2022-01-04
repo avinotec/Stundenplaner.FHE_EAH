@@ -48,7 +48,7 @@ import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 public class MyTimeTableCalendarFragment extends FeatureFragment {
 
 	private MyTimeTableCalendarView mView;
-	private final static String PREFS_LAST_APP_OPENED = "lastAppOpened";
+	private static final String PREFS_LAST_APP_OPENED = "lastAppOpened";
 
 	/**
 	 * Use this factory method to create a new instance of
