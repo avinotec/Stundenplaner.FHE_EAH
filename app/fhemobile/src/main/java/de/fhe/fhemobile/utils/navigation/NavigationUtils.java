@@ -33,8 +33,8 @@ public class NavigationUtils {
     private static String getFileNameOfFloorPlan(final Complex complex, final String floor){
 
         String floorCorrected;
-        if(floor.equals("-1")) floorCorrected = "ug1";
-        else if(floor.equals("-2")) floorCorrected = "ug2";
+        if("-1".equals(floor)) floorCorrected = "ug1";
+        else if("-2".equals(floor)) floorCorrected = "ug2";
         else floorCorrected = floor;
 
         String filename = "building_" + complex.toString() + "_floor_" + floorCorrected;
@@ -93,7 +93,7 @@ public class NavigationUtils {
                 currentFloor = "03";
                 break;
             case 4:
-                if(complex.equals(Complex.COMPLEX_5)){
+                if(complex == Complex.COMPLEX_5){
                     currentFloor = "3Z";
                 } else {
                     currentFloor = "04";
@@ -156,8 +156,8 @@ public class NavigationUtils {
      */
     public static boolean checkExceptCaseBuild321FloorUG(Cell cell1, Cell cell2){
         if((cell1.getFloorInt() == -1 && cell2.getFloorInt() == -1) &&
-                ((cell1.getBuilding().equals("03") && cell2.getBuilding().equals("01"))
-                    || (cell1.getBuilding().equals("01") && cell2.getBuilding().equals("03")))){
+                (("03".equals(cell1.getBuilding()) && "01".equals(cell2.getBuilding()))
+                    || ("01".equals(cell1.getBuilding()) && "03".equals(cell2.getBuilding())))){
             return true;
         }else{
             return false;

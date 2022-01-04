@@ -48,7 +48,7 @@ public class PhonebookModel extends EventDispatcher {
             
             // remove "-;" from title, when the person has no title available
             for (EmployeeVo employee : mFoundEmployees) {
-                if (employee.getTitle().equals("-;")) {
+                if ("-;".equals(employee.getTitle())) {
                     employee.setTitle("");
                 }
             }
