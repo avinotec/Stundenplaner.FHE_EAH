@@ -84,7 +84,7 @@ public class PhonebookAdapter extends BaseAdapter {
 
         final EmployeeVo employee = mListElements.get(position);
         final String title = employee.getTitle();
-        if(title.length() == 0) {
+        if(title.isEmpty()) {
             viewHolder.mFullName.setText(employee.getFirstName() + " " + employee.getLastName()); // $NON-NLS
         }
         else {
