@@ -391,7 +391,7 @@ public class NetworkHandler {
 	 */
 	public void registerTimeTableChanges(final String json, final Callback<ResponseModel>_Callback){
 		Assert.assertTrue( mApi != null );
-		final RequestBody body =RequestBody.create( MediaType.parse("application/json"), json);
+		final RequestBody body =RequestBody.create( json, MediaType.parse("application/json"));
 		mApi.registerTimeTableChanges(body).enqueue(_Callback);
 	}
 
@@ -402,7 +402,7 @@ public class NetworkHandler {
 	 */
 	public void getTimeTableChanges(final String json, final Callback<ResponseModel>_Callback){
 		Assert.assertTrue( mApi != null );
-		final RequestBody body =RequestBody.create( MediaType.parse("application/json"), json);
+		final RequestBody body =RequestBody.create( json, MediaType.parse("application/json"));
 		mApi.getTimeTableChanges(body).enqueue(_Callback);
 	}
 
