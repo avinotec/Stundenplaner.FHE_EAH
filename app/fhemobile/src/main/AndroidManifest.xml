@@ -133,23 +133,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.fhe.fhemobile.activities.MainActivity" />
         </activity>
-        <activity
-            android:name=".activities.ScannerActivity"
-            android:label="@string/title_scanner_activity"
-            android:parentActivityName=".activities.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.fhe.fhemobile.activities.MainActivity" />
-        </activity>
-        <activity
-            android:name=".activities.NavigationActivityOLD"
-            android:label="@string/title_navigation_activity"
-            android:parentActivityName=".activities.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.fhe.fhemobile.activities.MainActivity" />
-        </activity>
-
         <activity android:name=".widgets.homescreen.NewsListWidgetConfigureActivity"
             android:exported="true">
             <intent-filter>
