@@ -222,7 +222,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     private void initSelectionSite(){
         final Gson gson = new Gson();
 
-        sharedPreferences = this.getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = this.getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
         if(sharedPreferences.contains(PREFS_CHOSEN_COURSE)){
@@ -514,7 +514,6 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         }
     };
 
-    private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private AddLessonView     mView;
     private TimeTableResponse mResponse;
