@@ -90,7 +90,7 @@ public class PersonSearchFragment extends FeatureFragment {
         SharedPreferences mSP = Main.getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         String previousPersonChoice = mSP.getString(PREFS_NAVIGATION_PERSON_CHOICE, "");
 
-        if(!previousPersonChoice.equals("")){
+        if(!"".equals(previousPersonChoice)){
             Person chosenPerson = persons.get(previousPersonChoice);
             if(chosenPerson != null){
                 String chosenPersonsRoom = chosenPerson.getRoom();
