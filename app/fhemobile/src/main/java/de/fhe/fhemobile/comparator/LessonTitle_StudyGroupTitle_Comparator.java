@@ -20,20 +20,19 @@ import org.junit.Assert;
 
 import java.util.Comparator;
 
+import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
 public class LessonTitle_StudyGroupTitle_Comparator implements Comparator<FlatDataStructure> {
 	private static final String TAG = "LessonTitle_StudyGroupT";
 
-	private final static int GREATER=1;
-	private final static int EQUAL=0;
-	private final static int LESSER=-1;
-
 	private static final LessonTitle_StudyGroupTitle_Comparator lessonTitle_StudyGroupTitle_Comparator = new LessonTitle_StudyGroupTitle_Comparator();
 
-	public static int compareStatic(final FlatDataStructure o1, final FlatDataStructure o2) {
-		return lessonTitle_StudyGroupTitle_Comparator.compare(o1, o2);
-	}
+// --Commented out by Inspection START (04.01.2022 18:51):
+//	public static int compareStatic(final FlatDataStructure o1, final FlatDataStructure o2) {
+//		return lessonTitle_StudyGroupTitle_Comparator.compare(o1, o2);
+//	}
+// --Commented out by Inspection STOP (04.01.2022 18:51)
 
 	/**
 	 * Similar to {@link java.util.Comparator#compare(Object, Object)}, should compare two and
@@ -73,9 +72,9 @@ public class LessonTitle_StudyGroupTitle_Comparator implements Comparator<FlatDa
 		final int courseCompareResult = lessonTitle1.compareTo(lessonTitle2);
 //		Log.d(TAG, "compare Title1: "+lessonTitle1+" Title2:"+lessonTitle2 +" result: " +courseCompareResult);
 		if (courseCompareResult > 0) {
-			return GREATER;
+			return Define.GREATER;
 		} else if(courseCompareResult < 0) {
-			return LESSER;
+			return Define.LESSER;
 		}
 		else{
 			final int studyGroupCompareResult = studyGroupTitle1.compareTo(studyGroupTitle2);
