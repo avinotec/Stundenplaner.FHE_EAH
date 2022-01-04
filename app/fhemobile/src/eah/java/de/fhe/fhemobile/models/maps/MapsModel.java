@@ -63,7 +63,7 @@ public class MapsModel {
         return ourInstance;
     }
 
-    final public List<MapCollectionVo> getMaps() {
+    public final List<MapCollectionVo> getMaps() {
         return mMaps;
     }
 

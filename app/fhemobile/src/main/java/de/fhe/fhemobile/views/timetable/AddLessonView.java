@@ -94,7 +94,7 @@ public class AddLessonView extends LinearLayout {
     public void resetSemesterPicker() {
         mSemesterPicker.reset(true);
     }
-    public void setmSemesterPickerEnabled(boolean enabled){
+    public void setmSemesterPickerEnabled(final boolean enabled){
 
         mSemesterPicker.toggleEnabled(enabled);
     }
@@ -136,19 +136,19 @@ public class AddLessonView extends LinearLayout {
         void onStudyCourseChosen(String _TermId);
         void onSemesterChosen(String _GroupId);
         //TODO not yet implemented?
-        void onStudyGroupChosen(String _TimeTableId);
-        void onSearchClicked();
+        //not used? void onStudyGroupChosen(String _TimeTableId);
+        //not used? void onSearchClicked();
     }
 
-    public void setSelectedSemesterText(String text){
+    public void setSelectedSemesterText(final String text){
         mSemesterPicker.setDisplayValue(text);
     }
-    public void setSelectedGroupText(String text){
+    public void setSelectedGroupText(final String text){
         mStudyCoursePicker.setDisplayValue(text);
     }
 
     public void setEmptyText(final String text){
-        TextView emptyView = new TextView( getContext() );
+        final TextView emptyView = new TextView( getContext() );
         emptyView.setText(text);
         mLessonList.setEmptyView(emptyView);
     }

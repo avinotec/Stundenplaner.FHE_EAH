@@ -45,7 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private static final String TAG = "BaseActivity";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_base);
@@ -66,7 +66,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         mTabHost.setup();
         mTabHost.getTabWidget().setDividerDrawable(null);
-        mTabHost.setBackgroundDrawable(mToolbar.getBackground().getConstantState().newDrawable());
+        mTabHost.setBackground(mToolbar.getBackground().getConstantState().newDrawable());
 
     }
 
@@ -75,14 +75,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        TabWidget widget = mTabHost.getTabWidget();
+        final TabWidget widget = mTabHost.getTabWidget();
         // Change tab text color to preferred color
         for (int i = 0; i < widget.getChildCount(); i++) {
-            View v = widget.getChildAt(i);
-            TextView tv = (TextView) v.findViewById(android.R.id.title);
+            final View v = widget.getChildAt(i);
+            final TextView tv = (TextView) v.findViewById(android.R.id.title);
             if (tv == null) {
                 continue;
             }
+            int mTabSelectedTextColor = 0xFFFFFFFF;
             tv.setTextColor(mTabSelectedTextColor);
             tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.tab_text_size));
             v.setBackgroundResource(R.drawable.tab_indicator_ab_material);
@@ -107,10 +108,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 */
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         // das zurück gehen mit dem Pfeil oben links
-        if (item.getItemId() == android.R.id.home) {
-        }
+//        if (item.getItemId() == android.R.id.home) {
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -122,8 +123,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 //    }
 // --Commented out by Inspection STOP (01.11.2019 00:18)
 
-    protected void setBaseContent(int _layoutResource) {
-        mContent = View.inflate(this, _layoutResource, null);
+    protected void setBaseContent(final int _layoutResource) {
+        View mContent = View.inflate(this, _layoutResource, null);
         mContainer.addView(mContent);
     }
 
@@ -134,11 +135,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 //    }
 // --Commented out by Inspection STOP (01.11.2019 00:18)
 
-    protected void showTabs(boolean _show) {
+    protected void showTabs(final boolean _show) {
         mTabHost.setVisibility(_show ? View.VISIBLE : View.GONE);
     }
 
-    protected void showShadow(boolean _show) {
+    protected void showShadow(final boolean _show) {
         mShadow.setVisibility(_show ? View.VISIBLE : View.GONE);
     }
 
@@ -155,19 +156,19 @@ public abstract class BaseActivity extends AppCompatActivity {
 //    }
 // --Commented out by Inspection STOP (01.11.2019 00:17)
 
-    protected void setSpinnerListener(AdapterView.OnItemSelectedListener _listener) {
+    protected void setSpinnerListener(final AdapterView.OnItemSelectedListener _listener) {
         mSpinner.setOnItemSelectedListener(_listener);
     }
 
-    protected void setSpinnerAdapter(SpinnerAdapter _adapter) {
+    protected void setSpinnerAdapter(final SpinnerAdapter _adapter) {
         mSpinner.setAdapter(_adapter);
     }
 
-    protected void setSelectedSpinnerItem(int _index) {
+    protected void setSelectedSpinnerItem(final int _index) {
         mSpinner.setSelection(_index);
     }
 
-    protected void setSelectedSpinnerItem(int _index, boolean _animate) {
+    protected void setSelectedSpinnerItem(final int _index, final boolean _animate) {
         mSpinner.setSelection(_index, _animate);
     }
 
@@ -183,12 +184,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected ActionBar mActionBar;
 
     private FrameLayout mContainer;
-    private View        mContent;
     private TabHost     mTabHost;
     private ImageView   mShadow;
     private Spinner     mSpinner;
 
-    private final int         mTabSelectedTextColor   = 0xFFFFFFFF;
     // --Commented out by Inspection (01.11.2019 00:18):private int         mTabUnselectedTextColor = 0xFFFFFF00;
     // --Commented out by Inspection (01.11.2019 00:18):private boolean     mAdsEnabled             = false;
 }

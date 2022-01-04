@@ -28,7 +28,7 @@ public class Building {
     private Complex mComplex;
     private String mBuilding;
 
-    public Building(String building){
+    public Building(final String building){
         this.mBuilding = building;
         this.mComplex = Complex.getEnum(building);
     }
@@ -37,7 +37,7 @@ public class Building {
      * Constructor for non-walkable cells without a building
      * @param complex
      */
-    Building(Complex complex){
+    Building(final Complex complex){
         this.mBuilding = "_";
         this.mComplex = complex;
     }

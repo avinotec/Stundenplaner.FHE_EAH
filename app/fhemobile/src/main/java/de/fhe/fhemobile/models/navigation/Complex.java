@@ -30,7 +30,7 @@ public enum Complex {
     COMPLEX_321,
     COMPLEX_5;
 
-    public static Complex getEnum(String building) {
+    public static Complex getEnum(final String building) {
         switch (building) {
             case "01":
             case "02":

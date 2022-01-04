@@ -25,7 +25,7 @@ import android.widget.FrameLayout;
  */
 public class AnimFrameLayout extends FrameLayout {
     //AnimFrameLayout-------------------------------------------------------------------------------
-    public AnimFrameLayout(Context _context, AttributeSet _attrs) {
+    public AnimFrameLayout(final Context _context, final AttributeSet _attrs) {
         super(_context, _attrs);
     }
 

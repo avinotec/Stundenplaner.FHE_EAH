@@ -37,7 +37,7 @@ public class TimeTableCallback<T> implements Callback<T> {
 	/**
 	 *
 	 */
-	final private FlatDataStructure data;
+	private final FlatDataStructure data;
 
 	/**
 	 *

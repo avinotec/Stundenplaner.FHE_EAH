@@ -26,7 +26,7 @@ import java.util.ArrayList;
 /**
  * Created by paul on 16.03.15.
  */
-public class TimeTableDayVo implements Parcelable {
+public final class TimeTableDayVo implements Parcelable {
 
 // --Commented out by Inspection START (02.11.2021 17:33):
 //    public TimeTableDayVo() {

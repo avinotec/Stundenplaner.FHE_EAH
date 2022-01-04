@@ -100,7 +100,7 @@ public class Utils {
         try {
             return Main.getAppContext().getResources().getIdentifier(_variableName, _resourcename, Main.getAppContext().getPackageName());
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Fehler bei der Ressourcensuche",e);
             return -1;
         }
     }
@@ -109,7 +109,7 @@ public class Utils {
      * hides the current soft keyboard, if it is open.
      */
     public static void hideKeyboard(final AppCompatActivity _activity) {
-        InputMethodManager inputManager = (InputMethodManager) _activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        final InputMethodManager inputManager = (InputMethodManager) _activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 
         if (_activity.getCurrentFocus() != null) {
             inputManager.hideSoftInputFromWindow(_activity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
@@ -122,7 +122,7 @@ public class Utils {
      *
      * @param _ResId
      */
-    public static void showToast(final @StringRes int _ResId) {
+    public static void showToast(@StringRes final int _ResId) {
         showToast(Main.getAppContext(), _ResId);
     }
 
@@ -131,7 +131,7 @@ public class Utils {
      * @param _Context
      * @param _ResId
      */
-    public static void showToast(final Context _Context, final @StringRes int _ResId) {
+    public static void showToast(final Context _Context, @StringRes final int _ResId) {
         Toast.makeText(_Context, _ResId,
                 Toast.LENGTH_SHORT).show();
     }

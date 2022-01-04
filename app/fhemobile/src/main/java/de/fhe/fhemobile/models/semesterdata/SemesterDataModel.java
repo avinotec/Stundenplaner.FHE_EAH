@@ -25,12 +25,12 @@ import de.fhe.fhemobile.vos.semesterdata.SemesterVo;
  */
 public class SemesterDataModel extends EventDispatcher {
 
-    public class ChangeEvent extends SimpleEvent {
+    public static class ChangeEvent extends SimpleEvent {
         public static final String RECEIVED_SEMESTER_DATA       = "receivedSemesterData";
         public static final String RECEIVED_EMPTY_SEMESTER_DATA = "receivedEmptySemesterData";
         public static final String SEMESTER_SELECTION_CHANGED   = "semesterSelectionChanged";
 
-        public ChangeEvent(String type) {
+        public ChangeEvent(final String type) {
             super(type);
         }
     }
@@ -39,7 +39,7 @@ public class SemesterDataModel extends EventDispatcher {
         return mData;
     }
 
-    public void setData(SemesterVo[] _Data) {
+    public void setData(final SemesterVo[] _Data) {
         mData = _Data;
         if(mData != null) {
             notifyChange(ChangeEvent.RECEIVED_SEMESTER_DATA);
@@ -53,7 +53,7 @@ public class SemesterDataModel extends EventDispatcher {
         return mChosenSemester;
     }
 
-    public void setChosenSemester(int _chosenSemester) {
+    public void setChosenSemester(final int _chosenSemester) {
         if(_chosenSemester != mChosenSemester) {
             mChosenSemester = _chosenSemester;
             notifyChange(ChangeEvent.SEMESTER_SELECTION_CHANGED);
@@ -70,7 +70,7 @@ public class SemesterDataModel extends EventDispatcher {
     private SemesterDataModel() {
     }
 
-    private void notifyChange(String type) {
+    private void notifyChange(final String type) {
         dispatchEvent(new ChangeEvent(type));
     }
 

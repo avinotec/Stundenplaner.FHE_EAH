@@ -145,16 +145,16 @@ public class HeaderListView extends RelativeLayout {
 
                 actualSection = mAdapter.getSection(realFirstVisibleItem);
 
-                boolean currIsHeader = mAdapter.isSectionHeader(realFirstVisibleItem);
-                boolean prevHasHeader = mAdapter.hasSectionHeaderView(actualSection - 1);
-                boolean nextHasHeader = mAdapter.hasSectionHeaderView(actualSection + 1);
-                boolean currHasHeader = mAdapter.hasSectionHeaderView(actualSection);
-                boolean currIsLast = mAdapter.getRowInSection(realFirstVisibleItem) == mAdapter.numberOfRows(actualSection) - 1;
-                boolean prevHasRows = mAdapter.numberOfRows(actualSection - 1) > 0;
-                boolean currIsFirst = mAdapter.getRowInSection(realFirstVisibleItem) == 0;
+                final boolean currIsHeader = mAdapter.isSectionHeader(realFirstVisibleItem);
+                final boolean prevHasHeader = mAdapter.hasSectionHeaderView(actualSection - 1);
+                final boolean nextHasHeader = mAdapter.hasSectionHeaderView(actualSection + 1);
+                final boolean currHasHeader = mAdapter.hasSectionHeaderView(actualSection);
+                final boolean currIsLast = mAdapter.getRowInSection(realFirstVisibleItem) == mAdapter.numberOfRows(actualSection) - 1;
+                final boolean prevHasRows = mAdapter.numberOfRows(actualSection - 1) > 0;
+                final boolean currIsFirst = mAdapter.getRowInSection(realFirstVisibleItem) == 0;
 
-                boolean needScrolling = currIsFirst && !currHasHeader && prevHasHeader && realFirstVisibleItem != firstVisibleItem;
-                boolean needNoHeaderUpToHeader = currIsLast && currHasHeader && !nextHasHeader && realFirstVisibleItem == firstVisibleItem && Math.abs(mListView.getChildAt(0).getTop()) >= mListView.getChildAt(0).getHeight() / 2;
+                final boolean needScrolling = currIsFirst && !currHasHeader && prevHasHeader && realFirstVisibleItem != firstVisibleItem;
+                final boolean needNoHeaderUpToHeader = currIsLast && currHasHeader && !nextHasHeader && realFirstVisibleItem == firstVisibleItem && Math.abs(mListView.getChildAt(0).getTop()) >= mListView.getChildAt(0).getHeight() / 2;
                 
                 noHeaderUpToHeader = false;
                 if (currIsHeader && !prevHasHeader && firstVisibleItem >= 0) {
