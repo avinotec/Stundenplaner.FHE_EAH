@@ -67,9 +67,8 @@ public class NavigationView extends LinearLayout {
         mTextViewDest.setText(getResources().getString(R.string.navigation_dest) +"   "+ destRoom.getRoomName());
 
         //set size of a floor plan cell
-        int displayWidth = getResources().getDisplayMetrics().widthPixels;
-        cellWidth = displayWidth / cellgrid_width;
-        cellHeight = cellWidth;
+        final int displayWidth = getResources().getDisplayMetrics().widthPixels;
+        cellHeight = cellWidth = displayWidth / cellgrid_width;
 
         //set listeners for buttons navigating between the floorplans
         mButtonPrevPlan.setOnClickListener(new OnClickListener() {
@@ -282,7 +281,7 @@ public class NavigationView extends LinearLayout {
         Complex complex = fCell.getComplex();
         String floor = fCell.getFloorString();
 
-        if (fCell.getComplex().equals(complex)
+        if (fCell.getComplex() == complex
                 && fCell.getFloorString().equals(floor)) {
 
             if (fCell.getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_STAIR)) {

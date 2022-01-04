@@ -139,10 +139,10 @@ public class NavigationFragment extends FeatureFragment {
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//    }
 
     /**
      * Set currentFloorPlan to the next one, display floorplan image and navigationroute
@@ -271,13 +271,13 @@ public class NavigationFragment extends FeatureFragment {
             mView.drawAllPathCells(currentFloorPlan, cellsToWalk);
         }
 
-        if(mStartRoom.getComplex().equals(currentFloorPlan.getComplex())
+        if(mStartRoom.getComplex() == currentFloorPlan.getComplex()
                 && mStartRoom.getFloorInt() == (currentFloorPlan.getFloorInt()) ){
             //Add icon for current user location room to overlay
             mView.drawStartLocation(mStartRoom);
         }
 
-        if(mDestRoom.getComplex().equals(currentFloorPlan.getComplex())
+        if(mDestRoom.getComplex() == currentFloorPlan.getComplex()
                 && mDestRoom.getFloorInt() == currentFloorPlan.getFloorInt()) {
             mView.drawDestinationLocation(mDestRoom); //Add destination location room icon to overlay
         }

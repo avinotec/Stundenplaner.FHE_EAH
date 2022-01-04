@@ -92,7 +92,7 @@ public class RouteCalculator {
 
             //ROUTE OHNE GEBÄUDEWECHSEL
             //route just within one complex, user does not have to change between complexes
-            if(startComplex.equals(destLocation.getComplex())){
+            if(startComplex == destLocation.getComplex()){
                 //construct an instance of the Navigation Algorithm (AStar)
                 AStar aStar = new AStar(startLocation, destLocation, floorGrids, floorConnections);
                 //compute route and save it to cellsToWalk
@@ -112,7 +112,7 @@ public class RouteCalculator {
 
                     //use exitIt as exit if exitIt belongs to start complex
                     // and is an exit to the destination complex
-                    if(exitIt.getComplex().equals(startComplex)){
+                    if(exitIt.getComplex() == startComplex){
                         if(exitIt.getExitTo().contains(destComplex)){
                             if(exit == null) {
                                 exit = exitIt;
@@ -126,7 +126,7 @@ public class RouteCalculator {
 
                     //use exitIt as entry if exitIt belongs to the destination complex
                     // and is an entry when coming from the start complex
-                    if (exitIt.getComplex().equals(destComplex)) {
+                    if (exitIt.getComplex() == destComplex) {
                         if (exitIt.getEntryFrom().contains(startComplex)) {
                             if (entry == null) {
                                 entry = exitIt;
@@ -181,16 +181,16 @@ public class RouteCalculator {
         //für einen Komplex/Gebäude werden immer alle floorgrids hinzugefügt,
         //es werden nur Gebäude ausgelassen die weder Start noch Ziel enthalten
         try {
-            if(startComplex.equals(Complex.COMPLEX_321)
-                    || destinationComplex.equals(Complex.COMPLEX_321)){
+            if(startComplex == Complex.COMPLEX_321
+                    || destinationComplex == Complex.COMPLEX_321){
                 floorGrids.put(Complex.COMPLEX_321, new HashMap<>());
 
                 for(int i = -1; i <= 4; i++){
                     floorGrids.get(Complex.COMPLEX_321).put(i, buildFloorGrid(Complex.COMPLEX_321, i));
                 }
             }
-            if(startComplex.equals(Complex.COMPLEX_4)
-                    || destinationComplex.equals(Complex.COMPLEX_4)){
+            if(startComplex == Complex.COMPLEX_4
+                    || destinationComplex == Complex.COMPLEX_4){
                 floorGrids.put(Complex.COMPLEX_4, new HashMap<>());
 
                 for(int i = -1; i <= 3; i++){
@@ -198,8 +198,8 @@ public class RouteCalculator {
 
                 }
             }
-            if(startComplex.equals(Complex.COMPLEX_5)
-                    || destinationComplex.equals(Complex.COMPLEX_5)){
+            if(startComplex == Complex.COMPLEX_5
+                    || destinationComplex == Complex.COMPLEX_5){
                 floorGrids.put(Complex.COMPLEX_5, new HashMap<>());
 
                 //floorInt = 4 is floor 3Z
@@ -226,31 +226,28 @@ public class RouteCalculator {
         final String floor = floorIntToString(complex, floorInt);
 
         try {
-            final JSONHandler jsonHandler = new JSONHandler();
-            String json;
-
             //Get floor plan JSON from assets
-            String filename = getPathToFloorPlanGrid(complex, floor);
-            json = JSONHandler.readFloorGridFromAssets(context, filename);
-            final HashMap<String, Cell> walkableCells = jsonHandler.parseJsonWalkableCells(json);
+            final String filename = getPathToFloorPlanGrid(complex, floor);
+            final String json = JSONHandler.readFloorGridFromAssets(context, filename);
+            final HashMap<String, Cell> walkableCells = JSONHandler.parseJsonWalkableCells(json);
 
             //fill in rooms
             if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(context);
             for(final Room r : MainActivity.rooms){
-                if(r.getComplex().equals(complex) && r.getFloorString().equals(floor)){
+                if(r.getComplex() == complex && r.getFloorString().equals(floor)){
                     floorGrid[r.getXCoordinate()][r.getYCoordinate()] = r;
                 }
             }
             //fill in exits
             for(final Exit ex : exits){
-                if(ex.getComplex().equals(complex) && ex.getFloorString().equals(floor)){
+                if(ex.getComplex() == complex && ex.getFloorString().equals(floor)){
                     floorGrid[ex.getXCoordinate()][ex.getYCoordinate()] = ex;
                 }
             }
             //fill in floorconnections
             for(final FloorConnection fc : floorConnections){
                 for(final FloorConnectionCell cell : fc.getConnectedCells())
-                    if(cell.getComplex().equals(complex) && cell.getFloorString().equals(floor)){
+                    if(cell.getComplex() == complex && cell.getFloorString().equals(floor)){
                         floorGrid[cell.getXCoordinate()][cell.getYCoordinate()] = cell;
                     }
             }
