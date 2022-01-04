@@ -115,9 +115,9 @@ public class MyTimeTableFragment extends FeatureFragment {
 		}
 	}
 
-	private final static int CHANGEREASON_EDIT = 1;
-	private final static int CHANGEREASON_NEW = 3;
-	private final static int CHANGEREASON_DELETE = 2;
+	private static final int CHANGEREASON_EDIT = 1;
+	private static final int CHANGEREASON_NEW = 3;
+	private static final int CHANGEREASON_DELETE = 2;
 
 	@Override
 	public void onDetach() {
@@ -162,7 +162,7 @@ public class MyTimeTableFragment extends FeatureFragment {
 							try {
 								sErrorText = response.errorBody().string();
 							} catch (IOException e) {
-								e.printStackTrace();
+								Log.e(TAG,"Fehler im Netzwerk",e);
 							}
 							Log.d(TAG, "Error in Schedule Change Server: " + sErrorText);
 
