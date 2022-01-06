@@ -441,6 +441,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             }
         }
 
+/*        not used:
+
         @Override
         public void onStudyGroupChosen(final String _TimeTableId) {
             // empty
@@ -449,7 +451,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         @Override
         public void onSearchClicked() {
             // empty
-        }
+        }*/
 
     };
 /*
