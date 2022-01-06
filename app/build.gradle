@@ -39,7 +39,6 @@ buildscript {
     repositories {
         google()
         maven { url 'https://maven.google.com' }
-        //maven { url "https://dl.bintray.com/populov/maven" }
         maven { url "https://jitpack.io" }
         mavenCentral()
     }
@@ -65,7 +64,6 @@ buildscript {
  */
 allprojects {
     repositories {
-        //maven { url "https://dl.bintray.com/populov/maven" }
         maven { url "https://jitpack.io" }
         google()
         mavenCentral()
