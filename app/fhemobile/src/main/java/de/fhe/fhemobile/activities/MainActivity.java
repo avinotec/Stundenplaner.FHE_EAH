@@ -68,7 +68,6 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements DrawerFragment.NavigationDrawerCallbacks {
     private static final String TAG = "MainActivity";
 
-    public static List<FlatDataStructure> completeLessons = new ArrayList<>();
     private final int CHANGEREASON_EDIT = 1;
     private final int CHANGEREASON_NEW = 3;
     private final int CHANGEREASON_DELETE = 2;
@@ -217,13 +216,12 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 //                        // A null listener allows the button to dismiss the dialog and take no further action.
 //                        .show();
 
-                    //todo: folgender Code basiert auf generateNegativeList welche wie es scheint nur Änderungen der Veranstaltungen in selectedLessons berücksichtigt
-                    // --> auch Änderungen die nicht selectedLessons betreffen aber Veranstaltungen in completeLessons müssen eingebunden werden
+                    //folgender Code basiert auf generateNegativeList welche wie es Änderungen der Veranstaltungen in selectedCourses berücksichtigt
 
                     for(final ResponseModel.Change change : changes){
 
                         // Shortcut to the list
-                        final List<FlatDataStructure> myTimetableList = MyTimeTableView.getLessons();
+                        final List<FlatDataStructure> myTimetableList = MyTimeTableView.getSelectedCourses();
 
                         //Aenderung einer Veranstaltung: suche das Event (= einzelne Veranstaltung) und ueberschreibe ihre Daten
                         if(change.getChangesReason() == CHANGEREASON_EDIT) {
@@ -242,8 +240,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                                             myTimetableList, change.getSetSplusKey()).get(0).copy();
                             event.setEvent(change.getNewEventJson());
 
-                            MyTimeTableView.addLesson(event);
-                            completeLessons.add(event);
+                            MyTimeTableView.addCourse(event);
 
                         }
                         //Loeschen einer Veranstaltung: Suche die Veranstaltung mit der SplusID und lösche sie aus der Liste.
@@ -251,8 +248,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                             final FlatDataStructure event = FlatDataStructure.getEventByID(
                                     myTimetableList, change.getNewEventJson().getUid());
 
-                            MyTimeTableView.removeLesson(event);
-                            completeLessons.remove(event);
+                            MyTimeTableView.removeCourse(event);
                         }
 
 

@@ -33,6 +33,7 @@ import com.google.gson.Gson;
 import org.junit.Assert;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
@@ -58,9 +59,16 @@ import retrofit2.Response;
  * create an instance of this fragment.
  */
 public class MyTimeTableFragment extends FeatureFragment {
+
 	public static final String TAG = "MyTimeTableFragment";
 
-	//unused: private TimeTableResponse mResponse;
+
+	private static final int CHANGEREASON_EDIT = 1;
+	private static final int CHANGEREASON_NEW = 3;
+	private static final int CHANGEREASON_DELETE = 2;
+	//List of all courses chosen in MyTimeTable
+	public static List<FlatDataStructure> allCoursesOfSelectedSemesters = new ArrayList<>();
+
 
 	/**
 	 * Use this factory method to create a new instance of
@@ -82,10 +90,6 @@ public class MyTimeTableFragment extends FeatureFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-//		if (getArguments() != null) {
-//
-//		}
 	}
 
 	@Override
@@ -110,32 +114,27 @@ public class MyTimeTableFragment extends FeatureFragment {
 	@Override
 	public void onAttach(@NonNull Context context) {
 		super.onAttach(context);
-		if(!MyTimeTableView.getLessons().isEmpty()){
-			Collections.sort(MyTimeTableView.getLessons(),new LessonTitle_StudyGroupTitle_Comparator());
+		if(!MyTimeTableView.getSelectedCourses().isEmpty()){
+			Collections.sort(MyTimeTableView.getSelectedCourses(),new LessonTitle_StudyGroupTitle_Comparator());
 		}
 	}
-
-	private static final int CHANGEREASON_EDIT = 1;
-	private static final int CHANGEREASON_NEW = 3;
-	private static final int CHANGEREASON_DELETE = 2;
 
 	@Override
 	public void onDetach() {
 		super.onDetach();
 
-
-		if (MyTimeTableView.getLessons().isEmpty() == false) {
+		if (MyTimeTableView.getSelectedCourses().isEmpty() == false) {
 			final RequestModel request = new RequestModel(RequestModel.ANDROID_DEVICE, PushNotificationService.getFirebaseToken(), new Date().getTime() - 86400000);
 			String title = "";
 			String setID = "";
 
-			for (FlatDataStructure event : MyTimeTableView.getLessons()) {
+			for (FlatDataStructure event : MyTimeTableView.getSelectedCourses()) {
 				final String eventTitleShort = FlatDataStructure.cutEventTitle(event.getEvent().getTitle());
 				final String sSetID = event.getStudyGroup().getTimeTableId();
 
 				if ((title.equals(eventTitleShort) && setID.equals(sSetID)) == false) {
 
-					request.addLesson(event.getStudyGroup().getTimeTableId(), event.getEvent().getTitle());
+					request.addCourse(event.getStudyGroup().getTimeTableId(), event.getEvent().getTitle());
 					title = eventTitleShort;
 					setID = sSetID;
 				}
@@ -234,27 +233,27 @@ public class MyTimeTableFragment extends FeatureFragment {
 					for (ResponseModel.Change change : changes) {
 
 						// Shortcut to the list
-						final List<FlatDataStructure> myTimetableList = MyTimeTableView.getLessons();
+						final List<FlatDataStructure> myTimetableList = MyTimeTableView.getSelectedCourses();
 
-						//Aenderung eines Events: suche den Event und ueberschreibe seine Daten
+						//Aenderung eines Events: suche das Event und ueberschreibe es
 						if (change.getChangesReason() == CHANGEREASON_EDIT) {
 							final FlatDataStructure event = FlatDataStructure.getEventByID(myTimetableList, change.getNewEventJson().getUid());
 							if (event != null) {
 								event.setEvent(change.getNewEventJson());
 							}
 						}
-						//Hinzufuegen eines neuen Events: Erstelle ein neues Element vom Typ FlatDataStructure, schreibe alle Set-, Semester- und Studiengangdaten in diesen
+						//Hinzufuegen eines neuen Events: Erstelle ein neues Element vom Typ FlatDataStructure, schreibe alle Set-, Semester- und Studiengangdaten in dieses
 						//und fuege dann die Eventdaten des neuen Events hinzu. Anschliessend in die Liste hinzufuegen.
 						if (change.getChangesReason() == CHANGEREASON_NEW) {
 							final FlatDataStructure event = FlatDataStructure.queryGetEventsByStudyGroupTitle(myTimetableList, change.getSetSplusKey()).get(0).copy();
 							event.setEvent(change.getNewEventJson());
-							MyTimeTableView.getLessons().add(event);
+							MyTimeTableView.getSelectedCourses().add(event);
 
 						}
 						//Loeschen eines Events: Suche den Event mit der SplusID und lösche ihn aus der Liste.
 						if (change.getChangesReason() == CHANGEREASON_DELETE) {
 							final FlatDataStructure event = FlatDataStructure.getEventByID(myTimetableList, change.getNewEventJson().getUid());
-							MyTimeTableView.getLessons().remove(event);
+							MyTimeTableView.getSelectedCourses().remove(event);
 						}
 					}
 

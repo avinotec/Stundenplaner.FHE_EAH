@@ -84,7 +84,7 @@ public class FlatDataStructure implements Parcelable {
 		final FlatDataStructure copy = new FlatDataStructure();
 		//		Log.d(TAG, "FlatDataStructure: incID: "+FlatDataStructure.incId);
 		copy.id = FlatDataStructure.incId++;
-		copy.setCourse(this.getCourse());
+		copy.setStudyCourse(this.getCourse());
 		copy.setSemester(this.getSemester());
 		copy.setStudyGroup(this.getStudyGroup());
 		copy.setSets(new ArrayList<>(this.getSets()));
@@ -274,13 +274,13 @@ public class FlatDataStructure implements Parcelable {
 		return event;
 	}
 
-	public final FlatDataStructure setCourse(final StudyCourseVo course) {
+	public final FlatDataStructure setStudyCourse(final StudyCourseVo course) {
 		this.course = new FlatStudyCourse();
 		this.course.setId(course.getId());
 		this.course.setTitle(course.getTitle());
 		return this;
 	}
-	private void setCourse(final FlatStudyCourse course) {
+	private void setStudyCourse(final FlatStudyCourse course) {
 		this.course = course;
 	}
 

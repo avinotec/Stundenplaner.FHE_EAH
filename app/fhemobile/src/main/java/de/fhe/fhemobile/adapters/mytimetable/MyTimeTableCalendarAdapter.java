@@ -43,12 +43,12 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return MyTimeTableView.getSortedLessons().size();
+		return MyTimeTableView.getSortedCourses().size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return MyTimeTableView.getSortedLessons().get(position);
+		return MyTimeTableView.getSortedCourses().get(position);
 	}
 
 	@Override
@@ -65,52 +65,52 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 			convertView = LayoutInflater.from(context).
 					inflate(R.layout.row_layout_calendar, parent, false);
 		}
-		final FlatDataStructure currentItem = MyTimeTableView.getSortedLessons().get(position);
+		final FlatDataStructure currentItem = MyTimeTableView.getSortedCourses().get(position);
 		RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.singleRowLayout);
 
 		RelativeLayout headerLayout = convertView.findViewById(R.id.headerBackground);
 
-		final TextView lessonDay = (TextView) convertView.findViewById(R.id.tvLessonDay);
-		lessonDay.setText(currentItem.getEvent().getDayOfWeek());
+		final TextView courseDay = (TextView) convertView.findViewById(R.id.tvCourseDay);
+		courseDay.setText(currentItem.getEvent().getDayOfWeek());
 
-		final TextView lessonDate = (TextView) convertView.findViewById(R.id.tvLessonDate);
-		lessonDate.setText(currentItem.getEvent().getDate());
-
-
-		final TextView lessonTitle = (TextView) convertView.findViewById(R.id.tvTitle);
-		lessonTitle.setText(currentItem.getEvent().getShortTitle());
+		final TextView courseDate = (TextView) convertView.findViewById(R.id.tvCourseDate);
+		courseDate.setText(currentItem.getEvent().getDate());
 
 
-		final TextView lessonTime = (TextView) convertView.findViewById(R.id.tvLessonTime);
+		final TextView courseTitle = (TextView) convertView.findViewById(R.id.tvTitle);
+		courseTitle.setText(currentItem.getEvent().getShortTitle());
+
+
+		final TextView courseTime = (TextView) convertView.findViewById(R.id.tvCourseTime);
 		final Date df = new Date(currentItem.getEvent().getStartDate());
 		//String date = sdf.format(df);
-		lessonTime.setText(currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime()); // $NON-NLS
+		courseTime.setText(currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime()); // $NON-NLS
 
-		TextView lessonRoom = (TextView)convertView.findViewById(R.id.tvRoom);
-		lessonRoom.setText(currentItem.getEvent().getRoom());
+		TextView courseRoom = (TextView)convertView.findViewById(R.id.tvRoom);
+		courseRoom.setText(currentItem.getEvent().getRoom());
 
-		TextView lessonLecturer = (TextView)convertView.findViewById(R.id.tvLecturer);
-		lessonLecturer.setText(currentItem.getEvent().getLecturer());
+		TextView courseLecturer = (TextView)convertView.findViewById(R.id.tvLecturer);
+		courseLecturer.setText(currentItem.getEvent().getLecturer());
 
 		if(position == 0){
 			headerLayout.setVisibility(View.VISIBLE);
-			lessonDay.setVisibility(View.VISIBLE);
-			lessonDate.setVisibility(View.VISIBLE);
+			courseDay.setVisibility(View.VISIBLE);
+			courseDate.setVisibility(View.VISIBLE);
 		}
 		else if(!currentItem.getEvent().getDate()
-				.equals(MyTimeTableView.getSortedLessons().get(position - 1).getEvent().getDate())){
+				.equals(MyTimeTableView.getSortedCourses().get(position - 1).getEvent().getDate())){
 			headerLayout.setVisibility(View.VISIBLE);
-			lessonDay.setVisibility(View.VISIBLE);
-			lessonDate.setVisibility(View.VISIBLE);
+			courseDay.setVisibility(View.VISIBLE);
+			courseDate.setVisibility(View.VISIBLE);
 		}
 		else{
 			headerLayout.setVisibility(View.GONE);
-			lessonDay.setVisibility(View.GONE);
-			lessonDate.setVisibility(View.GONE);
+			courseDay.setVisibility(View.GONE);
+			courseDate.setVisibility(View.GONE);
 		}
 
 		if(sdf.format(df).compareTo(sdf.format(new Date())) == 0){
-			lessonDay.setText(context.getString(R.string.today) + "("+currentItem.getEvent().getDayOfWeek() + ")");
+			courseDay.setText(context.getString(R.string.today) + " ("+currentItem.getEvent().getDayOfWeek() + ")");
 		}
 
 		return convertView;

@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NonNls;
 public class Define {
 
 	@NonNls
-	public static final String SHARED_PREFERENCES_KEY_LESSON_LIST = "list";
+	public static final String SHARED_PREFERENCES_COURSES_LIST = "my_time_table_courses";
 	public static final int GREATER=1;
 	private static final int EQUAL=0;
 	public static final int LESSER=-1;

@@ -37,22 +37,22 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
-public class MyTimeTableSelectedLessonAdapter extends BaseAdapter {
-	private static final String TAG = "MyTimeTableSelectedLessonAdapter";
+public class MyTimeTableSelectedCoursesAdapter extends BaseAdapter {
+	private static final String TAG = "MyTimeTableSelectedCoursesAdapter";
 	private final Context context;
 
-	public MyTimeTableSelectedLessonAdapter(Context context) {
+	public MyTimeTableSelectedCoursesAdapter(Context context) {
 		this.context=context;
 	}
 
 	@Override
 	public int getCount() {
-		return MyTimeTableView.getLessons().size();
+		return MyTimeTableView.getSelectedCourses().size();
 	}
 
 	@Override
 	public Object getItem(final int position) {
-		return MyTimeTableView.getLessons().get(position);
+		return MyTimeTableView.getSelectedCourses().get(position);
 	}
 
 	@Override
@@ -66,19 +66,19 @@ public class MyTimeTableSelectedLessonAdapter extends BaseAdapter {
 			convertView = LayoutInflater.from(context).
 					inflate(R.layout.row_layout_my_scedule, parent, false);
 		}
-		final FlatDataStructure currentItem = MyTimeTableView.getLessons().get(position);
+		final FlatDataStructure currentItem = MyTimeTableView.getSelectedCourses().get(position);
 		//final RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.singleRowLayout);
 
 		convertView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				List<FlatDataStructure> lessonTitleFilteredList
+				List<FlatDataStructure> courseTitleFilteredList
 						= FlatDataStructure.queryGetEventsByEventTitle(
-								MyTimeTableView.getLessons(),
+								MyTimeTableView.getSelectedCourses(),
 								FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 				List <FlatDataStructure> filteredList
 						= FlatDataStructure.queryGetEventsByStudyGroupTitle(
-								lessonTitleFilteredList, currentItem.getSetString());
+						courseTitleFilteredList, currentItem.getSetString());
 				for (FlatDataStructure event:filteredList){
 					event.setVisible(!event.isVisible());
 				}
@@ -97,47 +97,47 @@ public class MyTimeTableSelectedLessonAdapter extends BaseAdapter {
 			convertView.setVisibility(View.GONE);
 		}
 
-		final TextView lessonTitle = (TextView) convertView.findViewById(R.id.tvLessonTitle);
+		final TextView courseTitle = (TextView) convertView.findViewById(R.id.tvLessonTitle);
 		final RelativeLayout headerBackground = convertView.findViewById(R.id.headerBackground);
-		lessonTitle.setText(FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
+		courseTitle.setText(FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 		if(position == 0){
-			lessonTitle.setVisibility(View.VISIBLE);
+			courseTitle.setVisibility(View.VISIBLE);
 			headerBackground.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1, 0));
 			convertView.setVisibility(View.VISIBLE);
 
 		}
 		else if(!FlatDataStructure.cutEventTitle(
-				MyTimeTableView.getLessons().get(position).getEvent().getTitle())
+				MyTimeTableView.getSelectedCourses().get(position).getEvent().getTitle())
 				.equals(FlatDataStructure.cutEventTitle(
-						MyTimeTableView.getLessons().get(position - 1).getEvent().getTitle()))){
-			lessonTitle.setVisibility(View.VISIBLE);
+						MyTimeTableView.getSelectedCourses().get(position - 1).getEvent().getTitle()))){
+			courseTitle.setVisibility(View.VISIBLE);
 			headerBackground.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1, 0));
 			convertView.setVisibility(View.VISIBLE);
 		}
 		else{
-			lessonTitle.setVisibility(View.GONE);
+			courseTitle.setVisibility(View.GONE);
 			headerBackground.setVisibility(View.GONE);
 		}
 		final TextView studyGroupLabel = (TextView)convertView.findViewById(R.id.tvStudyGroupLabel);
 		final TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.tvStudyGroupTitle);
 
 
-		final ImageButton ibRemoveLesson = convertView.findViewById(R.id.ibRemoveLesson);
-		ibRemoveLesson.setOnClickListener(new View.OnClickListener() {
+		final ImageButton ibRemoveCourse = convertView.findViewById(R.id.ibRemoveLesson);
+		ibRemoveCourse.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				final List<FlatDataStructure> eventFilteredList
 						= FlatDataStructure.queryGetEventsByEventTitle(
-								MyTimeTableView.getLessons(),
+								MyTimeTableView.getSelectedCourses(),
 								FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 				final List<FlatDataStructure> studyGroupFilteredList
 						= FlatDataStructure.queryGetEventsByStudyGroupTitle(
 								eventFilteredList, currentItem.getSetString());
 
 				for(FlatDataStructure event : studyGroupFilteredList){
-					MyTimeTableView.removeLesson(event);
+					MyTimeTableView.removeCourse(event);
 				}
 
 			}
@@ -148,38 +148,38 @@ public class MyTimeTableSelectedLessonAdapter extends BaseAdapter {
 			studyGroupTitle.setText(currentItem.getSetString());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			studyGroupLabel.setVisibility(View.VISIBLE);
-			ibRemoveLesson.setVisibility(View.VISIBLE);
+			ibRemoveCourse.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
 		}
 		else if(!FlatDataStructure.cutEventTitle(
 				currentItem.getEvent().getTitle())
 				.equals(FlatDataStructure.cutEventTitle(
-						MyTimeTableView.getLessons().get(position - 1).getEvent().getTitle()))){
+						MyTimeTableView.getSelectedCourses().get(position - 1).getEvent().getTitle()))){
 			studyGroupTitle.setText(currentItem.getSetString());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			studyGroupLabel.setVisibility(View.VISIBLE);
-			ibRemoveLesson.setVisibility(View.VISIBLE);
+			ibRemoveCourse.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
 
 		}
 		else if(!currentItem.getSetString()
-				.equals( MyTimeTableView.getLessons().get(position - 1).getSetString() )){
+				.equals( MyTimeTableView.getSelectedCourses().get(position - 1).getSetString() )){
 			studyGroupTitle.setText(currentItem.getSetString());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			studyGroupLabel.setVisibility(View.VISIBLE);
-			ibRemoveLesson.setVisibility(View.VISIBLE);
+			ibRemoveCourse.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
 		}
 		else{
 			studyGroupTitle.setVisibility(View.GONE);
 			studyGroupLabel.setVisibility(View.GONE);
-			ibRemoveLesson.setVisibility(View.GONE);
+			ibRemoveCourse.setVisibility(View.GONE);
 		}
 
-		final TextView tvTime = (TextView) convertView.findViewById(R.id.tvLessonTime);
+		final TextView tvTime = (TextView) convertView.findViewById(R.id.tvCourseTime);
 		final Date dateStartDate = new java.util.Date(currentItem.getEvent().getStartDate());
 		//final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
 		final String date = sdf.format(dateStartDate);

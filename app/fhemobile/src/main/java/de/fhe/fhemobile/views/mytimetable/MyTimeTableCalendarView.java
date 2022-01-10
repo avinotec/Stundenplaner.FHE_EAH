@@ -108,8 +108,8 @@ public class MyTimeTableCalendarView extends LinearLayout {
      */
     public static int getCurrentEventIndex(){
 
-        for(int i = 0; i < MyTimeTableView.sortedLessons.size(); i++){
-            final TimeTableEventVo event = MyTimeTableView.sortedLessons.get(i).getEvent();
+        for(int i = 0; i < MyTimeTableView.sortedCourses.size(); i++){
+            final TimeTableEventVo event = MyTimeTableView.sortedCourses.get(i).getEvent();
             final Date now = new Date();
             try {
                 //lesson starts now or in the future

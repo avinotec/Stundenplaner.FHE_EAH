@@ -176,8 +176,8 @@ public class TimeTableView extends LinearLayout {
     };
 
     public interface IViewListener {
-        void onStudyCourseChosen(String _TermId);
-        void onSemesterChosen(String _GroupId);
+        void onStudyCourseChosen(String _StudyCourseId);
+        void onSemesterChosen(String _SemesterId);
         void onGroupChosen(String _TimeTableId);
         void onSearchClicked();
     }

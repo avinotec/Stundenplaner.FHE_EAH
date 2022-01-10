@@ -33,7 +33,7 @@
         android:background="@color/list_header_background">
 
         <TextView
-            android:id="@+id/tvLessonDay"
+            android:id="@+id/tvCourseDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -43,7 +43,7 @@
             android:visibility="visible" />
 
         <TextView
-            android:id="@+id/tvLessonDate"
+            android:id="@+id/tvCourseDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -73,7 +73,7 @@
             android:orientation="horizontal"
             android:weightSum="3">
             <TextView
-                android:id="@+id/tvLessonTime"
+                android:id="@+id/tvCourseTime"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
