@@ -34,63 +34,106 @@ import java.util.List;
 import java.util.Locale;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.views.mytimetable.MyTimeTableView;
+import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
-public class MyTimeTableCourseAdapter extends BaseAdapter {
-	private static final String TAG = "MyTimeTableCourseAdapter";
+public class MyTimeTableChosenCourseListAdapter extends BaseAdapter {
+	private static final String TAG = "MyTimeTableChosenCourseListAdapter";
 
 	//private String lessonTitle="";
 	//private String studygroupTitle="";
 
-	private final Context context;
-	public MyTimeTableCourseAdapter(Context context) {
+	private final Context mContext;
+	private List<FlatDataStructure> chosenCourseList;
 
-		this.context=context;
+	public MyTimeTableChosenCourseListAdapter(Context context) {
+		this.mContext = context;
 	}
 
+	public void setChosenCourseList(List<FlatDataStructure> chosenCourseList) {
+		this.chosenCourseList = chosenCourseList;
+	}
+
+	/**
+	 * How many items are in the data set represented by this Adapter.
+	 *
+	 * @return Count of items.
+	 */
 	@Override
 	public int getCount() {
-		return MyTimeTableView.getAllCoursesOfChosenStudyCourseAndSemester().size();
+		return chosenCourseList != null ? chosenCourseList.size() : 0;
 	}
 
+	/**
+	 * Get the data item associated with the specified position in the data set.
+	 *
+	 * @param position Position of the item whose data we want within the adapter's
+	 *                 data set.
+	 * @return The data at the specified position.
+	 */
 	@Override
 	public Object getItem(final int position) {
-		return MyTimeTableView.getAllCoursesOfChosenStudyCourseAndSemester().get(position);
+		if(chosenCourseList != null) return chosenCourseList.get(position);
+		else return null;
 	}
 
+	/**
+	 * Get the row id associated with the specified position in the list.
+	 *
+	 * @param position The position of the item within the adapter's data set whose row id we want.
+	 * @return The id of the item at the specified position.
+	 */
 	@Override
 	public long getItemId(final int position) {
 		return position;
 	}
 
+	/**
+	 * Get a View that displays the data at the specified position in the data set. You can either
+	 * create a View manually or inflate it from an XML layout file. When the View is inflated, the
+	 * parent View (GridView, ListView...) will apply default layout parameters unless you use
+	 * {@link android.view.LayoutInflater#inflate(int, android.view.ViewGroup, boolean)}
+	 * to specify a root view and to prevent attachment to the root.
+	 *
+	 * @param position    The position of the item within the adapter's data set of the item whose view
+	 *                    we want.
+	 * @param convertView The old view to reuse, if possible. Note: You should check that this view
+	 *                    is non-null and of an appropriate type before using. If it is not possible to convert
+	 *                    this view to display the correct data, this method can create a new view.
+	 *                    Heterogeneous lists can specify their number of view types, so that this View is
+	 *                    always of the right type (see {@link #getViewTypeCount()} and
+	 *                    {@link #getItemViewType(int)}).
+	 * @param parent      The parent that this view will eventually be attached to
+	 * @return A View corresponding to the data at the specified position.
+	 */
 	@Override
 	public View getView(final int position, View convertView, final ViewGroup parent) {
+
 		if (convertView == null) {
-			convertView = LayoutInflater.from(context).
+			convertView = LayoutInflater.from(mContext).
 					inflate(R.layout.row_layout_events, parent, false);
 		}
-		final FlatDataStructure currentItem = MyTimeTableView.getAllCoursesOfChosenStudyCourseAndSemester().get(position);
-		//final RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.singleRowLayout);
+
+		final FlatDataStructure currentItem = chosenCourseList.get(position);
 
 		convertView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
-				final List<FlatDataStructure> courseTitleFilteredList =
-						FlatDataStructure.queryGetEventsByEventTitle(
-								MyTimeTableView.getAllCoursesOfChosenStudyCourseAndSemester(),
+				//get all courses with certain title
+				final List<FlatDataStructure> courseListFilteredByTitle =
+						FlatDataStructure.getCoursesByEventTitle(
+								chosenCourseList,
 								FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
+				//get all courses with certain study group
+				final List <FlatDataStructure> courseListFilteredByStudyGroup =
+						FlatDataStructure.getCoursesByStudyGroupTitle(
+								courseListFilteredByTitle, currentItem.getSetString());
 
-				final List <FlatDataStructure> filteredList =
-						FlatDataStructure.queryGetEventsByStudyGroupTitle(
-								courseTitleFilteredList, currentItem.getSetString());
-
-				for (final FlatDataStructure event : filteredList){
+				for (final FlatDataStructure event : courseListFilteredByStudyGroup){
 					event.setVisible(!event.isVisible());
 				}
-				((ListView)parent).invalidateViews();
-//				Log.d(TAG, "onClick: VisibleClick");
+				((ListView) parent).invalidateViews();
 
 			}
 		});
@@ -116,7 +159,11 @@ public class MyTimeTableCourseAdapter extends BaseAdapter {
 
 		}
 
-		else if(!FlatDataStructure.cutEventTitle(MyTimeTableView.getAllCoursesOfChosenStudyCourseAndSemester().get(position).getEvent().getTitle()).equals(FlatDataStructure.cutEventTitle(MyTimeTableView.getAllCoursesOfChosenStudyCourseAndSemester().get(position-1).getEvent().getTitle()))){
+		else if(!FlatDataStructure.cutEventTitle(
+				chosenCourseList.get(position).getEvent().getTitle())
+				.equals(FlatDataStructure.cutEventTitle(
+						chosenCourseList.get(position-1).getEvent().getTitle()))){
+
 			courseTitle.setText(FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 			courseTitle.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
@@ -150,19 +197,19 @@ public class MyTimeTableCourseAdapter extends BaseAdapter {
 
 				currentItem.setAdded(true);
 				final List<FlatDataStructure> eventFilteredList =
-						FlatDataStructure.queryGetEventsByEventTitle(
-								MyTimeTableView.getAllCoursesOfChosenStudyCourseAndSemester(),
+						FlatDataStructure.getCoursesByEventTitle(
+								chosenCourseList,
 								FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 				final List<FlatDataStructure> studyGroupFilteredList =
-						FlatDataStructure.queryGetEventsByStudyGroupTitle(
+						FlatDataStructure.getCoursesByStudyGroupTitle(
 								eventFilteredList, currentItem.getSetString());
 
 				for(final FlatDataStructure event : studyGroupFilteredList){
-					MyTimeTableView.addCourse(event);
+					MyTimeTableOverviewView.addCourse(event);
 				}
 				btnAddLesson.setImageResource(R.drawable.ic_input_add_gray);
 				btnAddLesson.setBackgroundResource(R.drawable.buttonshape_disabled);
-				MyTimeTableCourseAdapter.this.notifyDataSetChanged();
+				MyTimeTableChosenCourseListAdapter.this.notifyDataSetChanged();
 
 			}
 
@@ -182,7 +229,7 @@ public class MyTimeTableCourseAdapter extends BaseAdapter {
 		}
 
 		else if(!FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()).equals(
-					FlatDataStructure.cutEventTitle(MyTimeTableView.getAllCoursesOfChosenStudyCourseAndSemester().get(position-1).getEvent().getTitle())))
+					FlatDataStructure.cutEventTitle(chosenCourseList.get(position-1).getEvent().getTitle())))
 		{
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			studyGroupLabel.setVisibility(View.VISIBLE);
@@ -193,7 +240,7 @@ public class MyTimeTableCourseAdapter extends BaseAdapter {
 		}
 
 		else if(!currentItem.getSetString().equals(
-				MyTimeTableView.getAllCoursesOfChosenStudyCourseAndSemester().get(position-1).getSetString()))
+				chosenCourseList.get(position-1).getSetString()))
 		{
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			studyGroupLabel.setVisibility(View.VISIBLE);

@@ -117,12 +117,12 @@ public class FlatDataStructure implements Parcelable {
 	}
 
 	/**
-	 *
+	 * Returns a list filtered by the given event title
 	 * @param list
 	 * @param eventTitle
 	 * @return
 	 */
-	public static List<FlatDataStructure> queryGetEventsByEventTitle(final List<FlatDataStructure> list, final String eventTitle){
+	public static List<FlatDataStructure> getCoursesByEventTitle(final List<FlatDataStructure> list, final String eventTitle){
 
 		final List<FlatDataStructure> filteredEvents = new ArrayList<>();
 		for (final FlatDataStructure event : list) {
@@ -134,12 +134,12 @@ public class FlatDataStructure implements Parcelable {
 	}
 
 	/**
-	 *
+	 * Returns a list filtered by the given study group
 	 * @param list
 	 * @param studyGroupTitle
 	 * @return
 	 */
-	public static List<FlatDataStructure> queryGetEventsByStudyGroupTitle(final List<FlatDataStructure>list, final String studyGroupTitle){
+	public static List<FlatDataStructure> getCoursesByStudyGroupTitle(final List<FlatDataStructure>list, final String studyGroupTitle){
 		final List<FlatDataStructure> filteredEvents = new ArrayList<>();
 		for(final FlatDataStructure event : list){
 			if(event.getSetString().equals(studyGroupTitle)){

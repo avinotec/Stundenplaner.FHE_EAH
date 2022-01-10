@@ -17,6 +17,8 @@
 
 package de.fhe.fhemobile.fragments.mytimetable;
 
+import static de.fhe.fhemobile.Main.clearSubscribedCourses;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -41,7 +43,7 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableCalendarView;
-import de.fhe.fhemobile.views.mytimetable.MyTimeTableView;
+import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
 public class MyTimeTableCalendarFragment extends FeatureFragment {
@@ -76,30 +78,29 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		mView = (MyTimeTableCalendarView) inflater.inflate(R.layout.fragment_my_time_table_list, container, false);
+		mView = (MyTimeTableCalendarView) inflater.inflate(R.layout.fragment_my_time_table_calendar, container, false);
 		mView.initializeView(getActivity().getSupportFragmentManager());
 		SharedPreferences sharedPreferences = getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
 
 		askForTimeTableDeletionAfterTurnOfSemester(sharedPreferences);
 
 		// load selected Courses for My Time Table from Shared Preferences
-		final String json = sharedPreferences.getString(Define.SHARED_PREFERENCES_COURSES_LIST,"");
+		final String json = sharedPreferences.getString(Define.SHARED_PREFERENCES_SUBSCRIBED_COURSES,"");
 		final Gson gson = new Gson();
 		final FlatDataStructure[] list = gson.fromJson(json, FlatDataStructure[].class);
 		if(list != null) {
-			MyTimeTableView.setSelectedCourses(new ArrayList<FlatDataStructure>(Arrays.asList(list)));
+			MyTimeTableOverviewView.setSubscribedCourses(new ArrayList<FlatDataStructure>(Arrays.asList(list)));
 		}
 
 		//unterhalb der Liste wird immer "Kein Kurs gewählt" angezeigt. Dieser Text ist aber nicht immer sichtbar.
 		// Daher ist das Feld in den Fragment Ressourcen vorhanden
-		final String emptyText = getResources().getString(R.string.my_time_table_empty_text_calendar);
-		mView.setEmptyText(emptyText);
+		mView.setEmptyCalenderView();
 
 		return mView;
 	}
 
 	/**
-	 * Zeigt bei Semesterwechsel Dialog zur Nachfrage, ob der Stundenplan gelöscht werden soll.
+	 * Zeigt bei Semesterwechsel Dialog zur Nachfrage, ob der Stundenplan gelöscht werden soll
 	 * @param sharedPreferences
 	 */
 	private void askForTimeTableDeletionAfterTurnOfSemester(SharedPreferences sharedPreferences) {
@@ -140,11 +141,12 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 					.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
 							//Stundenplan löschen (die Listen leer machen und aus den Preferences entfernen)
-							MyTimeTableView.sortedCourses.clear();
-							MyTimeTableView.selectedCourses.clear();
-							MyTimeTableFragment.allCoursesOfSelectedSemesters.clear();
+							MyTimeTableOverviewFragment.sortedCourses.clear();
+							clearSubscribedCourses();
+							//todo: wozu brauchen wir die coursesOfChosenSemester hier? - Nadja
+							//MyTimeTableDialogFragment.coursesOfChosenSemester.clear();
 							sharedPreferences.edit()
-									.remove(Define.SHARED_PREFERENCES_COURSES_LIST)
+									.remove(Define.SHARED_PREFERENCES_SUBSCRIBED_COURSES)
 									.apply();
 						}
 					})

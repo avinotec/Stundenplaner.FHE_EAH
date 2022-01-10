@@ -26,10 +26,10 @@ import org.jetbrains.annotations.NonNls;
 public class Define {
 
 	@NonNls
-	public static final String SHARED_PREFERENCES_COURSES_LIST = "my_time_table_courses";
-	public static final int GREATER=1;
-	private static final int EQUAL=0;
-	public static final int LESSER=-1;
+	public static final String SHARED_PREFERENCES_SUBSCRIBED_COURSES = "my_time_table_courses";
+	public static final int GREATER = 1;
+	private static final int EQUAL = 0;
+	public static final int LESSER = -1;
 
 	//created by Nadja 17.11.2021
 	public static class Maps{

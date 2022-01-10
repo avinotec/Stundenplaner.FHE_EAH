@@ -29,7 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.views.mytimetable.MyTimeTableView;
+import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
 public class MyTimeTableCalendarAdapter extends BaseAdapter {
@@ -43,12 +43,12 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return MyTimeTableView.getSortedCourses().size();
+		return MyTimeTableOverviewView.getSortedCourses().size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return MyTimeTableView.getSortedCourses().get(position);
+		return MyTimeTableOverviewView.getSortedCourses().get(position);
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 			convertView = LayoutInflater.from(context).
 					inflate(R.layout.row_layout_calendar, parent, false);
 		}
-		final FlatDataStructure currentItem = MyTimeTableView.getSortedCourses().get(position);
+		final FlatDataStructure currentItem = MyTimeTableOverviewView.getSortedCourses().get(position);
 		RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.singleRowLayout);
 
 		RelativeLayout headerLayout = convertView.findViewById(R.id.headerBackground);
@@ -98,7 +98,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 			courseDate.setVisibility(View.VISIBLE);
 		}
 		else if(!currentItem.getEvent().getDate()
-				.equals(MyTimeTableView.getSortedCourses().get(position - 1).getEvent().getDate())){
+				.equals(MyTimeTableOverviewView.getSortedCourses().get(position - 1).getEvent().getDate())){
 			headerLayout.setVisibility(View.VISIBLE);
 			courseDay.setVisibility(View.VISIBLE);
 			courseDate.setVisibility(View.VISIBLE);

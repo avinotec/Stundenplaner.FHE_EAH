@@ -22,7 +22,11 @@ import android.content.Context;
 
 import androidx.annotation.StringRes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
+import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
 
 /**
@@ -32,6 +36,9 @@ public class Main extends Application {
 
     private static final String LOG_TAG = Main.class.getSimpleName();
     private static Application mAppContext;
+
+    //My Time Table
+    private static List<FlatDataStructure> subscribedCourses = new ArrayList();
 
     @Override
     public void onCreate() {
@@ -50,6 +57,25 @@ public class Main extends Application {
         return mAppContext;
     }
 
+    public static List<FlatDataStructure> getSubscribedCourses() {
+        return subscribedCourses;
+    }
+
+    public static void setSubscribedCourses(List<FlatDataStructure> subscribedCourses) {
+        Main.subscribedCourses = subscribedCourses;
+    }
+
+    public static void removeFromSubscribedCourses(final FlatDataStructure course){
+        subscribedCourses.remove(course);
+    }
+
+    public static void addToSubscribedCourses(final FlatDataStructure course){
+        subscribedCourses.add(course);
+    }
+
+    public static void clearSubscribedCourses(){
+        subscribedCourses.clear();
+    }
 
     //MS 201908 Multidex apk introduced
     // Or if you do override the Application class but it's not possible to change the base class,

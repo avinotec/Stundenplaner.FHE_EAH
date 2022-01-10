@@ -162,5 +162,6 @@
     <string name="navigation_building">Haus</string>
     <string name="navigation_floor">Etage</string>
     <string name="navigation_dialog_person">Person</string>
+    <string name="my_time_table_headline">Meine Kurse</string>
 
 </resources>
