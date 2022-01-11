@@ -16,8 +16,8 @@
   ~
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/singleRowLayout"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:paddingBottom="10dp">
@@ -33,11 +33,11 @@
         android:background="@color/list_header_background">
 
         <TextView
-            android:id="@+id/tvCourseDay"
+            android:id="@+id/textviewWeekDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:text="TextView"
+            android:text="Weekday"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/list_header_text"
             android:visibility="visible" />
@@ -46,14 +46,14 @@
             android:id="@+id/tvCourseDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="5dp"
-            android:text="TextView"
+            android:text="Date"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/list_header_text"
-            android:visibility="visible"
-	        android:layout_alignParentEnd="true" />
+            android:visibility="visible" />
     </RelativeLayout>
 
 
@@ -73,7 +73,7 @@
             android:orientation="horizontal"
             android:weightSum="3">
             <TextView
-                android:id="@+id/tvCourseTime"
+                android:id="@+id/textviewCourseTime"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -82,45 +82,38 @@
                 android:textColor="@color/primary_light"
                 android:textSize="@dimen/abc_text_size_body_1_material" />
             <TextView
-                android:id="@+id/tvLecturer"
+                android:id="@+id/textviewLecturer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:text="New Text"
+                android:text="Lecturer"
                 android:textColor="@color/primary_light"/>
             <TextView
-            android:id="@+id/tvRoom"
+            android:id="@+id/textviewRoom"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="New Text"
+                android:text="Room"
                 android:textColor="@color/primary_light"
                 android:textSize="@dimen/abc_text_size_body_1_material" />
         </LinearLayout>
 
 
         <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/textviewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:gravity="center_vertical"
-            android:text="New Text"
+            android:text="Title"
             android:textColor="@color/primary_light"
             android:textSize="16sp"
             android:textStyle="italic" />
 
-
-
-
-
     </RelativeLayout>
-
-
-
 
 
 </RelativeLayout>

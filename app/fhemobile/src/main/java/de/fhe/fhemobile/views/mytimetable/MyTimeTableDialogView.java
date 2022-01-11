@@ -28,7 +28,7 @@ import java.util.Collections;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableChosenCourseListAdapter;
+import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableDialogAdapter;
 import de.fhe.fhemobile.comparator.StudyCourseComperator;
 import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
 import de.fhe.fhemobile.vos.timetable.SemesterVo;
@@ -100,7 +100,7 @@ public class MyTimeTableDialogView extends LinearLayout {
         mCourseListView.setVisibility(_Visible ? VISIBLE : GONE);
     }
 
-    public void setCourseListAdapter(final MyTimeTableChosenCourseListAdapter adapter){
+    public void setCourseListAdapter(final MyTimeTableDialogAdapter adapter){
         mCourseListView.setAdapter(adapter);
     }
 

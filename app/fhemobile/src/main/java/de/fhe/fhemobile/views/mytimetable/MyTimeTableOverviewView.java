@@ -42,7 +42,7 @@ import java.util.List;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableSubscribedCoursesAdapter;
+import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableOverviewAdapter;
 import de.fhe.fhemobile.comparator.Date_Comparator;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableDialogFragment;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableOverviewFragment;
@@ -54,7 +54,7 @@ public class MyTimeTableOverviewView extends LinearLayout {
 
     private FragmentManager mFragmentManager;
     private ListView mCourseListView;
-    private static MyTimeTableSubscribedCoursesAdapter myTimeTableSubscribedCoursesAdapter;
+    private static MyTimeTableOverviewAdapter myTimeTableOverviewAdapter;
 
 
     public MyTimeTableOverviewView(final Context context, final AttributeSet attrs) {
@@ -82,10 +82,10 @@ public class MyTimeTableOverviewView extends LinearLayout {
             }
         });
 
-        myTimeTableSubscribedCoursesAdapter = new MyTimeTableSubscribedCoursesAdapter(getContext());
+        myTimeTableOverviewAdapter = new MyTimeTableOverviewAdapter(getContext());
 
         mCourseListView = (ListView) findViewById(R.id.ListViewCourses);
-        mCourseListView.setAdapter(myTimeTableSubscribedCoursesAdapter);
+        mCourseListView.setAdapter(myTimeTableOverviewAdapter);
     }
 
 
@@ -192,7 +192,7 @@ public class MyTimeTableOverviewView extends LinearLayout {
         editor.putString(Define.SHARED_PREFERENCES_SUBSCRIBED_COURSES, json);
         editor.apply();
 
-        myTimeTableSubscribedCoursesAdapter.notifyDataSetChanged();
+        myTimeTableOverviewAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -209,7 +209,7 @@ public class MyTimeTableOverviewView extends LinearLayout {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(Define.SHARED_PREFERENCES_SUBSCRIBED_COURSES, json);
         editor.apply();
-        myTimeTableSubscribedCoursesAdapter.notifyDataSetChanged();
+        myTimeTableOverviewAdapter.notifyDataSetChanged();
     }
 
     /**

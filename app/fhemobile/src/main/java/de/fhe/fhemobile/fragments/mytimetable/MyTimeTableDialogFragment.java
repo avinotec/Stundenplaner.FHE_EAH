@@ -43,7 +43,7 @@ import java.util.Collections;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableChosenCourseListAdapter;
+import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableDialogAdapter;
 import de.fhe.fhemobile.comparator.LessonTitleStudyGroupTitleComparator;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.network.TimeTableCallback;
@@ -112,14 +112,14 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         mChosenStudyCourse = null;
         mChosenSemester = null;
 
-	    mCourseListAdapter = new MyTimeTableChosenCourseListAdapter(getAppContext());
+	    mCourseListAdapter = new MyTimeTableDialogAdapter(getAppContext());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (MyTimeTableDialogView) inflater.inflate(R.layout.view_my_time_table_add_course, container, false);
+        mView = (MyTimeTableDialogView) inflater.inflate(R.layout.fragment_my_time_table_dialog, container, false);
 
         mView.initializeView(getChildFragmentManager());
         mView.setViewListener(mViewListener);
@@ -476,5 +476,5 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     //list of courses for the study course and semester currently chosen in MyTimeTableDialog
     private List<FlatDataStructure> coursesOfChosenSemester = new ArrayList<>();
 
-    private MyTimeTableChosenCourseListAdapter mCourseListAdapter;
+    private MyTimeTableDialogAdapter mCourseListAdapter;
 }

@@ -63,33 +63,32 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
 			convertView = LayoutInflater.from(context).
-					inflate(R.layout.row_layout_calendar, parent, false);
+					inflate(R.layout.item_my_time_table_calendar, parent, false);
 		}
 		final FlatDataStructure currentItem = MyTimeTableOverviewView.getSortedCourses().get(position);
-		RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.singleRowLayout);
 
 		RelativeLayout headerLayout = convertView.findViewById(R.id.headerBackground);
 
-		final TextView courseDay = (TextView) convertView.findViewById(R.id.tvCourseDay);
+		final TextView courseDay = (TextView) convertView.findViewById(R.id.textviewWeekDay);
 		courseDay.setText(currentItem.getEvent().getDayOfWeek());
 
 		final TextView courseDate = (TextView) convertView.findViewById(R.id.tvCourseDate);
 		courseDate.setText(currentItem.getEvent().getDate());
 
 
-		final TextView courseTitle = (TextView) convertView.findViewById(R.id.tvTitle);
+		final TextView courseTitle = (TextView) convertView.findViewById(R.id.textviewTitle);
 		courseTitle.setText(currentItem.getEvent().getShortTitle());
 
 
-		final TextView courseTime = (TextView) convertView.findViewById(R.id.tvCourseTime);
+		final TextView courseTime = (TextView) convertView.findViewById(R.id.textviewCourseTime);
 		final Date df = new Date(currentItem.getEvent().getStartDate());
 		//String date = sdf.format(df);
 		courseTime.setText(currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime()); // $NON-NLS
 
-		TextView courseRoom = (TextView)convertView.findViewById(R.id.tvRoom);
+		TextView courseRoom = (TextView)convertView.findViewById(R.id.textviewRoom);
 		courseRoom.setText(currentItem.getEvent().getRoom());
 
-		TextView courseLecturer = (TextView)convertView.findViewById(R.id.tvLecturer);
+		TextView courseLecturer = (TextView)convertView.findViewById(R.id.textviewLecturer);
 		courseLecturer.setText(currentItem.getEvent().getLecturer());
 
 		if(position == 0){

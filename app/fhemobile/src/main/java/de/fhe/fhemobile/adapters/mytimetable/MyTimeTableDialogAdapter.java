@@ -37,8 +37,8 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
-public class MyTimeTableChosenCourseListAdapter extends BaseAdapter {
-	private static final String TAG = "MyTimeTableChosenCourseListAdapter";
+public class MyTimeTableDialogAdapter extends BaseAdapter {
+	private static final String TAG = "MyTimeTableDialogAdapter";
 
 	//private String lessonTitle="";
 	//private String studygroupTitle="";
@@ -46,7 +46,7 @@ public class MyTimeTableChosenCourseListAdapter extends BaseAdapter {
 	private final Context mContext;
 	private List<FlatDataStructure> chosenCourseList;
 
-	public MyTimeTableChosenCourseListAdapter(Context context) {
+	public MyTimeTableDialogAdapter(Context context) {
 		this.mContext = context;
 	}
 
@@ -111,7 +111,7 @@ public class MyTimeTableChosenCourseListAdapter extends BaseAdapter {
 
 		if (convertView == null) {
 			convertView = LayoutInflater.from(mContext).
-					inflate(R.layout.row_layout_events, parent, false);
+					inflate(R.layout.item_my_time_table_dialog, parent, false);
 		}
 
 		final FlatDataStructure currentItem = chosenCourseList.get(position);
@@ -147,7 +147,7 @@ public class MyTimeTableChosenCourseListAdapter extends BaseAdapter {
 			convertView.setVisibility(View.GONE);
 		}
 
-		final TextView courseTitle = (TextView) convertView.findViewById(R.id.tvLessonTitle);
+		final TextView courseTitle = (TextView) convertView.findViewById(R.id.textviewCourseTitle);
 		final RelativeLayout headerLayout = convertView.findViewById(R.id.headerBackground);
 
 		if(position == 0){
@@ -178,7 +178,7 @@ public class MyTimeTableChosenCourseListAdapter extends BaseAdapter {
 
 		final TextView studyGroupLabel = (TextView) convertView.findViewById(R.id.tvStudyGroupLabel);
 		final TextView studyGroupTitle = (TextView) convertView.findViewById(R.id.tvStudyGroupTitle);
-		final ImageButton btnAddLesson = (ImageButton) convertView.findViewById(R.id.ibAddLesson);
+		final ImageButton btnAddLesson = (ImageButton) convertView.findViewById(R.id.imagebuttonAddCourse);
 		if(currentItem.isAdded() == true){
 			btnAddLesson.setEnabled(false);
 			btnAddLesson.setImageResource(R.drawable.ic_input_add_gray);
@@ -209,7 +209,7 @@ public class MyTimeTableChosenCourseListAdapter extends BaseAdapter {
 				}
 				btnAddLesson.setImageResource(R.drawable.ic_input_add_gray);
 				btnAddLesson.setBackgroundResource(R.drawable.buttonshape_disabled);
-				MyTimeTableChosenCourseListAdapter.this.notifyDataSetChanged();
+				MyTimeTableDialogAdapter.this.notifyDataSetChanged();
 
 			}
 
@@ -255,7 +255,7 @@ public class MyTimeTableChosenCourseListAdapter extends BaseAdapter {
 			btnAddLesson.setVisibility(View.GONE);
 		}
 
-		final TextView tvTime = (TextView) convertView.findViewById(R.id.tvCourseTime);
+		final TextView tvTime = (TextView) convertView.findViewById(R.id.textviewCourseTime);
 		final Date dateStartDate = new java.util.Date(currentItem.getEvent().getStartDate());
 		//final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
 		final String date = sdf.format(dateStartDate);
@@ -263,7 +263,7 @@ public class MyTimeTableChosenCourseListAdapter extends BaseAdapter {
 		tvTime.setText(dayOfWeek + ", " + date + "  "
 				+ currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime()); // $NON-NLS
 
-		final TextView tvRoom = (TextView)convertView.findViewById(R.id.tvRoom);
+		final TextView tvRoom = (TextView)convertView.findViewById(R.id.textviewRoom);
 		tvRoom.setText(currentItem.getEvent().getRoom());
 
 		return convertView;

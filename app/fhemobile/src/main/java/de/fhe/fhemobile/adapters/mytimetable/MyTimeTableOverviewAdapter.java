@@ -40,11 +40,11 @@ import java.util.Locale;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
-public class MyTimeTableSubscribedCoursesAdapter extends BaseAdapter {
-	private static final String TAG = "MyTimeTableSubscribedCoursesAdapter";
+public class MyTimeTableOverviewAdapter extends BaseAdapter {
+	private static final String TAG = "MyTimeTableOverviewAdapter";
 	private final Context context;
 
-	public MyTimeTableSubscribedCoursesAdapter(Context context) {
+	public MyTimeTableOverviewAdapter(Context context) {
 		this.context=context;
 	}
 
@@ -67,7 +67,7 @@ public class MyTimeTableSubscribedCoursesAdapter extends BaseAdapter {
 	public View getView(final int position, View convertView, final ViewGroup parent) {
 		if (convertView == null) {
 			convertView = LayoutInflater.from(context).
-					inflate(R.layout.row_layout_my_scedule, parent, false);
+					inflate(R.layout.item_my_time_table_overview, parent, false);
 		}
 		final FlatDataStructure currentItem = getSubscribedCourses().get(position);
 		//final RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.singleRowLayout);
@@ -105,7 +105,7 @@ public class MyTimeTableSubscribedCoursesAdapter extends BaseAdapter {
 			convertView.setVisibility(View.GONE);
 		}
 
-		final TextView courseTitle = (TextView) convertView.findViewById(R.id.tvLessonTitle);
+		final TextView courseTitle = (TextView) convertView.findViewById(R.id.textviewCourseTitle);
 		final RelativeLayout headerBackground = convertView.findViewById(R.id.headerBackground);
 		courseTitle.setText(correctUmlauts(FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle())));
 
@@ -194,7 +194,7 @@ public class MyTimeTableSubscribedCoursesAdapter extends BaseAdapter {
 			ibRemoveCourse.setVisibility(View.GONE);
 		}
 
-		final TextView tvTime = (TextView) convertView.findViewById(R.id.tvCourseTime);
+		final TextView tvTime = (TextView) convertView.findViewById(R.id.textviewCourseTime);
 		final Date dateStartDate = new java.util.Date(currentItem.getEvent().getStartDate());
 		//final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
 		final String date = sdf.format(dateStartDate);
@@ -202,7 +202,7 @@ public class MyTimeTableSubscribedCoursesAdapter extends BaseAdapter {
 		tvTime.setText(dayOfWeek + ", " + date + "  "
 				+ currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime()); // $NON-NLS
 
-		final TextView tvRoom = (TextView) convertView.findViewById(R.id.tvRoom);
+		final TextView tvRoom = (TextView) convertView.findViewById(R.id.textviewRoom);
 		tvRoom.setText(currentItem.getEvent().getRoom());
 
 		return convertView;

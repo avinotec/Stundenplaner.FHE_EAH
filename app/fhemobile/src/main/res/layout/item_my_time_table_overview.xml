@@ -18,7 +18,6 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/singleRowLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -34,8 +33,9 @@
         android:paddingTop="@dimen/list_item_vertical_padding"
         android:paddingBottom="@dimen/list_item_vertical_padding"
         android:background="@color/list_header_background">
+
         <TextView
-            android:id="@+id/tvLessonTitle"
+            android:id="@+id/textviewCourseTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -77,7 +77,7 @@
 	    android:layout_toStartOf="@+id/ibRemoveLesson" />
 
     <TextView
-        android:id="@+id/tvCourseTime"
+        android:id="@+id/textviewCourseTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvStudyGroupTitle"
@@ -89,15 +89,15 @@
 	    android:layout_marginStart="16dp" />
 
     <TextView
-        android:id="@+id/tvRoom"
+        android:id="@+id/textviewRoom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
         android:layout_below="@+id/tvStudyGroupTitle"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/tvCourseTime"
-        android:layout_toRightOf="@+id/tvCourseTime"
+        android:layout_toEndOf="@+id/textviewCourseTime"
+        android:layout_toRightOf="@+id/textviewCourseTime"
         android:layout_toLeftOf="@id/ibRemoveLesson"
         android:text="TextView"
 	    android:layout_toStartOf="@id/ibRemoveLesson" />
