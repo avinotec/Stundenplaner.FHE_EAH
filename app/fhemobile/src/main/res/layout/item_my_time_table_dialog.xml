@@ -35,7 +35,7 @@
         android:background="@color/list_header_background">
 
         <TextView
-            android:id="@+id/textviewCourseTitle"
+            android:id="@+id/textCourseTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -47,7 +47,7 @@
 
     </RelativeLayout>
     <TextView
-        android:id="@+id/tvStudyGroupLabel"
+        android:id="@+id/textStudyGroupLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/headerBackground"
@@ -60,11 +60,11 @@
 	    android:layout_marginStart="16dp"
 	    android:layout_alignParentStart="true" />
     <TextView
-        android:id="@+id/tvStudyGroupTitle"
+        android:id="@+id/textStudyGroupTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/headerBackground"
-        android:layout_toRightOf="@id/tvStudyGroupLabel"
+        android:layout_toRightOf="@id/textStudyGroupLabel"
         android:layout_toLeftOf="@+id/imagebuttonAddCourse"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="16dp"
@@ -72,7 +72,7 @@
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:visibility="visible"
-	    android:layout_toEndOf="@id/tvStudyGroupLabel"
+	    android:layout_toEndOf="@id/textStudyGroupLabel"
 	    android:layout_toStartOf="@+id/imagebuttonAddCourse"
 	    android:layout_marginStart="16dp" />
 
@@ -80,7 +80,7 @@
         android:id="@+id/textviewCourseTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvStudyGroupTitle"
+        android:layout_below="@+id/textStudyGroupTitle"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
@@ -92,7 +92,7 @@
         android:id="@+id/textviewRoom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvStudyGroupTitle"
+        android:layout_below="@+id/textStudyGroupTitle"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"

@@ -147,7 +147,7 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 			convertView.setVisibility(View.GONE);
 		}
 
-		final TextView courseTitle = (TextView) convertView.findViewById(R.id.textviewCourseTitle);
+		final TextView courseTitle = (TextView) convertView.findViewById(R.id.textCourseTitle);
 		final RelativeLayout headerLayout = convertView.findViewById(R.id.headerBackground);
 
 		if(position == 0){
@@ -176,8 +176,8 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 		}
 
 
-		final TextView studyGroupLabel = (TextView) convertView.findViewById(R.id.tvStudyGroupLabel);
-		final TextView studyGroupTitle = (TextView) convertView.findViewById(R.id.tvStudyGroupTitle);
+		final TextView studyGroupLabel = (TextView) convertView.findViewById(R.id.textStudyGroupLabel);
+		final TextView studyGroupTitle = (TextView) convertView.findViewById(R.id.textStudyGroupTitle);
 		final ImageButton btnAddLesson = (ImageButton) convertView.findViewById(R.id.imagebuttonAddCourse);
 		if(currentItem.isAdded() == true){
 			btnAddLesson.setEnabled(false);

@@ -105,7 +105,7 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 			convertView.setVisibility(View.GONE);
 		}
 
-		final TextView courseTitle = (TextView) convertView.findViewById(R.id.textviewCourseTitle);
+		final TextView courseTitle = (TextView) convertView.findViewById(R.id.textCourseTitle);
 		final RelativeLayout headerBackground = convertView.findViewById(R.id.headerBackground);
 		courseTitle.setText(correctUmlauts(FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle())));
 
@@ -133,12 +133,12 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 			headerBackground.setVisibility(View.GONE);
 		}
 
-		final TextView studyGroupLabel = (TextView)convertView.findViewById(R.id.tvStudyGroupLabel);
-		final TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.tvStudyGroupTitle);
+		final TextView studyGroupLabel = (TextView)convertView.findViewById(R.id.textStudyGroupLabel);
+		final TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.textStudyGroupTitle);
 
 
-		final ImageButton ibRemoveCourse = convertView.findViewById(R.id.ibRemoveLesson);
-		ibRemoveCourse.setOnClickListener(new View.OnClickListener() {
+		final ImageButton btnRemoveCourse = convertView.findViewById(R.id.btnRemoveCourse);
+		btnRemoveCourse.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -155,6 +155,7 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 					removeFromSubscribedCourses(event);
 				}
 
+				((ListView) parent).invalidateViews();
 			}
 		});
 
@@ -163,7 +164,7 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 			studyGroupTitle.setText(currentItem.getSetString());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			studyGroupLabel.setVisibility(View.VISIBLE);
-			ibRemoveCourse.setVisibility(View.VISIBLE);
+			btnRemoveCourse.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
 		}
@@ -174,7 +175,7 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 			studyGroupTitle.setText(currentItem.getSetString());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			studyGroupLabel.setVisibility(View.VISIBLE);
-			ibRemoveCourse.setVisibility(View.VISIBLE);
+			btnRemoveCourse.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
 
@@ -184,14 +185,14 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 			studyGroupTitle.setText(currentItem.getSetString());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			studyGroupLabel.setVisibility(View.VISIBLE);
-			ibRemoveCourse.setVisibility(View.VISIBLE);
+			btnRemoveCourse.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
 		}
 		else{
 			studyGroupTitle.setVisibility(View.GONE);
 			studyGroupLabel.setVisibility(View.GONE);
-			ibRemoveCourse.setVisibility(View.GONE);
+			btnRemoveCourse.setVisibility(View.GONE);
 		}
 
 		final TextView tvTime = (TextView) convertView.findViewById(R.id.textviewCourseTime);
