@@ -82,21 +82,25 @@
     <!-- string name="configure" >Configure</string -->
     <!-- string name="add_widget" >Add widget</string -->
 
-    <string name="timetable_modify_course">Modify schedule</string>
+
     <string name="professor">Professor</string>
     <string name="role">Role</string>
     <string name="mensa_food_no_data_available">No data available</string>
-    <string name="my_time_table_add_lesson">Add Lesson</string>
     <string name="loading">Loading…</string>
+
+    <!-- My Time Table -->
+    <string name="my_time_table_add_course">Add course</string>
+    <string name="my_timetable_modify_schedule">Modify schedule</string>
     <string name="my_time_table_empty_text_calendar">You did not compose a schedule.</string>
-    <string name="my_time_table_empty_text_edit">You did not choose a lesson.</string>
+    <string name="my_time_table_empty_text_edit">You did not choose a course.</string>
     <string name="my_time_table_empty_text_select">Choose study course and semester.</string>
+    <string name="jump_to_current_lesson">>> Today</string>
+    <string name="today">Today</string>
 
     <string name="impress_data_protection_link" translatable="false"><a href="https://www.eah-jena.de/datenschutz">Data protection</a></string>
     <string name="notification_error_ssl_cert_invalid">A SSL-Certificate occurred. Do you want to proceed?</string>
     <string name="ssl_error_continue">Continue</string>
     <string name="ssl_error_cancel">Cancel</string>
-    <string name="jump_current_lesson">>> Today</string>
     <string name="deleteTimetableTitle">Delete timetable?</string>
     <string name="deleteTimetableMessage">The semester is over. Do you want to delete the timetable?</string>
 
@@ -154,7 +158,6 @@
     <string name="navigation_button_next_plan">Next Map</string>
     <string name="maps_up" >One floor up</string>
     <string name="maps_down" >One floor down</string>
-	<string name="today">Today</string>
     <string name="navigation_dialog_empty_building">No rooms here.</string>
     <string name="error_message_room_input_invalid">Room not found!</string>
     <string name="navigation_start">From: </string>
@@ -163,6 +166,7 @@
     <string name="navigation_building">building</string>
     <string name="navigation_floor">floor</string>
     <string name="navigation_dialog_person">Person</string>
+    <string name="my_time_table_headline">My Courses</string>
 
 
 </resources>

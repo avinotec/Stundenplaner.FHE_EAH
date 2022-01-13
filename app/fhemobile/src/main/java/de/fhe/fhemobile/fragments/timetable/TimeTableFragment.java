@@ -97,7 +97,7 @@ public class TimeTableFragment extends FeatureFragment {
 
     private final TimeTableView.IViewListener mViewListener = new TimeTableView.IViewListener() {
         @Override
-        public void onStudyCourseChosen(String _SemesterId) {
+        public void onStudyCourseChosen(String _StudyCourseId) {
             mView.toggleGroupsPickerVisibility(false);
             mView.toggleButtonEnabled(false);
             mView.resetSemesterPicker();
@@ -109,7 +109,7 @@ public class TimeTableFragment extends FeatureFragment {
             boolean errorOccurred = false;
 
             for (StudyCourseVo courseVo : mResponse.getStudyCourses()) {
-                if (courseVo.getId() != null && courseVo.getId().equals(_SemesterId)) {
+                if (courseVo.getId() != null && courseVo.getId().equals(_StudyCourseId)) {
                     mChosenCourse = courseVo;
 
                     // Check if course has any terms available
@@ -140,7 +140,7 @@ public class TimeTableFragment extends FeatureFragment {
         }
 
         @Override
-        public void onSemesterChosen(String _GroupId) {
+        public void onSemesterChosen(String _SemesterId) {
             mView.toggleGroupsPickerVisibility(true);
             mView.toggleButtonEnabled(false);
             mView.resetGroupsPicker();
@@ -148,7 +148,7 @@ public class TimeTableFragment extends FeatureFragment {
             mChosenSemester = null;
 
             for (SemesterVo semesterVo : mChosenCourse.getSemesters()) {
-                if (semesterVo.getId().equals(_GroupId)) {
+                if (semesterVo.getId().equals(_SemesterId)) {
                     mChosenSemester = semesterVo;
                     mView.setStudyGroupItems(semesterVo.getStudyGroups());
                 }

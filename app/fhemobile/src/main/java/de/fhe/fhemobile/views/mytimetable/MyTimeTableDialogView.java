@@ -14,7 +14,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.views.timetable;
+package de.fhe.fhemobile.views.mytimetable;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -28,7 +28,7 @@ import java.util.Collections;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.adapters.timetable.TimeTableLessonAdapter;
+import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableDialogAdapter;
 import de.fhe.fhemobile.comparator.StudyCourseComperator;
 import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
 import de.fhe.fhemobile.vos.timetable.SemesterVo;
@@ -39,19 +39,20 @@ import de.fhe.fhemobile.widgets.picker.base.OnItemChosenListener;
 /**
  * Created on 12.03.15.
  */
-public class AddLessonView extends LinearLayout {
+public class MyTimeTableDialogView extends LinearLayout {
 
-    public AddLessonView(final Context context, final AttributeSet attrs) {
+    public MyTimeTableDialogView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public AddLessonView(final Context context) {
+    public MyTimeTableDialogView(final Context context) {
         super(context);
     }
 
     public void setViewListener(final IViewListener _Listener) {
         mViewListener = _Listener;
     }
+
 
     public void initializeView(final FragmentManager _Manager) {
 
@@ -61,9 +62,22 @@ public class AddLessonView extends LinearLayout {
 
         mSemesterPicker.setFragmentManager(_Manager);
         mSemesterPicker.toggleEnabled(false);
-        mSemesterPicker.setOnItemChosenListener(mTermsListener);
+        mSemesterPicker.setOnItemChosenListener(mSemesterListener);
+
+        setCourseListEmptyView();
 
     }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+
+        mStudyCoursePicker = (StudyCoursePicker) findViewById(R.id.mytimetable_studyCoursePicker);
+        mSemesterPicker =   (SemesterPicker)     findViewById(R.id.mytimetable_semesterPicker);
+
+        mCourseListView = (ListView) findViewById(R.id.my_time_table_dialog_listview_courses);
+    }
+
 
     public void setStudyCourseItems(final List<StudyCourseVo> _Items) {
         StudyCourseVo.alterTitle(_Items);
@@ -82,36 +96,24 @@ public class AddLessonView extends LinearLayout {
         mSemesterPicker.setVisibility(_Visible ? VISIBLE : GONE);
     }
 
-    public void toggleLessonListVisibility(final boolean _Visible){
-        mLessonList.setVisibility(_Visible ? VISIBLE : GONE);
-    }
-    public void setLessonListAdapter(final TimeTableLessonAdapter adapter){
-        mLessonList.setAdapter(adapter);
-
+    public void toggleCourseListVisibility(final boolean _Visible){
+        mCourseListView.setVisibility(_Visible ? VISIBLE : GONE);
     }
 
-    // if study course changes, reset the Terms
+    public void setCourseListAdapter(final MyTimeTableDialogAdapter adapter){
+        mCourseListView.setAdapter(adapter);
+    }
+
     public void resetSemesterPicker() {
         mSemesterPicker.reset(true);
     }
-    public void setmSemesterPickerEnabled(final boolean enabled){
 
+    public void setSemesterPickerEnabled(final boolean enabled){
         mSemesterPicker.toggleEnabled(enabled);
     }
 
 
 
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-
-        mStudyCoursePicker = (StudyCoursePicker) findViewById(R.id.add_timetableStudyCoursePicker);
-        mSemesterPicker = (SemesterPicker)       findViewById(R.id.add_timetableSemesterPicker);
-
-        mLessonList        = (ListView)          findViewById(R.id.add_lvLessons);
-    }
-
-    // Returns the chosen TermsId
     private final OnItemChosenListener mCourseListener = new OnItemChosenListener() {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
@@ -121,8 +123,7 @@ public class AddLessonView extends LinearLayout {
         }
     };
 
-    // Returns the GroupId
-    private final OnItemChosenListener mTermsListener = new OnItemChosenListener() {
+    private final OnItemChosenListener mSemesterListener = new OnItemChosenListener() {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
@@ -132,32 +133,35 @@ public class AddLessonView extends LinearLayout {
     };
 
 
-    public interface IViewListener {
-        void onStudyCourseChosen(String _TermId);
-        void onSemesterChosen(String _GroupId);
-        //TODO not yet implemented?
-        //not used? void onStudyGroupChosen(String _TimeTableId);
-        //not used? void onSearchClicked();
-    }
-
     public void setSelectedSemesterText(final String text){
         mSemesterPicker.setDisplayValue(text);
     }
+
     public void setSelectedGroupText(final String text){
         mStudyCoursePicker.setDisplayValue(text);
     }
 
-    public void setEmptyText(final String text){
+    /**
+     * Sets view to show if the course list is empty
+     */
+    private void setCourseListEmptyView(){
         final TextView emptyView = new TextView( getContext() );
-        emptyView.setText(text);
-        mLessonList.setEmptyView(emptyView);
+        emptyView.setText(getResources().getString(R.string.my_time_table_empty_text_select));
+        mCourseListView.setEmptyView(emptyView);
     }
+
+
+    public interface IViewListener {
+        void onStudyCourseChosen(String _TermId);
+        void onSemesterChosen(String _GroupId);
+    }
+
 
     private IViewListener     mViewListener;
 
-    private StudyCoursePicker mStudyCoursePicker;
-    private SemesterPicker mSemesterPicker;
-    private ListView          mLessonList;
+    private StudyCoursePicker   mStudyCoursePicker;
+    private SemesterPicker      mSemesterPicker;
+    private ListView            mCourseListView;
 
 
 }

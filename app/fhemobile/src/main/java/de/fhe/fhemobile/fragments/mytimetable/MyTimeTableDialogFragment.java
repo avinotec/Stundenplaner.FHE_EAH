@@ -19,6 +19,8 @@ package de.fhe.fhemobile.fragments.mytimetable;
 
 
 import static android.content.ContentValues.TAG;
+import static de.fhe.fhemobile.Main.getAppContext;
+import static de.fhe.fhemobile.Main.getSubscribedCourses;
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
 import android.app.Dialog;
@@ -41,13 +43,12 @@ import java.util.Collections;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.adapters.timetable.TimeTableLessonAdapter;
-import de.fhe.fhemobile.comparator.LessonTitle_StudyGroupTitle_Comparator;
+import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableDialogAdapter;
+import de.fhe.fhemobile.comparator.CourseTitleStudyGroupTitleComparator;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.network.TimeTableCallback;
 import de.fhe.fhemobile.utils.Utils;
-import de.fhe.fhemobile.views.mytimetable.MyTimeTableView;
-import de.fhe.fhemobile.views.timetable.AddLessonView;
+import de.fhe.fhemobile.views.mytimetable.MyTimeTableDialogView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 import de.fhe.fhemobile.vos.timetable.SemesterVo;
 import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
@@ -69,16 +70,15 @@ import retrofit2.Response;
  */
 public class MyTimeTableDialogFragment extends DialogFragment {
 
-
     public static final String PREFS_CHOSEN_SEMESTER = "_ChosenSemester";
-    public static final String PREFS_CHOSEN_COURSE = "_ChosenCourse";
-    public static final String PREFS_CHOSEN_RESULT = "_Result";
+    public static final String PREFS_CHOSEN_STUDY_COURSE = "_ChosenSudyCourse";
+    public static final String PREFS_ALL_COURSES_OF_CHOSEN_STUDYCOURSE_AND_SEMESTER = "_Result";
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment TimeTableFragment.
+     * @return A new instance of fragment MyTimeTableOverviewFragment.
      */
     public static MyTimeTableDialogFragment newInstance() {
         MyTimeTableDialogFragment fragment = new MyTimeTableDialogFragment();
@@ -109,27 +109,24 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mChosenCourse       = null;
+        mChosenStudyCourse = null;
         mChosenSemester = null;
 
-//        if (getArguments() != null) {
-//
-//        }
-	    timeTableLessonAdapter = new TimeTableLessonAdapter(MyTimeTableDialogFragment.this.getContext());
+	    mCourseListAdapter = new MyTimeTableDialogAdapter(getAppContext());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (AddLessonView) inflater.inflate(R.layout.view_my_time_table_add_course, container, false);
+        mView = (MyTimeTableDialogView) inflater.inflate(R.layout.fragment_my_time_table_dialog, container, false);
 
         mView.initializeView(getChildFragmentManager());
         mView.setViewListener(mViewListener);
 
-        initSelectionSite();
-        final String emptyText = getResources().getString(R.string.my_time_table_empty_text_select);
-        mView.setEmptyText(emptyText);
+        mView.setCourseListAdapter(mCourseListAdapter);
+
+        loadSelectionFromSharedPreferences();
 
         return mView;
     }
@@ -145,12 +142,12 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
     }
     /**
-     * @param weekList ist der Datensatz, der beim Request erhalten wird (alle events eines Sets)
-     * @param _completeLessons ist die Liste, die am Ende alle Daten der verschiedenen Requests beinhaltet.
+     * @param weekList ist der Datensatz, der beim Request erhalten wird (alle Events eines Sets/StudyGroup)
+     * @param _allChosenCourses ist die Liste, die am Ende alle Daten der verschiedenen Requests beinhaltet.
      * @param data ist der neue Datensatz, der in die Liste eingepflegt werden soll.
      **/
     private static void getAllEvents(final List<TimeTableWeekVo> weekList,
-                                     final List<FlatDataStructure> _completeLessons ,
+                                     final List<FlatDataStructure> _allChosenCourses,
                                      final FlatDataStructure data) {
         if (weekList != null) {
             try {
@@ -163,16 +160,16 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                         List<TimeTableEventVo> eventList = dayList.get(dayIndex).getEvents();
 
                         for(int eventIndex = 0; eventIndex < eventList.size(); eventIndex++){
-                            for(FlatDataStructure addedEvent : MyTimeTableView.getLessons()){
+                            for(FlatDataStructure addedEvent : getSubscribedCourses()){
                                 if (addedEvent.getEvent().getUid()
                                         .equals(eventList.get(eventIndex).getUid())){
                                     data.setAdded(true);
                                     break;
                                 }
                             }
-                            //durchsuche die komplette Liste nach der EventUID, des momentan hinzuzufügenden Event.
+                            //durchsuche die komplette Liste nach der EventUID, des momentan hinzuzufügenden Events
                         	FlatDataStructure exists = null;
-                        	for ( FlatDataStructure savedEvent : _completeLessons ) {
+                        	for ( FlatDataStructure savedEvent : _allChosenCourses) {
 //		                        Log.d(TAG, "EventUID1: "+savedEvent.getEvent().getUid()+" EventUID2: "+eventList.get(eventIndex).getUid()+" setTitle: "+ savedEvent.getStudyGroup().getTitle()+" result: "+savedEvent.getEvent().getUid().equals(eventList.get(eventIndex).getUid()));
                         		if (savedEvent.getEvent().getUid().equals(eventList.get(eventIndex).getUid())){
                         			exists = savedEvent;
@@ -187,8 +184,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 				                        .setEventDay(dayList.get(dayIndex))
 				                        .setEvent(eventList.get(eventIndex));
 		                        datacopy.getSets().add(datacopy.getStudyGroup().getTitle().split("\\.")[1]);
-		                        boolean found=false;
-		                        for(FlatDataStructure selectedItem:MyTimeTableView.getLessons()){
+		                        boolean found = false;
+		                        for(FlatDataStructure selectedItem: getSubscribedCourses()){
 		                            if(datacopy.getEvent().getUid()
                                             .equals(selectedItem.getEvent().getUid())){
 		                                found = true;
@@ -198,7 +195,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
                                 datacopy.setAdded( found ) ;
 
-		                        _completeLessons.add(datacopy);
+		                        _allChosenCourses.add(datacopy);
 	                        }
                             //Stattdessen füge bei dem existierenden Eintrag das Set des neuen Events hinzu.
                         	else{
@@ -216,20 +213,20 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     }
 
 
-    /** Setzt die beim letzten mal ausgewählten Werte und die letzen Suchergebnisse.
-     *
+    /**
+     * Setzt die beim letzten Mal ausgewählten Werte und die letzten Suchergebnisse.
      */
-    private void initSelectionSite(){
+    private void loadSelectionFromSharedPreferences(){
         final Gson gson = new Gson();
 
         SharedPreferences sharedPreferences = this.getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-        if(sharedPreferences.contains(PREFS_CHOSEN_COURSE)){
-            final String chosenCourseJson = sharedPreferences.getString(PREFS_CHOSEN_COURSE,"");
+        if(sharedPreferences.contains(PREFS_CHOSEN_STUDY_COURSE)){
+            final String chosenCourseJson = sharedPreferences.getString(PREFS_CHOSEN_STUDY_COURSE,"");
             final StudyCourseVo chosenCourse = gson.fromJson(chosenCourseJson,StudyCourseVo.class);
-            mChosenCourse = chosenCourse;
-            mView.setSemesterItems(mChosenCourse.getSemesters());
+            mChosenStudyCourse = chosenCourse;
+            mView.setSemesterItems(mChosenStudyCourse.getSemesters());
             mView.setSelectedGroupText(chosenCourse.getTitle());
         }
 
@@ -239,15 +236,18 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             mChosenSemester = chosenSemester;
             mView.setSelectedSemesterText(chosenSemester.getTitle());
             mView.toggleSemesterPickerVisibility(true);
-            mView.setmSemesterPickerEnabled(true);
+            mView.setSemesterPickerEnabled(true);
 
 
-            if (sharedPreferences.contains(PREFS_CHOSEN_RESULT)) {
-                final String resultJson = correctUmlauts(sharedPreferences.getString(PREFS_CHOSEN_RESULT, ""));
+            //load last request result for the last chosen study course and semester
+            if (sharedPreferences.contains(PREFS_ALL_COURSES_OF_CHOSEN_STUDYCOURSE_AND_SEMESTER)) {
+                final String resultJson = correctUmlauts(sharedPreferences.getString(PREFS_ALL_COURSES_OF_CHOSEN_STUDYCOURSE_AND_SEMESTER, ""));
                 final FlatDataStructure[] result = gson.fromJson(resultJson, FlatDataStructure[].class);
+
+                //for each course in result check if the user has added it to his/her schedule
                 for(FlatDataStructure loadedElement : result){
                     boolean found = false;
-                    for(FlatDataStructure selectedItem:MyTimeTableView.getLessons()){
+                    for(FlatDataStructure selectedItem : getSubscribedCourses()){
                         if(loadedElement.getEvent().getUid().equals(selectedItem.getEvent().getUid())){
                             found = true;
                             break;
@@ -256,67 +256,67 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                     loadedElement.setAdded( found );
 
                 }
-                MyTimeTableView.setCompleteLessons(new ArrayList<FlatDataStructure>(Arrays.asList(result)));
+                //set all courses of the currently chosen study course and semester (not the variable for the subscribed courses)
+                coursesOfChosenSemester = new ArrayList<FlatDataStructure>(Arrays.asList(result));
 
-                final TimeTableLessonAdapter timeTableLessonAdapter
-                        = new TimeTableLessonAdapter(MyTimeTableDialogFragment.this.getContext());
-                mView.setLessonListAdapter(timeTableLessonAdapter);
-                mView.toggleLessonListVisibility(true);
-                timeTableLessonAdapter.notifyDataSetChanged();
+                mCourseListAdapter.setChosenCourseList(coursesOfChosenSemester);
+                mView.setCourseListAdapter(mCourseListAdapter);
+                mView.toggleCourseListVisibility(true);
+                mCourseListAdapter.notifyDataSetChanged();
             }
         }
     }
 
-    /**
-     *
-     */
-    private final AddLessonView.IViewListener mViewListener = new AddLessonView.IViewListener() {
 
-        // Auswahl des Semesters (Term)
-        // löschen aller Listen und aus der DropDownliste auswählen lassen
+    private final MyTimeTableDialogView.IViewListener mViewListener = new MyTimeTableDialogView.IViewListener() {
+
         @Override
-        public void onStudyCourseChosen(final String _SemesterId ) {
+        public void onStudyCourseChosen(final String _StudCourseId) {
+            //reset needed because a new study course had been chosen
+            mView.resetSemesterPicker();
+            mView.toggleCourseListVisibility(false);
 
-            Log.d(TAG, "onTermChosen: "+_SemesterId+" ausgewählt");
-            //TODO ???
-            // mView.resetSemesterPicker();
-            //mView.toggleLessonListVisibility(false);
+            coursesOfChosenSemester.clear();
+            mCourseListAdapter.setChosenCourseList(coursesOfChosenSemester);
+            mCourseListAdapter.notifyDataSetChanged();
 
-            MyTimeTableView.getCompleteLessons().clear();
-            mView.setLessonListAdapter(timeTableLessonAdapter);
-            //timeTableLessonAdapter.notifyDataSetChanged();
-
-            mChosenCourse = null;
+            mChosenStudyCourse = null;
             mChosenSemester = null;
 
-            boolean errorOccurred = false;
 
-            for (StudyCourseVo courseVo : mResponse.getStudyCourses()) {
-                if (courseVo != null && courseVo.getId() != null && courseVo.getId().equals(_SemesterId)) {
-                    mChosenCourse = courseVo;
-                    Gson gson = new Gson();
-                    String chosenCourseJson = correctUmlauts(gson.toJson(courseVo));
+            boolean studyCourseEmpty = true;
 
-                    // Check if course has any terms available
-                    if (courseVo.getSemesters() != null) {
-                        errorOccurred = false;
-                        editor.putString(PREFS_CHOSEN_COURSE, chosenCourseJson);
+            for (StudyCourseVo studyCourse : mResponse.getStudyCourses()) {
+                if (studyCourse != null && studyCourse.getId() != null && studyCourse.getId().equals(_StudCourseId)) {
+
+                    mChosenStudyCourse = studyCourse;
+
+                    // Check if study course has any semesters available
+                    if (studyCourse.getSemesters() != null) {
+                        studyCourseEmpty = false;
+                        //save chosen study course to shared preferences
+                        String chosenStudyCourseJson = correctUmlauts(new Gson().toJson(studyCourse));
+                        editor.putString(PREFS_CHOSEN_STUDY_COURSE, chosenStudyCourseJson);
                         editor.commit();
-                        mView.setSemesterItems(courseVo.getSemesters());
+
+                        //set items of semester picker
+                        mView.setSemesterItems(studyCourse.getSemesters());
                     }
+                    // No terms are available
                     else {
-                        // No terms are available
-                        errorOccurred = true;
+                        studyCourseEmpty = true;
                     }
+
+                    //chosen study course found
                     break;
                 }
                 else {
-                    // No Id is available
-                    errorOccurred = true;
+                    // No Id is available, chosen study course not found
+                    studyCourseEmpty = true;
                 }
             }
 
-            if (errorOccurred) {
+            if (studyCourseEmpty) {
                 mView.toggleSemesterPickerVisibility(false);
                 Utils.showToast(R.string.timetable_error);
             }
@@ -329,54 +329,57 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         /** es gibt zu EINEM Request unterschiedliche Anzahl von Anforderungen und Antworten
          *  wir warten, bis alle Antworten eingetroffen sind.
          */
-        private volatile int requestCounter=0;
+        private volatile int requestCounter = 0;
 
         /**
          *
-         * @param _GroupId
+         * @param _SemesterId
          */
         @Override
-        public void onSemesterChosen(String _GroupId) {
-            //mView.toggleButtonEnabled(false);
-            mView.toggleLessonListVisibility(false);
-            MyTimeTableView.getCompleteLessons().clear();
-            timeTableLessonAdapter.notifyDataSetChanged();
-
-            // mView.resetGroupsPicker();
+        public void onSemesterChosen(String _SemesterId) {
+            mView.toggleCourseListVisibility(false);
+            coursesOfChosenSemester.clear();
+            mCourseListAdapter.setChosenCourseList(coursesOfChosenSemester);
+            mCourseListAdapter.notifyDataSetChanged();
 
             mChosenSemester = null;
 
-            for (SemesterVo semesterVo : mChosenCourse.getSemesters()) {
-                if (semesterVo.getId().equals(_GroupId)) {
+            for (SemesterVo semester : mChosenStudyCourse.getSemesters()) {
 
-                    mChosenSemester = semesterVo;
+                if (semester.getId().equals(_SemesterId)) {
+
+                    //set chosen semester
+                    mChosenSemester = semester;
+                    //save chosen semester to shared preferences
                     final Gson gson = new Gson();
                     final String chosenSemesterJson = correctUmlauts(gson.toJson(mChosenSemester));
-                    editor.putString(PREFS_CHOSEN_SEMESTER,chosenSemesterJson);
+                    editor.putString(PREFS_CHOSEN_SEMESTER, chosenSemesterJson);
                     editor.commit();
 
+                    //get timetable (all courses/events) for each study group in the chosen semester
                     for (StudyGroupVo studyGroupVo : mChosenSemester.getStudyGroups()) {
                         FlatDataStructure data = new FlatDataStructure()
-                                .setCourse(mChosenCourse)
+                                .setStudyCourse(mChosenStudyCourse)
                                 .setSemester(mChosenSemester)
                                 .setStudyGroup(studyGroupVo);
 
-
+                        //get timetable of the studyGroupVo
                         TimeTableCallback<List<TimeTableWeekVo>> callback =
                                 new TimeTableCallback<List<TimeTableWeekVo>>(data) {
+
                             @Override
                             public void onResponse(Call<List<TimeTableWeekVo>> call,
                                                    Response<List<TimeTableWeekVo>> response) {
-
                                 super.onResponse(call, response);
+
                                 if(response.code() >= 200) {
-                                    List<TimeTableWeekVo> weekList=response.body();
+                                    List<TimeTableWeekVo> weekList = response.body();
 
 //                                    Log.d(TAG, "success: Request wurde ausgefuehrt: " + response.raw().request().url() + " Status: " + response.code());
                                     //Gemergte liste aller zurückgekehrten Requests. Die Liste wächst mit jedem Request.
                                     //Hier (im success) haben wir neue Daten bekommen.
 
-                                    getAllEvents(weekList, MyTimeTableView.getCompleteLessons(), this.getData());
+                                    getAllEvents(weekList, coursesOfChosenSemester, this.getData());
 //                                    Log.d(TAG, "success: length"+courseEvents.size());
 
 
@@ -387,8 +390,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                     if (--requestCounter <= 0) {
 
                                         try {
-                                            Collections.sort(MyTimeTableView.getCompleteLessons(),
-                                                    new LessonTitle_StudyGroupTitle_Comparator());
+                                            Collections.sort(coursesOfChosenSemester,
+                                                    new CourseTitleStudyGroupTitleComparator());
                                         } catch ( final RuntimeException e ) {
                                             Log.e(TAG, "Fehler beim Sortieren", e); //$NON-NLS
                                         }
@@ -405,7 +408,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                                 final FlatDataStructure course1 = courseEvents.get( j );
 
                                                 // wenn es gleich ist, dann entfernen wir es, damit entfernen wir Duplikate
-                                                if ( LessonTitle_StudyGroupTitle_Comparator.compareStatic( course0, course1 ) == 0 ) {
+                                                if ( CourseTitleStudyGroupTitleComparator.compareStatic( course0, course1 ) == 0 ) {
                                                     courseEvents.remove(j);
                                                     j--;
                                                 }
@@ -413,13 +416,15 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                         }
 */
 
-                                        mView.setLessonListAdapter(timeTableLessonAdapter);
-                                        mView.toggleLessonListVisibility(true);
-                                        timeTableLessonAdapter.notifyDataSetChanged();
+                                        mView.toggleCourseListVisibility(true);
+                                        mCourseListAdapter.setChosenCourseList(coursesOfChosenSemester);
+                                        mCourseListAdapter.notifyDataSetChanged();
+                                        mView.setCourseListAdapter(mCourseListAdapter);
+
                                         final Gson gson = new Gson();
                                         final String chosenSemesterJson = correctUmlauts(
-                                                gson.toJson(MyTimeTableView.getCompleteLessons()));
-                                        editor.putString(PREFS_CHOSEN_RESULT, chosenSemesterJson);
+                                                gson.toJson(coursesOfChosenSemester));
+                                        editor.putString(PREFS_ALL_COURSES_OF_CHOSEN_STUDYCOURSE_AND_SEMESTER, chosenSemesterJson);
                                         editor.commit();
 
                                     }
@@ -441,57 +446,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             }
         }
 
-/*        not used:
-
-        @Override
-        public void onStudyGroupChosen(final String _TimeTableId) {
-            // empty
-        }
-
-        @Override
-        public void onSearchClicked() {
-            // empty
-        }*/
-
     };
-/*
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-//        Log.d(TAG, "onDestroyView");
-    }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-//        Log.d(TAG, "onAttach");
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-//        Log.d(TAG, "onDetach");
-    }
-
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop");
-    }
-
-    @Override
-    public void onCancel(DialogInterface dialog) {
-        super.onCancel(dialog);
-        Log.d(TAG,"onCancel");
-    }
-
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
-
-    }
-*/
     private final Callback<TimeTableResponse> mTimeTableResponseCallback = new Callback<TimeTableResponse>() {
         @Override
         public void onResponse(Call<TimeTableResponse> call, Response<TimeTableResponse> response) {
@@ -499,27 +455,26 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
                 //store the response, to work on later
                 mResponse = response.body();
-//                for (StudyCourseVo course : response.body().getStudyCourses()){
-//                    Log.d(TAG, "onResponse: "+course.getTitle());
-//                }
 
                 mView.setStudyCourseItems(mResponse.getStudyCourses());
             }
-            Log.d(TAG, "success: Request wurde ausgefuehrt: " + response.raw().request().url()
-                    + " Status: "+response.code());
-            // MS: Bei den News sind die news/0 kaputt
+            Log.d(TAG, "success: request  " + response.raw().request().url()
+                    + ", status: "+response.code());
         }
 
         @Override
         public void onFailure(Call<TimeTableResponse> call, Throwable t) {
-            Log.d(TAG, "failure: Request wurde ausgefuehrt: " + call.request().url());
+            Log.d(TAG, "failure: request " + call.request().url());
         }
     };
 
     private SharedPreferences.Editor editor;
-    private AddLessonView     mView;
+    private MyTimeTableDialogView mView;
     private TimeTableResponse mResponse;
-    private StudyCourseVo     mChosenCourse;
+    private StudyCourseVo mChosenStudyCourse;
     private SemesterVo mChosenSemester;
-	private TimeTableLessonAdapter timeTableLessonAdapter;
+    //list of courses for the study course and semester currently chosen in MyTimeTableDialog
+    private List<FlatDataStructure> coursesOfChosenSemester = new ArrayList<>();
+
+    private MyTimeTableDialogAdapter mCourseListAdapter;
 }

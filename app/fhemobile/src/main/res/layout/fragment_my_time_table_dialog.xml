@@ -14,7 +14,7 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ~
   -->
-<de.fhe.fhemobile.views.timetable.AddLessonView
+<de.fhe.fhemobile.views.mytimetable.MyTimeTableDialogView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -41,7 +41,7 @@
                 android:layout_marginRight="16dp"/>
 
             <de.fhe.fhemobile.widgets.picker.StudyCoursePicker
-                android:id="@+id/add_timetableStudyCoursePicker"
+                android:id="@+id/mytimetable_studyCoursePicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/list_single_item_height"
@@ -50,7 +50,7 @@
                 android:layout_marginRight="16dp"/>
 
             <de.fhe.fhemobile.widgets.picker.SemesterPicker
-                android:id="@+id/add_timetableSemesterPicker"
+                android:id="@+id/mytimetable_semesterPicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/list_single_item_height"
@@ -61,7 +61,7 @@
 
 
             <ListView
-                android:id="@+id/add_lvLessons"
+                android:id="@+id/my_time_table_dialog_listview_courses"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="gone"
@@ -88,4 +88,4 @@
         </LinearLayout>
 
 
-</de.fhe.fhemobile.views.timetable.AddLessonView>
+</de.fhe.fhemobile.views.mytimetable.MyTimeTableDialogView>

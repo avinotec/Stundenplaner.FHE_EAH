@@ -34,7 +34,7 @@ import java.util.Date;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableCalendarAdapter;
-import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableFragment;
+import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableOverviewFragment;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
 /**
@@ -62,17 +62,17 @@ public class MyTimeTableCalendarView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         final Button mBtnModifySchedule = (Button) findViewById(R.id.btnMyTimetableModifySchedule);
-        mCalendarList =     (ListView)      findViewById(R.id.lvCalendar);
+        mCalendarListView =     (ListView)      findViewById(R.id.lvCalendar);
 
         // "modify schedule"
         mBtnModifySchedule.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {
                 final FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                transaction.replace(R.id.container, new MyTimeTableFragment(), MyTimeTableFragment.TAG)
-                        .addToBackStack(MyTimeTableFragment.TAG)
+                transaction.replace(R.id.container, new MyTimeTableOverviewFragment(), MyTimeTableOverviewFragment.TAG)
+                        .addToBackStack(MyTimeTableOverviewFragment.TAG)
                         .commit();
-                //Wechsle zum EditorFragment (MyTimeTableFragment) mittels backstack
+                //Wechsle zum EditorFragment (MyTimeTableOverviewFragment) mittels backstack
             }
         });
 
@@ -87,14 +87,14 @@ public class MyTimeTableCalendarView extends LinearLayout {
 
         //deprecated: calendarAdapter = new CalendarAdapter(mContext);
         myTimeTableCalendarAdapter = new MyTimeTableCalendarAdapter( getContext() );
-        mCalendarList.setAdapter(myTimeTableCalendarAdapter);
+        mCalendarListView.setAdapter(myTimeTableCalendarAdapter);
     }
 
     // Springen auf den aktuellen Tag
     public void jumpToToday(){
         final int currentDayIndex = getCurrentEventIndex();
         if(currentDayIndex >= 0){
-            mCalendarList.setSelection(currentDayIndex);
+            mCalendarListView.setSelection(currentDayIndex);
         }
     }
 
@@ -108,8 +108,8 @@ public class MyTimeTableCalendarView extends LinearLayout {
      */
     public static int getCurrentEventIndex(){
 
-        for(int i = 0; i < MyTimeTableView.sortedLessons.size(); i++){
-            final TimeTableEventVo event = MyTimeTableView.sortedLessons.get(i).getEvent();
+        for(int i = 0; i < MyTimeTableOverviewFragment.sortedCourses.size(); i++){
+            final TimeTableEventVo event = MyTimeTableOverviewFragment.sortedCourses.get(i).getEvent();
             final Date now = new Date();
             try {
                 //lesson starts now or in the future
@@ -144,16 +144,18 @@ public class MyTimeTableCalendarView extends LinearLayout {
 //    }
 // --Commented out by Inspection STOP (02.11.2021 17:22)
 
-    public void setEmptyText(final String text){
-        final TextView emptyView = findViewById(R.id.emptyView);
-        emptyView.setText(text);
-        mCalendarList.setEmptyView(emptyView);
+    /**
+     * Sets view to show if the course list is empty
+     */
+    public void setEmptyCalenderView(){
+        final TextView emptyView = new TextView( getContext() );
+        emptyView.setText(getResources().getString(R.string.my_time_table_empty_text_select));
+        mCalendarListView.setEmptyView(emptyView);
     }
 
-    //deprecated: private final Context           mContext;
     private FragmentManager   mFragmentManager;
 
-    private ListView mCalendarList;
+    private ListView mCalendarListView;
 
     private MyTimeTableCalendarAdapter myTimeTableCalendarAdapter;
 

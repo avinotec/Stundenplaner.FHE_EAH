@@ -16,6 +16,8 @@
  */
 package de.fhe.fhemobile.activities;
 
+import static de.fhe.fhemobile.Main.getSubscribedCourses;
+
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,7 +49,7 @@ import de.fhe.fhemobile.fragments.DrawerFragment;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
 import de.fhe.fhemobile.fragments.impressum.ImpressumFragment;
-import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableFragment;
+import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableOverviewFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdata.SemesterDataWebViewFragment;
 import de.fhe.fhemobile.models.navigation.Room;
@@ -59,7 +61,7 @@ import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.feature.FeatureFragmentFactory;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
-import de.fhe.fhemobile.views.mytimetable.MyTimeTableView;
+import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -68,7 +70,6 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements DrawerFragment.NavigationDrawerCallbacks {
     private static final String TAG = "MainActivity";
 
-    public static List<FlatDataStructure> completeLessons = new ArrayList<>();
     private final int CHANGEREASON_EDIT = 1;
     private final int CHANGEREASON_NEW = 3;
     private final int CHANGEREASON_DELETE = 2;
@@ -175,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
                     final List<ResponseModel.Change> changes = response.body().getChanges();
 
-                    final List<String[]> negativeList = MyTimeTableView.generateNegativeLessons();
+                    final List<String[]> negativeList = MyTimeTableOverviewView.generateNegativeLessons();
                     final Iterator<ResponseModel.Change> iterator = changes.iterator();
 
                     while(iterator.hasNext()){
@@ -200,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 //					changesAsString+=(change.getChangesReasonText()+"/n/n");
 //				}
 
-//                new AlertDialog.Builder(MyTimeTableFragment.this.getActivity())
+//                new AlertDialog.Builder(MyTimeTableOverviewFragment.this.getActivity())
 //                        .setTitle("Änderungen")
 //                       // .setMessage(changesAsString)
 //                        .setMessage("test")
@@ -217,13 +218,12 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 //                        // A null listener allows the button to dismiss the dialog and take no further action.
 //                        .show();
 
-                    //todo: folgender Code basiert auf generateNegativeList welche wie es scheint nur Änderungen der Veranstaltungen in selectedLessons berücksichtigt
-                    // --> auch Änderungen die nicht selectedLessons betreffen aber Veranstaltungen in completeLessons müssen eingebunden werden
+                    //folgender Code basiert auf generateNegativeList welche wie es Änderungen der Veranstaltungen in subscribedCourses berücksichtigt
 
                     for(final ResponseModel.Change change : changes){
 
                         // Shortcut to the list
-                        final List<FlatDataStructure> myTimetableList = MyTimeTableView.getLessons();
+                        final List<FlatDataStructure> myTimetableList = getSubscribedCourses();
 
                         //Aenderung einer Veranstaltung: suche das Event (= einzelne Veranstaltung) und ueberschreibe ihre Daten
                         if(change.getChangesReason() == CHANGEREASON_EDIT) {
@@ -238,12 +238,11 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                         //und fuege dann die Eventdaten des neuen Events hinzu. Anschliessend in die Liste hinzufuegen.
                         if(change.getChangesReason() == CHANGEREASON_NEW) {
                             final FlatDataStructure event =
-                                    FlatDataStructure.queryGetEventsByStudyGroupTitle(
+                                    FlatDataStructure.getCoursesByStudyGroupTitle(
                                             myTimetableList, change.getSetSplusKey()).get(0).copy();
                             event.setEvent(change.getNewEventJson());
 
-                            MyTimeTableView.addLesson(event);
-                            completeLessons.add(event);
+                            MyTimeTableOverviewView.addCourse(event);
 
                         }
                         //Loeschen einer Veranstaltung: Suche die Veranstaltung mit der SplusID und lösche sie aus der Liste.
@@ -251,8 +250,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                             final FlatDataStructure event = FlatDataStructure.getEventByID(
                                     myTimetableList, change.getNewEventJson().getUid());
 
-                            MyTimeTableView.removeLesson(event);
-                            completeLessons.remove(event);
+                            MyTimeTableOverviewView.removeCourse(event);
                         }
 
 
@@ -350,11 +348,11 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
             //Sonderbehandlung für myTimetable (Mein Stundenplan)
             // im Fragment MyTimeTableCalendarFragment wird im ---R.id.container--- das Fragment zum
-            // Editieren des Courses eingeblendet "MyTimeTableFragment". Und nicht das gesamte Fragment ausgetauscht.
-            // Wenn das Fragment MyTimeTableFragment irgendwo eingeblendet ist, dann wollen wir einfach auf dem Backstack wieder zurück,
+            // Editieren des Courses eingeblendet "MyTimeTableOverviewFragment". Und nicht das gesamte Fragment ausgetauscht.
+            // Wenn das Fragment MyTimeTableOverviewFragment irgendwo eingeblendet ist, dann wollen wir einfach auf dem Backstack wieder zurück,
 
             final FragmentManager fragmentManager = getSupportFragmentManager();
-            final Fragment aFragment = fragmentManager.findFragmentByTag(MyTimeTableFragment.TAG);
+            final Fragment aFragment = fragmentManager.findFragmentByTag(MyTimeTableOverviewFragment.TAG);
             if ( aFragment != null) {
                 // go back
                 super.onBackPressed();

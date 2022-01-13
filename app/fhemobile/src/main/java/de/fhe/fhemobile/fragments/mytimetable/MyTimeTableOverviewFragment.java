@@ -18,6 +18,10 @@
 package de.fhe.fhemobile.fragments.mytimetable;
 
 
+import static de.fhe.fhemobile.Main.addToSubscribedCourses;
+import static de.fhe.fhemobile.Main.getSubscribedCourses;
+import static de.fhe.fhemobile.Main.removeFromSubscribedCourses;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +37,7 @@ import com.google.gson.Gson;
 import org.junit.Assert;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
@@ -40,13 +45,13 @@ import java.util.List;
 
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.comparator.LessonTitle_StudyGroupTitle_Comparator;
+import de.fhe.fhemobile.comparator.CourseTitleStudyGroupTitleComparator;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.models.timeTableChanges.RequestModel;
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.services.PushNotificationService;
-import de.fhe.fhemobile.views.mytimetable.MyTimeTableView;
+import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,13 +59,23 @@ import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MyTimeTableFragment#newInstance} factory method to
+ * Use the {@link MyTimeTableOverviewFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
+ * Fragment of view showing overview of all subscribed courses
  */
-public class MyTimeTableFragment extends FeatureFragment {
-	public static final String TAG = "MyTimeTableFragment";
+public class MyTimeTableOverviewFragment extends FeatureFragment {
 
-	//unused: private TimeTableResponse mResponse;
+	public static final String TAG = "MyTimeTableOverviewFrag";
+
+
+	private static final int CHANGEREASON_EDIT = 1;
+	private static final int CHANGEREASON_NEW = 3;
+	private static final int CHANGEREASON_DELETE = 2;
+
+	/** sortedCourses: Liste der subscribedCourses sortiert für die Ausgabe im view, ausschließlich dafür benötigt. */
+	public static List<FlatDataStructure> sortedCourses = new ArrayList<>();
+
 
 	/**
 	 * Use this factory method to create a new instance of
@@ -68,74 +83,58 @@ public class MyTimeTableFragment extends FeatureFragment {
 	 *
 	 * @return A new instance of fragment TimeTableFragment.
 	 */
-	public static MyTimeTableFragment newInstance() {
-		final MyTimeTableFragment fragment = new MyTimeTableFragment();
+	public static MyTimeTableOverviewFragment newInstance() {
+		final MyTimeTableOverviewFragment fragment = new MyTimeTableOverviewFragment();
 		final Bundle args = new Bundle();
 		fragment.setArguments(args);
 		return fragment;
 	}
 
-	public MyTimeTableFragment() {
+	public MyTimeTableOverviewFragment() {
 		// Required empty public constructor
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-//		if (getArguments() != null) {
-//
-//		}
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		MyTimeTableView mView = (MyTimeTableView) inflater.inflate(R.layout.fragment_my_time_table, container, false);
+		MyTimeTableOverviewView mView = (MyTimeTableOverviewView) inflater.inflate(R.layout.fragment_my_time_table_overview, container, false);
 		mView.initializeView(getChildFragmentManager());
 
-		String emptyText = getResources().getString(R.string.my_time_table_empty_text_edit);
-		mView.setEmptyText(emptyText);
+		mView.setCourseListEmptyView();
 		return mView;
 	}
 
-/*
-	@Override
-	public void onResume() {
-		super.onResume();
-	}
-*/
 
 	@Override
 	public void onAttach(@NonNull Context context) {
 		super.onAttach(context);
-		if(!MyTimeTableView.getLessons().isEmpty()){
-			Collections.sort(MyTimeTableView.getLessons(),new LessonTitle_StudyGroupTitle_Comparator());
+		if(!getSubscribedCourses().isEmpty()){
+			Collections.sort(getSubscribedCourses(),new CourseTitleStudyGroupTitleComparator());
 		}
 	}
-
-	private static final int CHANGEREASON_EDIT = 1;
-	private static final int CHANGEREASON_NEW = 3;
-	private static final int CHANGEREASON_DELETE = 2;
 
 	@Override
 	public void onDetach() {
 		super.onDetach();
 
-
-		if (MyTimeTableView.getLessons().isEmpty() == false) {
+		if (!getSubscribedCourses().isEmpty()) {
 			final RequestModel request = new RequestModel(RequestModel.ANDROID_DEVICE, PushNotificationService.getFirebaseToken(), new Date().getTime() - 86400000);
 			String title = "";
 			String setID = "";
 
-			for (FlatDataStructure event : MyTimeTableView.getLessons()) {
+			for (FlatDataStructure event : getSubscribedCourses()) {
 				final String eventTitleShort = FlatDataStructure.cutEventTitle(event.getEvent().getTitle());
 				final String sSetID = event.getStudyGroup().getTimeTableId();
 
-				if ((title.equals(eventTitleShort) && setID.equals(sSetID)) == false) {
+				if ((title.equals(eventTitleShort) && setID.equals(sSetID))) {
 
-					request.addLesson(event.getStudyGroup().getTimeTableId(), event.getEvent().getTitle());
+					request.addCourse(event.getStudyGroup().getTimeTableId(), event.getEvent().getTitle());
 					title = eventTitleShort;
 					setID = sSetID;
 				}
@@ -166,7 +165,7 @@ public class MyTimeTableFragment extends FeatureFragment {
 							}
 							Log.d(TAG, "Error in Schedule Change Server: " + sErrorText);
 
-//							AlertDialog.Builder builder1 = new AlertDialog.Builder(MyTimeTableFragment.this.getContext().getApplicationContext());
+//							AlertDialog.Builder builder1 = new AlertDialog.Builder(MyTimeTableOverviewFragment.this.getContext().getApplicationContext());
 //							builder1.setMessage("Push Notifications: Error in Schedule Change Server: " + sErrorText);
 //							AlertDialog alert11 = builder1.create();
 //							alert11.show();
@@ -186,7 +185,7 @@ public class MyTimeTableFragment extends FeatureFragment {
 
 					final List<ResponseModel.Change> changes = response.body().getChanges();
 
-					final List<String[]> negativeList = MyTimeTableView.generateNegativeLessons();
+					final List<String[]> negativeList = MyTimeTableOverviewView.generateNegativeLessons();
 					final Iterator<ResponseModel.Change> iterator = changes.iterator();
 
 					while (iterator.hasNext()) {
@@ -213,7 +212,7 @@ public class MyTimeTableFragment extends FeatureFragment {
 //					changesAsString+=(change.getChangesReasonText()+"/n/n");
 //				}
 
-//                new AlertDialog.Builder(MyTimeTableFragment.this.getActivity())
+//                new AlertDialog.Builder(MyTimeTableOverviewFragment.this.getActivity())
 //                        .setTitle("Änderungen")
 //                       // .setMessage(changesAsString)
 //                        .setMessage("test")
@@ -234,27 +233,27 @@ public class MyTimeTableFragment extends FeatureFragment {
 					for (ResponseModel.Change change : changes) {
 
 						// Shortcut to the list
-						final List<FlatDataStructure> myTimetableList = MyTimeTableView.getLessons();
+						final List<FlatDataStructure> myTimetableList = getSubscribedCourses();
 
-						//Aenderung eines Events: suche den Event und ueberschreibe seine Daten
+						//Aenderung eines Events: suche das Event und ueberschreibe es
 						if (change.getChangesReason() == CHANGEREASON_EDIT) {
 							final FlatDataStructure event = FlatDataStructure.getEventByID(myTimetableList, change.getNewEventJson().getUid());
 							if (event != null) {
 								event.setEvent(change.getNewEventJson());
 							}
 						}
-						//Hinzufuegen eines neuen Events: Erstelle ein neues Element vom Typ FlatDataStructure, schreibe alle Set-, Semester- und Studiengangdaten in diesen
+						//Hinzufuegen eines neuen Events: Erstelle ein neues Element vom Typ FlatDataStructure, schreibe alle Set-, Semester- und Studiengangdaten in dieses
 						//und fuege dann die Eventdaten des neuen Events hinzu. Anschliessend in die Liste hinzufuegen.
 						if (change.getChangesReason() == CHANGEREASON_NEW) {
-							final FlatDataStructure event = FlatDataStructure.queryGetEventsByStudyGroupTitle(myTimetableList, change.getSetSplusKey()).get(0).copy();
+							final FlatDataStructure event = FlatDataStructure.getCoursesByStudyGroupTitle(myTimetableList, change.getSetSplusKey()).get(0).copy();
 							event.setEvent(change.getNewEventJson());
-							MyTimeTableView.getLessons().add(event);
+							addToSubscribedCourses(event);
 
 						}
 						//Loeschen eines Events: Suche den Event mit der SplusID und lösche ihn aus der Liste.
 						if (change.getChangesReason() == CHANGEREASON_DELETE) {
 							final FlatDataStructure event = FlatDataStructure.getEventByID(myTimetableList, change.getNewEventJson().getUid());
-							MyTimeTableView.getLessons().remove(event);
+							removeFromSubscribedCourses(event);
 						}
 					}
 

@@ -84,10 +84,10 @@
     <!-- string name="configure" >Konfiguration</string -->
     <!-- string name="add_widget" >Widget ergänzen</string -->
 
-	<string name="timetable_modify_course">Stundenplan ändern</string>
+	<string name="my_timetable_modify_schedule">Stundenplan ändern</string>
     <string name="professor">Professor</string>
 	<string name="mensa_food_no_data_available">Keine Daten verfügbar</string>
-	<string name="my_time_table_add_lesson">Kurs hinzufügen</string>
+	<string name="my_time_table_add_course">Kurs hinzufügen</string>
 	<string name="loading">Lädt…</string>
     <string name="my_time_table_empty_text_calendar">Du hast noch keinen Stundenplan zusammengestellt.</string>
 	<string name="my_time_table_empty_text_edit">Du hast noch keine Vorlesungen ausgewählt.</string>
@@ -96,7 +96,7 @@
     <string name="notification_error_ssl_cert_invalid">Es ist ein Zertifikat-Fehler aufgetreten. Möchtest du die Seite trotzdem öffnen?</string>
     <string name="ssl_error_cancel">Abbrechen</string>
     <string name="ssl_error_continue">Fortfahren</string>
-    <string name="jump_current_lesson">>> Heute</string>
+    <string name="jump_to_current_lesson">>> Heute</string>
     <string name="deleteTimetableTitle">Stundenplan löschen?</string>
     <string name="deleteTimetableMessage">Das Semester ist zu Ende. Möchtest du den Stundenplan löschen?</string>
 
@@ -162,5 +162,6 @@
     <string name="navigation_building">Haus</string>
     <string name="navigation_floor">Etage</string>
     <string name="navigation_dialog_person">Person</string>
+    <string name="my_time_table_headline">Meine Kurse</string>
 
 </resources>

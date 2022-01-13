@@ -23,14 +23,14 @@ import java.util.Comparator;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 
-public class LessonTitle_StudyGroupTitle_Comparator implements Comparator<FlatDataStructure> {
-	private static final String TAG = "LessonTitle_StudyGroupT";
+public class CourseTitleStudyGroupTitleComparator implements Comparator<FlatDataStructure> {
+	private static final String TAG = "Course_StudyGroup_Comparator";
 
-	private static final LessonTitle_StudyGroupTitle_Comparator lessonTitle_StudyGroupTitle_Comparator = new LessonTitle_StudyGroupTitle_Comparator();
+	private static final CourseTitleStudyGroupTitleComparator LESSON_TITLE___STUDY_GROUP_TITLE___COMPARATOR = new CourseTitleStudyGroupTitleComparator();
 
 // --Commented out by Inspection START (04.01.2022 18:51):
 //	public static int compareStatic(final FlatDataStructure o1, final FlatDataStructure o2) {
-//		return lessonTitle_StudyGroupTitle_Comparator.compare(o1, o2);
+//		return LESSON_TITLE___STUDY_GROUP_TITLE___COMPARATOR.compare(o1, o2);
 //	}
 // --Commented out by Inspection STOP (04.01.2022 18:51)
 
@@ -50,12 +50,12 @@ public class LessonTitle_StudyGroupTitle_Comparator implements Comparator<FlatDa
 
 		final String title1 = o1.getEvent().getTitle();
 		final String title2 = o2.getEvent().getTitle();
-		final String lessonTitle1 = FlatDataStructure.cutEventTitle(title1);
-		final String lessonTitle2 = FlatDataStructure.cutEventTitle(title2);
-		Assert.assertTrue( lessonTitle1 != null );
-		Assert.assertTrue( lessonTitle2 != null );
-		Assert.assertTrue( lessonTitle1.length() > 3 );
-		Assert.assertTrue( lessonTitle2.length() > 3 );
+		final String courseTitle1 = FlatDataStructure.cutEventTitle(title1);
+		final String courseTitle2 = FlatDataStructure.cutEventTitle(title2);
+		Assert.assertTrue( courseTitle1 != null );
+		Assert.assertTrue( courseTitle2 != null );
+		Assert.assertTrue( courseTitle1.length() > 3 );
+		Assert.assertTrue( courseTitle2.length() > 3 );
 
 		final String studyGroupTitle1 = o1.getSetString();
 		final String studyGroupTitle2 = o2.getSetString();
@@ -69,8 +69,8 @@ public class LessonTitle_StudyGroupTitle_Comparator implements Comparator<FlatDa
 		//Ist der erste Titel "größer" wird 1 zurückgegeben, ist der zweite Titel größer wird -1 zurückgegeben
 		//und sind beide gleich, wird 0 zurückgegeben.
 		//Bei unterschiedlichen Titeln lass einfach sortieren, bei gleichem Titel sortiere noch nach StudyGroupTitle
-		final int courseCompareResult = lessonTitle1.compareTo(lessonTitle2);
-//		Log.d(TAG, "compare Title1: "+lessonTitle1+" Title2:"+lessonTitle2 +" result: " +courseCompareResult);
+		final int courseCompareResult = courseTitle1.compareTo(courseTitle2);
+//		Log.d(TAG, "compare Title1: "+courseTitle1+" Title2:"+courseTitle2 +" result: " +courseCompareResult);
 		if (courseCompareResult > 0) {
 			return Define.GREATER;
 		} else if(courseCompareResult < 0) {

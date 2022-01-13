@@ -48,7 +48,7 @@ public class RequestModel {
 	@SerializedName("module_list")
 	ArrayList<Module> module_list;
 
-	public void addLesson(String setID,String moduleTitle){
+	public void addCourse(String setID, String moduleTitle){
 		this.module_list.add(new Module(setID,moduleTitle));
 	}
 

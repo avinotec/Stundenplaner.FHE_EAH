@@ -45,8 +45,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/buttonshape"
-                android:text="@string/timetable_modify_course"
-                android:textColor="@color/drawer_item_text"
+                android:text="@string/my_timetable_modify_schedule"
+                android:textColor="@color/primary_color"
                 android:textSize="12sp"
                  />
             <View
@@ -62,8 +62,8 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/buttonshape"
-                android:text="@string/jump_current_lesson"
-                android:textColor="#009790"
+                android:text="@string/jump_to_current_lesson"
+                android:textColor="@color/primary_color"
                 android:textSize="12sp"
                  />
         </LinearLayout>

@@ -84,7 +84,7 @@ public class FlatDataStructure implements Parcelable {
 		final FlatDataStructure copy = new FlatDataStructure();
 		//		Log.d(TAG, "FlatDataStructure: incID: "+FlatDataStructure.incId);
 		copy.id = FlatDataStructure.incId++;
-		copy.setCourse(this.getCourse());
+		copy.setStudyCourse(this.getCourse());
 		copy.setSemester(this.getSemester());
 		copy.setStudyGroup(this.getStudyGroup());
 		copy.setSets(new ArrayList<>(this.getSets()));
@@ -94,6 +94,7 @@ public class FlatDataStructure implements Parcelable {
 	// "Bachelor: E-Commerce-->EC(BA)7-->EC(BA)7.01-->45-->3-->SPLUSA3E2FAs-2-->WI(BA)ERP-Sys.GPA/P/S/01"
 	@SuppressWarnings("Annotator")
 	private static final Pattern p = Pattern.compile("^(.*[a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß])"); //$NON-NLS
+
 	public static String cutEventTitle(final String title) {
 
 		// WI/WIEC(BA)Cloudtech./V/01
@@ -117,12 +118,12 @@ public class FlatDataStructure implements Parcelable {
 	}
 
 	/**
-	 *
+	 * Returns a list filtered by the given event title
 	 * @param list
 	 * @param eventTitle
 	 * @return
 	 */
-	public static List<FlatDataStructure> queryGetEventsByEventTitle(final List<FlatDataStructure> list, final String eventTitle){
+	public static List<FlatDataStructure> getCoursesByEventTitle(final List<FlatDataStructure> list, final String eventTitle){
 
 		final List<FlatDataStructure> filteredEvents = new ArrayList<>();
 		for (final FlatDataStructure event : list) {
@@ -134,12 +135,12 @@ public class FlatDataStructure implements Parcelable {
 	}
 
 	/**
-	 *
+	 * Returns a list filtered by the given study group
 	 * @param list
 	 * @param studyGroupTitle
 	 * @return
 	 */
-	public static List<FlatDataStructure> queryGetEventsByStudyGroupTitle(final List<FlatDataStructure>list, final String studyGroupTitle){
+	public static List<FlatDataStructure> getCoursesByStudyGroupTitle(final List<FlatDataStructure>list, final String studyGroupTitle){
 		final List<FlatDataStructure> filteredEvents = new ArrayList<>();
 		for(final FlatDataStructure event : list){
 			if(event.getSetString().equals(studyGroupTitle)){
@@ -274,13 +275,13 @@ public class FlatDataStructure implements Parcelable {
 		return event;
 	}
 
-	public final FlatDataStructure setCourse(final StudyCourseVo course) {
+	public final FlatDataStructure setStudyCourse(final StudyCourseVo course) {
 		this.course = new FlatStudyCourse();
 		this.course.setId(course.getId());
 		this.course.setTitle(course.getTitle());
 		return this;
 	}
-	private void setCourse(final FlatStudyCourse course) {
+	private void setStudyCourse(final FlatStudyCourse course) {
 		this.course = course;
 	}
 
@@ -352,7 +353,12 @@ public class FlatDataStructure implements Parcelable {
 		}
 	}
 
-	private static int incId=0;
+	public boolean isEqual(@NonNull FlatDataStructure other){
+		return FlatDataStructure.cutEventTitle(this.getEvent().getTitle())
+				.equals(FlatDataStructure.cutEventTitle(other.getEvent().getTitle()));
+	}
+
+	private static int incId = 0;
 	private int id;
 	@SerializedName("course")
 	private FlatStudyCourse course;
