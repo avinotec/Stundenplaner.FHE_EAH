@@ -25,12 +25,12 @@ import retrofit2.Response;
  *
  * @param <T>
  */
-public class TimeTableCallback<T> implements Callback<T> {
+public class MyTimeTableCallback<T> implements Callback<T> {
 	/**
 	 *
 	 * @param data
 	 */
-	public TimeTableCallback(FlatDataStructure data) {
+	public MyTimeTableCallback(FlatDataStructure data) {
 		this.data = data;
 	}
 

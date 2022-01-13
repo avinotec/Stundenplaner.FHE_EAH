@@ -46,7 +46,7 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableDialogAdapter;
 import de.fhe.fhemobile.comparator.CourseTitleStudyGroupTitleComparator;
 import de.fhe.fhemobile.network.NetworkHandler;
-import de.fhe.fhemobile.network.TimeTableCallback;
+import de.fhe.fhemobile.network.MyTimeTableCallback;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableDialogView;
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
@@ -138,17 +138,15 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         NetworkHandler.getInstance().fetchTimeTable(mTimeTableResponseCallback);
     }
 
-    private void proceedToTimetable(final String _TimeTableId, final TimeTableCallback callback) {
+    private void proceedToTimetable(final String _TimeTableId, final MyTimeTableCallback callback) {
         NetworkHandler.getInstance().fetchTimeTableEvents(_TimeTableId, callback);
 
     }
     /**
      * @param timeTableWeeks list of TimeTableWeeks of the remaining for the chosen study group
-     * @param allCoursesInChosenSemester ist die Liste, die am Ende alle Daten der verschiedenen Requests beinhaltet.
      * @param data ist der neue Datensatz, der in die Liste eingepflegt werden soll.
      **/
-    private static void getAllEvents(final List<TimeTableWeekVo> timeTableWeeks,
-                                     final List<FlatDataStructure> allCoursesInChosenSemester,
+    private void getAllEvents(final List<TimeTableWeekVo> timeTableWeeks,
                                      final FlatDataStructure data) {
 
         if (timeTableWeeks != null) {
@@ -170,7 +168,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                             }
                             //durchsuche die komplette Liste nach der EventUID, des momentan hinzuzufügenden Events
                         	FlatDataStructure exists = null;
-                        	for ( FlatDataStructure savedEvent : allCoursesInChosenSemester) {
+                        	for ( FlatDataStructure savedEvent : this.coursesOfChosenSemester) {
 //		                        Log.d(TAG, "EventUID1: "+savedEvent.getEvent().getUid()+" EventUID2: "+eventList.get(eventIndex).getUid()+" setTitle: "+ savedEvent.getStudyGroup().getTitle()+" result: "+savedEvent.getEvent().getUid().equals(eventList.get(eventIndex).getUid()));
                         		if (savedEvent.getEvent().getUid().equals(eventList.get(eventIndex).getUid())){
                         			exists = savedEvent;
@@ -196,7 +194,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
                                 datacopy.setAdded( found ) ;
 
-		                        allCoursesInChosenSemester.add(datacopy);
+                                this.coursesOfChosenSemester.add(datacopy);
 	                        }
                             //Stattdessen füge bei dem existierenden Eintrag das Set des neuen Events hinzu.
                         	else{
@@ -365,8 +363,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                 .setStudyGroup(studyGroupVo);
 
                         //get timetable of the studyGroupVo
-                        TimeTableCallback<List<TimeTableWeekVo>> callback =
-                                new TimeTableCallback<List<TimeTableWeekVo>>(data) {
+                        MyTimeTableCallback<List<TimeTableWeekVo>> callback =
+                                new MyTimeTableCallback<List<TimeTableWeekVo>>(data) {
 
                             @Override
                             public void onResponse(Call<List<TimeTableWeekVo>> call,
@@ -381,7 +379,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                     //Gemergte liste aller zurückgekehrten Requests. Die Liste wächst mit jedem Request.
                                     //Hier (im success) haben wir neue Daten bekommen.
 
-                                    getAllEvents(timeTableWeek, coursesOfChosenSemester, this.getData());
+                                    getAllEvents(timeTableWeek, this.getData());
 //                                    Log.d(TAG, "success: length"+courseEvents.size());
 
 

@@ -140,14 +140,14 @@ public class TimeTableFragment extends FeatureFragment {
         }
 
         @Override
-        public void onSemesterChosen(String _SemesterId) {
+        public void onSemesterChosen(final String _SemesterId) {
             mView.toggleGroupsPickerVisibility(true);
             mView.toggleButtonEnabled(false);
             mView.resetGroupsPicker();
 
             mChosenSemester = null;
 
-            for (SemesterVo semesterVo : mChosenCourse.getSemesters()) {
+            for (final SemesterVo semesterVo : mChosenCourse.getSemesters()) {
                 if (semesterVo.getId().equals(_SemesterId)) {
                     mChosenSemester = semesterVo;
                     mView.setStudyGroupItems(semesterVo.getStudyGroups());
