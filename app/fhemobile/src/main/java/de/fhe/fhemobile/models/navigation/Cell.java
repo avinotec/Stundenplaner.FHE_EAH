@@ -71,7 +71,7 @@ public class Cell {
     }
 
     /**
-     * Overloaded constructor for cell type {@link Room} and {@link Exit}
+     * Overloaded constructor for cell type {@link Room} and {@link BuildingExit}
      * @param xCoordinate
      * @param yCoordinate
      * @param building

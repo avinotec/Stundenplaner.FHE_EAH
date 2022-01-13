@@ -38,8 +38,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.models.navigation.BuildingExit;
 import de.fhe.fhemobile.models.navigation.Cell;
-import de.fhe.fhemobile.models.navigation.Exit;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
 import de.fhe.fhemobile.models.navigation.Room;
 import de.fhe.fhemobile.models.navigation.Complex;
@@ -210,8 +210,8 @@ public class NavigationView extends LinearLayout {
             for(Cell cell : cellList) {
                 if (cell instanceof FloorConnectionCell) {
                     drawFloorConnection((FloorConnectionCell) cell);
-                } else if (cell instanceof Exit) {
-                    drawExit((Exit) cell);
+                } else if (cell instanceof BuildingExit) {
+                    drawExit((BuildingExit) cell);
                 } else {
                     drawPathCell(cell);
                 }
@@ -321,17 +321,17 @@ public class NavigationView extends LinearLayout {
 
     /**
      * Draw exit icon corresponding to the exitCell
-     * @param exitCell exit to display
+     * @param buildingExitCell exit to display
      */
-    private void drawExit(Exit exitCell){
+    private void drawExit(BuildingExit buildingExitCell){
         ImageView exitIcon = new ImageView(getContext());
         exitIcon.setImageResource(R.drawable.exit_icon);
         if (mNavigationLayout != null) mNavigationLayout.addView(exitIcon);
         else Log.d(TAG, "Layout holding navigation route is null");
 
         fitOneCell(exitIcon);
-        exitIcon.setX(convertCellCoordX(exitCell.getXCoordinate()));
-        exitIcon.setY(convertCellCoordY(exitCell.getYCoordinate()));
+        exitIcon.setX(convertCellCoordX(buildingExitCell.getXCoordinate()));
+        exitIcon.setY(convertCellCoordY(buildingExitCell.getYCoordinate()));
     }
 
 

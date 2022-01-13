@@ -32,8 +32,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.fhe.fhemobile.activities.MainActivity;
+import de.fhe.fhemobile.models.navigation.BuildingExit;
 import de.fhe.fhemobile.models.navigation.Cell;
-import de.fhe.fhemobile.models.navigation.Exit;
 import de.fhe.fhemobile.models.navigation.FloorConnection;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
 import de.fhe.fhemobile.models.navigation.Person;
@@ -148,10 +148,10 @@ public class JSONHandler {
     /**
      * Parse exits from json
      * @param json
-     * @return ArrayList of {@link Exit} objects
+     * @return ArrayList of {@link BuildingExit} objects
      */
-    public static ArrayList<Exit> parseJsonExits(final String json){
-        final ArrayList<Exit> exits = new ArrayList<>();
+    public static ArrayList<BuildingExit> parseJsonExits(final String json){
+        final ArrayList<BuildingExit> buildingExits = new ArrayList<>();
 
         try{
             final JSONArray jsonArray = new JSONArray(json);
@@ -172,21 +172,21 @@ public class JSONHandler {
                     entryFrom.add(entryFromJSON.optString(j));
                 }
 
-                final Exit newExit = new Exit(jEntry.optInt(X_COORDINATE),
+                final BuildingExit newBuildingExit = new BuildingExit(jEntry.optInt(X_COORDINATE),
                         jEntry.getInt(Y_COORDINATE),
                         jEntry.getString(BUILDING),
                         jEntry.getString(FLOOR),
                         exitTo,
                         entryFrom);
 
-                exits.add(newExit);
+                buildingExits.add(newBuildingExit);
 
             }
         } catch (final JSONException e) {
             Log.e(TAG, "error parsing JSON exits", e);
         }
 
-        return exits;
+        return buildingExits;
     }
 
 

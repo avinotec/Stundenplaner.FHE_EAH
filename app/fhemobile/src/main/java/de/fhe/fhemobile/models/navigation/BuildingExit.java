@@ -28,7 +28,7 @@ import java.util.ArrayList;
 /**
  * Class that models an exit of a building
  */
-public class Exit extends Cell{
+public class BuildingExit extends Cell{
 
     // this exit should be use when changing to the complex "exitTo"
     private final ArrayList<Complex> exitTo = new ArrayList<Complex>();
@@ -44,8 +44,8 @@ public class Exit extends Cell{
      * @param exitTo list containing the buildings this exit should be used when changing to
      * @param entryFrom the building of the exit should be entered via this exit when coming from the buildings of the entryFrom list
      */
-    public Exit(final int xCoordinate, final int yCoordinate, final String building, final String floor,
-                final ArrayList<String> exitTo, final ArrayList<String> entryFrom) {
+    public BuildingExit(final int xCoordinate, final int yCoordinate, final String building, final String floor,
+                        final ArrayList<String> exitTo, final ArrayList<String> entryFrom) {
         super(xCoordinate, yCoordinate, building, floor, true, COSTS_EXIT);
 
         for(String destBuilding: exitTo){
