@@ -32,6 +32,8 @@ import de.fhe.fhemobile.views.navigation.PersonSearchView;
  */
 public class PersonSearchFragment extends FeatureFragment {
 
+    public static final String TAG = "PersonSearchFragment"; //$NON-NLS
+
     @NonNls
     public static final String PREFS_NAVIGATION_PERSON_CHOICE = "navigation person";
 
@@ -110,11 +112,6 @@ public class PersonSearchFragment extends FeatureFragment {
         }
     }
 
-    private void proceedToNavigation(){
-        ((MainActivity) getActivity()).changeFragment(
-                new NavigationFragment().newInstance(mStartRoom, mDestRoom), true);
-    }
-
     private final PersonSearchView.IViewListener mViewListener = new PersonSearchView.IViewListener() {
 
         @Override
@@ -151,7 +148,8 @@ public class PersonSearchFragment extends FeatureFragment {
         public void onGoClicked() {
             if(mDestRoom != null){
                 if(validateInputAndSetStartRoom()){
-                    proceedToNavigation();
+                    ((MainActivity) getActivity()).changeFragment(
+                            new NavigationFragment().newInstance(mStartRoom, mDestRoom), true, TAG);
 
                     mDestRoom = null;
                     mStartRoom = null;

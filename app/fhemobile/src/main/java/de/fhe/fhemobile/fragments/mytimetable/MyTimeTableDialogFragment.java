@@ -139,7 +139,6 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     }
 
     private void proceedToTimetable(final String _TimeTableId, final MyTimeTableCallback callback) {
-        NetworkHandler.getInstance().fetchTimeTableEvents(_TimeTableId, callback);
 
     }
 
@@ -358,13 +357,13 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                     for (StudyGroupVo studyGroupVo : mChosenSemester.getStudyGroups()) {
 
                         //get timetable of the studyGroupVo
-                        MyTimeTableCallback<List<TimeTableWeekVo>> callback =
-                                new MyTimeTableCallback<List<TimeTableWeekVo>>(
+                        MyTimeTableCallback<ArrayList<TimeTableWeekVo>> callback =
+                                new MyTimeTableCallback<ArrayList<TimeTableWeekVo>>(
                                         mChosenStudyCourse, mChosenSemester, studyGroupVo ) {
 
                             @Override
-                            public void onResponse(Call<List<TimeTableWeekVo>> call,
-                                                   Response<List<TimeTableWeekVo>> response) {
+                            public void onResponse(Call<ArrayList<TimeTableWeekVo>> call,
+                                                   Response<ArrayList<TimeTableWeekVo>> response) {
                                 super.onResponse(call, response);
 
                                 if(response.code() >= 200) {
@@ -429,12 +428,13 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                             }
 
                             @Override
-                            public void onFailure(Call<List<TimeTableWeekVo>> call, Throwable t) {
+                            public void onFailure(Call<ArrayList<TimeTableWeekVo>> call, Throwable t) {
                                 super.onFailure(call, t);
 //                                Log.d(TAG, "failure: " + t);
                             }
                         };
 
+                        NetworkHandler.getInstance().fetchTimeTableEvents(studyGroupVo.getTimeTableId(), callback);
                         proceedToTimetable(studyGroupVo.getTimeTableId(), callback);
                         requestCounter++;
                     }

@@ -47,6 +47,7 @@ import retrofit2.Response;
  */
 public class TimeTableFragment extends FeatureFragment {
 
+    public static final String TAG = "TimeTableFragment"; //$NON-NLS
 
     /**
      * Use this factory method to create a new instance of
@@ -92,7 +93,8 @@ public class TimeTableFragment extends FeatureFragment {
     }
 
     private void proceedToTimetable(String _TimeTableId) {
-        ((MainActivity) getActivity()).changeFragment(TimeTableEventsFragment.newInstance(_TimeTableId), true);
+        ((MainActivity) getActivity()).changeFragment(TimeTableEventsFragment.newInstance(_TimeTableId),
+                true, TAG);
     }
 
     private final TimeTableView.IViewListener mViewListener = new TimeTableView.IViewListener() {

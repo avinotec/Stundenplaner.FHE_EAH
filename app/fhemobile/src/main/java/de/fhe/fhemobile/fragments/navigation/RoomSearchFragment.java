@@ -50,6 +50,8 @@ import de.fhe.fhemobile.views.navigation.RoomSearchView;
  */
 public class RoomSearchFragment extends FeatureFragment {
 
+    public static final String TAG = "RoomSearchFragment"; //$NON-NLS
+
     @NonNls
     public static final String PREFS_NAVIGATION_ROOM_CHOICE = "navigation room";
 
@@ -144,10 +146,6 @@ public class RoomSearchFragment extends FeatureFragment {
         }
     }
 
-    private void proceedToNavigation(){
-        ((MainActivity) getActivity()).changeFragment(
-                new NavigationFragment().newInstance(mStartRoom, mChosenRoom), true);
-    }
 
 
     private final RoomSearchView.IViewListener mViewListener = new RoomSearchView.IViewListener() {
@@ -256,7 +254,8 @@ public class RoomSearchFragment extends FeatureFragment {
         public void onGoClicked() {
             if(mChosenRoom != null){
                 if(validateInputAndSetStartRoom()){
-                    proceedToNavigation();
+                    ((MainActivity) getActivity()).changeFragment(
+                            new NavigationFragment().newInstance(mStartRoom, mChosenRoom), true, TAG);
 
                     mChosenRoom = null;
                     mChosenBuilding = null;

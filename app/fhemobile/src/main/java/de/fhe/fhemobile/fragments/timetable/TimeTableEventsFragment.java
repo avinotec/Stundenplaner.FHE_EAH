@@ -50,6 +50,7 @@ import retrofit2.Response;
  */
 public class TimeTableEventsFragment extends FeatureFragment {
 
+	public static final String TAG = "TimeTableEventsFragment"; //$NON-NLS
 
 	/**
 	 * Use this factory method to create a new instance of
@@ -118,7 +119,7 @@ public class TimeTableEventsFragment extends FeatureFragment {
 		if (_item.getItemId() == R.id.action_reset_selection) {
 			TimeTableSettings.saveTimeTableSelection(null);
 
-			((MainActivity) getActivity()).changeFragment(TimeTableFragment.newInstance(), false);
+			((MainActivity) getActivity()).changeFragment(TimeTableFragment.newInstance(), false, TAG);
 
 			return true;
 

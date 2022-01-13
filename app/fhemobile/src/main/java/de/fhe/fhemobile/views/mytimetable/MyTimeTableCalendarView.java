@@ -68,6 +68,10 @@ public class MyTimeTableCalendarView extends LinearLayout {
         mBtnModifySchedule.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {
+
+                //todo: listener ins Fragment verlagern
+                //((MainActivity) getActivity()).changeFragment() ...
+
                 final FragmentTransaction transaction = mFragmentManager.beginTransaction();
                 transaction.replace(R.id.container, new MyTimeTableOverviewFragment(), MyTimeTableOverviewFragment.TAG)
                         .addToBackStack(MyTimeTableOverviewFragment.TAG)
