@@ -37,8 +37,8 @@ import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.models.navigation.BuildingExit;
 import de.fhe.fhemobile.models.navigation.Cell;
-import de.fhe.fhemobile.models.navigation.Exit;
 import de.fhe.fhemobile.models.navigation.FloorConnection;
 import de.fhe.fhemobile.models.navigation.Room;
 import de.fhe.fhemobile.models.navigation.RouteCalculator;
@@ -54,7 +54,7 @@ import de.fhe.fhemobile.views.navigation.NavigationView;
  */
 public class NavigationFragment extends FeatureFragment {
 
-    private static final String TAG = "NavigationFragment"; //$NON-NLS
+    public static final String TAG = "NavigationFragment"; //$NON-NLS
 
 
     public static final String PARAM_START = "paramStartRoom"; //$NON-NLS
@@ -66,7 +66,7 @@ public class NavigationFragment extends FeatureFragment {
     private Room mStartRoom;
     private Room mDestRoom;
 
-    private static ArrayList<Exit> exits                        = new ArrayList<>();
+    private static ArrayList<BuildingExit> buildingExits = new ArrayList<>();
     private static ArrayList<FloorConnection> floorConnections  = new ArrayList<>();
 
     //cellsToWalk here as LinkedHashMap to have a list sorted for flicking through floorplans by buttons
@@ -200,9 +200,9 @@ public class NavigationFragment extends FeatureFragment {
             String json;
 
             // read only once
-            if(exits.isEmpty()){
+            if(buildingExits.isEmpty()){
                 json = JSONHandler.readFromAssets(getContext(), "exits");
-                exits = JSONHandler.parseJsonExits(json);
+                buildingExits = JSONHandler.parseJsonExits(json);
             }
         } catch (Exception e) {
             Log.e(TAG, "error reading or parsing JSON files:", e);
@@ -236,7 +236,7 @@ public class NavigationFragment extends FeatureFragment {
     private void getRoute() {
         try {
             RouteCalculator routeCalculator = new RouteCalculator(getContext(),
-                    mStartRoom, mDestRoom, floorConnections, exits);
+                    mStartRoom, mDestRoom, floorConnections, buildingExits);
             cellsToWalk = routeCalculator.getWholeRoute();
             floorPlanIterator = new FloorPlanIterator(new ArrayList<>(cellsToWalk.keySet()));
 

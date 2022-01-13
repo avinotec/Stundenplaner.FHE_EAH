@@ -50,7 +50,7 @@ public class RouteCalculator {
     //Variables
     private final Context context;
     private final ArrayList<FloorConnection> floorConnections;
-    private final ArrayList<Exit> exits;
+    private final ArrayList<BuildingExit> buildingExits;
     private final Cell startLocation;
     private final Cell destLocation;
     //gesamte Route
@@ -68,12 +68,12 @@ public class RouteCalculator {
      * @param floorConnections
      */
     public RouteCalculator(final Context context, final Room startLocation, final Room destLocation,
-                           final ArrayList<FloorConnection> floorConnections, final ArrayList<Exit> exits) {
+                           final ArrayList<FloorConnection> floorConnections, final ArrayList<BuildingExit> buildingExits) {
         this.context = context;
         this.startLocation = startLocation;
         this.destLocation = destLocation;
         this.floorConnections = floorConnections;
-        this.exits = exits;
+        this.buildingExits = buildingExits;
     }
 
     /**
@@ -105,17 +105,17 @@ public class RouteCalculator {
 
                 //determine Exit to use for leaving complex to the start complex
                 // and determine Exit to use for entering the destination complex
-                Exit exit = null;
-                Exit entry = null;
-                for(Iterator<Exit> it = exits.iterator(); it.hasNext(); ){
-                    Exit exitIt = it.next();
+                BuildingExit buildingExit = null;
+                BuildingExit entry = null;
+                for(Iterator<BuildingExit> it = buildingExits.iterator(); it.hasNext(); ){
+                    BuildingExit buildingExitIt = it.next();
 
                     //use exitIt as exit if exitIt belongs to start complex
                     // and is an exit to the destination complex
-                    if(exitIt.getComplex() == startComplex){
-                        if(exitIt.getExitTo().contains(destComplex)){
-                            if(exit == null) {
-                                exit = exitIt;
+                    if(buildingExitIt.getComplex() == startComplex){
+                        if(buildingExitIt.getExitTo().contains(destComplex)){
+                            if(buildingExit == null) {
+                                buildingExit = buildingExitIt;
                             }
                             else Log.i(TAG,"More than one possible exit for complex "+startComplex.toString()+" to "+destComplex.toString());
 
@@ -126,15 +126,15 @@ public class RouteCalculator {
 
                     //use exitIt as entry if exitIt belongs to the destination complex
                     // and is an entry when coming from the start complex
-                    if (exitIt.getComplex() == destComplex) {
-                        if (exitIt.getEntryFrom().contains(startComplex)) {
+                    if (buildingExitIt.getComplex() == destComplex) {
+                        if (buildingExitIt.getEntryFrom().contains(startComplex)) {
                             if (entry == null) {
-                                entry = exitIt;
+                                entry = buildingExitIt;
                             } else
                                 Log.i(TAG, "More than one possible entry to complex " + destComplex.toString() + " from complex " + startComplex.toString());
 
                             //exit and entry found
-                            if(exit != null) break;
+                            if(buildingExit != null) break;
                         }
                     }
                 }
@@ -145,7 +145,7 @@ public class RouteCalculator {
                 cellsToWalk.putAll(aStar2.getCellsToWalk());
 
                 //route to get out of start complex
-                AStar aStar1 = new AStar(startLocation, exit, floorGrids, floorConnections);
+                AStar aStar1 = new AStar(startLocation, buildingExit, floorGrids, floorConnections);
                 cellsToWalk.putAll(aStar1.getCellsToWalk());
 
 
@@ -239,7 +239,7 @@ public class RouteCalculator {
                 }
             }
             //fill in exits
-            for(final Exit ex : exits){
+            for(final BuildingExit ex : buildingExits){
                 if(ex.getComplex() == complex && ex.getFloorString().equals(floor)){
                     floorGrid[ex.getXCoordinate()][ex.getYCoordinate()] = ex;
                 }

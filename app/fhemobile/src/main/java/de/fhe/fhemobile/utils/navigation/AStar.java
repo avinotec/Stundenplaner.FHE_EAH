@@ -30,9 +30,9 @@ import java.util.LinkedHashMap;
 import java.util.Objects;
 import java.util.PriorityQueue;
 
+import de.fhe.fhemobile.models.navigation.BuildingExit;
 import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.models.navigation.Complex;
-import de.fhe.fhemobile.models.navigation.Exit;
 import de.fhe.fhemobile.models.navigation.FloorConnection;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
 
@@ -126,7 +126,7 @@ public class AStar {
 
 
             // if destination is exit then add it as cellToWalk
-            if(currentCell instanceof Exit){
+            if(currentCell instanceof BuildingExit){
                 if(cellsToWalk.containsKey(new BuildingFloorKey(currentCell))){
                     cellsToWalk.get(new BuildingFloorKey(currentCell)).add(currentCell);
                 }
@@ -153,7 +153,7 @@ public class AStar {
                 currentCell = currentCell.getParentCell();
             }
             // if start is exit then add it as cellToWalk
-            if(currentCell.getParentCell() == null && currentCell instanceof Exit){
+            if(currentCell.getParentCell() == null && currentCell instanceof BuildingExit){
                 if(cellsToWalk.containsKey(new BuildingFloorKey(currentCell))){
                     cellsToWalk.get(new BuildingFloorKey(currentCell)).add(currentCell);
                 }
