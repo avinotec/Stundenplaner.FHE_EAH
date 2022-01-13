@@ -119,7 +119,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (MyTimeTableDialogView) inflater.inflate(R.layout.fragment_my_time_table_dialog, container, false);
+        mView = (MyTimeTableDialogView) inflater.inflate(R.layout.fragment_my_time_table_dialog,
+                container, false);
 
         mView.initializeView(getChildFragmentManager());
         mView.setViewListener(mViewListener);
@@ -138,23 +139,23 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     }
 
     private void proceedToTimetable(final String _TimeTableId, final TimeTableCallback callback) {
-        NetworkHandler.getInstance().fetchTimeTableEvents(_TimeTableId,callback);
+        NetworkHandler.getInstance().fetchTimeTableEvents(_TimeTableId, callback);
 
     }
     /**
-     * @param weekList ist der Datensatz, der beim Request erhalten wird (alle Events eines Sets/StudyGroup)
-     * @param _allChosenCourses ist die Liste, die am Ende alle Daten der verschiedenen Requests beinhaltet.
+     * @param timeTableWeeks list of TimeTableWeeks of the remaining for the chosen study group
+     * @param allCoursesInChosenSemester ist die Liste, die am Ende alle Daten der verschiedenen Requests beinhaltet.
      * @param data ist der neue Datensatz, der in die Liste eingepflegt werden soll.
      **/
-    private static void getAllEvents(final List<TimeTableWeekVo> weekList,
-                                     final List<FlatDataStructure> _allChosenCourses,
+    private static void getAllEvents(final List<TimeTableWeekVo> timeTableWeeks,
+                                     final List<FlatDataStructure> allCoursesInChosenSemester,
                                      final FlatDataStructure data) {
-        if (weekList != null) {
+
+        if (timeTableWeeks != null) {
             try {
+                for(int weekIndex = 0; weekIndex < timeTableWeeks.size(); weekIndex++){
 
-                for(int weekIndex = 0; weekIndex < weekList.size(); weekIndex++){
-
-                    List<TimeTableDayVo> dayList = weekList.get(weekIndex).getDays();
+                    List<TimeTableDayVo> dayList = timeTableWeeks.get(weekIndex).getDays();
 
                     for(int dayIndex = 0; dayIndex<dayList.size(); dayIndex++){
                         List<TimeTableEventVo> eventList = dayList.get(dayIndex).getEvents();
@@ -169,7 +170,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                             }
                             //durchsuche die komplette Liste nach der EventUID, des momentan hinzuzufügenden Events
                         	FlatDataStructure exists = null;
-                        	for ( FlatDataStructure savedEvent : _allChosenCourses) {
+                        	for ( FlatDataStructure savedEvent : allCoursesInChosenSemester) {
 //		                        Log.d(TAG, "EventUID1: "+savedEvent.getEvent().getUid()+" EventUID2: "+eventList.get(eventIndex).getUid()+" setTitle: "+ savedEvent.getStudyGroup().getTitle()+" result: "+savedEvent.getEvent().getUid().equals(eventList.get(eventIndex).getUid()));
                         		if (savedEvent.getEvent().getUid().equals(eventList.get(eventIndex).getUid())){
                         			exists = savedEvent;
@@ -180,7 +181,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                         	if ( exists == null ) {
 		                        FlatDataStructure datacopy = data.copy();
 		                        datacopy
-				                        .setEventWeek(weekList.get(weekIndex))
+				                        .setEventWeek(timeTableWeeks.get(weekIndex))
 				                        .setEventDay(dayList.get(dayIndex))
 				                        .setEvent(eventList.get(eventIndex));
 		                        datacopy.getSets().add(datacopy.getStudyGroup().getTitle().split("\\.")[1]);
@@ -195,7 +196,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
                                 datacopy.setAdded( found ) ;
 
-		                        _allChosenCourses.add(datacopy);
+		                        allCoursesInChosenSemester.add(datacopy);
 	                        }
                             //Stattdessen füge bei dem existierenden Eintrag das Set des neuen Events hinzu.
                         	else{
@@ -373,13 +374,14 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                 super.onResponse(call, response);
 
                                 if(response.code() >= 200) {
-                                    List<TimeTableWeekVo> weekList = response.body();
+                                    //week-wise timetables of the current studyGroup in the for-loop
+                                    List<TimeTableWeekVo> timeTableWeek = response.body();
 
 //                                    Log.d(TAG, "success: Request wurde ausgefuehrt: " + response.raw().request().url() + " Status: " + response.code());
                                     //Gemergte liste aller zurückgekehrten Requests. Die Liste wächst mit jedem Request.
                                     //Hier (im success) haben wir neue Daten bekommen.
 
-                                    getAllEvents(weekList, coursesOfChosenSemester, this.getData());
+                                    getAllEvents(timeTableWeek, coursesOfChosenSemester, this.getData());
 //                                    Log.d(TAG, "success: length"+courseEvents.size());
 
 

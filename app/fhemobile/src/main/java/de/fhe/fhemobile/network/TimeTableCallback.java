@@ -31,7 +31,7 @@ public class TimeTableCallback<T> implements Callback<T> {
 	 * @param data
 	 */
 	public TimeTableCallback(FlatDataStructure data) {
-		this.data=data;
+		this.data = data;
 	}
 
 	/**

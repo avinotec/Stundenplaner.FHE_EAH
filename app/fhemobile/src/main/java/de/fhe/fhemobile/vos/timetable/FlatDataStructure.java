@@ -358,6 +358,10 @@ public class FlatDataStructure implements Parcelable {
 				.equals(FlatDataStructure.cutEventTitle(other.getEvent().getTitle()));
 	}
 
+	public final int getId() {
+		return id;
+	}
+
 	private static int incId = 0;
 	private int id;
 	@SerializedName("course")
@@ -370,17 +374,14 @@ public class FlatDataStructure implements Parcelable {
 	private FlatTimeTableWeek eventWeek;
 	@SerializedName("eventDay")
 	private FlatTimeTableDay eventDay;
+
 	@SerializedName("event")
 	private TimeTableEventVo event;
 
-
-
 	@SerializedName("sets")
-	private List<String> sets=new ArrayList<>();
+	private List<String> sets = new ArrayList<>();
 
-	public final int getId() {
-		return id;
-	}
+
 	private boolean visible = false;
 	private boolean added = false;
 
@@ -399,7 +400,7 @@ public class FlatDataStructure implements Parcelable {
 	public void setAdded(boolean added) {
 		this.added = added;
 	}
-
+/*
 	@NonNull
 	@Override
 	public final String toString() {
@@ -413,4 +414,6 @@ public class FlatDataStructure implements Parcelable {
 				+ this.getSets().size();
 
 	}
+*/
 }
+
