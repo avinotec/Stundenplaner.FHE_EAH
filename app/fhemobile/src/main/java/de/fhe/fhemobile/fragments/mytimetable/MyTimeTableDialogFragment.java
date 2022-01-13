@@ -142,12 +142,17 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         NetworkHandler.getInstance().fetchTimeTableEvents(_TimeTableId, callback);
 
     }
+
     /**
-     * @param timeTableWeeks list of TimeTableWeeks of the remaining for the chosen study group
-     * @param courseToAddToSemester ist der neue Datensatz, der in die Liste eingepflegt werden soll.
-     **/
-    private void getAllEvents(final List<TimeTableWeekVo> timeTableWeeks,
-                                     final FlatDataStructure courseToAddToSemester) {
+     * Adds the course represented by timeTableWeeks to allCoursesInChosenSemester
+     *
+     * Method for collecting all courses and events of all study groups that belong to study course
+     * and semester chosen by the user in the My Time Table Dialog
+     * @param timeTableWeeks list of TimeTableWeeks of the remaining semester for the study group
+     * @param studyGroup study group the timeTableWeeks belong to
+     */
+    private void addCourseToAllCoursesInChosenSemester(final List<TimeTableWeekVo> timeTableWeeks,
+                                                       final StudyGroupVo studyGroup) {
 
         if (timeTableWeeks != null) {
             try {
@@ -156,54 +161,51 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                     for(TimeTableDayVo timeTableDay : timeTableWeek.getDays()){
                         for(TimeTableEventVo timeTableEvent : timeTableDay.getEvents()){
 
-                            //check if timeTableEvent belongs to a subscribed course
-                            for(FlatDataStructure subscribedCourse : getSubscribedCourses()){
-                                if (subscribedCourse.getEvent().getUid().equals(timeTableEvent.getUid())){
-
-                                    courseToAddToSemester.setSubscribed(true);
-                                    break;
-                                }
-                            }
-                            //check if timeTableEvent is in allCoursesInChosenSemester
-                        	FlatDataStructure exists = null;
+                            //check if timeTableEvent exists in allCoursesInChosenSemester
+                            // because the course has already been added with a previous study group
+                        	FlatDataStructure alreadyExistingCourse = null;
                         	for ( FlatDataStructure courseInChosenSemester : this.allCoursesInChosenSemester) {
                         		if (courseInChosenSemester.getEvent().getUid().equals(timeTableEvent.getUid())){
-                        			exists = courseInChosenSemester;
+                        			alreadyExistingCourse = courseInChosenSemester;
                         			break;
 		                        }
 	                        }
-                            // Kommt die UID noch nicht in der Liste vor, hinzufügen
-                        	if ( exists == null ) {
-		                        FlatDataStructure datacopy = courseToAddToSemester.copy();
-		                        datacopy
-				                        .setEventWeek(timeTableWeek)
-				                        .setEventDay(timeTableDay)
-				                        .setEvent(timeTableEvent);
-		                        datacopy.getSets().add(datacopy.getStudyGroup().getTitle().split("\\.")[1]);
-		                        boolean found = false;
-		                        for(FlatDataStructure selectedItem: getSubscribedCourses()){
-		                            if(datacopy.getEvent().getUid()
-                                            .equals(selectedItem.getEvent().getUid())){
-		                                found = true;
-		                                break;
+                            //courseToAdd has not already be saved to allCoursesInChosenSemester
+                        	if ( alreadyExistingCourse == null ) {
+
+		                        FlatDataStructure courseToAdd = new FlatDataStructure();
+		                        courseToAdd.setStudyCourse(mChosenStudyCourse);
+                                courseToAdd.setSemester(mChosenSemester);
+                                courseToAdd.setStudyGroup(studyGroup);
+                                courseToAdd.setEventWeek(timeTableWeek);
+                                courseToAdd.setEventDay(timeTableDay);
+                                courseToAdd.setEvent(timeTableEvent);
+                                courseToAdd.getSets().add(studyGroup.getTitle().split("\\.")[1]);
+
+                                //check if timeTableEvent belongs to a subscribed course
+                                // and set the subscribed attribute of the courseToAdd
+                                for(FlatDataStructure subscribedCourse : getSubscribedCourses()){
+                                    if (subscribedCourse.getEvent().getUid().equals(timeTableEvent.getUid())){
+                                        courseToAdd.setSubscribed(true);
+                                        break;
                                     }
                                 }
 
-                                datacopy.setSubscribed( found ) ;
-
-                                this.allCoursesInChosenSemester.add(datacopy);
+                                //add new course
+                                this.allCoursesInChosenSemester.add(courseToAdd);
 	                        }
-                            //Stattdessen füge bei dem existierenden Eintrag das Set des neuen Events hinzu.
-                        	else{
-                                //Kommt die UID schon in der Liste vor, braucht der Event nicht hinzugefügt werden, da es ein Duplikat wäre.
-                        	    exists.getSets().add(courseToAddToSemester.getStudyGroup().getTitle().split("\\.")[1]);
+
+                            //allCoursesInChosenSemester already contains an entry for this course,
+                            // then only add this study group to the set/study group list of the existing course
+                        	else {
+                        	    alreadyExistingCourse.getSets().add(studyGroup.getTitle().split("\\.")[1]);
 	                        }
                         }
                     }
                 }
             }
             catch (Exception e){
-                Log.e(TAG, "success: Exception beim Zusammenstellen der Datensaetze.",e);
+                Log.e(TAG, "problem merging new data into allCoursesInChosenSemester",e);
             }
         }
     }
@@ -354,14 +356,11 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
                     //get timetable (all courses/events) for each study group in the chosen semester
                     for (StudyGroupVo studyGroupVo : mChosenSemester.getStudyGroups()) {
-                        FlatDataStructure data = new FlatDataStructure()
-                                .setStudyCourse(mChosenStudyCourse)
-                                .setSemester(mChosenSemester)
-                                .setStudyGroup(studyGroupVo);
 
                         //get timetable of the studyGroupVo
                         MyTimeTableCallback<List<TimeTableWeekVo>> callback =
-                                new MyTimeTableCallback<List<TimeTableWeekVo>>(data) {
+                                new MyTimeTableCallback<List<TimeTableWeekVo>>(
+                                        mChosenStudyCourse, mChosenSemester, studyGroupVo ) {
 
                             @Override
                             public void onResponse(Call<List<TimeTableWeekVo>> call,
@@ -369,14 +368,14 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                 super.onResponse(call, response);
 
                                 if(response.code() >= 200) {
-                                    //week-wise timetables of the current studyGroup in the for-loop
+                                    //week-wise timetables of the remaining semester for the current studyGroup in the for-loop
                                     List<TimeTableWeekVo> timeTableWeek = response.body();
 
 //                                    Log.d(TAG, "success: Request wurde ausgefuehrt: " + response.raw().request().url() + " Status: " + response.code());
                                     //Gemergte liste aller zurückgekehrten Requests. Die Liste wächst mit jedem Request.
                                     //Hier (im success) haben wir neue Daten bekommen.
 
-                                    getAllEvents(timeTableWeek, this.getData());
+                                    addCourseToAllCoursesInChosenSemester(timeTableWeek, this.getStudyGroup());
 //                                    Log.d(TAG, "success: length"+courseEvents.size());
 
 

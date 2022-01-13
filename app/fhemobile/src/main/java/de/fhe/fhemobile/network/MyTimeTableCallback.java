@@ -16,7 +16,12 @@
  */
 package de.fhe.fhemobile.network;
 
+import androidx.annotation.NonNull;
+
 import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.timetable.SemesterVo;
+import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
+import de.fhe.fhemobile.vos.timetable.StudyGroupVo;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,25 +31,23 @@ import retrofit2.Response;
  * @param <T>
  */
 public class MyTimeTableCallback<T> implements Callback<T> {
-	/**
-	 *
-	 * @param data
-	 */
-	public MyTimeTableCallback(FlatDataStructure data) {
-		this.data = data;
-	}
+
+	final private StudyCourseVo studyCourse;
+	final private SemesterVo semester;
+	final private StudyGroupVo studyGroup;
+
 
 	/**
-	 *
+	 * @param studyCourse
+	 * @param semester
+	 * @param studyGroup
 	 */
-	private final FlatDataStructure data;
-
-	/**
-	 *
-	 * @return
-	 */
-	public FlatDataStructure getData() {
-		return data;
+	public MyTimeTableCallback(@NonNull StudyCourseVo studyCourse,
+							   @NonNull SemesterVo semester,
+							   @NonNull StudyGroupVo studyGroup) {
+		this.studyCourse = studyCourse;
+		this.semester = semester;
+		this.studyGroup = studyGroup;
 	}
 
 	/**
@@ -65,5 +68,17 @@ public class MyTimeTableCallback<T> implements Callback<T> {
 	@Override
 	public void onFailure(Call<T> call, Throwable t) {
 
+	}
+
+	public SemesterVo getSemester() {
+		return semester;
+	}
+
+	public StudyCourseVo getStudyCourse() {
+		return studyCourse;
+	}
+
+	public StudyGroupVo getStudyGroup() {
+		return studyGroup;
 	}
 }

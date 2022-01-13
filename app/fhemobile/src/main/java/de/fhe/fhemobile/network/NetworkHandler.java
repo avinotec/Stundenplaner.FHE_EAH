@@ -363,15 +363,14 @@ public class NetworkHandler {
 			final ArrayList<TimeTableWeekVo> timeTable = mApi.fetchTimeTableEvents(event.getStudyGroup().getTimeTableId()).execute().body();
 			Assert.assertTrue( timeTable != null );
 
-			for (final TimeTableWeekVo weekEntry:timeTable){
-				for(final TimeTableDayVo dayEntry:weekEntry.getDays() ){
+			for (final TimeTableWeekVo weekEntry : timeTable){
+				for(final TimeTableDayVo dayEntry : weekEntry.getDays() ){
 					for(final TimeTableEventVo eventEntry : dayEntry.getEvents() ){
 						if(eventEntry.getTitle().equals(event.getEvent().getTitle())){
 							final FlatDataStructure item = event.copy();
-							item
-								.setEventWeek(weekEntry)
-								.setEventDay(dayEntry)
-								.setEvent(eventEntry);
+							item.setEventWeek(weekEntry);
+							item.setEventDay(dayEntry);
+							item.setEvent(eventEntry);
 							eventList.add(item);
 						}
 					}

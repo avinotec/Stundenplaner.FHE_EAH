@@ -178,7 +178,7 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 		final ToggleButton btnAddCourse = (ToggleButton) convertView.findViewById(R.id.btnAddCourse);
 
 		//set current state of button
-		boolean btnEnabled = currentItem.isAdded() ? true : false;
+		boolean btnEnabled = currentItem.isSubscribed() ? true : false;
 		btnAddCourse.setActivated(btnEnabled);
 
 		btnAddCourse.setOnClickListener(new View.OnClickListener() {
