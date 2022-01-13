@@ -24,99 +24,119 @@
     android:clickable="true"
 	android:focusable="true">
 
-    <RelativeLayout
-        android:id="@+id/headerBackground"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/list_header_horizontal_padding"
-        android:paddingRight="@dimen/list_header_horizontal_padding"
-        android:paddingTop="@dimen/list_item_vertical_padding"
-        android:paddingBottom="@dimen/list_item_vertical_padding"
-        android:background="@color/list_header_background">
+	<RelativeLayout
+		android:id="@+id/headerBackground"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/list_header_background"
+		android:paddingLeft="@dimen/list_header_horizontal_padding"
+		android:paddingTop="@dimen/list_item_vertical_padding"
+		android:paddingRight="@dimen/list_header_horizontal_padding"
+		android:paddingBottom="@dimen/list_item_vertical_padding">
 
-        <TextView
-            android:id="@+id/textCourseTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="TextView"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/list_header_text"
-            android:visibility="visible" />
-
-
-    </RelativeLayout>
-    <TextView
-        android:id="@+id/textStudyGroupLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/headerBackground"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="16dp"
-        android:layout_alignParentLeft="true"
-        android:text="Sets:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:visibility="visible"
-	    android:layout_marginStart="16dp"
-	    android:layout_alignParentStart="true" />
-    <TextView
-        android:id="@+id/textStudyGroupTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/headerBackground"
-        android:layout_toRightOf="@id/textStudyGroupLabel"
-        android:layout_toLeftOf="@+id/imagebuttonAddCourse"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="16dp"
-
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:visibility="visible"
-	    android:layout_toEndOf="@id/textStudyGroupLabel"
-	    android:layout_toStartOf="@+id/imagebuttonAddCourse"
-	    android:layout_marginStart="16dp" />
-
-    <TextView
-        android:id="@+id/textviewCourseTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textStudyGroupTitle"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-	    android:layout_marginStart="16dp" />
-
-    <TextView
-        android:id="@+id/textviewRoom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textStudyGroupTitle"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_toLeftOf="@id/imagebuttonAddCourse"
-        android:layout_toEndOf="@+id/textviewCourseTime"
-        android:layout_toRightOf="@+id/textviewCourseTime"
-        android:text="TextView"
-	    android:layout_toStartOf="@id/imagebuttonAddCourse" />
+		<TextView
+			android:id="@+id/textCourseTitle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentTop="true"
+			android:text="TextView"
+			android:textAppearance="@style/TextAppearance.AppCompat.Large"
+			android:textColor="@color/list_header_text"
+			android:visibility="visible" />
 
 
+	</RelativeLayout>
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/imagebuttonAddCourse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginRight="3dp"
-        android:visibility="gone"
-        android:background="@drawable/buttonshape"
-        android:layout_below="@+id/headerBackground"
-        app:srcCompat="@android:drawable/ic_input_add"
-	    android:contentDescription="Button to add a lesson" />
+	<TextView
+		android:id="@+id/textStudyGroupLabel"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/headerBackground"
+		android:layout_alignParentStart="true"
+		android:layout_alignParentLeft="true"
+		android:layout_marginStart="16dp"
+		android:layout_marginLeft="16dp"
+		android:layout_marginTop="5dp"
+		android:text="Sets:"
+		android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+		android:visibility="visible" />
+
+	<TextView
+		android:id="@+id/textStudyGroupTitle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/headerBackground"
+		android:layout_marginStart="16dp"
+		android:layout_marginLeft="16dp"
+		android:layout_marginTop="5dp"
+		android:layout_toStartOf="@+id/btnAddCourse"
+		android:layout_toLeftOf="@+id/btnAddCourse"
+		android:layout_toEndOf="@id/textStudyGroupLabel"
+		android:layout_toRightOf="@id/textStudyGroupLabel"
+		android:text="TextView"
+		android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+		android:visibility="visible" />
+
+	<TextView
+		android:id="@+id/textCourseTime"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/textStudyGroupTitle"
+		android:layout_marginStart="16dp"
+		android:layout_marginLeft="16dp"
+		android:layout_marginTop="5dp"
+		android:layout_marginBottom="10dp"
+		android:text="Time"
+		android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+	<TextView
+		android:id="@+id/textviewRoom"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/textStudyGroupTitle"
+		android:layout_marginStart="20dp"
+		android:layout_marginLeft="15dp"
+		android:layout_marginTop="5dp"
+		android:layout_toStartOf="@id/btnAddCourse"
+		android:layout_toLeftOf="@id/btnAddCourse"
+		android:layout_toEndOf="@+id/textCourseTime"
+		android:layout_toRightOf="@+id/textCourseTime"
+		android:text="Room" />
+
+
+
+<!--    <androidx.appcompat.widget.AppCompatImageButton-->
+<!--        android:id="@+id/btnAddCourse"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_alignParentRight="true"-->
+<!--        android:layout_marginTop="0dp"-->
+<!--        android:layout_marginEnd="3dp"-->
+<!--        android:layout_marginRight="3dp"-->
+<!--        android:background="@drawable/buttonshape"-->
+<!--        android:layout_below="@+id/headerBackground"-->
+<!--        app:srcCompat="@android:drawable/ic_input_add"-->
+<!--	    android:contentDescription="Button to add a lesson" />-->
+
+	<ToggleButton
+		android:id="@+id/btnAddCourse"
+		android:layout_width="40dp"
+		android:layout_height="30dp"
+		android:layout_below="@+id/headerBackground"
+		android:layout_alignTop="@id/textStudyGroupLabel"
+		android:layout_alignBottom="@id/textviewRoom"
+		android:layout_alignParentEnd="true"
+		android:layout_centerVertical="true"
+		android:layout_marginTop="0dp"
+		android:layout_marginEnd="3dp"
+		android:layout_marginRight="3dp"
+		android:background="@android:color/transparent"
+		android:button="@drawable/selector_toggle"
+		android:contentDescription="Button to add a lesson"
+		android:focusable="false"
+		android:focusableInTouchMode="false"
+		android:textOff=""
+		android:textOn=""/>
 
 </RelativeLayout>

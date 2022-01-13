@@ -45,7 +45,7 @@ import java.util.List;
 
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.comparator.LessonTitleStudyGroupTitleComparator;
+import de.fhe.fhemobile.comparator.CourseTitleStudyGroupTitleComparator;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.models.timeTableChanges.RequestModel;
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
@@ -110,18 +110,12 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 		return mView;
 	}
 
-/*
-	@Override
-	public void onResume() {
-		super.onResume();
-	}
-*/
 
 	@Override
 	public void onAttach(@NonNull Context context) {
 		super.onAttach(context);
 		if(!getSubscribedCourses().isEmpty()){
-			Collections.sort(getSubscribedCourses(),new LessonTitleStudyGroupTitleComparator());
+			Collections.sort(getSubscribedCourses(),new CourseTitleStudyGroupTitleComparator());
 		}
 	}
 

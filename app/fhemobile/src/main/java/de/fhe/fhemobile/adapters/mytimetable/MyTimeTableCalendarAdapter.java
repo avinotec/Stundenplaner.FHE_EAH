@@ -80,7 +80,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 		courseTitle.setText(currentItem.getEvent().getShortTitle());
 
 
-		final TextView courseTime = (TextView) convertView.findViewById(R.id.textviewCourseTime);
+		final TextView courseTime = (TextView) convertView.findViewById(R.id.textCourseTime);
 		final Date df = new Date(currentItem.getEvent().getStartDate());
 		//String date = sdf.format(df);
 		courseTime.setText(currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime()); // $NON-NLS

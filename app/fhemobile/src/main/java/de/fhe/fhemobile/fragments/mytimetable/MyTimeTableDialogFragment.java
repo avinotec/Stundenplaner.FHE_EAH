@@ -44,7 +44,7 @@ import java.util.List;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableDialogAdapter;
-import de.fhe.fhemobile.comparator.LessonTitleStudyGroupTitleComparator;
+import de.fhe.fhemobile.comparator.CourseTitleStudyGroupTitleComparator;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.network.TimeTableCallback;
 import de.fhe.fhemobile.utils.Utils;
@@ -391,7 +391,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
                                         try {
                                             Collections.sort(coursesOfChosenSemester,
-                                                    new LessonTitleStudyGroupTitleComparator());
+                                                    new CourseTitleStudyGroupTitleComparator());
                                         } catch ( final RuntimeException e ) {
                                             Log.e(TAG, "Fehler beim Sortieren", e); //$NON-NLS
                                         }
@@ -408,7 +408,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                                 final FlatDataStructure course1 = courseEvents.get( j );
 
                                                 // wenn es gleich ist, dann entfernen wir es, damit entfernen wir Duplikate
-                                                if ( LessonTitleStudyGroupTitleComparator.compareStatic( course0, course1 ) == 0 ) {
+                                                if ( CourseTitleStudyGroupTitleComparator.compareStatic( course0, course1 ) == 0 ) {
                                                     courseEvents.remove(j);
                                                     j--;
                                                 }
@@ -458,13 +458,13 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
                 mView.setStudyCourseItems(mResponse.getStudyCourses());
             }
-            Log.d(TAG, "success: Request wurde ausgefuehrt: " + response.raw().request().url()
-                    + " Status: "+response.code());
+            Log.d(TAG, "success: request  " + response.raw().request().url()
+                    + ", status: "+response.code());
         }
 
         @Override
         public void onFailure(Call<TimeTableResponse> call, Throwable t) {
-            Log.d(TAG, "failure: Request wurde ausgefuehrt: " + call.request().url());
+            Log.d(TAG, "failure: request " + call.request().url());
         }
     };
 

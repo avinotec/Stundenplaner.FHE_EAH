@@ -22,10 +22,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -159,10 +159,7 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 
 		}
 
-		else if(!FlatDataStructure.cutEventTitle(
-				chosenCourseList.get(position).getEvent().getTitle())
-				.equals(FlatDataStructure.cutEventTitle(
-						chosenCourseList.get(position-1).getEvent().getTitle()))){
+		else if(!chosenCourseList.get(position).isEqual(chosenCourseList.get(position-1))){
 
 			courseTitle.setText(FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
 			courseTitle.setVisibility(View.VISIBLE);
@@ -178,38 +175,36 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 
 		final TextView studyGroupLabel = (TextView) convertView.findViewById(R.id.textStudyGroupLabel);
 		final TextView studyGroupTitle = (TextView) convertView.findViewById(R.id.textStudyGroupTitle);
-		final ImageButton btnAddLesson = (ImageButton) convertView.findViewById(R.id.imagebuttonAddCourse);
-		if(currentItem.isAdded() == true){
-			btnAddLesson.setEnabled(false);
-			btnAddLesson.setImageResource(R.drawable.ic_input_add_gray);
-			btnAddLesson.setBackgroundResource(R.drawable.buttonshape_disabled);
-		}
-		else{
-			btnAddLesson.setEnabled(true);
-			btnAddLesson.setImageResource(android.R.drawable.ic_input_add);
-			btnAddLesson.setBackgroundResource(R.drawable.buttonshape);
+		final ToggleButton btnAddCourse = (ToggleButton) convertView.findViewById(R.id.btnAddCourse);
 
-		}
-		btnAddLesson.setOnClickListener(new View.OnClickListener() {
+		//set current state of button
+		boolean btnEnabled = currentItem.isAdded() ? true : false;
+		btnAddCourse.setActivated(btnEnabled);
+
+		btnAddCourse.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				btnAddLesson.setEnabled(false);
 
-				currentItem.setAdded(true);
-				final List<FlatDataStructure> eventFilteredList =
-						FlatDataStructure.getCoursesByEventTitle(
-								chosenCourseList,
-								FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
-				final List<FlatDataStructure> studyGroupFilteredList =
-						FlatDataStructure.getCoursesByStudyGroupTitle(
-								eventFilteredList, currentItem.getSetString());
+				btnAddCourse.setActivated(!btnAddCourse.isActivated());
 
-				for(final FlatDataStructure event : studyGroupFilteredList){
-					MyTimeTableOverviewView.addCourse(event);
+				if(btnAddCourse.isActivated()){
+					currentItem.setAdded(true);
+					final List<FlatDataStructure> eventFilteredList =
+							FlatDataStructure.getCoursesByEventTitle(
+									chosenCourseList,
+									FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
+					final List<FlatDataStructure> studyGroupFilteredList =
+							FlatDataStructure.getCoursesByStudyGroupTitle(
+									eventFilteredList, currentItem.getSetString());
+
+					for(final FlatDataStructure event : studyGroupFilteredList){
+						MyTimeTableOverviewView.addCourse(event);
+					}
+				}else{
+					MyTimeTableOverviewView.removeCourse(currentItem);
 				}
-				btnAddLesson.setImageResource(R.drawable.ic_input_add_gray);
-				btnAddLesson.setBackgroundResource(R.drawable.buttonshape_disabled);
-				MyTimeTableDialogAdapter.this.notifyDataSetChanged();
+
+				notifyDataSetChanged();
 
 			}
 
@@ -223,17 +218,16 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 		if(position == 0){
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			studyGroupLabel.setVisibility(View.VISIBLE);
-			btnAddLesson.setVisibility(View.VISIBLE);
+			btnAddCourse.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
 		}
 
-		else if(!FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()).equals(
-					FlatDataStructure.cutEventTitle(chosenCourseList.get(position-1).getEvent().getTitle())))
+		else if(!currentItem.isEqual(chosenCourseList.get(position-1)))
 		{
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			studyGroupLabel.setVisibility(View.VISIBLE);
-			btnAddLesson.setVisibility(View.VISIBLE);
+			btnAddCourse.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
 
@@ -244,7 +238,7 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 		{
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			studyGroupLabel.setVisibility(View.VISIBLE);
-			btnAddLesson.setVisibility(View.VISIBLE);
+			btnAddCourse.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
 		}
@@ -252,19 +246,19 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 		else{
 			studyGroupTitle.setVisibility(View.GONE);
 			studyGroupLabel.setVisibility(View.GONE);
-			btnAddLesson.setVisibility(View.GONE);
+			btnAddCourse.setVisibility(View.GONE);
 		}
 
-		final TextView tvTime = (TextView) convertView.findViewById(R.id.textviewCourseTime);
+		final TextView timeTextView = (TextView) convertView.findViewById(R.id.textCourseTime);
 		final Date dateStartDate = new java.util.Date(currentItem.getEvent().getStartDate());
 		//final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
 		final String date = sdf.format(dateStartDate);
 		final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(dateStartDate);
-		tvTime.setText(dayOfWeek + ", " + date + "  "
+		timeTextView.setText(dayOfWeek + ", " + date + "  "
 				+ currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime()); // $NON-NLS
 
-		final TextView tvRoom = (TextView)convertView.findViewById(R.id.textviewRoom);
-		tvRoom.setText(currentItem.getEvent().getRoom());
+		final TextView roomTextView = (TextView)convertView.findViewById(R.id.textviewRoom);
+		roomTextView.setText(currentItem.getEvent().getRoom());
 
 		return convertView;
 	}

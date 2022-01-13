@@ -94,6 +94,7 @@ public class FlatDataStructure implements Parcelable {
 	// "Bachelor: E-Commerce-->EC(BA)7-->EC(BA)7.01-->45-->3-->SPLUSA3E2FAs-2-->WI(BA)ERP-Sys.GPA/P/S/01"
 	@SuppressWarnings("Annotator")
 	private static final Pattern p = Pattern.compile("^(.*[a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß])"); //$NON-NLS
+
 	public static String cutEventTitle(final String title) {
 
 		// WI/WIEC(BA)Cloudtech./V/01
@@ -352,7 +353,12 @@ public class FlatDataStructure implements Parcelable {
 		}
 	}
 
-	private static int incId=0;
+	public boolean isEqual(@NonNull FlatDataStructure other){
+		return FlatDataStructure.cutEventTitle(this.getEvent().getTitle())
+				.equals(FlatDataStructure.cutEventTitle(other.getEvent().getTitle()));
+	}
+
+	private static int incId = 0;
 	private int id;
 	@SerializedName("course")
 	private FlatStudyCourse course;

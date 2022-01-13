@@ -117,10 +117,8 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 
 		}
 
-		else if(!FlatDataStructure.cutEventTitle(
-				getSubscribedCourses().get(position).getEvent().getTitle())
-				.equals(FlatDataStructure.cutEventTitle(
-						getSubscribedCourses().get(position - 1).getEvent().getTitle()))){
+		else if(!getSubscribedCourses().get(position)
+				.isEqual(getSubscribedCourses().get(position - 1))){
 
 			courseTitle.setVisibility(View.VISIBLE);
 			headerBackground.setVisibility(View.VISIBLE);
@@ -168,10 +166,7 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
 		}
-		else if(!FlatDataStructure.cutEventTitle(
-				currentItem.getEvent().getTitle())
-				.equals(FlatDataStructure.cutEventTitle(
-						getSubscribedCourses().get(position - 1).getEvent().getTitle()))){
+		else if(!currentItem.isEqual(getSubscribedCourses().get(position - 1))){
 			studyGroupTitle.setText(currentItem.getSetString());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			studyGroupLabel.setVisibility(View.VISIBLE);
@@ -195,7 +190,7 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 			btnRemoveCourse.setVisibility(View.GONE);
 		}
 
-		final TextView tvTime = (TextView) convertView.findViewById(R.id.textviewCourseTime);
+		final TextView tvTime = (TextView) convertView.findViewById(R.id.textCourseTime);
 		final Date dateStartDate = new java.util.Date(currentItem.getEvent().getStartDate());
 		//final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
 		final String date = sdf.format(dateStartDate);
