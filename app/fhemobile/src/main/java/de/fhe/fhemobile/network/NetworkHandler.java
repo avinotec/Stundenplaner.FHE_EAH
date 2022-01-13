@@ -264,7 +264,6 @@ public class NetworkHandler {
 			 */
 			@Override
 			public void onResponse(final Call<MensaChoiceItemVo[]> call, final Response<MensaChoiceItemVo[]> response) {
-				// MS: Bei den News sind die news/0 kaputt
 				if ( response.body() != null ) {
 					MensaFoodModel.getInstance().setChoiceItems(response.body());
 				}
