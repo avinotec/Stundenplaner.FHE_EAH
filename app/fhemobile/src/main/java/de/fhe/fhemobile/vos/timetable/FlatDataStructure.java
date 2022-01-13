@@ -397,7 +397,7 @@ public class FlatDataStructure implements Parcelable {
 		return added;
 	}
 
-	public void setAdded(boolean added) {
+	public void setSubscribed(boolean added) {
 		this.added = added;
 	}
 /*

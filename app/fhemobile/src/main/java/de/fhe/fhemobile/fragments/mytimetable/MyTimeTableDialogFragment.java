@@ -144,44 +144,41 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     }
     /**
      * @param timeTableWeeks list of TimeTableWeeks of the remaining for the chosen study group
-     * @param data ist der neue Datensatz, der in die Liste eingepflegt werden soll.
+     * @param courseToAddToSemester ist der neue Datensatz, der in die Liste eingepflegt werden soll.
      **/
     private void getAllEvents(final List<TimeTableWeekVo> timeTableWeeks,
-                                     final FlatDataStructure data) {
+                                     final FlatDataStructure courseToAddToSemester) {
 
         if (timeTableWeeks != null) {
             try {
-                for(int weekIndex = 0; weekIndex < timeTableWeeks.size(); weekIndex++){
 
-                    List<TimeTableDayVo> dayList = timeTableWeeks.get(weekIndex).getDays();
+                for(TimeTableWeekVo timeTableWeek : timeTableWeeks){
+                    for(TimeTableDayVo timeTableDay : timeTableWeek.getDays()){
+                        for(TimeTableEventVo timeTableEvent : timeTableDay.getEvents()){
 
-                    for(int dayIndex = 0; dayIndex<dayList.size(); dayIndex++){
-                        List<TimeTableEventVo> eventList = dayList.get(dayIndex).getEvents();
+                            //check if timeTableEvent belongs to a subscribed course
+                            for(FlatDataStructure subscribedCourse : getSubscribedCourses()){
+                                if (subscribedCourse.getEvent().getUid().equals(timeTableEvent.getUid())){
 
-                        for(int eventIndex = 0; eventIndex < eventList.size(); eventIndex++){
-                            for(FlatDataStructure addedEvent : getSubscribedCourses()){
-                                if (addedEvent.getEvent().getUid()
-                                        .equals(eventList.get(eventIndex).getUid())){
-                                    data.setAdded(true);
+                                    courseToAddToSemester.setSubscribed(true);
                                     break;
                                 }
                             }
-                            //durchsuche die komplette Liste nach der EventUID, des momentan hinzuzufügenden Events
+                            //check if timeTableEvent is in allCoursesInChosenSemester
                         	FlatDataStructure exists = null;
-                        	for ( FlatDataStructure savedEvent : this.coursesOfChosenSemester) {
-//		                        Log.d(TAG, "EventUID1: "+savedEvent.getEvent().getUid()+" EventUID2: "+eventList.get(eventIndex).getUid()+" setTitle: "+ savedEvent.getStudyGroup().getTitle()+" result: "+savedEvent.getEvent().getUid().equals(eventList.get(eventIndex).getUid()));
-                        		if (savedEvent.getEvent().getUid().equals(eventList.get(eventIndex).getUid())){
-                        			exists = savedEvent;
+                        	for ( FlatDataStructure courseInChosenSemester : this.allCoursesInChosenSemester) {
+                        		if (courseInChosenSemester.getEvent().getUid().equals(timeTableEvent.getUid())){
+                        			exists = courseInChosenSemester;
                         			break;
 		                        }
 	                        }
                             // Kommt die UID noch nicht in der Liste vor, hinzufügen
                         	if ( exists == null ) {
-		                        FlatDataStructure datacopy = data.copy();
+		                        FlatDataStructure datacopy = courseToAddToSemester.copy();
 		                        datacopy
-				                        .setEventWeek(timeTableWeeks.get(weekIndex))
-				                        .setEventDay(dayList.get(dayIndex))
-				                        .setEvent(eventList.get(eventIndex));
+				                        .setEventWeek(timeTableWeek)
+				                        .setEventDay(timeTableDay)
+				                        .setEvent(timeTableEvent);
 		                        datacopy.getSets().add(datacopy.getStudyGroup().getTitle().split("\\.")[1]);
 		                        boolean found = false;
 		                        for(FlatDataStructure selectedItem: getSubscribedCourses()){
@@ -192,14 +189,14 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                     }
                                 }
 
-                                datacopy.setAdded( found ) ;
+                                datacopy.setSubscribed( found ) ;
 
-                                this.coursesOfChosenSemester.add(datacopy);
+                                this.allCoursesInChosenSemester.add(datacopy);
 	                        }
                             //Stattdessen füge bei dem existierenden Eintrag das Set des neuen Events hinzu.
                         	else{
                                 //Kommt die UID schon in der Liste vor, braucht der Event nicht hinzugefügt werden, da es ein Duplikat wäre.
-                        	    exists.getSets().add(data.getStudyGroup().getTitle().split("\\.")[1]);
+                        	    exists.getSets().add(courseToAddToSemester.getStudyGroup().getTitle().split("\\.")[1]);
 	                        }
                         }
                     }
@@ -252,13 +249,13 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                             break;
                         }
                     }
-                    loadedElement.setAdded( found );
+                    loadedElement.setSubscribed( found );
 
                 }
                 //set all courses of the currently chosen study course and semester (not the variable for the subscribed courses)
-                coursesOfChosenSemester = new ArrayList<FlatDataStructure>(Arrays.asList(result));
+                allCoursesInChosenSemester = new ArrayList<FlatDataStructure>(Arrays.asList(result));
 
-                mCourseListAdapter.setChosenCourseList(coursesOfChosenSemester);
+                mCourseListAdapter.setChosenCourseList(allCoursesInChosenSemester);
                 mView.setCourseListAdapter(mCourseListAdapter);
                 mView.toggleCourseListVisibility(true);
                 mCourseListAdapter.notifyDataSetChanged();
@@ -275,8 +272,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             mView.resetSemesterPicker();
             mView.toggleCourseListVisibility(false);
 
-            coursesOfChosenSemester.clear();
-            mCourseListAdapter.setChosenCourseList(coursesOfChosenSemester);
+            allCoursesInChosenSemester.clear();
+            mCourseListAdapter.setChosenCourseList(allCoursesInChosenSemester);
             mCourseListAdapter.notifyDataSetChanged();
 
             mChosenStudyCourse = null;
@@ -337,8 +334,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         @Override
         public void onSemesterChosen(String _SemesterId) {
             mView.toggleCourseListVisibility(false);
-            coursesOfChosenSemester.clear();
-            mCourseListAdapter.setChosenCourseList(coursesOfChosenSemester);
+            allCoursesInChosenSemester.clear();
+            mCourseListAdapter.setChosenCourseList(allCoursesInChosenSemester);
             mCourseListAdapter.notifyDataSetChanged();
 
             mChosenSemester = null;
@@ -390,7 +387,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                     if (--requestCounter <= 0) {
 
                                         try {
-                                            Collections.sort(coursesOfChosenSemester,
+                                            Collections.sort(allCoursesInChosenSemester,
                                                     new CourseTitleStudyGroupTitleComparator());
                                         } catch ( final RuntimeException e ) {
                                             Log.e(TAG, "Fehler beim Sortieren", e); //$NON-NLS
@@ -417,13 +414,13 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 */
 
                                         mView.toggleCourseListVisibility(true);
-                                        mCourseListAdapter.setChosenCourseList(coursesOfChosenSemester);
+                                        mCourseListAdapter.setChosenCourseList(allCoursesInChosenSemester);
                                         mCourseListAdapter.notifyDataSetChanged();
                                         mView.setCourseListAdapter(mCourseListAdapter);
 
                                         final Gson gson = new Gson();
                                         final String chosenSemesterJson = correctUmlauts(
-                                                gson.toJson(coursesOfChosenSemester));
+                                                gson.toJson(allCoursesInChosenSemester));
                                         editor.putString(PREFS_ALL_COURSES_OF_CHOSEN_STUDYCOURSE_AND_SEMESTER, chosenSemesterJson);
                                         editor.commit();
 
@@ -474,7 +471,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     private StudyCourseVo mChosenStudyCourse;
     private SemesterVo mChosenSemester;
     //list of courses for the study course and semester currently chosen in MyTimeTableDialog
-    private List<FlatDataStructure> coursesOfChosenSemester = new ArrayList<>();
+    private List<FlatDataStructure> allCoursesInChosenSemester = new ArrayList<>();
 
     private MyTimeTableDialogAdapter mCourseListAdapter;
 }

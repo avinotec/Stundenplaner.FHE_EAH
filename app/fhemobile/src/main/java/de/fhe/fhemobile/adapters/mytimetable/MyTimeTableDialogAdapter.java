@@ -188,7 +188,7 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 				btnAddCourse.setActivated(!btnAddCourse.isActivated());
 
 				if(btnAddCourse.isActivated()){
-					currentItem.setAdded(true);
+					currentItem.setSubscribed(true);
 					final List<FlatDataStructure> eventFilteredList =
 							FlatDataStructure.getCoursesByEventTitle(
 									chosenCourseList,

@@ -66,12 +66,12 @@ public class Main extends Application {
     }
 
     public static void removeFromSubscribedCourses(final FlatDataStructure course){
-        course.setAdded(false);
+        course.setSubscribed(false);
         subscribedCourses.remove(course);
     }
 
     public static void addToSubscribedCourses(final FlatDataStructure course){
-        course.setAdded(true);
+        course.setSubscribed(true);
         subscribedCourses.add(course);
     }
 
