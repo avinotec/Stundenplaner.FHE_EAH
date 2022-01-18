@@ -50,6 +50,7 @@ import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
 import de.fhe.fhemobile.fragments.impressum.ImpressumFragment;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableOverviewFragment;
+import de.fhe.fhemobile.fragments.navigation.NavigationFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdata.SemesterDataWebViewFragment;
 import de.fhe.fhemobile.models.navigation.Room;
@@ -352,8 +353,11 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             // Wenn das Fragment MyTimeTableOverviewFragment irgendwo eingeblendet ist, dann wollen wir einfach auf dem Backstack wieder zurück,
 
             final FragmentManager fragmentManager = getSupportFragmentManager();
-            final Fragment aFragment = fragmentManager.findFragmentByTag(MyTimeTableOverviewFragment.TAG);
-            if ( aFragment != null) {
+            final Fragment aMyTimeTableOverviewFragment = fragmentManager.findFragmentByTag(MyTimeTableOverviewFragment.TAG);
+            final Fragment aNavigationFragment = fragmentManager.findFragmentByTag(NavigationFragment.TAG);
+
+            if ( aMyTimeTableOverviewFragment != null
+                || aNavigationFragment != null) {
                 // go back
                 super.onBackPressed();
                 return;
@@ -381,7 +385,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
     }
 
-    /*
+    /**
     Hier wird dafuer gesorgt, dass wenn in der Root-Activity der Back-Button gedrückt wird, erst beim 2. Mal Back-Button die App geschlossen wird.
     Die Variable backPressedTwice wird beim ersten Betätigen gesetzt und es wird ein Thread verzögert gestartet. In dem Thread wird die Variable
     wieder zurückgesetzt. Nur wenn "backPressedTwice" gesetzt ist, und der Back-Button ein zweites mal betätigt wird, wird die App beendet.
