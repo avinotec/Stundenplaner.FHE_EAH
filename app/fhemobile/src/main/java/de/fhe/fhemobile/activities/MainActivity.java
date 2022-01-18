@@ -308,20 +308,29 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         }
     }
 
-    public void changeFragment(final FeatureFragment _Fragment, final boolean _AddToBackStack) {
-        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, _Fragment);
+    /**
+     *
+     * @param _Fragment
+     * @param _AddToBackStack
+     * @param _Tag
+     */
+    public void changeFragment(final FeatureFragment _Fragment, final boolean _AddToBackStack, final String _Tag) {
+
         mCurrentFragment = _Fragment;
+
+        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, _Fragment, _Tag);
+
 //        transaction.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.abc_fade_in, R.anim.abc_fade_out);
 
         if (_AddToBackStack) {
-            transaction.addToBackStack(null);
+            transaction.addToBackStack(_Tag);
         }
-//Todo: Wenn ein eintrag im Backstack ist, dann eine andere Rubrik ausgewählt wird (z.B. news) und dann back-taste gedrueckt wird, überlagern sich die layouts.
-//An dieser Stelle muss dann der BackStack geleert werden, wenn man wechselt.
-// else{
-//            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//        }
+        //Todo: Wenn ein eintrag im Backstack ist, dann eine andere Rubrik ausgewählt wird (z.B. news) und dann back-taste gedrueckt wird, überlagern sich die layouts.
+        //An dieser Stelle muss dann der BackStack geleert werden, wenn man wechselt.
+        // else{
+        //            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        //        }
 
         transaction.commit();
     }
