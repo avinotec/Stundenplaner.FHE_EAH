@@ -54,7 +54,7 @@ public class TimeTableEventVo implements Parcelable {
     @NonNull
     public String getShortTitle() {
         //Todo: vorübergehender Fix für Veranstaltungen mit shortTitle = null
-        return mShortTitle != null ? mShortTitle : mTitle;
+        return correctUmlauts(mShortTitle != null ? mShortTitle : mTitle);
     }
 
 // --Commented out by Inspection START (02.11.2021 17:34):

@@ -51,6 +51,7 @@ import de.fhe.fhemobile.models.timeTableChanges.RequestModel;
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.services.PushNotificationService;
+import de.fhe.fhemobile.utils.MyTimeTableUtils;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
 import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
 import retrofit2.Call;
@@ -129,7 +130,7 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 			String setID = "";
 
 			for (FlatDataStructure event : getSubscribedCourses()) {
-				final String eventTitleShort = FlatDataStructure.cutEventTitle(event.getEvent().getTitle());
+				final String eventTitleShort = MyTimeTableUtils.cutEventTitle(event.getEvent().getTitle());
 				final String sSetID = event.getStudyGroup().getTimeTableId();
 
 				if ((title.equals(eventTitleShort) && setID.equals(sSetID))) {
@@ -237,7 +238,7 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 
 						//Aenderung eines Events: suche das Event und ueberschreibe es
 						if (change.getChangesReason() == CHANGEREASON_EDIT) {
-							final FlatDataStructure event = FlatDataStructure.getEventByID(myTimetableList, change.getNewEventJson().getUid());
+							final FlatDataStructure event = MyTimeTableUtils.getEventByID(myTimetableList, change.getNewEventJson().getUid());
 							if (event != null) {
 								event.setEvent(change.getNewEventJson());
 							}
@@ -245,14 +246,14 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 						//Hinzufuegen eines neuen Events: Erstelle ein neues Element vom Typ FlatDataStructure, schreibe alle Set-, Semester- und Studiengangdaten in dieses
 						//und fuege dann die Eventdaten des neuen Events hinzu. Anschliessend in die Liste hinzufuegen.
 						if (change.getChangesReason() == CHANGEREASON_NEW) {
-							final FlatDataStructure event = FlatDataStructure.getCoursesByStudyGroupTitle(myTimetableList, change.getSetSplusKey()).get(0).copy();
+							final FlatDataStructure event = MyTimeTableUtils.getCoursesByStudyGroupTitle(myTimetableList, change.getSetSplusKey()).get(0).copy();
 							event.setEvent(change.getNewEventJson());
 							addToSubscribedCourses(event);
 
 						}
 						//Loeschen eines Events: Suche den Event mit der SplusID und lösche ihn aus der Liste.
 						if (change.getChangesReason() == CHANGEREASON_DELETE) {
-							final FlatDataStructure event = FlatDataStructure.getEventByID(myTimetableList, change.getNewEventJson().getUid());
+							final FlatDataStructure event = MyTimeTableUtils.getEventByID(myTimetableList, change.getNewEventJson().getUid());
 							removeFromSubscribedCourses(event);
 						}
 					}

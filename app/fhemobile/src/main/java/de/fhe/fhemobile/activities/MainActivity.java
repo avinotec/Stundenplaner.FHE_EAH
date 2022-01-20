@@ -59,6 +59,7 @@ import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.utils.Define;
+import de.fhe.fhemobile.utils.MyTimeTableUtils;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.feature.FeatureFragmentFactory;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
@@ -228,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
                         //Aenderung einer Veranstaltung: suche das Event (= einzelne Veranstaltung) und ueberschreibe ihre Daten
                         if(change.getChangesReason() == CHANGEREASON_EDIT) {
-                            final FlatDataStructure event = FlatDataStructure.getEventByID(
+                            final FlatDataStructure event = MyTimeTableUtils.getEventByID(
                                     myTimetableList, change.getNewEventJson().getUid());
                             if(event != null){
                                 event.setEvent(change.getNewEventJson());
@@ -239,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                         //und fuege dann die Eventdaten des neuen Events hinzu. Anschliessend in die Liste hinzufuegen.
                         if(change.getChangesReason() == CHANGEREASON_NEW) {
                             final FlatDataStructure event =
-                                    FlatDataStructure.getCoursesByStudyGroupTitle(
+                                    MyTimeTableUtils.getCoursesByStudyGroupTitle(
                                             myTimetableList, change.getSetSplusKey()).get(0).copy();
                             event.setEvent(change.getNewEventJson());
 
@@ -248,7 +249,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                         }
                         //Loeschen einer Veranstaltung: Suche die Veranstaltung mit der SplusID und lösche sie aus der Liste.
                         if(change.getChangesReason() == CHANGEREASON_DELETE){
-                            final FlatDataStructure event = FlatDataStructure.getEventByID(
+                            final FlatDataStructure event = MyTimeTableUtils.getEventByID(
                                     myTimetableList, change.getNewEventJson().getUid());
 
                             MyTimeTableOverviewView.removeCourse(event);

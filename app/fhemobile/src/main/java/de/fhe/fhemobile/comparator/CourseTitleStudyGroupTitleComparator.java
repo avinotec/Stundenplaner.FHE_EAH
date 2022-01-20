@@ -21,6 +21,7 @@ import org.junit.Assert;
 import java.util.Comparator;
 
 import de.fhe.fhemobile.utils.Define;
+import de.fhe.fhemobile.utils.MyTimeTableUtils;
 import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
 
 public class CourseTitleStudyGroupTitleComparator implements Comparator<FlatDataStructure> {
@@ -50,8 +51,8 @@ public class CourseTitleStudyGroupTitleComparator implements Comparator<FlatData
 
 		final String title1 = o1.getEvent().getTitle();
 		final String title2 = o2.getEvent().getTitle();
-		final String courseTitle1 = FlatDataStructure.cutEventTitle(title1);
-		final String courseTitle2 = FlatDataStructure.cutEventTitle(title2);
+		final String courseTitle1 = MyTimeTableUtils.cutEventTitle(title1);
+		final String courseTitle2 = MyTimeTableUtils.cutEventTitle(title2);
 		Assert.assertTrue( courseTitle1 != null );
 		Assert.assertTrue( courseTitle2 != null );
 		Assert.assertTrue( courseTitle1.length() > 3 );

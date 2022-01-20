@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Locale;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.utils.MyTimeTableUtils;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
 import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
 
@@ -122,12 +123,12 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 
 				//get all courses with certain title
 				final List<FlatDataStructure> courseListFilteredByTitle =
-						FlatDataStructure.getCoursesByEventTitle(
+						MyTimeTableUtils.getCoursesByEventTitle(
 								chosenCourseList,
-								FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
+								MyTimeTableUtils.cutEventTitle(currentItem.getEvent().getTitle()));
 				//get all courses with certain study group
 				final List <FlatDataStructure> courseListFilteredByStudyGroup =
-						FlatDataStructure.getCoursesByStudyGroupTitle(
+						MyTimeTableUtils.getCoursesByStudyGroupTitle(
 								courseListFilteredByTitle, currentItem.getSetString());
 
 				for (final FlatDataStructure event : courseListFilteredByStudyGroup){
@@ -151,7 +152,7 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 		final RelativeLayout headerLayout = convertView.findViewById(R.id.headerBackground);
 
 		if(position == 0){
-			courseTitle.setText(FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
+			courseTitle.setText(currentItem.getEvent().getShortTitle());
 			courseTitle.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
@@ -161,7 +162,7 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 
 		else if(!chosenCourseList.get(position).isEqual(chosenCourseList.get(position-1))){
 
-			courseTitle.setText(FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
+			courseTitle.setText(currentItem.getEvent().getShortTitle());
 			courseTitle.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
@@ -190,11 +191,11 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 				if(btnAddCourse.isActivated()){
 					currentItem.setSubscribed(true);
 					final List<FlatDataStructure> eventFilteredList =
-							FlatDataStructure.getCoursesByEventTitle(
+							MyTimeTableUtils.getCoursesByEventTitle(
 									chosenCourseList,
-									FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
+									MyTimeTableUtils.cutEventTitle(currentItem.getEvent().getTitle()));
 					final List<FlatDataStructure> studyGroupFilteredList =
-							FlatDataStructure.getCoursesByStudyGroupTitle(
+							MyTimeTableUtils.getCoursesByStudyGroupTitle(
 									eventFilteredList, currentItem.getSetString());
 
 					for(final FlatDataStructure event : studyGroupFilteredList){

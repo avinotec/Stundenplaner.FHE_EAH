@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Locale;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.utils.MyTimeTableUtils;
 import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
 
 public class MyTimeTableOverviewAdapter extends BaseAdapter {
@@ -78,12 +79,12 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 			public void onClick(View v) {
 
 				List<FlatDataStructure> courseTitleFilteredList
-						= FlatDataStructure.getCoursesByEventTitle(
+						= MyTimeTableUtils.getCoursesByEventTitle(
 								getSubscribedCourses(),
-								FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
+								MyTimeTableUtils.cutEventTitle(currentItem.getEvent().getTitle()));
 
 				List <FlatDataStructure> filteredList
-						= FlatDataStructure.getCoursesByStudyGroupTitle(
+						= MyTimeTableUtils.getCoursesByStudyGroupTitle(
 						courseTitleFilteredList, currentItem.getSetString());
 
 				for (FlatDataStructure event:filteredList){
@@ -107,7 +108,7 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 
 		final TextView courseTitle = (TextView) convertView.findViewById(R.id.textCourseTitle);
 		final RelativeLayout headerBackground = convertView.findViewById(R.id.headerBackground);
-		courseTitle.setText(correctUmlauts(FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle())));
+		courseTitle.setText(correctUmlauts(currentItem.getEvent().getShortTitle()));
 
 		if(position == 0){
 			courseTitle.setVisibility(View.VISIBLE);
@@ -141,12 +142,12 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				final List<FlatDataStructure> eventFilteredList
-						= FlatDataStructure.getCoursesByEventTitle(
+						= MyTimeTableUtils.getCoursesByEventTitle(
 								getSubscribedCourses(),
-								FlatDataStructure.cutEventTitle(currentItem.getEvent().getTitle()));
+								MyTimeTableUtils.cutEventTitle(currentItem.getEvent().getTitle()));
 
 				final List<FlatDataStructure> studyGroupFilteredList
-						= FlatDataStructure.getCoursesByStudyGroupTitle(
+						= MyTimeTableUtils.getCoursesByStudyGroupTitle(
 								eventFilteredList, currentItem.getSetString());
 
 				for(FlatDataStructure event : studyGroupFilteredList){
