@@ -47,7 +47,7 @@ import de.fhe.fhemobile.comparator.Date_Comparator;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableDialogFragment;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableOverviewFragment;
 import de.fhe.fhemobile.utils.Define;
-import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
 
 
 public class MyTimeTableOverviewView extends LinearLayout {
@@ -74,7 +74,7 @@ public class MyTimeTableOverviewView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        FloatingActionButton mAddButton = (FloatingActionButton) findViewById(R.id.button_timetableAddCourse);
+        FloatingActionButton mAddButton = (FloatingActionButton) findViewById(R.id.btn_mytimetable_overview_add_course);
         mAddButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -84,7 +84,7 @@ public class MyTimeTableOverviewView extends LinearLayout {
 
         myTimeTableOverviewAdapter = new MyTimeTableOverviewAdapter(getContext());
 
-        mCourseListView = (ListView) findViewById(R.id.ListViewCourses);
+        mCourseListView = (ListView) findViewById(R.id.listview_mytimetable_overview_courses);
         mCourseListView.setAdapter(myTimeTableOverviewAdapter);
     }
 

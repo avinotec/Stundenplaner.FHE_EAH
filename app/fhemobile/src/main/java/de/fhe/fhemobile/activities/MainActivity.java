@@ -63,7 +63,7 @@ import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.feature.FeatureFragmentFactory;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
-import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

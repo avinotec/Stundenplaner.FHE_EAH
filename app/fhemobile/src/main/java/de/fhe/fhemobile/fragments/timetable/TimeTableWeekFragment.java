@@ -38,7 +38,7 @@ public class TimeTableWeekFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment TimeTableEventsFragment.
+     * @return A new instance of fragment TimeTableFragment.
      */
     public static TimeTableWeekFragment newInstance(TimeTableWeekVo _Week) {
         TimeTableWeekFragment fragment = new TimeTableWeekFragment();

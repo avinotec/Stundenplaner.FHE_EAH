@@ -18,7 +18,6 @@ package de.fhe.fhemobile.network;
 
 import androidx.annotation.NonNull;
 
-import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
 import de.fhe.fhemobile.vos.timetable.SemesterVo;
 import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
 import de.fhe.fhemobile.vos.timetable.StudyGroupVo;

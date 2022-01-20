@@ -19,7 +19,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="de.fhe.fhemobile.fragments.timetable.TimeTableFragment"
+    tools:context="de.fhe.fhemobile.fragments.timetable.TimeTableDialogFragment"
     android:background="@color/background"
     >
 
@@ -38,7 +38,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnMyTimetableModifySchedule"
+                android:id="@+id/btn_mytimetable_calendar_modify_Schedule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -55,7 +55,7 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/jumpCurrentLesson"
+                android:id="@+id/btn_mytimetable_calendar_jump_to_today"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -69,19 +69,11 @@
         </LinearLayout>
 
         <ListView
-            android:id="@+id/lvCalendar"
+            android:id="@+id/listview_mytimetable_calendar_courses"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
         </ListView>
-
-        <TextView
-            android:id="@+id/emptyView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="test"
-            android:visibility="gone" />
 
 
     </LinearLayout>

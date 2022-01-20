@@ -14,7 +14,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.vos.timetable;
+package de.fhe.fhemobile.vos.mytimetable;
 
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
@@ -35,6 +35,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.fhe.fhemobile.vos.timetable.SemesterVo;
+import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
+import de.fhe.fhemobile.vos.timetable.StudyGroupVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableDayVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
+
 public class FlatDataStructure implements Parcelable {
 	private static final String TAG = "FlatDataStructure";
 
@@ -42,7 +49,7 @@ public class FlatDataStructure implements Parcelable {
 	}
 
 	public FlatDataStructure(FlatStudyCourse course,
-							 FlatTerms semester,
+							 FlatSemesters semester,
 							 StudyGroupVo studyGroup,
 							 FlatTimeTableWeek eventWeek,
 							 FlatTimeTableDay eventDay,
@@ -59,7 +66,7 @@ public class FlatDataStructure implements Parcelable {
 
 	private FlatDataStructure(final Parcel in) {
 		course = in.readParcelable(FlatStudyCourse.class.getClassLoader());
-		semester = in.readParcelable(FlatTerms.class.getClassLoader());
+		semester = in.readParcelable(FlatSemesters.class.getClassLoader());
 		studyGroup = in.readParcelable(StudyGroupVo.class.getClassLoader());
 		eventWeek = in.readParcelable(FlatTimeTableWeek.class.getClassLoader());
 		eventDay = in.readParcelable(FlatTimeTableDay.class.getClassLoader());
@@ -246,7 +253,7 @@ public class FlatDataStructure implements Parcelable {
 		return course;
 	}
 
-	public final FlatTerms getSemester() {
+	public final FlatSemesters getSemester() {
 		return semester;
 	}
 
@@ -276,12 +283,12 @@ public class FlatDataStructure implements Parcelable {
 		this.course = course;
 	}
 
-	private final void setSemester(final FlatTerms semester) {
+	private final void setSemester(final FlatSemesters semester) {
 		this.semester = semester;
 	}
 
 	public final void setSemester(final SemesterVo semester) {
-		this.semester = new FlatTerms();
+		this.semester = new FlatSemesters();
 		this.semester.setId(semester.getId());
 		this.semester.setTitle(semester.getTitle());
 	}
@@ -368,7 +375,7 @@ public class FlatDataStructure implements Parcelable {
 	private FlatStudyCourse course;
 
 	@SerializedName("semester")
-	private FlatTerms semester;
+	private FlatSemesters semester;
 
 	@SerializedName("studyGroup")
 	private StudyGroupVo studyGroup;

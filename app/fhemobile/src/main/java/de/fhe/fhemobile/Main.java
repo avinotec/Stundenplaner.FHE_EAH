@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
-import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
 
 
 /**

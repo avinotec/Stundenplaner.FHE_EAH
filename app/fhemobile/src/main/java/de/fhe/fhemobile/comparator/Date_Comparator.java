@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 
-import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
 
 public class Date_Comparator implements Comparator<FlatDataStructure> {
 	private static final String TAG = "LessonTitle_StudyGroupT";

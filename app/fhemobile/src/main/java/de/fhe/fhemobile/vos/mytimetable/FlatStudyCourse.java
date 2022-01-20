@@ -14,7 +14,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.vos.timetable;
+package de.fhe.fhemobile.vos.mytimetable;
 
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
@@ -26,25 +26,25 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by paul on 12.03.15.
  */
-public class FlatTerms implements Parcelable {
+public class FlatStudyCourse implements Parcelable {
 
-    public FlatTerms() {
+    public FlatStudyCourse() {
     }
 
-    FlatTerms(Parcel in) {
+    FlatStudyCourse(Parcel in) {
         mId = in.readString();
         mTitle = correctUmlauts(in.readString());
     }
 
-    public static final Creator<FlatTerms> CREATOR = new Creator<FlatTerms>() {
+    public static final Creator<FlatStudyCourse> CREATOR = new Creator<FlatStudyCourse>() {
         @Override
-        public FlatTerms createFromParcel(Parcel in) {
-            return new FlatTerms(in);
+        public FlatStudyCourse createFromParcel(Parcel in) {
+            return new FlatStudyCourse(in);
         }
 
         @Override
-        public FlatTerms[] newArray(int size) {
-            return new FlatTerms[size];
+        public FlatStudyCourse[] newArray(int size) {
+            return new FlatStudyCourse[size];
         }
     };
 
@@ -67,10 +67,11 @@ public class FlatTerms implements Parcelable {
 
 
     @SerializedName("id")
-    private String                  mId;
+    private String              mId;
 
     @SerializedName("title")
-    private String                  mTitle;
+    private String              mTitle;
+
 
 
     @Override

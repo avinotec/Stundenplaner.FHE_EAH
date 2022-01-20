@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Locale;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
 
 public class MyTimeTableOverviewAdapter extends BaseAdapter {
 	private static final String TAG = "MyTimeTableOverviewAdapter";

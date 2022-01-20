@@ -52,7 +52,7 @@ import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
-import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -81,7 +81,7 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 	 * Use this factory method to create a new instance of
 	 * this fragment using the provided parameters.
 	 *
-	 * @return A new instance of fragment TimeTableFragment.
+	 * @return A new instance of fragment TimeTableDialogFragment.
 	 */
 	public static MyTimeTableOverviewFragment newInstance() {
 		final MyTimeTableOverviewFragment fragment = new MyTimeTableOverviewFragment();

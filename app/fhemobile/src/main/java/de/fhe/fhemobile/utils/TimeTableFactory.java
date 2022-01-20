@@ -17,8 +17,8 @@
 package de.fhe.fhemobile.utils;
 
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.fragments.timetable.TimeTableEventsFragment;
 import de.fhe.fhemobile.fragments.timetable.TimeTableFragment;
+import de.fhe.fhemobile.fragments.timetable.TimeTableDialogFragment;
 
 /**
  * Created by paul on 16.03.15.
@@ -34,10 +34,10 @@ public class TimeTableFactory {
         FeatureFragment fragment = null;
 
         if (chosenTimeTable != null) {
-            fragment = TimeTableEventsFragment.newInstance(chosenTimeTable);
+            fragment = TimeTableFragment.newInstance(chosenTimeTable);
         }
         else {
-            fragment = TimeTableFragment.newInstance();
+            fragment = TimeTableDialogFragment.newInstance();
         }
 
         return fragment;

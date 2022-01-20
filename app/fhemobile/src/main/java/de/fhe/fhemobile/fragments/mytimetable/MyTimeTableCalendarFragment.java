@@ -44,7 +44,7 @@ import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableCalendarView;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
-import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
 
 public class MyTimeTableCalendarFragment extends FeatureFragment {
 

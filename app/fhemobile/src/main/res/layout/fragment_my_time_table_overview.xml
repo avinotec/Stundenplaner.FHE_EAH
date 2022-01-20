@@ -18,7 +18,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context="de.fhe.fhemobile.fragments.timetable.TimeTableFragment"
+	tools:context="de.fhe.fhemobile.fragments.timetable.TimeTableDialogFragment"
 	android:background="@color/background">
 
 	<RelativeLayout
@@ -28,7 +28,7 @@
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:layout_above="@id/button_timetableAddCourse"
+			android:layout_above="@id/btn_mytimetable_overview_add_course"
 			android:paddingTop="@dimen/activity_vertical_margin"
 			android:orientation="vertical"
 			android:animateLayoutChanges="true"
@@ -48,24 +48,16 @@
 			<View style="@style/Divider"/>
 
 			<ListView
-				android:id="@+id/ListViewCourses"
+				android:id="@+id/listview_mytimetable_overview_courses"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:divider="@null"
 				android:dividerHeight="0dp"/>
 
-			<TextView
-				android:id="@+id/emptyView"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:gravity="center"
-				android:text="test"
-				android:visibility="gone" />
-
 		</LinearLayout>
 
 		<com.google.android.material.floatingactionbutton.FloatingActionButton
-			android:id="@+id/button_timetableAddCourse"
+			android:id="@+id/btn_mytimetable_overview_add_course"
 			android:layout_margin="16dp"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"

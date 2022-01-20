@@ -14,7 +14,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.vos.timetable;
+package de.fhe.fhemobile.vos.mytimetable;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -24,33 +24,34 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by paul on 16.03.15.
  */
-public class FlatTimeTableWeek implements Parcelable {
+public class FlatTimeTableDay implements Parcelable {
 
-    public FlatTimeTableWeek() {
+    public FlatTimeTableDay() {
     }
 
-    public int getWeekInYear() {
-        return mWeekInYear;
+    public Integer getDayInWeek() {
+        return mDayInWeek;
     }
 
-    public void setWeekInYear(int _weekInYear) {
-        mWeekInYear = _weekInYear;
+    public void setDayInWeek(Integer _dayInWeek) {
+        mDayInWeek = _dayInWeek;
     }
 
-    public int getYear() {
-        return mYear;
+    public String getName() {
+        return mName;
     }
 
-    public void setYear(int _year) {
-        mYear = _year;
+    public void setName(String _name) {
+        mName = _name;
     }
 
 
-    @SerializedName("weekInYear")
-    private int mWeekInYear;
+    @SerializedName("dayInWeek")
+    private int mDayInWeek;
 
-    @SerializedName("year")
-    private int mYear;
+    @SerializedName("name")
+    private String mName;
+
 
 
     @Override
@@ -60,22 +61,22 @@ public class FlatTimeTableWeek implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(mWeekInYear);
-        dest.writeInt(mYear);
+        dest.writeInt(mDayInWeek);
+        dest.writeString(mName);
     }
 
-    private FlatTimeTableWeek(Parcel in) {
-        mWeekInYear = in.readInt();
-        mYear = in.readInt();
+    private FlatTimeTableDay(Parcel in) {
+        mDayInWeek = in.readInt();
+        mName = in.readString();
     }
 
-    public static final Creator<FlatTimeTableWeek> CREATOR = new Creator<FlatTimeTableWeek>() {
-        public FlatTimeTableWeek createFromParcel(Parcel source) {
-            return new FlatTimeTableWeek(source);
+    public static final Creator<FlatTimeTableDay> CREATOR = new Creator<FlatTimeTableDay>() {
+        public FlatTimeTableDay createFromParcel(Parcel source) {
+            return new FlatTimeTableDay(source);
         }
 
-        public FlatTimeTableWeek[] newArray(int size) {
-            return new FlatTimeTableWeek[size];
+        public FlatTimeTableDay[] newArray(int size) {
+            return new FlatTimeTableDay[size];
         }
     };
 }

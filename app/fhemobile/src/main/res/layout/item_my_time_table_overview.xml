@@ -34,15 +34,15 @@
         android:paddingBottom="@dimen/list_item_vertical_padding"
         android:background="@color/list_header_background">
 
-        <TextView
-            android:id="@+id/textCourseTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="TextView"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/list_header_text"
-            android:visibility="visible" />
+		<TextView
+			android:id="@+id/textCourseTitle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentTop="true"
+			android:text="Course Title"
+			android:textAppearance="@style/TextAppearance.AppCompat.Large"
+			android:textColor="@color/list_header_text"
+			android:visibility="visible" />
 
 
     </RelativeLayout>
@@ -61,33 +61,33 @@
 		android:textAppearance="@style/TextAppearance.AppCompat.Medium"
 		android:visibility="visible" />
 
-    <TextView
-        android:id="@+id/textStudyGroupTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/headerBackground"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="16dp"
-        android:layout_toRightOf="@id/textStudyGroupLabel"
-        android:layout_toLeftOf="@+id/btnRemoveCourse"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:visibility="visible"
-	    android:layout_marginStart="16dp"
-	    android:layout_toEndOf="@id/textStudyGroupLabel"
-	    android:layout_toStartOf="@+id/btnRemoveCourse" />
+	<TextView
+		android:id="@+id/textStudyGroupTitle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/headerBackground"
+		android:layout_marginStart="16dp"
+		android:layout_marginLeft="16dp"
+		android:layout_marginTop="5dp"
+		android:layout_toStartOf="@+id/btnRemoveCourse"
+		android:layout_toLeftOf="@+id/btnRemoveCourse"
+		android:layout_toEndOf="@id/textStudyGroupLabel"
+		android:layout_toRightOf="@id/textStudyGroupLabel"
+		android:text="TextView"
+		android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+		android:visibility="visible" />
 
-    <TextView
-        android:id="@+id/textCourseTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textStudyGroupTitle"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:layout_marginLeft="16dp"
-	    android:layout_marginStart="16dp" />
+	<TextView
+		android:id="@+id/textCourseTime"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/textStudyGroupTitle"
+		android:layout_marginStart="16dp"
+		android:layout_marginLeft="16dp"
+		android:layout_marginTop="5dp"
+		android:layout_marginBottom="10dp"
+		android:text="Date"
+		android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     <TextView
         android:id="@+id/textviewRoom"
@@ -100,7 +100,7 @@
         android:layout_toEndOf="@+id/textCourseTime"
         android:layout_toRightOf="@+id/textCourseTime"
         android:layout_toLeftOf="@id/btnRemoveCourse"
-        android:text="TextView"
+        android:text="Room"
 	    android:layout_toStartOf="@id/btnRemoveCourse" />
 
 
@@ -118,6 +118,6 @@
         android:layout_below="@+id/headerBackground"
         app:srcCompat="@android:drawable/ic_delete"
         android:background="@android:color/transparent"
-	    android:contentDescription="remove course" />
+	    android:contentDescription="button remove course" />
 
 </RelativeLayout>

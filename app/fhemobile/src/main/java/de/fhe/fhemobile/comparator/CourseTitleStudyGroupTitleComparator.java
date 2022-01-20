@@ -21,7 +21,7 @@ import org.junit.Assert;
 import java.util.Comparator;
 
 import de.fhe.fhemobile.utils.Define;
-import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
 
 public class CourseTitleStudyGroupTitleComparator implements Comparator<FlatDataStructure> {
 	private static final String TAG = "Course_StudyGroup_Comparator";

@@ -49,7 +49,7 @@ import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.network.MyTimeTableCallback;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableDialogView;
-import de.fhe.fhemobile.vos.timetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
 import de.fhe.fhemobile.vos.timetable.SemesterVo;
 import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
 import de.fhe.fhemobile.vos.timetable.StudyGroupVo;
