@@ -21,7 +21,7 @@ import android.util.AttributeSet;
 
 import java.util.List;
 
-import de.fhe.fhemobile.vos.timetable.StudyGroupVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
 import de.fhe.fhemobile.widgets.picker.base.IdPicker;
 
 /**
@@ -33,7 +33,7 @@ public class StudyGroupPicker extends IdPicker {
         super(context, attrs);
     }
 
-    public void setItems(List<StudyGroupVo> _items) {
+    public void setItems(List<TimeTableStudyGroupVo> _items) {
         mItems = _items;
         if (mItems == null) {
             throw new AssertionError("StudyGroup items cannot be null!");
@@ -55,5 +55,5 @@ public class StudyGroupPicker extends IdPicker {
         return mItems.size();
     }
 
-    private List<StudyGroupVo> mItems;
+    private List<TimeTableStudyGroupVo> mItems;
 }

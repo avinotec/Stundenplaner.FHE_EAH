@@ -36,7 +36,7 @@ import java.util.Locale;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.utils.MyTimeTableUtils;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
-import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
 
 public class MyTimeTableDialogAdapter extends BaseAdapter {
 	private static final String TAG = "MyTimeTableDialogAdapter";
@@ -45,13 +45,13 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 	//private String studygroupTitle="";
 
 	private final Context mContext;
-	private List<FlatDataStructure> chosenCourseList;
+	private List<MyTimeTableCourse> chosenCourseList;
 
 	public MyTimeTableDialogAdapter(Context context) {
 		this.mContext = context;
 	}
 
-	public void setChosenCourseList(List<FlatDataStructure> chosenCourseList) {
+	public void setChosenCourseList(List<MyTimeTableCourse> chosenCourseList) {
 		this.chosenCourseList = chosenCourseList;
 	}
 
@@ -115,23 +115,23 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 					inflate(R.layout.item_my_time_table_dialog, parent, false);
 		}
 
-		final FlatDataStructure currentItem = chosenCourseList.get(position);
+		final MyTimeTableCourse currentItem = chosenCourseList.get(position);
 
 		convertView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
 				//get all courses with certain title
-				final List<FlatDataStructure> courseListFilteredByTitle =
+				final List<MyTimeTableCourse> courseListFilteredByTitle =
 						MyTimeTableUtils.getCoursesByEventTitle(
 								chosenCourseList,
 								MyTimeTableUtils.cutEventTitle(currentItem.getEvent().getTitle()));
 				//get all courses with certain study group
-				final List <FlatDataStructure> courseListFilteredByStudyGroup =
+				final List <MyTimeTableCourse> courseListFilteredByStudyGroup =
 						MyTimeTableUtils.getCoursesByStudyGroupTitle(
 								courseListFilteredByTitle, currentItem.getSetString());
 
-				for (final FlatDataStructure event : courseListFilteredByStudyGroup){
+				for (final MyTimeTableCourse event : courseListFilteredByStudyGroup){
 					event.setVisible(!event.isVisible());
 				}
 				((ListView) parent).invalidateViews();
@@ -190,15 +190,15 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 
 				if(btnAddCourse.isActivated()){
 					currentItem.setSubscribed(true);
-					final List<FlatDataStructure> eventFilteredList =
+					final List<MyTimeTableCourse> eventFilteredList =
 							MyTimeTableUtils.getCoursesByEventTitle(
 									chosenCourseList,
 									MyTimeTableUtils.cutEventTitle(currentItem.getEvent().getTitle()));
-					final List<FlatDataStructure> studyGroupFilteredList =
+					final List<MyTimeTableCourse> studyGroupFilteredList =
 							MyTimeTableUtils.getCoursesByStudyGroupTitle(
 									eventFilteredList, currentItem.getSetString());
 
-					for(final FlatDataStructure event : studyGroupFilteredList){
+					for(final MyTimeTableCourse event : studyGroupFilteredList){
 						MyTimeTableOverviewView.addCourse(event);
 					}
 				}else{

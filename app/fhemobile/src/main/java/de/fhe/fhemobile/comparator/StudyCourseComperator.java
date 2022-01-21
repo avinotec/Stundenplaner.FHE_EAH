@@ -19,11 +19,11 @@ package de.fhe.fhemobile.comparator;
 
 import java.util.Comparator;
 
-import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyCourseVo;
 
-public class StudyCourseComperator implements Comparator <StudyCourseVo> {
+public class StudyCourseComperator implements Comparator <TimeTableStudyCourseVo> {
 	@Override
-	public int compare(StudyCourseVo t1, StudyCourseVo t2) {
+	public int compare(TimeTableStudyCourseVo t1, TimeTableStudyCourseVo t2) {
 		return t1.getTitle().compareTo(t2.getTitle());
 	}
 }

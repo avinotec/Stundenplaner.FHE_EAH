@@ -30,9 +30,9 @@ import java.util.List;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.comparator.StudyCourseComperator;
-import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
-import de.fhe.fhemobile.vos.timetable.StudyGroupVo;
-import de.fhe.fhemobile.vos.timetable.SemesterVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyCourseVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
 import de.fhe.fhemobile.widgets.picker.StudyCoursePicker;
 import de.fhe.fhemobile.widgets.picker.StudyGroupPicker;
 import de.fhe.fhemobile.widgets.picker.SemesterPicker;
@@ -73,19 +73,19 @@ public class TimeTableDialogView extends LinearLayout {
         toggleButtonEnabled(false);
     }
 
-    public void setStudyCourseItems(final List<StudyCourseVo> _Items) {
-        StudyCourseVo.alterTitle(_Items);
+    public void setStudyCourseItems(final List<TimeTableStudyCourseVo> _Items) {
+        TimeTableStudyCourseVo.alterTitle(_Items);
         Collections.sort(_Items,new StudyCourseComperator());
         mStudyCoursePicker.setItems(_Items);
         mStudyCoursePicker.toggleEnabled(true);
     }
 
-    public void setSemesterItems(final List<SemesterVo> _Items) {
+    public void setSemesterItems(final List<TimeTableSemesterVo> _Items) {
         mSemesterPicker.setItems(_Items);
         mSemesterPicker.toggleEnabled(true);
     }
 
-    public void setStudyGroupItems(final List<StudyGroupVo> _Items) {
+    public void setStudyGroupItems(final List<TimeTableStudyGroupVo> _Items) {
         mStudyGroupPicker.setItems(_Items);
         mStudyGroupPicker.toggleEnabled(true);
     }

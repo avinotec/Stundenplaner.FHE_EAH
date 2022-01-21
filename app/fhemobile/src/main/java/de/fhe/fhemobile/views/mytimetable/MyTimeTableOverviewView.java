@@ -47,7 +47,7 @@ import de.fhe.fhemobile.comparator.Date_Comparator;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableDialogFragment;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableOverviewFragment;
 import de.fhe.fhemobile.utils.Define;
-import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
 
 
 public class MyTimeTableOverviewView extends LinearLayout {
@@ -100,8 +100,8 @@ public class MyTimeTableOverviewView extends LinearLayout {
      * @param comparator
      * @return
      */
-    private static List<FlatDataStructure> getSortedList(Comparator<FlatDataStructure> comparator){
-        final List<FlatDataStructure> sortedList = new ArrayList<FlatDataStructure>(getSubscribedCourses());
+    private static List<MyTimeTableCourse> getSortedList(Comparator<MyTimeTableCourse> comparator){
+        final List<MyTimeTableCourse> sortedList = new ArrayList<MyTimeTableCourse>(getSubscribedCourses());
         if(sortedList.isEmpty() == false){
             Collections.sort(sortedList,comparator);
         }
@@ -114,7 +114,7 @@ public class MyTimeTableOverviewView extends LinearLayout {
      *
      * @param courses
      */
-    public static void setSubscribedCourses(final List<FlatDataStructure> courses){
+    public static void setSubscribedCourses(final List<MyTimeTableCourse> courses){
         if(courses != null){
             Main.setSubscribedCourses(courses);
             MyTimeTableOverviewFragment.sortedCourses = getSortedList(new Date_Comparator());
@@ -131,12 +131,12 @@ public class MyTimeTableOverviewView extends LinearLayout {
 
     	//todo: überarbeiten, coursesOfChosenSemester should not be needed here
     	//Durchsuche alle Vorlesungen
-//    	for(FlatDataStructure eventInCompleteList : MyTimeTableDialogFragment.coursesOfChosenSemester){
+//    	for(MyTimeTableCourse eventInCompleteList : MyTimeTableDialogFragment.coursesOfChosenSemester){
 //            boolean exists = false;
 //
 //            //überspringe einzelne Vorlesungsevents wenn der Vorlesungstitel schon zur negativeList hinzugefügt wurde
 //    		for(String[] eventdata : negativeList) {
-//    		    if(eventdata[0].equals( FlatDataStructure.cutEventTitle(eventInCompleteList.getEvent().getTitle()))
+//    		    if(eventdata[0].equals( MyTimeTableCourse.cutEventTitle(eventInCompleteList.getEvent().getTitle()))
 //                && eventdata[1].equals( eventInCompleteList.getStudyGroup().getTimeTableId())){
 //                    exists = true;
 //                    break;
@@ -147,10 +147,10 @@ public class MyTimeTableOverviewView extends LinearLayout {
 //    		if(!exists) {
 //    		    boolean isSelected = false;
 //    		    //durchsuche subscribedCourses nach dem eventInCompletedList
-//                for (FlatDataStructure eventInSelectedList : getSubscribedCourses()) {
+//                for (MyTimeTableCourse eventInSelectedList : getSubscribedCourses()) {
 //
-//                    if (FlatDataStructure.cutEventTitle(eventInCompleteList.getEvent().getTitle())
-//                            .equals(FlatDataStructure.cutEventTitle(eventInSelectedList.getEvent().getTitle()))
+//                    if (MyTimeTableCourse.cutEventTitle(eventInCompleteList.getEvent().getTitle())
+//                            .equals(MyTimeTableCourse.cutEventTitle(eventInSelectedList.getEvent().getTitle()))
 //                    && eventInCompleteList.getStudyGroup().getTimeTableId()
 //                            .equals(eventInSelectedList.getStudyGroup().getTimeTableId())){
 //                        isSelected = true;
@@ -161,7 +161,7 @@ public class MyTimeTableOverviewView extends LinearLayout {
 //                if(!isSelected){
 //                    final String[] eventdata = new String[2];
 //                    //add an event (title + id) to negativeList
-//                    eventdata[0] = FlatDataStructure.cutEventTitle(eventInCompleteList.getEvent().getTitle());
+//                    eventdata[0] = MyTimeTableCourse.cutEventTitle(eventInCompleteList.getEvent().getTitle());
 //                    eventdata[1] = eventInCompleteList.getStudyGroup().getTimeTableId();
 //                    negativeList.add(eventdata);
 //                }
@@ -175,13 +175,13 @@ public class MyTimeTableOverviewView extends LinearLayout {
      *
      * @return sorted Lessons list
      */
-    public static List<FlatDataStructure> getSortedCourses(){  return MyTimeTableOverviewFragment.sortedCourses;  }
+    public static List<MyTimeTableCourse> getSortedCourses(){  return MyTimeTableOverviewFragment.sortedCourses;  }
 
     /**
      *
      * @param course
      */
-    public static void removeCourse(final FlatDataStructure course){
+    public static void removeCourse(final MyTimeTableCourse course){
         removeFromSubscribedCourses(course);
         MyTimeTableOverviewFragment.sortedCourses = getSortedList(new Date_Comparator());
 
@@ -199,7 +199,7 @@ public class MyTimeTableOverviewView extends LinearLayout {
      *
      * @param course
      */
-    public static void addCourse(final FlatDataStructure course){
+    public static void addCourse(final MyTimeTableCourse course){
         addToSubscribedCourses(course);
         MyTimeTableOverviewFragment.sortedCourses = getSortedList(new Date_Comparator());
 

@@ -28,27 +28,31 @@ import java.util.Collections;
 import java.util.List;
 
 import de.fhe.fhemobile.utils.MyTimeTableUtils;
-import de.fhe.fhemobile.vos.timetable.SemesterVo;
-import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
-import de.fhe.fhemobile.vos.timetable.StudyGroupVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyCourseVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableDayVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
 
-public class FlatDataStructure implements Parcelable {
-	private static final String TAG = "FlatDataStructure";
 
-	public FlatDataStructure(){
-	}
+/**
+ * edited by Nadja - 01/2022
+ */
+public class MyTimeTableCourse implements Parcelable {
 
-	public FlatDataStructure(FlatStudyCourse course,
-							 FlatSemesters semester,
-							 StudyGroupVo studyGroup,
-							 FlatTimeTableWeek eventWeek,
-							 FlatTimeTableDay eventDay,
+	private static final String TAG = "MyTimeTableCourse";
+
+	public MyTimeTableCourse(){	}
+
+	public MyTimeTableCourse(TimeTableStudyCourseVo studyCourse,
+							 TimeTableSemesterVo semester,
+							 TimeTableStudyGroupVo studyGroup,
+							 TimeTableWeekVo eventWeek,
+							 TimeTableDayVo eventDay,
 							 TimeTableEventVo event,
 							 boolean subscribed) {
-		this.course = course;
+		this.studyCourse = studyCourse;
 		this.semester = semester;
 		this.studyGroup = studyGroup;
 		this.eventWeek = eventWeek;
@@ -57,93 +61,43 @@ public class FlatDataStructure implements Parcelable {
 		this.subscribed = subscribed;
 	}
 
-	private FlatDataStructure(final Parcel in) {
-		course = in.readParcelable(FlatStudyCourse.class.getClassLoader());
-		semester = in.readParcelable(FlatSemesters.class.getClassLoader());
-		studyGroup = in.readParcelable(StudyGroupVo.class.getClassLoader());
-		eventWeek = in.readParcelable(FlatTimeTableWeek.class.getClassLoader());
-		eventDay = in.readParcelable(FlatTimeTableDay.class.getClassLoader());
+	private MyTimeTableCourse(final Parcel in) {
+		studyCourse = in.readParcelable(TimeTableStudyCourseVo.class.getClassLoader());
+		semester = in.readParcelable(TimeTableSemesterVo.class.getClassLoader());
+		studyGroup = in.readParcelable(TimeTableStudyGroupVo.class.getClassLoader());
+		eventWeek = in.readParcelable(TimeTableWeekVo.class.getClassLoader());
+		eventDay = in.readParcelable(TimeTableDayVo.class.getClassLoader());
 		event = in.readParcelable(TimeTableEventVo.class.getClassLoader());
 		in.readStringList(sets);
 	}
 
-	public final FlatStudyCourse getCourse() {
-		return course;
-	}
+	public final TimeTableStudyCourseVo getStudyCourse() { return studyCourse; }
 
-	public final FlatSemesters getSemester() {
-		return semester;
-	}
+	public final TimeTableSemesterVo getSemester() { return semester; }
 
-	public final StudyGroupVo getStudyGroup() {
-		return studyGroup;
-	}
+	public final TimeTableStudyGroupVo getStudyGroup() { return studyGroup; }
 
-	public FlatTimeTableWeek getEventWeek() {
-		return eventWeek;
-	}
+	public TimeTableWeekVo getEventWeek() { return eventWeek; }
 
-	public FlatTimeTableDay getEventDay() {
-		return eventDay;
-	}
+	public TimeTableDayVo getEventDay() { return eventDay; }
 
-	public final TimeTableEventVo getEvent() {
-		return event;
-	}
+	public final TimeTableEventVo getEvent() { return event; }
 
-	public final void setStudyCourse(final StudyCourseVo course) {
-		this.course = new FlatStudyCourse();
-		this.course.setId(course.getId());
-		this.course.setTitle(course.getTitle());
-	}
+	public final void setStudyCourse(final TimeTableStudyCourseVo course) { this.studyCourse = course; }
 
-	private final void setStudyCourse(final FlatStudyCourse course) {
-		this.course = course;
-	}
+	public final void setSemester(final TimeTableSemesterVo semester) { this.semester = semester; }
 
-	private final void setSemester(final FlatSemesters semester) {
-		this.semester = semester;
-	}
+	public final void setStudyGroup(final TimeTableStudyGroupVo studyGroup) { this.studyGroup = studyGroup; }
 
-	public final void setSemester(final SemesterVo semester) {
-		this.semester = new FlatSemesters();
-		this.semester.setId(semester.getId());
-		this.semester.setTitle(semester.getTitle());
-	}
+	public final void setEventWeek(final TimeTableWeekVo eventWeek) { this.eventWeek = eventWeek; }
 
-	public final void setStudyGroup(final StudyGroupVo studyGroup) {
-		this.studyGroup = studyGroup;
-	}
+	public final void setEventDay(final TimeTableDayVo eventDay) { this.eventDay = eventDay; }
 
-	public final void setEventWeek(final TimeTableWeekVo eventWeek) {
-		this.eventWeek = new FlatTimeTableWeek();
-		this.eventWeek.setWeekInYear(eventWeek.getWeekInYear());
-		this.eventWeek.setYear(eventWeek.getYear());
-	}
+	public final void setEvent(final TimeTableEventVo event) { this.event = event; }
 
-	public final void setEventWeek(final FlatTimeTableWeek eventWeek) {
-		this.eventWeek = eventWeek;
-	}
-	public final void setEventDay(final TimeTableDayVo eventDay) {
-		this.eventDay = new FlatTimeTableDay();
-		this.eventDay.setDayInWeek(eventDay.getDayInWeek());
-		this.eventDay.setName(eventDay.getName());
-	}
+	public List<String> getSets() { return sets; }
 
-	public final void setEventDay(final FlatTimeTableDay eventDay) {
-		this.eventDay = eventDay;
-	}
-	public final void setEvent(final TimeTableEventVo event) {
-		this.event = event;
-	}
-
-	public List<String> getSets() {
-		return sets;
-	}
-
-	public void setSets(List<String> sets) {
-		this.sets = sets;
-	}
+	public void setSets(List<String> sets) { this.sets = sets; }
 
 	/**
 	 * adds all set names to one long string and returns it
@@ -183,16 +137,16 @@ public class FlatDataStructure implements Parcelable {
 		this.subscribed = added;
 	}
 
-	public boolean isEqual(@NonNull FlatDataStructure other){
+	public boolean isEqual(@NonNull MyTimeTableCourse other){
 		return MyTimeTableUtils.cutEventTitle(this.getEvent().getTitle())
 				.equals(MyTimeTableUtils.cutEventTitle(other.getEvent().getTitle()));
 	}
 
-	public FlatDataStructure copy(){
-		final FlatDataStructure copy = new FlatDataStructure();
-		//		Log.d(TAG, "FlatDataStructure: incID: "+FlatDataStructure.incId);
-		copy.id = FlatDataStructure.incId++;
-		copy.setStudyCourse(this.getCourse());
+	public MyTimeTableCourse copy(){
+		final MyTimeTableCourse copy = new MyTimeTableCourse();
+		//		Log.d(TAG, "MyTimeTableCourse: incID: "+MyTimeTableCourse.incId);
+		copy.id = MyTimeTableCourse.incId++;
+		copy.setStudyCourse(this.getStudyCourse());
 		copy.setSemester(this.getSemester());
 		copy.setStudyGroup(this.getStudyGroup());
 		copy.setSets(new ArrayList<>(this.getSets()));
@@ -209,7 +163,7 @@ public class FlatDataStructure implements Parcelable {
 
 	@Override
 	public void writeToParcel(final Parcel dest, final int flags) {
-		dest.writeParcelable(course, flags);
+		dest.writeParcelable(studyCourse, flags);
 		dest.writeParcelable(semester, flags);
 		dest.writeParcelable(studyGroup, flags);
 		dest.writeParcelable(eventWeek, flags);
@@ -219,40 +173,41 @@ public class FlatDataStructure implements Parcelable {
 
 	}
 
-	public static final Creator<FlatDataStructure> CREATOR = new Creator<FlatDataStructure>() {
+	public static final Creator<MyTimeTableCourse> CREATOR = new Creator<MyTimeTableCourse>() {
 		@Override
-		public FlatDataStructure createFromParcel(Parcel in) {
-			return new FlatDataStructure(in);
+		public MyTimeTableCourse createFromParcel(Parcel in) {
+			return new MyTimeTableCourse(in);
 		}
 
 		@Override
-		public FlatDataStructure[] newArray(int size) {
-			return new FlatDataStructure[size];
+		public MyTimeTableCourse[] newArray(int size) {
+			return new MyTimeTableCourse[size];
 		}
 	};
 
 
-
-	@SerializedName("course")
-	private FlatStudyCourse course;
+	@SerializedName("studyCourse")
+	private TimeTableStudyCourseVo studyCourse;
 
 	@SerializedName("semester")
-	private FlatSemesters semester;
+	private TimeTableSemesterVo semester;
 
 	@SerializedName("studyGroup")
-	private StudyGroupVo studyGroup;
+	private TimeTableStudyGroupVo studyGroup;
 
 	@SerializedName("eventWeek")
-	private FlatTimeTableWeek eventWeek;
+	private TimeTableWeekVo eventWeek;
 
 	@SerializedName("eventDay")
-	private FlatTimeTableDay eventDay;
+	private TimeTableDayVo eventDay;
 
 	@SerializedName("event")
 	private TimeTableEventVo event;
 
 	@SerializedName("sets")
 	private List<String> sets = new ArrayList<>();
+
+
 
 	private boolean visible = false;
 	private boolean subscribed = false;
@@ -289,7 +244,7 @@ public class FlatDataStructure implements Parcelable {
 	@NonNull
 	@Override
 	public final String toString() {
-		return this.getCourse().getTitle() + "-->"
+		return this.getStudyCourse().getTitle() + "-->"
 				+ this.getSemester().getTitle() + "-->"
 				+ this.getStudyGroup().getTitle() + "-->"
 				+ this.getEventWeek().getWeekInYear() + "-->"

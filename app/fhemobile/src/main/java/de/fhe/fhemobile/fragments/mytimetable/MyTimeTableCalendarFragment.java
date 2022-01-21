@@ -44,7 +44,7 @@ import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableCalendarView;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
-import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
 
 public class MyTimeTableCalendarFragment extends FeatureFragment {
 
@@ -87,9 +87,9 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		// load selected Courses for My Time Table from Shared Preferences
 		final String json = sharedPreferences.getString(Define.SHARED_PREFERENCES_SUBSCRIBED_COURSES,"");
 		final Gson gson = new Gson();
-		final FlatDataStructure[] list = gson.fromJson(json, FlatDataStructure[].class);
+		final MyTimeTableCourse[] list = gson.fromJson(json, MyTimeTableCourse[].class);
 		if(list != null) {
-			MyTimeTableOverviewView.setSubscribedCourses(new ArrayList<FlatDataStructure>(Arrays.asList(list)));
+			MyTimeTableOverviewView.setSubscribedCourses(new ArrayList<MyTimeTableCourse>(Arrays.asList(list)));
 		}
 
 		//unterhalb der Liste wird immer "Kein Kurs gewählt" angezeigt. Dieser Text ist aber nicht immer sichtbar.

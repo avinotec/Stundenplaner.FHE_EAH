@@ -21,7 +21,7 @@ import android.util.AttributeSet;
 
 import java.util.List;
 
-import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyCourseVo;
 import de.fhe.fhemobile.widgets.picker.base.IdPicker;
 
 /**
@@ -33,7 +33,7 @@ public class StudyCoursePicker extends IdPicker {
         super(context, attrs);
     }
 
-    public void setItems(List<StudyCourseVo> _items) {
+    public void setItems(List<TimeTableStudyCourseVo> _items) {
         mItems = _items;
         if (mItems == null) {
             throw new AssertionError("StudyCourse items cannot be null!");
@@ -55,5 +55,5 @@ public class StudyCoursePicker extends IdPicker {
         return mItems.size();
     }
 
-    private List<StudyCourseVo> mItems;
+    private List<TimeTableStudyCourseVo> mItems;
 }

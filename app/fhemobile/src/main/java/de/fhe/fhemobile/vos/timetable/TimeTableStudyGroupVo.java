@@ -24,25 +24,25 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by paul on 12.03.15.
  */
-public class StudyGroupVo implements Parcelable {
+public class TimeTableStudyGroupVo implements Parcelable {
 
-    public StudyGroupVo() {
+    public TimeTableStudyGroupVo() {
     }
 
-    protected StudyGroupVo(Parcel in) {
+    protected TimeTableStudyGroupVo(Parcel in) {
         mTitle = in.readString();
         mTimeTableId = in.readString();
     }
 
-    public static final Creator<StudyGroupVo> CREATOR = new Creator<StudyGroupVo>() {
+    public static final Creator<TimeTableStudyGroupVo> CREATOR = new Creator<TimeTableStudyGroupVo>() {
         @Override
-        public StudyGroupVo createFromParcel(Parcel in) {
-            return new StudyGroupVo(in);
+        public TimeTableStudyGroupVo createFromParcel(Parcel in) {
+            return new TimeTableStudyGroupVo(in);
         }
 
         @Override
-        public StudyGroupVo[] newArray(int size) {
-            return new StudyGroupVo[size];
+        public TimeTableStudyGroupVo[] newArray(int size) {
+            return new TimeTableStudyGroupVo[size];
         }
     };
 

@@ -18,9 +18,9 @@ package de.fhe.fhemobile.network;
 
 import androidx.annotation.NonNull;
 
-import de.fhe.fhemobile.vos.timetable.SemesterVo;
-import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
-import de.fhe.fhemobile.vos.timetable.StudyGroupVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyCourseVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,9 +31,9 @@ import retrofit2.Response;
  */
 public class MyTimeTableCallback<T> implements Callback<T> {
 
-	final private StudyCourseVo studyCourse;
-	final private SemesterVo semester;
-	final private StudyGroupVo studyGroup;
+	final private TimeTableStudyCourseVo studyCourse;
+	final private TimeTableSemesterVo semester;
+	final private TimeTableStudyGroupVo studyGroup;
 
 
 	/**
@@ -41,9 +41,9 @@ public class MyTimeTableCallback<T> implements Callback<T> {
 	 * @param semester
 	 * @param studyGroup
 	 */
-	public MyTimeTableCallback(@NonNull StudyCourseVo studyCourse,
-							   @NonNull SemesterVo semester,
-							   @NonNull StudyGroupVo studyGroup) {
+	public MyTimeTableCallback(@NonNull TimeTableStudyCourseVo studyCourse,
+							   @NonNull TimeTableSemesterVo semester,
+							   @NonNull TimeTableStudyGroupVo studyGroup) {
 		this.studyCourse = studyCourse;
 		this.semester = semester;
 		this.studyGroup = studyGroup;
@@ -69,15 +69,15 @@ public class MyTimeTableCallback<T> implements Callback<T> {
 
 	}
 
-	public SemesterVo getSemester() {
+	public TimeTableSemesterVo getSemester() {
 		return semester;
 	}
 
-	public StudyCourseVo getStudyCourse() {
+	public TimeTableStudyCourseVo getStudyCourse() {
 		return studyCourse;
 	}
 
-	public StudyGroupVo getStudyGroup() {
+	public TimeTableStudyGroupVo getStudyGroup() {
 		return studyGroup;
 	}
 }

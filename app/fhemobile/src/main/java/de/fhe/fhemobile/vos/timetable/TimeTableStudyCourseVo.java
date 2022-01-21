@@ -30,27 +30,27 @@ import java.util.List;
 /**
  * Created by paul on 12.03.15.
  */
-public class StudyCourseVo implements Parcelable {
-    private static final String TAG = "StudyCourseVo";
+public class TimeTableStudyCourseVo implements Parcelable {
+    private static final String TAG = "TimeTableStudyCourseVo";
 
-    public StudyCourseVo() {
+    public TimeTableStudyCourseVo() {
     }
 
-    protected StudyCourseVo(final Parcel in) {
+    protected TimeTableStudyCourseVo(final Parcel in) {
         mId = in.readString();
         mTitle = correctUmlauts(in.readString());
-        mSemesters = in.createTypedArrayList(SemesterVo.CREATOR);
+        mSemesters = in.createTypedArrayList(TimeTableSemesterVo.CREATOR);
     }
 
-    public static final Creator<StudyCourseVo> CREATOR = new Creator<StudyCourseVo>() {
+    public static final Creator<TimeTableStudyCourseVo> CREATOR = new Creator<TimeTableStudyCourseVo>() {
         @Override
-        public StudyCourseVo createFromParcel(final Parcel in) {
-            return new StudyCourseVo(in);
+        public TimeTableStudyCourseVo createFromParcel(final Parcel in) {
+            return new TimeTableStudyCourseVo(in);
         }
 
         @Override
-        public StudyCourseVo[] newArray(final int size) {
-            return new StudyCourseVo[size];
+        public TimeTableStudyCourseVo[] newArray(final int size) {
+            return new TimeTableStudyCourseVo[size];
         }
     };
 
@@ -70,11 +70,11 @@ public class StudyCourseVo implements Parcelable {
         mTitle = _title;
     }
 
-    public ArrayList<SemesterVo> getSemesters() {
+    public ArrayList<TimeTableSemesterVo> getSemesters() {
         return mSemesters;
     }
 
-    public void setSemesters(final ArrayList<SemesterVo> _semesters) {
+    public void setSemesters(final ArrayList<TimeTableSemesterVo> _semesters) {
         mSemesters = _semesters;
     }
     static final String BACHELOR_BEFORE="Bachelor: ";
@@ -82,8 +82,8 @@ public class StudyCourseVo implements Parcelable {
     static final String MASTER_BEFORE ="Master: ";
     static final String MASTER_AFTER =": M";
 
-    public static void alterTitle(final List<StudyCourseVo> list){
-        for (final StudyCourseVo semester:list){
+    public static void alterTitle(final List<TimeTableStudyCourseVo> list){
+        for (final TimeTableStudyCourseVo semester:list){
             Log.d(TAG, "alterTitle: "+ semester.getTitle());
             if(semester.getTitle().contains(BACHELOR_BEFORE)){
                 semester.setTitle(semester.getTitle().replace(BACHELOR_BEFORE,"")+BACHELOR_AFTER);
@@ -105,7 +105,7 @@ public class StudyCourseVo implements Parcelable {
     private String              mTitle;
 
     @SerializedName("terms")
-    private ArrayList<SemesterVo> mSemesters;
+    private ArrayList<TimeTableSemesterVo> mSemesters;
 
     @Override
     public int describeContents() {

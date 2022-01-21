@@ -46,11 +46,11 @@ public class TimeTableResponse {
         mModified = _modified;
     }
 
-    public ArrayList<StudyCourseVo> getStudyCourses() {
+    public ArrayList<TimeTableStudyCourseVo> getStudyCourses() {
         return mStudyCourses;
     }
 
-    public void setStudyCourses(final ArrayList<StudyCourseVo> _studyCourses) {
+    public void setStudyCourses(final ArrayList<TimeTableStudyCourseVo> _studyCourses) {
         mStudyCourses = _studyCourses;
     }
 
@@ -61,5 +61,5 @@ public class TimeTableResponse {
     private String                   mModified;
 
     @SerializedName("courseOfStudies")
-    private ArrayList<StudyCourseVo> mStudyCourses;
+    private ArrayList<TimeTableStudyCourseVo> mStudyCourses;
 }

@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
-import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
 
 
 /**
@@ -38,7 +38,7 @@ public class Main extends Application {
     private static Application mAppContext;
 
     //My Time Table
-    private static List<FlatDataStructure> subscribedCourses = new ArrayList();
+    private static List<MyTimeTableCourse> subscribedCourses = new ArrayList();
 
     @Override
     public void onCreate() {
@@ -57,20 +57,20 @@ public class Main extends Application {
         return mAppContext;
     }
 
-    public static List<FlatDataStructure> getSubscribedCourses() {
+    public static List<MyTimeTableCourse> getSubscribedCourses() {
         return subscribedCourses;
     }
 
-    public static void setSubscribedCourses(List<FlatDataStructure> subscribedCourses) {
+    public static void setSubscribedCourses(List<MyTimeTableCourse> subscribedCourses) {
         Main.subscribedCourses = subscribedCourses;
     }
 
-    public static void removeFromSubscribedCourses(final FlatDataStructure course){
+    public static void removeFromSubscribedCourses(final MyTimeTableCourse course){
         course.setSubscribed(false);
         subscribedCourses.remove(course);
     }
 
-    public static void addToSubscribedCourses(final FlatDataStructure course){
+    public static void addToSubscribedCourses(final MyTimeTableCourse course){
         course.setSubscribed(true);
         subscribedCourses.add(course);
     }

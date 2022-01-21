@@ -22,15 +22,15 @@ import java.util.Comparator;
 
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.MyTimeTableUtils;
-import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
 
-public class CourseTitleStudyGroupTitleComparator implements Comparator<FlatDataStructure> {
+public class CourseTitleStudyGroupTitleComparator implements Comparator<MyTimeTableCourse> {
 	private static final String TAG = "Course_StudyGroup_Comparator";
 
 	private static final CourseTitleStudyGroupTitleComparator LESSON_TITLE___STUDY_GROUP_TITLE___COMPARATOR = new CourseTitleStudyGroupTitleComparator();
 
 // --Commented out by Inspection START (04.01.2022 18:51):
-//	public static int compareStatic(final FlatDataStructure o1, final FlatDataStructure o2) {
+//	public static int compareStatic(final MyTimeTableCourse o1, final MyTimeTableCourse o2) {
 //		return LESSON_TITLE___STUDY_GROUP_TITLE___COMPARATOR.compare(o1, o2);
 //	}
 // --Commented out by Inspection STOP (04.01.2022 18:51)
@@ -47,7 +47,7 @@ public class CourseTitleStudyGroupTitleComparator implements Comparator<FlatData
 	 * second.
 	 */
 	@Override
-	public int compare(final FlatDataStructure o1, final FlatDataStructure o2) {
+	public int compare(final MyTimeTableCourse o1, final MyTimeTableCourse o2) {
 
 		final String title1 = o1.getEvent().getTitle();
 		final String title2 = o2.getEvent().getTitle();

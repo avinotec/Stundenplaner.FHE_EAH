@@ -32,8 +32,8 @@ import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.TimeTableSettings;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.timetable.TimeTableDialogView;
-import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
-import de.fhe.fhemobile.vos.timetable.SemesterVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyCourseVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -110,7 +110,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
             boolean errorOccurred = false;
 
-            for (StudyCourseVo courseVo : mResponse.getStudyCourses()) {
+            for (TimeTableStudyCourseVo courseVo : mResponse.getStudyCourses()) {
                 if (courseVo.getId() != null && courseVo.getId().equals(_StudyCourseId)) {
                     mChosenCourse = courseVo;
 
@@ -149,10 +149,10 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
             mChosenSemester = null;
 
-            for (final SemesterVo semesterVo : mChosenCourse.getSemesters()) {
-                if (semesterVo.getId().equals(_SemesterId)) {
-                    mChosenSemester = semesterVo;
-                    mView.setStudyGroupItems(semesterVo.getStudyGroups());
+            for (final TimeTableSemesterVo timeTableSemesterVo : mChosenCourse.getSemesters()) {
+                if (timeTableSemesterVo.getId().equals(_SemesterId)) {
+                    mChosenSemester = timeTableSemesterVo;
+                    mView.setStudyGroupItems(timeTableSemesterVo.getStudyGroups());
                 }
             }
         }
@@ -203,7 +203,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
     private TimeTableDialogView mView;
 
     private TimeTableResponse mResponse;
-    private StudyCourseVo     mChosenCourse;
-    private SemesterVo        mChosenSemester;
+    private TimeTableStudyCourseVo mChosenCourse;
+    private TimeTableSemesterVo mChosenSemester;
     private String            mChosenTimetableId;
 }

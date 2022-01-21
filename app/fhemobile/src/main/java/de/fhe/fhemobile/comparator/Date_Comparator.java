@@ -23,9 +23,9 @@ import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 
-import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
 
-public class Date_Comparator implements Comparator<FlatDataStructure> {
+public class Date_Comparator implements Comparator<MyTimeTableCourse> {
 	private static final String TAG = "LessonTitle_StudyGroupT";
 	private static final int GREATER = 1;
 	private static final int EQUAL = 0;
@@ -34,7 +34,7 @@ public class Date_Comparator implements Comparator<FlatDataStructure> {
 	static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
 
 	@Override
-	public int compare(final FlatDataStructure o1, final FlatDataStructure o2) {
+	public int compare(final MyTimeTableCourse o1, final MyTimeTableCourse o2) {
 
 		//don't use SimpleDateFormat.getDateTimeInstance() because it includes seconds
 		Date lessonDate1 = null;

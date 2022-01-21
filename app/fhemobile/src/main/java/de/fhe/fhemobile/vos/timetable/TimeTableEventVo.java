@@ -193,7 +193,7 @@ public class TimeTableEventVo implements Parcelable {
         dest.writeString(this.mUid);
     }
 
-    private TimeTableEventVo(Parcel in) {
+    private TimeTableEventVo(final Parcel in) {
         this.mStartDate = in.readLong();
         this.mTitle = correctUmlauts(in.readString());
         this.mShortTitle = correctUmlauts(in.readString());

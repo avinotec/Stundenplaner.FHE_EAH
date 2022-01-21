@@ -49,10 +49,10 @@ import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.network.MyTimeTableCallback;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableDialogView;
-import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
-import de.fhe.fhemobile.vos.timetable.SemesterVo;
-import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
-import de.fhe.fhemobile.vos.timetable.StudyGroupVo;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
+import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyCourseVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableDayVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
@@ -151,7 +151,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
      * @param studyGroup study group the timeTableWeeks belong to
      */
     private void addCourseToAllCoursesInChosenSemester(final List<TimeTableWeekVo> timeTableWeeks,
-                                                       final StudyGroupVo studyGroup) {
+                                                       final TimeTableStudyGroupVo studyGroup) {
 
         if (timeTableWeeks != null) {
             try {
@@ -162,8 +162,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
                             //check if timeTableEvent exists in allCoursesInChosenSemester
                             // because the course has already been added with a previous study group
-                        	FlatDataStructure alreadyExistingCourse = null;
-                        	for ( FlatDataStructure courseInChosenSemester : this.allCoursesInChosenSemester) {
+                        	MyTimeTableCourse alreadyExistingCourse = null;
+                        	for ( MyTimeTableCourse courseInChosenSemester : this.allCoursesInChosenSemester) {
                         		if (courseInChosenSemester.getEvent().getUid().equals(timeTableEvent.getUid())){
                         			alreadyExistingCourse = courseInChosenSemester;
                         			break;
@@ -172,7 +172,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                             //courseToAdd has not already be saved to allCoursesInChosenSemester
                         	if ( alreadyExistingCourse == null ) {
 
-		                        FlatDataStructure courseToAdd = new FlatDataStructure();
+		                        MyTimeTableCourse courseToAdd = new MyTimeTableCourse();
 		                        courseToAdd.setStudyCourse(mChosenStudyCourse);
                                 courseToAdd.setSemester(mChosenSemester);
                                 courseToAdd.setStudyGroup(studyGroup);
@@ -183,7 +183,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
                                 //check if timeTableEvent belongs to a subscribed course
                                 // and set the subscribed attribute of the courseToAdd
-                                for(FlatDataStructure subscribedCourse : getSubscribedCourses()){
+                                for(MyTimeTableCourse subscribedCourse : getSubscribedCourses()){
                                     if (subscribedCourse.getEvent().getUid().equals(timeTableEvent.getUid())){
                                         courseToAdd.setSubscribed(true);
                                         break;
@@ -221,7 +221,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
         if(sharedPreferences.contains(PREFS_CHOSEN_STUDY_COURSE)){
             final String chosenCourseJson = sharedPreferences.getString(PREFS_CHOSEN_STUDY_COURSE,"");
-            final StudyCourseVo chosenCourse = gson.fromJson(chosenCourseJson,StudyCourseVo.class);
+            final TimeTableStudyCourseVo chosenCourse = gson.fromJson(chosenCourseJson, TimeTableStudyCourseVo.class);
             mChosenStudyCourse = chosenCourse;
             mView.setSemesterItems(mChosenStudyCourse.getSemesters());
             mView.setSelectedGroupText(chosenCourse.getTitle());
@@ -229,7 +229,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
         if(sharedPreferences.contains(PREFS_CHOSEN_SEMESTER)) {
             final String chosenSemesterJson = sharedPreferences.getString(PREFS_CHOSEN_SEMESTER, "");
-            final SemesterVo chosenSemester = gson.fromJson(chosenSemesterJson, SemesterVo.class);
+            final TimeTableSemesterVo chosenSemester = gson.fromJson(chosenSemesterJson, TimeTableSemesterVo.class);
             mChosenSemester = chosenSemester;
             mView.setSelectedSemesterText(chosenSemester.getTitle());
             mView.toggleSemesterPickerVisibility(true);
@@ -239,12 +239,12 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             //load last request result for the last chosen study course and semester
             if (sharedPreferences.contains(PREFS_ALL_COURSES_OF_CHOSEN_STUDYCOURSE_AND_SEMESTER)) {
                 final String resultJson = correctUmlauts(sharedPreferences.getString(PREFS_ALL_COURSES_OF_CHOSEN_STUDYCOURSE_AND_SEMESTER, ""));
-                final FlatDataStructure[] result = gson.fromJson(resultJson, FlatDataStructure[].class);
+                final MyTimeTableCourse[] result = gson.fromJson(resultJson, MyTimeTableCourse[].class);
 
                 //for each course in result check if the user has added it to his/her schedule
-                for(FlatDataStructure loadedElement : result){
+                for(MyTimeTableCourse loadedElement : result){
                     boolean found = false;
-                    for(FlatDataStructure selectedItem : getSubscribedCourses()){
+                    for(MyTimeTableCourse selectedItem : getSubscribedCourses()){
                         if(loadedElement.getEvent().getUid().equals(selectedItem.getEvent().getUid())){
                             found = true;
                             break;
@@ -254,7 +254,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
                 }
                 //set all courses of the currently chosen study course and semester (not the variable for the subscribed courses)
-                allCoursesInChosenSemester = new ArrayList<FlatDataStructure>(Arrays.asList(result));
+                allCoursesInChosenSemester = new ArrayList<MyTimeTableCourse>(Arrays.asList(result));
 
                 mCourseListAdapter.setChosenCourseList(allCoursesInChosenSemester);
                 mView.setCourseListAdapter(mCourseListAdapter);
@@ -283,7 +283,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
             boolean studyCourseEmpty = true;
 
-            for (StudyCourseVo studyCourse : mResponse.getStudyCourses()) {
+            for (TimeTableStudyCourseVo studyCourse : mResponse.getStudyCourses()) {
                 if (studyCourse != null && studyCourse.getId() != null && studyCourse.getId().equals(_StudCourseId)) {
 
                     mChosenStudyCourse = studyCourse;
@@ -341,7 +341,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
             mChosenSemester = null;
 
-            for (SemesterVo semester : mChosenStudyCourse.getSemesters()) {
+            for (TimeTableSemesterVo semester : mChosenStudyCourse.getSemesters()) {
 
                 if (semester.getId().equals(_SemesterId)) {
 
@@ -354,12 +354,12 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                     editor.commit();
 
                     //get timetable (all courses/events) for each study group in the chosen semester
-                    for (StudyGroupVo studyGroupVo : mChosenSemester.getStudyGroups()) {
+                    for (TimeTableStudyGroupVo timeTableStudyGroupVo : mChosenSemester.getStudyGroups()) {
 
-                        //get timetable of the studyGroupVo
+                        //get timetable of the timeTableStudyGroupVo
                         MyTimeTableCallback<ArrayList<TimeTableWeekVo>> callback =
                                 new MyTimeTableCallback<ArrayList<TimeTableWeekVo>>(
-                                        mChosenStudyCourse, mChosenSemester, studyGroupVo ) {
+                                        mChosenStudyCourse, mChosenSemester, timeTableStudyGroupVo) {
 
                             @Override
                             public void onResponse(Call<ArrayList<TimeTableWeekVo>> call,
@@ -399,8 +399,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                             // we have to check per iteration, if we reached the end, because we delete
                                             // dynamically the list and shorten it
                                             for (int j = 0 + 1; j < courseEvents.size(); j++) {
-                                                final FlatDataStructure course0 = courseEvents.get( j-1 );
-                                                final FlatDataStructure course1 = courseEvents.get( j );
+                                                final MyTimeTableCourse course0 = courseEvents.get( j-1 );
+                                                final MyTimeTableCourse course1 = courseEvents.get( j );
 
                                                 // wenn es gleich ist, dann entfernen wir es, damit entfernen wir Duplikate
                                                 if ( CourseTitleStudyGroupTitleComparator.compareStatic( course0, course1 ) == 0 ) {
@@ -434,8 +434,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                             }
                         };
 
-                        NetworkHandler.getInstance().fetchTimeTableEvents(studyGroupVo.getTimeTableId(), callback);
-                        proceedToTimetable(studyGroupVo.getTimeTableId(), callback);
+                        NetworkHandler.getInstance().fetchTimeTableEvents(timeTableStudyGroupVo.getTimeTableId(), callback);
+                        proceedToTimetable(timeTableStudyGroupVo.getTimeTableId(), callback);
                         requestCounter++;
                     }
                 }
@@ -467,10 +467,10 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     private SharedPreferences.Editor editor;
     private MyTimeTableDialogView mView;
     private TimeTableResponse mResponse;
-    private StudyCourseVo mChosenStudyCourse;
-    private SemesterVo mChosenSemester;
+    private TimeTableStudyCourseVo mChosenStudyCourse;
+    private TimeTableSemesterVo mChosenSemester;
     //list of courses for the study course and semester currently chosen in MyTimeTableDialog
-    private List<FlatDataStructure> allCoursesInChosenSemester = new ArrayList<>();
+    private List<MyTimeTableCourse> allCoursesInChosenSemester = new ArrayList<>();
 
     private MyTimeTableDialogAdapter mCourseListAdapter;
 }

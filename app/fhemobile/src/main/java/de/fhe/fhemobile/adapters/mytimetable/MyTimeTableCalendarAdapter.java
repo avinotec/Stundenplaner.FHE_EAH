@@ -30,7 +30,7 @@ import java.util.Date;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
-import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
 
 public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
@@ -65,7 +65,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 			convertView = LayoutInflater.from(context).
 					inflate(R.layout.item_my_time_table_calendar, parent, false);
 		}
-		final FlatDataStructure currentItem = MyTimeTableOverviewView.getSortedCourses().get(position);
+		final MyTimeTableCourse currentItem = MyTimeTableOverviewView.getSortedCourses().get(position);
 
 		RelativeLayout headerLayout = convertView.findViewById(R.id.headerBackground);
 

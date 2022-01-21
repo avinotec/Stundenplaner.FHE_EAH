@@ -14,7 +14,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.vos.mytimetable;
+package de.fhe.fhemobile.vos.timetable;
 
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
@@ -23,28 +23,32 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 /**
  * Created by paul on 12.03.15.
+ * Value Object für das Semester eines Studiengangs, speichert die verfügbaren Sets
  */
-public class FlatStudyCourse implements Parcelable {
+public class TimeTableSemesterVo implements Parcelable {
 
-    public FlatStudyCourse() {
+    public TimeTableSemesterVo() {
     }
 
-    FlatStudyCourse(Parcel in) {
+    protected TimeTableSemesterVo(Parcel in) {
         mId = in.readString();
         mTitle = correctUmlauts(in.readString());
+        mStudyGroups = in.createTypedArrayList(TimeTableStudyGroupVo.CREATOR);
     }
 
-    public static final Creator<FlatStudyCourse> CREATOR = new Creator<FlatStudyCourse>() {
+    public static final Creator<TimeTableSemesterVo> CREATOR = new Creator<TimeTableSemesterVo>() {
         @Override
-        public FlatStudyCourse createFromParcel(Parcel in) {
-            return new FlatStudyCourse(in);
+        public TimeTableSemesterVo createFromParcel(Parcel in) {
+            return new TimeTableSemesterVo(in);
         }
 
         @Override
-        public FlatStudyCourse[] newArray(int size) {
-            return new FlatStudyCourse[size];
+        public TimeTableSemesterVo[] newArray(int size) {
+            return new TimeTableSemesterVo[size];
         }
     };
 
@@ -64,15 +68,22 @@ public class FlatStudyCourse implements Parcelable {
         mTitle = _title;
     }
 
+    public ArrayList<TimeTableStudyGroupVo> getStudyGroups() {
+        return mStudyGroups;
+    }
 
+    public void setStudyGroups(ArrayList<TimeTableStudyGroupVo> _studyGroups) {
+        mStudyGroups = _studyGroups;
+    }
 
     @SerializedName("id")
-    private String              mId;
+    private String                  mId;
 
     @SerializedName("title")
-    private String              mTitle;
+    private String                  mTitle;
 
-
+    @SerializedName("studyGroups")
+    private ArrayList<TimeTableStudyGroupVo> mStudyGroups;
 
     @Override
     public int describeContents() {
@@ -83,5 +94,6 @@ public class FlatStudyCourse implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mId);
         dest.writeString(mTitle);
+        dest.writeTypedList(mStudyGroups);
     }
 }

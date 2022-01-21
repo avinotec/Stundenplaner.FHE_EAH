@@ -39,7 +39,7 @@ import java.util.Locale;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.utils.MyTimeTableUtils;
-import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
 
 public class MyTimeTableOverviewAdapter extends BaseAdapter {
 	private static final String TAG = "MyTimeTableOverviewAdapter";
@@ -70,7 +70,7 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 			convertView = LayoutInflater.from(context).
 					inflate(R.layout.item_my_time_table_overview, parent, false);
 		}
-		final FlatDataStructure currentItem = getSubscribedCourses().get(position);
+		final MyTimeTableCourse currentItem = getSubscribedCourses().get(position);
 		//final RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.singleRowLayout);
 
 		convertView.setOnClickListener(new View.OnClickListener() {
@@ -78,16 +78,16 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 
-				List<FlatDataStructure> courseTitleFilteredList
+				List<MyTimeTableCourse> courseTitleFilteredList
 						= MyTimeTableUtils.getCoursesByEventTitle(
 								getSubscribedCourses(),
 								MyTimeTableUtils.cutEventTitle(currentItem.getEvent().getTitle()));
 
-				List <FlatDataStructure> filteredList
+				List <MyTimeTableCourse> filteredList
 						= MyTimeTableUtils.getCoursesByStudyGroupTitle(
 						courseTitleFilteredList, currentItem.getSetString());
 
-				for (FlatDataStructure event:filteredList){
+				for (MyTimeTableCourse event:filteredList){
 					event.setVisible(!event.isVisible());
 				}
 
@@ -141,16 +141,16 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				final List<FlatDataStructure> eventFilteredList
+				final List<MyTimeTableCourse> eventFilteredList
 						= MyTimeTableUtils.getCoursesByEventTitle(
 								getSubscribedCourses(),
 								MyTimeTableUtils.cutEventTitle(currentItem.getEvent().getTitle()));
 
-				final List<FlatDataStructure> studyGroupFilteredList
+				final List<MyTimeTableCourse> studyGroupFilteredList
 						= MyTimeTableUtils.getCoursesByStudyGroupTitle(
 								eventFilteredList, currentItem.getSetString());
 
-				for(FlatDataStructure event : studyGroupFilteredList){
+				for(MyTimeTableCourse event : studyGroupFilteredList){
 					removeFromSubscribedCourses(event);
 				}
 

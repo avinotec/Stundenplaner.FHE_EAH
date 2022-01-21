@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import de.fhe.fhemobile.vos.mytimetable.FlatDataStructure;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
 
 public class MyTimeTableUtils {
 
@@ -48,11 +48,11 @@ public class MyTimeTableUtils {
      * @param eventTitle
      * @return
      */
-    public static List<FlatDataStructure> getCoursesByEventTitle(final List<FlatDataStructure> list,
+    public static List<MyTimeTableCourse> getCoursesByEventTitle(final List<MyTimeTableCourse> list,
                                                                  final String eventTitle){
 
-        final List<FlatDataStructure> filteredEvents = new ArrayList<>();
-        for (final FlatDataStructure event : list) {
+        final List<MyTimeTableCourse> filteredEvents = new ArrayList<>();
+        for (final MyTimeTableCourse event : list) {
             if(event.getEvent().getTitle().contains(eventTitle)){
                 filteredEvents.add(event);
             }
@@ -66,10 +66,10 @@ public class MyTimeTableUtils {
      * @param studyGroupTitle
      * @return
      */
-    public static List<FlatDataStructure> getCoursesByStudyGroupTitle(
-            final List<FlatDataStructure>list, final String studyGroupTitle){
-        final List<FlatDataStructure> filteredEvents = new ArrayList<>();
-        for(final FlatDataStructure event : list){
+    public static List<MyTimeTableCourse> getCoursesByStudyGroupTitle(
+            final List<MyTimeTableCourse>list, final String studyGroupTitle){
+        final List<MyTimeTableCourse> filteredEvents = new ArrayList<>();
+        for(final MyTimeTableCourse event : list){
             if(event.getSetString().equals(studyGroupTitle)){
                 filteredEvents.add(event);
             }
@@ -77,10 +77,10 @@ public class MyTimeTableUtils {
         return filteredEvents;
     }
 
-    public static List<FlatDataStructure> queryfutureEvents(final List<FlatDataStructure>list){
+    public static List<MyTimeTableCourse> queryfutureEvents(final List<MyTimeTableCourse>list){
 
-        final List<FlatDataStructure> filteredEvents = new ArrayList<>();
-        for(final FlatDataStructure event : list){
+        final List<MyTimeTableCourse> filteredEvents = new ArrayList<>();
+        for(final MyTimeTableCourse event : list){
 
             Date eventDate = null;
             try {
@@ -101,8 +101,8 @@ public class MyTimeTableUtils {
      * @param ID
      * @return
      */
-    public static final FlatDataStructure getEventByID (final List<FlatDataStructure> list, final String ID){
-        for ( final FlatDataStructure event:list ) {
+    public static final MyTimeTableCourse getEventByID (final List<MyTimeTableCourse> list, final String ID){
+        for ( final MyTimeTableCourse event:list ) {
             if(ID.equals(event.getEvent().getUid())){
                 return event;
             }
@@ -116,8 +116,8 @@ public class MyTimeTableUtils {
      * @param data
      * @return
      */
-    public static final boolean listContainsEvent(final List<FlatDataStructure> list, final FlatDataStructure data){
-        for(FlatDataStructure event:list){
+    public static final boolean listContainsEvent(final List<MyTimeTableCourse> list, final MyTimeTableCourse data){
+        for(MyTimeTableCourse event:list){
 //			Log.d(TAG, "Eventvergleich1: "+event);
 //			Log.d(TAG, "Eventvergleich2: "+data);
 //			Log.d(TAG, "listContainsEvent: "+event.getEvent().getTitle()+" "+data.getEvent().getTitle());
@@ -125,7 +125,7 @@ public class MyTimeTableUtils {
 //			Log.d(TAG, "listContainsEvent: "+event.getEventWeek().getWeekInYear()+" "+data.getEventWeek().getWeekInYear());
 //			Log.d(TAG, "listContainsEvent: "+event.getStudyGroup().getTimeTableId()+" "+data.getStudyGroup().getTimeTableId());
 //			Log.d(TAG, "listContainsEvent: "+event.getSemester().getId()+" "+data.getSemester().getId());
-//			Log.d(TAG, "listContainsEvent: "+event.getCourse().getId()+" "+data.getCourse().getId());
+//			Log.d(TAG, "listContainsEvent: "+event.getStudyCourse().getId()+" "+data.getStudyCourse().getId());
             if(event.getEvent().getTitle().equals(data.getEvent().getTitle())){
 //				Log.d(TAG, "EventTitle: true");
                 if(event.getEventDay().getDayInWeek().equals(data.getEventDay().getDayInWeek())){
@@ -136,7 +136,7 @@ public class MyTimeTableUtils {
 //							Log.d(TAG, "StudyGroup: true");
                             if(event.getSemester().getId().equals(data.getSemester().getId())){
 //								Log.d(TAG, "Semester: true");
-                                if(event.getCourse().getId().equals(data.getCourse().getId())){
+                                if(event.getStudyCourse().getId().equals(data.getStudyCourse().getId())){
 //									Log.d(TAG, "Course: true");
                                     return true;
                                 }

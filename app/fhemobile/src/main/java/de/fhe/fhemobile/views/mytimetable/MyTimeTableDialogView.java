@@ -30,8 +30,8 @@ import java.util.List;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableDialogAdapter;
 import de.fhe.fhemobile.comparator.StudyCourseComperator;
-import de.fhe.fhemobile.vos.timetable.StudyCourseVo;
-import de.fhe.fhemobile.vos.timetable.SemesterVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyCourseVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
 import de.fhe.fhemobile.widgets.picker.StudyCoursePicker;
 import de.fhe.fhemobile.widgets.picker.SemesterPicker;
 import de.fhe.fhemobile.widgets.picker.base.OnItemChosenListener;
@@ -79,14 +79,14 @@ public class MyTimeTableDialogView extends LinearLayout {
     }
 
 
-    public void setStudyCourseItems(final List<StudyCourseVo> _Items) {
-        StudyCourseVo.alterTitle(_Items);
+    public void setStudyCourseItems(final List<TimeTableStudyCourseVo> _Items) {
+        TimeTableStudyCourseVo.alterTitle(_Items);
         Collections.sort(_Items,new StudyCourseComperator());
         mStudyCoursePicker.setItems(_Items);
         mStudyCoursePicker.toggleEnabled(true);
     }
 
-    public void setSemesterItems(final List<SemesterVo> _Items) {
+    public void setSemesterItems(final List<TimeTableSemesterVo> _Items) {
         mSemesterPicker.setItems(_Items);
         mSemesterPicker.toggleEnabled(true);
     }
