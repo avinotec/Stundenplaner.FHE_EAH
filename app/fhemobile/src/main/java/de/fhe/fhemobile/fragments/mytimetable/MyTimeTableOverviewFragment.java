@@ -19,10 +19,13 @@ package de.fhe.fhemobile.fragments.mytimetable;
 
 
 import static de.fhe.fhemobile.Main.addToSubscribedCourses;
+import static de.fhe.fhemobile.Main.getAppContext;
 import static de.fhe.fhemobile.Main.getSubscribedCourses;
 import static de.fhe.fhemobile.Main.removeFromSubscribedCourses;
+import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,13 +47,16 @@ import java.util.Iterator;
 import java.util.List;
 
 import de.fhe.fhemobile.BuildConfig;
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.comparator.CourseTitleStudyGroupTitleComparator;
+import de.fhe.fhemobile.comparator.Date_Comparator;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.models.timeTableChanges.RequestModel;
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.services.PushNotificationService;
+import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.MyTimeTableUtils;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
@@ -75,7 +81,7 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 	private static final int CHANGEREASON_DELETE = 2;
 
 	/** sortedCourses: Liste der subscribedCourses sortiert für die Ausgabe im view, ausschließlich dafür benötigt. */
-	public static List<MyTimeTableCourse> sortedCourses = new ArrayList<>();
+	private static List<MyTimeTableCourse> sortedCourses = new ArrayList<>();
 
 
 	/**
@@ -95,6 +101,7 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 		// Required empty public constructor
 	}
 
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -104,7 +111,8 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		MyTimeTableOverviewView mView = (MyTimeTableOverviewView) inflater.inflate(R.layout.fragment_my_time_table_overview, container, false);
+		MyTimeTableOverviewView mView = (MyTimeTableOverviewView) inflater.inflate(
+				R.layout.fragment_my_time_table_overview, container, false);
 		mView.initializeView(getChildFragmentManager());
 
 		mView.setCourseListEmptyView();
@@ -266,5 +274,55 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 				}
 			});
 		}
+	}
+
+	// static --------------------------------------------------------------------------------------
+
+	public static List<MyTimeTableCourse> getSortedCourses(){  return sortedCourses;  }
+
+	/**
+	 *
+	 * @param courses
+	 */
+	public static void setSubscribedCourses(final List<MyTimeTableCourse> courses){
+		if(courses != null){
+			Main.setSubscribedCourses(courses);
+			sortedCourses = MyTimeTableOverviewView.getSortedList(new Date_Comparator());
+		}
+	}
+
+	/**
+	 *
+	 * @param course
+	 */
+	public static void addCourseAndUpdateSharedPreferences(final MyTimeTableCourse course){
+		addToSubscribedCourses(course);
+		sortedCourses = MyTimeTableOverviewView.getSortedList(new Date_Comparator());
+
+		final Gson gson = new Gson();
+		final String json = correctUmlauts(gson.toJson(getSubscribedCourses()));
+		final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPreferences.edit();
+		editor.putString(Define.SHARED_PREFERENCES_SUBSCRIBED_COURSES, json);
+		editor.apply();
+		MyTimeTableOverviewView.notifyDataSetChanged();
+	}
+
+	/**
+	 *
+	 * @param course
+	 */
+	public static void removeCourseAndUpdateSharedPreferences(final MyTimeTableCourse course){
+		removeFromSubscribedCourses(course);
+		sortedCourses = MyTimeTableOverviewView.getSortedList(new Date_Comparator());
+
+		final Gson gson = new Gson();
+		final String json = correctUmlauts(gson.toJson(getSubscribedCourses()));
+		final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+		final SharedPreferences.Editor editor = sharedPreferences.edit();
+		editor.putString(Define.SHARED_PREFERENCES_SUBSCRIBED_COURSES, json);
+		editor.apply();
+
+		MyTimeTableOverviewView.notifyDataSetChanged();
 	}
 }

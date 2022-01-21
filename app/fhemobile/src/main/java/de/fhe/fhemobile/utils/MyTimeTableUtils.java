@@ -68,6 +68,7 @@ public class MyTimeTableUtils {
      */
     public static List<MyTimeTableCourse> getCoursesByStudyGroupTitle(
             final List<MyTimeTableCourse>list, final String studyGroupTitle){
+
         final List<MyTimeTableCourse> filteredEvents = new ArrayList<>();
         for(final MyTimeTableCourse event : list){
             if(event.getSetString().equals(studyGroupTitle)){

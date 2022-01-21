@@ -360,7 +360,8 @@ public class NetworkHandler {
 		final List<MyTimeTableCourse>eventList = new ArrayList<>();
 
 		try {
-			final ArrayList<TimeTableWeekVo> timeTable = mApi.fetchTimeTableEvents(event.getStudyGroup().getTimeTableId()).execute().body();
+			final ArrayList<TimeTableWeekVo> timeTable = mApi.fetchTimeTableEvents(
+					event.getStudyGroup().getTimeTableId()).execute().body();
 			Assert.assertTrue( timeTable != null );
 
 			for (final TimeTableWeekVo weekEntry : timeTable){

@@ -65,16 +65,30 @@ public class Main extends Application {
         Main.subscribedCourses = subscribedCourses;
     }
 
+    /**
+     * Remove course from subscribed courses
+     * (note: this does not update other places like views, shared preferences etc.)
+     * @param course
+     */
     public static void removeFromSubscribedCourses(final MyTimeTableCourse course){
         course.setSubscribed(false);
         subscribedCourses.remove(course);
     }
 
+    /**
+     * Add a course to subscribed courses
+     * (note: this does not update other places like views, shared preferences etc.)
+     * @param course
+     */
     public static void addToSubscribedCourses(final MyTimeTableCourse course){
         course.setSubscribed(true);
         subscribedCourses.add(course);
     }
 
+    /**
+     * Clear subscribed courses
+     * (note: this does not update other places like views, shared preferences etc.)
+     */
     public static void clearSubscribedCourses(){
         subscribedCourses.clear();
     }

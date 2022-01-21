@@ -144,7 +144,6 @@ public class MyTimeTableCourse implements Parcelable {
 
 	public MyTimeTableCourse copy(){
 		final MyTimeTableCourse copy = new MyTimeTableCourse();
-		//		Log.d(TAG, "MyTimeTableCourse: incID: "+MyTimeTableCourse.incId);
 		copy.id = MyTimeTableCourse.incId++;
 		copy.setStudyCourse(this.getStudyCourse());
 		copy.setSemester(this.getSemester());

@@ -43,7 +43,6 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableCalendarView;
-import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
 
 public class MyTimeTableCalendarFragment extends FeatureFragment {
@@ -89,7 +88,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		final Gson gson = new Gson();
 		final MyTimeTableCourse[] list = gson.fromJson(json, MyTimeTableCourse[].class);
 		if(list != null) {
-			MyTimeTableOverviewView.setSubscribedCourses(new ArrayList<MyTimeTableCourse>(Arrays.asList(list)));
+			MyTimeTableOverviewFragment.setSubscribedCourses(new ArrayList<MyTimeTableCourse>(Arrays.asList(list)));
 		}
 
 		//unterhalb der Liste wird immer "Kein Kurs gewählt" angezeigt. Dieser Text ist aber nicht immer sichtbar.
@@ -141,7 +140,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 					.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
 							//Stundenplan löschen (die Listen leer machen und aus den Preferences entfernen)
-							MyTimeTableOverviewFragment.sortedCourses.clear();
+							MyTimeTableOverviewFragment.getSortedCourses().clear();
 							clearSubscribedCourses();
 							//todo: wozu brauchen wir die coursesOfChosenSemester hier? - Nadja
 							//MyTimeTableDialogFragment.coursesOfChosenSemester.clear();

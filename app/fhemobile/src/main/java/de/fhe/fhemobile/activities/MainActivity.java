@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                                             myTimetableList, change.getSetSplusKey()).get(0).copy();
                             event.setEvent(change.getNewEventJson());
 
-                            MyTimeTableOverviewView.addCourse(event);
+                            MyTimeTableOverviewFragment.addCourseAndUpdateSharedPreferences(event);
 
                         }
                         //Loeschen einer Veranstaltung: Suche die Veranstaltung mit der SplusID und lösche sie aus der Liste.
@@ -252,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                             final MyTimeTableCourse event = MyTimeTableUtils.getEventByID(
                                     myTimetableList, change.getNewEventJson().getUid());
 
-                            MyTimeTableOverviewView.removeCourse(event);
+                            MyTimeTableOverviewFragment.removeCourseAndUpdateSharedPreferences(event);
                         }
 
 

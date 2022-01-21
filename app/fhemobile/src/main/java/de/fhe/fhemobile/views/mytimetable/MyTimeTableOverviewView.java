@@ -16,14 +16,9 @@
  */
 package de.fhe.fhemobile.views.mytimetable;
 
-import static de.fhe.fhemobile.Main.addToSubscribedCourses;
-import static de.fhe.fhemobile.Main.getAppContext;
 import static de.fhe.fhemobile.Main.getSubscribedCourses;
-import static de.fhe.fhemobile.Main.removeFromSubscribedCourses;
-import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -33,20 +28,15 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableOverviewAdapter;
-import de.fhe.fhemobile.comparator.Date_Comparator;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableDialogFragment;
-import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableOverviewFragment;
-import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
 
 
@@ -88,37 +78,17 @@ public class MyTimeTableOverviewView extends LinearLayout {
         mCourseListView.setAdapter(myTimeTableOverviewAdapter);
     }
 
-
-    private void createAddDialog(){
-        final FragmentManager fm = mFragmentManager;
-        MyTimeTableDialogFragment myTimeTableDialogFragment = MyTimeTableDialogFragment.newInstance();
-        myTimeTableDialogFragment.show(fm, "fragment_edit_name");
-    }
-
     /**
      * returns the "subscribedCourses" in sorted order
      * @param comparator
      * @return
      */
-    private static List<MyTimeTableCourse> getSortedList(Comparator<MyTimeTableCourse> comparator){
+    public static List<MyTimeTableCourse> getSortedList(Comparator<MyTimeTableCourse> comparator){
         final List<MyTimeTableCourse> sortedList = new ArrayList<MyTimeTableCourse>(getSubscribedCourses());
         if(sortedList.isEmpty() == false){
             Collections.sort(sortedList,comparator);
         }
         return sortedList;
-    }
-
-
-
-    /**
-     *
-     * @param courses
-     */
-    public static void setSubscribedCourses(final List<MyTimeTableCourse> courses){
-        if(courses != null){
-            Main.setSubscribedCourses(courses);
-            MyTimeTableOverviewFragment.sortedCourses = getSortedList(new Date_Comparator());
-        }
     }
 
     /**
@@ -172,47 +142,6 @@ public class MyTimeTableOverviewView extends LinearLayout {
     }
 
     /**
-     *
-     * @return sorted Lessons list
-     */
-    public static List<MyTimeTableCourse> getSortedCourses(){  return MyTimeTableOverviewFragment.sortedCourses;  }
-
-    /**
-     *
-     * @param course
-     */
-    public static void removeCourse(final MyTimeTableCourse course){
-        removeFromSubscribedCourses(course);
-        MyTimeTableOverviewFragment.sortedCourses = getSortedList(new Date_Comparator());
-
-        final Gson gson = new Gson();
-        final String json = correctUmlauts(gson.toJson(getSubscribedCourses()));
-        final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(Define.SHARED_PREFERENCES_SUBSCRIBED_COURSES, json);
-        editor.apply();
-
-        myTimeTableOverviewAdapter.notifyDataSetChanged();
-    }
-
-    /**
-     *
-     * @param course
-     */
-    public static void addCourse(final MyTimeTableCourse course){
-        addToSubscribedCourses(course);
-        MyTimeTableOverviewFragment.sortedCourses = getSortedList(new Date_Comparator());
-
-        final Gson gson = new Gson();
-        final String json = correctUmlauts(gson.toJson(getSubscribedCourses()));
-        final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(Define.SHARED_PREFERENCES_SUBSCRIBED_COURSES, json);
-        editor.apply();
-        myTimeTableOverviewAdapter.notifyDataSetChanged();
-    }
-
-    /**
      * Sets view to show if the course list is empty
      */
     public void setCourseListEmptyView(){
@@ -221,4 +150,14 @@ public class MyTimeTableOverviewView extends LinearLayout {
         mCourseListView.setEmptyView(emptyView);
     }
 
+    public static void notifyDataSetChanged(){
+        myTimeTableOverviewAdapter.notifyDataSetChanged();
+    }
+
+
+    private void createAddDialog(){
+        final FragmentManager fm = mFragmentManager;
+        MyTimeTableDialogFragment myTimeTableDialogFragment = MyTimeTableDialogFragment.newInstance();
+        myTimeTableDialogFragment.show(fm, "fragment_edit_name");
+    }
 }

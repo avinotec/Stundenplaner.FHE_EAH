@@ -34,8 +34,8 @@ import java.util.List;
 import java.util.Locale;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableOverviewFragment;
 import de.fhe.fhemobile.utils.MyTimeTableUtils;
-import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
 
 public class MyTimeTableDialogAdapter extends BaseAdapter {
@@ -199,10 +199,10 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 									eventFilteredList, currentItem.getSetString());
 
 					for(final MyTimeTableCourse event : studyGroupFilteredList){
-						MyTimeTableOverviewView.addCourse(event);
+						MyTimeTableOverviewFragment.addCourseAndUpdateSharedPreferences(event);
 					}
 				}else{
-					MyTimeTableOverviewView.removeCourse(currentItem);
+					MyTimeTableOverviewFragment.removeCourseAndUpdateSharedPreferences(currentItem);
 				}
 
 				notifyDataSetChanged();
