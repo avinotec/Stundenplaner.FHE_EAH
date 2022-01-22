@@ -19,12 +19,17 @@ package de.fhe.fhemobile;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.annotation.StringRes;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
 
@@ -38,7 +43,7 @@ public class Main extends Application {
     private static Application mAppContext;
 
     //My Time Table
-    private static List<MyTimeTableCourse> subscribedCourses = new ArrayList();
+    public static List<MyTimeTableCourse> subscribedCourses = new ArrayList();
 
     @Override
     public void onCreate() {
@@ -47,6 +52,13 @@ public class Main extends Application {
 
         // load active features from xml
         FeatureProvider.loadFeatures(this);
+
+        // load subscribed courses for My Time Table from Shared Preferences
+        SharedPreferences sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        final String json = sharedPreferences.getString(Define.SHARED_PREFERENCES_SUBSCRIBED_COURSES,"");
+        final Gson gson = new Gson();
+        final MyTimeTableCourse[] list = gson.fromJson(json, MyTimeTableCourse[].class);
+        subscribedCourses = new ArrayList<>(Arrays.asList(list));
     }
 
     public static String getSafeString(@StringRes int _ResId) {
@@ -57,37 +69,12 @@ public class Main extends Application {
         return mAppContext;
     }
 
-    public static List<MyTimeTableCourse> getSubscribedCourses() {
+    public static List<MyTimeTableCourse> getSubscribedCourses(){
         return subscribedCourses;
-    }
-
-    public static void setSubscribedCourses(List<MyTimeTableCourse> subscribedCourses) {
-        Main.subscribedCourses = subscribedCourses;
-    }
-
-    /**
-     * Remove course from subscribed courses
-     * (note: this does not update other places like views, shared preferences etc.)
-     * @param course
-     */
-    public static void removeFromSubscribedCourses(final MyTimeTableCourse course){
-        course.setSubscribed(false);
-        subscribedCourses.remove(course);
-    }
-
-    /**
-     * Add a course to subscribed courses
-     * (note: this does not update other places like views, shared preferences etc.)
-     * @param course
-     */
-    public static void addToSubscribedCourses(final MyTimeTableCourse course){
-        course.setSubscribed(true);
-        subscribedCourses.add(course);
     }
 
     /**
      * Clear subscribed courses
-     * (note: this does not update other places like views, shared preferences etc.)
      */
     public static void clearSubscribedCourses(){
         subscribedCourses.clear();

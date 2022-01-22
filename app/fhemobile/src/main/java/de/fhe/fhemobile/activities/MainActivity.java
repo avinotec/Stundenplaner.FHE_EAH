@@ -16,9 +16,14 @@
  */
 package de.fhe.fhemobile.activities;
 
+import static de.fhe.fhemobile.Main.getAppContext;
 import static de.fhe.fhemobile.Main.getSubscribedCourses;
+import static de.fhe.fhemobile.Main.subscribedCourses;
+import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -39,12 +44,17 @@ import com.google.gson.Gson;
 import org.junit.Assert;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import de.fhe.fhemobile.BuildConfig;
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableCalendarAdapter;
+import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableOverviewAdapter;
+import de.fhe.fhemobile.comparator.Date_Comparator;
 import de.fhe.fhemobile.fragments.DrawerFragment;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
@@ -78,6 +88,13 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
     public static ArrayList<Room> rooms = new ArrayList<>();
 
+    /** subscribedCoursesSorted: Liste der subscribedCourses sortiert für die Ausgabe im view,
+     * ausschließlich für Adapter der Views benötigt. */
+    public static List<MyTimeTableCourse> subscribedCoursesSorted;
+
+    public static MyTimeTableCalendarAdapter myTimeTableCalendarAdapter;
+    public static MyTimeTableOverviewAdapter myTimeTableOverviewAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,14 +102,20 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         setContentView(R.layout.activity_main);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (mToolbar != null) setSupportActionBar(mToolbar);
         
-        if (mToolbar != null) {
-            setSupportActionBar(mToolbar);
-        }
-        
-        mDrawerFragment = (DrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mDrawerFragment = (DrawerFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
+
+
+        myTimeTableOverviewAdapter = new MyTimeTableOverviewAdapter(
+                Main.getAppContext(), subscribedCourses);
+
+        subscribedCoursesSorted = getSortedSubscribedCourses();
+        myTimeTableCalendarAdapter = new MyTimeTableCalendarAdapter(
+                Main.getAppContext(), subscribedCoursesSorted);
+
 
         // Set up the drawer.
         mDrawerFragment.setUp(
@@ -225,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                     for(final ResponseModel.Change change : changes){
 
                         // Shortcut to the list
-                        final List<MyTimeTableCourse> myTimetableList = getSubscribedCourses();
+                        final List<MyTimeTableCourse> myTimetableList = subscribedCourses;
 
                         //Aenderung einer Veranstaltung: suche das Event (= einzelne Veranstaltung) und ueberschreibe ihre Daten
                         if(change.getChangesReason() == CHANGEREASON_EDIT) {
@@ -244,7 +267,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                                             myTimetableList, change.getSetSplusKey()).get(0).copy();
                             event.setEvent(change.getNewEventJson());
 
-                            MyTimeTableOverviewFragment.addCourseAndUpdateSharedPreferences(event);
+                            //todo: bad static use to update MyTimeTableCalendar
+                            //MyTimeTableCalendarAdapter.addCourseAndUpdateSharedPreferences(event);
 
                         }
                         //Loeschen einer Veranstaltung: Suche die Veranstaltung mit der SplusID und lösche sie aus der Liste.
@@ -252,7 +276,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                             final MyTimeTableCourse event = MyTimeTableUtils.getEventByID(
                                     myTimetableList, change.getNewEventJson().getUid());
 
-                            MyTimeTableOverviewFragment.removeCourseAndUpdateSharedPreferences(event);
+                            //todo: bad static use to update MyTimeTableCalendar
+                            //MyTimeTableCalendarAdapter.removeCourseAndUpdateSharedPreferences(event);
                         }
 
 
@@ -267,6 +292,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             });
 
         }
+
     }
 
     @Override
@@ -422,6 +448,63 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             restoreActionBar();
         }
         return super.onCreateOptionsMenu(menu);
+    }
+
+
+    public static void addToSubscribedCourses(final MyTimeTableCourse course){
+        course.setSubscribed(true);
+        subscribedCourses.add(course);
+        subscribedCoursesSorted = getSortedSubscribedCourses();
+
+        saveSubscribedCoursesInSharedPreferences();
+
+        myTimeTableCalendarAdapter.notifyDataSetChanged();
+        myTimeTableOverviewAdapter.notifyDataSetChanged();
+    }
+
+
+    public static void removeFromSubscribedCourses(final MyTimeTableCourse course){
+        course.setSubscribed(false);
+        subscribedCourses.remove(course);
+        subscribedCoursesSorted = getSortedSubscribedCourses();
+
+        saveSubscribedCoursesInSharedPreferences();
+
+        myTimeTableCalendarAdapter.notifyDataSetChanged();
+        myTimeTableOverviewAdapter.notifyDataSetChanged();
+    }
+
+
+    public static void clearSubscribedCourses(){
+        Main.clearSubscribedCourses();
+        subscribedCoursesSorted.clear();
+
+        saveSubscribedCoursesInSharedPreferences();
+
+        myTimeTableCalendarAdapter.notifyDataSetChanged();
+        myTimeTableOverviewAdapter.notifyDataSetChanged();
+    }
+
+    private static void saveSubscribedCoursesInSharedPreferences() {
+        final Gson gson = new Gson();
+        final String json = correctUmlauts(gson.toJson(getSubscribedCourses()));
+        final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Define.SHARED_PREFERENCES_SUBSCRIBED_COURSES, json);
+        editor.apply();
+    }
+
+    /**
+     * Returns the "subscribedCourses" sorted by date
+     * @return
+     */
+    private static List<MyTimeTableCourse> getSortedSubscribedCourses(){
+        final List<MyTimeTableCourse> sortedList = new ArrayList<>(getSubscribedCourses());
+
+        if(!sortedList.isEmpty()){
+            Collections.sort(sortedList, new Date_Comparator());
+        }
+        return sortedList;
     }
 
     // #############################################################################################

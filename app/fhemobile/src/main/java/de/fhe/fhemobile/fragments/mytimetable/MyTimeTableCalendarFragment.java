@@ -31,19 +31,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableCalendarView;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
 
 public class MyTimeTableCalendarFragment extends FeatureFragment {
 
@@ -79,17 +75,8 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		// Inflate the layout for this fragment
 		mView = (MyTimeTableCalendarView) inflater.inflate(R.layout.fragment_my_time_table_calendar, container, false);
 		mView.initializeView(getActivity().getSupportFragmentManager());
-		SharedPreferences sharedPreferences = getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
 
-		askForTimeTableDeletionAfterTurnOfSemester(sharedPreferences);
-
-		// load selected Courses for My Time Table from Shared Preferences
-		final String json = sharedPreferences.getString(Define.SHARED_PREFERENCES_SUBSCRIBED_COURSES,"");
-		final Gson gson = new Gson();
-		final MyTimeTableCourse[] list = gson.fromJson(json, MyTimeTableCourse[].class);
-		if(list != null) {
-			MyTimeTableOverviewFragment.setSubscribedCourses(new ArrayList<MyTimeTableCourse>(Arrays.asList(list)));
-		}
+		askForTimeTableDeletionAfterTurnOfSemester();
 
 		//unterhalb der Liste wird immer "Kein Kurs gewählt" angezeigt. Dieser Text ist aber nicht immer sichtbar.
 		// Daher ist das Feld in den Fragment Ressourcen vorhanden
@@ -100,12 +87,12 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 
 	/**
 	 * Zeigt bei Semesterwechsel Dialog zur Nachfrage, ob der Stundenplan gelöscht werden soll
-	 * @param sharedPreferences
 	 */
-	private void askForTimeTableDeletionAfterTurnOfSemester(SharedPreferences sharedPreferences) {
+	private void askForTimeTableDeletionAfterTurnOfSemester() {
 		//Wenn die App das letzte Mal vor Semesterferienbeginn geöffnet wurde und das aktuelle Datum nach dem Beginn, soll nachgefragt werden.
 		//lastAppOpened muss dabei ungleich 0 sein, gleich 0 bedeutet, die App wurde vorher noch nicht gestartet.
 		// in Sekunden seit 1970, Unixtime
+		SharedPreferences sharedPreferences = getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
 		final long lastAppOpened = sharedPreferences.getLong(PREFS_LAST_APP_OPENED, 0);
 
 		Calendar calLastOpened = Calendar.getInstance(new Locale("de", "DE"));
@@ -140,7 +127,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 					.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
 							//Stundenplan löschen (die Listen leer machen und aus den Preferences entfernen)
-							MyTimeTableOverviewFragment.getSortedCourses().clear();
+							MainActivity.clearSubscribedCourses();
 							clearSubscribedCourses();
 							//todo: wozu brauchen wir die coursesOfChosenSemester hier? - Nadja
 							//MyTimeTableDialogFragment.coursesOfChosenSemester.clear();

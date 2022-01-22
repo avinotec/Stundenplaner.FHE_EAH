@@ -16,8 +16,6 @@
  */
 package de.fhe.fhemobile.views.mytimetable;
 
-import static de.fhe.fhemobile.Main.getSubscribedCourses;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -30,21 +28,17 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableOverviewAdapter;
+import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableDialogFragment;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
 
 
 public class MyTimeTableOverviewView extends LinearLayout {
 
     private FragmentManager mFragmentManager;
     private ListView mCourseListView;
-    private static MyTimeTableOverviewAdapter myTimeTableOverviewAdapter;
 
 
     public MyTimeTableOverviewView(final Context context, final AttributeSet attrs) {
@@ -72,27 +66,13 @@ public class MyTimeTableOverviewView extends LinearLayout {
             }
         });
 
-        myTimeTableOverviewAdapter = new MyTimeTableOverviewAdapter(getContext());
 
         mCourseListView = (ListView) findViewById(R.id.listview_mytimetable_overview_courses);
-        mCourseListView.setAdapter(myTimeTableOverviewAdapter);
+        mCourseListView.setAdapter(MainActivity.myTimeTableOverviewAdapter);
     }
 
     /**
-     * returns the "subscribedCourses" in sorted order
-     * @param comparator
-     * @return
-     */
-    public static List<MyTimeTableCourse> getSortedList(Comparator<MyTimeTableCourse> comparator){
-        final List<MyTimeTableCourse> sortedList = new ArrayList<MyTimeTableCourse>(getSubscribedCourses());
-        if(sortedList.isEmpty() == false){
-            Collections.sort(sortedList,comparator);
-        }
-        return sortedList;
-    }
-
-    /**
-     * finde die Lessons heraus, die nicht mehr enthalten sind.
+     * finde die Kurse heraus, die nicht mehr enthalten sind.
      * @return
      */
     public static List<String[]> generateNegativeLessons(){
@@ -148,10 +128,6 @@ public class MyTimeTableOverviewView extends LinearLayout {
         final TextView emptyView = new TextView( getContext() );
         emptyView.setText(getResources().getString(R.string.my_time_table_empty_text_select));
         mCourseListView.setEmptyView(emptyView);
-    }
-
-    public static void notifyDataSetChanged(){
-        myTimeTableOverviewAdapter.notifyDataSetChanged();
     }
 
 

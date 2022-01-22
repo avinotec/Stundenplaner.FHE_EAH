@@ -23,7 +23,7 @@
 	android:paddingBottom="10dp">
 
     <RelativeLayout
-        android:id="@+id/headerBackground"
+        android:id="@+id/layout_mytimetable_calendar_header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/list_header_height"
         android:paddingLeft="@dimen/list_header_horizontal_padding"
@@ -65,7 +65,7 @@
         android:paddingRight="@dimen/list_item_horizontal_padding"
         android:paddingTop="@dimen/list_item_vertical_padding"
         android:paddingBottom="@dimen/list_item_vertical_padding"
-        android:layout_below="@+id/headerBackground"
+        android:layout_below="@+id/layout_mytimetable_calendar_header"
         >
         <LinearLayout
             android:layout_width="match_parent"

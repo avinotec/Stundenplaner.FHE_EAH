@@ -256,7 +256,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                 //set all courses of the currently chosen study course and semester (not the variable for the subscribed courses)
                 allCoursesInChosenSemester = new ArrayList<MyTimeTableCourse>(Arrays.asList(result));
 
-                mCourseListAdapter.setChosenCourseList(allCoursesInChosenSemester);
+                mCourseListAdapter.setItems(allCoursesInChosenSemester);
                 mView.setCourseListAdapter(mCourseListAdapter);
                 mView.toggleCourseListVisibility(true);
                 mCourseListAdapter.notifyDataSetChanged();
@@ -274,7 +274,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             mView.toggleCourseListVisibility(false);
 
             allCoursesInChosenSemester.clear();
-            mCourseListAdapter.setChosenCourseList(allCoursesInChosenSemester);
+            mCourseListAdapter.setItems(allCoursesInChosenSemester);
             mCourseListAdapter.notifyDataSetChanged();
 
             mChosenStudyCourse = null;
@@ -336,7 +336,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         public void onSemesterChosen(String _SemesterId) {
             mView.toggleCourseListVisibility(false);
             allCoursesInChosenSemester.clear();
-            mCourseListAdapter.setChosenCourseList(allCoursesInChosenSemester);
+            mCourseListAdapter.setItems(allCoursesInChosenSemester);
             mCourseListAdapter.notifyDataSetChanged();
 
             mChosenSemester = null;
@@ -412,7 +412,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 */
 
                                         mView.toggleCourseListVisibility(true);
-                                        mCourseListAdapter.setChosenCourseList(allCoursesInChosenSemester);
+                                        mCourseListAdapter.setItems(allCoursesInChosenSemester);
                                         mCourseListAdapter.notifyDataSetChanged();
                                         mView.setCourseListAdapter(mCourseListAdapter);
 

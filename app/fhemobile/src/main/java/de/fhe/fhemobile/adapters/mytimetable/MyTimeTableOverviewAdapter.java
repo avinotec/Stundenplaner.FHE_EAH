@@ -17,7 +17,6 @@
 package de.fhe.fhemobile.adapters.mytimetable;
 
 import static de.fhe.fhemobile.Main.getSubscribedCourses;
-import static de.fhe.fhemobile.Main.removeFromSubscribedCourses;
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
 import android.content.Context;
@@ -38,25 +37,35 @@ import java.util.List;
 import java.util.Locale;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.utils.MyTimeTableUtils;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
 
 public class MyTimeTableOverviewAdapter extends BaseAdapter {
-	private static final String TAG = "MyTimeTableOverviewAdapter";
-	private final Context context;
 
-	public MyTimeTableOverviewAdapter(Context context) {
-		this.context=context;
+	private static final String TAG = "MyTimeTableOverviewAdapter";
+
+	private final Context context;
+	private List<MyTimeTableCourse> mItems;
+
+	public MyTimeTableOverviewAdapter(Context context, List<MyTimeTableCourse> mItems) {
+		this.context = context;
+		this.mItems = mItems;
 	}
 
+	/**
+	 * How many items are in the data set represented by this Adapter.
+	 *
+	 * @return Count of items.
+	 */
 	@Override
 	public int getCount() {
-		return getSubscribedCourses().size();
+		return mItems.size();
 	}
 
 	@Override
 	public Object getItem(final int position) {
-		return getSubscribedCourses().get(position);
+		return mItems.get(position);
 	}
 
 	@Override
@@ -64,15 +73,36 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 		return position;
 	}
 
+	/**
+	 * Get a View that displays the data at the specified position in the data set. You can either
+	 * create a View manually or inflate it from an XML layout file. When the View is inflated, the
+	 * parent View (GridView, ListView...) will apply default layout parameters unless you use
+	 * {@link android.view.LayoutInflater#inflate(int, android.view.ViewGroup, boolean)}
+	 * to specify a root view and to prevent attachment to the root.
+	 *
+	 * @param position    The position of the item within the adapter's data set of the item whose view
+	 *                    we want.
+	 * @param convertView The old view to reuse, if possible. Note: You should check that this view
+	 *                    is non-null and of an appropriate type before using. If it is not possible to convert
+	 *                    this view to display the correct data, this method can create a new view.
+	 *                    Heterogeneous lists can specify their number of view types, so that this View is
+	 *                    always of the right type (see {@link #getViewTypeCount()} and
+	 *                    {@link #getItemViewType(int)}).
+	 * @param parent      The parent that this view will eventually be attached to
+	 * @return A View corresponding to the data at the specified position.
+	 */
 	@Override
 	public View getView(final int position, View convertView, final ViewGroup parent) {
+
 		if (convertView == null) {
 			convertView = LayoutInflater.from(context).
 					inflate(R.layout.item_my_time_table_overview, parent, false);
 		}
-		final MyTimeTableCourse currentItem = getSubscribedCourses().get(position);
-		//final RelativeLayout layout = (RelativeLayout)convertView.findViewById(R.id.singleRowLayout);
 
+		final MyTimeTableCourse currentItem = mItems.get(position);
+
+
+		//todo: find out in which use case this is needed
 		convertView.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -87,16 +117,44 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 						= MyTimeTableUtils.getCoursesByStudyGroupTitle(
 						courseTitleFilteredList, currentItem.getSetString());
 
-				for (MyTimeTableCourse event:filteredList){
+				for (MyTimeTableCourse event : filteredList){
 					event.setVisible(!event.isVisible());
 				}
 
 				((ListView) parent).invalidateViews();
-//				Log.d(TAG, "onClick: VisibleClick");
 
 			}
 		});
 
+
+		final ImageButton btnRemoveCourse = convertView.findViewById(R.id.btnRemoveCourse);
+		btnRemoveCourse.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				final List<MyTimeTableCourse> eventFilteredList
+						= MyTimeTableUtils.getCoursesByEventTitle(
+						getSubscribedCourses(),
+						MyTimeTableUtils.cutEventTitle(currentItem.getEvent().getTitle()));
+
+				final List<MyTimeTableCourse> studyGroupFilteredList
+						= MyTimeTableUtils.getCoursesByStudyGroupTitle(
+						eventFilteredList, currentItem.getSetString());
+
+				for(MyTimeTableCourse event : studyGroupFilteredList){
+					MainActivity.removeFromSubscribedCourses(event);
+				}
+
+				((ListView) parent).invalidateViews();
+			}
+		});
+
+		//set text of courseTitle
+		final TextView courseTitle = (TextView) convertView.findViewById(
+				R.id.textview_mytimetable_overview_courseTitle);
+		courseTitle.setText(correctUmlauts(currentItem.getEvent().getShortTitle()));
+
+
+		//todo: find out in which use case currentItem is not visible
 		if(currentItem.isVisible()){
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1, 0));
 			convertView.setVisibility(View.VISIBLE);
@@ -106,78 +164,29 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 			convertView.setVisibility(View.GONE);
 		}
 
-		final TextView courseTitle = (TextView) convertView.findViewById(R.id.textCourseTitle);
-		final RelativeLayout headerBackground = convertView.findViewById(R.id.headerBackground);
-		courseTitle.setText(correctUmlauts(currentItem.getEvent().getShortTitle()));
-
-		if(position == 0){
-			courseTitle.setVisibility(View.VISIBLE);
-			headerBackground.setVisibility(View.VISIBLE);
+		//Add a header displaying the course title
+		// if such a header has already been added because of processing another set of the course (I guess),
+		// then do not add header again (set it visibility to GONE)
+		final RelativeLayout header = convertView.findViewById(
+				R.id.layout_mytimetable_overview_header);
+		if(position == 0
+				|| !getSubscribedCourses().get(position).isEqual(mItems.get(position - 1))){
+			header.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1, 0));
 			convertView.setVisibility(View.VISIBLE);
 
+		} else{
+			header.setVisibility(View.GONE);
 		}
 
-		else if(!getSubscribedCourses().get(position)
-				.isEqual(getSubscribedCourses().get(position - 1))){
-
-			courseTitle.setVisibility(View.VISIBLE);
-			headerBackground.setVisibility(View.VISIBLE);
-			convertView.setLayoutParams(new AbsListView.LayoutParams(-1, 0));
-			convertView.setVisibility(View.VISIBLE);
-		}
-
-		else{
-			courseTitle.setVisibility(View.GONE);
-			headerBackground.setVisibility(View.GONE);
-		}
-
-		final TextView studyGroupLabel = (TextView)convertView.findViewById(R.id.textStudyGroupLabel);
-		final TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.textStudyGroupTitle);
-
-
-		final ImageButton btnRemoveCourse = convertView.findViewById(R.id.btnRemoveCourse);
-		btnRemoveCourse.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				final List<MyTimeTableCourse> eventFilteredList
-						= MyTimeTableUtils.getCoursesByEventTitle(
-								getSubscribedCourses(),
-								MyTimeTableUtils.cutEventTitle(currentItem.getEvent().getTitle()));
-
-				final List<MyTimeTableCourse> studyGroupFilteredList
-						= MyTimeTableUtils.getCoursesByStudyGroupTitle(
-								eventFilteredList, currentItem.getSetString());
-
-				for(MyTimeTableCourse event : studyGroupFilteredList){
-					removeFromSubscribedCourses(event);
-				}
-
-				((ListView) parent).invalidateViews();
-			}
-		});
-
-
-		if(position == 0){
-			studyGroupTitle.setText(currentItem.getSetString());
-			studyGroupTitle.setVisibility(View.VISIBLE);
-			studyGroupLabel.setVisibility(View.VISIBLE);
-			btnRemoveCourse.setVisibility(View.VISIBLE);
-			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
-			convertView.setVisibility(View.VISIBLE);
-		}
-		else if(!currentItem.isEqual(getSubscribedCourses().get(position - 1))){
-			studyGroupTitle.setText(currentItem.getSetString());
-			studyGroupTitle.setVisibility(View.VISIBLE);
-			studyGroupLabel.setVisibility(View.VISIBLE);
-			btnRemoveCourse.setVisibility(View.VISIBLE);
-			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
-			convertView.setVisibility(View.VISIBLE);
-
-		}
-		else if(!currentItem.getSetString()
-				.equals( getSubscribedCourses().get(position - 1).getSetString() )){
+		//Add each event (lecture, training, practical, ...) belonging to the course title in the header
+		// Only add if cutEventTitle and setString do not equal previous item
+		final TextView studyGroupLabel = (TextView)convertView.findViewById(
+				R.id.textview_mytimetable_overview_sets_label);
+		final TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.textview_mytimetable_overview_studygroups);
+		if(position == 0
+				|| !currentItem.isEqual(mItems.get(position - 1))
+				|| !currentItem.getSetString().equals( mItems.get(position - 1).getSetString() )){
 			studyGroupTitle.setText(currentItem.getSetString());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			studyGroupLabel.setVisibility(View.VISIBLE);
@@ -191,16 +200,22 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 			btnRemoveCourse.setVisibility(View.GONE);
 		}
 
-		final TextView tvTime = (TextView) convertView.findViewById(R.id.textCourseTime);
+
+		//set text for course time, weekday and room
+
 		final Date dateStartDate = new java.util.Date(currentItem.getEvent().getStartDate());
 		//final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
 		final String date = sdf.format(dateStartDate);
 		final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(dateStartDate);
-		tvTime.setText(dayOfWeek + ", " + date + "  "
+
+		final TextView textEventTime = (TextView) convertView.findViewById(R.id.textCourseTime);
+		textEventTime.setText(dayOfWeek + ", " + date + "  "
 				+ currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime()); // $NON-NLS
 
-		final TextView tvRoom = (TextView) convertView.findViewById(R.id.textviewRoom);
-		tvRoom.setText(currentItem.getEvent().getRoom());
+		final TextView textRoom = (TextView) convertView.findViewById(R.id.textviewRoom);
+		textRoom.setText(currentItem.getEvent().getRoom());
+
+
 
 		return convertView;
 	}

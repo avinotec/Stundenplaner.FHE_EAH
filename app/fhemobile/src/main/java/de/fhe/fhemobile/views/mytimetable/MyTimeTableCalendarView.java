@@ -18,7 +18,6 @@ package de.fhe.fhemobile.views.mytimetable;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -28,25 +27,17 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableCalendarAdapter;
+import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableOverviewFragment;
-import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
-/**
- * Created by paul on 12.03.15.
- */
+
 public class MyTimeTableCalendarView extends LinearLayout {
 
     private static final String TAG = "MyTimeTableCalendarView";
 
-    public MyTimeTableCalendarView(final Context context, final AttributeSet attrs) {
-        super(context, attrs);
-    }
+
+    public MyTimeTableCalendarView(final Context context, final AttributeSet attrs) { super(context, attrs);  }
 
     public MyTimeTableCalendarView(final Context context) {
         super(context);
@@ -61,10 +52,10 @@ public class MyTimeTableCalendarView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        final Button mBtnModifySchedule = (Button) findViewById(R.id.btn_mytimetable_calendar_modify_Schedule);
-        mCalendarListView =     (ListView)      findViewById(R.id.listview_mytimetable_calendar_courses);
+        mCalendarListView = (ListView) findViewById(R.id.listview_mytimetable_calendar_courses);
 
         // "modify schedule"
+        final Button mBtnModifySchedule = (Button) findViewById(R.id.btn_mytimetable_calendar_modify_Schedule);
         mBtnModifySchedule.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -89,54 +80,18 @@ public class MyTimeTableCalendarView extends LinearLayout {
             }
         });
 
-        //deprecated: calendarAdapter = new CalendarAdapter(mContext);
-        myTimeTableCalendarAdapter = new MyTimeTableCalendarAdapter( getContext() );
-        mCalendarListView.setAdapter(myTimeTableCalendarAdapter);
+        mCalendarListView.setAdapter(MainActivity.myTimeTableCalendarAdapter);
     }
 
     // Springen auf den aktuellen Tag
     public void jumpToToday(){
-        final int currentDayIndex = getCurrentEventIndex();
+        final int currentDayIndex = MainActivity.myTimeTableCalendarAdapter.getPositionOfFirstCourseToday();
         if(currentDayIndex >= 0){
             mCalendarListView.setSelection(currentDayIndex);
         }
     }
 
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
-    //don't use SimpleDateFormat.getDateTimeInstance() because it includes seconds
 
-    /**
-     *    gehe durch die Liste, bis die Startzeit eines Events größer ist als die angegebene Zeit und nehme den vorherigen Event
-     *    und gebe den Index zurück.
-     * @return
-     */
-    public static int getCurrentEventIndex(){
-
-        for(int i = 0; i < MyTimeTableOverviewFragment.getSortedCourses().size(); i++){
-            final TimeTableEventVo event = MyTimeTableOverviewFragment.getSortedCourses().get(i).getEvent();
-            final Date now = new Date();
-            try {
-                //lesson starts now or in the future
-                if(sdf.parse(event.getDate() + " " + event.getStartTime())
-                        .compareTo(now) >= 0) {
-                    //lesson already ended //todo:????
-                    if(sdf.parse(event.getDate() + " " + event.getEndTime())
-                            .compareTo(now) < 0) {
-                        return (i);
-                    }
-
-                    if(i == 0) return 0;
-                    return (i - 1);
-                }
-            } catch (ParseException e) {
-                Log.e(TAG, "getCurrentEventIndex: ",e );
-            }
-            catch (NullPointerException e) {
-                Log.e(TAG, "wrong Date format", e);
-            }
-        }
-        return -1;
-    }
 
 
 // --Commented out by Inspection START (02.11.2021 17:22):
@@ -157,10 +112,9 @@ public class MyTimeTableCalendarView extends LinearLayout {
         mCalendarListView.setEmptyView(emptyView);
     }
 
+
     private FragmentManager   mFragmentManager;
 
     private ListView mCalendarListView;
-
-    private MyTimeTableCalendarAdapter myTimeTableCalendarAdapter;
 
 }

@@ -17,6 +17,7 @@
 package de.fhe.fhemobile.adapters.mytimetable;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,63 +26,108 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableOverviewFragment;
+import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
+import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
 public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
-	private static final String TAG = "MyTimeTableCalendarAdapter";
+	private static final String TAG = "MyTTCalenderAdapter";
 
 	private final Context context;
-	public MyTimeTableCalendarAdapter(Context context) {
-		this.context=context;
+	private List<MyTimeTableCourse> mItems;
+
+
+	public MyTimeTableCalendarAdapter(Context context, List<MyTimeTableCourse> mItems) {
+		this.context = context;
+		this.mItems = mItems;
 	}
 
+
+	/**
+	 * How many items are in the data set represented by this Adapter.
+	 *
+	 * @return Count of items.
+	 */
 	@Override
 	public int getCount() {
-		return MyTimeTableOverviewFragment.getSortedCourses().size();
+		return mItems != null ? mItems.size() : 0;
+		//return 0;
 	}
 
+	/**
+	 * Get the data item associated with the specified position in the data set.
+	 *
+	 * @param position Position of the item whose data we want within the adapter's data set.
+	 * @return The data at the specified position.
+	 */
 	@Override
-	public Object getItem(int position) {
-		return MyTimeTableOverviewFragment.getSortedCourses().get(position);
+	public MyTimeTableCourse getItem(int position) {
+		return mItems.get(position);
 	}
 
+	/**
+	 * Get the row id associated with the specified position in the list.
+	 *
+	 * @param position The position of the item within the adapter's data set whose row id we want.
+	 * @return The id of the item at the specified position.
+	 */
 	@Override
 	public long getItemId(int position) {
-		return position;
+		//todo: was "return position" before -> ensure that change does not have side effects
+		return mItems.get(position).getId();
 	}
 
-	//private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-	private static final DateFormat sdf = SimpleDateFormat.getDateInstance();
 
+	/**
+	 * Get a View that displays the data at the specified position in the data set. You can either
+	 * create a View manually or inflate it from an XML layout file. When the View is inflated, the
+	 * parent View (GridView, ListView...) will apply default layout parameters unless you use
+	 * {@link android.view.LayoutInflater#inflate(int, android.view.ViewGroup, boolean)}
+	 * to specify a root view and to prevent attachment to the root.
+	 *
+	 * @param position    The position of the item within the adapter's data set of the item whose view
+	 *                    we want.
+	 * @param convertView The old view to reuse, if possible. Note: You should check that this view
+	 *                    is non-null and of an appropriate type before using. If it is not possible to convert
+	 *                    this view to display the correct data, this method can create a new view.
+	 *                    Heterogeneous lists can specify their number of view types, so that this View is
+	 *                    always of the right type (see {@link #getViewTypeCount()} and
+	 *                    {@link #getItemViewType(int)}).
+	 * @param parent      The parent that this view will eventually be attached to
+	 * @return A View corresponding to the data at the specified position.
+	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
 			convertView = LayoutInflater.from(context).
 					inflate(R.layout.item_my_time_table_calendar, parent, false);
 		}
-		final MyTimeTableCourse currentItem = MyTimeTableOverviewFragment.getSortedCourses().get(position);
 
-		RelativeLayout headerLayout = convertView.findViewById(R.id.headerBackground);
 
-		final TextView courseDay = (TextView) convertView.findViewById(R.id.textviewWeekDay);
-		courseDay.setText(currentItem.getEvent().getDayOfWeek());
+		//set TextViews Week, Day, Title,... for the currentItem
+		final MyTimeTableCourse currentItem = mItems.get(position);
+		final Date df = new Date(currentItem.getEvent().getStartDate());
+
+		final TextView courseWeekDay = (TextView) convertView.findViewById(R.id.textviewWeekDay);
+		courseWeekDay.setText(currentItem.getEvent().getDayOfWeek());
+		if(sdf.format(df).compareTo(sdf.format(new Date())) == 0){
+			courseWeekDay.setText(context.getString(R.string.today) + " ("+currentItem.getEvent().getDayOfWeek() + ")");
+		}
 
 		final TextView courseDate = (TextView) convertView.findViewById(R.id.tvCourseDate);
 		courseDate.setText(currentItem.getEvent().getDate());
 
-
 		final TextView courseTitle = (TextView) convertView.findViewById(R.id.textviewTitle);
 		courseTitle.setText(currentItem.getEvent().getShortTitle());
 
-
 		final TextView courseTime = (TextView) convertView.findViewById(R.id.textCourseTime);
-		final Date df = new Date(currentItem.getEvent().getStartDate());
 		//String date = sdf.format(df);
 		courseTime.setText(currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime()); // $NON-NLS
 
@@ -91,27 +137,69 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 		TextView courseLecturer = (TextView)convertView.findViewById(R.id.textviewLecturer);
 		courseLecturer.setText(currentItem.getEvent().getLecturer());
 
-		if(position == 0){
+
+		//Add a header displaying WeekDay and Date
+		// if such a header has already been added with other courses at the same date,
+		// then do not add header again (set it invisible for this item)
+		RelativeLayout headerLayout = convertView.findViewById(R.id.layout_mytimetable_calendar_header);
+		if(position == 0 || !currentItem.getEvent().getDate().equals(
+											mItems.get(position - 1).getEvent().getDate())){
 			headerLayout.setVisibility(View.VISIBLE);
-			courseDay.setVisibility(View.VISIBLE);
-			courseDate.setVisibility(View.VISIBLE);
-		}
-		else if(!currentItem.getEvent().getDate()
-				.equals(MyTimeTableOverviewFragment.getSortedCourses().get(position - 1).getEvent().getDate())){
-			headerLayout.setVisibility(View.VISIBLE);
-			courseDay.setVisibility(View.VISIBLE);
+			courseWeekDay.setVisibility(View.VISIBLE);
 			courseDate.setVisibility(View.VISIBLE);
 		}
 		else{
 			headerLayout.setVisibility(View.GONE);
-			courseDay.setVisibility(View.GONE);
+			courseWeekDay.setVisibility(View.GONE);
 			courseDate.setVisibility(View.GONE);
 		}
 
-		if(sdf.format(df).compareTo(sdf.format(new Date())) == 0){
-			courseDay.setText(context.getString(R.string.today) + " ("+currentItem.getEvent().getDayOfWeek() + ")");
-		}
 
 		return convertView;
 	}
+
+
+	/**
+	 *    gehe durch die Liste, bis die Startzeit eines Events größer ist als die angegebene Zeit und nehme den vorherigen Event
+	 *    und gebe den Index zurück.
+	 * @return
+	 */
+	public int getPositionOfFirstCourseToday(){
+		final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
+		//don't use SimpleDateFormat.getDateTimeInstance() because it includes seconds
+
+		int posToday = -1;
+
+		for(int i = 0; i < MainActivity.subscribedCoursesSorted.size(); i++){
+
+			final TimeTableEventVo event = MainActivity.subscribedCoursesSorted.get(i).getEvent();
+			final Date now = new Date();
+
+			try {
+				//course starts now or in the future
+				if(sdf.parse(event.getDate() + " " + event.getStartTime())
+						.compareTo(now) >= 0) {
+
+					//check if course today finished already (endTime before timeNow)
+					if(sdf.parse(event.getDate() + " " + event.getEndTime())
+							.compareTo(now) < 0) {
+						posToday = i;
+					}
+					//endTime of the course not reached
+					else{
+						posToday = (i == 0 ? 0 : i - 1);
+					}
+				}
+			} catch (ParseException e) {
+				Log.e(TAG, "error getting position of first course today",e );
+			}
+			catch (NullPointerException e) {
+				Log.e(TAG, "wrong Date format", e);
+			}
+		}
+		return posToday;
+	}
+
+	//private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+	private static final DateFormat sdf = SimpleDateFormat.getDateInstance();
 }
