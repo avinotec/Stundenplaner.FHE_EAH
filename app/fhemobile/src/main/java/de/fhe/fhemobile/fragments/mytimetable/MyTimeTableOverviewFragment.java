@@ -121,6 +121,11 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 	public void onDetach() {
 		super.onDetach();
 
+		//TODO enable Push Notifications
+		//PushNotificationsRegisterAndUpdateCourses();
+	}
+
+	private void PushNotificationsRegisterAndUpdateCourses() {
 		if (!getSubscribedCourses().isEmpty()) {
 			final RequestModel request = new RequestModel(RequestModel.ANDROID_DEVICE, PushNotificationService.getFirebaseToken(), new Date().getTime() - 86400000);
 			String title = "";
