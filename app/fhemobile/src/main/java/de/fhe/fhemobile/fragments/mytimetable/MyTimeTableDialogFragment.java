@@ -172,13 +172,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                             //courseToAdd has not already be saved to allCoursesInChosenSemester
                         	if ( alreadyExistingCourse == null ) {
 
-		                        MyTimeTableCourse courseToAdd = new MyTimeTableCourse();
-		                        courseToAdd.setStudyCourse(mChosenStudyCourse);
-                                courseToAdd.setSemester(mChosenSemester);
-                                courseToAdd.setStudyGroup(studyGroup);
-                                courseToAdd.setEventWeek(timeTableWeek);
-                                courseToAdd.setEventDay(timeTableDay);
-                                courseToAdd.setEvent(timeTableEvent);
+                                MyTimeTableCourse courseToAdd = new MyTimeTableCourse(mChosenStudyCourse,mChosenSemester,studyGroup,timeTableWeek,timeTableDay,timeTableEvent,false);
                                 courseToAdd.getSets().add(studyGroup.getTitle().split("\\.")[1]);
 
                                 //check if timeTableEvent belongs to a subscribed course
