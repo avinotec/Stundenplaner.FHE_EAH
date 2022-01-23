@@ -140,7 +140,7 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 
 			final String json = request.toJson();
 			Log.d(TAG, "onDetach: " + json);
-
+//TODO Pushnotification Das hier müsste zu den Push-Notifications gehören. Die aufgerufene URL müsste der Push-Server sein?
 			NetworkHandler.getInstance().registerTimeTableChanges(json, new Callback<ResponseModel>() {
 				@Override
 				public void onResponse(final Call<ResponseModel> call, final Response<ResponseModel> response) {
