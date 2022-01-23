@@ -25,6 +25,8 @@ import androidx.annotation.StringRes;
 
 import com.google.gson.Gson;
 
+import org.junit.Assert;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,11 +58,22 @@ public class Main extends Application {
         // load subscribed courses for My Time Table from Shared Preferences
         SharedPreferences sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
         final String json = sharedPreferences.getString(Define.SHARED_PREFERENCES_SUBSCRIBED_COURSES,"");
-        final Gson gson = new Gson();
-        final MyTimeTableCourse[] list = gson.fromJson(json, MyTimeTableCourse[].class);
-        subscribedCourses = new ArrayList<>(Arrays.asList(list));
+
+        // falls die Liste leer sein sollte, überspringen
+        if ( ! "".equals(json)) {
+            final Gson gson = new Gson();
+            final MyTimeTableCourse[] list = gson.fromJson(json, MyTimeTableCourse[].class);
+            subscribedCourses = new ArrayList<>(Arrays.asList(list));
+        }
+
+        Assert.assertTrue("onCreate(): subscribed courses is not initialized", subscribedCourses != null);
     }
 
+    /**
+     * return String from Resource ID
+     * @param _ResId requested ID
+     * @return corresponding String
+     */
     public static String getSafeString(@StringRes int _ResId) {
         return mAppContext.getString(_ResId);
     }
