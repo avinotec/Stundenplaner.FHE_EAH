@@ -76,12 +76,12 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	 * Get the row id associated with the specified position in the list.
 	 *
 	 * @param position The position of the item within the adapter's data set whose row id we want.
-	 * @return The id of the item at the specified position.
+	 * @return
 	 */
 	@Override
 	public long getItemId(int position) {
 		//todo: was "return position" before -> ensure that change does not have side effects
-		return mItems.get(position).getId();
+		return position;
 	}
 
 
