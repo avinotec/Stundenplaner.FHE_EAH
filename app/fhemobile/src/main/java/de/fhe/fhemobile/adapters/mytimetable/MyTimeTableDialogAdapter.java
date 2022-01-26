@@ -119,7 +119,8 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 		final MyTimeTableCourse currentItem = mItems.get(position);
 
 
-		//todo: find out in which use case this is needed
+		//click on row of the course (at header, sets, ...) expands the row of next date and room
+		// to a list of all upcoming dates with its rooms
 		convertView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -141,8 +142,8 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 
 			}
 		});
-
-		//todo: find out in which use case currentItem is not visible
+		//currentItem can be invisible because initially only the next date
+		// (and not all upcoming dates) are shown for a course
 		if(currentItem.isVisible()){
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
@@ -152,11 +153,12 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 			convertView.setVisibility(View.GONE);
 		}
 
+
 		final TextView courseTitle = (TextView) convertView.findViewById(R.id.textview_mytimetable_dialog_courseTitle);
 		final RelativeLayout headerLayout = convertView.findViewById(R.id.layout_mytimetable_dialog_header);
 
 		//Add a header displaying the course title
-		// if such a header has already been added because of processing another set of the course (I guess),
+		// if such a header has already been added because of processing another set of the course (I guess - Nadja),
 		// then do not add header again (set it visibility to GONE)
 		if(position == 0
 				|| !mItems.get(position).isEqual(mItems.get(position-1))){

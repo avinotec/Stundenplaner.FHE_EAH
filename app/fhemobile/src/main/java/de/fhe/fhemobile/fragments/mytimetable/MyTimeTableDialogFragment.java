@@ -45,17 +45,17 @@ import java.util.List;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableDialogAdapter;
 import de.fhe.fhemobile.comparator.CourseTitleStudyGroupTitleComparator;
-import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.network.MyTimeTableCallback;
+import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableDialogView;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
-import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyCourseVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableDayVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
+import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyCourseVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -73,6 +73,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     public static final String PREFS_CHOSEN_SEMESTER = "_ChosenSemester";
     public static final String PREFS_CHOSEN_STUDY_COURSE = "_ChosenSudyCourse";
     public static final String PREFS_ALL_COURSES_OF_CHOSEN_STUDYCOURSE_AND_SEMESTER = "_Result";
+    public static final String PREFS_COURSE_LIST = "MyTimeTableDialog_course_list";
 
     /**
      * Use this factory method to create a new instance of
@@ -127,7 +128,11 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
         mView.setCourseListAdapter(mCourseListAdapter);
 
-        loadSelectionFromSharedPreferences();
+        //todo: loading course list from shared preferences risks to display an outdated version,
+        // the user has to re-select his study course and semester to update it.
+        // This is not intuitive and not how the user predicts MyTimeTableDialog to work.
+        // Thus this function should be commented out till or replaced by a less risky method.
+        //loadSelectionFromSharedPreferences();
 
         return mView;
     }
@@ -138,9 +143,6 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         NetworkHandler.getInstance().fetchTimeTable(mTimeTableResponseCallback);
     }
 
-    private void proceedToTimetable(final String _TimeTableId, final MyTimeTableCallback callback) {
-
-    }
 
     /**
      * Adds the course represented by timeTableWeeks to allCoursesInChosenSemester
@@ -148,10 +150,11 @@ public class MyTimeTableDialogFragment extends DialogFragment {
      * Method for collecting all courses and events of all study groups that belong to study course
      * and semester chosen by the user in the My Time Table Dialog
      * @param timeTableWeeks list of TimeTableWeeks of the remaining semester for the study group
+     *                       (weeks contain days which contain TimeTableEvents)
      * @param studyGroup study group the timeTableWeeks belong to
      */
-    private void addCourseToAllCoursesInChosenSemester(final List<TimeTableWeekVo> timeTableWeeks,
-                                                       final TimeTableStudyGroupVo studyGroup) {
+    private void addToAllCoursesInChosenSemester(final List<TimeTableWeekVo> timeTableWeeks,
+                                                 final TimeTableStudyGroupVo studyGroup) {
 
         if (timeTableWeeks != null) {
             try {
@@ -162,27 +165,32 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
                             //check if timeTableEvent exists in allCoursesInChosenSemester
                             // because the course has already been added with a previous study group
-                        	MyTimeTableCourse alreadyExistingCourse = null;
-                        	for ( MyTimeTableCourse courseInChosenSemester : this.allCoursesInChosenSemester) {
-                        		if (courseInChosenSemester.getEvent().getUid().equals(timeTableEvent.getUid())){
-                        			alreadyExistingCourse = courseInChosenSemester;
-                        			break;
-		                        }
-	                        }
+                            MyTimeTableCourse alreadyExistingCourse =
+                                    getCorrespondingCourseInAllCoursesInChosenSemester(timeTableEvent);
+
+
                             //courseToAdd has not already be saved to allCoursesInChosenSemester
                         	if ( alreadyExistingCourse == null ) {
 
-                                MyTimeTableCourse courseToAdd = new MyTimeTableCourse(mChosenStudyCourse,mChosenSemester,studyGroup,timeTableWeek,timeTableDay,timeTableEvent,false);
-                                courseToAdd.getSets().add(studyGroup.getTitle().split("\\.")[1]);
-
                                 //check if timeTableEvent belongs to a subscribed course
-                                // and set the subscribed attribute of the courseToAdd
+                                boolean isSubscribed = false;
                                 for(MyTimeTableCourse subscribedCourse : getSubscribedCourses()){
                                     if (subscribedCourse.getEvent().getUid().equals(timeTableEvent.getUid())){
-                                        courseToAdd.setSubscribed(true);
-                                        break;
+
+                                        isSubscribed = true;
                                     }
                                 }
+
+                                MyTimeTableCourse courseToAdd = new MyTimeTableCourse(
+                                        mChosenStudyCourse,
+                                        mChosenSemester,
+                                        studyGroup,
+                                        timeTableWeek,
+                                        timeTableDay,
+                                        timeTableEvent,
+                                        isSubscribed);
+                                courseToAdd.addSet(studyGroup.getTitle().split("\\.")[1]);
+
 
                                 //add new course
                                 this.allCoursesInChosenSemester.add(courseToAdd);
@@ -191,7 +199,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                             //allCoursesInChosenSemester already contains an entry for this course,
                             // then only add this study group to the set/study group list of the existing course
                         	else {
-                        	    alreadyExistingCourse.getSets().add(studyGroup.getTitle().split("\\.")[1]);
+                        	    alreadyExistingCourse.addSet(studyGroup.getTitle().split("\\.")[1]);
 	                        }
                         }
                     }
@@ -203,6 +211,21 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         }
     }
 
+    /**
+     * Returns the {@link MyTimeTableCourse} corresponding to the given timeTableEvent;
+     * here timeTableEvent is a single event/date/lecture/practical/... belonging to a certain course
+     * @param timeTableEvent the timeTableEvent to search for in already stored allCoursesInChosenSemester
+     * @return the corresponding course; null if no corresponding course was found
+     */
+    private MyTimeTableCourse getCorrespondingCourseInAllCoursesInChosenSemester(TimeTableEventVo timeTableEvent) {
+        for ( MyTimeTableCourse courseInChosenSemester : this.allCoursesInChosenSemester) {
+            if (courseInChosenSemester.getEvent().getUid().equals(timeTableEvent.getUid())){
+                return courseInChosenSemester;
+            }
+        }
+        return null;
+    }
+
 
     /**
      * Setzt die beim letzten Mal ausgewählten Werte und die letzten Suchergebnisse.
@@ -210,8 +233,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     private void loadSelectionFromSharedPreferences(){
         final Gson gson = new Gson();
 
-        SharedPreferences sharedPreferences = this.getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
+        SharedPreferences sharedPreferences = this.getContext().getSharedPreferences(PREFS_COURSE_LIST, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
         if(sharedPreferences.contains(PREFS_CHOSEN_STUDY_COURSE)){
             final String chosenCourseJson = sharedPreferences.getString(PREFS_CHOSEN_STUDY_COURSE,"");
@@ -230,25 +253,28 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             mView.setSemesterPickerEnabled(true);
 
 
+
             //load last request result for the last chosen study course and semester
             if (sharedPreferences.contains(PREFS_ALL_COURSES_OF_CHOSEN_STUDYCOURSE_AND_SEMESTER)) {
                 final String resultJson = correctUmlauts(sharedPreferences.getString(PREFS_ALL_COURSES_OF_CHOSEN_STUDYCOURSE_AND_SEMESTER, ""));
-                final MyTimeTableCourse[] result = gson.fromJson(resultJson, MyTimeTableCourse[].class);
+                final MyTimeTableCourse[] coursesFromSharedPreferences = gson.fromJson(resultJson, MyTimeTableCourse[].class);
 
-                //for each course in result check if the user has added it to his/her schedule
-                for(MyTimeTableCourse loadedElement : result){
+                //for each course in coursesFromSharedPreferences,
+                // check if the course is in the courses the user subscribed to
+                // and update the subscribed property
+                for(MyTimeTableCourse loadedCourse : coursesFromSharedPreferences){
                     boolean found = false;
-                    for(MyTimeTableCourse selectedItem : getSubscribedCourses()){
-                        if(loadedElement.getEvent().getUid().equals(selectedItem.getEvent().getUid())){
+                    for(MyTimeTableCourse subscribedCourse : getSubscribedCourses()){
+                        if(loadedCourse.getEvent().getUid().equals(subscribedCourse.getEvent().getUid())){
                             found = true;
                             break;
                         }
                     }
-                    loadedElement.setSubscribed( found );
+                    loadedCourse.setSubscribed( found );
 
                 }
                 //set all courses of the currently chosen study course and semester (not the variable for the subscribed courses)
-                allCoursesInChosenSemester = new ArrayList<MyTimeTableCourse>(Arrays.asList(result));
+                allCoursesInChosenSemester = new ArrayList<MyTimeTableCourse>(Arrays.asList(coursesFromSharedPreferences));
 
                 mCourseListAdapter.setItems(allCoursesInChosenSemester);
                 mView.setCourseListAdapter(mCourseListAdapter);
@@ -285,7 +311,10 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                     // Check if study course has any semesters available
                     if (studyCourse.getSemesters() != null) {
                         studyCourseEmpty = false;
+
                         //save chosen study course to shared preferences
+                        SharedPreferences sharedPreferences = getContext().getSharedPreferences(PREFS_COURSE_LIST, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
                         String chosenStudyCourseJson = correctUmlauts(new Gson().toJson(studyCourse));
                         editor.putString(PREFS_CHOSEN_STUDY_COURSE, chosenStudyCourseJson);
                         editor.commit();
@@ -317,11 +346,6 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
         }
 
-        /** es gibt zu EINEM Request unterschiedliche Anzahl von Anforderungen und Antworten
-         *  wir warten, bis alle Antworten eingetroffen sind.
-         */
-        private volatile int requestCounter = 0;
-
         /**
          *
          * @param _SemesterId
@@ -344,6 +368,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                     //save chosen semester to shared preferences
                     final Gson gson = new Gson();
                     final String chosenSemesterJson = correctUmlauts(gson.toJson(mChosenSemester));
+                    SharedPreferences sharedPreferences = getContext().getSharedPreferences(PREFS_COURSE_LIST, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString(PREFS_CHOSEN_SEMESTER, chosenSemesterJson);
                     editor.commit();
 
@@ -364,12 +390,9 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                     //week-wise timetables of the remaining semester for the current studyGroup in the for-loop
                                     List<TimeTableWeekVo> timeTableWeek = response.body();
 
-//                                    Log.d(TAG, "success: Request wurde ausgefuehrt: " + response.raw().request().url() + " Status: " + response.code());
-                                    //Gemergte liste aller zurückgekehrten Requests. Die Liste wächst mit jedem Request.
-                                    //Hier (im success) haben wir neue Daten bekommen.
-
-                                    addCourseToAllCoursesInChosenSemester(timeTableWeek, this.getStudyGroup());
-//                                    Log.d(TAG, "success: length"+courseEvents.size());
+                                    //add all time table events of the remaining semester (= list of timetableWeeks)
+                                    // to the list of allCoursesInChosenSemester
+                                    addToAllCoursesInChosenSemester(timeTableWeek, this.getStudyGroup());
 
 
                                     // es gibt zu jedem Request unterschiedliche Anzahl von Anforderungen und Antworten
@@ -384,26 +407,6 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                         } catch ( final RuntimeException e ) {
                                             Log.e(TAG, "Fehler beim Sortieren", e); //$NON-NLS
                                         }
-
-/* TODO: Performance, fühlt sich an, als ob es immer ausgeführt würde....
-                                        //Alle Duplikate rauswerfen, Sprich, Einträge, die gleich sind
-                                        int nCourseLength = courseEvents.size();
-                                        // we need at least 2 elements, to find duplicates and throw away the duplicate
-                                        if ( nCourseLength > 2 ) {
-                                            // we have to check per iteration, if we reached the end, because we delete
-                                            // dynamically the list and shorten it
-                                            for (int j = 0 + 1; j < courseEvents.size(); j++) {
-                                                final MyTimeTableCourse course0 = courseEvents.get( j-1 );
-                                                final MyTimeTableCourse course1 = courseEvents.get( j );
-
-                                                // wenn es gleich ist, dann entfernen wir es, damit entfernen wir Duplikate
-                                                if ( CourseTitleStudyGroupTitleComparator.compareStatic( course0, course1 ) == 0 ) {
-                                                    courseEvents.remove(j);
-                                                    j--;
-                                                }
-                                            }
-                                        }
-*/
 
                                         mView.toggleCourseListVisibility(true);
                                         mCourseListAdapter.setItems(allCoursesInChosenSemester);
@@ -424,12 +427,10 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                             @Override
                             public void onFailure(Call<ArrayList<TimeTableWeekVo>> call, Throwable t) {
                                 super.onFailure(call, t);
-//                                Log.d(TAG, "failure: " + t);
                             }
                         };
 
                         NetworkHandler.getInstance().fetchTimeTableEvents(timeTableStudyGroupVo.getTimeTableId(), callback);
-                        proceedToTimetable(timeTableStudyGroupVo.getTimeTableId(), callback);
                         requestCounter++;
                     }
                 }
@@ -448,8 +449,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
                 mView.setStudyCourseItems(mResponse.getStudyCourses());
             }
-            Log.d(TAG, "success: request  " + response.raw().request().url()
-                    + ", status: "+response.code());
+//            Log.d(TAG, "success: request  " + response.raw().request().url()
+//                    + ", status: "+response.code());
         }
 
         @Override
@@ -458,7 +459,6 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         }
     };
 
-    private SharedPreferences.Editor editor;
     private MyTimeTableDialogView mView;
     private TimeTableResponse mResponse;
     private TimeTableStudyCourseVo mChosenStudyCourse;
@@ -467,4 +467,10 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     private List<MyTimeTableCourse> allCoursesInChosenSemester = new ArrayList<>();
 
     private MyTimeTableDialogAdapter mCourseListAdapter;
+
+    /** es gibt zu EINEM Request unterschiedliche Anzahl von Anforderungen und Antworten
+     *  wir warten, bis alle Antworten eingetroffen sind.
+     */
+    private volatile int requestCounter = 0;
+
 }

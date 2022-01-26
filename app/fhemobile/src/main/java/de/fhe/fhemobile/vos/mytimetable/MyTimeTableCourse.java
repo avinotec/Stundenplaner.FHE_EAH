@@ -99,6 +99,8 @@ public class MyTimeTableCourse implements Parcelable {
 
 	public void setSets(List<String> sets) { this.sets = sets; }
 
+	public void addSet(String set) { this.sets.add(set); }
+
 	/**
 	 * adds all set names to one long string and returns it
 	 * @return
