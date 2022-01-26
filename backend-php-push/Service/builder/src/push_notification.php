@@ -27,57 +27,55 @@ Darüber hinaus werden hier die Änderungshinweise in die Tabelle changes geschr
 Oberfunktion
 #####################
 */
-function send_push_notifications($module_id, $event_id, $set_splus_key, $grund_aenderung, $neue_event_daten, $alte_event_daten) {
+
+const PUSH_NOTIFICATION_ANDERUNG = 1 ;
+const PUSH_NOTIFICATION_DELETE = 2;
+const PUSH_NOTIFICATION_ADD = 3 ;
+const PUSH_NOTIFICATION_UNKNOWN = 4;
+
+function send_push_notifications($module_id, $event_id, $set_splus_key, $grund_aenderung, $neue_event_daten, $alte_event_daten) : void
+{
     global $firebase_client;
     $DB = new Db(DBHost, DBPort, DBName, DBUser, DBPassword);
     // Den Grund der Änderung ID bilden, um in der Datenbank und/oder App besser damit zu handieren.
     // ID :
     // 1 -> Änderung
     // 2 -> Entfernung
-    // 3 -> Hinzfügung
+    // 3 -> Hinzufügen
     // 4 -> Unbekannt
     // Prüfen ob $grund_aenderung ein Array ist und ein 0tes Element verfügbar ist. 
     if (is_array($grund_aenderung)) {
         // Date, startTime, endTime, room
-        if (in_array("Datum", $grund_aenderung) OR in_array("Startzeit", $grund_aenderung) OR in_array("Endzeit", $grund_aenderung) OR in_array("Raum", $grund_aenderung)) {
-            $grund_aenderung_id = 1;
-        }
-        // Entfernt
+        if (in_array("Datum", $grund_aenderung) or in_array("Startzeit", $grund_aenderung) or in_array("Endzeit", $grund_aenderung) or in_array("Raum", $grund_aenderung)) {
+            $grund_aenderung_id = PUSH_NOTIFICATION_ANDERUNG;
+        } // Entfernt
         elseif (in_array("Event Entfernt", $grund_aenderung)) {
-            $grund_aenderung_id = 2;
-        }
-        // Hinzugefügt
-            elseif (in_array("Neues Event", $grund_aenderung)) {
-            $grund_aenderung_id = 3;
-        }
-        // Wenn kein passender Grund übermittelt worden ist.
+            $grund_aenderung_id = PUSH_NOTIFICATION_DELETE;
+        } // Hinzugefügt
+        elseif (in_array("Neues Event", $grund_aenderung)) {
+            $grund_aenderung_id = PUSH_NOTIFICATION_ADD;
+        } // Wenn kein passender Grund übermittelt worden ist.
         else {
-            $grund_aenderung_id = 4;
-            $grund_aenderung    = array(
-                "unknown"
-            );
+            $grund_aenderung_id = PUSH_NOTIFICATION_UNKNOWN;
+            $grund_aenderung = array("unknown");
         }
-    }
-    // Wenn $grund_aenderung kein Array ist
+    } // Wenn $grund_aenderung kein Array ist
     else {
-        $grund_aenderung_id = 4;
-        $grund_aenderung    = array(
-            "unknown"
-        );
+        $grund_aenderung_id = PUSH_NOTIFICATION_UNKNOWN;
+        $grund_aenderung = array("unknown");
     }
 
     // Neue oder alte Daten nutzen
     // Alte bei Löschun
     // Sonst können neue_event_daten genutzt werden
 
-    if(empty($neue_event_daten)){
-            $event_splus_key =  $alte_event_daten['module_event_splus_key'];
-            $title =  $alte_event_daten['title'];
-            $date = $alte_event_daten['date'];
-    }
-    else{
-        $event_splus_key =  $neue_event_daten['uid'];
-        $title =  $neue_event_daten['title'];
+    if (empty($neue_event_daten)) {
+        $event_splus_key = $alte_event_daten['module_event_splus_key'];
+        $title = $alte_event_daten['title'];
+        $date = $alte_event_daten['date'];
+    } else {
+        $event_splus_key = $neue_event_daten['uid'];
+        $title = $neue_event_daten['title'];
         $date = $neue_event_daten['date'];
     }
 
@@ -99,7 +97,7 @@ function send_push_notifications($module_id, $event_id, $set_splus_key, $grund_a
 
     $deviceId_array = hol_alle_device_ids_fuer_modul($title, $set_splus_key);
     //Test
-    if ($deviceId_array !== false) {
+    if ( ! empty( $deviceId_array ) ) {
         $log = new PDOLog();
         // Sende Push zu jedem Device
 
@@ -107,22 +105,22 @@ function send_push_notifications($module_id, $event_id, $set_splus_key, $grund_a
         $deviceId_array_chunk = array_chunk($deviceId_array, 100);
         foreach ($deviceId_array_chunk as $deviceId_id) {
 
-               $deviceId_id_string = implode( ",", $deviceId_id ); 
+            $deviceId_id_string = implode( ",", $deviceId_id );
             $log->write("Push an _ {$title} - : " . $deviceId_id_string , DBName . md5(DBPassword));
 
             // Nur ein Änderungsgrund - wenn $grund_aenderung Anzahl = 1
-            if (isset($grund_aenderung) AND is_array($grund_aenderung) AND count($grund_aenderung) == 1) {
+            if (isset($grund_aenderung) AND is_array($grund_aenderung) AND count($grund_aenderung) == PUSH_NOTIFICATION_ANDERUNG) {
                 $msg_title = 'Änderung einer Veranstaltung';
                 $msg_body = "{$title} - {$date}. Grund: {$grund_aenderung[0]}";
             }
             // Mehre Änderungsgründe
-            elseif (isset($grund_aenderung) AND is_array($grund_aenderung) AND count($grund_aenderung) > 1) {
+            elseif (isset($grund_aenderung) AND is_array($grund_aenderung) AND count($grund_aenderung) >= PUSH_NOTIFICATION_DELETE) {
                 // implode des Arrays
                 $send_string  = implode(", ", $grund_aenderung);
                 $msg_title = 'Änderung einer Veranstaltung';
                 $msg_body = "{$title} - {$date}. Gründe: { $send_string}";
             }
-            // Umbekannter Änderungsgrund
+            // Unbekannter Änderungsgrund
             else {
                 $msg_title = 'Änderung einer Veranstaltung';
                 $msg_body = "{$title} - {$date}. Grund: unbekannt ";
@@ -141,10 +139,10 @@ function send_push_notifications($module_id, $event_id, $set_splus_key, $grund_a
             
             $log->write("Response: " . json_encode($response) , DBName . md5(DBPassword));
         }
-        
+
     }
-    return;
 }
+
 
 /*
 #####################
@@ -153,7 +151,7 @@ Unterfunktionen
 */
 
 // Diese Funktion holt alle Device Ids, welche ein gewisses Modul abonniert hat.
-function hol_alle_device_ids_fuer_modul(String $module_title, String $set_splus_key) : array {
+private function hol_alle_device_ids_fuer_modul(String $module_title, String $set_splus_key) : array {
     // neue DB Con
     $DB               = new Db(DBHost, DBPort, DBName, DBUser, DBPassword);
     $encryption_class = new Encryption();
@@ -162,14 +160,15 @@ function hol_alle_device_ids_fuer_modul(String $module_title, String $set_splus_
         $set_splus_key,
         $module_title
     ));
+
     // Check, ob es erfolgreiche Treffer gibt
     // Wenn ja wird das $return_array mit den Device Ids gefüllt
+    $return_array = array();
     if (isset($result) AND is_array($result) AND count($result) > 0) {
-        $retrun_array = array();
+
         foreach ($result as $num => $data) {
-            $retrun_array[] = $encryption_class->decryptString($data['device_id']);
+            $return_array[] = $encryption_class->decryptString($data['device_id']);
         }
-        return $retrun_array;
     }
-    return false;
+    return $return_array;
 }

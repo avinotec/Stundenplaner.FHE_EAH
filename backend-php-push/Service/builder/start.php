@@ -63,8 +63,6 @@ Skript Vorbereitung
 // Wenn 1 -> ist der erste Durchgang. Es werden keine Einträge in die Changes DB gemacht und keine Push. Not. werden versendet.
 // Diese Variable wird von der check_valid_db.php angepasst
 $first_start = 0;
-// Check ob es möglich ist zu DB eine Verbindung herzustellen.
-check_db_con();
 // Check ob die Datenbank vorhanden ist
 // Wenn nicht wird diese angelegt
 check_db_available();

@@ -17,11 +17,8 @@
   */
 
 
-// Diese Part muss zwingend zum Start des gesamten Skriptes (also beim Start von start.php) ausgeführt werden.
-// Hierbei wird gepürft, ob eine DB Verbindung möglich ist.
-// Es wird überprüft, ob die benötigte Datenbank vorhanden ist.
-// Wenn sie nicht vorhanden ist (z.b. beim erstmaligen nutzen dieses Tools), wird die Datenbank mittels DB_Dump (src/stundenplan.sql) generiert
-function check_db_con() : void {
+function check_db_available() : void {
+
     // Aufbau DB Con
     // Wenn die Verbindung nicht aufgebaut werden kann, wird das Skript beendet und der Fehler in den Log geschrieben
     $conn = new mysqli(DBHost, DBUser, DBPassword);
@@ -29,9 +26,8 @@ function check_db_con() : void {
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-}
 
-function check_db_available() : void {
+
     global $first_start;
     $DB     = new Db(DBHost, DBPort, "", DBUser, DBPassword);
     $log    = new PDOLog();
