@@ -19,8 +19,8 @@
 
 // Hier sind mehrere Funktionen enthalten
 // All umfassend wird get_module_and_module_event von der start.php ausgeführt
-// Hierbei werden die neu eingelesenen Ical Dateien aus den Set Datenbanken geholt, um die Module und Modul_Event DB zu Aktualisieren
-// Gleichzeitig wird  geprüft, ob Änderung an den Events aufgetreten sind
+// Hierbei werden die neu eingelesenen Ical Dateien aus den Set Datenbanken geholt, um die Module und Modul_Event DB zu aktualisieren
+// Gleichzeitig wird geprüft, ob Änderung an den Events aufgetreten sind
 // Wenn Änderung gefunden werden, werden die Push B. versendet und eine Änderungshinweis in der DB Tabelle changes erstellt.
 // get_module_and_module_event  ist hierbei eine Funktion, welche mehrere Unterfunktionen ansteuert.
 
@@ -268,6 +268,7 @@ function remove_old_events($db_time, $DB) {
     }
     return;
 }
+
 function remove_old_module($db_time, $DB) {
     // Löscht alle alten Module, welche zu alt sind und keine Events mehr unter sicht hat
     $DB     = new Db(DBHost, DBPort, DBName, DBUser, DBPassword);
@@ -294,4 +295,3 @@ function remove_old_module($db_time, $DB) {
     }
     return;
 }
-?> 

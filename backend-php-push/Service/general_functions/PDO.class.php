@@ -11,13 +11,14 @@
  * 
  * A PHP MySQL PDO class similar to the the Python MySQLdb. 
  */
-require(__DIR__ . '/PDO.Log.class.php');
-require(__DIR__ . '/PDO.Iterator.class.php');
 /** Class DB
  * @property PDO pdo PDO object
  * @property PDOStatement sQuery PDOStatement
  * @property PDOLog PDOLog logObject
  */
+
+
+
 class DB
 {
 	private $Host;
@@ -49,6 +50,10 @@ class DB
      */
 	public function __construct($Host, $DBPort, $DBName, $DBUser, $DBPassword)
 	{
+
+
+
+
 		$this->logObject  = new PDOLog();
 		$this->Host       = $Host;
 		$this->DBPort     = $DBPort;
@@ -370,4 +375,81 @@ class DB
 			}
 		}
 	}
+}
+
+
+class PDOIterator implements Iterator {
+    private $position = 0;
+    private $pdo;
+    private $fetchMode;
+    private $nextResult;
+
+    public function __construct(PDOStatement $pdo, $fetchMode = PDO::FETCH_ASSOC) {
+        $this->position = 0;
+        $this->pdo = $pdo;
+        $this->fetchMode = $fetchMode;
+    }
+
+    function rewind() {
+        $this->position = 0;
+        $this->pdo->execute();
+        $this->nextResult = $this->pdo->fetch($this->fetchMode, PDO::FETCH_ORI_NEXT);
+    }
+
+    function current() {
+        return $this->nextResult;
+    }
+
+    function key() {
+        return $this->position;
+    }
+
+    function next() {
+        ++$this->position;
+        $this->nextResult = $this->pdo->fetch($this->fetchMode, PDO::FETCH_ORI_NEXT);
+    }
+
+    function valid() {
+        $invalid = $this->nextResult === false;
+        if ($invalid) {
+            $this->pdo->closeCursor();
+        }
+        return !$invalid;
+    }
+}
+
+
+class PDOLog
+{
+    private $path = '/logs/';
+    public function __construct()
+    {
+        $this->path = __DIR__ . $this->path;
+    }
+
+    public function write($message, $fileSalt)
+    {
+        $date = new DateTime();
+        $log  = $this->path . $date->format('Y-m-d') . "-" . md5($date->format('Y-m-d') . $fileSalt) . ".txt";
+        if (is_dir($this->path)) {
+            if (!file_exists($log)) {
+                $fh = fopen($log, 'a+') or die("Fatal Error !");
+                $logcontent = "Time : " . $date->format('H:i:s') . "\r\n" . $message . "\r\n";
+                fwrite($fh, $logcontent);
+                fclose($fh);
+            } else {
+                $this->edit($log, $date, $message);
+            }
+        } else {
+            if (mkdir($this->path, 0777) === true) {
+                $this->write($message, $fileSalt);
+            }
+        }
+    }
+    private function edit($log, DateTime $date, $message)
+    {
+        $logcontent = "Time : " . $date->format('H:i:s') . "\r\n" . $message . "\r\n\r\n";
+        $logcontent = $logcontent . file_get_contents($log);
+        file_put_contents($log, $logcontent);
+    }
 }
