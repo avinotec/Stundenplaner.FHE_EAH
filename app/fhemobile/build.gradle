@@ -67,8 +67,9 @@ android {
         versionName '1.8'
 
         multiDexEnabled = true
-
-        // For Testing
+	    resConfigs 'de', 'en'
+	
+	    // For Testing
         //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         
         /*
@@ -77,7 +78,6 @@ android {
         app is translated to the same languages or not. If you'd like to keep only the languages that your app officially supports,
         you can specify those languages using the resConfig property. Any resources for languages not specified are removed.
          */
-        resConfigs "de", "en"
     }
     
     
@@ -204,29 +204,19 @@ android {
             ext.enableCrashlytics = false
         }
     }
-
-    // Lint found fatal errors while assembling a release target
-    lintOptions {
-        //checkReleaseBuilds false
-
-        // Or, if you prefer, you can continue to check for errors in release builds,
-        // but continue the build even when errors are found:
-        abortOnError false
-    }
-
-    packagingOptions {
-        exclude 'META-INF/ASL2.0'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/NOTICE'
-
-        //junit stuff, not necessary
-        exclude 'LICENCE.txt' // from old code
-        exclude 'junit/runner/smalllogo.gif'
-        exclude 'junit/runner/logo.gif'
-        exclude 'LICENSE-junit.txt'
-    }
-
-
+	packagingOptions {
+		resources {
+			excludes += ['META-INF/ASL2.0', 'META-INF/LICENSE', 'META-INF/NOTICE', 'LICENCE.txt', 'junit/runner/smalllogo.gif', 'junit/runner/logo.gif', 'LICENSE-junit.txt']
+		}
+	}
+	
+	// Lint found fatal errors while assembling a release target
+	
+	lint {
+		abortOnError false
+	}
+	
+	
 }
 
 /**
