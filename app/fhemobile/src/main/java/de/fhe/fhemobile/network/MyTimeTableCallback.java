@@ -19,7 +19,7 @@ package de.fhe.fhemobile.network;
 import androidx.annotation.NonNull;
 
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyCourseVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,20 +31,20 @@ import retrofit2.Response;
  */
 public class MyTimeTableCallback<T> implements Callback<T> {
 
-	final private TimeTableStudyCourseVo studyCourse;
+	final private TimeTableStudyProgramVo studyProgram;
 	final private TimeTableSemesterVo semester;
 	final private TimeTableStudyGroupVo studyGroup;
 
 
 	/**
-	 * @param studyCourse
+	 * @param studyProgram
 	 * @param semester
 	 * @param studyGroup
 	 */
-	public MyTimeTableCallback(@NonNull TimeTableStudyCourseVo studyCourse,
+	public MyTimeTableCallback(@NonNull TimeTableStudyProgramVo studyProgram,
 							   @NonNull TimeTableSemesterVo semester,
 							   @NonNull TimeTableStudyGroupVo studyGroup) {
-		this.studyCourse = studyCourse;
+		this.studyProgram = studyProgram;
 		this.semester = semester;
 		this.studyGroup = studyGroup;
 	}
@@ -73,8 +73,8 @@ public class MyTimeTableCallback<T> implements Callback<T> {
 		return semester;
 	}
 
-	public TimeTableStudyCourseVo getStudyCourse() {
-		return studyCourse;
+	public TimeTableStudyProgramVo getStudyProgram() {
+		return studyProgram;
 	}
 
 	public TimeTableStudyGroupVo getStudyGroup() {

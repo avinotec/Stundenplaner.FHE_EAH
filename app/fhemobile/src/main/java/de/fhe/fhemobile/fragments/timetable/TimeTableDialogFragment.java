@@ -32,7 +32,7 @@ import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.TimeTableSettings;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.timetable.TimeTableDialogView;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyCourseVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
 import retrofit2.Call;
@@ -110,7 +110,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
             boolean errorOccurred = false;
 
-            for (TimeTableStudyCourseVo courseVo : mResponse.getStudyCourses()) {
+            for (TimeTableStudyProgramVo courseVo : mResponse.getStudyPrograms()) {
                 if (courseVo.getId() != null && courseVo.getId().equals(_StudyCourseId)) {
                     mChosenCourse = courseVo;
 
@@ -190,7 +190,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
         public void onResponse(Call<TimeTableResponse> call, Response<TimeTableResponse> response) {
             if ( response.body() != null ) {
                 mResponse = response.body();
-                mView.setStudyCourseItems(response.body().getStudyCourses());
+                mView.setStudyCourseItems(response.body().getStudyPrograms());
             }
         }
 
@@ -203,7 +203,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
     private TimeTableDialogView mView;
 
     private TimeTableResponse mResponse;
-    private TimeTableStudyCourseVo mChosenCourse;
+    private TimeTableStudyProgramVo mChosenCourse;
     private TimeTableSemesterVo mChosenSemester;
     private String            mChosenTimetableId;
 }

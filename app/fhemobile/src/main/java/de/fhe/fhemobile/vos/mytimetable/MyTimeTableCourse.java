@@ -33,7 +33,7 @@ import java.util.List;
 import de.fhe.fhemobile.comparator.TimeTableEventComparator;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyCourseVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
 
 
@@ -47,13 +47,13 @@ public class MyTimeTableCourse implements Parcelable {
 	public MyTimeTableCourse(){	}
 
 
-	public MyTimeTableCourse(TimeTableStudyCourseVo studyCourse,
+	public MyTimeTableCourse(TimeTableStudyProgramVo studyProgram,
 							 TimeTableSemesterVo semester,
 							 TimeTableEventVo event,
 							 String studyGroup,
 							 boolean subscribed) {
 		this.mTitle = getCourseName(event.getTitle());
-		this.studyCourse = studyCourse;
+		this.studyProgram = studyProgram;
 		this.semester = semester;
 		events.add(event);
 		studyGroups.add(studyGroup);
@@ -63,17 +63,17 @@ public class MyTimeTableCourse implements Parcelable {
 	/**
 	 * Creates a new instance of {@link MyTimeTableCourse}
 	 * and automatically sets the subscribed status
-	 * @param studyCourse study program the course belongs to
+	 * @param studyProgram study program the course belongs to
 	 * @param semester semester the course belongs to
 	 * @param event the event to initialize the event list with
 	 * @param studyGroup the study group the course is dedicated to and that to initialize the study group list with
 	 */
-	public MyTimeTableCourse(TimeTableStudyCourseVo studyCourse,
+	public MyTimeTableCourse(TimeTableStudyProgramVo studyProgram,
 							 TimeTableSemesterVo semester,
 							 TimeTableEventVo event,
 							 TimeTableStudyGroupVo studyGroup) {
 		this.mTitle = getCourseName(event.getTitle());
-		this.studyCourse = studyCourse;
+		this.studyProgram = studyProgram;
 		this.semester = semester;
 		events.add(event);
 		studyGroups.add(studyGroup.getShortTitle());
@@ -88,7 +88,7 @@ public class MyTimeTableCourse implements Parcelable {
 		this.mTitle = getCourseName(title);
 	}
 
-	public final TimeTableStudyCourseVo getStudyCourse() { return studyCourse; }
+	public final TimeTableStudyProgramVo getStudyProgram() { return studyProgram; }
 
 	public final TimeTableSemesterVo getSemester() { return semester; }
 
@@ -96,7 +96,7 @@ public class MyTimeTableCourse implements Parcelable {
 
 	public TimeTableEventVo getFirstEvent() {  return events.isEmpty() ? events.get(0) : null; }
 
-	public final void setStudyCourse(final TimeTableStudyCourseVo course) { this.studyCourse = course; }
+	public final void setStudyProgram(final TimeTableStudyProgramVo course) { this.studyProgram = course; }
 
 	public final void setSemester(final TimeTableSemesterVo semester) { this.semester = semester; }
 
@@ -173,7 +173,7 @@ public class MyTimeTableCourse implements Parcelable {
 	public MyTimeTableCourse copy(){
 		final MyTimeTableCourse copy = new MyTimeTableCourse();
 		copy.id = MyTimeTableCourse.incId++;
-		copy.setStudyCourse(this.getStudyCourse());
+		copy.setStudyProgram(this.getStudyProgram());
 		copy.setSemester(this.getSemester());
 		copy.setStudyGroups(this.getStudyGroups());
 		copy.setSubscribed(this.subscribed);
@@ -185,7 +185,7 @@ public class MyTimeTableCourse implements Parcelable {
 
 	private MyTimeTableCourse(final Parcel in) {
 		mTitle = in.readString();
-		studyCourse = in.readParcelable(TimeTableStudyCourseVo.class.getClassLoader());
+		studyProgram = in.readParcelable(TimeTableStudyProgramVo.class.getClassLoader());
 		semester = in.readParcelable(TimeTableSemesterVo.class.getClassLoader());
 
 		studyGroups = new ArrayList<>();
@@ -211,7 +211,7 @@ public class MyTimeTableCourse implements Parcelable {
 	@Override
 	public void writeToParcel(final Parcel dest, final int flags) {
 		dest.writeString(mTitle);
-		dest.writeParcelable(studyCourse, flags);
+		dest.writeParcelable(studyProgram, flags);
 		dest.writeParcelable(semester, flags);
 
 		//sizes needed for reading parcelable
@@ -244,8 +244,8 @@ public class MyTimeTableCourse implements Parcelable {
 	@SerializedName("title")
 	private String mTitle;
 
-	@SerializedName("studyCourse")
-	private TimeTableStudyCourseVo studyCourse;
+	@SerializedName("studyProgram")
+	private TimeTableStudyProgramVo studyProgram;
 
 	@SerializedName("semester")
 	private TimeTableSemesterVo semester;
@@ -272,7 +272,7 @@ public class MyTimeTableCourse implements Parcelable {
 	@NonNull
 	@Override
 	public final String toString() {
-		return this.getStudyCourse().getTitle() + "-->"
+		return this.getStudyProgram().getTitle() + "-->"
 				+ this.getSemester().getTitle() + "-->"
 				+ this.getStudyGroup().getTitle() + "-->"
 				+ this.getEventWeek().getWeekInYear() + "-->"

@@ -152,7 +152,7 @@ public class MyTimeTableUtils {
 //			Log.d(TAG, "listContainsEvent: "+event.getEventWeek().getWeekInYear()+" "+data.getEventWeek().getWeekInYear());
 //			Log.d(TAG, "listContainsEvent: "+event.getStudyGroup().getTimeTableId()+" "+data.getStudyGroup().getTimeTableId());
 //			Log.d(TAG, "listContainsEvent: "+event.getSemester().getId()+" "+data.getSemester().getId());
-//			Log.d(TAG, "listContainsEvent: "+event.getStudyCourse().getId()+" "+data.getStudyCourse().getId());
+//			Log.d(TAG, "listContainsEvent: "+event.getStudyProgram().getId()+" "+data.getStudyProgram().getId());
             //todo: auskommentiert im Zuge von Umbauarbeiten
            /* if(event.getFirstEvent().getTitle().equals(data.getFirstEvent().getTitle())){
 //				Log.d(TAG, "EventTitle: true");
@@ -164,7 +164,7 @@ public class MyTimeTableUtils {
 //							Log.d(TAG, "StudyGroup: true");
                             if(event.getSemester().getId().equals(data.getSemester().getId())){
 //								Log.d(TAG, "Semester: true");
-                                if(event.getStudyCourse().getId().equals(data.getStudyCourse().getId())){
+                                if(event.getStudyProgram().getId().equals(data.getStudyProgram().getId())){
 //									Log.d(TAG, "Course: true");
                                     return true;
                                 }
