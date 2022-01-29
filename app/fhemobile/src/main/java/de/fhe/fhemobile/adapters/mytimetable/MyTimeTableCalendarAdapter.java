@@ -16,6 +16,9 @@
  */
 package de.fhe.fhemobile.adapters.mytimetable;
 
+import static de.fhe.fhemobile.Main.getSubscribedCourses;
+import static de.fhe.fhemobile.utils.MyTimeTableUtils.getEventTitleWithoutLastNumbers;
+
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +35,6 @@ import java.util.Date;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
@@ -80,7 +82,6 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	 */
 	@Override
 	public long getItemId(int position) {
-		//todo: was "return position" before -> ensure that change does not have side effects
 		return position;
 	}
 
@@ -113,37 +114,37 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 		//set TextViews Week, Day, Title,... for the currentItem
 		final MyTimeTableCourse currentItem = mItems.get(position);
-		final Date df = new Date(currentItem.getEvent().getStartDate());
+		final Date df = new Date(currentItem.getFirstEvent().getStartDate());
 
 		final TextView courseWeekDay = (TextView) convertView.findViewById(R.id.textviewWeekDay);
-		courseWeekDay.setText(currentItem.getEvent().getDayOfWeek());
+		courseWeekDay.setText(currentItem.getFirstEvent().getDayOfWeek());
 		if(sdf.format(df).compareTo(sdf.format(new Date())) == 0){
-			courseWeekDay.setText(context.getString(R.string.today) + " ("+currentItem.getEvent().getDayOfWeek() + ")");
+			courseWeekDay.setText(context.getString(R.string.today) + " ("+currentItem.getFirstEvent().getDayOfWeek() + ")");
 		}
 
 		final TextView courseDate = (TextView) convertView.findViewById(R.id.tvCourseDate);
-		courseDate.setText(currentItem.getEvent().getDate());
+		courseDate.setText(currentItem.getFirstEvent().getDate());
 
 		final TextView courseTitle = (TextView) convertView.findViewById(R.id.textviewTitle);
-		courseTitle.setText(currentItem.getEvent().getShortTitle());
+		courseTitle.setText(getEventTitleWithoutLastNumbers(currentItem.getFirstEvent().getShortTitle()));
 
 		final TextView courseTime = (TextView) convertView.findViewById(R.id.textCourseTime);
 		//String date = sdf.format(df);
-		courseTime.setText(currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime()); // $NON-NLS
+		courseTime.setText(currentItem.getFirstEvent().getStartTime() + " – " + currentItem.getFirstEvent().getEndTime()); // $NON-NLS
 
 		TextView courseRoom = (TextView)convertView.findViewById(R.id.textviewRoom);
-		courseRoom.setText(currentItem.getEvent().getRoom());
+		courseRoom.setText(currentItem.getFirstEvent().getRoom());
 
 		TextView courseLecturer = (TextView)convertView.findViewById(R.id.textviewLecturer);
-		courseLecturer.setText(currentItem.getEvent().getLecturer());
+		courseLecturer.setText(currentItem.getFirstEvent().getLecturer());
 
 
 		//Add a header displaying WeekDay and Date
 		// if such a header has already been added with other courses at the same date,
 		// then do not add header again (set it invisible for this item)
 		RelativeLayout headerLayout = convertView.findViewById(R.id.layout_mytimetable_calendar_header);
-		if(position == 0 || !currentItem.getEvent().getDate().equals(
-											mItems.get(position - 1).getEvent().getDate())){
+		if(position == 0 || !currentItem.getFirstEvent().getDate().equals(
+											mItems.get(position - 1).getFirstEvent().getDate())){
 			headerLayout.setVisibility(View.VISIBLE);
 			courseWeekDay.setVisibility(View.VISIBLE);
 			courseDate.setVisibility(View.VISIBLE);
@@ -170,9 +171,9 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 		int posToday = -1;
 
-		for(int i = 0; i < MainActivity.subscribedCoursesSorted.size(); i++){
+		for(int i = 0; i < getSubscribedCourses().size(); i++){
 
-			final TimeTableEventVo event = MainActivity.subscribedCoursesSorted.get(i).getEvent();
+			final TimeTableEventVo event = getSubscribedCourses().get(i).getFirstEvent();
 			final Date now = new Date();
 
 			try {

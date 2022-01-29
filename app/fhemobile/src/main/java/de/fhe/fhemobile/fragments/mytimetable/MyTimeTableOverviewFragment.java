@@ -131,16 +131,18 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 			String title = "";
 			String setID = "";
 
-			for (MyTimeTableCourse event : getSubscribedCourses()) {
-				final String eventTitleShort = MyTimeTableUtils.cutEventTitle(event.getEvent().getTitle());
-				final String sSetID = event.getStudyGroup().getTimeTableId();
+			for (MyTimeTableCourse course : getSubscribedCourses()) {
+				final String eventTitleShort = course.getTitle();
+
+				//todo: all setIds in the course's studyGroupList has to be searched
+				/*final String sSetID = course.getStudyGroup().getTimeTableId();
 
 				if ((title.equals(eventTitleShort) && setID.equals(sSetID))) {
 
-					request.addCourse(event.getStudyGroup().getTimeTableId(), event.getEvent().getTitle());
+					request.addCourse(course.getStudyGroup().getTimeTableId(), course.getEvent().getTitle());
 					title = eventTitleShort;
 					setID = sSetID;
-				}
+				}*/
 			}
 
 			final String json = request.toJson();
@@ -242,21 +244,23 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 						if (change.getChangesReason() == CHANGEREASON_EDIT) {
 							final MyTimeTableCourse event = MyTimeTableUtils.getEventByID(myTimetableList, change.getNewEventJson().getUid());
 							if (event != null) {
-								event.setEvent(change.getNewEventJson());
+								//todo: auskommentiert im Zuge von Umbauarbeiten
+								//event.setEvent(change.getNewEventJson());
 							}
 						}
 						//Hinzufuegen eines neuen Events: Erstelle ein neues Element vom Typ MyTimeTableCourse, schreibe alle Set-, Semester- und Studiengangdaten in dieses
 						//und fuege dann die Eventdaten des neuen Events hinzu. Anschliessend in die Liste hinzufuegen.
 						if (change.getChangesReason() == CHANGEREASON_NEW) {
 							final MyTimeTableCourse event = MyTimeTableUtils.getCoursesByStudyGroupTitle(myTimetableList, change.getSetSplusKey()).get(0).copy();
-							event.setEvent(change.getNewEventJson());
-							((MainActivity) getActivity()).addToSubscribedCourses(event);
+							//todo: auskommentiert im Zuge von Umbauarbeiten
+							//event.setEvent(change.getNewEventJson());
+							((MainActivity) getActivity()).addToSubscribedCoursesAndUpdateAdapters(event);
 
 						}
 						//Loeschen eines Events: Suche den Event mit der SplusID und lösche ihn aus der Liste.
 						if (change.getChangesReason() == CHANGEREASON_DELETE) {
 							final MyTimeTableCourse event = MyTimeTableUtils.getEventByID(myTimetableList, change.getNewEventJson().getUid());
-							((MainActivity) getActivity()).removeFromSubscribedCourses(event);
+							((MainActivity) getActivity()).removeFromSubscribedCoursesAndUpdateAdapters(event);
 						}
 					}
 

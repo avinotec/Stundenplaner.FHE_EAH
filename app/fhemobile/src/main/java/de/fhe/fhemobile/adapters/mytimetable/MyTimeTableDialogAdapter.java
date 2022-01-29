@@ -16,6 +16,8 @@
  */
 package de.fhe.fhemobile.adapters.mytimetable;
 
+import static de.fhe.fhemobile.utils.MyTimeTableUtils.getEventTitleWithoutLastNumbers;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -129,7 +131,7 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 				final List<MyTimeTableCourse> courseListFilteredByTitle =
 						MyTimeTableUtils.getCoursesByEventTitle(
 								mItems,
-								MyTimeTableUtils.cutEventTitle(currentItem.getEvent().getTitle()));
+								currentItem.getTitle());
 				//get all courses with certain study group
 				final List <MyTimeTableCourse> courseListFilteredByStudyGroup =
 						MyTimeTableUtils.getCoursesByStudyGroupTitle(
@@ -162,7 +164,7 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 		// then do not add header again (set it visibility to GONE)
 		if(position == 0
 				|| !mItems.get(position).isEqual(mItems.get(position-1))){
-			courseTitle.setText(currentItem.getEvent().getShortTitle());
+			courseTitle.setText(getEventTitleWithoutLastNumbers(currentItem.getFirstEvent().getShortTitle()));
 			courseTitle.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
@@ -175,8 +177,7 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 
 		final ToggleButton btnAddCourse = (ToggleButton) convertView.findViewById(R.id.btnAddCourse);
 		//set current state of button
-		boolean btnEnabled = currentItem.isSubscribed() ? true : false;
-		btnAddCourse.setActivated(btnEnabled);
+		btnAddCourse.setActivated(currentItem.isSubscribed());
 
 		btnAddCourse.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -189,16 +190,16 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 					final List<MyTimeTableCourse> eventFilteredList =
 							MyTimeTableUtils.getCoursesByEventTitle(
 									mItems,
-									MyTimeTableUtils.cutEventTitle(currentItem.getEvent().getTitle()));
+									currentItem.getTitle());
 					final List<MyTimeTableCourse> studyGroupFilteredList =
 							MyTimeTableUtils.getCoursesByStudyGroupTitle(
 									eventFilteredList, currentItem.getSetString());
 
 					for(final MyTimeTableCourse event : studyGroupFilteredList){
-						MainActivity.addToSubscribedCourses(event);
+						MainActivity.addToSubscribedCoursesAndUpdateAdapters(event);
 					}
 				}else{
-					MainActivity.removeFromSubscribedCourses(currentItem);
+					MainActivity.removeFromSubscribedCoursesAndUpdateAdapters(currentItem);
 				}
 
 				notifyDataSetChanged();
@@ -233,17 +234,17 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 
 		//set text for course time, weekday and room
 
-		final Date dateStartDate = new java.util.Date(currentItem.getEvent().getStartDate());
+		final Date dateStartDate = new java.util.Date(currentItem.getFirstEvent().getStartDate());
 		//final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
 		final String date = sdf.format(dateStartDate);
 		final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(dateStartDate);
 
 		final TextView textEventTime = (TextView) convertView.findViewById(R.id.textCourseTime);
 		textEventTime.setText(dayOfWeek + ", " + date + "  "
-				+ currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime()); // $NON-NLS
+				+ currentItem.getFirstEvent().getStartTime() + " – " + currentItem.getFirstEvent().getEndTime()); // $NON-NLS
 
 		final TextView textRoom = (TextView)convertView.findViewById(R.id.textviewRoom);
-		textRoom.setText(currentItem.getEvent().getRoom());
+		textRoom.setText(currentItem.getFirstEvent().getRoom());
 
 
 

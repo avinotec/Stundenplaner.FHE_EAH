@@ -17,8 +17,6 @@
 
 package de.fhe.fhemobile.fragments.mytimetable;
 
-import static de.fhe.fhemobile.Main.clearSubscribedCourses;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -127,8 +125,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 					.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
 							//Stundenplan löschen (die Listen leer machen und aus den Preferences entfernen)
-							MainActivity.clearSubscribedCourses();
-							clearSubscribedCourses();
+							MainActivity.clearSubscribedCoursesAndUpdateAdapters();
 							//todo: wozu brauchen wir die coursesOfChosenSemester hier? - Nadja
 							//MyTimeTableDialogFragment.coursesOfChosenSemester.clear();
 							sharedPreferences.edit()

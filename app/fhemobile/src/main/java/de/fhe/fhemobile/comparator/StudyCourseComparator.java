@@ -21,7 +21,7 @@ import java.util.Comparator;
 
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyCourseVo;
 
-public class StudyCourseComperator implements Comparator <TimeTableStudyCourseVo> {
+public class StudyCourseComparator implements Comparator <TimeTableStudyCourseVo> {
 	@Override
 	public int compare(TimeTableStudyCourseVo t1, TimeTableStudyCourseVo t2) {
 		return t1.getTitle().compareTo(t2.getTitle());

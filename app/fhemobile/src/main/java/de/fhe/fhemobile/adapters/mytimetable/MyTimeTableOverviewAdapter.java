@@ -17,6 +17,7 @@
 package de.fhe.fhemobile.adapters.mytimetable;
 
 import static de.fhe.fhemobile.Main.getSubscribedCourses;
+import static de.fhe.fhemobile.utils.MyTimeTableUtils.getEventTitleWithoutLastNumbers;
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
 import android.content.Context;
@@ -111,7 +112,7 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 				List<MyTimeTableCourse> courseTitleFilteredList
 						= MyTimeTableUtils.getCoursesByEventTitle(
 								getSubscribedCourses(),
-								MyTimeTableUtils.cutEventTitle(currentItem.getEvent().getTitle()));
+								currentItem.getTitle());
 
 				List <MyTimeTableCourse> filteredList
 						= MyTimeTableUtils.getCoursesByStudyGroupTitle(
@@ -134,14 +135,14 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 				final List<MyTimeTableCourse> eventFilteredList
 						= MyTimeTableUtils.getCoursesByEventTitle(
 						getSubscribedCourses(),
-						MyTimeTableUtils.cutEventTitle(currentItem.getEvent().getTitle()));
+						currentItem.getTitle());
 
 				final List<MyTimeTableCourse> studyGroupFilteredList
 						= MyTimeTableUtils.getCoursesByStudyGroupTitle(
 						eventFilteredList, currentItem.getSetString());
 
 				for(MyTimeTableCourse event : studyGroupFilteredList){
-					MainActivity.removeFromSubscribedCourses(event);
+					MainActivity.removeFromSubscribedCoursesAndUpdateAdapters(event);
 				}
 
 				((ListView) parent).invalidateViews();
@@ -151,7 +152,9 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 		//set text of courseTitle
 		final TextView courseTitle = (TextView) convertView.findViewById(
 				R.id.textview_mytimetable_overview_courseTitle);
-		courseTitle.setText(correctUmlauts(currentItem.getEvent().getShortTitle()));
+		courseTitle.setText(
+				correctUmlauts(getEventTitleWithoutLastNumbers(
+						currentItem.getFirstEvent().getShortTitle())));
 
 
 		//todo: find out in which use case currentItem is not visible
@@ -203,17 +206,17 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 
 		//set text for course time, weekday and room
 
-		final Date dateStartDate = new java.util.Date(currentItem.getEvent().getStartDate());
+		final Date dateStartDate = new java.util.Date(currentItem.getFirstEvent().getStartDate());
 		//final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
 		final String date = sdf.format(dateStartDate);
 		final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(dateStartDate);
 
 		final TextView textEventTime = (TextView) convertView.findViewById(R.id.textCourseTime);
 		textEventTime.setText(dayOfWeek + ", " + date + "  "
-				+ currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime()); // $NON-NLS
+				+ currentItem.getFirstEvent().getStartTime() + " – " + currentItem.getFirstEvent().getEndTime()); // $NON-NLS
 
 		final TextView textRoom = (TextView) convertView.findViewById(R.id.textviewRoom);
-		textRoom.setText(currentItem.getEvent().getRoom());
+		textRoom.setText(currentItem.getFirstEvent().getRoom());
 
 
 

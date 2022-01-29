@@ -24,7 +24,6 @@ import com.google.gson.GsonBuilder;
 
 import org.junit.Assert;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,8 +46,6 @@ import de.fhe.fhemobile.vos.news.NewsItemResponse;
 import de.fhe.fhemobile.vos.news.NewsItemVo;
 import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
 import de.fhe.fhemobile.vos.semesterdata.SemesterDataVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableDayVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
 import okhttp3.MediaType;
@@ -357,9 +354,11 @@ public class NetworkHandler {
 		Assert.assertTrue( event != null );
 
 
-		final List<MyTimeTableCourse>eventList = new ArrayList<>();
+		final List<MyTimeTableCourse> eventList = new ArrayList<>();
 
-		try {
+		//todo: auskommentiert im Zuge von Umbauarbeiten
+		/*try {
+
 			final ArrayList<TimeTableWeekVo> timeTable = mApi.fetchTimeTableEvents(
 					event.getStudyGroup().getTimeTableId()).execute().body();
 			Assert.assertTrue( timeTable != null );
@@ -379,7 +378,7 @@ public class NetworkHandler {
 			}
 		} catch (final IOException e) {
 			Log.e(TAG, "fetchTimeTableEventsSynchron: ",e );
-		}
+		}*/
 		return eventList;
 	}
 

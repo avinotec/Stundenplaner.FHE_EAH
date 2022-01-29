@@ -21,6 +21,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import com.google.gson.Gson;
@@ -29,8 +30,10 @@ import org.junit.Assert;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import de.fhe.fhemobile.comparator.CourseDateComparator;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
@@ -45,7 +48,22 @@ public class Main extends Application {
     private static Application mAppContext;
 
     //My Time Table
-    public static List<MyTimeTableCourse> subscribedCourses = new ArrayList();
+    //note: always keep subscribedCourses sorted for display in the view
+    public static List<MyTimeTableCourse> subscribedCourses = new ArrayList<MyTimeTableCourse>(){
+        @Override
+        public boolean add(MyTimeTableCourse myTimeTableCourse) {
+            super.add(myTimeTableCourse);
+            Collections.sort(subscribedCourses, new CourseDateComparator());
+            return true;
+        }
+
+        @Override
+        public boolean remove(@Nullable @org.jetbrains.annotations.Nullable Object o) {
+            super.remove(o);
+            Collections.sort(subscribedCourses, new CourseDateComparator());
+            return true;
+        }
+    };
 
     @Override
     public void onCreate() {
@@ -84,13 +102,6 @@ public class Main extends Application {
 
     public static List<MyTimeTableCourse> getSubscribedCourses(){
         return subscribedCourses;
-    }
-
-    /**
-     * Clear subscribed courses
-     */
-    public static void clearSubscribedCourses(){
-        subscribedCourses.clear();
     }
 
     //MS 201908 Multidex apk introduced

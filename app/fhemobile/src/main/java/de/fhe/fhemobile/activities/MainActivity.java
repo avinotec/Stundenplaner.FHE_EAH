@@ -54,7 +54,7 @@ import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableCalendarAdapter;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableOverviewAdapter;
-import de.fhe.fhemobile.comparator.Date_Comparator;
+import de.fhe.fhemobile.comparator.CourseDateComparator;
 import de.fhe.fhemobile.fragments.DrawerFragment;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
@@ -88,10 +88,6 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
     public static ArrayList<Room> rooms = new ArrayList<>();
 
-    /** subscribedCoursesSorted: Liste der subscribedCourses sortiert für die Ausgabe im view,
-     * ausschließlich für Adapter der Views benötigt. */
-    public static List<MyTimeTableCourse> subscribedCoursesSorted;
-
     public static MyTimeTableCalendarAdapter myTimeTableCalendarAdapter;
     public static MyTimeTableOverviewAdapter myTimeTableOverviewAdapter;
 
@@ -112,9 +108,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         myTimeTableOverviewAdapter = new MyTimeTableOverviewAdapter(
                 Main.getAppContext(), subscribedCourses);
 
-        subscribedCoursesSorted = getSortedSubscribedCourses();
         myTimeTableCalendarAdapter = new MyTimeTableCalendarAdapter(
-                Main.getAppContext(), subscribedCoursesSorted);
+                Main.getAppContext(), subscribedCourses);
 
 
         // Set up the drawer.
@@ -255,7 +250,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                             final MyTimeTableCourse event = MyTimeTableUtils.getEventByID(
                                     myTimetableList, change.getNewEventJson().getUid());
                             if(event != null){
-                                event.setEvent(change.getNewEventJson());
+                                //todo: auskommentiert im Zuge von Umbauarbeiten
+                               // event.setEvent(change.getNewEventJson());
                             }
                         }
                         //Hinzufuegen einer neuen veranstaltung:
@@ -265,7 +261,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                             final MyTimeTableCourse event =
                                     MyTimeTableUtils.getCoursesByStudyGroupTitle(
                                             myTimetableList, change.getSetSplusKey()).get(0).copy();
-                            event.setEvent(change.getNewEventJson());
+                            //todo: auskommentiert im Zuge von Umbauarbeiten
+                            //event.setEvent(change.getNewEventJson());
 
                             //todo: bad static use to update MyTimeTableCalendar
                             //MyTimeTableCalendarAdapter.addCourseAndUpdateSharedPreferences(event);
@@ -451,10 +448,9 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     }
 
 
-    public static void addToSubscribedCourses(final MyTimeTableCourse course){
+    public static void addToSubscribedCoursesAndUpdateAdapters(final MyTimeTableCourse course){
         course.setSubscribed(true);
         subscribedCourses.add(course);
-        subscribedCoursesSorted = getSortedSubscribedCourses();
 
         saveSubscribedCoursesInSharedPreferences();
 
@@ -463,10 +459,9 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     }
 
 
-    public static void removeFromSubscribedCourses(final MyTimeTableCourse course){
+    public static void removeFromSubscribedCoursesAndUpdateAdapters(final MyTimeTableCourse course){
         course.setSubscribed(false);
         subscribedCourses.remove(course);
-        subscribedCoursesSorted = getSortedSubscribedCourses();
 
         saveSubscribedCoursesInSharedPreferences();
 
@@ -475,9 +470,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     }
 
 
-    public static void clearSubscribedCourses(){
-        Main.clearSubscribedCourses();
-        subscribedCoursesSorted.clear();
+    public static void clearSubscribedCoursesAndUpdateAdapters(){
+        subscribedCourses.clear();
 
         saveSubscribedCoursesInSharedPreferences();
 
@@ -502,7 +496,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         final List<MyTimeTableCourse> sortedList = new ArrayList<>(getSubscribedCourses());
 
         if(!sortedList.isEmpty()){
-            Collections.sort(sortedList, new Date_Comparator());
+            Collections.sort(sortedList, new CourseDateComparator());
         }
         return sortedList;
     }

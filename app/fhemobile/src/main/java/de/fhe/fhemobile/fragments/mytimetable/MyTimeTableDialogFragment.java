@@ -47,6 +47,7 @@ import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableDialogAdapter;
 import de.fhe.fhemobile.comparator.CourseTitleStudyGroupTitleComparator;
 import de.fhe.fhemobile.network.MyTimeTableCallback;
 import de.fhe.fhemobile.network.NetworkHandler;
+import de.fhe.fhemobile.utils.MyTimeTableUtils;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableDialogView;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
@@ -163,44 +164,40 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                     for(TimeTableDayVo timeTableDay : timeTableWeek.getDays()){
                         for(TimeTableEventVo timeTableEvent : timeTableDay.getEvents()){
 
-                            //check if timeTableEvent exists in allCoursesInChosenSemester
-                            // because the course has already been added with a previous study group
+
+                            //check if a course corresponding to timeTableEvent already exists in allCoursesInChosenSemester
+                            // because the course has already been added with a previous study group or other event of the course
                             MyTimeTableCourse alreadyExistingCourse =
                                     getCorrespondingCourseInAllCoursesInChosenSemester(timeTableEvent);
 
 
-                            //courseToAdd has not already be saved to allCoursesInChosenSemester
-                        	if ( alreadyExistingCourse == null ) {
-
-                                //check if timeTableEvent belongs to a subscribed course
-                                boolean isSubscribed = false;
-                                for(MyTimeTableCourse subscribedCourse : getSubscribedCourses()){
-                                    if (subscribedCourse.getEvent().getUid().equals(timeTableEvent.getUid())){
-
-                                        isSubscribed = true;
-                                    }
-                                }
+                            //new MyTimeTableCourse Object needed
+                            if ( alreadyExistingCourse == null ) {
 
                                 MyTimeTableCourse courseToAdd = new MyTimeTableCourse(
                                         mChosenStudyCourse,
                                         mChosenSemester,
-                                        studyGroup,
-                                        timeTableWeek,
-                                        timeTableDay,
                                         timeTableEvent,
-                                        isSubscribed);
-                                courseToAdd.addSet(studyGroup.getTitle().split("\\.")[1]);
+                                        studyGroup.getTitle().split("\\.")[1],
+                                        false);
 
+                                //check if timeTableEvent belongs to a subscribed course
+                                for(MyTimeTableCourse subscribedCourse : getSubscribedCourses()){
+                                    if (courseToAdd.isEqual(subscribedCourse)){
+
+                                        courseToAdd.setSubscribed(true);
+                                    }
+                                }
 
                                 //add new course
                                 this.allCoursesInChosenSemester.add(courseToAdd);
-	                        }
+                            }
+                            //allCoursesInChosenSemester already contains an the course the event belongs to,
+                            // then only add the study group to the study group list of the existing course
+                            else {
+                                alreadyExistingCourse.addStudyGroup(studyGroup);
+                            }
 
-                            //allCoursesInChosenSemester already contains an entry for this course,
-                            // then only add this study group to the set/study group list of the existing course
-                        	else {
-                        	    alreadyExistingCourse.addSet(studyGroup.getTitle().split("\\.")[1]);
-	                        }
                         }
                     }
                 }
@@ -212,14 +209,13 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     }
 
     /**
-     * Returns the {@link MyTimeTableCourse} corresponding to the given timeTableEvent;
-     * here timeTableEvent is a single event/date/lecture/practical/... belonging to a certain course
-     * @param timeTableEvent the timeTableEvent to search for in already stored allCoursesInChosenSemester
-     * @return the corresponding course; null if no corresponding course was found
+     * Returns the course the event belongs to if it already exists in allCoursesInChosenSemester
+     * @param event the {@link TimeTableEventVo} to search for
+     * @return course from allCoursesInChosenSemester; null if no corresponding course was found
      */
-    private MyTimeTableCourse getCorrespondingCourseInAllCoursesInChosenSemester(TimeTableEventVo timeTableEvent) {
+    private MyTimeTableCourse getCorrespondingCourseInAllCoursesInChosenSemester(TimeTableEventVo event) {
         for ( MyTimeTableCourse courseInChosenSemester : this.allCoursesInChosenSemester) {
-            if (courseInChosenSemester.getEvent().getUid().equals(timeTableEvent.getUid())){
+            if (courseInChosenSemester.getTitle().equals(MyTimeTableUtils.getCourseName(event))){
                 return courseInChosenSemester;
             }
         }
@@ -265,7 +261,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                 for(MyTimeTableCourse loadedCourse : coursesFromSharedPreferences){
                     boolean found = false;
                     for(MyTimeTableCourse subscribedCourse : getSubscribedCourses()){
-                        if(loadedCourse.getEvent().getUid().equals(subscribedCourse.getEvent().getUid())){
+                        if(loadedCourse.isEqual(subscribedCourse)){
                             found = true;
                             break;
                         }
@@ -288,7 +284,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     private final MyTimeTableDialogView.IViewListener mViewListener = new MyTimeTableDialogView.IViewListener() {
 
         @Override
-        public void onStudyCourseChosen(final String _StudCourseId) {
+        public void onStudyCourseChosen(final String _StudyCourseId) {
             //reset needed because a new study course had been chosen
             mView.resetSemesterPicker();
             mView.toggleCourseListVisibility(false);
@@ -304,7 +300,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
             boolean studyCourseEmpty = true;
 
             for (TimeTableStudyCourseVo studyCourse : mResponse.getStudyCourses()) {
-                if (studyCourse != null && studyCourse.getId() != null && studyCourse.getId().equals(_StudCourseId)) {
+                if (studyCourse != null && studyCourse.getId() != null && studyCourse.getId().equals(_StudyCourseId)) {
 
                     mChosenStudyCourse = studyCourse;
 

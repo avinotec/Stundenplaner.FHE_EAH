@@ -16,6 +16,9 @@
  */
 package de.fhe.fhemobile.vos.mytimetable;
 
+import static de.fhe.fhemobile.Main.getSubscribedCourses;
+import static de.fhe.fhemobile.utils.MyTimeTableUtils.getCourseName;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -27,13 +30,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import de.fhe.fhemobile.utils.MyTimeTableUtils;
+import de.fhe.fhemobile.comparator.TimeTableEventComparator;
+import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyCourseVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableDayVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
 
 
 /**
@@ -45,71 +46,87 @@ public class MyTimeTableCourse implements Parcelable {
 
 	public MyTimeTableCourse(){	}
 
+
 	public MyTimeTableCourse(TimeTableStudyCourseVo studyCourse,
 							 TimeTableSemesterVo semester,
-							 TimeTableStudyGroupVo studyGroup,
-							 TimeTableWeekVo eventWeek,
-							 TimeTableDayVo eventDay,
 							 TimeTableEventVo event,
+							 String studyGroup,
 							 boolean subscribed) {
+		this.mTitle = getCourseName(event.getTitle());
 		this.studyCourse = studyCourse;
 		this.semester = semester;
-		this.studyGroup = studyGroup;
-		this.eventWeek = eventWeek;
-		this.eventDay = eventDay;
-		this.event = event;
+		events.add(event);
+		studyGroups.add(studyGroup);
 		this.subscribed = subscribed;
 	}
 
-	private MyTimeTableCourse(final Parcel in) {
-		studyCourse = in.readParcelable(TimeTableStudyCourseVo.class.getClassLoader());
-		semester = in.readParcelable(TimeTableSemesterVo.class.getClassLoader());
-		studyGroup = in.readParcelable(TimeTableStudyGroupVo.class.getClassLoader());
-		eventWeek = in.readParcelable(TimeTableWeekVo.class.getClassLoader());
-		eventDay = in.readParcelable(TimeTableDayVo.class.getClassLoader());
-		event = in.readParcelable(TimeTableEventVo.class.getClassLoader());
-		in.readStringList(sets);
+	/**
+	 * Creates a new instance of {@link MyTimeTableCourse}
+	 * and automatically sets the subscribed status
+	 * @param studyCourse study program the course belongs to
+	 * @param semester semester the course belongs to
+	 * @param event the event to initialize the event list with
+	 * @param studyGroup the study group the course is dedicated to and that to initialize the study group list with
+	 */
+	public MyTimeTableCourse(TimeTableStudyCourseVo studyCourse,
+							 TimeTableSemesterVo semester,
+							 TimeTableEventVo event,
+							 TimeTableStudyGroupVo studyGroup) {
+		this.mTitle = getCourseName(event.getTitle());
+		this.studyCourse = studyCourse;
+		this.semester = semester;
+		events.add(event);
+		studyGroups.add(studyGroup.getShortTitle());
+
+		checkAndSetSubscribed();
+	}
+
+
+	public String getTitle() { return mTitle; }
+
+	public void setTitle(String title) {
+		this.mTitle = getCourseName(title);
 	}
 
 	public final TimeTableStudyCourseVo getStudyCourse() { return studyCourse; }
 
 	public final TimeTableSemesterVo getSemester() { return semester; }
 
-	public final TimeTableStudyGroupVo getStudyGroup() { return studyGroup; }
+	public List<TimeTableEventVo> getEvents() { return events; }
 
-	public TimeTableWeekVo getEventWeek() { return eventWeek; }
-
-	public TimeTableDayVo getEventDay() { return eventDay; }
-
-	public final TimeTableEventVo getEvent() { return event; }
+	public TimeTableEventVo getFirstEvent() {  return events.isEmpty() ? events.get(0) : null; }
 
 	public final void setStudyCourse(final TimeTableStudyCourseVo course) { this.studyCourse = course; }
 
 	public final void setSemester(final TimeTableSemesterVo semester) { this.semester = semester; }
 
-	public final void setStudyGroup(final TimeTableStudyGroupVo studyGroup) { this.studyGroup = studyGroup; }
+	public void setEvents(List<TimeTableEventVo> events) {
+		this.events = events;
+		Collections.sort(this.events, new TimeTableEventComparator());
+	}
 
-	public final void setEventWeek(final TimeTableWeekVo eventWeek) { this.eventWeek = eventWeek; }
+	public void addEvent(TimeTableEventVo event) {
+		this.events.add(event);
+		Collections.sort(this.events, new TimeTableEventComparator());
+	}
 
-	public final void setEventDay(final TimeTableDayVo eventDay) { this.eventDay = eventDay; }
+	public List<String> getStudyGroups() { return studyGroups; }
 
-	public final void setEvent(final TimeTableEventVo event) { this.event = event; }
+	public void setStudyGroups(List<String> studyGroups) { this.studyGroups = studyGroups; }
 
-	public List<String> getSets() { return sets; }
-
-	public void setSets(List<String> sets) { this.sets = sets; }
-
-	public void addSet(String set) { this.sets.add(set); }
+	public void addStudyGroup(TimeTableStudyGroupVo studyGroup) {
+		this.studyGroups.add(studyGroup.getShortTitle());
+	}
 
 	/**
 	 * adds all set names to one long string and returns it
 	 * @return
 	 */
 	public String getSetString(){
-		Collections.sort(sets);
+		Collections.sort(studyGroups);
 		StringBuilder combinedStudyGroups = new StringBuilder();
-		if(sets.size() > 0) {
-			for (String _studyGroupTitle : sets) {
+		if(studyGroups.size() > 0) {
+			for (String _studyGroupTitle : studyGroups) {
 				combinedStudyGroups.append(_studyGroupTitle).append(", ");
 			}
 			return combinedStudyGroups.substring(0, combinedStudyGroups.length() - 2);
@@ -140,8 +157,17 @@ public class MyTimeTableCourse implements Parcelable {
 	}
 
 	public boolean isEqual(@NonNull MyTimeTableCourse other){
-		return MyTimeTableUtils.cutEventTitle(this.getEvent().getTitle())
-				.equals(MyTimeTableUtils.cutEventTitle(other.getEvent().getTitle()));
+		return mTitle.equals(other.getTitle());
+	}
+
+	public void checkAndSetSubscribed(){
+		//check if this course belongs to a subscribed course
+		for(MyTimeTableCourse subscribedCourse : getSubscribedCourses()){
+			if (this.isEqual(subscribedCourse)){
+
+				this.setSubscribed(true);
+			}
+		}
 	}
 
 	public MyTimeTableCourse copy(){
@@ -149,13 +175,33 @@ public class MyTimeTableCourse implements Parcelable {
 		copy.id = MyTimeTableCourse.incId++;
 		copy.setStudyCourse(this.getStudyCourse());
 		copy.setSemester(this.getSemester());
-		copy.setStudyGroup(this.getStudyGroup());
-		copy.setSets(new ArrayList<>(this.getSets()));
+		copy.setStudyGroups(this.getStudyGroups());
+		copy.setSubscribed(this.subscribed);
 		return copy;
 	}
 
 
 	// PARCELABLE --------------------------------------------------------------------------------
+
+	private MyTimeTableCourse(final Parcel in) {
+		mTitle = in.readString();
+		studyCourse = in.readParcelable(TimeTableStudyCourseVo.class.getClassLoader());
+		semester = in.readParcelable(TimeTableSemesterVo.class.getClassLoader());
+
+		studyGroups = new ArrayList<>();
+		int sizeStudyGroups = in.readInt();
+		for(int i = 0; i < sizeStudyGroups; i ++){
+			studyGroups.add(in.readString());
+		}
+
+		events = new ArrayList<>();
+		int sizeEvents = in.readInt();
+		for(int i = 0; i < sizeEvents; i ++){
+			events.add(in.readParcelable(TimeTableEventVo.class.getClassLoader()));
+		}
+
+		subscribed = in.readByte() != 0;
+	}
 
 	@Override
 	public int describeContents() {
@@ -164,13 +210,21 @@ public class MyTimeTableCourse implements Parcelable {
 
 	@Override
 	public void writeToParcel(final Parcel dest, final int flags) {
+		dest.writeString(mTitle);
 		dest.writeParcelable(studyCourse, flags);
 		dest.writeParcelable(semester, flags);
-		dest.writeParcelable(studyGroup, flags);
-		dest.writeParcelable(eventWeek, flags);
-		dest.writeParcelable(eventDay, flags);
-		dest.writeParcelable(event, flags);
-		dest.writeStringList(sets);
+
+		//sizes needed for reading parcelable
+		dest.writeInt(studyGroups.size());
+		for(String studyGroup : studyGroups){
+			dest.writeString(studyGroup);
+		}
+		dest.writeInt(events.size());
+		for(TimeTableEventVo event : events){
+			dest.writeParcelable(event, flags);
+		}
+
+		dest.writeByte((byte) (subscribed ? 1 : 0));
 
 	}
 
@@ -187,58 +241,31 @@ public class MyTimeTableCourse implements Parcelable {
 	};
 
 
+	@SerializedName("title")
+	private String mTitle;
+
 	@SerializedName("studyCourse")
 	private TimeTableStudyCourseVo studyCourse;
 
 	@SerializedName("semester")
 	private TimeTableSemesterVo semester;
 
-	@SerializedName("studyGroup")
-	private TimeTableStudyGroupVo studyGroup;
+	@SerializedName("studyGroups")
+	private List<String> studyGroups = new ArrayList<>();
 
-	@SerializedName("eventWeek")
-	private TimeTableWeekVo eventWeek;
+	@SerializedName("events")
+	private List<TimeTableEventVo> events = new ArrayList<>();
 
-	@SerializedName("eventDay")
-	private TimeTableDayVo eventDay;
-
-	@SerializedName("event")
-	private TimeTableEventVo event;
-
-	@SerializedName("sets")
-	private List<String> sets = new ArrayList<>();
+	@SerializedName("subscribed")
+	private boolean subscribed = false;
 
 
 
 	private boolean visible = false;
-	private boolean subscribed = false;
 
 	private static int incId = 0;
 	private int id;
 
-
-	/*
-	Gesamtliste:[
-		Liste der Sets für Studienfach 1 [
-			Liste der einzelnen Events für Set 1 [
-
-				Event 1,
-				Event 2,
-
-			],
-			Liste der einzelnen Events für Set 2 [
-
-				Event 1,
-				Event 2,
-
-			],
-		],
-		Liste der Sets für Studienfach 2 [
-			...
-		]
-
-	]
-	 */
 
 
 /*
@@ -252,7 +279,7 @@ public class MyTimeTableCourse implements Parcelable {
 				+ this.getEventDay().getDayInWeek() + "-->"
 				+ this.getEvent().getUid() + "-->"
 				+ this.getEvent().getTitle() + "-->"
-				+ this.getSets().size();
+				+ this.getStudyGroups().size();
 
 	}
 */

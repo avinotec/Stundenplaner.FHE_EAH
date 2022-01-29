@@ -29,7 +29,7 @@ import java.util.Collections;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.comparator.StudyCourseComperator;
+import de.fhe.fhemobile.comparator.StudyCourseComparator;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyCourseVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
@@ -75,7 +75,7 @@ public class TimeTableDialogView extends LinearLayout {
 
     public void setStudyCourseItems(final List<TimeTableStudyCourseVo> _Items) {
         TimeTableStudyCourseVo.alterTitle(_Items);
-        Collections.sort(_Items,new StudyCourseComperator());
+        Collections.sort(_Items, new StudyCourseComparator());
         mStudyCoursePicker.setItems(_Items);
         mStudyCoursePicker.toggleEnabled(true);
     }

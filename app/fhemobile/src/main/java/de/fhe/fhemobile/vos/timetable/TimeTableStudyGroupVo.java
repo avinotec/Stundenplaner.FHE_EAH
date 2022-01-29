@@ -58,6 +58,10 @@ public class TimeTableStudyGroupVo implements Parcelable {
         return mTimeTableId;
     }
 
+    public String getShortTitle() {
+        return mTitle.substring(mTitle.length() - 3);
+    }
+
 // --Commented out by Inspection START (02.11.2021 17:32):
 //    public void setTimeTableId(final String _timeTableId) {
 //        mTimeTableId = _timeTableId;
@@ -67,6 +71,7 @@ public class TimeTableStudyGroupVo implements Parcelable {
     @SerializedName("title")
     private String mTitle;
 
+    //SPLUS-Id
     @SerializedName("timetableId")
     private String mTimeTableId;
 

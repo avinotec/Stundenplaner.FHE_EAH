@@ -49,10 +49,10 @@ public class CourseTitleStudyGroupTitleComparator implements Comparator<MyTimeTa
 	@Override
 	public int compare(final MyTimeTableCourse o1, final MyTimeTableCourse o2) {
 
-		final String title1 = o1.getEvent().getTitle();
-		final String title2 = o2.getEvent().getTitle();
-		final String courseTitle1 = MyTimeTableUtils.cutEventTitle(title1);
-		final String courseTitle2 = MyTimeTableUtils.cutEventTitle(title2);
+		final String title1 = o1.getFirstEvent().getTitle();
+		final String title2 = o2.getFirstEvent().getTitle();
+		final String courseTitle1 = MyTimeTableUtils.getEventTitleWithoutLastNumbers(title1);
+		final String courseTitle2 = MyTimeTableUtils.getEventTitleWithoutLastNumbers(title2);
 		Assert.assertTrue( courseTitle1 != null );
 		Assert.assertTrue( courseTitle2 != null );
 		Assert.assertTrue( courseTitle1.length() > 3 );
@@ -62,7 +62,7 @@ public class CourseTitleStudyGroupTitleComparator implements Comparator<MyTimeTa
 		final String studyGroupTitle2 = o2.getSetString();
 		Assert.assertTrue( studyGroupTitle1 != null );
 		Assert.assertTrue( studyGroupTitle2 != null );
-		//Comperator wird auch ausgeführt, wenn keine elemente vorhanden sind.
+		//Comparator wird auch ausgeführt, wenn keine elemente vorhanden sind.
 //		Assert.assertTrue( studyGroupTitle1.length() > 1 );
 //		Assert.assertTrue( studyGroupTitle2.length() > 1 );
 
@@ -71,7 +71,6 @@ public class CourseTitleStudyGroupTitleComparator implements Comparator<MyTimeTa
 		//und sind beide gleich, wird 0 zurückgegeben.
 		//Bei unterschiedlichen Titeln lass einfach sortieren, bei gleichem Titel sortiere noch nach StudyGroupTitle
 		final int courseCompareResult = courseTitle1.compareTo(courseTitle2);
-//		Log.d(TAG, "compare Title1: "+courseTitle1+" Title2:"+courseTitle2 +" result: " +courseCompareResult);
 		if (courseCompareResult > 0) {
 			return Define.GREATER;
 		} else if(courseCompareResult < 0) {
@@ -79,7 +78,6 @@ public class CourseTitleStudyGroupTitleComparator implements Comparator<MyTimeTa
 		}
 		else{
 			final int studyGroupCompareResult = studyGroupTitle1.compareTo(studyGroupTitle2);
-//			Log.d(TAG, "compare GroupID1: "+studyGroupTitle1+" GroupID2"+studyGroupTitle2+" result: " +studyGroupCompareResult);
 
 			return Integer.compare(studyGroupCompareResult, 0);
 		}

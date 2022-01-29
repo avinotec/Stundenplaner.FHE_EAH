@@ -14,32 +14,20 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.utils;
+package de.fhe.fhemobile.comparator;
 
-import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.fragments.timetable.TimeTableFragment;
-import de.fhe.fhemobile.fragments.timetable.TimeTableDialogFragment;
+import java.util.Comparator;
+
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
 
 /**
- * Created by paul on 16.03.15.
+ * This Comparator compares two {@link MyTimeTableCourse} objects
+ * based on the next upcoming event in there event list
  */
-public class TimeTableFactory {
+public class CourseDateComparator implements Comparator<MyTimeTableCourse> {
 
-    /**
-     *
-     * @return
-     */
-    public static FeatureFragment getTimeTableFragment() {
-        final String chosenTimeTable = TimeTableSettings.getTimeTableSelection();
-        FeatureFragment fragment = null;
-
-        if (chosenTimeTable != null) {
-            fragment = TimeTableFragment.newInstance(chosenTimeTable);
-        }
-        else {
-            fragment = TimeTableDialogFragment.newInstance();
-        }
-
-        return fragment;
-    }
+	@Override
+	public int compare(final MyTimeTableCourse o1, final MyTimeTableCourse o2) {
+		return new TimeTableEventComparator().compare(o1.getFirstEvent(), o2.getFirstEvent());
+	}
 }

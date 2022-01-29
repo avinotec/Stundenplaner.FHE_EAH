@@ -13,14 +13,40 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
+import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
 public class MyTimeTableUtils {
 
     private static final String TAG = "MyTimeTableUtils";
 
+    /**
+     * Returns the event title without the number of the time table entry
+     * (event titles have non if entered for the first time, but later added events belonging to the same course get one)
+     *
+     * @param event
+     * @return string corresponding to the title that identifies a course
+     */
+    public static String getCourseName(final TimeTableEventVo event){
+        return getCourseName(event.getTitle());
+    }
 
-    public static String cutEventTitle(final String title) {
+    /**
+     * Returns the event title without the number of the time table entry
+     * (event titles have non if entered for the first time, but later added events belonging to the same course get one)
+     *
+     * @param title
+     * @return string corresponding to the title that identifies a course
+     */
+    public static String getCourseName(final String title){
+        //cut away all ".dd" (where d stands for any digit)
+        return title.replaceAll("\\.\\d*$","");
+    }
 
+
+
+    public static String getEventTitleWithoutLastNumbers(final String title) {
+
+        //cuts away everything after the last letter (a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß), which means that "/01.2" is cut
         final Pattern p = Pattern.compile("^(.*[a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß])"); //$NON-NLS
 
         // WI/WIEC(BA)Cloudtech./V/01
@@ -53,7 +79,7 @@ public class MyTimeTableUtils {
 
         final List<MyTimeTableCourse> filteredEvents = new ArrayList<>();
         for (final MyTimeTableCourse event : list) {
-            if(event.getEvent().getTitle().contains(eventTitle)){
+            if(event.getFirstEvent().getTitle().contains(eventTitle)){
                 filteredEvents.add(event);
             }
         }
@@ -85,7 +111,7 @@ public class MyTimeTableUtils {
 
             Date eventDate = null;
             try {
-                eventDate= sdf.parse(event.getEvent().getDate()+" "+event.getEvent().getStartTime());
+                eventDate = sdf.parse(event.getFirstEvent().getDate()+" "+event.getFirstEvent().getStartTime());
             } catch (final ParseException e) {
                 Log.e(TAG, "Fehler beim Parsen der Daten: ",e );
             }
@@ -104,7 +130,7 @@ public class MyTimeTableUtils {
      */
     public static final MyTimeTableCourse getEventByID (final List<MyTimeTableCourse> list, final String ID){
         for ( final MyTimeTableCourse event:list ) {
-            if(ID.equals(event.getEvent().getUid())){
+            if(ID.equals(event.getFirstEvent().getUid())){
                 return event;
             }
         }
@@ -127,9 +153,10 @@ public class MyTimeTableUtils {
 //			Log.d(TAG, "listContainsEvent: "+event.getStudyGroup().getTimeTableId()+" "+data.getStudyGroup().getTimeTableId());
 //			Log.d(TAG, "listContainsEvent: "+event.getSemester().getId()+" "+data.getSemester().getId());
 //			Log.d(TAG, "listContainsEvent: "+event.getStudyCourse().getId()+" "+data.getStudyCourse().getId());
-            if(event.getEvent().getTitle().equals(data.getEvent().getTitle())){
+            //todo: auskommentiert im Zuge von Umbauarbeiten
+           /* if(event.getFirstEvent().getTitle().equals(data.getFirstEvent().getTitle())){
 //				Log.d(TAG, "EventTitle: true");
-                if(event.getEventDay().getDayInWeek().equals(data.getEventDay().getDayInWeek())){
+                if(event.getFirstEventDay().getDayInWeek().equals(data.getEventDay().getDayInWeek())){
 //					Log.d(TAG, "EventDay: true");
                     if(event.getEventWeek().getWeekInYear()==data.getEventWeek().getWeekInYear()){
 //						Log.d(TAG, "EventWeek: true");
@@ -146,7 +173,7 @@ public class MyTimeTableUtils {
                     }
                 }
 
-            }
+            }*/
         }
 //		Log.d(TAG, "listContainsEvent: Contains not!");
         return false;

@@ -101,7 +101,7 @@ public class TimeTableFragment extends FeatureFragment {
 		// If the drawer is open, show the global app actions in the action bar. See also
 		// showGlobalContextActionBar, which controls the top-left area of the action bar.
 		menu.clear();
-		if (TimeTableSettings.fetchTimeTableSelection() != null) {
+		if (TimeTableSettings.getTimeTableSelection() != null) {
 			inflater.inflate(R.menu.menu_time_table_events, menu);
 		}
 		super.onCreateOptionsMenu(menu, inflater);
