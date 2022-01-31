@@ -1,5 +1,7 @@
 package de.fhe.fhemobile.fragments.navigation;
 
+import static de.fhe.fhemobile.utils.Define.SP_NAVIGATION;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -89,7 +91,7 @@ public class PersonSearchFragment extends FeatureFragment {
     @Override
     public void onResume() {
         super.onResume();
-        SharedPreferences mSP = Main.getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        SharedPreferences mSP = Main.getAppContext().getSharedPreferences(SP_NAVIGATION, Context.MODE_PRIVATE);
         String previousPersonChoice = mSP.getString(PREFS_NAVIGATION_PERSON_CHOICE, "");
 
         if(!"".equals(previousPersonChoice)){
@@ -128,7 +130,7 @@ public class PersonSearchFragment extends FeatureFragment {
                     mView.toggleGoButtonEnabled(true);
                     mView.toggleStartInputCardVisibility(true);
 
-                    final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+                    final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences(SP_NAVIGATION, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString(PREFS_NAVIGATION_PERSON_CHOICE, _person);
                     editor.apply();

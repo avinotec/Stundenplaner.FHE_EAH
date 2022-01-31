@@ -17,6 +17,8 @@
 
 package de.fhe.fhemobile.fragments.mytimetable;
 
+import static de.fhe.fhemobile.utils.Define.SP_MYTIMETABLE;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -90,7 +92,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		//Wenn die App das letzte Mal vor Semesterferienbeginn geöffnet wurde und das aktuelle Datum nach dem Beginn, soll nachgefragt werden.
 		//lastAppOpened muss dabei ungleich 0 sein, gleich 0 bedeutet, die App wurde vorher noch nicht gestartet.
 		// in Sekunden seit 1970, Unixtime
-		SharedPreferences sharedPreferences = getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+		SharedPreferences sharedPreferences = getContext().getSharedPreferences(SP_MYTIMETABLE, Context.MODE_PRIVATE);
 		final long lastAppOpened = sharedPreferences.getLong(PREFS_LAST_APP_OPENED, 0);
 
 		Calendar calLastOpened = Calendar.getInstance(new Locale("de", "DE"));
@@ -129,7 +131,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 							//todo: wozu brauchen wir die coursesOfChosenSemester hier? - Nadja
 							//MyTimeTableDialogFragment.coursesOfChosenSemester.clear();
 							sharedPreferences.edit()
-									.remove(Define.SHARED_PREFERENCES_SUBSCRIBED_COURSES)
+									.remove(Define.PREF_SUBSCRIBED_COURSES)
 									.apply();
 						}
 					})

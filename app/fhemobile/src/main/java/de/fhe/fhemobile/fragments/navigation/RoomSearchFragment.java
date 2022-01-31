@@ -17,6 +17,8 @@
 
 package de.fhe.fhemobile.fragments.navigation;
 
+import static de.fhe.fhemobile.utils.Define.SP_NAVIGATION;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -117,7 +119,7 @@ public class RoomSearchFragment extends FeatureFragment {
     @Override
     public void onResume() {
         super.onResume();
-        SharedPreferences mSP = Main.getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        SharedPreferences mSP = Main.getAppContext().getSharedPreferences(SP_NAVIGATION, Context.MODE_PRIVATE);
         String previousRoomChoice = mSP.getString(PREFS_NAVIGATION_ROOM_CHOICE, "");
         if(!"".equals(previousRoomChoice)){
             for (Room room : MainActivity.rooms){
@@ -234,7 +236,7 @@ public class RoomSearchFragment extends FeatureFragment {
                     mView.toggleGoButtonEnabled(true);
                     mView.toggleStartInputCardVisibility(true);
 
-                    final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+                    final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences(SP_NAVIGATION, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString(PREFS_NAVIGATION_ROOM_CHOICE, mChosenRoom.getRoomName());
                     editor.apply();

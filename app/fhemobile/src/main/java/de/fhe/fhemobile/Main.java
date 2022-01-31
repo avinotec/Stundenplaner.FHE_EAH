@@ -17,6 +17,8 @@
 
 package de.fhe.fhemobile;
 
+import static de.fhe.fhemobile.utils.Define.SP_MYTIMETABLE;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -74,8 +76,8 @@ public class Main extends Application {
         FeatureProvider.loadFeatures(this);
 
         // load subscribed courses for My Time Table from Shared Preferences
-        SharedPreferences sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
-        final String json = sharedPreferences.getString(Define.SHARED_PREFERENCES_SUBSCRIBED_COURSES,"");
+        SharedPreferences sharedPreferences = getSharedPreferences(SP_MYTIMETABLE, Context.MODE_PRIVATE);
+        final String json = sharedPreferences.getString(Define.PREF_SUBSCRIBED_COURSES,"");
 
         // falls die Liste leer sein sollte, überspringen
         if ( !"".equals(json) && !"null".equals(json)) {

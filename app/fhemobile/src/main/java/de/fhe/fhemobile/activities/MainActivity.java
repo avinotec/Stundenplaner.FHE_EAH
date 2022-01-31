@@ -19,6 +19,8 @@ package de.fhe.fhemobile.activities;
 import static de.fhe.fhemobile.Main.getAppContext;
 import static de.fhe.fhemobile.Main.getSubscribedCourseComponents;
 import static de.fhe.fhemobile.Main.subscribedCourseComponents;
+import static de.fhe.fhemobile.utils.Define.PREF_SUBSCRIBED_COURSES;
+import static de.fhe.fhemobile.utils.Define.SP_MYTIMETABLE;
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
 import android.app.AlertDialog;
@@ -482,9 +484,9 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     private static void saveSubscribedCourseComponentsToSharedPreferences() {
         final Gson gson = new Gson();
         final String json = correctUmlauts(gson.toJson(getSubscribedCourseComponents()));
-        final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences(SP_MYTIMETABLE, Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(Define.SHARED_PREFERENCES_SUBSCRIBED_COURSES, json);
+        editor.putString(PREF_SUBSCRIBED_COURSES, json);
         editor.apply();
     }
 
