@@ -125,7 +125,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 					.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
 							//Stundenplan löschen (die Listen leer machen und aus den Preferences entfernen)
-							MainActivity.clearSubscribedCoursesAndUpdateAdapters();
+							MainActivity.clearSubscribedCourseComponentsAndUpdateAdapters();
 							//todo: wozu brauchen wir die coursesOfChosenSemester hier? - Nadja
 							//MyTimeTableDialogFragment.coursesOfChosenSemester.clear();
 							sharedPreferences.edit()

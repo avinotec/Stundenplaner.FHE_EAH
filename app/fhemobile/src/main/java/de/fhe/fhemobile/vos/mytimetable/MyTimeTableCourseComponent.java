@@ -16,7 +16,8 @@
  */
 package de.fhe.fhemobile.vos.mytimetable;
 
-import static de.fhe.fhemobile.Main.getSubscribedCourses;
+import static de.fhe.fhemobile.Main.getSubscribedCourseComponents;
+import static de.fhe.fhemobile.utils.MyTimeTableUtils.getCourseComponentName;
 import static de.fhe.fhemobile.utils.MyTimeTableUtils.getCourseName;
 
 import android.os.Parcel;
@@ -27,32 +28,38 @@ import androidx.annotation.NonNull;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import de.fhe.fhemobile.comparator.TimeTableEventComparator;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
 
 
 /**
- * edited by Nadja - 01/2022
+ * Class stores information of course for a certain subset of study groups
+ * (example: math training is on Monday for groups 1 to 5 and on Tuesday for groups 6 to 10
+ * -> each subset creates a new MyTimeTableCourseComponent)
+ *
+ * by Nadja - 01/2022
  */
-public class MyTimeTableCourse implements Parcelable {
+public class MyTimeTableCourseComponent implements Parcelable {
 
-	private static final String TAG = "MyTimeTableCourse";
+	private static final String TAG = "MyTimeTableCourseComponent";
 
-	public MyTimeTableCourse(){	}
+	public MyTimeTableCourseComponent(){	}
 
 
-	public MyTimeTableCourse(TimeTableStudyProgramVo studyProgram,
-							 TimeTableSemesterVo semester,
-							 TimeTableEventVo event,
-							 String studyGroup,
-							 boolean subscribed) {
-		this.mTitle = getCourseName(event.getTitle());
+	public MyTimeTableCourseComponent(TimeTableStudyProgramVo studyProgram,
+									  TimeTableSemesterVo semester,
+									  TimeTableEventVo event,
+									  String studyGroup,
+									  boolean subscribed) {
+		this.mTitle = getCourseComponentName(event);
+		this.mCourse = getCourseName(event);
 		this.studyProgram = studyProgram;
 		this.semester = semester;
 		events.add(event);
@@ -61,18 +68,19 @@ public class MyTimeTableCourse implements Parcelable {
 	}
 
 	/**
-	 * Creates a new instance of {@link MyTimeTableCourse}
+	 * Creates a new instance of {@link MyTimeTableCourseComponent}
 	 * and automatically sets the subscribed status
 	 * @param studyProgram study program the course belongs to
 	 * @param semester semester the course belongs to
 	 * @param event the event to initialize the event list with
 	 * @param studyGroup the study group the course is dedicated to and that to initialize the study group list with
 	 */
-	public MyTimeTableCourse(TimeTableStudyProgramVo studyProgram,
-							 TimeTableSemesterVo semester,
-							 TimeTableEventVo event,
-							 TimeTableStudyGroupVo studyGroup) {
-		this.mTitle = getCourseName(event.getTitle());
+	public MyTimeTableCourseComponent(TimeTableStudyProgramVo studyProgram,
+									  TimeTableSemesterVo semester,
+									  TimeTableEventVo event,
+									  TimeTableStudyGroupVo studyGroup) {
+		this.mTitle = getCourseComponentName(event.getTitle());
+		this.mCourse = getCourseName(event);
 		this.studyProgram = studyProgram;
 		this.semester = semester;
 		events.add(event);
@@ -85,8 +93,10 @@ public class MyTimeTableCourse implements Parcelable {
 	public String getTitle() { return mTitle; }
 
 	public void setTitle(String title) {
-		this.mTitle = getCourseName(title);
+		this.mTitle = getCourseComponentName(title);
 	}
+
+	public String getCourse() { return mCourse; }
 
 	public final TimeTableStudyProgramVo getStudyProgram() { return studyProgram; }
 
@@ -94,7 +104,7 @@ public class MyTimeTableCourse implements Parcelable {
 
 	public List<TimeTableEventVo> getEvents() { return events; }
 
-	public TimeTableEventVo getFirstEvent() {  return events.isEmpty() ? events.get(0) : null; }
+	public TimeTableEventVo getFirstEvent() {  return events.size() > 0 ? events.get(0) : null; }
 
 	public final void setStudyProgram(final TimeTableStudyProgramVo course) { this.studyProgram = course; }
 
@@ -119,10 +129,10 @@ public class MyTimeTableCourse implements Parcelable {
 	}
 
 	/**
-	 * adds all set names to one long string and returns it
-	 * @return
+	 * Adds all names of the study groups list to one long string
+	 * @return study group list as string
 	 */
-	public String getSetString(){
+	public String getStudyGroupListString(){
 		Collections.sort(studyGroups);
 		StringBuilder combinedStudyGroups = new StringBuilder();
 		if(studyGroups.size() > 0) {
@@ -132,7 +142,7 @@ public class MyTimeTableCourse implements Parcelable {
 			return combinedStudyGroups.substring(0, combinedStudyGroups.length() - 2);
 		}
 		else{
-			return combinedStudyGroups.toString();
+			return "";
 		}
 	}
 
@@ -156,23 +166,41 @@ public class MyTimeTableCourse implements Parcelable {
 		this.subscribed = added;
 	}
 
-	public boolean isEqual(@NonNull MyTimeTableCourse other){
-		return mTitle.equals(other.getTitle());
+	/**
+	 * Check if to components belong to the same course
+	 * @param other
+	 * @return true if components belong to the same course
+	 */
+	public boolean isSameCourse(@NonNull MyTimeTableCourseComponent other){
+		return mCourse.equals(other.getCourse());
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof MyTimeTableCourseComponent)) return false;
+		MyTimeTableCourseComponent that = (MyTimeTableCourseComponent) o;
+		return mTitle.equals(that.mTitle);
+	}
+
+	@Override
+	public int hashCode() {
+		return Arrays.hashCode(new Object[]{mTitle});
 	}
 
 	public void checkAndSetSubscribed(){
 		//check if this course belongs to a subscribed course
-		for(MyTimeTableCourse subscribedCourse : getSubscribedCourses()){
-			if (this.isEqual(subscribedCourse)){
+		for(MyTimeTableCourseComponent subscribedCourseComponent : getSubscribedCourseComponents()){
+			if (this.equals(subscribedCourseComponent)){
 
 				this.setSubscribed(true);
 			}
 		}
 	}
 
-	public MyTimeTableCourse copy(){
-		final MyTimeTableCourse copy = new MyTimeTableCourse();
-		copy.id = MyTimeTableCourse.incId++;
+	public MyTimeTableCourseComponent copy(){
+		final MyTimeTableCourseComponent copy = new MyTimeTableCourseComponent();
+		copy.id = MyTimeTableCourseComponent.incId++;
 		copy.setStudyProgram(this.getStudyProgram());
 		copy.setSemester(this.getSemester());
 		copy.setStudyGroups(this.getStudyGroups());
@@ -183,8 +211,9 @@ public class MyTimeTableCourse implements Parcelable {
 
 	// PARCELABLE --------------------------------------------------------------------------------
 
-	private MyTimeTableCourse(final Parcel in) {
+	private MyTimeTableCourseComponent(final Parcel in) {
 		mTitle = in.readString();
+		mCourse = in.readString();
 		studyProgram = in.readParcelable(TimeTableStudyProgramVo.class.getClassLoader());
 		semester = in.readParcelable(TimeTableSemesterVo.class.getClassLoader());
 
@@ -211,6 +240,7 @@ public class MyTimeTableCourse implements Parcelable {
 	@Override
 	public void writeToParcel(final Parcel dest, final int flags) {
 		dest.writeString(mTitle);
+		dest.writeString(mCourse);
 		dest.writeParcelable(studyProgram, flags);
 		dest.writeParcelable(semester, flags);
 
@@ -228,21 +258,24 @@ public class MyTimeTableCourse implements Parcelable {
 
 	}
 
-	public static final Creator<MyTimeTableCourse> CREATOR = new Creator<MyTimeTableCourse>() {
+	public static final Creator<MyTimeTableCourseComponent> CREATOR = new Creator<MyTimeTableCourseComponent>() {
 		@Override
-		public MyTimeTableCourse createFromParcel(Parcel in) {
-			return new MyTimeTableCourse(in);
+		public MyTimeTableCourseComponent createFromParcel(Parcel in) {
+			return new MyTimeTableCourseComponent(in);
 		}
 
 		@Override
-		public MyTimeTableCourse[] newArray(int size) {
-			return new MyTimeTableCourse[size];
+		public MyTimeTableCourseComponent[] newArray(int size) {
+			return new MyTimeTableCourseComponent[size];
 		}
 	};
 
 
 	@SerializedName("title")
 	private String mTitle;
+
+	@SerializedName("course")
+	private String mCourse;
 
 	@SerializedName("studyProgram")
 	private TimeTableStudyProgramVo studyProgram;

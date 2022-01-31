@@ -59,7 +59,7 @@ public class TimeTableStudyGroupVo implements Parcelable {
     }
 
     public String getShortTitle() {
-        return mTitle.substring(mTitle.length() - 3);
+        return mTitle.substring(mTitle.length() - 2);
     }
 
 // --Commented out by Inspection START (02.11.2021 17:32):

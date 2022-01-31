@@ -21,13 +21,25 @@ import java.util.Comparator;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
 
 /**
- * This Comparator compares two {@link MyTimeTableCourseComponent} objects
- * based on the next upcoming event in there event list
+ * Edited by Nadja - 01/2022
  */
-public class CourseDateComparator implements Comparator<MyTimeTableCourseComponent> {
+public class CourseTitleComparator implements Comparator<MyTimeTableCourseComponent> {
 
+	private static final String TAG = "CourseTitleComparator";
+
+	/**
+	 * Similar to {@link java.util.Comparator#compare(Object, Object)}, should compare two and
+	 * return how they should be ordered.
+	 *
+	 * @param o1 The first object to compare.
+	 * @param o2 The second object to compare.
+	 *
+	 * @return a negative integer, zero, or a positive integer as the
+	 * first argument is less than, equal to, or greater than the second.
+	 */
 	@Override
 	public int compare(final MyTimeTableCourseComponent o1, final MyTimeTableCourseComponent o2) {
-		return new TimeTableEventComparator().compare(o1.getFirstEvent(), o2.getFirstEvent());
+		//studyGroups are also taken into account because the title includes the group a certain subset of studygroups belong to
+		return o1.getTitle().compareTo(o2.getTitle());
 	}
 }

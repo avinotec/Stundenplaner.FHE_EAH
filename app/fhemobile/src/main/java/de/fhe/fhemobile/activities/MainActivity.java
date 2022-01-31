@@ -17,8 +17,8 @@
 package de.fhe.fhemobile.activities;
 
 import static de.fhe.fhemobile.Main.getAppContext;
-import static de.fhe.fhemobile.Main.getSubscribedCourses;
-import static de.fhe.fhemobile.Main.subscribedCourses;
+import static de.fhe.fhemobile.Main.getSubscribedCourseComponents;
+import static de.fhe.fhemobile.Main.subscribedCourseComponents;
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
 import android.app.AlertDialog;
@@ -74,7 +74,7 @@ import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.feature.FeatureFragmentFactory;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -106,10 +106,10 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
 
         myTimeTableOverviewAdapter = new MyTimeTableOverviewAdapter(
-                Main.getAppContext(), subscribedCourses);
+                Main.getAppContext(), subscribedCourseComponents);
 
         myTimeTableCalendarAdapter = new MyTimeTableCalendarAdapter(
-                Main.getAppContext(), subscribedCourses);
+                Main.getAppContext(), subscribedCourseComponents);
 
 
         // Set up the drawer.
@@ -238,16 +238,16 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 //                        // A null listener allows the button to dismiss the dialog and take no further action.
 //                        .show();
 
-                    //folgender Code basiert auf generateNegativeList welche wie es Änderungen der Veranstaltungen in subscribedCourses berücksichtigt
+                    //folgender Code basiert auf generateNegativeList welche wie es Änderungen der Veranstaltungen in subscribedCourseComponents berücksichtigt
 
                     for(final ResponseModel.Change change : changes){
 
                         // Shortcut to the list
-                        final List<MyTimeTableCourse> myTimetableList = subscribedCourses;
+                        final List<MyTimeTableCourseComponent> myTimetableList = subscribedCourseComponents;
 
                         //Aenderung einer Veranstaltung: suche das Event (= einzelne Veranstaltung) und ueberschreibe ihre Daten
                         if(change.getChangesReason() == CHANGEREASON_EDIT) {
-                            final MyTimeTableCourse event = MyTimeTableUtils.getEventByID(
+                            final MyTimeTableCourseComponent event = MyTimeTableUtils.getEventByID(
                                     myTimetableList, change.getNewEventJson().getUid());
                             if(event != null){
                                 //todo: auskommentiert im Zuge von Umbauarbeiten
@@ -255,10 +255,10 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                             }
                         }
                         //Hinzufuegen einer neuen veranstaltung:
-                        // Erstelle ein neues Element vom Typ MyTimeTableCourse, schreibe alle Set-, Semester- und Studiengangdaten in diesen
+                        // Erstelle ein neues Element vom Typ MyTimeTableCourseComponent, schreibe alle Set-, Semester- und Studiengangdaten in diesen
                         //und fuege dann die Eventdaten des neuen Events hinzu. Anschliessend in die Liste hinzufuegen.
                         if(change.getChangesReason() == CHANGEREASON_NEW) {
-                            final MyTimeTableCourse event =
+                            final MyTimeTableCourseComponent event =
                                     MyTimeTableUtils.getCoursesByStudyGroupTitle(
                                             myTimetableList, change.getSetSplusKey()).get(0).copy();
                             //todo: auskommentiert im Zuge von Umbauarbeiten
@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                         }
                         //Loeschen einer Veranstaltung: Suche die Veranstaltung mit der SplusID und lösche sie aus der Liste.
                         if(change.getChangesReason() == CHANGEREASON_DELETE){
-                            final MyTimeTableCourse event = MyTimeTableUtils.getEventByID(
+                            final MyTimeTableCourseComponent event = MyTimeTableUtils.getEventByID(
                                     myTimetableList, change.getNewEventJson().getUid());
 
                             //todo: bad static use to update MyTimeTableCalendar
@@ -448,40 +448,40 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     }
 
 
-    public static void addToSubscribedCoursesAndUpdateAdapters(final MyTimeTableCourse course){
+    public static void addToSubscribedCourseComponentsAndUpdateAdapters(final MyTimeTableCourseComponent course){
         course.setSubscribed(true);
-        subscribedCourses.add(course);
+        subscribedCourseComponents.add(course);
 
-        saveSubscribedCoursesInSharedPreferences();
+        saveSubscribedCourseComponentsToSharedPreferences();
 
         myTimeTableCalendarAdapter.notifyDataSetChanged();
         myTimeTableOverviewAdapter.notifyDataSetChanged();
     }
 
 
-    public static void removeFromSubscribedCoursesAndUpdateAdapters(final MyTimeTableCourse course){
+    public static void removeFromSubscribedCourseComponentsAndUpdateAdapters(final MyTimeTableCourseComponent course){
         course.setSubscribed(false);
-        subscribedCourses.remove(course);
+        subscribedCourseComponents.remove(course);
 
-        saveSubscribedCoursesInSharedPreferences();
-
-        myTimeTableCalendarAdapter.notifyDataSetChanged();
-        myTimeTableOverviewAdapter.notifyDataSetChanged();
-    }
-
-
-    public static void clearSubscribedCoursesAndUpdateAdapters(){
-        subscribedCourses.clear();
-
-        saveSubscribedCoursesInSharedPreferences();
+        saveSubscribedCourseComponentsToSharedPreferences();
 
         myTimeTableCalendarAdapter.notifyDataSetChanged();
         myTimeTableOverviewAdapter.notifyDataSetChanged();
     }
 
-    private static void saveSubscribedCoursesInSharedPreferences() {
+
+    public static void clearSubscribedCourseComponentsAndUpdateAdapters(){
+        subscribedCourseComponents.clear();
+
+        saveSubscribedCourseComponentsToSharedPreferences();
+
+        myTimeTableCalendarAdapter.notifyDataSetChanged();
+        myTimeTableOverviewAdapter.notifyDataSetChanged();
+    }
+
+    private static void saveSubscribedCourseComponentsToSharedPreferences() {
         final Gson gson = new Gson();
-        final String json = correctUmlauts(gson.toJson(getSubscribedCourses()));
+        final String json = correctUmlauts(gson.toJson(getSubscribedCourseComponents()));
         final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(Define.SHARED_PREFERENCES_SUBSCRIBED_COURSES, json);
@@ -489,11 +489,11 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     }
 
     /**
-     * Returns the "subscribedCourses" sorted by date
+     * Returns the "subscribedCourseComponents" sorted by date
      * @return
      */
-    private static List<MyTimeTableCourse> getSortedSubscribedCourses(){
-        final List<MyTimeTableCourse> sortedList = new ArrayList<>(getSubscribedCourses());
+    private static List<MyTimeTableCourseComponent> getSortedSubscribedCourses(){
+        final List<MyTimeTableCourseComponent> sortedList = new ArrayList<>(getSubscribedCourseComponents());
 
         if(!sortedList.isEmpty()){
             Collections.sort(sortedList, new CourseDateComparator());

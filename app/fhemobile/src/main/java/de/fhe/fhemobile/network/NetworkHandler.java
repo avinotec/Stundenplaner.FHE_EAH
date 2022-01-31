@@ -40,7 +40,7 @@ import de.fhe.fhemobile.vos.WeatherResponse;
 import de.fhe.fhemobile.vos.mensa.MensaChoiceItemVo;
 import de.fhe.fhemobile.vos.mensa.MensaFoodItemCollectionVo;
 import de.fhe.fhemobile.vos.mensa.MensaFoodItemVo;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
 import de.fhe.fhemobile.vos.news.NewsCategoryResponse;
 import de.fhe.fhemobile.vos.news.NewsItemResponse;
 import de.fhe.fhemobile.vos.news.NewsItemVo;
@@ -349,12 +349,12 @@ public class NetworkHandler {
 		mApi.fetchTimeTableEvents(_TimeTableId).enqueue(_Callback);
 	}
 
-	public List<MyTimeTableCourse> reloadEvents(final MyTimeTableCourse event) {
+	public List<MyTimeTableCourseComponent> reloadEvents(final MyTimeTableCourseComponent event) {
 		Assert.assertTrue( mApi != null );
 		Assert.assertTrue( event != null );
 
 
-		final List<MyTimeTableCourse> eventList = new ArrayList<>();
+		final List<MyTimeTableCourseComponent> eventList = new ArrayList<>();
 
 		//todo: auskommentiert im Zuge von Umbauarbeiten
 		/*try {
@@ -367,7 +367,7 @@ public class NetworkHandler {
 				for(final TimeTableDayVo dayEntry : weekEntry.getDays() ){
 					for(final TimeTableEventVo eventEntry : dayEntry.getEvents() ){
 						if(eventEntry.getTitle().equals(event.getEvent().getTitle())){
-							final MyTimeTableCourse item = event.copy();
+							final MyTimeTableCourseComponent item = event.copy();
 							item.setEventWeek(weekEntry);
 							item.setEventDay(dayEntry);
 							item.setEvent(eventEntry);

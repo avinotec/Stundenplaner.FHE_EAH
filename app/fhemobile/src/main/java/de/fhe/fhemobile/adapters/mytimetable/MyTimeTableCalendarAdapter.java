@@ -16,7 +16,7 @@
  */
 package de.fhe.fhemobile.adapters.mytimetable;
 
-import static de.fhe.fhemobile.Main.getSubscribedCourses;
+import static de.fhe.fhemobile.Main.getSubscribedCourseComponents;
 import static de.fhe.fhemobile.utils.MyTimeTableUtils.getEventTitleWithoutLastNumbers;
 
 import android.content.Context;
@@ -35,7 +35,7 @@ import java.util.Date;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
 public class MyTimeTableCalendarAdapter extends BaseAdapter {
@@ -43,10 +43,10 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	private static final String TAG = "MyTTCalenderAdapter";
 
 	private final Context context;
-	private List<MyTimeTableCourse> mItems;
+	private List<MyTimeTableCourseComponent> mItems;
 
 
-	public MyTimeTableCalendarAdapter(Context context, List<MyTimeTableCourse> mItems) {
+	public MyTimeTableCalendarAdapter(Context context, List<MyTimeTableCourseComponent> mItems) {
 		this.context = context;
 		this.mItems = mItems;
 	}
@@ -70,7 +70,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	 * @return The data at the specified position.
 	 */
 	@Override
-	public MyTimeTableCourse getItem(int position) {
+	public MyTimeTableCourseComponent getItem(int position) {
 		return mItems.get(position);
 	}
 
@@ -113,7 +113,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 
 		//set TextViews Week, Day, Title,... for the currentItem
-		final MyTimeTableCourse currentItem = mItems.get(position);
+		final MyTimeTableCourseComponent currentItem = mItems.get(position);
 		final Date df = new Date(currentItem.getFirstEvent().getStartDate());
 
 		final TextView courseWeekDay = (TextView) convertView.findViewById(R.id.textviewWeekDay);
@@ -171,9 +171,9 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 		int posToday = -1;
 
-		for(int i = 0; i < getSubscribedCourses().size(); i++){
+		for(int i = 0; i < getSubscribedCourseComponents().size(); i++){
 
-			final TimeTableEventVo event = getSubscribedCourses().get(i).getFirstEvent();
+			final TimeTableEventVo event = getSubscribedCourseComponents().get(i).getFirstEvent();
 			final Date now = new Date();
 
 			try {

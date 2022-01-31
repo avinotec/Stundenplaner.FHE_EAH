@@ -36,7 +36,7 @@ import java.util.List;
 import de.fhe.fhemobile.comparator.CourseDateComparator;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
 
 
 /**
@@ -48,19 +48,19 @@ public class Main extends Application {
     private static Application mAppContext;
 
     //My Time Table
-    //note: always keep subscribedCourses sorted for display in the view
-    public static List<MyTimeTableCourse> subscribedCourses = new ArrayList<MyTimeTableCourse>(){
+    //note: always keep subscribedCourseComponents sorted for display in the view
+    public static List<MyTimeTableCourseComponent> subscribedCourseComponents = new ArrayList<MyTimeTableCourseComponent>(){
         @Override
-        public boolean add(MyTimeTableCourse myTimeTableCourse) {
-            super.add(myTimeTableCourse);
-            Collections.sort(subscribedCourses, new CourseDateComparator());
+        public boolean add(MyTimeTableCourseComponent myTimeTableCourseComponent) {
+            super.add(myTimeTableCourseComponent);
+            Collections.sort(subscribedCourseComponents, new CourseDateComparator());
             return true;
         }
 
         @Override
         public boolean remove(@Nullable @org.jetbrains.annotations.Nullable Object o) {
             super.remove(o);
-            Collections.sort(subscribedCourses, new CourseDateComparator());
+            Collections.sort(subscribedCourseComponents, new CourseDateComparator());
             return true;
         }
     };
@@ -78,13 +78,13 @@ public class Main extends Application {
         final String json = sharedPreferences.getString(Define.SHARED_PREFERENCES_SUBSCRIBED_COURSES,"");
 
         // falls die Liste leer sein sollte, überspringen
-        if ( ! "".equals(json)) {
+        if ( !"".equals(json) && !"null".equals(json)) {
             final Gson gson = new Gson();
-            final MyTimeTableCourse[] list = gson.fromJson(json, MyTimeTableCourse[].class);
-            subscribedCourses = new ArrayList<>(Arrays.asList(list));
+            final MyTimeTableCourseComponent[] list = gson.fromJson(json, MyTimeTableCourseComponent[].class);
+            subscribedCourseComponents = new ArrayList<>(Arrays.asList(list));
         }
 
-        Assert.assertTrue("onCreate(): subscribed courses is not initialized", subscribedCourses != null);
+        Assert.assertTrue("onCreate(): subscribed courses is not initialized", subscribedCourseComponents != null);
     }
 
     /**
@@ -100,8 +100,8 @@ public class Main extends Application {
         return mAppContext;
     }
 
-    public static List<MyTimeTableCourse> getSubscribedCourses(){
-        return subscribedCourses;
+    public static List<MyTimeTableCourseComponent> getSubscribedCourseComponents(){
+        return subscribedCourseComponents;
     }
 
     //MS 201908 Multidex apk introduced
