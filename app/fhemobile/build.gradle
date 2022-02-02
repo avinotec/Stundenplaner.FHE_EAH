@@ -42,7 +42,7 @@ android {
      * This property is optional because the plugin uses a recommended version of
      * the build tools by default.
      */
-    buildToolsVersion '32.0.0'
+    buildToolsVersion '32.1.0 rc1'
 
     compileOptions {
         // Error: Invoke-customs are only supported starting with Android O (--min-api 26)
@@ -270,8 +270,8 @@ dependencies {
 
 
 
-    implementation 'androidx.navigation:navigation-fragment:2.3.5'
-    implementation 'androidx.navigation:navigation-ui:2.3.5'
+    implementation 'androidx.navigation:navigation-fragment:2.4.0'
+    implementation 'androidx.navigation:navigation-ui:2.4.0'
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
     
     
