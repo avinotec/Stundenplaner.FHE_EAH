@@ -24,7 +24,6 @@ import com.google.gson.GsonBuilder;
 
 import org.junit.Assert;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,14 +40,12 @@ import de.fhe.fhemobile.vos.WeatherResponse;
 import de.fhe.fhemobile.vos.mensa.MensaChoiceItemVo;
 import de.fhe.fhemobile.vos.mensa.MensaFoodItemCollectionVo;
 import de.fhe.fhemobile.vos.mensa.MensaFoodItemVo;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
 import de.fhe.fhemobile.vos.news.NewsCategoryResponse;
 import de.fhe.fhemobile.vos.news.NewsItemResponse;
 import de.fhe.fhemobile.vos.news.NewsItemVo;
 import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
 import de.fhe.fhemobile.vos.semesterdata.SemesterDataVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableDayVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
 import okhttp3.MediaType;
@@ -352,14 +349,16 @@ public class NetworkHandler {
 		mApi.fetchTimeTableEvents(_TimeTableId).enqueue(_Callback);
 	}
 
-	public List<MyTimeTableCourse> reloadEvents(final MyTimeTableCourse event) {
+	public List<MyTimeTableCourseComponent> reloadEvents(final MyTimeTableCourseComponent event) {
 		Assert.assertTrue( mApi != null );
 		Assert.assertTrue( event != null );
 
 
-		final List<MyTimeTableCourse>eventList = new ArrayList<>();
+		final List<MyTimeTableCourseComponent> eventList = new ArrayList<>();
 
-		try {
+		//todo: auskommentiert im Zuge von Umbauarbeiten
+		/*try {
+
 			final ArrayList<TimeTableWeekVo> timeTable = mApi.fetchTimeTableEvents(
 					event.getStudyGroup().getTimeTableId()).execute().body();
 			Assert.assertTrue( timeTable != null );
@@ -368,7 +367,7 @@ public class NetworkHandler {
 				for(final TimeTableDayVo dayEntry : weekEntry.getDays() ){
 					for(final TimeTableEventVo eventEntry : dayEntry.getEvents() ){
 						if(eventEntry.getTitle().equals(event.getEvent().getTitle())){
-							final MyTimeTableCourse item = event.copy();
+							final MyTimeTableCourseComponent item = event.copy();
 							item.setEventWeek(weekEntry);
 							item.setEventDay(dayEntry);
 							item.setEvent(eventEntry);
@@ -379,7 +378,7 @@ public class NetworkHandler {
 			}
 		} catch (final IOException e) {
 			Log.e(TAG, "fetchTimeTableEventsSynchron: ",e );
-		}
+		}*/
 		return eventList;
 	}
 

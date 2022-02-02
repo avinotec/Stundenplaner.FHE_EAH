@@ -58,6 +58,11 @@ public class TimeTableStudyGroupVo implements Parcelable {
         return mTimeTableId;
     }
 
+    public String getShortTitle() {
+        //e.g. mTitle = "ET(BA)5.01(ATTITi)
+        return mTitle.replaceFirst("^\\w+\\([\\w|/]+\\)\\d\\.", "");
+    }
+
 // --Commented out by Inspection START (02.11.2021 17:32):
 //    public void setTimeTableId(final String _timeTableId) {
 //        mTimeTableId = _timeTableId;
@@ -67,6 +72,7 @@ public class TimeTableStudyGroupVo implements Parcelable {
     @SerializedName("title")
     private String mTitle;
 
+    //SPLUS-Id
     @SerializedName("timetableId")
     private String mTimeTableId;
 

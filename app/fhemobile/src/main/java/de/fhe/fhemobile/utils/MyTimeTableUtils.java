@@ -118,7 +118,7 @@ public class MyTimeTableUtils {
      * @return
      */
     public static final boolean listContainsEvent(final List<MyTimeTableCourse> list, final MyTimeTableCourse data){
-        for(final MyTimeTableCourse event:list){
+        for(MyTimeTableCourse event:list){
 //			Log.d(TAG, "Eventvergleich1: "+event);
 //			Log.d(TAG, "Eventvergleich2: "+data);
 //			Log.d(TAG, "listContainsEvent: "+event.getEvent().getTitle()+" "+data.getEvent().getTitle());

@@ -30,7 +30,7 @@ public class TimeTableFactory {
      * @return
      */
     public static FeatureFragment getTimeTableFragment() {
-        final String chosenTimeTable = TimeTableSettings.fetchTimeTableSelection();
+        final String chosenTimeTable = TimeTableSettings.getTimeTableSelection();
         FeatureFragment fragment = null;
 
         if (chosenTimeTable != null) {

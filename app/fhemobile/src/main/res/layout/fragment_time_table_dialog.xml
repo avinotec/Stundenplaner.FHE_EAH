@@ -47,7 +47,7 @@
                     android:textSize="@dimen/timetable_headline_textsize"
                     />
 
-                <de.fhe.fhemobile.widgets.picker.StudyCoursePicker
+                <de.fhe.fhemobile.widgets.picker.StudyProgramPicker
                     android:id="@+id/timetableStudyCoursePicker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -51,8 +51,8 @@ public class PersonSearchFragment extends FeatureFragment {
      * @return A new instance of fragment PersonSearchFragment.
      */
     public static PersonSearchFragment newInstance() {
-        final PersonSearchFragment fragment = new PersonSearchFragment();
-        final Bundle args = new Bundle();
+        PersonSearchFragment fragment = new PersonSearchFragment();
+        Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,7 +62,7 @@ public class PersonSearchFragment extends FeatureFragment {
     }
 
     @Override
-    public void onCreate(final Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mDestRoom = null;
@@ -70,8 +70,8 @@ public class PersonSearchFragment extends FeatureFragment {
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-                             final Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
         mView = (PersonSearchView) inflater.inflate(R.layout.fragment_person_search, container, false);
@@ -79,7 +79,7 @@ public class PersonSearchFragment extends FeatureFragment {
         mView.initializeView(getChildFragmentManager());
 
         persons = JSONHandler.loadPersons(getContext());
-        final List<Person> personList = new ArrayList();
+        List<Person> personList = new ArrayList();
         personList.addAll(persons.values());
         mView.setPersonItems(personList);
 
@@ -89,14 +89,14 @@ public class PersonSearchFragment extends FeatureFragment {
     @Override
     public void onResume() {
         super.onResume();
-        final SharedPreferences mSP = Main.getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
-        final String previousPersonChoice = mSP.getString(PREFS_NAVIGATION_PERSON_CHOICE, "");
+        SharedPreferences mSP = Main.getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        String previousPersonChoice = mSP.getString(PREFS_NAVIGATION_PERSON_CHOICE, "");
 
         if(!"".equals(previousPersonChoice)){
-            final Person chosenPerson = persons.get(previousPersonChoice);
+            Person chosenPerson = persons.get(previousPersonChoice);
             if(chosenPerson != null){
-                final String chosenPersonsRoom = chosenPerson.getRoom();
-                for (final Room room : MainActivity.rooms){
+                String chosenPersonsRoom = chosenPerson.getRoom();
+                for (Room room : MainActivity.rooms){
 
                     if(room.getRoomName().equals(chosenPersonsRoom)){
                         mDestRoom = room;
@@ -115,13 +115,13 @@ public class PersonSearchFragment extends FeatureFragment {
     private final PersonSearchView.IViewListener mViewListener = new PersonSearchView.IViewListener() {
 
         @Override
-        public void onPersonChosen(final String _person) {
+        public void onPersonChosen(String _person) {
             mView.toggleGoButtonEnabled(false);
 
             //search for room object
             if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
-            for(final Room room : MainActivity.rooms){
-                final String roomOfPerson = persons.get(_person).getRoom();
+            for(Room room : MainActivity.rooms){
+                String roomOfPerson = persons.get(_person).getRoom();
                 if(room.getRoomName() != null && room.getRoomName().equals(roomOfPerson)){
 
                     mDestRoom = room;
@@ -129,7 +129,7 @@ public class PersonSearchFragment extends FeatureFragment {
                     mView.toggleStartInputCardVisibility(true);
 
                     final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
-                    final SharedPreferences.Editor editor = sharedPreferences.edit();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString(PREFS_NAVIGATION_PERSON_CHOICE, _person);
                     editor.apply();
 
@@ -169,14 +169,14 @@ public class PersonSearchFragment extends FeatureFragment {
      */
     private boolean validateInputAndSetStartRoom(){
 
-        final String input = mView.getStartInputText();
+        String input = mView.getStartInputText();
 
         boolean valid = false;
         //a room number has been entered
         if(input != null){
 
             //check room list for matching names
-            for (final Room room : MainActivity.rooms){
+            for (Room room : MainActivity.rooms){
                 if (room.getRoomName().equals(input)){
                     valid = true;
                     mStartRoom = room;

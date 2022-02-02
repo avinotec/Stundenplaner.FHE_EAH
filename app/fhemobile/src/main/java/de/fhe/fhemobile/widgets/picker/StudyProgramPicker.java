@@ -29,11 +29,11 @@ import de.fhe.fhemobile.widgets.picker.base.IdPicker;
  */
 public class StudyCoursePicker extends IdPicker {
 
-    public StudyCoursePicker(final Context context, final AttributeSet attrs) {
+    public StudyCoursePicker(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public void setItems(final List<TimeTableStudyCourseVo> _items) {
+    public void setItems(List<TimeTableStudyCourseVo> _items) {
         mItems = _items;
         if (mItems == null) {
             throw new AssertionError("StudyCourse items cannot be null!");
@@ -41,12 +41,12 @@ public class StudyCoursePicker extends IdPicker {
     }
 
     @Override
-    protected String getId(final int _Position) {
+    protected String getId(int _Position) {
         return mItems.get(_Position).getId();
     }
 
     @Override
-    protected String getName(final int _Position) {
+    protected String getName(int _Position) {
         return mItems.get(_Position).getTitle();
     }
 

@@ -41,10 +41,10 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	private static final String TAG = "MyTTCalenderAdapter";
 
 	private final Context context;
-	private final List<MyTimeTableCourse> mItems;
+	private List<MyTimeTableCourse> mItems;
 
 
-	public MyTimeTableCalendarAdapter(final Context context, final List<MyTimeTableCourse> mItems) {
+	public MyTimeTableCalendarAdapter(Context context, List<MyTimeTableCourse> mItems) {
 		this.context = context;
 		this.mItems = mItems;
 	}
@@ -68,7 +68,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	 * @return The data at the specified position.
 	 */
 	@Override
-	public MyTimeTableCourse getItem(final int position) {
+	public MyTimeTableCourse getItem(int position) {
 		return mItems.get(position);
 	}
 
@@ -79,7 +79,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	 * @return
 	 */
 	@Override
-	public long getItemId(final int position) {
+	public long getItemId(int position) {
 		//todo: was "return position" before -> ensure that change does not have side effects
 		return position;
 	}
@@ -104,7 +104,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	 * @return A View corresponding to the data at the specified position.
 	 */
 	@Override
-	public View getView(final int position, View convertView, final ViewGroup parent) {
+	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
 			convertView = LayoutInflater.from(context).
 					inflate(R.layout.item_my_time_table_calendar, parent, false);
@@ -131,17 +131,17 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 		//String date = sdf.format(df);
 		courseTime.setText(currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime()); // $NON-NLS
 
-		final TextView courseRoom = (TextView)convertView.findViewById(R.id.textviewRoom);
+		TextView courseRoom = (TextView)convertView.findViewById(R.id.textviewRoom);
 		courseRoom.setText(currentItem.getEvent().getRoom());
 
-		final TextView courseLecturer = (TextView)convertView.findViewById(R.id.textviewLecturer);
+		TextView courseLecturer = (TextView)convertView.findViewById(R.id.textviewLecturer);
 		courseLecturer.setText(currentItem.getEvent().getLecturer());
 
 
 		//Add a header displaying WeekDay and Date
 		// if such a header has already been added with other courses at the same date,
 		// then do not add header again (set it invisible for this item)
-		final RelativeLayout headerLayout = convertView.findViewById(R.id.layout_mytimetable_calendar_header);
+		RelativeLayout headerLayout = convertView.findViewById(R.id.layout_mytimetable_calendar_header);
 		if(position == 0 || !currentItem.getEvent().getDate().equals(
 											mItems.get(position - 1).getEvent().getDate())){
 			headerLayout.setVisibility(View.VISIBLE);
@@ -190,10 +190,10 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 						posToday = (i == 0 ? 0 : i - 1);
 					}
 				}
-			} catch (final ParseException e) {
+			} catch (ParseException e) {
 				Log.e(TAG, "error getting position of first course today",e );
 			}
-			catch (final NullPointerException e) {
+			catch (NullPointerException e) {
 				Log.e(TAG, "wrong Date format", e);
 			}
 		}
