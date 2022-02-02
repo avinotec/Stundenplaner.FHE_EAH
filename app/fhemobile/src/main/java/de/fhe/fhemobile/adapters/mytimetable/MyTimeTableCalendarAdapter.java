@@ -16,7 +16,7 @@
  */
 package de.fhe.fhemobile.adapters.mytimetable;
 
-import static de.fhe.fhemobile.utils.MyTimeTableUtils.getEventTitleWithoutLastNumbers;
+import static de.fhe.fhemobile.utils.MyTimeTableUtils.getEventTitleWithoutEndingNumbers;
 
 import android.content.Context;
 import android.util.Log;
@@ -34,7 +34,6 @@ import java.util.Date;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
@@ -127,7 +126,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 		courseDate.setText(currentItem.getFirstEvent().getDate());
 
 		final TextView courseTitle = (TextView) convertView.findViewById(R.id.textviewTitle);
-		courseTitle.setText(getEventTitleWithoutLastNumbers(currentItem.getFirstEvent().getShortTitle()));
+		courseTitle.setText(getEventTitleWithoutEndingNumbers(currentItem.getFirstEvent().getShortTitle()));
 
 		final TextView courseTime = (TextView) convertView.findViewById(R.id.textCourseTime);
 		//String date = sdf.format(df);

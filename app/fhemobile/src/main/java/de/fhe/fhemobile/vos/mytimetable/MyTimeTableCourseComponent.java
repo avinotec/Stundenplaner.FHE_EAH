@@ -23,8 +23,6 @@ import static de.fhe.fhemobile.utils.MyTimeTableUtils.getCourseName;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.annotation.NonNull;
-
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -130,24 +128,6 @@ public class MyTimeTableCourseComponent implements Parcelable {
 		this.studyGroups.add(studyGroup.getShortTitle());
 	}
 
-	/**
-	 * Adds all names of the study groups list to one long string
-	 * @return study group list as string
-	 */
-	public String getStudyGroupListString(){
-		Collections.sort(studyGroups);
-		StringBuilder combinedStudyGroups = new StringBuilder();
-		if(studyGroups.size() > 0) {
-			for (String _studyGroupTitle : studyGroups) {
-				combinedStudyGroups.append(_studyGroupTitle).append(", ");
-			}
-			return combinedStudyGroups.substring(0, combinedStudyGroups.length() - 2);
-		}
-		else{
-			return "";
-		}
-	}
-
 	public final int getId() {
 		return id;
 	}
@@ -173,7 +153,7 @@ public class MyTimeTableCourseComponent implements Parcelable {
 	 * @param other
 	 * @return true if components belong to the same course
 	 */
-	public boolean isSameCourse(@NonNull MyTimeTableCourseComponent other){
+	public boolean isSameCourse(final MyTimeTableCourseComponent other){
 		return mCourse.equals(other.getCourse());
 	}
 
@@ -208,6 +188,29 @@ public class MyTimeTableCourseComponent implements Parcelable {
 		copy.setStudyGroups(this.getStudyGroups());
 		copy.setSubscribed(this.subscribed);
 		return copy;
+	}
+
+	/**
+	 * Adds all names of the study groups list to one long string
+	 * @return study group list as string
+	 */
+	public String getStudyGroupListString(){
+		Collections.sort(studyGroups);
+		StringBuilder combinedStudyGroups = new StringBuilder();
+
+		if(studyGroups.size() > 0) {
+			for (String studyGroupTitle : studyGroups) {
+
+				//reduce title e.g. "08(KMT)" to numerical
+				studyGroupTitle = studyGroupTitle.replaceAll("\\D","");
+
+				combinedStudyGroups.append(studyGroupTitle).append(", ");
+			}
+			return combinedStudyGroups.substring(0, combinedStudyGroups.length() - 2);
+		}
+		else{
+			return "";
+		}
 	}
 
 

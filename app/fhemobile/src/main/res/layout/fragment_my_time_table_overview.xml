@@ -14,7 +14,8 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ~
   -->
-<de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView xmlns:android="http://schemas.android.com/apk/res/android"
+<de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView
+	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
@@ -28,42 +29,45 @@
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:layout_above="@id/btn_mytimetable_overview_add_course"
-			android:paddingTop="@dimen/activity_vertical_margin"
-			android:orientation="vertical"
+			android:layout_alignParentTop="true"
 			android:animateLayoutChanges="true"
-			>
+			android:orientation="vertical"
+			android:paddingTop="@dimen/activity_vertical_margin">
 
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="@string/my_time_table_headline"
 				android:layout_gravity="center_horizontal"
 				android:layout_marginBottom="12dp"
+				android:layout_marginTop="6dp"
 				android:gravity="center_horizontal"
+				android:text="@string/my_time_table_headline"
+				android:textColor="@color/primary_color"
 				android:textSize="16sp"
-				android:textStyle="bold"
-				android:textColor="@color/primary_color"/>
+				android:textStyle="bold" />
 
-			<View style="@style/Divider"/>
+			<View style="@style/Divider" />
 
 			<ListView
 				android:id="@+id/listview_mytimetable_overview_courses"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:divider="@null"
-				android:dividerHeight="0dp"/>
+				android:dividerHeight="0dp" />
+
 
 		</LinearLayout>
 
 		<com.google.android.material.floatingactionbutton.FloatingActionButton
 			android:id="@+id/btn_mytimetable_overview_add_course"
-			android:layout_margin="16dp"
+			android:layout_marginRight="16dp"
+			android:layout_marginBottom="16dp"
+			android:layout_marginTop="16dp"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:background="@drawable/buttonshape"
 			android:src="@drawable/ic_add_white"
-			android:layout_alignParentBottom="true"
+			android:layout_alignParentTop="true"
 			android:layout_alignParentRight="true" />
 
 	</RelativeLayout>

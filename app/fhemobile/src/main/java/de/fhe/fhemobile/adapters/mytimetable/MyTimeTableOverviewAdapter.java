@@ -17,7 +17,7 @@
 package de.fhe.fhemobile.adapters.mytimetable;
 
 import static de.fhe.fhemobile.Main.getSubscribedCourseComponents;
-import static de.fhe.fhemobile.utils.MyTimeTableUtils.getEventTitleWithoutLastNumbers;
+import static de.fhe.fhemobile.utils.MyTimeTableUtils.getEventTitleWithoutEndingNumbers;
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
 import android.content.Context;
@@ -41,6 +41,7 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.utils.MyTimeTableUtils;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
+import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
 public class MyTimeTableOverviewAdapter extends BaseAdapter {
 
@@ -49,9 +50,9 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 	private final Context context;
 	private List<MyTimeTableCourseComponent> mItems;
 
-	public MyTimeTableOverviewAdapter(final Context context, final List<MyTimeTableCourseComponent> mItems) {
+	public MyTimeTableOverviewAdapter(final Context context, final List<MyTimeTableCourseComponent> _items) {
 		this.context = context;
-		this.mItems = mItems;
+		this.mItems = _items;
 	}
 
 	/**
@@ -109,21 +110,12 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 
-				List<MyTimeTableCourseComponent> courseTitleFilteredList
-						= MyTimeTableUtils.getCoursesByEventTitle(
-						getSubscribedCourseComponents(),
-						currentItem.getTitle());
-
-				List <MyTimeTableCourseComponent> filteredList
-						= MyTimeTableUtils.getCoursesByStudyGroupTitle(
-						courseTitleFilteredList, currentItem.getStudyGroupListString());
-
-				for (MyTimeTableCourseComponent event : filteredList){
-					event.setVisible(!event.isVisible());
+				for (final TimeTableEventVo event : currentItem.getEvents()){
+					//todo: make all dates of the course visible
+					//event.setVisible(!event.isVisible());
 				}
 
 				((ListView) parent).invalidateViews();
-
 			}
 		});
 
@@ -153,7 +145,7 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 		final TextView courseTitle = (TextView) convertView.findViewById(
 				R.id.textview_mytimetable_overview_courseTitle);
 		courseTitle.setText(
-				correctUmlauts(getEventTitleWithoutLastNumbers(
+				correctUmlauts(getEventTitleWithoutEndingNumbers(
 						currentItem.getFirstEvent().getShortTitle())));
 
 
@@ -222,6 +214,8 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 
 		return convertView;
 	}
+
+
 
 
 	private static final DateFormat sdf = SimpleDateFormat.getDateInstance();

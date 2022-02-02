@@ -2,14 +2,14 @@
 <selector
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- When not selected, use x -->
+    <!-- When not selected, use + -->
     <item
         android:state_activated="false"
         android:drawable="@android:drawable/ic_input_add" />
 
-    <!-- When selected, use + -->
+    <!-- When selected, use x -->
     <item
         android:state_activated="true"
-        android:drawable="@android:drawable/ic_delete" />
+        android:drawable="@drawable/ic_baseline_delete" />
 
 </selector>

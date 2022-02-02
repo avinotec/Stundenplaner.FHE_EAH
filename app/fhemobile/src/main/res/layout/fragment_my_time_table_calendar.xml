@@ -68,12 +68,16 @@
                  />
         </LinearLayout>
 
+        <View style="@style/Divider"/>
+
         <ListView
             android:id="@+id/listview_mytimetable_calendar_courses"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
         </ListView>
+
+        <View style="@style/Divider"/>
 
 
     </LinearLayout>

@@ -72,6 +72,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="3">
+
             <TextView
                 android:id="@+id/textCourseTime"
                 android:layout_width="0dp"
@@ -81,6 +82,7 @@
                 android:text="Heading"
                 android:textColor="@color/primary_light"
                 android:textSize="@dimen/abc_text_size_body_1_material" />
+
             <TextView
                 android:id="@+id/textviewLecturer"
                 android:layout_width="0dp"
@@ -88,9 +90,11 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="Lecturer"
-                android:textColor="@color/primary_light"/>
+                android:textColor="@color/primary_light"
+                android:textStyle="italic"/>
+
             <TextView
-            android:id="@+id/textviewRoom"
+                android:id="@+id/textviewRoom"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -98,6 +102,7 @@
                 android:text="Room"
                 android:textColor="@color/primary_light"
                 android:textSize="@dimen/abc_text_size_body_1_material" />
+
         </LinearLayout>
 
 
@@ -111,7 +116,7 @@
             android:text="Title"
             android:textColor="@color/primary_light"
             android:textSize="16sp"
-            android:textStyle="italic" />
+            />
 
     </RelativeLayout>
 

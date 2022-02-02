@@ -40,8 +40,8 @@ public class MyTimeTableUtils {
      * @return string corresponding to the title that identifies a {@link MyTimeTableCourseComponent}
      */
     public static String getCourseComponentName(final String title){
-        //cut away all ".dd" (where d stands for any digit)
-        return title.replaceAll("\\.\\d*$","");
+        //cut away all ".d" (where d stands for any digit)
+        return title.replaceAll("\\.\\d+$","");
     }
 
     /**
@@ -56,7 +56,7 @@ public class MyTimeTableUtils {
 
 
 
-    public static String getEventTitleWithoutLastNumbers(final String title) {
+    public static String getEventTitleWithoutEndingNumbers(final String title) {
 
         //cuts away everything after the last letter (a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß), which means that "/01.2" is cut
         final Pattern p = Pattern.compile("^(.*[a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß])"); //$NON-NLS
