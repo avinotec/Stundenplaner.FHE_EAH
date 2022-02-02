@@ -27,13 +27,13 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.junit.Assert;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 import de.fhe.fhemobile.comparator.CourseDateComparator;
 import de.fhe.fhemobile.utils.Define;
@@ -51,7 +51,7 @@ public class Main extends Application {
 
     //My Time Table
     //note: always keep subscribedCourseComponents sorted for display in the view
-    public static List<MyTimeTableCourseComponent> subscribedCourseComponents = new ArrayList<MyTimeTableCourseComponent>(){
+    public static ArrayList<MyTimeTableCourseComponent> subscribedCourseComponents = new ArrayList<MyTimeTableCourseComponent>(){
         @Override
         public boolean add(MyTimeTableCourseComponent myTimeTableCourseComponent) {
             super.add(myTimeTableCourseComponent);
@@ -82,8 +82,9 @@ public class Main extends Application {
         // falls die Liste leer sein sollte, überspringen
         if ( !"".equals(json) && !"null".equals(json)) {
             final Gson gson = new Gson();
-            final MyTimeTableCourseComponent[] list = gson.fromJson(json, MyTimeTableCourseComponent[].class);
-            subscribedCourseComponents = new ArrayList<>(Arrays.asList(list));
+            Type listType = new TypeToken<ArrayList<MyTimeTableCourseComponent>>(){}.getType();
+            subscribedCourseComponents = gson.fromJson(json, listType);
+            //subscribedCourseComponents = new ArrayList<MyTimeTableCourseComponent>(Arrays.asList(list));
         }
 
         Assert.assertTrue("onCreate(): subscribed courses is not initialized", subscribedCourseComponents != null);
@@ -102,7 +103,7 @@ public class Main extends Application {
         return mAppContext;
     }
 
-    public static List<MyTimeTableCourseComponent> getSubscribedCourseComponents(){
+    public static ArrayList<MyTimeTableCourseComponent> getSubscribedCourseComponents(){
         return subscribedCourseComponents;
     }
 

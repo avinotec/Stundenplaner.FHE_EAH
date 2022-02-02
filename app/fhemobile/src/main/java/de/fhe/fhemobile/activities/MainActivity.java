@@ -46,7 +46,6 @@ import com.google.gson.Gson;
 import org.junit.Assert;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -56,7 +55,6 @@ import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableCalendarAdapter;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableOverviewAdapter;
-import de.fhe.fhemobile.comparator.CourseDateComparator;
 import de.fhe.fhemobile.fragments.DrawerFragment;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
@@ -483,25 +481,13 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
     private static void saveSubscribedCourseComponentsToSharedPreferences() {
         final Gson gson = new Gson();
-        final String json = correctUmlauts(gson.toJson(getSubscribedCourseComponents()));
+        final String json = correctUmlauts(gson.toJson(getSubscribedCourseComponents(), ArrayList.class));
         final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences(SP_MYTIMETABLE, Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(PREF_SUBSCRIBED_COURSES, json);
         editor.apply();
     }
 
-    /**
-     * Returns the "subscribedCourseComponents" sorted by date
-     * @return
-     */
-    private static List<MyTimeTableCourseComponent> getSortedSubscribedCourses(){
-        final List<MyTimeTableCourseComponent> sortedList = new ArrayList<>(getSubscribedCourseComponents());
-
-        if(!sortedList.isEmpty()){
-            Collections.sort(sortedList, new CourseDateComparator());
-        }
-        return sortedList;
-    }
 
     // #############################################################################################
 

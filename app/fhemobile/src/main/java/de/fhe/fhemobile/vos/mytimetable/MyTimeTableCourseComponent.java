@@ -50,7 +50,9 @@ public class MyTimeTableCourseComponent implements Parcelable {
 
 	private static final String TAG = "MyTimeTableCourseComponent";
 
-	public MyTimeTableCourseComponent(){	}
+	public MyTimeTableCourseComponent(){
+		//empty constructor needed
+	}
 
 
 	public MyTimeTableCourseComponent(TimeTableStudyProgramVo studyProgram,
