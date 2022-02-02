@@ -38,7 +38,6 @@ import java.util.Locale;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableCalendarView;
 
 public class MyTimeTableCalendarFragment extends FeatureFragment {
@@ -126,13 +125,8 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 					.setMessage(R.string.deleteTimetableMessage)
 					.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
-							//Stundenplan löschen (die Listen leer machen und aus den Preferences entfernen)
+							//subscribed Kurse löschen
 							MainActivity.clearSubscribedCourseComponentsAndUpdateAdapters();
-							//todo: wozu brauchen wir die coursesOfChosenSemester hier? - Nadja
-							//MyTimeTableDialogFragment.coursesOfChosenSemester.clear();
-							sharedPreferences.edit()
-									.remove(Define.PREF_SUBSCRIBED_COURSES)
-									.apply();
 						}
 					})
 					.setNegativeButton(android.R.string.no, null)

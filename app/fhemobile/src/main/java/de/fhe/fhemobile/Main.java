@@ -84,7 +84,6 @@ public class Main extends Application {
             final Gson gson = new Gson();
             Type listType = new TypeToken<ArrayList<MyTimeTableCourseComponent>>(){}.getType();
             subscribedCourseComponents = gson.fromJson(json, listType);
-            //subscribedCourseComponents = new ArrayList<MyTimeTableCourseComponent>(Arrays.asList(list));
         }
 
         Assert.assertTrue("onCreate(): subscribed courses is not initialized", subscribedCourseComponents != null);

@@ -16,7 +16,6 @@
  */
 package de.fhe.fhemobile.adapters.mytimetable;
 
-import static de.fhe.fhemobile.Main.getSubscribedCourseComponents;
 import static de.fhe.fhemobile.utils.MyTimeTableUtils.getEventTitleWithoutLastNumbers;
 
 import android.content.Context;
@@ -170,29 +169,36 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 		//don't use SimpleDateFormat.getDateTimeInstance() because it includes seconds
 
 		int posToday = -1;
+		Date posEndTime = null;
 
-		for(int i = 0; i < getSubscribedCourseComponents().size(); i++){
 
-			final TimeTableEventVo event = getSubscribedCourseComponents().get(i).getFirstEvent();
+		for(int i = 0; i < mItems.size(); i++){
+
+			final TimeTableEventVo event = mItems.get(i).getFirstEvent();
 			final Date now = new Date();
 
 			try {
-				//course starts now or in the future
-				if(sdf.parse(event.getDate() + " " + event.getStartTime())
-						.compareTo(now) >= 0) {
+				Date eventStartTime = sdf.parse(event.getDate() + " " + event.getStartTime());
 
-					//check if course today finished already (endTime before timeNow)
+				//course starts now or in the future
+				if(eventStartTime.compareTo(now) >= 0) {
+
+					//if the event today has not finished yet (endTime after timeNow)
 					if(sdf.parse(event.getDate() + " " + event.getEndTime())
-							.compareTo(now) < 0) {
-						posToday = i;
+							.compareTo(now) >= 0) {
+
+						//if the event is earlier on the same day than the one found before
+						if(posEndTime == null
+								|| (eventStartTime.compareTo(posEndTime) == 0
+								&& eventStartTime.compareTo(posEndTime) < 0)){
+							posEndTime = eventStartTime;
+							posToday = i;
+						}
 					}
-					//endTime of the course not reached
-					else{
-						posToday = (i == 0 ? 0 : i - 1);
-					}
+
 				}
 			} catch (ParseException e) {
-				Log.e(TAG, "error getting position of first course today",e );
+				Log.e(TAG, "error getting position of first event today",e );
 			}
 			catch (NullPointerException e) {
 				Log.e(TAG, "wrong Date format", e);
