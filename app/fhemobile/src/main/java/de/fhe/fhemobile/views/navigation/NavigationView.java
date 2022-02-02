@@ -158,7 +158,7 @@ public class NavigationView extends LinearLayout {
         mButtonPrevPlan.setEnabled(_Enabled);
         if(_Enabled){
             mButtonPrevPlan.setBackgroundResource(R.drawable.buttonshape_rectangle);
-        }else{
+        } else {
             mButtonPrevPlan.setBackgroundResource(R.drawable.buttonshape_rectangle_disabled);
         }
     }
