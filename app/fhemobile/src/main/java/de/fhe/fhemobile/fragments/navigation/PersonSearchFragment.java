@@ -1,5 +1,7 @@
 package de.fhe.fhemobile.fragments.navigation;
 
+import static de.fhe.fhemobile.utils.Define.SP_NAVIGATION;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -51,8 +53,8 @@ public class PersonSearchFragment extends FeatureFragment {
      * @return A new instance of fragment PersonSearchFragment.
      */
     public static PersonSearchFragment newInstance() {
-        PersonSearchFragment fragment = new PersonSearchFragment();
-        Bundle args = new Bundle();
+        final PersonSearchFragment fragment = new PersonSearchFragment();
+        final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,7 +64,7 @@ public class PersonSearchFragment extends FeatureFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mDestRoom = null;
@@ -70,8 +72,8 @@ public class PersonSearchFragment extends FeatureFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
         mView = (PersonSearchView) inflater.inflate(R.layout.fragment_person_search, container, false);
@@ -79,7 +81,7 @@ public class PersonSearchFragment extends FeatureFragment {
         mView.initializeView(getChildFragmentManager());
 
         persons = JSONHandler.loadPersons(getContext());
-        List<Person> personList = new ArrayList();
+        final List<Person> personList = new ArrayList();
         personList.addAll(persons.values());
         mView.setPersonItems(personList);
 
@@ -89,14 +91,14 @@ public class PersonSearchFragment extends FeatureFragment {
     @Override
     public void onResume() {
         super.onResume();
-        SharedPreferences mSP = Main.getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        SharedPreferences mSP = Main.getAppContext().getSharedPreferences(SP_NAVIGATION, Context.MODE_PRIVATE);
         String previousPersonChoice = mSP.getString(PREFS_NAVIGATION_PERSON_CHOICE, "");
 
         if(!"".equals(previousPersonChoice)){
-            Person chosenPerson = persons.get(previousPersonChoice);
+            final Person chosenPerson = persons.get(previousPersonChoice);
             if(chosenPerson != null){
-                String chosenPersonsRoom = chosenPerson.getRoom();
-                for (Room room : MainActivity.rooms){
+                final String chosenPersonsRoom = chosenPerson.getRoom();
+                for (final Room room : MainActivity.rooms){
 
                     if(room.getRoomName().equals(chosenPersonsRoom)){
                         mDestRoom = room;
@@ -115,13 +117,13 @@ public class PersonSearchFragment extends FeatureFragment {
     private final PersonSearchView.IViewListener mViewListener = new PersonSearchView.IViewListener() {
 
         @Override
-        public void onPersonChosen(String _person) {
+        public void onPersonChosen(final String _person) {
             mView.toggleGoButtonEnabled(false);
 
             //search for room object
             if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
             for(Room room : MainActivity.rooms){
-                String roomOfPerson = persons.get(_person).getRoom();
+                final String roomOfPerson = persons.get(_person).getRoom();
                 if(room.getRoomName() != null && room.getRoomName().equals(roomOfPerson)){
 
                     mDestRoom = room;
@@ -169,14 +171,14 @@ public class PersonSearchFragment extends FeatureFragment {
      */
     private boolean validateInputAndSetStartRoom(){
 
-        String input = mView.getStartInputText();
+        final String input = mView.getStartInputText();
 
         boolean valid = false;
         //a room number has been entered
         if(input != null){
 
             //check room list for matching names
-            for (Room room : MainActivity.rooms){
+            for (final Room room : MainActivity.rooms){
                 if (room.getRoomName().equals(input)){
                     valid = true;
                     mStartRoom = room;

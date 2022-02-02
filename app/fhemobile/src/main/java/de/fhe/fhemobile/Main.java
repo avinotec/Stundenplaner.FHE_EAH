@@ -17,23 +17,28 @@
 
 package de.fhe.fhemobile;
 
+import static de.fhe.fhemobile.utils.Define.SP_MYTIMETABLE;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.junit.Assert;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
 
+import de.fhe.fhemobile.comparator.CourseDateComparator;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
 
 
 /**
@@ -45,7 +50,22 @@ public class Main extends Application {
     private static Application mAppContext;
 
     //My Time Table
-    public static List<MyTimeTableCourse> subscribedCourses = new ArrayList();
+    //note: always keep subscribedCourseComponents sorted for display in the view
+    public static ArrayList<MyTimeTableCourseComponent> subscribedCourseComponents = new ArrayList<MyTimeTableCourseComponent>(){
+        @Override
+        public boolean add(MyTimeTableCourseComponent myTimeTableCourseComponent) {
+            super.add(myTimeTableCourseComponent);
+            Collections.sort(subscribedCourseComponents, new CourseDateComparator());
+            return true;
+        }
+
+        @Override
+        public boolean remove(Object o) {
+            super.remove(o);
+            Collections.sort(subscribedCourseComponents, new CourseDateComparator());
+            return true;
+        }
+    };
 
     @Override
     public void onCreate() {
@@ -56,17 +76,17 @@ public class Main extends Application {
         FeatureProvider.loadFeatures(this);
 
         // load subscribed courses for My Time Table from Shared Preferences
-        SharedPreferences sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
-        final String json = sharedPreferences.getString(Define.SHARED_PREFERENCES_SUBSCRIBED_COURSES,"");
+        SharedPreferences sharedPreferences = getSharedPreferences(SP_MYTIMETABLE, Context.MODE_PRIVATE);
+        final String json = sharedPreferences.getString(Define.PREF_SUBSCRIBED_COURSES,"");
 
         // falls die Liste leer sein sollte, überspringen
-        if ( ! "".equals(json)) {
+        if ( !"".equals(json) && !"null".equals(json)) {
             final Gson gson = new Gson();
-            final MyTimeTableCourse[] list = gson.fromJson(json, MyTimeTableCourse[].class);
-            subscribedCourses = new ArrayList<>(Arrays.asList(list));
+            Type listType = new TypeToken<ArrayList<MyTimeTableCourseComponent>>(){}.getType();
+            subscribedCourseComponents = gson.fromJson(json, listType);
         }
 
-        Assert.assertTrue("onCreate(): subscribed courses is not initialized", subscribedCourses != null);
+        Assert.assertTrue("onCreate(): subscribed courses is not initialized", subscribedCourseComponents != null);
     }
 
     /**
@@ -74,7 +94,7 @@ public class Main extends Application {
      * @param _ResId requested ID
      * @return corresponding String
      */
-    public static String getSafeString(@StringRes int _ResId) {
+    public static String getSafeString(@StringRes final int _ResId) {
         return mAppContext.getString(_ResId);
     }
 
@@ -82,15 +102,8 @@ public class Main extends Application {
         return mAppContext;
     }
 
-    public static List<MyTimeTableCourse> getSubscribedCourses(){
-        return subscribedCourses;
-    }
-
-    /**
-     * Clear subscribed courses
-     */
-    public static void clearSubscribedCourses(){
-        subscribedCourses.clear();
+    public static ArrayList<MyTimeTableCourseComponent> getSubscribedCourseComponents(){
+        return subscribedCourseComponents;
     }
 
     //MS 201908 Multidex apk introduced

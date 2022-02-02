@@ -55,11 +55,11 @@ public class MyTimeTableCourseComponent implements Parcelable {
 	}
 
 
-	public MyTimeTableCourseComponent(TimeTableStudyProgramVo studyProgram,
-									  TimeTableSemesterVo semester,
-									  TimeTableEventVo event,
-									  String studyGroup,
-									  boolean subscribed) {
+	public MyTimeTableCourseComponent(final TimeTableStudyProgramVo studyProgram,
+									  final TimeTableSemesterVo semester,
+									  final TimeTableEventVo event,
+									  final String studyGroup,
+									  final boolean subscribed) {
 		this.mTitle = getCourseComponentName(event);
 		this.mCourse = getCourseName(event);
 		this.studyProgram = studyProgram;
@@ -77,10 +77,10 @@ public class MyTimeTableCourseComponent implements Parcelable {
 	 * @param event the event to initialize the event list with
 	 * @param studyGroup the study group the course is dedicated to and that to initialize the study group list with
 	 */
-	public MyTimeTableCourseComponent(TimeTableStudyProgramVo studyProgram,
-									  TimeTableSemesterVo semester,
-									  TimeTableEventVo event,
-									  TimeTableStudyGroupVo studyGroup) {
+	public MyTimeTableCourseComponent(final TimeTableStudyProgramVo studyProgram,
+									  final TimeTableSemesterVo semester,
+									  final TimeTableEventVo event,
+									  final TimeTableStudyGroupVo studyGroup) {
 		this.mTitle = getCourseComponentName(event.getTitle());
 		this.mCourse = getCourseName(event);
 		this.studyProgram = studyProgram;
@@ -124,9 +124,9 @@ public class MyTimeTableCourseComponent implements Parcelable {
 
 	public List<String> getStudyGroups() { return studyGroups; }
 
-	public void setStudyGroups(List<String> studyGroups) { this.studyGroups = studyGroups; }
+	public void setStudyGroups(final List<String> studyGroups) { this.studyGroups = studyGroups; }
 
-	public void addStudyGroup(TimeTableStudyGroupVo studyGroup) {
+	public void addStudyGroup(final TimeTableStudyGroupVo studyGroup) {
 		this.studyGroups.add(studyGroup.getShortTitle());
 	}
 
@@ -164,7 +164,7 @@ public class MyTimeTableCourseComponent implements Parcelable {
 		return subscribed;
 	}
 
-	public void setSubscribed(boolean added) {
+	public void setSubscribed(final boolean added) {
 		this.subscribed = added;
 	}
 

@@ -16,6 +16,8 @@
  */
 package de.fhe.fhemobile.adapters.mytimetable;
 
+import static de.fhe.fhemobile.utils.MyTimeTableUtils.getEventTitleWithoutLastNumbers;
+
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,7 +35,7 @@ import java.util.List;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
 public class MyTimeTableCalendarAdapter extends BaseAdapter {
@@ -41,10 +43,10 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	private static final String TAG = "MyTTCalenderAdapter";
 
 	private final Context context;
-	private List<MyTimeTableCourse> mItems;
+	private List<MyTimeTableCourseComponent> mItems;
 
 
-	public MyTimeTableCalendarAdapter(Context context, List<MyTimeTableCourse> mItems) {
+	public MyTimeTableCalendarAdapter(final Context context, final List<MyTimeTableCourseComponent> mItems) {
 		this.context = context;
 		this.mItems = mItems;
 	}
@@ -68,7 +70,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	 * @return The data at the specified position.
 	 */
 	@Override
-	public MyTimeTableCourse getItem(int position) {
+	public MyTimeTableCourseComponent getItem(int position) {
 		return mItems.get(position);
 	}
 
@@ -80,7 +82,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	 */
 	@Override
 	public long getItemId(int position) {
-		//todo: was "return position" before -> ensure that change does not have side effects
+		//note: position is correct
 		return position;
 	}
 
@@ -104,7 +106,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	 * @return A View corresponding to the data at the specified position.
 	 */
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
 			convertView = LayoutInflater.from(context).
 					inflate(R.layout.item_my_time_table_calendar, parent, false);
@@ -112,38 +114,38 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 
 		//set TextViews Week, Day, Title,... for the currentItem
-		final MyTimeTableCourse currentItem = mItems.get(position);
-		final Date df = new Date(currentItem.getEvent().getStartDate());
+		final MyTimeTableCourseComponent currentItem = mItems.get(position);
+		final Date df = new Date(currentItem.getFirstEvent().getStartDate());
 
 		final TextView courseWeekDay = (TextView) convertView.findViewById(R.id.textviewWeekDay);
-		courseWeekDay.setText(currentItem.getEvent().getDayOfWeek());
+		courseWeekDay.setText(currentItem.getFirstEvent().getDayOfWeek());
 		if(sdf.format(df).compareTo(sdf.format(new Date())) == 0){
-			courseWeekDay.setText(context.getString(R.string.today) + " ("+currentItem.getEvent().getDayOfWeek() + ")");
+			courseWeekDay.setText(context.getString(R.string.today) + " ("+currentItem.getFirstEvent().getDayOfWeek() + ")");
 		}
 
 		final TextView courseDate = (TextView) convertView.findViewById(R.id.tvCourseDate);
-		courseDate.setText(currentItem.getEvent().getDate());
+		courseDate.setText(currentItem.getFirstEvent().getDate());
 
 		final TextView courseTitle = (TextView) convertView.findViewById(R.id.textviewTitle);
-		courseTitle.setText(currentItem.getEvent().getShortTitle());
+		courseTitle.setText(getEventTitleWithoutLastNumbers(currentItem.getFirstEvent().getShortTitle()));
 
 		final TextView courseTime = (TextView) convertView.findViewById(R.id.textCourseTime);
 		//String date = sdf.format(df);
-		courseTime.setText(currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime()); // $NON-NLS
+		courseTime.setText(currentItem.getFirstEvent().getStartTime() + " – " + currentItem.getFirstEvent().getEndTime()); // $NON-NLS
 
-		TextView courseRoom = (TextView)convertView.findViewById(R.id.textviewRoom);
-		courseRoom.setText(currentItem.getEvent().getRoom());
+		final TextView courseRoom = (TextView)convertView.findViewById(R.id.textviewRoom);
+		courseRoom.setText(currentItem.getFirstEvent().getRoom());
 
-		TextView courseLecturer = (TextView)convertView.findViewById(R.id.textviewLecturer);
-		courseLecturer.setText(currentItem.getEvent().getLecturer());
+		final TextView courseLecturer = (TextView)convertView.findViewById(R.id.textviewLecturer);
+		courseLecturer.setText(currentItem.getFirstEvent().getLecturer());
 
 
 		//Add a header displaying WeekDay and Date
 		// if such a header has already been added with other courses at the same date,
 		// then do not add header again (set it invisible for this item)
-		RelativeLayout headerLayout = convertView.findViewById(R.id.layout_mytimetable_calendar_header);
-		if(position == 0 || !currentItem.getEvent().getDate().equals(
-											mItems.get(position - 1).getEvent().getDate())){
+		final RelativeLayout headerLayout = convertView.findViewById(R.id.layout_mytimetable_calendar_header);
+		if(position == 0 || !currentItem.getFirstEvent().getDate().equals(
+				mItems.get(position - 1).getFirstEvent().getDate())){
 			headerLayout.setVisibility(View.VISIBLE);
 			courseWeekDay.setVisibility(View.VISIBLE);
 			courseDate.setVisibility(View.VISIBLE);
@@ -169,29 +171,36 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 		//don't use SimpleDateFormat.getDateTimeInstance() because it includes seconds
 
 		int posToday = -1;
+		Date posEndTime = null;
 
-		for(int i = 0; i < MainActivity.subscribedCoursesSorted.size(); i++){
 
-			final TimeTableEventVo event = MainActivity.subscribedCoursesSorted.get(i).getEvent();
+		for(int i = 0; i < mItems.size(); i++){
+
+			final TimeTableEventVo event = mItems.get(i).getFirstEvent();
 			final Date now = new Date();
 
 			try {
-				//course starts now or in the future
-				if(sdf.parse(event.getDate() + " " + event.getStartTime())
-						.compareTo(now) >= 0) {
+				Date eventStartTime = sdf.parse(event.getDate() + " " + event.getStartTime());
 
-					//check if course today finished already (endTime before timeNow)
+				//course starts now or in the future
+				if(eventStartTime.compareTo(now) >= 0) {
+
+					//if the event today has not finished yet (endTime after timeNow)
 					if(sdf.parse(event.getDate() + " " + event.getEndTime())
-							.compareTo(now) < 0) {
-						posToday = i;
+							.compareTo(now) >= 0) {
+
+						//if the event is earlier on the same day than the one found before
+						if(posEndTime == null
+								|| (eventStartTime.compareTo(posEndTime) == 0
+								&& eventStartTime.compareTo(posEndTime) < 0)){
+							posEndTime = eventStartTime;
+							posToday = i;
+						}
 					}
-					//endTime of the course not reached
-					else{
-						posToday = (i == 0 ? 0 : i - 1);
-					}
+
 				}
 			} catch (ParseException e) {
-				Log.e(TAG, "error getting position of first course today",e );
+				Log.e(TAG, "error getting position of first event today",e );
 			}
 			catch (NullPointerException e) {
 				Log.e(TAG, "wrong Date format", e);

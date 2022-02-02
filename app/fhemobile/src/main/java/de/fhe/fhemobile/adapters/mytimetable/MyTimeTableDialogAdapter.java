@@ -16,6 +16,8 @@
  */
 package de.fhe.fhemobile.adapters.mytimetable;
 
+import static de.fhe.fhemobile.utils.MyTimeTableUtils.getEventTitleWithoutLastNumbers;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,22 +38,25 @@ import java.util.Locale;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.utils.MyTimeTableUtils;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
+import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
+/**
+ * Edited by Nadja - 01/2022
+ */
 public class MyTimeTableDialogAdapter extends BaseAdapter {
 
 	private static final String TAG = "MyTimeTableDialogAdapter";
 
 	private final Context mContext;
-	private List<MyTimeTableCourse> mItems;
+	private List<MyTimeTableCourseComponent> mItems;
 
 
-
-	public MyTimeTableDialogAdapter(Context context) {
+	public MyTimeTableDialogAdapter(final Context context) {
 		this.mContext = context;
 	}
 
-	public void setItems(List<MyTimeTableCourse> mItems) {
+	public void setItems(final List<MyTimeTableCourseComponent> mItems) {
 		this.mItems = mItems;
 		this.notifyDataSetChanged();
 	}
@@ -116,53 +121,44 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 					inflate(R.layout.item_my_time_table_dialog, parent, false);
 		}
 
-		final MyTimeTableCourse currentItem = mItems.get(position);
+		final MyTimeTableCourseComponent currentItem = mItems.get(position);
 
 
-		//click on row of the course (at header, sets, ...) expands the row of next date and room
+		//click on row of the course (at header, study groups, ...) expands the row of next date and room
 		// to a list of all upcoming dates with its rooms
 		convertView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
-				//get all courses with certain title
-				final List<MyTimeTableCourse> courseListFilteredByTitle =
-						MyTimeTableUtils.getCoursesByEventTitle(
-								mItems,
-								MyTimeTableUtils.cutEventTitle(currentItem.getEvent().getTitle()));
-				//get all courses with certain study group
-				final List <MyTimeTableCourse> courseListFilteredByStudyGroup =
-						MyTimeTableUtils.getCoursesByStudyGroupTitle(
-								courseListFilteredByTitle, currentItem.getSetString());
-
-				for (final MyTimeTableCourse event : courseListFilteredByStudyGroup){
-					event.setVisible(!event.isVisible());
+				for (final TimeTableEventVo event : currentItem.getEvents()){
+					//todo: make all dates of the course visible
 				}
 				((ListView) parent).invalidateViews();
 
 			}
 		});
-		//currentItem can be invisible because initially only the next date
-		// (and not all upcoming dates) are shown for a course
-		if(currentItem.isVisible()){
-			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
-			convertView.setVisibility(View.VISIBLE);
-		}
-		else{
-			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,1));
-			convertView.setVisibility(View.GONE);
-		}
+
+		//todo: just headers are supposed to switch between visibility after restructuring of MyTimeTableCourseComponent
+//		//currentItem can be invisible because initially only the next date
+//		// (and not all upcoming dates) are shown for a course
+//		if(currentItem.isVisible()){
+//			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
+//			convertView.setVisibility(View.VISIBLE);
+//		}
+//		else{
+//			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,1));
+//			convertView.setVisibility(View.GONE);
+//		}
 
 
 		final TextView courseTitle = (TextView) convertView.findViewById(R.id.textview_mytimetable_dialog_courseTitle);
 		final RelativeLayout headerLayout = convertView.findViewById(R.id.layout_mytimetable_dialog_header);
 
 		//Add a header displaying the course title
-		// if such a header has already been added because of processing another set of the course (I guess - Nadja),
-		// then do not add header again (set it visibility to GONE)
-		if(position == 0
-				|| !mItems.get(position).isEqual(mItems.get(position-1))){
-			courseTitle.setText(currentItem.getEvent().getShortTitle());
+		// if such a header has already been added because of processing another another component of the course
+		// then do not add header again (set its visibility to GONE)
+		if(position == 0 || !mItems.get(position).isSameCourse(mItems.get(position - 1))){
+			courseTitle.setText(getEventTitleWithoutLastNumbers(currentItem.getFirstEvent().getShortTitle()));
 			courseTitle.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
@@ -174,77 +170,55 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 
 
 		final ToggleButton btnAddCourse = (ToggleButton) convertView.findViewById(R.id.btnAddCourse);
-		//set current state of button
-		boolean btnEnabled = currentItem.isSubscribed() ? true : false;
-		btnAddCourse.setActivated(btnEnabled);
-
+		btnAddCourse.setActivated(currentItem.isSubscribed());
 		btnAddCourse.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(final View v) {
 
 				btnAddCourse.setActivated(!btnAddCourse.isActivated());
 
 				if(btnAddCourse.isActivated()){
-					currentItem.setSubscribed(true);
-					final List<MyTimeTableCourse> eventFilteredList =
-							MyTimeTableUtils.getCoursesByEventTitle(
-									mItems,
-									MyTimeTableUtils.cutEventTitle(currentItem.getEvent().getTitle()));
-					final List<MyTimeTableCourse> studyGroupFilteredList =
-							MyTimeTableUtils.getCoursesByStudyGroupTitle(
-									eventFilteredList, currentItem.getSetString());
-
-					for(final MyTimeTableCourse event : studyGroupFilteredList){
-						MainActivity.addToSubscribedCourses(event);
-					}
+					MainActivity.addToSubscribedCourseComponentsAndUpdateAdapters(currentItem);
 				}else{
-					MainActivity.removeFromSubscribedCourses(currentItem);
+					MainActivity.removeFromSubscribedCourseComponentsAndUpdateAdapters(currentItem);
 				}
-
-				notifyDataSetChanged();
 			}
-
 		});
 
 
-
 		final TextView studyGroupTitle = (TextView) convertView.findViewById(R.id.textview_mytimetable_dialog_studygroups);
-		String allStudyGroupsOfCourse = currentItem.getSetString();
-		studyGroupTitle.setText(allStudyGroupsOfCourse);
+		studyGroupTitle.setText(currentItem.getStudyGroupListString());
 
-		final TextView labelSets = (TextView) convertView.findViewById(R.id.textview_mytimetable_dialog_label_sets);
+		final TextView labelStudyGroup = (TextView) convertView.findViewById(R.id.textview_mytimetable_dialog_label_sets);
 
 		//Add each event (lecture, training, practical, ...) belonging to the course title in the header
 		if(position == 0
-				|| !currentItem.isEqual(mItems.get(position-1))
-				|| !currentItem.getSetString().equals(mItems.get(position-1).getSetString())){
+				|| !currentItem.isSameCourse(mItems.get(position-1))
+				|| !currentItem.getStudyGroupListString().equals(mItems.get(position-1).getStudyGroupListString())){
 			studyGroupTitle.setVisibility(View.VISIBLE);
-			labelSets.setVisibility(View.VISIBLE);
+			labelStudyGroup.setVisibility(View.VISIBLE);
 			btnAddCourse.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
 		}
 		else{
 			studyGroupTitle.setVisibility(View.GONE);
-			labelSets.setVisibility(View.GONE);
+			labelStudyGroup.setVisibility(View.GONE);
 			btnAddCourse.setVisibility(View.GONE);
 		}
 
 
 		//set text for course time, weekday and room
 
-		final Date dateStartDate = new java.util.Date(currentItem.getEvent().getStartDate());
+		final Date dateStartDate = new java.util.Date(currentItem.getFirstEvent().getStartDate());
 		//final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
 		final String date = sdf.format(dateStartDate);
 		final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(dateStartDate);
 
 		final TextView textEventTime = (TextView) convertView.findViewById(R.id.textCourseTime);
 		textEventTime.setText(dayOfWeek + ", " + date + "  "
-				+ currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime()); // $NON-NLS
-
-		final TextView textRoom = (TextView)convertView.findViewById(R.id.textviewRoom);
-		textRoom.setText(currentItem.getEvent().getRoom());
-
+				+ currentItem.getFirstEvent().getStartTime() + " – " + currentItem.getFirstEvent().getEndTime()); // $NON-NLS
 
 
 		return convertView;

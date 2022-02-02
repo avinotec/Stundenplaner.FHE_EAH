@@ -16,7 +16,8 @@
  */
 package de.fhe.fhemobile.adapters.mytimetable;
 
-import static de.fhe.fhemobile.Main.getSubscribedCourses;
+import static de.fhe.fhemobile.Main.getSubscribedCourseComponents;
+import static de.fhe.fhemobile.utils.MyTimeTableUtils.getEventTitleWithoutLastNumbers;
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
 import android.content.Context;
@@ -39,16 +40,16 @@ import java.util.Locale;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.utils.MyTimeTableUtils;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourse;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
 
 public class MyTimeTableOverviewAdapter extends BaseAdapter {
 
 	private static final String TAG = "MyTimeTableOverviewAdapter";
 
 	private final Context context;
-	private List<MyTimeTableCourse> mItems;
+	private List<MyTimeTableCourseComponent> mItems;
 
-	public MyTimeTableOverviewAdapter(Context context, List<MyTimeTableCourse> mItems) {
+	public MyTimeTableOverviewAdapter(final Context context, final List<MyTimeTableCourseComponent> mItems) {
 		this.context = context;
 		this.mItems = mItems;
 	}
@@ -99,7 +100,7 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 					inflate(R.layout.item_my_time_table_overview, parent, false);
 		}
 
-		final MyTimeTableCourse currentItem = mItems.get(position);
+		final MyTimeTableCourseComponent currentItem = mItems.get(position);
 
 
 		//todo: find out in which use case this is needed
@@ -108,16 +109,16 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 
-				List<MyTimeTableCourse> courseTitleFilteredList
+				List<MyTimeTableCourseComponent> courseTitleFilteredList
 						= MyTimeTableUtils.getCoursesByEventTitle(
-								getSubscribedCourses(),
-								MyTimeTableUtils.cutEventTitle(currentItem.getEvent().getTitle()));
+						getSubscribedCourseComponents(),
+						currentItem.getTitle());
 
-				List <MyTimeTableCourse> filteredList
+				List <MyTimeTableCourseComponent> filteredList
 						= MyTimeTableUtils.getCoursesByStudyGroupTitle(
-						courseTitleFilteredList, currentItem.getSetString());
+						courseTitleFilteredList, currentItem.getStudyGroupListString());
 
-				for (MyTimeTableCourse event : filteredList){
+				for (MyTimeTableCourseComponent event : filteredList){
 					event.setVisible(!event.isVisible());
 				}
 
@@ -131,17 +132,17 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 		btnRemoveCourse.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				final List<MyTimeTableCourse> eventFilteredList
+				final List<MyTimeTableCourseComponent> eventFilteredList
 						= MyTimeTableUtils.getCoursesByEventTitle(
-						getSubscribedCourses(),
-						MyTimeTableUtils.cutEventTitle(currentItem.getEvent().getTitle()));
+						getSubscribedCourseComponents(),
+						currentItem.getTitle());
 
-				final List<MyTimeTableCourse> studyGroupFilteredList
+				final List<MyTimeTableCourseComponent> studyGroupFilteredList
 						= MyTimeTableUtils.getCoursesByStudyGroupTitle(
-						eventFilteredList, currentItem.getSetString());
+						eventFilteredList, currentItem.getStudyGroupListString());
 
-				for(MyTimeTableCourse event : studyGroupFilteredList){
-					MainActivity.removeFromSubscribedCourses(event);
+				for(MyTimeTableCourseComponent event : studyGroupFilteredList){
+					MainActivity.removeFromSubscribedCourseComponentsAndUpdateAdapters(event);
 				}
 
 				((ListView) parent).invalidateViews();
@@ -151,7 +152,9 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 		//set text of courseTitle
 		final TextView courseTitle = (TextView) convertView.findViewById(
 				R.id.textview_mytimetable_overview_courseTitle);
-		courseTitle.setText(correctUmlauts(currentItem.getEvent().getShortTitle()));
+		courseTitle.setText(
+				correctUmlauts(getEventTitleWithoutLastNumbers(
+						currentItem.getFirstEvent().getShortTitle())));
 
 
 		//todo: find out in which use case currentItem is not visible
@@ -170,7 +173,7 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 		final RelativeLayout header = convertView.findViewById(
 				R.id.layout_mytimetable_overview_header);
 		if(position == 0
-				|| !getSubscribedCourses().get(position).isEqual(mItems.get(position - 1))){
+				|| !getSubscribedCourseComponents().get(position).isSameCourse(mItems.get(position - 1))){
 			header.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1, 0));
 			convertView.setVisibility(View.VISIBLE);
@@ -185,9 +188,9 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 				R.id.textview_mytimetable_overview_sets_label);
 		final TextView studyGroupTitle = (TextView)convertView.findViewById(R.id.textview_mytimetable_overview_studygroups);
 		if(position == 0
-				|| !currentItem.isEqual(mItems.get(position - 1))
-				|| !currentItem.getSetString().equals( mItems.get(position - 1).getSetString() )){
-			studyGroupTitle.setText(currentItem.getSetString());
+				|| !currentItem.isSameCourse(mItems.get(position - 1))
+				|| !currentItem.getStudyGroupListString().equals( mItems.get(position - 1).getStudyGroupListString() )){
+			studyGroupTitle.setText(currentItem.getStudyGroupListString());
 			studyGroupTitle.setVisibility(View.VISIBLE);
 			studyGroupLabel.setVisibility(View.VISIBLE);
 			btnRemoveCourse.setVisibility(View.VISIBLE);
@@ -203,17 +206,17 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 
 		//set text for course time, weekday and room
 
-		final Date dateStartDate = new java.util.Date(currentItem.getEvent().getStartDate());
+		final Date dateStartDate = new java.util.Date(currentItem.getFirstEvent().getStartDate());
 		//final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
 		final String date = sdf.format(dateStartDate);
 		final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(dateStartDate);
 
 		final TextView textEventTime = (TextView) convertView.findViewById(R.id.textCourseTime);
 		textEventTime.setText(dayOfWeek + ", " + date + "  "
-				+ currentItem.getEvent().getStartTime() + " – " + currentItem.getEvent().getEndTime()); // $NON-NLS
+				+ currentItem.getFirstEvent().getStartTime() + " – " + currentItem.getFirstEvent().getEndTime()); // $NON-NLS
 
 		final TextView textRoom = (TextView) convertView.findViewById(R.id.textviewRoom);
-		textRoom.setText(currentItem.getEvent().getRoom());
+		textRoom.setText(currentItem.getFirstEvent().getRoom());
 
 
 

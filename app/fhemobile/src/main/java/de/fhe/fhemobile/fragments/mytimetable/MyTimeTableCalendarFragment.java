@@ -17,7 +17,8 @@
 
 package de.fhe.fhemobile.fragments.mytimetable;
 
-import static de.fhe.fhemobile.Main.clearSubscribedCourses;
+import static de.fhe.fhemobile.utils.Define.SP_MYTIMETABLE;
+
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -53,8 +54,8 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 	 * @return A new instance of fragment MyTimeTableCalendarFragment.
 	 */
 	public static MyTimeTableCalendarFragment newInstance() {
-		MyTimeTableCalendarFragment fragment = new MyTimeTableCalendarFragment();
-		Bundle args = new Bundle();
+		final MyTimeTableCalendarFragment fragment = new MyTimeTableCalendarFragment();
+		final Bundle args = new Bundle();
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -64,14 +65,14 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
 
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	                         Bundle savedInstanceState) {
+	public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+	                         final Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		mView = (MyTimeTableCalendarView) inflater.inflate(R.layout.fragment_my_time_table_calendar, container, false);
 		mView.initializeView(getActivity().getSupportFragmentManager());
@@ -92,15 +93,15 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		//Wenn die App das letzte Mal vor Semesterferienbeginn geöffnet wurde und das aktuelle Datum nach dem Beginn, soll nachgefragt werden.
 		//lastAppOpened muss dabei ungleich 0 sein, gleich 0 bedeutet, die App wurde vorher noch nicht gestartet.
 		// in Sekunden seit 1970, Unixtime
-		SharedPreferences sharedPreferences = getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+		final SharedPreferences sharedPreferences = getContext().getSharedPreferences(SP_MYTIMETABLE, Context.MODE_PRIVATE);
 		final long lastAppOpened = sharedPreferences.getLong(PREFS_LAST_APP_OPENED, 0);
 
-		Calendar calLastOpened = Calendar.getInstance(new Locale("de", "DE"));
+		final Calendar calLastOpened = Calendar.getInstance(new Locale("de", "DE"));
 		calLastOpened.setTimeInMillis(lastAppOpened);
 
 		// Löschen des alten Kalenders mitten in den Semesterferien
 		// 1. März
-		Calendar calSemester1HolidayStart = Calendar.getInstance(new Locale("de", "DE"));
+		final Calendar calSemester1HolidayStart = Calendar.getInstance(new Locale("de", "DE"));
 		calSemester1HolidayStart.set(Calendar.MONTH, Calendar.MARCH);
 		calSemester1HolidayStart.set(Calendar.DAY_OF_MONTH, 1);
 		// 1. September
@@ -109,15 +110,15 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		calSemester2HolidayStart.set(Calendar.DAY_OF_MONTH, 1);
 
 		// wo sind wir heute?
-		Calendar calNow = Calendar.getInstance();
+		final Calendar calNow = Calendar.getInstance();
 
 		// hat es seit dem letzten
 		if (    // wir sind noch nie geöffnet worden, also kein Dialog
 				( lastAppOpened != 0 )
-				&& (
+						&& (
 						// calLastOpened: wann ist die App das letzte Mal gestartet worden
 						(calLastOpened.before(calSemester1HolidayStart) && calNow.after(calSemester1HolidayStart))
-						|| (calLastOpened.before(calSemester2HolidayStart) && calNow.after(calSemester2HolidayStart))
+								|| (calLastOpened.before(calSemester2HolidayStart) && calNow.after(calSemester2HolidayStart))
 				)
 		) {
 			// Benutzer fragen, ob der nun alte Stundenplan gelöscht werden soll.
@@ -126,14 +127,8 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 					.setMessage(R.string.deleteTimetableMessage)
 					.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
-							//Stundenplan löschen (die Listen leer machen und aus den Preferences entfernen)
-							MainActivity.clearSubscribedCourses();
-							clearSubscribedCourses();
-							//todo: wozu brauchen wir die coursesOfChosenSemester hier? - Nadja
-							//MyTimeTableDialogFragment.coursesOfChosenSemester.clear();
-							sharedPreferences.edit()
-									.remove(Define.SHARED_PREFERENCES_SUBSCRIBED_COURSES)
-									.apply();
+							//subscribed Kurse löschen
+							MainActivity.clearSubscribedCourseComponentsAndUpdateAdapters();
 						}
 					})
 					.setNegativeButton(android.R.string.no, null)
@@ -150,7 +145,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 	 * onViewCreated : hier sind alle Adapter und alle Listen intialisiert. Jetzt können wir auf die aktuelle Woche vorspringen.
 	 */
 	@Override
-	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+	public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
 		// es sind alle Views initialisiert, Fragmente sind alle inflated

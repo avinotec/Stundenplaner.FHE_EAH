@@ -17,6 +17,8 @@
 
 package de.fhe.fhemobile.fragments.navigation;
 
+import static de.fhe.fhemobile.utils.Define.SP_NAVIGATION;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -71,8 +73,8 @@ public class RoomSearchFragment extends FeatureFragment {
      * @return A new instance of fragment RoomSearchFragment.
      */
     public static RoomSearchFragment newInstance() {
-        RoomSearchFragment fragment = new RoomSearchFragment();
-        Bundle args = new Bundle();
+        final RoomSearchFragment fragment = new RoomSearchFragment();
+        final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
@@ -82,7 +84,7 @@ public class RoomSearchFragment extends FeatureFragment {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mChosenBuilding = null;
@@ -93,8 +95,8 @@ public class RoomSearchFragment extends FeatureFragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
         mView = (RoomSearchView) inflater.inflate(R.layout.fragment_room_search, container, false);
@@ -102,7 +104,7 @@ public class RoomSearchFragment extends FeatureFragment {
         mView.initializeView(getChildFragmentManager());
 
         //set items of building picker
-        List<Building> buildings = new ArrayList<>();
+        final List<Building> buildings = new ArrayList<>();
         buildings.add(new Building("01"));
         buildings.add(new Building("03"));
         buildings.add(new Building("02"));
@@ -117,10 +119,10 @@ public class RoomSearchFragment extends FeatureFragment {
     @Override
     public void onResume() {
         super.onResume();
-        SharedPreferences mSP = Main.getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
-        String previousRoomChoice = mSP.getString(PREFS_NAVIGATION_ROOM_CHOICE, "");
+        final SharedPreferences mSP = Main.getAppContext().getSharedPreferences(SP_NAVIGATION, Context.MODE_PRIVATE);
+        final String previousRoomChoice = mSP.getString(PREFS_NAVIGATION_ROOM_CHOICE, "");
         if(!"".equals(previousRoomChoice)){
-            for (Room room : MainActivity.rooms){
+            for (final Room room : MainActivity.rooms){
                 if(previousRoomChoice.equals(room.getRoomName())){
                     mChosenBuilding = room.getBuilding();
                     mChosenFloor = room.getFloorString();
@@ -150,7 +152,7 @@ public class RoomSearchFragment extends FeatureFragment {
 
     private final RoomSearchView.IViewListener mViewListener = new RoomSearchView.IViewListener() {
         @Override
-        public void onBuildingChosen(String _building) {
+        public void onBuildingChosen(final String _building) {
             mView.toggleRoomPickerVisibility(false);
             mView.toggleGoButtonEnabled(false);
             mView.resetFloorPicker();
@@ -161,9 +163,9 @@ public class RoomSearchFragment extends FeatureFragment {
 
             //check if building has any rooms
             boolean buildingValid = false;
-            List<Integer> floors = new ArrayList<>();
+            final List<Integer> floors = new ArrayList<>();
             if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
-            for(Room room : MainActivity.rooms){
+            for(final Room room : MainActivity.rooms){
                 if(room.getBuilding() != null && room.getBuilding().equals(_building)){
 
                     //add floor to floor picker items if not yet contained
@@ -187,7 +189,7 @@ public class RoomSearchFragment extends FeatureFragment {
         }
 
         @Override
-        public void onFloorChosen(String _floor) {
+        public void onFloorChosen(final String _floor) {
             mView.toggleFloorPickerVisibility(true);
             mView.toggleGoButtonEnabled(false);
             mView.resetRoomPicker();
@@ -196,10 +198,10 @@ public class RoomSearchFragment extends FeatureFragment {
 
             //check if floor has any rooms
             boolean floorValid = false;
-            List<Room> rooms = new ArrayList<>();
+            final List<Room> rooms = new ArrayList<>();
             if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
 
-            for(Room room : MainActivity.rooms){
+            for(final Room room : MainActivity.rooms){
 
                 //String _floor is a single digit "-1" or "3" --> treat as integer
                 if(room.getBuilding().equals(mChosenBuilding)
@@ -221,21 +223,21 @@ public class RoomSearchFragment extends FeatureFragment {
         }
 
         @Override
-        public void onRoomChosen(String _room) {
+        public void onRoomChosen(final String _room) {
             mView.toggleRoomPickerVisibility(true);
             mView.toggleGoButtonEnabled(false);
 
             //search for room object
             if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
-            for(Room room : MainActivity.rooms){
+            for(final Room room : MainActivity.rooms){
                 if(room.getRoomName() != null && room.getRoomName().equals(_room)){
 
                     mChosenRoom = room;
                     mView.toggleGoButtonEnabled(true);
                     mView.toggleStartInputCardVisibility(true);
 
-                    final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences(SP_NAVIGATION, Context.MODE_PRIVATE);
+                    final SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString(PREFS_NAVIGATION_ROOM_CHOICE, mChosenRoom.getRoomName());
                     editor.apply();
 
@@ -277,14 +279,14 @@ public class RoomSearchFragment extends FeatureFragment {
      */
     private boolean validateInputAndSetStartRoom(){
 
-        String input = mView.getStartInputText();
+        final String input = mView.getStartInputText();
 
         boolean valid = false;
         //a room number has been entered
         if(input != null){
 
             //check room list for matching names
-            for (Room room : MainActivity.rooms){
+            for (final Room room : MainActivity.rooms){
                 if (room.getRoomName().equals(input)){
                     valid = true;
                     mStartRoom = room;
