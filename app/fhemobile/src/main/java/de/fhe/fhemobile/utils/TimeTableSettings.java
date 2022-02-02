@@ -32,7 +32,7 @@ public class TimeTableSettings {
     private static final String PREF_CHOSEN_TIMETABLE_ID = "prefChosenTimeTableId";
 
     /**
-     *
+     * Saves time table favourite to Shared Preferences
      * @param _TimeTableId
      */
     public static void saveTimeTableSelection(final String _TimeTableId) {
@@ -41,10 +41,10 @@ public class TimeTableSettings {
     }
 
     /**
-     *
+     * Loads time table id that was set as favourite (is selected) from Shared Preferences
      * @return
      */
-    public static String fetchTimeTableSelection() {
+    public static String getTimeTableSelection() {
 
         final SharedPreferences sp = Main.getAppContext().getSharedPreferences(SP_DATABASE, Context.MODE_PRIVATE);
         final String result = sp.getString(PREF_CHOSEN_TIMETABLE_ID, null);

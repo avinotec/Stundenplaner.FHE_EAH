@@ -14,16 +14,20 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 package de.fhe.fhemobile.comparator;
 
 import java.util.Comparator;
 
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyCourseVo;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
 
-public class StudyCourseComperator implements Comparator <TimeTableStudyCourseVo> {
+/**
+ * This Comparator compares two {@link MyTimeTableCourseComponent} objects
+ * based on the next upcoming event in there event list
+ */
+public class CourseDateComparator implements Comparator<MyTimeTableCourseComponent> {
+
 	@Override
-	public int compare(final TimeTableStudyCourseVo t1, final TimeTableStudyCourseVo t2) {
-		return t1.getTitle().compareTo(t2.getTitle());
+	public int compare(final MyTimeTableCourseComponent o1, final MyTimeTableCourseComponent o2) {
+		return new TimeTableEventComparator().compare(o1.getFirstEvent(), o2.getFirstEvent());
 	}
 }

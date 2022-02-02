@@ -29,10 +29,10 @@ import java.util.List;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableDialogAdapter;
-import de.fhe.fhemobile.comparator.StudyCourseComperator;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyCourseVo;
+import de.fhe.fhemobile.comparator.StudyProgramComparator;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
-import de.fhe.fhemobile.widgets.picker.StudyCoursePicker;
+import de.fhe.fhemobile.widgets.picker.StudyProgramPicker;
 import de.fhe.fhemobile.widgets.picker.SemesterPicker;
 import de.fhe.fhemobile.widgets.picker.base.OnItemChosenListener;
 
@@ -56,9 +56,9 @@ public class MyTimeTableDialogView extends LinearLayout {
 
     public void initializeView(final FragmentManager _Manager) {
 
-        mStudyCoursePicker.setFragmentManager(_Manager);
-        mStudyCoursePicker.toggleEnabled(false);
-        mStudyCoursePicker.setOnItemChosenListener(mCourseListener);
+        mStudyProgramPicker.setFragmentManager(_Manager);
+        mStudyProgramPicker.toggleEnabled(false);
+        mStudyProgramPicker.setOnItemChosenListener(mCourseListener);
 
         mSemesterPicker.setFragmentManager(_Manager);
         mSemesterPicker.toggleEnabled(false);
@@ -72,18 +72,18 @@ public class MyTimeTableDialogView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mStudyCoursePicker = (StudyCoursePicker) findViewById(R.id.studycoursepicker_mytimetable_dialog);
+        mStudyProgramPicker = (StudyProgramPicker) findViewById(R.id.studyprogrampicker_mytimetable_dialog);
         mSemesterPicker =   (SemesterPicker)     findViewById(R.id.semesterpicker_mytimetable_dialog);
 
         mCourseListView = (ListView) findViewById(R.id.listview_mytimetable_dialog_courses);
     }
 
 
-    public void setStudyCourseItems(final List<TimeTableStudyCourseVo> _Items) {
-        TimeTableStudyCourseVo.alterTitle(_Items);
-        Collections.sort(_Items,new StudyCourseComperator());
-        mStudyCoursePicker.setItems(_Items);
-        mStudyCoursePicker.toggleEnabled(true);
+    public void setStudyProgramItems(final List<TimeTableStudyProgramVo> _Items) {
+        TimeTableStudyProgramVo.alterTitle(_Items);
+        Collections.sort(_Items, new StudyProgramComparator());
+        mStudyProgramPicker.setItems(_Items);
+        mStudyProgramPicker.toggleEnabled(true);
     }
 
     public void setSemesterItems(final List<TimeTableSemesterVo> _Items) {
@@ -118,7 +118,7 @@ public class MyTimeTableDialogView extends LinearLayout {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
-                mViewListener.onStudyCourseChosen(_ItemId);
+                mViewListener.onStudyProgramChosen(_ItemId);
             }
         }
     };
@@ -138,7 +138,7 @@ public class MyTimeTableDialogView extends LinearLayout {
     }
 
     public void setSelectedGroupText(final String text){
-        mStudyCoursePicker.setDisplayValue(text);
+        mStudyProgramPicker.setDisplayValue(text);
     }
 
     /**
@@ -152,14 +152,14 @@ public class MyTimeTableDialogView extends LinearLayout {
 
 
     public interface IViewListener {
-        void onStudyCourseChosen(String _TermId);
+        void onStudyProgramChosen(String _TermId);
         void onSemesterChosen(String _GroupId);
     }
 
 
     private IViewListener     mViewListener;
 
-    private StudyCoursePicker   mStudyCoursePicker;
+    private StudyProgramPicker mStudyProgramPicker;
     private SemesterPicker      mSemesterPicker;
     private ListView            mCourseListView;
 

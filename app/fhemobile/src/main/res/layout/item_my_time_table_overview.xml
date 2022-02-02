@@ -104,20 +104,19 @@
 	    android:layout_toStartOf="@id/btnRemoveCourse" />
 
 
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btnRemoveCourse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginRight="3dp"
+	<androidx.appcompat.widget.AppCompatImageButton
+		android:id="@+id/btnRemoveCourse"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/layout_mytimetable_overview_header"
 		android:layout_alignTop="@id/textview_mytimetable_overview_sets_label"
-        android:layout_below="@+id/layout_mytimetable_overview_header"
-        app:srcCompat="@android:drawable/ic_delete"
-        android:background="@android:color/transparent"
-	    android:contentDescription="button remove course" />
+		android:layout_alignParentEnd="true"
+		android:layout_alignParentRight="true"
+		android:layout_marginTop="0dp"
+		android:layout_marginEnd="3dp"
+		android:layout_marginRight="3dp"
+		android:background="@android:color/transparent"
+		android:contentDescription="button remove course"
+		app:srcCompat="@android:drawable/ic_delete" />
 
 </RelativeLayout>

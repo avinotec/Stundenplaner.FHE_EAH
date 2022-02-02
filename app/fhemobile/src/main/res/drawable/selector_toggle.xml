@@ -4,12 +4,12 @@
 
     <!-- When not selected, use x -->
     <item
-        android:state_checked="false"
+        android:state_activated="false"
         android:drawable="@android:drawable/ic_input_add" />
 
     <!-- When selected, use + -->
     <item
-        android:state_checked="true"
+        android:state_activated="true"
         android:drawable="@android:drawable/ic_delete" />
 
 </selector>

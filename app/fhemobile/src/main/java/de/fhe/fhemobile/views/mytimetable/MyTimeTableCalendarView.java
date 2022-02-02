@@ -54,7 +54,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
         super.onFinishInflate();
         mCalendarListView = (ListView) findViewById(R.id.listview_mytimetable_calendar_courses);
 
-        // "modify schedule"
+        // button "modify schedule"
         final Button mBtnModifySchedule = (Button) findViewById(R.id.btn_mytimetable_calendar_modify_Schedule);
         mBtnModifySchedule.setOnClickListener(new OnClickListener() {
             @Override
@@ -87,7 +87,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
     public void jumpToToday(){
         final int currentDayIndex = MainActivity.myTimeTableCalendarAdapter.getPositionOfFirstCourseToday();
         if(currentDayIndex >= 0){
-            mCalendarListView.setSelection(currentDayIndex);
+            mCalendarListView.smoothScrollToPosition(currentDayIndex);
         }
     }
 

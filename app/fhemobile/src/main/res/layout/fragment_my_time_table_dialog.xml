@@ -43,8 +43,8 @@
                 android:layout_marginRight="16dp"/>
 
 
-            <de.fhe.fhemobile.widgets.picker.StudyCoursePicker
-                android:id="@+id/studycoursepicker_mytimetable_dialog"
+            <de.fhe.fhemobile.widgets.picker.StudyProgramPicker
+                android:id="@+id/studyprogrampicker_mytimetable_dialog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"

@@ -30,27 +30,27 @@ import java.util.List;
 /**
  * Created by paul on 12.03.15.
  */
-public class TimeTableStudyCourseVo implements Parcelable {
-    private static final String TAG = "TimeTableStudyCourseVo";
+public class TimeTableStudyProgramVo implements Parcelable {
+    private static final String TAG = "TimeTableStudyProgramVo";
 
-    public TimeTableStudyCourseVo() {
+    public TimeTableStudyProgramVo() {
     }
 
-    protected TimeTableStudyCourseVo(final Parcel in) {
+    protected TimeTableStudyProgramVo(final Parcel in) {
         mId = in.readString();
         mTitle = correctUmlauts(in.readString());
         mSemesters = in.createTypedArrayList(TimeTableSemesterVo.CREATOR);
     }
 
-    public static final Creator<TimeTableStudyCourseVo> CREATOR = new Creator<TimeTableStudyCourseVo>() {
+    public static final Creator<TimeTableStudyProgramVo> CREATOR = new Creator<TimeTableStudyProgramVo>() {
         @Override
-        public TimeTableStudyCourseVo createFromParcel(final Parcel in) {
-            return new TimeTableStudyCourseVo(in);
+        public TimeTableStudyProgramVo createFromParcel(final Parcel in) {
+            return new TimeTableStudyProgramVo(in);
         }
 
         @Override
-        public TimeTableStudyCourseVo[] newArray(final int size) {
-            return new TimeTableStudyCourseVo[size];
+        public TimeTableStudyProgramVo[] newArray(final int size) {
+            return new TimeTableStudyProgramVo[size];
         }
     };
 
@@ -82,8 +82,8 @@ public class TimeTableStudyCourseVo implements Parcelable {
     static final String MASTER_BEFORE ="Master: ";
     static final String MASTER_AFTER =": M";
 
-    public static void alterTitle(final List<TimeTableStudyCourseVo> list){
-        for (final TimeTableStudyCourseVo semester:list){
+    public static void alterTitle(final List<TimeTableStudyProgramVo> list){
+        for (final TimeTableStudyProgramVo semester:list){
             Log.d(TAG, "alterTitle: "+ semester.getTitle());
             if(semester.getTitle().contains(BACHELOR_BEFORE)){
                 semester.setTitle(semester.getTitle().replace(BACHELOR_BEFORE,"")+BACHELOR_AFTER);

@@ -47,11 +47,11 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 
 
 
-	public MyTimeTableDialogAdapter(final Context context) {
+	public MyTimeTableDialogAdapter(Context context) {
 		this.mContext = context;
 	}
 
-	public void setItems(final List<MyTimeTableCourse> mItems) {
+	public void setItems(List<MyTimeTableCourse> mItems) {
 		this.mItems = mItems;
 		this.notifyDataSetChanged();
 	}
@@ -123,7 +123,7 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 		// to a list of all upcoming dates with its rooms
 		convertView.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(final View v) {
+			public void onClick(View v) {
 
 				//get all courses with certain title
 				final List<MyTimeTableCourse> courseListFilteredByTitle =
@@ -175,7 +175,7 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 
 		final ToggleButton btnAddCourse = (ToggleButton) convertView.findViewById(R.id.btnAddCourse);
 		//set current state of button
-		final boolean btnEnabled = currentItem.isSubscribed();
+		boolean btnEnabled = currentItem.isSubscribed() ? true : false;
 		btnAddCourse.setActivated(btnEnabled);
 
 		btnAddCourse.setOnClickListener(new View.OnClickListener() {
@@ -209,7 +209,7 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 
 
 		final TextView studyGroupTitle = (TextView) convertView.findViewById(R.id.textview_mytimetable_dialog_studygroups);
-		final String allStudyGroupsOfCourse = currentItem.getSetString();
+		String allStudyGroupsOfCourse = currentItem.getSetString();
 		studyGroupTitle.setText(allStudyGroupsOfCourse);
 
 		final TextView labelSets = (TextView) convertView.findViewById(R.id.textview_mytimetable_dialog_label_sets);

@@ -31,9 +31,9 @@ import retrofit2.Response;
  */
 public class MyTimeTableCallback<T> implements Callback<T> {
 
-	private final TimeTableStudyCourseVo studyCourse;
-	private final TimeTableSemesterVo semester;
-	private final TimeTableStudyGroupVo studyGroup;
+	final private TimeTableStudyCourseVo studyCourse;
+	final private TimeTableSemesterVo semester;
+	final private TimeTableStudyGroupVo studyGroup;
 
 
 	/**
@@ -41,9 +41,9 @@ public class MyTimeTableCallback<T> implements Callback<T> {
 	 * @param semester
 	 * @param studyGroup
 	 */
-	public MyTimeTableCallback(@NonNull final TimeTableStudyCourseVo studyCourse,
-							   @NonNull final TimeTableSemesterVo semester,
-							   @NonNull final TimeTableStudyGroupVo studyGroup) {
+	public MyTimeTableCallback(@NonNull TimeTableStudyCourseVo studyCourse,
+							   @NonNull TimeTableSemesterVo semester,
+							   @NonNull TimeTableStudyGroupVo studyGroup) {
 		this.studyCourse = studyCourse;
 		this.semester = semester;
 		this.studyGroup = studyGroup;
@@ -55,7 +55,7 @@ public class MyTimeTableCallback<T> implements Callback<T> {
 	 * @param response
 	 */
 	@Override
-	public void onResponse(final Call<T> call, final Response<T> response) {
+	public void onResponse(Call<T> call, Response<T> response) {
 
 	}
 
@@ -65,7 +65,7 @@ public class MyTimeTableCallback<T> implements Callback<T> {
 	 * @param t
 	 */
 	@Override
-	public void onFailure(final Call<T> call, final Throwable t) {
+	public void onFailure(Call<T> call, Throwable t) {
 
 	}
 
