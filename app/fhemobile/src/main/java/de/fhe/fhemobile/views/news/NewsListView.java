@@ -46,17 +46,17 @@ public class NewsListView extends LinearLayout {
         void onNewsItemClick(Integer _Id);
     }
 
-    public NewsListView(Context context, AttributeSet attrs) {
+    public NewsListView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
         mModel   = NewsModel.getInstance();
     }
 
-    public void setViewListener(ViewListener _Listener) {
+    public void setViewListener(final ViewListener _Listener) {
         mViewListener = _Listener;
     }
 
-    public void init(ViewListener _Listener) {
+    public void init(final ViewListener _Listener) {
         mViewListener = _Listener;
 
         if(mModel.getNewsItems() != null) {
@@ -81,12 +81,12 @@ public class NewsListView extends LinearLayout {
 
     private void initializeAdapter() {
 
-        ArrayList<IHeaderItem> sectionList = new ArrayList<>();
+        final ArrayList<IHeaderItem> sectionList = new ArrayList<>();
 
-        DefaultHeaderItem headerItem = new DefaultHeaderItem("", false);
+        final DefaultHeaderItem headerItem = new DefaultHeaderItem("", false);
         headerItem.addItem(new WeatherRowItem());
 
-        for (NewsItemVo itemVo : mModel.getNewsItems()) {
+        for (final NewsItemVo itemVo : mModel.getNewsItems()) {
             headerItem.addItem(new NewsRowItem(itemVo));
         }
 
@@ -107,14 +107,14 @@ public class NewsListView extends LinearLayout {
         // See: https://github.com/applidium/HeaderListView/issues/28
         //MS neue Lösung, da ab 2021 die Ressourcen nun in separaten Namensräumen verwendet werden
         //mNewsList.getListView().setId(R.id.listMode);
-        HeaderListView yourListView = (HeaderListView) findViewWithTag("HeaderListViewTag");
+        final HeaderListView yourListView = (HeaderListView) findViewWithTag("HeaderListViewTag");
         mNewsList.getListView().setId( yourListView.getId() );
 
     }
 
     private final EventListener mReceivedNewsListener = new EventListener() {
         @Override
-        public void onEvent(Event event) {
+        public void onEvent(final Event event) {
             mNewsProgressBar.setVisibility(GONE);
             initializeAdapter();
         }
@@ -122,14 +122,14 @@ public class NewsListView extends LinearLayout {
 
     private final EventListener mReceivedEmptyNewsListener = new EventListener() {
         @Override
-        public void onEvent(Event event) {
+        public void onEvent(final Event event) {
 
         }
     };
 
     private final AdapterView.OnItemClickListener mListItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        public void onItemClick(final AdapterView<?> parent, final View view, int position, final long id) {
             if (mViewListener != null) {
                 // As the WeatherHeader is interpreted as a Row item we need to decrement the position
                 // to get the correct position in the news list and check if the position is not

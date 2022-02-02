@@ -29,19 +29,19 @@ public class TimeTableStudyGroupVo implements Parcelable {
     public TimeTableStudyGroupVo() {
     }
 
-    protected TimeTableStudyGroupVo(Parcel in) {
+    protected TimeTableStudyGroupVo(final Parcel in) {
         mTitle = in.readString();
         mTimeTableId = in.readString();
     }
 
     public static final Creator<TimeTableStudyGroupVo> CREATOR = new Creator<TimeTableStudyGroupVo>() {
         @Override
-        public TimeTableStudyGroupVo createFromParcel(Parcel in) {
+        public TimeTableStudyGroupVo createFromParcel(final Parcel in) {
             return new TimeTableStudyGroupVo(in);
         }
 
         @Override
-        public TimeTableStudyGroupVo[] newArray(int size) {
+        public TimeTableStudyGroupVo[] newArray(final int size) {
             return new TimeTableStudyGroupVo[size];
         }
     };
@@ -76,7 +76,7 @@ public class TimeTableStudyGroupVo implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(mTitle);
         dest.writeString(mTimeTableId);
     }

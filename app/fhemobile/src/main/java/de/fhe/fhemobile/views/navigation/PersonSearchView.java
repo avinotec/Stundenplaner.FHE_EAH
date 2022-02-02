@@ -48,7 +48,7 @@ public class PersonSearchView extends SearchView {
     public void setPersonItems(final List<Person> _Items) {
         Collections.sort(_Items, new Comparator<Person>() {
             @Override
-            public int compare(Person o1, Person o2) {
+            public int compare(final Person o1, final Person o2) {
                 return o1.getName().compareTo(o2.getName());
             }
         });
@@ -69,7 +69,7 @@ public class PersonSearchView extends SearchView {
      *
      * @param text to display
      */
-    public void setPersonDisplayValue(String text) {
+    public void setPersonDisplayValue(final String text) {
         mPersonPicker.setDisplayValue(text);
     }
 
@@ -84,7 +84,7 @@ public class PersonSearchView extends SearchView {
     //Returns the selected building
     private final OnItemChosenListener mPersonListener = new OnItemChosenListener() {
         @Override
-        public void onItemChosen(String _ItemId, int _ItemPos) {
+        public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
                 mViewListener.onPersonChosen(_ItemId);
             }

@@ -35,13 +35,13 @@ public class TimeTableWeekVo implements Parcelable {
         return mWeekInYear;
     }
 
-    public void setWeekInYear(int _weekInYear) { mWeekInYear = _weekInYear; }
+    public void setWeekInYear(final int _weekInYear) { mWeekInYear = _weekInYear; }
 
     public int getYear() {
         return mYear;
     }
 
-    public void setYear(int _year) { mYear = _year; }
+    public void setYear(final int _year) { mYear = _year; }
 
 
     public ArrayList<TimeTableDayVo> getDays() {
@@ -61,7 +61,7 @@ public class TimeTableWeekVo implements Parcelable {
     private int mYear;
 
     @SerializedName("weekdays")
-    private ArrayList<TimeTableDayVo> mDays = new ArrayList<>();
+    private final ArrayList<TimeTableDayVo> mDays = new ArrayList<>();
 
     @Override
     public int describeContents() {
@@ -69,24 +69,24 @@ public class TimeTableWeekVo implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeInt(mWeekInYear);
         dest.writeInt(mYear);
         dest.writeTypedList(mDays);
     }
 
-    private TimeTableWeekVo(Parcel in) {
+    private TimeTableWeekVo(final Parcel in) {
         mWeekInYear = in.readInt();
         mYear = in.readInt();
         in.readTypedList(mDays, TimeTableDayVo.CREATOR);
     }
 
     public static final Parcelable.Creator<TimeTableWeekVo> CREATOR = new Parcelable.Creator<TimeTableWeekVo>() {
-        public TimeTableWeekVo createFromParcel(Parcel source) {
+        public TimeTableWeekVo createFromParcel(final Parcel source) {
             return new TimeTableWeekVo(source);
         }
 
-        public TimeTableWeekVo[] newArray(int size) {
+        public TimeTableWeekVo[] newArray(final int size) {
             return new TimeTableWeekVo[size];
         }
     };

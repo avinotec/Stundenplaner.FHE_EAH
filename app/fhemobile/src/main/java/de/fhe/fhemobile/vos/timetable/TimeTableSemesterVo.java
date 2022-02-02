@@ -34,7 +34,7 @@ public class TimeTableSemesterVo implements Parcelable {
     public TimeTableSemesterVo() {
     }
 
-    protected TimeTableSemesterVo(Parcel in) {
+    protected TimeTableSemesterVo(final Parcel in) {
         mId = in.readString();
         mTitle = correctUmlauts(in.readString());
         mStudyGroups = in.createTypedArrayList(TimeTableStudyGroupVo.CREATOR);
@@ -42,12 +42,12 @@ public class TimeTableSemesterVo implements Parcelable {
 
     public static final Creator<TimeTableSemesterVo> CREATOR = new Creator<TimeTableSemesterVo>() {
         @Override
-        public TimeTableSemesterVo createFromParcel(Parcel in) {
+        public TimeTableSemesterVo createFromParcel(final Parcel in) {
             return new TimeTableSemesterVo(in);
         }
 
         @Override
-        public TimeTableSemesterVo[] newArray(int size) {
+        public TimeTableSemesterVo[] newArray(final int size) {
             return new TimeTableSemesterVo[size];
         }
     };
@@ -56,7 +56,7 @@ public class TimeTableSemesterVo implements Parcelable {
         return mId;
     }
 
-    public void setId(String _id) {
+    public void setId(final String _id) {
         mId = _id;
     }
 
@@ -64,7 +64,7 @@ public class TimeTableSemesterVo implements Parcelable {
         return mTitle;
     }
 
-    public void setTitle(String _title) {
+    public void setTitle(final String _title) {
         mTitle = _title;
     }
 
@@ -72,7 +72,7 @@ public class TimeTableSemesterVo implements Parcelable {
         return mStudyGroups;
     }
 
-    public void setStudyGroups(ArrayList<TimeTableStudyGroupVo> _studyGroups) {
+    public void setStudyGroups(final ArrayList<TimeTableStudyGroupVo> _studyGroups) {
         mStudyGroups = _studyGroups;
     }
 
@@ -91,7 +91,7 @@ public class TimeTableSemesterVo implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(mId);
         dest.writeString(mTitle);
         dest.writeTypedList(mStudyGroups);

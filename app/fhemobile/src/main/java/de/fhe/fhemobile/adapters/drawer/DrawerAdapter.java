@@ -58,7 +58,7 @@ public class DrawerAdapter extends BaseAdapter {
         final LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
         if(convertView == null) {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.item_drawer, parent, false);

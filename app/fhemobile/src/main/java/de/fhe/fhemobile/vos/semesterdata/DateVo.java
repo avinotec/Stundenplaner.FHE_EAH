@@ -29,12 +29,12 @@ public class DateVo implements Parcelable {
     public DateVo() {
     }
 
-    public DateVo(String mDate, String mName) {
+    public DateVo(final String mDate, final String mName) {
         this.mDate = mDate;
         this.mName = mName;
     }
 
-    public DateVo(Parcel _In) {
+    public DateVo(final Parcel _In) {
         mDate = _In.readString();
         mName = _In.readString();
     }

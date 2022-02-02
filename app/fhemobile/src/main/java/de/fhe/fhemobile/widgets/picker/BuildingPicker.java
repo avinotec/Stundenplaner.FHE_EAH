@@ -31,9 +31,9 @@ import de.fhe.fhemobile.widgets.picker.base.IdPicker;
  */
 public class BuildingPicker extends IdPicker {
 
-    public BuildingPicker(Context context, AttributeSet attrs) { super(context, attrs); }
+    public BuildingPicker(final Context context, final AttributeSet attrs) { super(context, attrs); }
 
-    public void setItems(List<Building> _items){
+    public void setItems(final List<Building> _items){
         mItems = _items;
         if(mItems == null){
             throw new AssertionError("Building items cannot be null!");
@@ -41,12 +41,12 @@ public class BuildingPicker extends IdPicker {
     }
 
     @Override
-    protected String getId(int _Position) {
+    protected String getId(final int _Position) {
         return mItems.get(_Position).getId();
     }
 
     @Override
-    protected String getName(int _Position) {
+    protected String getName(final int _Position) {
         return mItems.get(_Position).getBuilding();
     }
 

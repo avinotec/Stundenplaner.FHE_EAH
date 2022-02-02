@@ -43,14 +43,14 @@ public class NewsListFragment extends FeatureFragment {
     }
 
     public static NewsListFragment newInstance() {
-        NewsListFragment fragment = new NewsListFragment();
-        Bundle args = new Bundle();
+        final NewsListFragment fragment = new NewsListFragment();
+        final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if(NewsModel.getInstance().getNewsItems() == null) {
@@ -65,8 +65,8 @@ public class NewsListFragment extends FeatureFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = (NewsListView) inflater.inflate(R.layout.fragment_news_list, container, false);
         mView.init(mViewListener);
@@ -89,7 +89,7 @@ public class NewsListFragment extends FeatureFragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
         // If the drawer is open, show the global app actions in the action bar. See also
         // showGlobalContextActionBar, which controls the top-left area of the action bar.
         menu.clear();
@@ -100,7 +100,7 @@ public class NewsListFragment extends FeatureFragment {
 
     //onOptionsItemSelected-------------------------------------------------------------------------
     @Override
-    public boolean onOptionsItemSelected(MenuItem _item) {
+    public boolean onOptionsItemSelected(final MenuItem _item) {
         /* Checks use of resource IDs in places requiring constants
             Avoid the usage of resource IDs where constant expressions are required.
             A future version of the Android Gradle Plugin will generate R classes with
@@ -108,7 +108,7 @@ public class NewsListFragment extends FeatureFragment {
             Issue id: NonConstantResourceId
          */
         if (_item.getItemId() == R.id.action_settings) {
-            Intent intent = new Intent(getActivity(), SettingsActivity.class);
+            final Intent intent = new Intent(getActivity(), SettingsActivity.class);
             intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.NEWS);
             startActivity(intent);
             return true;
@@ -120,8 +120,8 @@ public class NewsListFragment extends FeatureFragment {
 
     private final NewsListView.ViewListener mViewListener = new NewsListView.ViewListener() {
         @Override
-        public void onNewsItemClick(Integer _Id) {
-            Intent intent = new Intent(getActivity(), NewsSingleActivity.class);
+        public void onNewsItemClick(final Integer _Id) {
+            final Intent intent = new Intent(getActivity(), NewsSingleActivity.class);
             intent.putExtra(NewsSingleActivity.EXTRA_NEWS_ITEM, NewsModel.getInstance().getNewsItems()[_Id]);
             startActivity(intent);
         }

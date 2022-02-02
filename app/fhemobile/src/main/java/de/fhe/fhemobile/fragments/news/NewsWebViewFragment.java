@@ -40,8 +40,8 @@ public class NewsWebViewFragment extends FeatureFragment {
     }
 
     public static NewsWebViewFragment newInstance() {
-        NewsWebViewFragment fragment = new NewsWebViewFragment();
-        Bundle args = new Bundle();
+        final NewsWebViewFragment fragment = new NewsWebViewFragment();
+        final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,8 +67,8 @@ public class NewsWebViewFragment extends FeatureFragment {
 */
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = (NewsWebView) inflater.inflate(R.layout.fragment_news_webview, container, false);
         return mView;

@@ -29,11 +29,11 @@ import de.fhe.fhemobile.widgets.picker.base.IdPicker;
  */
 public class StudyGroupPicker extends IdPicker {
 
-    public StudyGroupPicker(Context context, AttributeSet attrs) {
+    public StudyGroupPicker(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public void setItems(List<TimeTableStudyGroupVo> _items) {
+    public void setItems(final List<TimeTableStudyGroupVo> _items) {
         mItems = _items;
         if (mItems == null) {
             throw new AssertionError("StudyGroup items cannot be null!");
@@ -41,12 +41,12 @@ public class StudyGroupPicker extends IdPicker {
     }
 
     @Override
-    protected String getId(int _Position) {
+    protected String getId(final int _Position) {
         return mItems.get(_Position).getTimeTableId();
     }
 
     @Override
-    protected String getName(int _Position) {
+    protected String getName(final int _Position) {
         return mItems.get(_Position).getTitle();
     }
 

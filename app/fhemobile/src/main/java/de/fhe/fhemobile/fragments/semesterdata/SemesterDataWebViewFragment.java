@@ -40,8 +40,8 @@ public class SemesterDataWebViewFragment extends FeatureFragment {
     }
 
     public static SemesterDataWebViewFragment newInstance() {
-        SemesterDataWebViewFragment fragment = new SemesterDataWebViewFragment();
-        Bundle args = new Bundle();
+        final SemesterDataWebViewFragment fragment = new SemesterDataWebViewFragment();
+        final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
@@ -66,8 +66,8 @@ public class SemesterDataWebViewFragment extends FeatureFragment {
 */
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = (SemesterDataWebView) inflater.inflate(R.layout.fragment_semesterdata_webview, container, false);
         return mView;

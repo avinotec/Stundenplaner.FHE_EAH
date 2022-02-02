@@ -20,7 +20,7 @@ package de.fhe.fhemobile.widgets.picker.base;
  * Created by paul on 12.03.15.
  */
 class IDItem {
-    public IDItem(String _Name, String _Id) {
+    public IDItem(final String _Name, final String _Id) {
         mName = _Name;
         mId   = _Id;
     }
@@ -29,7 +29,7 @@ class IDItem {
         return mName;
     }
 
-    public void setName(String _name) {
+    public void setName(final String _name) {
         mName = _name;
     }
 
@@ -37,7 +37,7 @@ class IDItem {
         return mId;
     }
 
-    public void setId(String _id) {
+    public void setId(final String _id) {
         mId = _id;
     }
 

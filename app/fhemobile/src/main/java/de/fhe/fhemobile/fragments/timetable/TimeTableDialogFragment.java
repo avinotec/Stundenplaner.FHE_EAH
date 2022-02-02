@@ -56,8 +56,8 @@ public class TimeTableDialogFragment extends FeatureFragment {
      * @return A new instance of fragment TimeTableDialogFragment.
      */
     public static TimeTableDialogFragment newInstance() {
-        TimeTableDialogFragment fragment = new TimeTableDialogFragment();
-        Bundle args = new Bundle();
+        final TimeTableDialogFragment fragment = new TimeTableDialogFragment();
+        final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,7 +67,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mChosenCourse       = null;
@@ -76,8 +76,8 @@ public class TimeTableDialogFragment extends FeatureFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = (TimeTableDialogView) inflater.inflate(R.layout.fragment_time_table_dialog, container, false);
         mView.setViewListener(mViewListener);
@@ -92,14 +92,14 @@ public class TimeTableDialogFragment extends FeatureFragment {
         NetworkHandler.getInstance().fetchTimeTable(mTimeTableResponseCallback);
     }
 
-    private void proceedToTimetable(String _TimeTableId) {
+    private void proceedToTimetable(final String _TimeTableId) {
         ((MainActivity) getActivity()).changeFragment(TimeTableFragment.newInstance(_TimeTableId),
                 true, TAG);
     }
 
     private final TimeTableDialogView.IViewListener mViewListener = new TimeTableDialogView.IViewListener() {
         @Override
-        public void onStudyCourseChosen(String _StudyCourseId) {
+        public void onStudyCourseChosen(final String _StudyCourseId) {
             mView.toggleGroupsPickerVisibility(false);
             mView.toggleButtonEnabled(false);
             mView.resetSemesterPicker();
@@ -110,7 +110,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
             boolean errorOccurred = false;
 
-            for (TimeTableStudyCourseVo courseVo : mResponse.getStudyCourses()) {
+            for (final TimeTableStudyCourseVo courseVo : mResponse.getStudyCourses()) {
                 if (courseVo.getId() != null && courseVo.getId().equals(_StudyCourseId)) {
                     mChosenCourse = courseVo;
 
@@ -162,7 +162,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
          * @param _TimeTableId
          */
         @Override
-        public void onGroupChosen(String _TimeTableId) {
+        public void onGroupChosen(final String _TimeTableId) {
             mView.toggleButtonEnabled(true);
             mChosenTimetableId = _TimeTableId;
         }
@@ -187,7 +187,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
     private final Callback<TimeTableResponse> mTimeTableResponseCallback = new Callback<TimeTableResponse>() {
         @Override
-        public void onResponse(Call<TimeTableResponse> call, Response<TimeTableResponse> response) {
+        public void onResponse(final Call<TimeTableResponse> call, final Response<TimeTableResponse> response) {
             if ( response.body() != null ) {
                 mResponse = response.body();
                 mView.setStudyCourseItems(response.body().getStudyCourses());
@@ -195,7 +195,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
         }
 
         @Override
-        public void onFailure(Call<TimeTableResponse> call, Throwable t) {
+        public void onFailure(final Call<TimeTableResponse> call, final Throwable t) {
 
         }
     };

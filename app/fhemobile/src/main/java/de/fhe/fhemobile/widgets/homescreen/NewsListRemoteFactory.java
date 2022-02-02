@@ -35,9 +35,9 @@ import de.fhe.fhemobile.vos.news.NewsItemVo;
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class NewsListRemoteFactory implements RemoteViewsService.RemoteViewsFactory {
 
-    public NewsListRemoteFactory(Context _context, Intent _intent) {
+    public NewsListRemoteFactory(final Context _context, final Intent _intent) {
         mContext  = _context;
-        int mWidgetId = _intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+        final int mWidgetId = _intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
 
         mItems    = NewsListRemoteFetchService.getNewsItems(mWidgetId).clone();
@@ -63,13 +63,13 @@ public class NewsListRemoteFactory implements RemoteViewsService.RemoteViewsFact
     }
 
     @Override
-    public RemoteViews getViewAt(int position) {
+    public RemoteViews getViewAt(final int position) {
         final RemoteViews remoteView = new RemoteViews(
                 mContext.getPackageName(), R.layout.item_news_list);
 
-        NewsItemVo listItem = mItems[position];
+        final NewsItemVo listItem = mItems[position];
 
-        Intent intent = new Intent();
+        final Intent intent = new Intent();
         intent.putExtra(NewsSingleActivity.EXTRA_NEWS_ITEM, listItem);
 
         remoteView.setOnClickFillInIntent(R.id.newsItemLayout, intent);
@@ -96,7 +96,7 @@ public class NewsListRemoteFactory implements RemoteViewsService.RemoteViewsFact
     }
 
     @Override
-    public long getItemId(int position) {
+    public long getItemId(final int position) {
         return position;
     }
 

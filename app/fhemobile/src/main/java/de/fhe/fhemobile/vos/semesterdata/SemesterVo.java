@@ -32,7 +32,7 @@ public class SemesterVo implements Parcelable {
     public SemesterVo() {
     }
 
-    public SemesterVo(String mName, String mLongName, List<SemesterTimesVo> mCourseTimes, List<SemesterTimesVo> mHolidays, List<SemesterTimesVo> mImportantDates) {
+    public SemesterVo(final String mName, final String mLongName, final List<SemesterTimesVo> mCourseTimes, final List<SemesterTimesVo> mHolidays, final List<SemesterTimesVo> mImportantDates) {
         this.mName              = mName;
         this.mLongName          = mLongName;
         this.mCourseTimes       = mCourseTimes;
@@ -40,7 +40,7 @@ public class SemesterVo implements Parcelable {
         this.mImportantDates    = mImportantDates;
     }
 
-    public SemesterVo(Parcel _In) {
+    public SemesterVo(final Parcel _In) {
         mName       = _In.readString();
         mLongName   = _In.readString();
         _In.readTypedList(mCourseTimes, SemesterTimesVo.CREATOR);
@@ -68,7 +68,7 @@ public class SemesterVo implements Parcelable {
      *              May be 0 or {@link #PARCELABLE_WRITE_RETURN_VALUE}.
      */
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(mName);
         dest.writeString(mLongName);
         dest.writeTypedList(mCourseTimes);
@@ -78,11 +78,11 @@ public class SemesterVo implements Parcelable {
 
     public static final Parcelable.Creator<SemesterVo> CREATOR
             = new Parcelable.Creator<SemesterVo>() {
-        public SemesterVo createFromParcel(Parcel in) {
+        public SemesterVo createFromParcel(final Parcel in) {
             return new SemesterVo(in);
         }
 
-        public SemesterVo[] newArray(int size) {
+        public SemesterVo[] newArray(final int size) {
             return new SemesterVo[size];
         }
     };
@@ -91,7 +91,7 @@ public class SemesterVo implements Parcelable {
         return mName;
     }
 
-    public void setName(String mName) {
+    public void setName(final String mName) {
         this.mName = mName;
     }
 
@@ -99,7 +99,7 @@ public class SemesterVo implements Parcelable {
         return mLongName;
     }
 
-    public void setLongName(String mLongName) {
+    public void setLongName(final String mLongName) {
         this.mLongName = mLongName;
     }
 
@@ -107,7 +107,7 @@ public class SemesterVo implements Parcelable {
         return mCourseTimes;
     }
 
-    public void setCourseTimes(List<SemesterTimesVo> mCourseTimes) {
+    public void setCourseTimes(final List<SemesterTimesVo> mCourseTimes) {
         this.mCourseTimes = mCourseTimes;
     }
 
@@ -115,7 +115,7 @@ public class SemesterVo implements Parcelable {
         return mHolidays;
     }
 
-    public void setHolidays(List<SemesterTimesVo> mHolidays) {
+    public void setHolidays(final List<SemesterTimesVo> mHolidays) {
         this.mHolidays = mHolidays;
     }
 
@@ -123,7 +123,7 @@ public class SemesterVo implements Parcelable {
         return mImportantDates;
     }
 
-    public void setImportantDates(List<SemesterTimesVo> mImportantDates) {
+    public void setImportantDates(final List<SemesterTimesVo> mImportantDates) {
         this.mImportantDates = mImportantDates;
     }
 

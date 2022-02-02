@@ -34,7 +34,7 @@ public class EmployeeInformationActivity extends BaseActivity
     implements EmployeeListFragment.EmployeeListCallbacks {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBaseContent(R.layout.activity_employee_information);
 
@@ -43,12 +43,12 @@ public class EmployeeInformationActivity extends BaseActivity
         if(savedInstanceState != null) {
             mEmployee = savedInstanceState.getParcelable(STATE_EMPLOYEE);
             final ArrayList<Parcelable> temp = savedInstanceState.getParcelableArrayList(STATE_EMPLOYEE_LIST);
-            for(Parcelable parcel : temp) {
+            for(final Parcelable parcel : temp) {
                 mModel.addEmployeeToList((EmployeeVo) parcel);
             }
         }
 
-        EmployeeListFragment mListFragment = EmployeeListFragment.newInstance();
+        final EmployeeListFragment mListFragment = EmployeeListFragment.newInstance();
         mEmployeeFragment = EmployeeInformationFragment.newInstance();
 
         getSupportFragmentManager().beginTransaction()
@@ -68,7 +68,7 @@ public class EmployeeInformationActivity extends BaseActivity
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
+    public void onSaveInstanceState(@NonNull final Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(STATE_EMPLOYEE, mEmployee);
         outState.putParcelableArrayList(STATE_EMPLOYEE_LIST, mModel.getFoundEmployees());
@@ -79,7 +79,7 @@ public class EmployeeInformationActivity extends BaseActivity
      * @param _ListPosition
      */
     @Override
-    public void onEmployeeChosen(Integer _ListPosition) {
+    public void onEmployeeChosen(final Integer _ListPosition) {
         mEmployee = PhonebookModel.getInstance().getFoundEmployees().get(_ListPosition);
         loadEmployeeDetailView();
     }

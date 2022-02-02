@@ -28,8 +28,8 @@ import android.widget.RemoteViewsService;
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class NewsListRemoteService extends RemoteViewsService {
     @Override
-    public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        int appWidgetId = intent.getIntExtra(
+    public RemoteViewsFactory onGetViewFactory(final Intent intent) {
+        final int appWidgetId = intent.getIntExtra(
                 AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
 

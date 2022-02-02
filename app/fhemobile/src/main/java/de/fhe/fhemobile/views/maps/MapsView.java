@@ -31,12 +31,12 @@ import de.fhe.fhemobile.vos.maps.MapVo;
  * Edit by Nadja: rename from MapsSingleView to MapsView
  */
 public class MapsView extends FrameLayout {
-    public MapsView(Context context, AttributeSet attrs) {
+    public MapsView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public void initializeView(MapVo _Map) {
-        String htmlData = "<!DOCTYPE html>" +
+    public void initializeView(final MapVo _Map) {
+        final String htmlData = "<!DOCTYPE html>" +
                 "<html>" +
                 "<head></head>" +
                 "<body>" +

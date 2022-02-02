@@ -36,13 +36,13 @@ public class EmployeeListView extends FrameLayout {
         void onListItemClicked(Integer _ListPosition);
     }
 
-    public EmployeeListView(Context context, AttributeSet attrs) {
+    public EmployeeListView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
         mModel   = PhonebookModel.getInstance();
     }
 
-    public void initializeView(ViewListener _Listener) {
+    public void initializeView(final ViewListener _Listener) {
         mViewListener = _Listener;
 
         if(mModel.getFoundEmployees() != null) {
@@ -82,7 +82,7 @@ public class EmployeeListView extends FrameLayout {
 
     private final AdapterView.OnItemClickListener mListClickListener = new AdapterView.OnItemClickListener() {
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
             mViewListener.onListItemClicked(position);
         }
     };

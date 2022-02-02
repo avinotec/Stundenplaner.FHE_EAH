@@ -38,21 +38,21 @@ public class EmployeeInformationView extends FrameLayout {
         void onPhoneClicked();
     }
 
-    public EmployeeInformationView(Context context, AttributeSet attrs) {
+    public EmployeeInformationView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public void initializeView(ViewListener _Listener) {
+    public void initializeView(final ViewListener _Listener) {
         mViewListener = _Listener;
 
     }
 
-    public void populateView(EmployeeVo _Employee) {
-        SpannableString mail = new SpannableString(_Employee.getMail());
+    public void populateView(final EmployeeVo _Employee) {
+        final SpannableString mail = new SpannableString(_Employee.getMail());
         mail.setSpan(new UnderlineSpan(), 0, _Employee.getMail().length(), 0);
 
-        String phoneNumber = PhonebookModel.PHONE_NUMBER_PREFIX + _Employee.getPhone();
-        SpannableString phone = new SpannableString(phoneNumber);
+        final String phoneNumber = PhonebookModel.PHONE_NUMBER_PREFIX + _Employee.getPhone();
+        final SpannableString phone = new SpannableString(phoneNumber);
         phone.setSpan(new UnderlineSpan(), 0, phoneNumber.length(), 0);
 
         mName.setText(_Employee.getFullName());
@@ -83,14 +83,14 @@ public class EmployeeInformationView extends FrameLayout {
 
     private final OnClickListener mMailClick = new OnClickListener() {
         @Override
-        public void onClick(View v) {
+        public void onClick(final View v) {
             mViewListener.onMailClicked();
         }
     };
 
     private final OnClickListener mPhoneClick = new OnClickListener() {
         @Override
-        public void onClick(View v) {
+        public void onClick(final View v) {
             mViewListener.onPhoneClicked();
         }
     };

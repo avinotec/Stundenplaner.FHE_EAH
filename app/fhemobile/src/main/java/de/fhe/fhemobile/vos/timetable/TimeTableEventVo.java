@@ -47,7 +47,7 @@ public class TimeTableEventVo implements Parcelable {
         return mTitle;
     }
 
-    public void setTitle(String _title) {
+    public void setTitle(final String _title) {
         mTitle = _title;
     }
 
@@ -117,7 +117,7 @@ public class TimeTableEventVo implements Parcelable {
         return mLecturer;
     }
 
-    public void setLecturer(String _lecturer) {
+    public void setLecturer(final String _lecturer) {
         mLecturer = _lecturer;
     }
 
@@ -125,7 +125,7 @@ public class TimeTableEventVo implements Parcelable {
         return mRoom;
     }
 
-    public void setRoom(String _room) {
+    public void setRoom(final String _room) {
         mRoom = _room;
     }
 
@@ -179,7 +179,7 @@ public class TimeTableEventVo implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.mStartDate);
         dest.writeString(this.mTitle);
         dest.writeString(this.mShortTitle);
@@ -208,11 +208,11 @@ public class TimeTableEventVo implements Parcelable {
     }
 
     public static final Parcelable.Creator<TimeTableEventVo> CREATOR = new Parcelable.Creator<TimeTableEventVo>() {
-        public TimeTableEventVo createFromParcel(Parcel source) {
+        public TimeTableEventVo createFromParcel(final Parcel source) {
             return new TimeTableEventVo(source);
         }
 
-        public TimeTableEventVo[] newArray(int size) {
+        public TimeTableEventVo[] newArray(final int size) {
             return new TimeTableEventVo[size];
         }
     };

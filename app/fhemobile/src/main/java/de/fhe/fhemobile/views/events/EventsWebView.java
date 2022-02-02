@@ -20,7 +20,7 @@ public class EventsWebView extends FrameLayout {
 
     private WebView mWebView;
 
-    public EventsWebView(Context context, AttributeSet attrs) {
+    public EventsWebView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
     }

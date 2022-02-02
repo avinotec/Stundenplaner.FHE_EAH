@@ -23,9 +23,9 @@ public class FloorPlanIterator {
 
     private int currentPosition = Integer.MAX_VALUE;
     //list sorted from destination to start
-    private ArrayList<BuildingFloorKey> floorPlanList;
+    private final ArrayList<BuildingFloorKey> floorPlanList;
 
-    public FloorPlanIterator(ArrayList<BuildingFloorKey> _floorPlanList){
+    public FloorPlanIterator(final ArrayList<BuildingFloorKey> _floorPlanList){
         this.floorPlanList = _floorPlanList;
     }
 

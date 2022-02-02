@@ -33,7 +33,7 @@ public class NewsModel extends EventDispatcher {
 
         public static final String RECEIVED_CATEGORY_ITEMS = "receivedCategoryItems";
 
-        public ChangeEvent(String type) {
+        public ChangeEvent(final String type) {
             super(type);
         }
     }
@@ -42,7 +42,7 @@ public class NewsModel extends EventDispatcher {
         return mNewsItems;
     }
 
-    public void setNewsItems(NewsItemVo[] _NewsItems) {
+    public void setNewsItems(final NewsItemVo[] _NewsItems) {
         mNewsItems = _NewsItems;
         
         if(mNewsItems != null && mNewsItems.length > 0) {
@@ -57,8 +57,8 @@ public class NewsModel extends EventDispatcher {
         return mCategoryItems;
     }
 
-    public void setCategoryItems(NewsCategoryVo[] _CategoryItems) {
-        Integer selectedId = Integer.valueOf(UserSettings.getInstance().getChosenNewsCategory());
+    public void setCategoryItems(final NewsCategoryVo[] _CategoryItems) {
+        final Integer selectedId = Integer.valueOf(UserSettings.getInstance().getChosenNewsCategory());
         
         for(int i = 0; i < _CategoryItems.length; i++) {
             if(selectedId.equals(_CategoryItems[i].getId())) {
@@ -76,7 +76,7 @@ public class NewsModel extends EventDispatcher {
         return mChosenNewsItemPosition;
     }
 
-    public void setChosenNewsItemPosition(Integer _ChosenNewsItemPosition) {
+    public void setChosenNewsItemPosition(final Integer _ChosenNewsItemPosition) {
         mChosenNewsItemPosition = _ChosenNewsItemPosition;
     }
 
@@ -90,14 +90,14 @@ public class NewsModel extends EventDispatcher {
     private NewsModel() {
     }
 
-    private void notifyChange(String type) {
+    private void notifyChange(final String type) {
         dispatchEvent(new ChangeEvent(type));
     }
 
-    private static NewsModel ourInstance = null;
+    private static NewsModel ourInstance;
 
-    private NewsItemVo[] mNewsItems = null;
-    private NewsCategoryVo[] mCategoryItems = null;
+    private NewsItemVo[] mNewsItems;
+    private NewsCategoryVo[] mCategoryItems;
 
     private Integer mChosenNewsItemPosition = 0;
 }

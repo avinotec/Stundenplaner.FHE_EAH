@@ -40,14 +40,14 @@ public class MensaSettingsFragment extends Fragment {
     }
 
     public static MensaSettingsFragment newInstance() {
-        MensaSettingsFragment fragment = new MensaSettingsFragment();
-        Bundle args = new Bundle();
+        final MensaSettingsFragment fragment = new MensaSettingsFragment();
+        final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        if (getArguments() != null) {
 //
@@ -55,8 +55,8 @@ public class MensaSettingsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = (MensaChoiceView) inflater.inflate(R.layout.fragment_mensa_choice, container, false);
         mView.initView(mViewListener);
@@ -82,9 +82,9 @@ public class MensaSettingsFragment extends Fragment {
 
     private final MensaChoiceView.ViewListener mViewListener = new MensaChoiceView.ViewListener() {
         @Override
-        public void onMensaChosen(Integer _Id, Integer _Position) {
+        public void onMensaChosen(final Integer _Id, final Integer _Position) {
 
-            String mensaName = MensaFoodModel.getInstance().getChoiceItems()[_Position].getName();
+            final String mensaName = MensaFoodModel.getInstance().getChoiceItems()[_Position].getName();
 
             UserSettings.getInstance().setChosenMensa( String.valueOf(_Id), mensaName );
             MensaFoodModel.getInstance().setSelectedItemPosition(_Position);

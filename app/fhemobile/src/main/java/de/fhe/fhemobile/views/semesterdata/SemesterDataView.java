@@ -43,7 +43,7 @@ import de.fhe.fhemobile.widgets.stickyHeaderList.ImageRowItem;
  */
 public class SemesterDataView extends LinearLayout {
 
-    public SemesterDataView(Context context, AttributeSet attrs) {
+    public SemesterDataView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
         mModel   = SemesterDataModel.getInstance();
@@ -79,34 +79,34 @@ public class SemesterDataView extends LinearLayout {
         // See: https://github.com/applidium/HeaderListView/issues/28
         //mListView.getListView().setId(R.id.listMode);
         //MS neue Lösung, da ab 2021 die Ressourcen nun in separaten Namensräumen verwendet werden
-        HeaderListView yourListView = (HeaderListView) findViewWithTag("HeaderListViewTag");
+        final HeaderListView yourListView = (HeaderListView) findViewWithTag("HeaderListViewTag");
         mListView.getListView().setId( yourListView.getId() );
     }
 
     private void initializeList() {
-        SemesterVo chosenSemester = mModel.getSemesterData()[mModel.getChosenSemester()];
+        final SemesterVo chosenSemester = mModel.getSemesterData()[mModel.getChosenSemester()];
 
-        ArrayList<IHeaderItem> sectionList = new ArrayList<>();
+        final ArrayList<IHeaderItem> sectionList = new ArrayList<>();
 
-        DefaultHeaderItem headerSection = new DefaultHeaderItem("", false);
+        final DefaultHeaderItem headerSection = new DefaultHeaderItem("", false);
         headerSection.addItem(new ImageRowItem(R.drawable.th_semesterdates));
 
         sectionList.add(headerSection);
 
-        ArrayList<IRowItem> courseRowItems = new ArrayList<>();
-        for (SemesterTimesVo times : chosenSemester.getCourseTimes()) {
+        final ArrayList<IRowItem> courseRowItems = new ArrayList<>();
+        for (final SemesterTimesVo times : chosenSemester.getCourseTimes()) {
             courseRowItems.add(new DoubleRowItem(SemesterDataUtils.getHeadline(times), SemesterDataUtils.getSubHeadline(times)));
         }
         sectionList.add(new DefaultHeaderItem(mContext.getString(R.string.semester_course_times), true, courseRowItems));
 
-        ArrayList<IRowItem> holidayRowItems = new ArrayList<>();
-        for (SemesterTimesVo times : chosenSemester.getHolidays()) {
+        final ArrayList<IRowItem> holidayRowItems = new ArrayList<>();
+        for (final SemesterTimesVo times : chosenSemester.getHolidays()) {
             holidayRowItems.add(new DoubleRowItem(SemesterDataUtils.getHeadline(times), SemesterDataUtils.getSubHeadline(times)));
         }
         sectionList.add(new DefaultHeaderItem(mContext.getString(R.string.semester_holidays), true, holidayRowItems));
 
-        ArrayList<IRowItem> datesRowItems = new ArrayList<>();
-        for (SemesterTimesVo times : chosenSemester.getImportantDates()) {
+        final ArrayList<IRowItem> datesRowItems = new ArrayList<>();
+        for (final SemesterTimesVo times : chosenSemester.getImportantDates()) {
             datesRowItems.add(new DoubleRowItem(SemesterDataUtils.getHeadline(times), SemesterDataUtils.getSubHeadline(times)));
         }
         sectionList.add(new DefaultHeaderItem(mContext.getString(R.string.semester_important_dates), true, datesRowItems));
@@ -119,7 +119,7 @@ public class SemesterDataView extends LinearLayout {
 
     private final EventListener mModelListener = new EventListener() {
         @Override
-        public void onEvent(Event event) {
+        public void onEvent(final Event event) {
             initializeList();
         }
     };

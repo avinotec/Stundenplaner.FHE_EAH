@@ -37,7 +37,7 @@ public abstract class FeatureFragment extends Fragment {
         }
     }
 
-    public void setActionBarTitle(@StringRes int _Title) {
+    public void setActionBarTitle(@StringRes final int _Title) {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(_Title);
     }
 

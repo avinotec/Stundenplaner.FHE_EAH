@@ -32,12 +32,12 @@ public class NavigationUtils {
      */
     private static String getFileNameOfFloorPlan(final Complex complex, final String floor){
 
-        String floorCorrected;
+        final String floorCorrected;
         if("-1".equals(floor)) floorCorrected = "ug1";
         else if("-2".equals(floor)) floorCorrected = "ug2";
         else floorCorrected = floor;
 
-        String filename = "building_" + complex.toString() + "_floor_" + floorCorrected;
+        final String filename = "building_" + complex.toString() + "_floor_" + floorCorrected;
 
         return filename;
     }
@@ -111,7 +111,7 @@ public class NavigationUtils {
      * @param floor floor as string
      * @return floor as integer
      */
-    public static int floorStringToInt(String floor) {
+    public static int floorStringToInt(final String floor) {
 
         int floorAsInteger = 0;
 
@@ -154,13 +154,9 @@ public class NavigationUtils {
      * @param cell1 start cell
      * @param cell2 cell to reach from the start cell
      */
-    public static boolean checkExceptCaseBuild321FloorUG(Cell cell1, Cell cell2){
-        if((cell1.getFloorInt() == -1 && cell2.getFloorInt() == -1) &&
-                (("03".equals(cell1.getBuilding()) && "01".equals(cell2.getBuilding()))
-                    || ("01".equals(cell1.getBuilding()) && "03".equals(cell2.getBuilding())))){
-            return true;
-        }else{
-            return false;
-        }
+    public static boolean checkExceptCaseBuild321FloorUG(final Cell cell1, final Cell cell2){
+	    return (cell1.getFloorInt() == -1 && cell2.getFloorInt() == -1) &&
+			    (("03".equals(cell1.getBuilding()) && "01".equals(cell2.getBuilding()))
+					    || ("01".equals(cell1.getBuilding()) && "03".equals(cell2.getBuilding())));
     }
 }

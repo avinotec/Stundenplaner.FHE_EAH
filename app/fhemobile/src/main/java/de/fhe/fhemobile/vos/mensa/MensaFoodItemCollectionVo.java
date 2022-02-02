@@ -94,5 +94,5 @@ public class MensaFoodItemCollectionVo implements Parcelable {
 // --Commented out by Inspection STOP (02.11.2021 17:11)
 
     private List<MensaFoodItemVo> mItems = new ArrayList<MensaFoodItemVo>();
-    private String mHeadline;
+    private final String mHeadline;
 }

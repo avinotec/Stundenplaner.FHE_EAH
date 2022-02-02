@@ -27,12 +27,12 @@ import de.fhe.fhemobile.vos.news.NewsItemVo;
 public class NewsSingleActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBaseContent(R.layout.activity_news_single);
 
-        Intent intent = getIntent();
-        NewsItemVo newsItem = intent.getParcelableExtra(EXTRA_NEWS_ITEM);
+        final Intent intent = getIntent();
+        final NewsItemVo newsItem = intent.getParcelableExtra(EXTRA_NEWS_ITEM);
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, NewsSingleViewFragment.newInstance(newsItem))

@@ -58,7 +58,7 @@ public class MyTimeTableOverviewView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        FloatingActionButton mAddButton = (FloatingActionButton) findViewById(R.id.btn_mytimetable_overview_add_course);
+        final FloatingActionButton mAddButton = (FloatingActionButton) findViewById(R.id.btn_mytimetable_overview_add_course);
         mAddButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -133,7 +133,7 @@ public class MyTimeTableOverviewView extends LinearLayout {
 
     private void createAddDialog(){
         final FragmentManager fm = mFragmentManager;
-        MyTimeTableDialogFragment myTimeTableDialogFragment = MyTimeTableDialogFragment.newInstance();
+        final MyTimeTableDialogFragment myTimeTableDialogFragment = MyTimeTableDialogFragment.newInstance();
         myTimeTableDialogFragment.show(fm, "fragment_edit_name");
     }
 }

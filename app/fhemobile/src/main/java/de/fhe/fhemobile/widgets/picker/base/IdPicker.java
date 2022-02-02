@@ -64,11 +64,11 @@ public abstract class IdPicker extends LinearLayout{
     //                                       Base methods
     //##############################################################################################
 
-    protected IdPicker(Context context, AttributeSet attrs) {
+    protected IdPicker(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
 
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.IdPicker, 0, 0);
+        final TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.IdPicker, 0, 0);
 
         try {
             //left button
@@ -85,29 +85,29 @@ public abstract class IdPicker extends LinearLayout{
         preInitialize();
     }
 
-    public void setFragmentManager(FragmentManager _Manager) {
+    public void setFragmentManager(final FragmentManager _Manager) {
         mFragmentManager = _Manager;
     }
 
-    public void setOnItemChosenListener(OnItemChosenListener _Listener) {
+    public void setOnItemChosenListener(final OnItemChosenListener _Listener) {
         mListener = _Listener;
     }
 
-    public void setHeadline(String _Headline) {
+    public void setHeadline(final String _Headline) {
         mHeadline = _Headline;
     }
 
-    public void toggleEnabled(boolean _Enabled) {
+    public void toggleEnabled(final boolean _Enabled) {
         mEnabled = _Enabled;
     }
 
-    public void reset(boolean _Enabled) {
+    public void reset(final boolean _Enabled) {
         mContentView.setText(mContext.getResources().getString(R.string.timetable_input));
         toggleEnabled(_Enabled);
     }
 
     private void preInitialize() {
-        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.widget_id_picker, this, true);
     }
 
@@ -129,16 +129,16 @@ public abstract class IdPicker extends LinearLayout{
 
     private void openStringPicker() {
 
-        IdStringDialog dialog = new IdStringDialog();
+        final IdStringDialog dialog = new IdStringDialog();
         dialog.setOnItemChosenListener(mItemChosenListener);
         dialog.initDialog(mContext, buildItemList(), mHeadline);
         dialog.show(mFragmentManager, "idStringDialog");
     }
 
     private List<IDItem> buildItemList() {
-        ArrayList<IDItem> items = new ArrayList<>();
+        final ArrayList<IDItem> items = new ArrayList<>();
 
-        int amountOfItems = getCount();
+        final int amountOfItems = getCount();
 
         for (int i = 0; i < amountOfItems; i++) {
             items.add(new IDItem(getName(i), getId(i)));
@@ -149,7 +149,7 @@ public abstract class IdPicker extends LinearLayout{
 
     private final OnClickListener mClickListener = new OnClickListener() {
         @Override
-        public void onClick(View v) {
+        public void onClick(final View v) {
             if (mEnabled) {
                 openStringPicker();
             }
@@ -158,7 +158,7 @@ public abstract class IdPicker extends LinearLayout{
 
     private final OnItemChosenListener mItemChosenListener = new OnItemChosenListener() {
         @Override
-        public void onItemChosen(String _ItemId, int _ItemPos) {
+        public void onItemChosen(final String _ItemId, final int _ItemPos) {
             mContentView.setText(getName(_ItemPos));
 
 
@@ -167,7 +167,7 @@ public abstract class IdPicker extends LinearLayout{
             }
         }
     };
-    public void setDisplayValue(String text){
+    public void setDisplayValue(final String text){
         mContentView.setText(text);
     }
 

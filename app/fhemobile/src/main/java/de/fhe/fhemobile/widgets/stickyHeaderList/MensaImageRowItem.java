@@ -28,7 +28,7 @@ import de.fhe.fhemobile.R;
  */
 public class MensaImageRowItem extends IRowItem {
 
-    public MensaImageRowItem(int _imageRes) {
+    public MensaImageRowItem(final int _imageRes) {
         mImageRes = _imageRes;
     }
 
@@ -38,8 +38,8 @@ public class MensaImageRowItem extends IRowItem {
     }
 
     @Override
-    public View getView(LayoutInflater _inflater, View _convertView, ViewGroup _parent) {
-        ViewHolder holder;
+    public View getView(final LayoutInflater _inflater, View _convertView, final ViewGroup _parent) {
+        final ViewHolder holder;
         if (_convertView == null) {
             holder = new ViewHolder();
             _convertView = _inflater.inflate(R.layout.item_header_image_mensa, _parent, false);

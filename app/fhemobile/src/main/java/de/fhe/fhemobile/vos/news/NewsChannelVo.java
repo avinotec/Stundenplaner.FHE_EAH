@@ -30,7 +30,7 @@ public class NewsChannelVo {
         return mTitle;
     }
 
-    public void setTitle(String _title) {
+    public void setTitle(final String _title) {
         mTitle = _title;
     }
 
@@ -38,7 +38,7 @@ public class NewsChannelVo {
         return mNewsItems;
     }
 
-    public void setNewsItems(NewsItemVo[] _newsItems) {
+    public void setNewsItems(final NewsItemVo[] _newsItems) {
         mNewsItems = _newsItems;
     }
 

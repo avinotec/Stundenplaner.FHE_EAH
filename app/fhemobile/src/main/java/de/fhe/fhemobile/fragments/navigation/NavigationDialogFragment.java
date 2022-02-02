@@ -32,7 +32,7 @@ import de.fhe.fhemobile.views.navigation.NavigationDialogView;
  */
 public class NavigationDialogFragment extends FeatureFragment {
 
-    private NavigationDialogView mView = null;
+    private NavigationDialogView mView;
 
     //Constants
     private static final String TAG = "NavigDialogFragment"; //$NON-NLS
@@ -43,20 +43,20 @@ public class NavigationDialogFragment extends FeatureFragment {
     }
 
     public static NavigationDialogFragment newInstance(){
-        NavigationDialogFragment fragment = new NavigationDialogFragment();
-        Bundle args = new Bundle();
+        final NavigationDialogFragment fragment = new NavigationDialogFragment();
+        final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
         mView = (NavigationDialogView) inflater.inflate(R.layout.fragment_navigation_dialog,

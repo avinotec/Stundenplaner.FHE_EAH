@@ -48,11 +48,11 @@ public class BuildingExit extends Cell{
                         final ArrayList<String> exitTo, final ArrayList<String> entryFrom) {
         super(xCoordinate, yCoordinate, building, floor, true, COSTS_EXIT);
 
-        for(String destBuilding: exitTo){
+        for(final String destBuilding: exitTo){
             this.exitTo.add(new Building(destBuilding).getComplex());
         }
 
-        for(String startBuilding: entryFrom){
+        for(final String startBuilding: entryFrom){
             this.entryFrom.add(new Building(startBuilding).getComplex());
         }
     }

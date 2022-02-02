@@ -37,14 +37,14 @@ public class PhonebookSearchFragment extends FeatureFragment {
     }
 
     public static PhonebookSearchFragment newInstance() {
-        PhonebookSearchFragment fragment = new PhonebookSearchFragment();
-        Bundle args = new Bundle();
+        final PhonebookSearchFragment fragment = new PhonebookSearchFragment();
+        final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        if (getArguments() != null) {
 //        }
@@ -59,8 +59,8 @@ public class PhonebookSearchFragment extends FeatureFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = (PhonebookSearchView) inflater.inflate(R.layout.fragment_phonebook_search, container, false);
         mView.initializeView(mViewListener);
@@ -69,13 +69,13 @@ public class PhonebookSearchFragment extends FeatureFragment {
 
     private final PhonebookSearchView.ViewListener mViewListener = new PhonebookSearchView.ViewListener() {
         @Override
-        public void onSearchClicked(String _FirstName, String _LastName) {
+        public void onSearchClicked(final String _FirstName, final String _LastName) {
             NetworkHandler.getInstance().fetchEmployees(_FirstName, _LastName);
         }
 
         @Override
         public void onEmployeesFound() {
-            Intent intent = new Intent(getActivity(), EmployeeInformationActivity.class);
+            final Intent intent = new Intent(getActivity(), EmployeeInformationActivity.class);
             startActivity(intent);
         }
     };

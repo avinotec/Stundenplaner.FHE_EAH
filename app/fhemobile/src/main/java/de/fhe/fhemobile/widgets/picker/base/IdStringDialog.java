@@ -38,14 +38,14 @@ public class IdStringDialog extends DialogFragment {
 
     @NonNull
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public Dialog onCreateDialog(final Bundle savedInstanceState) {
         //create the list view
-        ListView listView = new ListView(mContext);
+        final ListView listView = new ListView(mContext);
         listView.setAdapter(mItemAdapter);
         listView.setOnItemClickListener(mItemClickListener);
 
         //Create the dialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(mTitle);
         builder.setView(listView);
 
@@ -62,32 +62,32 @@ public class IdStringDialog extends DialogFragment {
 */
 
     //initDialog------------------------------------------------------------------------------------
-    public void initDialog(Context _Context, List<IDItem> _Items, String _Title) {
+    public void initDialog(final Context _Context, final List<IDItem> _Items, final String _Title) {
         mContext     = _Context;
         mItems       = _Items;
         mItemAdapter = new ArrayAdapter<>(mContext, android.R.layout.select_dialog_item);
 
         //fill the adapter
-        for (IDItem item : mItems) {
+        for (final IDItem item : mItems) {
             mItemAdapter.add(item.getName());
         }
 
         mTitle = _Title;
     }
 
-    public void setOnItemChosenListener(OnItemChosenListener _Listener) {
+    public void setOnItemChosenListener(final OnItemChosenListener _Listener) {
         mListener = _Listener;
     }
 
     //onDismiss-------------------------------------------------------------------------------------
     @Override
-    public void onDismiss(@NonNull DialogInterface dialog) {
+    public void onDismiss(@NonNull final DialogInterface dialog) {
         super.onDismiss(dialog);
     }
 
     private final AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
             if (mListener != null) {
                 mListener.onItemChosen(mItems.get(position).getId(), position);
             }

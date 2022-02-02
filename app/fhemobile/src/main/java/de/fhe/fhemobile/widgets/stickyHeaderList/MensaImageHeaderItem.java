@@ -30,12 +30,12 @@ import de.fhe.fhemobile.R;
  */
 public class MensaImageHeaderItem extends IHeaderItem {
 
-    public MensaImageHeaderItem(boolean _hasSectionHeader, int _imageRes) {
+    public MensaImageHeaderItem(final boolean _hasSectionHeader, final int _imageRes) {
         super(_hasSectionHeader);
         mImageRes = _imageRes;
     }
 
-    public MensaImageHeaderItem(List<IRowItem> _items, boolean _hasSectionHeader, int _imageRes) {
+    public MensaImageHeaderItem(final List<IRowItem> _items, final boolean _hasSectionHeader, final int _imageRes) {
         super(_items, _hasSectionHeader);
         mImageRes = _imageRes;
     }
@@ -47,7 +47,7 @@ public class MensaImageHeaderItem extends IHeaderItem {
 
     @Override
     public View getView(final LayoutInflater _inflater, View _convertView, final ViewGroup _parent) {
-        ViewHolder holder;
+        final ViewHolder holder;
         if (_convertView == null) {
             holder = new ViewHolder();
             _convertView = _inflater.inflate(R.layout.item_header_image_mensa, _parent, false);

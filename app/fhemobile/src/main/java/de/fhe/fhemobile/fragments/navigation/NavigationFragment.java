@@ -84,9 +84,9 @@ public class NavigationFragment extends FeatureFragment {
         // Required empty public constructor
     }
 
-    public static NavigationFragment newInstance(Room _startRoom, Room _destRoom) {
-        NavigationFragment fragment = new NavigationFragment();
-        Bundle args = new Bundle();
+    public static NavigationFragment newInstance(final Room _startRoom, final Room _destRoom) {
+        final NavigationFragment fragment = new NavigationFragment();
+        final Bundle args = new Bundle();
         args.putString(PARAM_START, _startRoom.getRoomName());
         args.putString(PARAM_DEST, _destRoom.getRoomName());
         fragment.setArguments(args);
@@ -95,17 +95,17 @@ public class NavigationFragment extends FeatureFragment {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (BuildConfig.DEBUG) Assert.assertTrue( getArguments() != null );
-        String start = getArguments().getString(PARAM_START);
-        String dest = getArguments().getString(PARAM_DEST);
+        final String start = getArguments().getString(PARAM_START);
+        final String dest = getArguments().getString(PARAM_DEST);
 
         mStartRoom = null;
         mDestRoom = null;
 
-        for(Room room : MainActivity.rooms){
+        for(final Room room : MainActivity.rooms){
             if(room.getRoomName().equals(start)){
                 mStartRoom = room;
             }
@@ -124,7 +124,7 @@ public class NavigationFragment extends FeatureFragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
         mView = (NavigationView) inflater.inflate(R.layout.fragment_navigation, container, false);
@@ -173,21 +173,11 @@ public class NavigationFragment extends FeatureFragment {
      */
     private  void updateButtonStatus(){
 
-        if (floorPlanIterator.hasPrevious()) {
-            mView.togglePrevPlanButtonEnabled(true);
-        }
-        //start floor reached -> disable prevButton
-        else{
-            mView.togglePrevPlanButtonEnabled(false);
-        }
+	    //start floor reached -> disable prevButton
+	    mView.togglePrevPlanButtonEnabled(floorPlanIterator.hasPrevious());
 
-        if(floorPlanIterator.hasNext()){
-            mView.toggleNextPlanButtonEnabled(true);
-        }
-        //destination floor reached -> disable nextButton
-        else{
-            mView.toggleNextPlanButtonEnabled(false);
-        }
+	    //destination floor reached -> disable nextButton
+	    mView.toggleNextPlanButtonEnabled(floorPlanIterator.hasNext());
     }
 
 
@@ -197,14 +187,14 @@ public class NavigationFragment extends FeatureFragment {
      */
     private void getFloorConnections() {
         try {
-            String json;
+            final String json;
 
             // read only once
             if(buildingExits.isEmpty()){
                 json = JSONHandler.readFromAssets(getContext(), "exits");
                 buildingExits = JSONHandler.parseJsonExits(json);
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.e(TAG, "error reading or parsing JSON files:", e);
         }
     }
@@ -214,14 +204,14 @@ public class NavigationFragment extends FeatureFragment {
      */
     private void getExits() {
         try {
-            String json;
+            final String json;
 
             // read only once
             if (floorConnections.isEmpty()) {
                 json = JSONHandler.readFromAssets(getContext(), "floorconnections");
                 floorConnections = JSONHandler.parseJsonFloorConnection(json);
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.e(TAG, "error reading or parsing JSON files:", e);
         }
     }
@@ -235,12 +225,12 @@ public class NavigationFragment extends FeatureFragment {
      */
     private void getRoute() {
         try {
-            RouteCalculator routeCalculator = new RouteCalculator(getContext(),
+            final RouteCalculator routeCalculator = new RouteCalculator(getContext(),
                     mStartRoom, mDestRoom, floorConnections, buildingExits);
             cellsToWalk = routeCalculator.getWholeRoute();
             floorPlanIterator = new FloorPlanIterator(new ArrayList<>(cellsToWalk.keySet()));
 
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.e(TAG,"error calculating route:", e);
         }
     }
@@ -291,14 +281,14 @@ public class NavigationFragment extends FeatureFragment {
     private void drawFloorPlan(){
         try {
             //get image of the first displayed floorplan
-            String path = getPathToFloorPlanPNG(currentFloorPlan.getComplex(),
+            final String path = getPathToFloorPlanPNG(currentFloorPlan.getComplex(),
                     currentFloorPlan.getFloorString());
             //grid for debugging: path = "floorplan_images/grid_for_debug.png"
-            InputStream input = getActivity().getAssets().open(path);
-            Drawable image = Drawable.createFromStream(input, null);
+            final InputStream input = getActivity().getAssets().open(path);
+            final Drawable image = Drawable.createFromStream(input, null);
             //setFloorPlanImage
             mView.drawFloorPlanImage(image, currentFloorPlan);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             Log.e(TAG, "Loading Floorplan Image from assets failed", e);
         }
     }

@@ -43,14 +43,14 @@ public class SemesterDataFragment extends FeatureFragment {
     }
 
     public static SemesterDataFragment newInstance() {
-        SemesterDataFragment fragment = new SemesterDataFragment();
-        Bundle args = new Bundle();
+        final SemesterDataFragment fragment = new SemesterDataFragment();
+        final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mModel = SemesterDataModel.getInstance();
@@ -63,8 +63,8 @@ public class SemesterDataFragment extends FeatureFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = (SemesterDataView) inflater.inflate(R.layout.fragment_semester_data, container, false);
         mView.initializeView();
@@ -77,7 +77,7 @@ public class SemesterDataFragment extends FeatureFragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
         // If the drawer is open, show the global app actions in the action bar. See also
         // showGlobalContextActionBar, which controls the top-left area of the action bar.
         menu.clear();
@@ -88,7 +88,7 @@ public class SemesterDataFragment extends FeatureFragment {
 
     //onOptionsItemSelected-------------------------------------------------------------------------
     @Override
-    public boolean onOptionsItemSelected(MenuItem _item) {
+    public boolean onOptionsItemSelected(final MenuItem _item) {
         /* Checks use of resource IDs in places requiring constants
             Avoid the usage of resource IDs where constant expressions are required.
             A future version of the Android Gradle Plugin will generate R classes with
@@ -130,7 +130,7 @@ public class SemesterDataFragment extends FeatureFragment {
     }
 
     @Override
-    public void onRestoreActionBar(ActionBar _ActionBar) {
+    public void onRestoreActionBar(final ActionBar _ActionBar) {
         super.onRestoreActionBar(_ActionBar);
         // As the onCreate method hasn't been called yet, the mModel still is a NP and can't be accessed.
 
@@ -143,7 +143,7 @@ public class SemesterDataFragment extends FeatureFragment {
 
     private final EventListener mModelChangeListener = new EventListener() {
         @Override
-        public void onEvent(Event event) {
+        public void onEvent(final Event event) {
             // Used to update the ActionbarTitle if the selection has changed
             if(event.getType().equals(SemesterDataModel.ChangeEvent.RECEIVED_SEMESTER_DATA) ||
                event.getType().equals(SemesterDataModel.ChangeEvent.SEMESTER_SELECTION_CHANGED)) {

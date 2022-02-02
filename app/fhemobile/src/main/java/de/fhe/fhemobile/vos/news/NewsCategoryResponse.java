@@ -30,7 +30,7 @@ public class NewsCategoryResponse {
         return mNewsCategories;
     }
 
-    public void setNewsCategories(NewsCategoryVo[] _newsCategories) {
+    public void setNewsCategories(final NewsCategoryVo[] _newsCategories) {
         mNewsCategories = _newsCategories;
     }
 

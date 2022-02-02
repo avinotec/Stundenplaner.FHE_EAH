@@ -96,10 +96,10 @@ public class Utils {
      * @param _resourcename Resource type
      * @return Resource ID
      */
-    public static int getResourceId(String _variableName, String _resourcename) {
+    public static int getResourceId(final String _variableName, final String _resourcename) {
         try {
             return Main.getAppContext().getResources().getIdentifier(_variableName, _resourcename, Main.getAppContext().getPackageName());
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.e(TAG, "Fehler bei der Ressourcensuche",e);
             return -1;
         }

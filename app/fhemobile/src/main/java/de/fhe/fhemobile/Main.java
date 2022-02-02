@@ -56,7 +56,7 @@ public class Main extends Application {
         FeatureProvider.loadFeatures(this);
 
         // load subscribed courses for My Time Table from Shared Preferences
-        SharedPreferences sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        final SharedPreferences sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
         final String json = sharedPreferences.getString(Define.SHARED_PREFERENCES_SUBSCRIBED_COURSES,"");
 
         // falls die Liste leer sein sollte, überspringen
@@ -74,7 +74,7 @@ public class Main extends Application {
      * @param _ResId requested ID
      * @return corresponding String
      */
-    public static String getSafeString(@StringRes int _ResId) {
+    public static String getSafeString(@StringRes final int _ResId) {
         return mAppContext.getString(_ResId);
     }
 

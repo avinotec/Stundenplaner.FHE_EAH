@@ -36,7 +36,7 @@ public class SemesterDataWebView extends FrameLayout {
 
     private WebView mWebView;
 
-    public SemesterDataWebView(Context context, AttributeSet attrs) {
+    public SemesterDataWebView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
     }

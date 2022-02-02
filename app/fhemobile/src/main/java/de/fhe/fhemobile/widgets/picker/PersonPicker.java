@@ -31,9 +31,9 @@ import de.fhe.fhemobile.widgets.picker.base.IdPicker;
  */
 public class PersonPicker extends IdPicker {
 
-    public PersonPicker(Context context, AttributeSet attrs) { super(context, attrs); }
+    public PersonPicker(final Context context, final AttributeSet attrs) { super(context, attrs); }
 
-    public void setItems(List<Person> _items){
+    public void setItems(final List<Person> _items){
         mItems = _items;
         if(mItems == null){
             throw new AssertionError("Person items cannot be null!");
@@ -41,12 +41,12 @@ public class PersonPicker extends IdPicker {
     }
 
     @Override
-    protected String getId(int _Position) {
+    protected String getId(final int _Position) {
         return mItems.get(_Position).getName();
     }
 
     @Override
-    protected String getName(int _Position) {
+    protected String getName(final int _Position) {
         return mItems.get(_Position).getName();
     }
 

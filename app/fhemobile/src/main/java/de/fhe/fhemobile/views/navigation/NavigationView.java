@@ -60,7 +60,7 @@ public class NavigationView extends LinearLayout {
     }
 
 
-    public void initializeView(Room startRoom, Room destRoom){
+    public void initializeView(final Room startRoom, final Room destRoom){
 
         //set start and dest
         mTextViewStart.setText(getResources().getString(R.string.navigation_start) +"   "+ startRoom.getRoomName());
@@ -73,7 +73,7 @@ public class NavigationView extends LinearLayout {
         //set listeners for buttons navigating between the floorplans
         mButtonPrevPlan.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 if (mViewListener != null) {
                     mViewListener.onPrevPlanClicked();
                 }
@@ -82,7 +82,7 @@ public class NavigationView extends LinearLayout {
 
         mButtonNextPlan.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 if (mViewListener != null) {
                     mViewListener.onNextPlanClicked();
                 }
@@ -111,7 +111,7 @@ public class NavigationView extends LinearLayout {
      * Removes old floorplan and route and sets new image
      * @param image new floorplan drawable
      */
-    public void drawFloorPlanImage(Drawable image, BuildingFloorKey currentFloorPlan){
+    public void drawFloorPlanImage(final Drawable image, final BuildingFloorKey currentFloorPlan){
 
         removeRoute();
         mNavigationLayout.addView(mFloorPlanImageView);
@@ -121,10 +121,10 @@ public class NavigationView extends LinearLayout {
         mFloorPlanImageView.setY(0);
 
         //rescale floorplan to match display width
-        ViewGroup.LayoutParams layoutParams = mFloorPlanImageView.getLayoutParams();
+        final ViewGroup.LayoutParams layoutParams = mFloorPlanImageView.getLayoutParams();
         layoutParams.width = (int) Math.round(cellWidth*cellgrid_width);
         //intrinsicHeight returns the height of the original floor plan image in the resources
-        int floorPlanImageHeight = image.getIntrinsicHeight();
+        final int floorPlanImageHeight = image.getIntrinsicHeight();
         //Dreisatz: imageheight_new / cellheight = intrinsicHeight / cellheight_original
         //      cellHeight_original = intrinsicHeight / cellgridHeight
         layoutParams.height = (int) Math.round(floorPlanImageHeight * cellHeight / (floorPlanImageHeight/cellgrid_height)) ;
@@ -186,7 +186,7 @@ public class NavigationView extends LinearLayout {
      * @param x position in cells
      * @return x in the displaying unit
      */
-    private int convertCellCoordX(int x){
+    private int convertCellCoordX(final int x){
         return (int) Math.round( x * cellWidth);
     }
 
@@ -195,7 +195,7 @@ public class NavigationView extends LinearLayout {
      * @param y position in cells
      * @return y in the displaying unit
      */
-    private int convertCellCoordY(int y){
+    private int convertCellCoordY(final int y){
         return (int) Math.round(y * cellHeight);
     }
 
@@ -204,10 +204,10 @@ public class NavigationView extends LinearLayout {
      * @param currentlyDisplayed BuildingFloorKey describing the currently displayed floorplan and route
      * @param cellsToWalk Map of all cells to walk (complete route)
      */
-    public void drawAllPathCells(BuildingFloorKey currentlyDisplayed, Map<BuildingFloorKey, ArrayList<Cell>> cellsToWalk) {
+    public void drawAllPathCells(final BuildingFloorKey currentlyDisplayed, final Map<BuildingFloorKey, ArrayList<Cell>> cellsToWalk) {
         try {
-            ArrayList<Cell> cellList = cellsToWalk.get(currentlyDisplayed);
-            for(Cell cell : cellList) {
+            final ArrayList<Cell> cellList = cellsToWalk.get(currentlyDisplayed);
+            for(final Cell cell : cellList) {
                 if (cell instanceof FloorConnectionCell) {
                     drawFloorConnection((FloorConnectionCell) cell);
                 } else if (cell instanceof BuildingExit) {
@@ -216,7 +216,7 @@ public class NavigationView extends LinearLayout {
                     drawPathCell(cell);
                 }
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.e(TAG, "error drawing path cells:",e);
         }
     }
@@ -225,17 +225,17 @@ public class NavigationView extends LinearLayout {
      * Draw start location
      * @param startRoom start room of the route
      */
-    public void drawStartLocation(Room startRoom) {
+    public void drawStartLocation(final Room startRoom) {
         try {
             //add start icon
-            ImageView startIcon = new ImageView(getContext());
+            final ImageView startIcon = new ImageView(getContext());
             startIcon.setImageResource(R.drawable.start_icon);
             if (mNavigationLayout != null) mNavigationLayout.addView(startIcon);
             else Log.d(TAG, "Layout holding navigation route is null");
             fitOneCell(startIcon);
             startIcon.setX(convertCellCoordX(startRoom.getXCoordinate()));
             startIcon.setY(convertCellCoordY(startRoom.getYCoordinate()));
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.e(TAG, "error drawing start room:", e);
         }
     }
@@ -244,16 +244,16 @@ public class NavigationView extends LinearLayout {
      * Draw destination location
      * @param destRoom destination room of the route
      */
-    public void drawDestinationLocation(Room destRoom) {
+    public void drawDestinationLocation(final Room destRoom) {
         try {
             //add destination icon
-            ImageView destinationIcon = new ImageView(getContext());
+            final ImageView destinationIcon = new ImageView(getContext());
             destinationIcon.setImageResource(R.drawable.destination_icon);
             if (mNavigationLayout != null) mNavigationLayout.addView(destinationIcon);
             fitOneCell(destinationIcon);
             destinationIcon.setX(convertCellCoordX(destRoom.getXCoordinate()));
             destinationIcon.setY(convertCellCoordY(destRoom.getYCoordinate()));
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.e(TAG,"error drawing destination room:", e);
         }
     }
@@ -262,8 +262,8 @@ public class NavigationView extends LinearLayout {
      * Add a cell icon to display a walkable cell of the calculated route
      * @param cell to draw
      */
-    private void drawPathCell(Cell cell){
-        ImageView pathCellIcon = new ImageView(getContext());
+    private void drawPathCell(final Cell cell){
+        final ImageView pathCellIcon = new ImageView(getContext());
         pathCellIcon.setImageResource(R.drawable.path_cell_icon);
         if (mNavigationLayout != null) mNavigationLayout.addView(pathCellIcon);
         else Log.d(TAG, "Layout holding navigation route is null");
@@ -277,15 +277,15 @@ public class NavigationView extends LinearLayout {
      * Draw floorconnection icon corresponding to the floorconnection type (stairs, elevator)
      * @param fCell {@link FloorConnectionCell} to draw
      */
-    private void drawFloorConnection(FloorConnectionCell fCell) {
-        Complex complex = fCell.getComplex();
-        String floor = fCell.getFloorString();
+    private void drawFloorConnection(final FloorConnectionCell fCell) {
+        final Complex complex = fCell.getComplex();
+        final String floor = fCell.getFloorString();
 
         if (fCell.getComplex() == complex
                 && fCell.getFloorString().equals(floor)) {
 
             if (fCell.getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_STAIR)) {
-                ImageView stairIcon = new ImageView(getContext());
+                final ImageView stairIcon = new ImageView(getContext());
                 stairIcon.setImageResource(R.drawable.stairs_icon);
                 if (mNavigationLayout != null) mNavigationLayout.addView(stairIcon);
                 else Log.d(TAG, "Layout holding navigation route is null");
@@ -296,7 +296,7 @@ public class NavigationView extends LinearLayout {
             }
 
             if (fCell.getTypeOfFloorConnection().equals(FLOORCONNECTION_TYPE_ELEVATOR)) {
-                ImageView elevatorIcon = new ImageView(getContext());
+                final ImageView elevatorIcon = new ImageView(getContext());
                 elevatorIcon.setImageResource(R.drawable.elevator_icon);
                 if (mNavigationLayout != null) mNavigationLayout.addView(elevatorIcon);
                 else Log.d(TAG, "Layout holding navigation route is null");
@@ -323,8 +323,8 @@ public class NavigationView extends LinearLayout {
      * Draw exit icon corresponding to the exitCell
      * @param buildingExitCell exit to display
      */
-    private void drawExit(BuildingExit buildingExitCell){
-        ImageView exitIcon = new ImageView(getContext());
+    private void drawExit(final BuildingExit buildingExitCell){
+        final ImageView exitIcon = new ImageView(getContext());
         exitIcon.setImageResource(R.drawable.exit_icon);
         if (mNavigationLayout != null) mNavigationLayout.addView(exitIcon);
         else Log.d(TAG, "Layout holding navigation route is null");
@@ -339,7 +339,7 @@ public class NavigationView extends LinearLayout {
      * Make the icon image fit exactly one cell
      * @param icon ImageView containing the icon (view must be added to parent view before calling)
      */
-    private void fitOneCell(ImageView icon){
+    private void fitOneCell(final ImageView icon){
         //visibility set GONE to avoid shortly displaying falsely sized icons
         icon.setVisibility(GONE);
 
@@ -348,7 +348,7 @@ public class NavigationView extends LinearLayout {
             @Override
             public void run() {
                 //set height and width of the ImageView
-                ViewGroup.LayoutParams layoutParams = icon.getLayoutParams();
+                final ViewGroup.LayoutParams layoutParams = icon.getLayoutParams();
                 layoutParams.height = (int) Math.round(cellHeight*0.95); //fill 95% of the cell
                 layoutParams.width = (int) Math.round(cellWidth*0.95);
                 icon.setLayoutParams(layoutParams);
@@ -377,5 +377,5 @@ public class NavigationView extends LinearLayout {
     private double cellWidth;
     private double cellHeight;
 
-    private String TAG = "NavigationView"; //$NON-NLS
+    private final String TAG = "NavigationView"; //$NON-NLS
 }

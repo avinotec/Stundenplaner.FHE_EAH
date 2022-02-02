@@ -37,9 +37,9 @@ import de.fhe.fhemobile.activities.news.NewsSingleActivity;
 public class NewsListWidget extends AppWidgetProvider {
 
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+    public void onUpdate(final Context context, final AppWidgetManager appWidgetManager, final int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
-        for (int appWidgetId : appWidgetIds) {
+        for (final int appWidgetId : appWidgetIds) {
             fetchData(context, appWidgetId);
         }
 
@@ -47,34 +47,34 @@ public class NewsListWidget extends AppWidgetProvider {
     }
 
     @Override
-    public void onDeleted(Context context, int[] appWidgetIds) {
+    public void onDeleted(final Context context, final int[] appWidgetIds) {
         // When the user deletes the widget, delete the preference associated with it.
-        for (int appWidgetId : appWidgetIds) {
+        for (final int appWidgetId : appWidgetIds) {
             NewsListRemoteFetchService.deleteNewsItems(appWidgetId);
             NewsListWidgetConfigureActivity.deleteNewsWidgetPref(context, appWidgetId);
         }
     }
 
     @Override
-    public void onEnabled(Context context) {
+    public void onEnabled(final Context context) {
         // Enter relevant functionality for when the first widget is created
     }
 
     @Override
-    public void onDisabled(Context context) {
+    public void onDisabled(final Context context) {
         // Enter relevant functionality for when the last widget is disabled
     }
 
-    private RemoteViews updateWidgetListView(Context context, int appWidgetId) {
+    private RemoteViews updateWidgetListView(final Context context, final int appWidgetId) {
 
         //which layout to show on widget
-        RemoteViews remoteViews = new RemoteViews(
+        final RemoteViews remoteViews = new RemoteViews(
                 context.getPackageName(),
                 R.layout.news_list_widget
         );
 
         //RemoteViews Service needed to provide adapter for ListView
-        Intent svcIntent = new Intent(context, NewsListRemoteService.class);
+        final Intent svcIntent = new Intent(context, NewsListRemoteService.class);
 
         //passing app widget id to that RemoteViews Service
         svcIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
@@ -96,17 +96,17 @@ public class NewsListWidget extends AppWidgetProvider {
 
         // Set template for specific list item click. Starts the NewsSingleActivity with the clicked
         // new item.
-        Intent intent = new Intent(context, NewsSingleActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        final Intent intent = new Intent(context, NewsSingleActivity.class);
+        final PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         remoteViews.setPendingIntentTemplate(R.id.widgetNewsList, pendingIntent);
 
         // When no data is shown, then allow click on empty view to reload view
         // Sends broadcast for specific appwidget to update itself
-        Intent updateIntent = new Intent(context, NewsListWidget.class);
+        final Intent updateIntent = new Intent(context, NewsListWidget.class);
         updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        PendingIntent updatePendingIntent = PendingIntent.getBroadcast(context, 0, updateIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        final PendingIntent updatePendingIntent = PendingIntent.getBroadcast(context, 0, updateIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         remoteViews.setOnClickPendingIntent(R.id.widgetNewsListEmpty, updatePendingIntent);
 
@@ -114,20 +114,20 @@ public class NewsListWidget extends AppWidgetProvider {
     }
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, final Intent intent) {
         super.onReceive(context, intent);
 
-        int appWidgetId = intent.getIntExtra(
+        final int appWidgetId = intent.getIntExtra(
                 AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
 
         if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
             if (DATA_FETCHED.equals(intent.getAction())) {
 
-                AppWidgetManager appWidgetManager = AppWidgetManager
+                final AppWidgetManager appWidgetManager = AppWidgetManager
                         .getInstance(context);
 
-                RemoteViews remoteViews = updateWidgetListView(context, appWidgetId);
+                final RemoteViews remoteViews = updateWidgetListView(context, appWidgetId);
                 appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
             } else if (intent.getAction().equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
 
@@ -136,8 +136,8 @@ public class NewsListWidget extends AppWidgetProvider {
         }
     }
 
-    private void fetchData(Context _Context, int _AppWidgetId) {
-        Intent serviceIntent = new Intent(_Context, NewsListRemoteFetchService.class);
+    private void fetchData(final Context _Context, final int _AppWidgetId) {
+        final Intent serviceIntent = new Intent(_Context, NewsListRemoteFetchService.class);
         serviceIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, _AppWidgetId);
         _Context.startService(serviceIntent);
     }

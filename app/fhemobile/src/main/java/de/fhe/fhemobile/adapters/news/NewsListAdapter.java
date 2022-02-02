@@ -40,7 +40,7 @@ public class NewsListAdapter extends BaseAdapter {
         TextView mPubDate;
     }
 
-    public NewsListAdapter(Context _Context, NewsItemVo[] _Items) {
+    public NewsListAdapter(final Context _Context, final NewsItemVo[] _Items) {
         mContext = _Context;
         mItems = _Items;
     }
@@ -51,21 +51,21 @@ public class NewsListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public Object getItem(final int position) {
         return null;
     }
 
     @Override
-    public long getItemId(int position) {
+    public long getItemId(final int position) {
         return 0;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) mContext
+    public View getView(final int position, View convertView, final ViewGroup parent) {
+        final LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
         if(convertView == null) {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.item_news_list, parent, false);
@@ -80,7 +80,7 @@ public class NewsListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        NewsItemVo item = mItems[position];
+        final NewsItemVo item = mItems[position];
 
         viewHolder.mTitle.setText(item.getTitle());
 

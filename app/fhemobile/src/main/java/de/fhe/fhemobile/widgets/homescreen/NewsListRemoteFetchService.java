@@ -36,7 +36,7 @@ public class NewsListRemoteFetchService extends Service {
     }
 
     @Override
-    public IBinder onBind(Intent intent) {
+    public IBinder onBind(final Intent intent) {
         return null;
     }
 
@@ -44,7 +44,7 @@ public class NewsListRemoteFetchService extends Service {
      * Retrieve appwidget id from intent it is needed to update widget later
     */
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public int onStartCommand(final Intent intent, final int flags, final int startId) {
         if (intent != null && intent.hasExtra(AppWidgetManager.EXTRA_APPWIDGET_ID)) {
             final int appWidgetId = intent.getIntExtra(
                     AppWidgetManager.EXTRA_APPWIDGET_ID,
@@ -54,7 +54,7 @@ public class NewsListRemoteFetchService extends Service {
                     NewsListWidgetConfigureActivity.loadNewsWidgetPref(getBaseContext(), appWidgetId),
                     new Callback<NewsItemResponse>() {
                         @Override
-                        public void onResponse(Call<NewsItemResponse> call, Response<NewsItemResponse> response) {
+                        public void onResponse(final Call<NewsItemResponse> call, final Response<NewsItemResponse> response) {
 
                             // MS: Bei den News sind die news/0 kaputt
                             if ( response.body() != null ) {
@@ -66,7 +66,7 @@ public class NewsListRemoteFetchService extends Service {
                         }
 
                         @Override
-                        public void onFailure(Call<NewsItemResponse> call, Throwable t) {
+                        public void onFailure(final Call<NewsItemResponse> call, final Throwable t) {
 
                         }
 
@@ -76,7 +76,7 @@ public class NewsListRemoteFetchService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
-    public static NewsItemVo[] getNewsItems(int _AppWidgetId) {
+    public static NewsItemVo[] getNewsItems(final int _AppWidgetId) {
         NewsItemVo[] result;
 
         if (mNewsData == null) {
@@ -92,14 +92,14 @@ public class NewsListRemoteFetchService extends Service {
         return result;
     }
 
-    public static String getNewsChannelName(int _AppWidgetId) {
+    public static String getNewsChannelName(final int _AppWidgetId) {
         if (mNewsChannelNames == null) {
             mNewsChannelNames = new SparseArray<>();
         }
         return mNewsChannelNames.get(_AppWidgetId);
     }
 
-    public static void deleteNewsItems(int _AppWidgetId) {
+    public static void deleteNewsItems(final int _AppWidgetId) {
         if (mNewsData.get(_AppWidgetId, null) != null) {
             mNewsData.delete(_AppWidgetId);
             mNewsChannelNames.delete(_AppWidgetId);
@@ -111,9 +111,9 @@ public class NewsListRemoteFetchService extends Service {
      * so that widget is notified to do necessary action
      * and here action == WidgetProvider.DATA_FETCHED
      */
-    private void populateWidget(int _AppWidgetId) {
+    private void populateWidget(final int _AppWidgetId) {
 
-        Intent widgetUpdateIntent = new Intent();
+        final Intent widgetUpdateIntent = new Intent();
         widgetUpdateIntent.setAction(NewsListWidget.DATA_FETCHED);
         widgetUpdateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, _AppWidgetId);
         sendBroadcast(widgetUpdateIntent);

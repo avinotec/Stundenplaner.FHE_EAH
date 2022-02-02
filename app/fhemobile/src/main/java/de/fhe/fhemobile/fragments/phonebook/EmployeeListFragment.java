@@ -41,14 +41,14 @@ public class EmployeeListFragment extends Fragment {
     }
 
     public static EmployeeListFragment newInstance() {
-        EmployeeListFragment fragment = new EmployeeListFragment();
-        Bundle args = new Bundle();
+        final EmployeeListFragment fragment = new EmployeeListFragment();
+        final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //TODO: Save instance list
 
@@ -58,8 +58,8 @@ public class EmployeeListFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = (EmployeeListView) inflater.inflate(R.layout.fragment_employee_list, container, false);
         mView.initializeView(mViewListener);
@@ -67,12 +67,12 @@ public class EmployeeListFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(@NonNull Activity activity) {
+    public void onAttach(@NonNull final Activity activity) {
         super.onAttach(activity);
         try {
             mCallbacks = (EmployeeListCallbacks) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
+        } catch (final ClassCastException e) {
+            throw new ClassCastException(activity
                     + " must implement EmployeeListCallbacks");
         }
     }
@@ -97,7 +97,7 @@ public class EmployeeListFragment extends Fragment {
 
     private final EmployeeListView.ViewListener mViewListener = new EmployeeListView.ViewListener() {
         @Override
-        public void onListItemClicked(Integer _ListPosition) {
+        public void onListItemClicked(final Integer _ListPosition) {
             mCallbacks.onEmployeeChosen(_ListPosition);
         }
     };

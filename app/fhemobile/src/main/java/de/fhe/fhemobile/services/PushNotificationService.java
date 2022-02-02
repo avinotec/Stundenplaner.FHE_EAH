@@ -44,7 +44,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 
 
 	@Override
-	public void onMessageReceived(RemoteMessage remoteMessage) {
+	public void onMessageReceived(final RemoteMessage remoteMessage) {
 		// ...
 		showNotification(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
 		// TODO(developer): Handle FCM messages here.
@@ -59,7 +59,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 
 		//TODO was bedeutet das?
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-			NotificationChannel notificationChannel = new NotificationChannel(Define.PUSH_NOTIFICATION_CHANNEL_ID, Define.PUSH_NOTIFICATION_CHANNEL_NAME,NotificationManager.IMPORTANCE_DEFAULT);
+			final NotificationChannel notificationChannel = new NotificationChannel(Define.PUSH_NOTIFICATION_CHANNEL_ID, Define.PUSH_NOTIFICATION_CHANNEL_NAME,NotificationManager.IMPORTANCE_DEFAULT);
 			notificationChannel.setDescription(Define.PUSH_NOTIFICATION_STUNDENPLANAENDERUNG_TITLE_NOTIFICATION);
 			notificationChannel.enableLights(true);
 			notificationChannel.setLightColor(Color.RED);

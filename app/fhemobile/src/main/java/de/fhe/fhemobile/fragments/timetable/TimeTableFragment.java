@@ -58,9 +58,9 @@ public class TimeTableFragment extends FeatureFragment {
 	 *
 	 * @return A new instance of fragment TimeTableFragment.
 	 */
-	public static TimeTableFragment newInstance(String _TimeTableId) {
-		TimeTableFragment fragment = new TimeTableFragment();
-		Bundle args = new Bundle();
+	public static TimeTableFragment newInstance(final String _TimeTableId) {
+		final TimeTableFragment fragment = new TimeTableFragment();
+		final Bundle args = new Bundle();
 		args.putString(PARAM_TIMETABLE_ID, _TimeTableId);
 		fragment.setArguments(args);
 		return fragment;
@@ -71,7 +71,7 @@ public class TimeTableFragment extends FeatureFragment {
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments() != null) {
 			mChosenTimeTableId = getArguments().getString(PARAM_TIMETABLE_ID);
@@ -81,8 +81,8 @@ public class TimeTableFragment extends FeatureFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	                         Bundle savedInstanceState) {
+	public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+	                         final Bundle savedInstanceState) {
 		mView = (TimeTableView) inflater.inflate(R.layout.fragment_time_table_events, container, false);
 		mView.setViewListener(mViewListener);
 		mView.initializeView(getChildFragmentManager());
@@ -97,7 +97,7 @@ public class TimeTableFragment extends FeatureFragment {
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, @NonNull MenuInflater inflater) {
+	public void onCreateOptionsMenu(final Menu menu, @NonNull final MenuInflater inflater) {
 		// If the drawer is open, show the global app actions in the action bar. See also
 		// showGlobalContextActionBar, which controls the top-left area of the action bar.
 		menu.clear();
@@ -109,7 +109,7 @@ public class TimeTableFragment extends FeatureFragment {
 
 	//onOptionsItemSelected-------------------------------------------------------------------------
 	@Override
-	public boolean onOptionsItemSelected(MenuItem _item) {
+	public boolean onOptionsItemSelected(final MenuItem _item) {
         /* Checks use of resource IDs in places requiring constants
             Avoid the usage of resource IDs where constant expressions are required.
             A future version of the Android Gradle Plugin will generate R classes with
@@ -130,14 +130,14 @@ public class TimeTableFragment extends FeatureFragment {
 
 	private final Callback<ArrayList<TimeTableWeekVo>> mCallback = new Callback<ArrayList<TimeTableWeekVo>>() {
 		@Override
-		public void onResponse(Call<ArrayList<TimeTableWeekVo>> call, Response<ArrayList<TimeTableWeekVo>> response) {
+		public void onResponse(final Call<ArrayList<TimeTableWeekVo>> call, final Response<ArrayList<TimeTableWeekVo>> response) {
 			if (response.body() != null) {
 				mView.setPagerItems(response.body());
 			}
 		}
 
 		@Override
-		public void onFailure(Call<ArrayList<TimeTableWeekVo>> call, Throwable t) {
+		public void onFailure(final Call<ArrayList<TimeTableWeekVo>> call, final Throwable t) {
 
 		}
 

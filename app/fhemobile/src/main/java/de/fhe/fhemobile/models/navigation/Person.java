@@ -20,10 +20,10 @@ package de.fhe.fhemobile.models.navigation;
 
 public class Person {
 
-    private String name;
-    private String room;
+    private final String name;
+    private final String room;
 
-    public Person(String _name, String _room){
+    public Person(final String _name, final String _room){
         this.name = _name;
         this.room = _room;
     }

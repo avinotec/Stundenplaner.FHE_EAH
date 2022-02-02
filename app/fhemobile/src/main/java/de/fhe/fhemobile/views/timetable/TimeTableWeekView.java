@@ -88,10 +88,10 @@ public class TimeTableWeekView extends LinearLayout {
     private void buildListEntries(final TimeTableWeekVo _Data) {
         mData = new ArrayList<>();
 
-        for (TimeTableDayVo dayVo : _Data.getDays()) {
+        for (final TimeTableDayVo dayVo : _Data.getDays()) {
 
             mData.add(new HeaderItem(dayVo.getName()));
-            for (TimeTableEventVo eventVo : dayVo.getEvents()) {
+            for (final TimeTableEventVo eventVo : dayVo.getEvents()) {
 
                 if ( BuildConfig.DEBUG ) Assert.assertTrue( eventVo != null );
                 if ( eventVo != null ) {

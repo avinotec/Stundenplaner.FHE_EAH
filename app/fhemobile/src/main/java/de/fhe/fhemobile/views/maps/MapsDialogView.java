@@ -39,13 +39,13 @@ public class MapsDialogView extends FrameLayout {
         void onMapItemClicked(Integer _Position);
     }
 
-    public MapsDialogView(Context context, AttributeSet attrs) {
+    public MapsDialogView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
         mModel = MapsModel.getInstance();
     }
 
-    public void initializeView(ViewListener _Listener) {
+    public void initializeView(final ViewListener _Listener) {
         mViewListener = _Listener;
 
         mAdapter = new MapsAdapter(mContext, mModel.getMaps());
@@ -64,7 +64,7 @@ public class MapsDialogView extends FrameLayout {
 
     private final AdapterView.OnItemClickListener mMapsClickListener = new AdapterView.OnItemClickListener() {
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
             mViewListener.onMapItemClicked(position);
         }
     };

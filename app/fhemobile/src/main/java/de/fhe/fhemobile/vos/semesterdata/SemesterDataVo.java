@@ -30,7 +30,7 @@ public class SemesterDataVo {
         return mSemester;
     }
 
-    public void setSemester(SemesterVo[] _semester) {
+    public void setSemester(final SemesterVo[] _semester) {
         mSemester = _semester;
     }
 

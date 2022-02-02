@@ -62,13 +62,13 @@ public final class TimeTableDayVo implements Parcelable {
 // --Commented out by Inspection STOP (02.11.2021 17:33)
 
     @SerializedName("dayInWeek")
-    private int mDayInWeek;
+    private final int mDayInWeek;
 
     @SerializedName("name")
     private String mWeekDayName;
 
     @SerializedName("events")
-    private ArrayList<TimeTableEventVo> mEvents = new ArrayList<>();
+    private final ArrayList<TimeTableEventVo> mEvents = new ArrayList<>();
 
 
     @Override
@@ -77,24 +77,24 @@ public final class TimeTableDayVo implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeInt(mDayInWeek);
         dest.writeString(mWeekDayName);
         dest.writeTypedList(mEvents);
     }
 
-    private TimeTableDayVo(Parcel in) {
+    private TimeTableDayVo(final Parcel in) {
         mDayInWeek = in.readInt();
         mWeekDayName = in.readString();
         in.readTypedList(mEvents, TimeTableEventVo.CREATOR);
     }
 
     public static final Parcelable.Creator<TimeTableDayVo> CREATOR = new Parcelable.Creator<TimeTableDayVo>() {
-        public TimeTableDayVo createFromParcel(Parcel source) {
+        public TimeTableDayVo createFromParcel(final Parcel source) {
             return new TimeTableDayVo(source);
         }
 
-        public TimeTableDayVo[] newArray(int size) {
+        public TimeTableDayVo[] newArray(final int size) {
             return new TimeTableDayVo[size];
         }
     };

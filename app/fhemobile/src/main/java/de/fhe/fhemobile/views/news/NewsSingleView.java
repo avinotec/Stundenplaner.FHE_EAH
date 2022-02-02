@@ -29,30 +29,30 @@ import de.fhe.fhemobile.R;
  */
 public class NewsSingleView extends FrameLayout {
 
-    public NewsSingleView(Context context, AttributeSet attrs) {
+    public NewsSingleView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public void setTitle(String _Title) {
+    public void setTitle(final String _Title) {
         mTitle.setText(_Title);
     }
 
-    public void setText(String _Text) {
-        String htmlData = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />" + _Text;
+    public void setText(final String _Text) {
+        final String htmlData = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />" + _Text;
 
 //        mText.getSettings().setJavaScriptEnabled(true);
         mText.loadDataWithBaseURL("file:///android_asset/", htmlData, "text/html", "UTF-8", "");
     }
 
-    public void setAuthor(String _Author) {
+    public void setAuthor(final String _Author) {
         mAuthor.setText(_Author);
     }
 
-    public void setPubDate(String _Date) {
+    public void setPubDate(final String _Date) {
         mPubDate.setText(_Date);
     }
 
-    public void setCategories(String _Categories) {
+    public void setCategories(final String _Categories) {
         mCategories.setText(_Categories);
     }
 

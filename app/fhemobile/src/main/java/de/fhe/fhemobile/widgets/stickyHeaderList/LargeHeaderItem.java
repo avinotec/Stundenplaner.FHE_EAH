@@ -30,13 +30,13 @@ import de.fhe.fhemobile.R;
  */
 public class LargeHeaderItem extends IHeaderItem {
 
-    public LargeHeaderItem(String _headerText, boolean _hasSectionHeader) {
+    public LargeHeaderItem(final String _headerText, final boolean _hasSectionHeader) {
         super(_hasSectionHeader);
         mHeaderText       = _headerText;
 
     }
 
-    public LargeHeaderItem(String _headerText, boolean _hasSectionHeader, List<IRowItem> _items) {
+    public LargeHeaderItem(final String _headerText, final boolean _hasSectionHeader, final List<IRowItem> _items) {
         super(_items, _hasSectionHeader);
         mHeaderText       = _headerText;
     }
@@ -47,9 +47,9 @@ public class LargeHeaderItem extends IHeaderItem {
     }
 
     @Override
-    public View getView(LayoutInflater _inflater, View _convertView, ViewGroup _parent) {
+    public View getView(final LayoutInflater _inflater, View _convertView, final ViewGroup _parent) {
 
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
         if (_convertView == null) {
             viewHolder = new ViewHolder();
 

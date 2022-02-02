@@ -47,10 +47,10 @@ public class MapsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static MapsFragment newInstance(int _MapId) {
-        MapsFragment fragment = new MapsFragment();
+    public static MapsFragment newInstance(final int _MapId) {
+        final MapsFragment fragment = new MapsFragment();
         
-        Bundle args = new Bundle();
+        final Bundle args = new Bundle();
         args.putInt(ARGS_MAP_ID, _MapId );
 
         fragment.setArguments( args );
@@ -58,13 +58,13 @@ public class MapsFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         setHasOptionsMenu(true);
         
         if (getArguments() != null) {
-            int mapId = getArguments().getInt(ARGS_MAP_ID);
+            final int mapId = getArguments().getInt(ARGS_MAP_ID);
             mMap = MapsModel.getInstance().getMaps().get(mapId);
         }
 
@@ -79,12 +79,12 @@ public class MapsFragment extends Fragment {
     
     
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         try {
             mView = (MapsView) inflater.inflate(R.layout.fragment_maps, container, false);
-            MapVo map;
+            final MapVo map;
 
             if (mMap.getMaps().size() > 1) {
                 map = mMap.getMaps().get(mCurrentMapIndex);
@@ -96,7 +96,7 @@ public class MapsFragment extends Fragment {
             }
 
             updateActionBarTitle(getContext().getResources().getString(map.getNameID()));
-        }catch (Exception e){
+        }catch (final Exception e){
             mView = new MapsView(getContext(), new AttributeSet() {
                 @Override
                 public int getAttributeCount() {
@@ -104,17 +104,17 @@ public class MapsFragment extends Fragment {
                 }
 
                 @Override
-                public String getAttributeName(int i) {
+                public String getAttributeName(final int i) {
                     return null;
                 }
 
                 @Override
-                public String getAttributeValue(int i) {
+                public String getAttributeValue(final int i) {
                     return null;
                 }
 
                 @Override
-                public String getAttributeValue(String s, String s1) {
+                public String getAttributeValue(final String s, final String s1) {
                     return null;
                 }
 
@@ -124,67 +124,67 @@ public class MapsFragment extends Fragment {
                 }
 
                 @Override
-                public int getAttributeNameResource(int i) {
+                public int getAttributeNameResource(final int i) {
                     return 0;
                 }
 
                 @Override
-                public int getAttributeListValue(String s, String s1, String[] strings, int i) {
+                public int getAttributeListValue(final String s, final String s1, final String[] strings, final int i) {
                     return 0;
                 }
 
                 @Override
-                public boolean getAttributeBooleanValue(String s, String s1, boolean b) {
+                public boolean getAttributeBooleanValue(final String s, final String s1, final boolean b) {
                     return false;
                 }
 
                 @Override
-                public int getAttributeResourceValue(String s, String s1, int i) {
+                public int getAttributeResourceValue(final String s, final String s1, final int i) {
                     return 0;
                 }
 
                 @Override
-                public int getAttributeIntValue(String s, String s1, int i) {
+                public int getAttributeIntValue(final String s, final String s1, final int i) {
                     return 0;
                 }
 
                 @Override
-                public int getAttributeUnsignedIntValue(String s, String s1, int i) {
+                public int getAttributeUnsignedIntValue(final String s, final String s1, final int i) {
                     return 0;
                 }
 
                 @Override
-                public float getAttributeFloatValue(String s, String s1, float v) {
+                public float getAttributeFloatValue(final String s, final String s1, final float v) {
                     return 0;
                 }
 
                 @Override
-                public int getAttributeListValue(int i, String[] strings, int i1) {
+                public int getAttributeListValue(final int i, final String[] strings, final int i1) {
                     return 0;
                 }
 
                 @Override
-                public boolean getAttributeBooleanValue(int i, boolean b) {
+                public boolean getAttributeBooleanValue(final int i, final boolean b) {
                     return false;
                 }
 
                 @Override
-                public int getAttributeResourceValue(int i, int i1) {
+                public int getAttributeResourceValue(final int i, final int i1) {
                     return 0;
                 }
 
                 @Override
-                public int getAttributeIntValue(int i, int i1) {
+                public int getAttributeIntValue(final int i, final int i1) {
                     return 0;
                 }
 
                 @Override
-                public int getAttributeUnsignedIntValue(int i, int i1) {
+                public int getAttributeUnsignedIntValue(final int i, final int i1) {
                     return 0;
                 }
 
                 @Override
-                public float getAttributeFloatValue(int i, float v) {
+                public float getAttributeFloatValue(final int i, final float v) {
                     return 0;
                 }
 
@@ -199,7 +199,7 @@ public class MapsFragment extends Fragment {
                 }
 
                 @Override
-                public int getIdAttributeResourceValue(int i) {
+                public int getIdAttributeResourceValue(final int i) {
                     return 0;
                 }
 
@@ -218,7 +218,7 @@ public class MapsFragment extends Fragment {
 
     //onCreateOptionsMenu---------------------------------------------------------------------------
     @Override
-    public void onCreateOptionsMenu(Menu _menu, @NonNull MenuInflater _inflater) {
+    public void onCreateOptionsMenu(final Menu _menu, @NonNull final MenuInflater _inflater) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
         _menu.clear();
@@ -232,7 +232,7 @@ public class MapsFragment extends Fragment {
 
     //onOptionsItemSelected-------------------------------------------------------------------------
     @Override
-    public boolean onOptionsItemSelected(MenuItem _item) {
+    public boolean onOptionsItemSelected(final MenuItem _item) {
 
         /* Checks use of resource IDs in places requiring constants
             Avoid the usage of resource IDs where constant expressions are required.
@@ -244,7 +244,7 @@ public class MapsFragment extends Fragment {
         if (itemId == R.id.action_up) {
             if (mCurrentMapIndex < mMap.getMaps().size() - 1) {
                 mCurrentMapIndex++;
-                MapVo map = mMap.getMaps().get(mCurrentMapIndex);
+                final MapVo map = mMap.getMaps().get(mCurrentMapIndex);
 
                 mView.initializeView(map);
                 updateActionBarTitle(getContext().getResources().getString(map.getNameID()));
@@ -253,7 +253,7 @@ public class MapsFragment extends Fragment {
         } else if (itemId == R.id.action_down) {
             if (mCurrentMapIndex > 0) {
                 mCurrentMapIndex--;
-                MapVo map = mMap.getMaps().get(mCurrentMapIndex);
+                final MapVo map = mMap.getMaps().get(mCurrentMapIndex);
 
                 mView.initializeView(map);
                 updateActionBarTitle(getContext().getResources().getString(map.getNameID()));
@@ -266,14 +266,14 @@ public class MapsFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
+    public void onSaveInstanceState(@NonNull final Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putInt(SAV_MAP_INDEX, mCurrentMapIndex);
 //        Log.d(LOG_TAG, "onSaveInstanceState ");
     }
 
-    private void updateActionBarTitle(String _Title) {
+    private void updateActionBarTitle(final String _Title) {
         ((BaseActivity) getActivity()).getSupportActionBar().setTitle(_Title);
     }
 

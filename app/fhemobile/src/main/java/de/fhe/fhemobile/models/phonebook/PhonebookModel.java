@@ -33,7 +33,7 @@ public class PhonebookModel extends EventDispatcher {
         public static final String EMPLOYEES_SAVED = "employeesSaved";
         public static final String EMPLOYEES_EMPTY = "employeesEmpty";
 
-        public ChangeEvent(String type) {
+        public ChangeEvent(final String type) {
             super(type);
         }
     }
@@ -42,12 +42,12 @@ public class PhonebookModel extends EventDispatcher {
         return mFoundEmployees;
     }
 
-    public void setFoundEmployees(ArrayList<EmployeeVo> _FoundEmployees) {
+    public void setFoundEmployees(final ArrayList<EmployeeVo> _FoundEmployees) {
         this.mFoundEmployees = _FoundEmployees;
         if(mFoundEmployees != null) {
             
             // remove "-;" from title, when the person has no title available
-            for (EmployeeVo employee : mFoundEmployees) {
+            for (final EmployeeVo employee : mFoundEmployees) {
                 if ("-;".equals(employee.getTitle())) {
                     employee.setTitle("");
                 }
@@ -60,7 +60,7 @@ public class PhonebookModel extends EventDispatcher {
         }
     }
 
-    public void addEmployeeToList(EmployeeVo _Employee) {
+    public void addEmployeeToList(final EmployeeVo _Employee) {
         mFoundEmployees.add(_Employee);
     }
 
@@ -71,7 +71,7 @@ public class PhonebookModel extends EventDispatcher {
         return ourInstance;
     }
 
-    private void notifyChange(String type) {
+    private void notifyChange(final String type) {
         dispatchEvent(new ChangeEvent(type));
     }
 
@@ -79,7 +79,7 @@ public class PhonebookModel extends EventDispatcher {
         super();
     }
 
-    private static PhonebookModel ourInstance = null;
+    private static PhonebookModel ourInstance;
 
     private ArrayList<EmployeeVo> mFoundEmployees = new ArrayList<EmployeeVo>();
 

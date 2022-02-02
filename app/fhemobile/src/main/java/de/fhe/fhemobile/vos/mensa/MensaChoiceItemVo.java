@@ -28,7 +28,7 @@ public class MensaChoiceItemVo {
         return mId;
     }
 
-    public void setId(Integer mId) {
+    public void setId(final Integer mId) {
         this.mId = mId;
     }
 
@@ -36,7 +36,7 @@ public class MensaChoiceItemVo {
         return mName;
     }
 
-    public void setName(String mName) {
+    public void setName(final String mName) {
         this.mName = mName;
     }
 

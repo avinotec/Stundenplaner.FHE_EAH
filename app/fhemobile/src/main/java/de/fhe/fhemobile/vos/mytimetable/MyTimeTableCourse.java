@@ -45,13 +45,13 @@ public class MyTimeTableCourse implements Parcelable {
 
 	public MyTimeTableCourse(){	}
 
-	public MyTimeTableCourse(TimeTableStudyCourseVo studyCourse,
-							 TimeTableSemesterVo semester,
-							 TimeTableStudyGroupVo studyGroup,
-							 TimeTableWeekVo eventWeek,
-							 TimeTableDayVo eventDay,
-							 TimeTableEventVo event,
-							 boolean subscribed) {
+	public MyTimeTableCourse(final TimeTableStudyCourseVo studyCourse,
+	                         final TimeTableSemesterVo semester,
+	                         final TimeTableStudyGroupVo studyGroup,
+	                         final TimeTableWeekVo eventWeek,
+	                         final TimeTableDayVo eventDay,
+	                         final TimeTableEventVo event,
+	                         final boolean subscribed) {
 		this.studyCourse = studyCourse;
 		this.semester = semester;
 		this.studyGroup = studyGroup;
@@ -97,9 +97,9 @@ public class MyTimeTableCourse implements Parcelable {
 
 	public List<String> getSets() { return sets; }
 
-	public void setSets(List<String> sets) { this.sets = sets; }
+	public void setSets(final List<String> sets) { this.sets = sets; }
 
-	public void addSet(String set) { this.sets.add(set); }
+	public void addSet(final String set) { this.sets.add(set); }
 
 	/**
 	 * adds all set names to one long string and returns it
@@ -107,9 +107,9 @@ public class MyTimeTableCourse implements Parcelable {
 	 */
 	public String getSetString(){
 		Collections.sort(sets);
-		StringBuilder combinedStudyGroups = new StringBuilder();
+		final StringBuilder combinedStudyGroups = new StringBuilder();
 		if(sets.size() > 0) {
-			for (String _studyGroupTitle : sets) {
+			for (final String _studyGroupTitle : sets) {
 				combinedStudyGroups.append(_studyGroupTitle).append(", ");
 			}
 			return combinedStudyGroups.substring(0, combinedStudyGroups.length() - 2);
@@ -135,11 +135,11 @@ public class MyTimeTableCourse implements Parcelable {
 		return subscribed;
 	}
 
-	public void setSubscribed(boolean added) {
+	public void setSubscribed(final boolean added) {
 		this.subscribed = added;
 	}
 
-	public boolean isEqual(@NonNull MyTimeTableCourse other){
+	public boolean isEqual(@NonNull final MyTimeTableCourse other){
 		return MyTimeTableUtils.cutEventTitle(this.getEvent().getTitle())
 				.equals(MyTimeTableUtils.cutEventTitle(other.getEvent().getTitle()));
 	}
@@ -176,12 +176,12 @@ public class MyTimeTableCourse implements Parcelable {
 
 	public static final Creator<MyTimeTableCourse> CREATOR = new Creator<MyTimeTableCourse>() {
 		@Override
-		public MyTimeTableCourse createFromParcel(Parcel in) {
+		public MyTimeTableCourse createFromParcel(final Parcel in) {
 			return new MyTimeTableCourse(in);
 		}
 
 		@Override
-		public MyTimeTableCourse[] newArray(int size) {
+		public MyTimeTableCourse[] newArray(final int size) {
 			return new MyTimeTableCourse[size];
 		}
 	};
@@ -210,10 +210,10 @@ public class MyTimeTableCourse implements Parcelable {
 
 
 
-	private boolean visible = false;
-	private boolean subscribed = false;
+	private boolean visible;
+	private boolean subscribed;
 
-	private static int incId = 0;
+	private static int incId;
 	private int id;
 
 

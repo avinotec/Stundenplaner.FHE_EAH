@@ -37,9 +37,9 @@ public class WeatherRowItem extends IRowItem {
     }
 
     @Override
-    public View getView(LayoutInflater _inflater, View _convertView, ViewGroup _parent) {
+    public View getView(final LayoutInflater _inflater, View _convertView, final ViewGroup _parent) {
 
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
         if(_convertView == null) {
             viewHolder = new ViewHolder();
             _convertView = _inflater.inflate(R.layout.item_header_weather, _parent, false);

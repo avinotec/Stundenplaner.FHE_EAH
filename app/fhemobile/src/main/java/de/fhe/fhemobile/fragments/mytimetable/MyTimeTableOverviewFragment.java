@@ -92,15 +92,15 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	                         Bundle savedInstanceState) {
+	public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+	                         final Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		MyTimeTableOverviewView mView = (MyTimeTableOverviewView) inflater.inflate(
+		final MyTimeTableOverviewView mView = (MyTimeTableOverviewView) inflater.inflate(
 				R.layout.fragment_my_time_table_overview, container, false);
 		mView.initializeView(getChildFragmentManager());
 
@@ -110,7 +110,7 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 
 
 	@Override
-	public void onAttach(@NonNull Context context) {
+	public void onAttach(@NonNull final Context context) {
 		super.onAttach(context);
 		if(!getSubscribedCourses().isEmpty()){
 			Collections.sort(getSubscribedCourses(),new CourseTitleStudyGroupTitleComparator());
@@ -131,7 +131,7 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 			String title = "";
 			String setID = "";
 
-			for (MyTimeTableCourse event : getSubscribedCourses()) {
+			for (final MyTimeTableCourse event : getSubscribedCourses()) {
 				final String eventTitleShort = MyTimeTableUtils.cutEventTitle(event.getEvent().getTitle());
 				final String sSetID = event.getStudyGroup().getTimeTableId();
 
@@ -163,7 +163,7 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 							String sErrorText = "";
 							try {
 								sErrorText = response.errorBody().string();
-							} catch (IOException e) {
+							} catch (final IOException e) {
 								Log.e(TAG,"Fehler im Netzwerk",e);
 							}
 							Log.d(TAG, "Error in Schedule Change Server: " + sErrorText);
@@ -196,7 +196,7 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 						final ResponseModel.Change change = iterator.next();
 						//TODO: Negativ Liste von der gespeicherten Liste erstellen
 						boolean isInNegativeList = false;
-						for (String[] negativeEvent : negativeList) {
+						for (final String[] negativeEvent : negativeList) {
 							if (change.getNewEventJson().getTitle().contains(negativeEvent[0])
 									&& change.getSetSplusKey().equals(negativeEvent[1])) {
 								isInNegativeList = true;
@@ -233,7 +233,7 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 //                        .show();
 
 
-					for (ResponseModel.Change change : changes) {
+					for (final ResponseModel.Change change : changes) {
 
 						// Shortcut to the list
 						final List<MyTimeTableCourse> myTimetableList = getSubscribedCourses();
@@ -263,8 +263,8 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 				}
 
 				@Override
-				public void onFailure(Call<ResponseModel> call, Throwable t) {
-					Log.d(TAG, "onFailure: " + t.toString());
+				public void onFailure(final Call<ResponseModel> call, final Throwable t) {
+					Log.d(TAG, "onFailure: " + t);
 				}
 			});
 		}

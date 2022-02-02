@@ -30,11 +30,11 @@ import de.fhe.fhemobile.widgets.WeatherHeader;
  */
 public class WeatherHeaderItem extends IHeaderItem {
 
-    public WeatherHeaderItem(boolean _hasSectionHeader) {
+    public WeatherHeaderItem(final boolean _hasSectionHeader) {
         super(_hasSectionHeader);
     }
 
-    public WeatherHeaderItem(List<IRowItem> _items, boolean _hasSectionHeader) {
+    public WeatherHeaderItem(final List<IRowItem> _items, final boolean _hasSectionHeader) {
         super(_items, _hasSectionHeader);
     }
 
@@ -44,9 +44,9 @@ public class WeatherHeaderItem extends IHeaderItem {
     }
 
     @Override
-    public View getView(LayoutInflater _inflater, View _convertView, ViewGroup _parent) {
+    public View getView(final LayoutInflater _inflater, View _convertView, final ViewGroup _parent) {
 
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
         if(_convertView == null) {
             viewHolder = new ViewHolder();
             _convertView = _inflater.inflate(R.layout.item_header_weather, _parent, false);

@@ -37,15 +37,15 @@ import de.fhe.fhemobile.adapters.navigation.NavigationDialogPagerAdapter;
  */
 public class NavigationDialogView extends LinearLayout {
 
-    public NavigationDialogView(Context context, AttributeSet attrs){
+    public NavigationDialogView(final Context context, final AttributeSet attrs){
         super(context, attrs);
     }
 
-    public void initializeView(@NonNull final FragmentManager _Manager, @NonNull Lifecycle _Lifecycle) {
+    public void initializeView(@NonNull final FragmentManager _Manager, @NonNull final Lifecycle _Lifecycle) {
 
         //set up tab layout
-        TabLayout tabLayout = findViewById(R.id.navigationDialogTablayout);
-        ViewPager2 viewPager = findViewById(R.id.navigationDialogViewpager);
+        final TabLayout tabLayout = findViewById(R.id.navigationDialogTablayout);
+        final ViewPager2 viewPager = findViewById(R.id.navigationDialogViewpager);
         viewPager.setAdapter(new NavigationDialogPagerAdapter(_Manager, _Lifecycle));
 
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tablayout_tabtext_roomsearch));
@@ -54,20 +54,20 @@ public class NavigationDialogView extends LinearLayout {
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
+            public void onTabSelected(final TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {            }
+            public void onTabUnselected(final TabLayout.Tab tab) {            }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {            }
+            public void onTabReselected(final TabLayout.Tab tab) {            }
         });
 
         viewPager.registerOnPageChangeCallback(new OnPageChangeCallback() {
             @Override
-            public void onPageSelected(int position) {
+            public void onPageSelected(final int position) {
                 tabLayout.selectTab(tabLayout.getTabAt(position));
             }
         });

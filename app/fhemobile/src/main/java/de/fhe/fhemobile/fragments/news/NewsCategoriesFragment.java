@@ -39,14 +39,14 @@ public class NewsCategoriesFragment extends Fragment {
     }
 
     public static NewsCategoriesFragment newInstance() {
-        NewsCategoriesFragment fragment = new NewsCategoriesFragment();
-        Bundle args = new Bundle();
+        final NewsCategoriesFragment fragment = new NewsCategoriesFragment();
+        final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        if (getArguments() != null) {
 //
@@ -54,8 +54,8 @@ public class NewsCategoriesFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = (NewsCategoriesView) inflater.inflate(R.layout.fragment_news_categories, container, false);
         mView.initView(mViewsListener);
@@ -80,7 +80,7 @@ public class NewsCategoriesFragment extends Fragment {
 
     private final NewsCategoriesView.ViewListener mViewsListener = new NewsCategoriesView.ViewListener() {
         @Override
-        public void onNewsCategoryChosen(Integer _Id, Integer _Position) {
+        public void onNewsCategoryChosen(final Integer _Id, final Integer _Position) {
             UserSettings.getInstance().setChosenNewsCategory(String.valueOf(_Id));
             NewsModel.getInstance().setChosenNewsItemPosition(_Position);
         }

@@ -27,8 +27,8 @@ import de.fhe.fhemobile.models.navigation.Complex;
  */
 public class BuildingFloorKey implements Comparable {
 
-    private Complex mComplex;
-    private int mFloor;
+    private final Complex mComplex;
+    private final int mFloor;
 
     /**
      *

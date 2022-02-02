@@ -23,7 +23,7 @@ import de.fhe.fhemobile.vos.timetable.TimeTableStudyCourseVo;
 
 public class StudyCourseComperator implements Comparator <TimeTableStudyCourseVo> {
 	@Override
-	public int compare(TimeTableStudyCourseVo t1, TimeTableStudyCourseVo t2) {
+	public int compare(final TimeTableStudyCourseVo t1, final TimeTableStudyCourseVo t2) {
 		return t1.getTitle().compareTo(t2.getTitle());
 	}
 }

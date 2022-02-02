@@ -29,7 +29,7 @@ public class NewsItemVo implements Parcelable {
     public NewsItemVo() {
     }
 
-    public NewsItemVo(String _title) {
+    public NewsItemVo(final String _title) {
         mTitle       = _title;
         mLink        = "";
         mDescription = "Description";
@@ -42,7 +42,7 @@ public class NewsItemVo implements Parcelable {
         return mTitle;
     }
 
-    public void setTitle(String mTitle) {
+    public void setTitle(final String mTitle) {
         this.mTitle = mTitle;
     }
 
@@ -50,7 +50,7 @@ public class NewsItemVo implements Parcelable {
         return mLink;
     }
 
-    public void setLink(String mLink) {
+    public void setLink(final String mLink) {
         this.mLink = mLink;
     }
 
@@ -58,7 +58,7 @@ public class NewsItemVo implements Parcelable {
         return mDescription;
     }
 
-    public void setDescription(String mDescription) {
+    public void setDescription(final String mDescription) {
         this.mDescription = mDescription;
     }
 
@@ -66,7 +66,7 @@ public class NewsItemVo implements Parcelable {
         return mEncoded;
     }
 
-    public void setEncoded(String mEncoded) {
+    public void setEncoded(final String mEncoded) {
         this.mEncoded = mEncoded;
     }
 
@@ -74,7 +74,7 @@ public class NewsItemVo implements Parcelable {
         return mCategories;
     }
 
-    public void setCategories(String[] mCategories) {
+    public void setCategories(final String[] mCategories) {
         this.mCategories = mCategories;
     }
 
@@ -82,7 +82,7 @@ public class NewsItemVo implements Parcelable {
         return mAuthor;
     }
 
-    public void setAuthor(String mAuthor) {
+    public void setAuthor(final String mAuthor) {
         this.mAuthor = mAuthor;
     }
 
@@ -93,7 +93,7 @@ public class NewsItemVo implements Parcelable {
         return "";
     }
 
-    public void setPubDate(String mPubDate) {
+    public void setPubDate(final String mPubDate) {
         this.mPubDate = mPubDate;
     }
 
@@ -126,7 +126,7 @@ public class NewsItemVo implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.mTitle);
         dest.writeString(this.mLink);
         dest.writeString(this.mDescription);
@@ -136,7 +136,7 @@ public class NewsItemVo implements Parcelable {
         dest.writeString(this.mPubDate);
     }
 
-    private NewsItemVo(Parcel in) {
+    private NewsItemVo(final Parcel in) {
         this.mTitle = in.readString();
         this.mLink = in.readString();
         this.mDescription = in.readString();
@@ -147,11 +147,11 @@ public class NewsItemVo implements Parcelable {
     }
 
     public static final Parcelable.Creator<NewsItemVo> CREATOR = new Parcelable.Creator<NewsItemVo>() {
-        public NewsItemVo createFromParcel(Parcel source) {
+        public NewsItemVo createFromParcel(final Parcel source) {
             return new NewsItemVo(source);
         }
 
-        public NewsItemVo[] newArray(int size) {
+        public NewsItemVo[] newArray(final int size) {
             return new NewsItemVo[size];
         }
     };

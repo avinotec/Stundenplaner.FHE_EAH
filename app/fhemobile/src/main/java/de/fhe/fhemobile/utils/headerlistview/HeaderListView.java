@@ -32,7 +32,7 @@ public class HeaderListView extends RelativeLayout {
     private FrameLayout      mScrollView;
     private AbsListView.OnScrollListener mExternalOnScrollListener;
 
-    public HeaderListView(Context context) {
+    public HeaderListView(final Context context) {
         super(context);
         init(context, null);
     }
@@ -84,12 +84,12 @@ public class HeaderListView extends RelativeLayout {
         addView(mScrollView);
     }
 
-    public void setAdapter(SectionAdapter adapter) {
+    public void setAdapter(final SectionAdapter adapter) {
         mAdapter = adapter;
         mListView.setAdapter(adapter);
     }
 
-    public void setOnScrollListener(AbsListView.OnScrollListener l) {
+    public void setOnScrollListener(final AbsListView.OnScrollListener l) {
         mExternalOnScrollListener = l;
     }
 
@@ -110,7 +110,7 @@ public class HeaderListView extends RelativeLayout {
         private boolean        didScroll = false;
 
         @Override
-        public void onScrollStateChanged(AbsListView view, int scrollState) {
+        public void onScrollStateChanged(final AbsListView view, final int scrollState) {
             if (mExternalOnScrollListener != null) {
                 mExternalOnScrollListener.onScrollStateChanged(view, scrollState);
             }
@@ -118,7 +118,7 @@ public class HeaderListView extends RelativeLayout {
         }
 
         @Override
-        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        public void onScroll(final AbsListView view, int firstVisibleItem, final int visibleItemCount, final int totalItemCount) {
             if (mExternalOnScrollListener != null) {
                 mExternalOnScrollListener.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
             }
@@ -139,7 +139,7 @@ public class HeaderListView extends RelativeLayout {
                 lastResetSection = 0;
             }
 
-            int realFirstVisibleItem = getRealFirstVisibleItem(firstVisibleItem, visibleItemCount);
+            final int realFirstVisibleItem = getRealFirstVisibleItem(firstVisibleItem, visibleItemCount);
             if (totalItemCount > 0 && previousFirstVisibleItem != realFirstVisibleItem) {
                 direction = realFirstVisibleItem - previousFirstVisibleItem;
 
@@ -174,17 +174,17 @@ public class HeaderListView extends RelativeLayout {
             }
 
             if (scrollingStart) {
-                int scrolled = realFirstVisibleItem >= firstVisibleItem ? mListView.getChildAt(realFirstVisibleItem - firstVisibleItem).getTop() : 0;
+                final int scrolled = realFirstVisibleItem >= firstVisibleItem ? mListView.getChildAt(realFirstVisibleItem - firstVisibleItem).getTop() : 0;
 
                 if (!doneMeasuring) {
                     setMeasurements(realFirstVisibleItem, firstVisibleItem);
                 }
 
-                int headerH = doneMeasuring ? (prevH - nextH) * direction * Math.abs(scrolled) / (direction < 0 ? nextH : prevH) + (direction > 0 ? nextH : prevH) : 0;
+                final int headerH = doneMeasuring ? (prevH - nextH) * direction * Math.abs(scrolled) / (direction < 0 ? nextH : prevH) + (direction > 0 ? nextH : prevH) : 0;
 
                 mHeader.scrollTo(0, -Math.min(0, scrolled - headerH));
                 if (doneMeasuring && headerH != mHeader.getLayoutParams().height) {
-                    LayoutParams p = (LayoutParams) (direction < 0 ? next.getLayoutParams() : previous.getLayoutParams());
+                    final LayoutParams p = (LayoutParams) (direction < 0 ? next.getLayoutParams() : previous.getLayoutParams());
                     p.topMargin = headerH - p.height;
                     mHeader.getLayoutParams().height = headerH;
                     mHeader.requestLayout();
@@ -206,14 +206,14 @@ public class HeaderListView extends RelativeLayout {
             lastResetSection = -1;
         }
 
-        private void resetHeader(int section) {
+        private void resetHeader(final int section) {
             scrollingStart = false;
             addSectionHeader(section);
             mHeader.requestLayout();
             lastResetSection = section;
         }
 
-        private void setMeasurements(int realFirstVisibleItem, int firstVisibleItem) {
+        private void setMeasurements(final int realFirstVisibleItem, final int firstVisibleItem) {
 
             if (direction > 0) {
                 nextH = realFirstVisibleItem >= firstVisibleItem ? mListView.getChildAt(realFirstVisibleItem - firstVisibleItem).getMeasuredHeight() : 0;
@@ -235,15 +235,15 @@ public class HeaderListView extends RelativeLayout {
 
         private void updateScrollBar() {
             if (mHeader != null && mListView != null && mScrollView != null) {
-                int offset = mListView.computeVerticalScrollOffset();
-                int range = mListView.computeVerticalScrollRange();
-                int extent = mListView.computeVerticalScrollExtent();
+                final int offset = mListView.computeVerticalScrollOffset();
+                final int range = mListView.computeVerticalScrollRange();
+                final int extent = mListView.computeVerticalScrollExtent();
                 mScrollView.setVisibility(extent >= range ? View.INVISIBLE : View.VISIBLE);
                 if (extent >= range) {
                     return;
                 }
-                int top = range == 0 ? mListView.getHeight() : mListView.getHeight() * offset / range;
-                int bottom = range == 0 ? 0 : mListView.getHeight() - mListView.getHeight() * (offset + extent) / range;
+                final int top = range == 0 ? mListView.getHeight() : mListView.getHeight() * offset / range;
+                final int bottom = range == 0 ? 0 : mListView.getHeight() - mListView.getHeight() * (offset + extent) / range;
                 mScrollView.setPadding(0, top, 0, bottom);
                 fadeOut.reset();
                 fadeOut.setFillBefore(true);
@@ -255,8 +255,8 @@ public class HeaderListView extends RelativeLayout {
             }
         }
 
-        private void addSectionHeader(int actualSection) {
-            View previousHeader = mHeader.getChildAt(0);
+        private void addSectionHeader(final int actualSection) {
+            final View previousHeader = mHeader.getChildAt(0);
             if (previousHeader != null) {
                 mHeader.removeViewAt(0);
             }
@@ -279,7 +279,7 @@ public class HeaderListView extends RelativeLayout {
             mScrollView.bringToFront();
         }
 
-        private int getRealFirstVisibleItem(int firstVisibleItem, int visibleItemCount) {
+        private int getRealFirstVisibleItem(final int firstVisibleItem, final int visibleItemCount) {
             if (visibleItemCount == 0) {
                 return -1;
             }
@@ -297,11 +297,11 @@ public class HeaderListView extends RelativeLayout {
         return mListView;
     }
     
-    public void addHeaderView(View v) {
+    public void addHeaderView(final View v) {
         mListView.addHeaderView(v);
     }
 
-    private float dpToPx(float dp) {
+    private float dpToPx(final float dp) {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getContext().getResources().getDisplayMetrics());
     }
 

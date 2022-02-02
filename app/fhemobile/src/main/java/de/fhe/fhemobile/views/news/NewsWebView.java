@@ -36,7 +36,7 @@ public class NewsWebView extends FrameLayout {
 
     private WebView mWebView;
 
-    public NewsWebView(Context context, AttributeSet attrs) {
+    public NewsWebView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
     }

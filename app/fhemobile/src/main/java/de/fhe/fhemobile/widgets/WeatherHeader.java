@@ -40,14 +40,14 @@ import retrofit2.Response;
  */
 public class WeatherHeader extends RelativeLayout {
     
-    public WeatherHeader(Context context) {
+    public WeatherHeader(final Context context) {
         super(context);
         mContext = context;
 
         preInitialize();
     }
 
-    public WeatherHeader(Context context, AttributeSet attrs) {
+    public WeatherHeader(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
 
@@ -55,24 +55,24 @@ public class WeatherHeader extends RelativeLayout {
     }
     
     private void preInitialize() {
-        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.widget_weather_header, this, true);
     }
     
     private void postInitialize() {
-        Date now = new Date();
-        SimpleDateFormat simpleDateformatDoW = new SimpleDateFormat("EEEE"); // the day of the week spelled out completely
-        String sNowDoW = simpleDateformatDoW.format(now);
+        final Date now = new Date();
+        final SimpleDateFormat simpleDateformatDoW = new SimpleDateFormat("EEEE"); // the day of the week spelled out completely
+        final String sNowDoW = simpleDateformatDoW.format(now);
         mDayOfWeek.setText(sNowDoW);
 
-        SimpleDateFormat simpleDateformat = new SimpleDateFormat("dd. MMM"); // the day of the week spelled out completely
-        String sNow = simpleDateformat.format(now);
+        final SimpleDateFormat simpleDateformat = new SimpleDateFormat("dd. MMM"); // the day of the week spelled out completely
+        final String sNow = simpleDateformat.format(now);
         mDate.setText(sNow);
 
         NetworkHandler.getInstance().fetchWeather(mWeatherResponseCallback);
     }
     
-    private void update(final String _Temperature, final int _BackgroundId, int _IconId) {
+    private void update(final String _Temperature, final int _BackgroundId, final int _IconId) {
         mTemperature.setText(_Temperature);
         mBackground.setImageResource(Utils.getResourceId("wetter_bg" + _BackgroundId, "drawable"));
         mIcon.setImageResource(Utils.getResourceId("wetter_icon" + _BackgroundId, "drawable"));
@@ -102,7 +102,7 @@ public class WeatherHeader extends RelativeLayout {
         }
 
         @Override
-        public void onFailure(Call<WeatherResponse> call, Throwable t) {
+        public void onFailure(final Call<WeatherResponse> call, final Throwable t) {
 
         }
 

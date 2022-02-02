@@ -18,15 +18,15 @@ public abstract class SectionAdapter extends BaseAdapter implements OnItemClickL
 
     public abstract Object getRowItem(int section, int row);
 
-    public boolean hasSectionHeaderView(int section) {
+    public boolean hasSectionHeaderView(final int section) {
         return false;
     }
 
-    public View getSectionHeaderView(int section, View convertView, ViewGroup parent) {
+    public View getSectionHeaderView(final int section, final View convertView, final ViewGroup parent) {
         return null;
     }
 
-    public Object getSectionHeaderItem(int section) {
+    public Object getSectionHeaderItem(final int section) {
         return null;
     }
 
@@ -41,14 +41,14 @@ public abstract class SectionAdapter extends BaseAdapter implements OnItemClickL
     /**
      * Must return a value between 0 and getRowViewTypeCount() (excluded)
      */
-    public int getRowItemViewType(int section, int row) {
+    public int getRowItemViewType(final int section, final int row) {
         return 0;
     }
 
     /**
      * Must return a value between 0 and getSectionHeaderViewTypeCount() (excluded, if > 0)
      */
-    public int getSectionHeaderItemViewType(int section) {
+    public int getSectionHeaderItemViewType(final int section) {
         return 0;
     }
 
@@ -56,11 +56,11 @@ public abstract class SectionAdapter extends BaseAdapter implements OnItemClickL
      * Dispatched to call onItemClick
      */
     @Override
-    public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public final void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
         onRowItemClick(parent, view, getSection(position), getRowInSection(position), id);
     }
 
-    public void onRowItemClick(AdapterView<?> parent, View view, int section, int row, long id) {
+    public void onRowItemClick(final AdapterView<?> parent, final View view, final int section, final int row, final long id) {
 
     }
 
@@ -84,8 +84,8 @@ public abstract class SectionAdapter extends BaseAdapter implements OnItemClickL
      * Dispatched to call getRowItem or getSectionHeaderItem
      */
     @Override
-    public final Object getItem(int position) {
-        int section = getSection(position);
+    public final Object getItem(final int position) {
+        final int section = getSection(position);
         if (isSectionHeader(position)) {
             if (hasSectionHeaderView(section)) {
                 return getSectionHeaderItem(section);
@@ -96,7 +96,7 @@ public abstract class SectionAdapter extends BaseAdapter implements OnItemClickL
     }
 
     @Override
-    public long getItemId(int position) {
+    public long getItemId(final int position) {
         return position;
     }
 
@@ -104,8 +104,8 @@ public abstract class SectionAdapter extends BaseAdapter implements OnItemClickL
      * Dispatched to call getRowView or getSectionHeaderView
      */
     @Override
-    public final View getView(int position, View convertView, ViewGroup parent) {
-        int section = getSection(position);
+    public final View getView(final int position, final View convertView, final ViewGroup parent) {
+        final int section = getSection(position);
         if (isSectionHeader(position)) {
             if (hasSectionHeaderView(section)) {
                 return getSectionHeaderView(section, convertView, parent);
@@ -118,7 +118,7 @@ public abstract class SectionAdapter extends BaseAdapter implements OnItemClickL
     /**
      * Returns the section number of the indicated cell
      */
-    protected int getSection(int position) {
+    protected int getSection(final int position) {
         int section = 0;
         int cellCounter = 0;
         while (cellCounter <= position && section <= numberOfSections()) {
@@ -132,9 +132,9 @@ public abstract class SectionAdapter extends BaseAdapter implements OnItemClickL
      * Returns the row index of the indicated cell Should not be call with
      * positions directing to section headers
      */
-    protected int getRowInSection(int position) {
-        int section = getSection(position);
-        int row = position - numberOfCellsBeforeSection(section);
+    protected int getRowInSection(final int position) {
+        final int section = getSection(position);
+        final int row = position - numberOfCellsBeforeSection(section);
         if (hasSectionHeaderView(section)) {
             return row - 1;
         } else {
@@ -145,8 +145,8 @@ public abstract class SectionAdapter extends BaseAdapter implements OnItemClickL
     /**
      * Returns true if the cell at this index is a section header
      */
-    protected boolean isSectionHeader(int position) {
-        int section = getSection(position);
+    protected boolean isSectionHeader(final int position) {
+        final int section = getSection(position);
         return hasSectionHeaderView(section) && numberOfCellsBeforeSection(section) == position;
     }
 
@@ -154,7 +154,7 @@ public abstract class SectionAdapter extends BaseAdapter implements OnItemClickL
      * Returns the number of cells (= headers + rows) before the indicated
      * section
      */
-    protected int numberOfCellsBeforeSection(int section) {
+    protected int numberOfCellsBeforeSection(final int section) {
         int count = 0;
         for (int i = 0; i < Math.min(numberOfSections(), section); i++) {
             count += numberOfCellsInSection(i);
@@ -162,7 +162,7 @@ public abstract class SectionAdapter extends BaseAdapter implements OnItemClickL
         return count;
     }
 
-    private int numberOfCellsInSection(int section) {
+    private int numberOfCellsInSection(final int section) {
         return numberOfRows(section) + (hasSectionHeaderView(section) ? 1 : 0);
     }
 
@@ -182,8 +182,8 @@ public abstract class SectionAdapter extends BaseAdapter implements OnItemClickL
      * Dispatched to call getRowItemViewType or getSectionHeaderItemViewType
      */
     @Override
-    public final int getItemViewType(int position) {
-        int section = getSection(position);
+    public final int getItemViewType(final int position) {
+        final int section = getSection(position);
         if (isSectionHeader(position)) {
             return getRowViewTypeCount() + getSectionHeaderItemViewType(section);
         } else {
@@ -203,7 +203,7 @@ public abstract class SectionAdapter extends BaseAdapter implements OnItemClickL
      * By default, disables section headers
      */
     @Override
-    public boolean isEnabled(int position) {
+    public boolean isEnabled(final int position) {
         return (!isSectionHeader(position));
     }
 

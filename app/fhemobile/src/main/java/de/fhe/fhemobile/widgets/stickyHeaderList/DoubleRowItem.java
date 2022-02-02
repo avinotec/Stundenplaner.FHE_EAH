@@ -28,7 +28,7 @@ import de.fhe.fhemobile.R;
  */
 public class DoubleRowItem extends IRowItem {
 
-    public DoubleRowItem(String _headline, String _subHeadline) {
+    public DoubleRowItem(final String _headline, final String _subHeadline) {
         mHeadline    = _headline;
         mSubHeadline = _subHeadline;
     }
@@ -39,8 +39,8 @@ public class DoubleRowItem extends IRowItem {
     }
 
     @Override
-    public View getView(LayoutInflater _inflater, View _convertView, ViewGroup _parent) {
-        ViewHolder holder;
+    public View getView(final LayoutInflater _inflater, View _convertView, final ViewGroup _parent) {
+        final ViewHolder holder;
         if (_convertView == null) {
             holder = new ViewHolder();
             _convertView = _inflater.inflate(R.layout.item_double_line, _parent, false);

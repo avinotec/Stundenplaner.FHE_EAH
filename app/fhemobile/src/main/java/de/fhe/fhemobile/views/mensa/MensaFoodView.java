@@ -46,14 +46,14 @@ public class MensaFoodView extends LinearLayout {
     public interface ViewListener {
     }
 
-    public MensaFoodView(Context context, AttributeSet attrs) {
+    public MensaFoodView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
         mModel  = MensaFoodModel.getInstance();
 
     }
 
-    public void initView(ViewListener _Listener) {
+    public void initView(final ViewListener _Listener) {
         if(mModel.getFoodItems() != null) {
             populateList();
         }
@@ -75,17 +75,17 @@ public class MensaFoodView extends LinearLayout {
     }
 
     public void populateList() {
-        ArrayList<IHeaderItem> sectionList = new ArrayList<>();
+        final ArrayList<IHeaderItem> sectionList = new ArrayList<>();
 
-        DefaultHeaderItem headerSection = new DefaultHeaderItem("", false);
+        final DefaultHeaderItem headerSection = new DefaultHeaderItem("", false);
         headerSection.addItem(new MensaImageRowItem(R.drawable.th_mensa));
 
         sectionList.add(headerSection);
 
-        for (MensaFoodItemCollectionVo collection : mModel.getFoodItems()) {
-            ArrayList<IRowItem> rowItems = new ArrayList<>();
+        for (final MensaFoodItemCollectionVo collection : mModel.getFoodItems()) {
+            final ArrayList<IRowItem> rowItems = new ArrayList<>();
 
-            for (MensaFoodItemVo mensaItem : collection.getItems()) {
+            for (final MensaFoodItemVo mensaItem : collection.getItems()) {
                 rowItems.add(new MensaRowItem(mensaItem));
             }
 
@@ -108,14 +108,14 @@ public class MensaFoodView extends LinearLayout {
         // See: https://github.com/applidium/HeaderListView/issues/28
         //MS neue Lösung, da ab 2021 die Ressourcen nun in separaten Namensräumen verwendet werden
         //mListView.getListView().setId(R.id.listMode);
-        HeaderListView yourListView = (HeaderListView) findViewWithTag("HeaderListViewTag");
+        final HeaderListView yourListView = (HeaderListView) findViewWithTag("HeaderListViewTag");
         mListView.getListView().setId( yourListView.getId() );
 
     }
 
     private final EventListener mReceivedMensaFoodListener = new EventListener() {
         @Override
-        public void onEvent(Event event) {
+        public void onEvent(final Event event) {
             mMensaProgressBar.setVisibility(GONE);
             populateList();
         }
@@ -123,7 +123,7 @@ public class MensaFoodView extends LinearLayout {
 
     private final EventListener mReceivedEmptyMensaFoodListener = new EventListener() {
         @Override
-        public void onEvent(Event event) {
+        public void onEvent(final Event event) {
             mMensaProgressBar.setVisibility(GONE);
             mErrorText.setVisibility(VISIBLE);
         }

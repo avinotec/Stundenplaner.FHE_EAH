@@ -37,13 +37,13 @@ public class PhonebookSearchView extends FrameLayout {
         void onEmployeesFound();
     }
 
-    public PhonebookSearchView(Context context, AttributeSet attrs) {
+    public PhonebookSearchView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
 
 	    mModel = PhonebookModel.getInstance();
     }
 
-    public void initializeView(ViewListener _Listener) {
+    public void initializeView(final ViewListener _Listener) {
         mViewListener = _Listener;
 
         mSearchButton.setOnClickListener(mSearchClick);
@@ -75,7 +75,7 @@ public class PhonebookSearchView extends FrameLayout {
 
     private final EventListener mFoundEmployeesListener = new EventListener() {
         @Override
-        public void onEvent(Event event) {
+        public void onEvent(final Event event) {
             mProgressIndicator.setVisibility(GONE);
             mErrorText.setVisibility(GONE);
             mViewListener.onEmployeesFound();
@@ -84,7 +84,7 @@ public class PhonebookSearchView extends FrameLayout {
 
     private final EventListener mFoundNoEmployeesListener = new EventListener() {
         @Override
-        public void onEvent(Event event) {
+        public void onEvent(final Event event) {
             mProgressIndicator.setVisibility(GONE);
             mErrorText.setVisibility(VISIBLE);
         }
@@ -92,7 +92,7 @@ public class PhonebookSearchView extends FrameLayout {
 
     private final OnClickListener mSearchClick = new OnClickListener() {
         @Override
-        public void onClick(View v) {
+        public void onClick(final View v) {
             mErrorText.setVisibility(GONE);
             mProgressIndicator.setVisibility(VISIBLE);
             mViewListener.onSearchClicked(mFirstName.getText().toString(), mLastName.getText().toString());

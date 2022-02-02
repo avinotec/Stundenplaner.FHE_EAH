@@ -16,7 +16,7 @@ public class NavigationDialogPagerAdapter extends FragmentStateAdapter {
 
     ArrayList<FeatureFragment> fragments = new ArrayList<FeatureFragment>();
 
-    public NavigationDialogPagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle){
+    public NavigationDialogPagerAdapter(@NonNull final FragmentManager fragmentManager, @NonNull final Lifecycle lifecycle){
         super(fragmentManager, lifecycle);
 
         fragments.add(new RoomSearchFragment());
@@ -26,7 +26,7 @@ public class NavigationDialogPagerAdapter extends FragmentStateAdapter {
 
     @NonNull
     @Override
-    public Fragment createFragment(int position) {
+    public Fragment createFragment(final int position) {
         switch (position){
             case 0:
                 return fragments.get(0);

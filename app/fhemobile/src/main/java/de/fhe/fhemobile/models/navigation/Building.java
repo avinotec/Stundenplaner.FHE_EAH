@@ -25,8 +25,8 @@ package de.fhe.fhemobile.models.navigation;
  */
 public class Building {
 
-    private Complex mComplex;
-    private String mBuilding;
+    private final Complex mComplex;
+    private final String mBuilding;
 
     public Building(final String building){
         this.mBuilding = building;

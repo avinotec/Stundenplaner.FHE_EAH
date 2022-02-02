@@ -33,7 +33,7 @@ public class MensaFoodModel extends EventDispatcher {
 
         public static final String RECEIVED_CHOICE_ITEMS    = "receivedChoiceItems";
 
-        public ChangeEvent(String type) {
+        public ChangeEvent(final String type) {
             super(type);
         }
     }
@@ -42,7 +42,7 @@ public class MensaFoodModel extends EventDispatcher {
         return mFoodItems;
     }
 
-    public void setFoodItems(MensaFoodItemCollectionVo[] mFoodItems) {
+    public void setFoodItems(final MensaFoodItemCollectionVo[] mFoodItems) {
         this.mFoodItems = mFoodItems;
         if(this.mFoodItems != null && this.mFoodItems.length > 0) {
             notifyChange(ChangeEvent.RECEIVED_FOOD_DATA);
@@ -56,8 +56,8 @@ public class MensaFoodModel extends EventDispatcher {
         return mChoiceItems;
     }
 
-    public void setChoiceItems(MensaChoiceItemVo[] mChoiceItems) {
-        Integer selectedId = Integer.valueOf(UserSettings.getInstance().getChosenMensa());
+    public void setChoiceItems(final MensaChoiceItemVo[] mChoiceItems) {
+        final Integer selectedId = Integer.valueOf(UserSettings.getInstance().getChosenMensa());
         for(int i = 0; i < mChoiceItems.length; i++) {
             if(selectedId.equals(mChoiceItems[i].getId())) {
                 mSelectedItemPosition = i;
@@ -73,7 +73,7 @@ public class MensaFoodModel extends EventDispatcher {
         return mSelectedItemPosition;
     }
 
-    public void setSelectedItemPosition(Integer mSelectedItemPosition) {
+    public void setSelectedItemPosition(final Integer mSelectedItemPosition) {
         this.mSelectedItemPosition = mSelectedItemPosition;
     }
 
@@ -87,16 +87,16 @@ public class MensaFoodModel extends EventDispatcher {
     private MensaFoodModel() {
     }
 
-    private void notifyChange(String type) {
+    private void notifyChange(final String type) {
         dispatchEvent(new ChangeEvent(type));
     }
 
     private static final String LOG_TAG = MensaFoodModel.class.getSimpleName();
 
-    private static MensaFoodModel       ourInstance             = null;
+    private static MensaFoodModel       ourInstance;
 
-    private MensaFoodItemCollectionVo[] mFoodItems              = null;
-    private MensaChoiceItemVo[]         mChoiceItems            = null;
+    private MensaFoodItemCollectionVo[] mFoodItems;
+    private MensaChoiceItemVo[]         mChoiceItems;
 
     private Integer                     mSelectedItemPosition   = 0;
     private final String                      mSelectedItemName       = "Mensa";

@@ -34,16 +34,16 @@ public class NewsSingleViewFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static NewsSingleViewFragment newInstance(NewsItemVo _NewsItem) {
-        NewsSingleViewFragment fragment = new NewsSingleViewFragment();
-        Bundle args = new Bundle();
+    public static NewsSingleViewFragment newInstance(final NewsItemVo _NewsItem) {
+        final NewsSingleViewFragment fragment = new NewsSingleViewFragment();
+        final Bundle args = new Bundle();
         args.putParcelable(ARG_NEWS_ITEM, _NewsItem);
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mNewsItem = getArguments().getParcelable(ARG_NEWS_ITEM);
@@ -51,8 +51,8 @@ public class NewsSingleViewFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = (NewsSingleView) inflater.inflate(R.layout.fragment_news_single_view, container, false);
 

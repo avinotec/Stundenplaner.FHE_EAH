@@ -46,9 +46,9 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 	private static final String TAG = "MyTimeTableOverviewAdapter";
 
 	private final Context context;
-	private List<MyTimeTableCourse> mItems;
+	private final List<MyTimeTableCourse> mItems;
 
-	public MyTimeTableOverviewAdapter(Context context, List<MyTimeTableCourse> mItems) {
+	public MyTimeTableOverviewAdapter(final Context context, final List<MyTimeTableCourse> mItems) {
 		this.context = context;
 		this.mItems = mItems;
 	}
@@ -106,18 +106,18 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 		convertView.setOnClickListener(new View.OnClickListener() {
 
 			@Override
-			public void onClick(View v) {
+			public void onClick(final View v) {
 
-				List<MyTimeTableCourse> courseTitleFilteredList
+				final List<MyTimeTableCourse> courseTitleFilteredList
 						= MyTimeTableUtils.getCoursesByEventTitle(
 								getSubscribedCourses(),
 								MyTimeTableUtils.cutEventTitle(currentItem.getEvent().getTitle()));
 
-				List <MyTimeTableCourse> filteredList
+				final List <MyTimeTableCourse> filteredList
 						= MyTimeTableUtils.getCoursesByStudyGroupTitle(
 						courseTitleFilteredList, currentItem.getSetString());
 
-				for (MyTimeTableCourse event : filteredList){
+				for (final MyTimeTableCourse event : filteredList){
 					event.setVisible(!event.isVisible());
 				}
 
@@ -130,7 +130,7 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 		final ImageButton btnRemoveCourse = convertView.findViewById(R.id.btnRemoveCourse);
 		btnRemoveCourse.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v) {
+			public void onClick(final View v) {
 				final List<MyTimeTableCourse> eventFilteredList
 						= MyTimeTableUtils.getCoursesByEventTitle(
 						getSubscribedCourses(),
@@ -140,7 +140,7 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 						= MyTimeTableUtils.getCoursesByStudyGroupTitle(
 						eventFilteredList, currentItem.getSetString());
 
-				for(MyTimeTableCourse event : studyGroupFilteredList){
+				for(final MyTimeTableCourse event : studyGroupFilteredList){
 					MainActivity.removeFromSubscribedCourses(event);
 				}
 

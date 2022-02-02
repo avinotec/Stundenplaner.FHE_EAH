@@ -35,7 +35,7 @@ public class NewsCategoryAdapter extends BaseAdapter {
         TextView mCategoryName;
     }
 
-    public NewsCategoryAdapter(Context mContext, NewsCategoryVo[] mItems) {
+    public NewsCategoryAdapter(final Context mContext, final NewsCategoryVo[] mItems) {
         this.mContext = mContext;
         this.mItems = mItems;
     }
@@ -58,7 +58,7 @@ public class NewsCategoryAdapter extends BaseAdapter {
      * @return The data at the specified position.
      */
     @Override
-    public NewsCategoryVo getItem(int position) {
+    public NewsCategoryVo getItem(final int position) {
         return mItems[position];
     }
 
@@ -69,7 +69,7 @@ public class NewsCategoryAdapter extends BaseAdapter {
      * @return The id of the item at the specified position.
      */
     @Override
-    public long getItemId(int position) {
+    public long getItemId(final int position) {
         return mItems[position].getId();
     }
 
@@ -92,11 +92,11 @@ public class NewsCategoryAdapter extends BaseAdapter {
      * @return A View corresponding to the data at the specified position.
      */
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) mContext
+    public View getView(final int position, View convertView, final ViewGroup parent) {
+        final LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
         if(convertView == null) {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.item_singlechoice, parent, false);

@@ -34,7 +34,7 @@ public class TimeTableResponse {
         return mTitle;
     }
 
-    public void setTitle(String _title) {
+    public void setTitle(final String _title) {
         mTitle = correctUmlauts(_title);
     }
 

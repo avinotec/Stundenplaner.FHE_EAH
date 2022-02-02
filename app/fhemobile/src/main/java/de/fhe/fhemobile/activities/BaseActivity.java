@@ -83,7 +83,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             if (tv == null) {
                 continue;
             }
-            int mTabSelectedTextColor = 0xFFFFFFFF;
+            final int mTabSelectedTextColor = 0xFFFFFFFF;
             tv.setTextColor(mTabSelectedTextColor);
             tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.tab_text_size));
             v.setBackgroundResource(R.drawable.tab_indicator_ab_material);
@@ -124,7 +124,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 // --Commented out by Inspection STOP (01.11.2019 00:18)
 
     protected void setBaseContent(final int _layoutResource) {
-        View mContent = View.inflate(this, _layoutResource, null);
+        final View mContent = View.inflate(this, _layoutResource, null);
         mContainer.addView(mContent);
     }
 

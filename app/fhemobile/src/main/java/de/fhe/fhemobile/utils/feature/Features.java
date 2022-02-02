@@ -36,7 +36,7 @@ public class Features {
     /**
      *
      */
-    public static interface FeatureId {
+    public interface FeatureId {
         int NEWS            = 0;
         int PHONEBOOK       = 1;
         int MENSA           = 2;

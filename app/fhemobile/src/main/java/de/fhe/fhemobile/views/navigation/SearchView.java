@@ -62,7 +62,7 @@ public abstract class SearchView extends LinearLayout {
     }
 
     public String getStartInputText() {
-        Editable text = mStartInputText.getText();
+        final Editable text = mStartInputText.getText();
 
         //getText() returns null if no text was entered -> error message is displayed
         if (text == null) {
@@ -96,7 +96,7 @@ public abstract class SearchView extends LinearLayout {
     //Listener for QR-Code button
     private final View.OnClickListener mQrClickListener = new View.OnClickListener() {
         @Override
-        public void onClick(View v) {
+        public void onClick(final View v) {
             if (getViewListener() != null) {
                 getViewListener().onQrClicked();
             }
@@ -106,7 +106,7 @@ public abstract class SearchView extends LinearLayout {
     //Listener for Go! button
     private final View.OnClickListener mGoClickListener = new View.OnClickListener() {
         @Override
-        public void onClick(View v) {
+        public void onClick(final View v) {
             if (getViewListener() != null) {
                 getViewListener().onGoClicked();
             }

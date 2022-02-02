@@ -40,15 +40,15 @@ public class MapsDialogFragment extends FeatureFragment {
     }
 
     public static MapsDialogFragment newInstance() {
-        MapsDialogFragment fragment = new MapsDialogFragment();
-        Bundle args = new Bundle();
+        final MapsDialogFragment fragment = new MapsDialogFragment();
+        final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = (MapsDialogView) inflater.inflate(R.layout.fragment_maps_dialog, container, false);
 
@@ -59,8 +59,8 @@ public class MapsDialogFragment extends FeatureFragment {
 
     private final MapsDialogView.ViewListener mViewListener = new MapsDialogView.ViewListener() {
         @Override
-        public void onMapItemClicked(Integer _Position) {
-            Intent intent = new Intent(getActivity(), MapsActivity.class);
+        public void onMapItemClicked(final Integer _Position) {
+            final Intent intent = new Intent(getActivity(), MapsActivity.class);
             intent.putExtra(MapsActivity.EXTRA_MAP_ID, _Position);
             startActivity(intent);
         }

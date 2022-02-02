@@ -40,21 +40,21 @@ import de.fhe.fhemobile.views.mensa.MensaFoodView;
 
 public class MensaFoodFragment extends FeatureFragment {
 
-    private MensaFoodView mView = null;
+    private MensaFoodView mView;
 
     public MensaFoodFragment() {
         // Required empty public constructor
     }
 
     public static MensaFoodFragment newInstance() {
-        MensaFoodFragment fragment = new MensaFoodFragment();
-        Bundle args = new Bundle();
+        final MensaFoodFragment fragment = new MensaFoodFragment();
+        final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 //        if (getArguments() != null) {
@@ -65,8 +65,8 @@ public class MensaFoodFragment extends FeatureFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = (MensaFoodView) inflater.inflate(R.layout.fragment_mensa_food, container, false);
         mView.initView(null);
@@ -91,7 +91,7 @@ public class MensaFoodFragment extends FeatureFragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
         // If the drawer is open, show the global app actions in the action bar. See also
         // showGlobalContextActionBar, which controls the top-left area of the action bar.
         menu.clear();
@@ -102,7 +102,7 @@ public class MensaFoodFragment extends FeatureFragment {
 
     //onOptionsItemSelected-------------------------------------------------------------------------
     @Override
-    public boolean onOptionsItemSelected(MenuItem _item) {
+    public boolean onOptionsItemSelected(final MenuItem _item) {
 
         /* Checks use of resource IDs in places requiring constants
             Avoid the usage of resource IDs where constant expressions are required.
@@ -111,7 +111,7 @@ public class MensaFoodFragment extends FeatureFragment {
             Issue id: NonConstantResourceId
          */
         if (_item.getItemId() == R.id.action_settings) {
-            Intent intent = new Intent(getActivity(), SettingsActivity.class);
+            final Intent intent = new Intent(getActivity(), SettingsActivity.class);
             intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.MENSA);
             startActivity(intent);
             return true;
@@ -122,7 +122,7 @@ public class MensaFoodFragment extends FeatureFragment {
     }
 
     @Override
-    public void onRestoreActionBar(ActionBar _ActionBar) {
+    public void onRestoreActionBar(final ActionBar _ActionBar) {
         super.onRestoreActionBar(_ActionBar);
         _ActionBar.setTitle(UserSettings.getInstance().getChosenMensaName());
     }

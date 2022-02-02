@@ -40,8 +40,8 @@ public class EventsWebViewFragment extends FeatureFragment {
     }
 
     public static de.fhe.fhemobile.fragments.events.EventsWebViewFragment newInstance() {
-        de.fhe.fhemobile.fragments.events.EventsWebViewFragment fragment = new de.fhe.fhemobile.fragments.events.EventsWebViewFragment();
-        Bundle args = new Bundle();
+        final de.fhe.fhemobile.fragments.events.EventsWebViewFragment fragment = new de.fhe.fhemobile.fragments.events.EventsWebViewFragment();
+        final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
@@ -66,8 +66,8 @@ public class EventsWebViewFragment extends FeatureFragment {
 */
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = (EventsWebView) inflater.inflate(R.layout.fragment_events_webview, container, false);
         return mView;

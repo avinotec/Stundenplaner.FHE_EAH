@@ -163,7 +163,7 @@ public class NetworkHandler {
 			 */
 			@Override
 			public void onResponse(final Call<MensaFoodItemVo[]> call, final Response<MensaFoodItemVo[]> response) {
-				Log.d(TAG, "Mensa: "+call.request().url().toString());
+				Log.d(TAG, "Mensa: "+ call.request().url());
 				final MensaFoodItemVo[] _mensaItems =response.body();
 				List<MensaFoodItemCollectionVo> orderedItems = null;
 

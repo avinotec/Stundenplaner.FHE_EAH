@@ -54,10 +54,10 @@ public class RouteCalculator {
     private final Cell startLocation;
     private final Cell destLocation;
     //gesamte Route
-    private LinkedHashMap<BuildingFloorKey, ArrayList<Cell>> cellsToWalk = new LinkedHashMap<>();
+    private final LinkedHashMap<BuildingFloorKey, ArrayList<Cell>> cellsToWalk = new LinkedHashMap<>();
     //Koordinatensysteme aller Stockwerke
     //for each building (key = complex e.g. BUILDING_321) and for each floor (key = floor as int) a grid of cells is stored
-    private HashMap<Complex, HashMap<Integer, Cell[][]>> floorGrids = new HashMap<>();
+    private final HashMap<Complex, HashMap<Integer, Cell[][]>> floorGrids = new HashMap<>();
 
 
     /**
@@ -87,14 +87,14 @@ public class RouteCalculator {
 
         try {
 
-            Complex startComplex = startLocation.getComplex();
-            Complex destComplex = destLocation.getComplex();
+            final Complex startComplex = startLocation.getComplex();
+            final Complex destComplex = destLocation.getComplex();
 
             //ROUTE OHNE GEBÄUDEWECHSEL
             //route just within one complex, user does not have to change between complexes
             if(startComplex == destLocation.getComplex()){
                 //construct an instance of the Navigation Algorithm (AStar)
-                AStar aStar = new AStar(startLocation, destLocation, floorGrids, floorConnections);
+                final AStar aStar = new AStar(startLocation, destLocation, floorGrids, floorConnections);
                 //compute route and save it to cellsToWalk
                 cellsToWalk.putAll(aStar.getCellsToWalk());
             }
@@ -107,8 +107,8 @@ public class RouteCalculator {
                 // and determine Exit to use for entering the destination complex
                 BuildingExit buildingExit = null;
                 BuildingExit entry = null;
-                for(Iterator<BuildingExit> it = buildingExits.iterator(); it.hasNext(); ){
-                    BuildingExit buildingExitIt = it.next();
+                for(final Iterator<BuildingExit> it = buildingExits.iterator(); it.hasNext(); ){
+                    final BuildingExit buildingExitIt = it.next();
 
                     //use exitIt as exit if exitIt belongs to start complex
                     // and is an exit to the destination complex
@@ -141,18 +141,18 @@ public class RouteCalculator {
 
                 //first add entry-dest and then exit-start to maintain the order important for prev/next-button navigation in NavigationFragment
                 //route to get to destination within the destination complex
-                AStar aStar2 = new AStar(entry, destLocation, floorGrids, floorConnections);
+                final AStar aStar2 = new AStar(entry, destLocation, floorGrids, floorConnections);
                 cellsToWalk.putAll(aStar2.getCellsToWalk());
 
                 //route to get out of start complex
-                AStar aStar1 = new AStar(startLocation, buildingExit, floorGrids, floorConnections);
+                final AStar aStar1 = new AStar(startLocation, buildingExit, floorGrids, floorConnections);
                 cellsToWalk.putAll(aStar1.getCellsToWalk());
 
 
 
             }
 
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.e(TAG, "error getting navigation cells", e);
         }
 
@@ -173,8 +173,8 @@ public class RouteCalculator {
      */
     private void getNeededFloorGrids() {
 
-        Complex startComplex = startLocation.getComplex();
-        Complex destinationComplex = destLocation.getComplex();
+        final Complex startComplex = startLocation.getComplex();
+        final Complex destinationComplex = destLocation.getComplex();
 
 
         //add floorgrids of the start and destination building,
@@ -207,7 +207,7 @@ public class RouteCalculator {
                     floorGrids.get(Complex.COMPLEX_5).put(i, buildFloorGrid(Complex.COMPLEX_5, i));
                 }
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.e(TAG, "error building floor grids", e);
         }
 

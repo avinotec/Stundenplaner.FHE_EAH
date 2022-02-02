@@ -72,7 +72,7 @@ public class RoomSearchView extends SearchView {
     public void setBuildingItems(final List<Building> _Items){
         Collections.sort(_Items, new Comparator<Building>() {
             @Override
-            public int compare(Building o1, Building o2) {
+            public int compare(final Building o1, final Building o2) {
                 return o1.getBuilding().compareTo(o2.getBuilding());
             }
         });
@@ -89,7 +89,7 @@ public class RoomSearchView extends SearchView {
     public void setRoomItems(final List<Room> _Items){
         Collections.sort(_Items, new Comparator<Room>() {
             @Override
-            public int compare(Room o1, Room o2) {
+            public int compare(final Room o1, final Room o2) {
                 return o1.getRoomName().compareTo(o2.getRoomName());
             }
         });
@@ -127,19 +127,19 @@ public class RoomSearchView extends SearchView {
      * Set displayed value of the Building Picker
      * @param text to display
      */
-    public void setBuildingDisplayValue(String text){ mBuildingPicker.setDisplayValue(text); }
+    public void setBuildingDisplayValue(final String text){ mBuildingPicker.setDisplayValue(text); }
 
     /**
      * Set displayed value of the Floor Picker
      * @param text to display
      */
-    public void setFloorDisplayValue(String text){ mFloorPicker.setDisplayValue(text);}
+    public void setFloorDisplayValue(final String text){ mFloorPicker.setDisplayValue(text);}
 
     /**
      * Set displayed value of the Room Picker
      * @param text to display
      */
-    public void setRoomDisplayValue(String text){ mRoomPicker.setDisplayValue(text);}
+    public void setRoomDisplayValue(final String text){ mRoomPicker.setDisplayValue(text);}
 
 
     @Override
@@ -155,7 +155,7 @@ public class RoomSearchView extends SearchView {
     //Returns the selected building
     private final OnItemChosenListener mBuildingListener = new OnItemChosenListener() {
         @Override
-        public void onItemChosen(String _ItemId, int _ItemPos) {
+        public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null){
                 mViewListener.onBuildingChosen(_ItemId);
             }
@@ -165,7 +165,7 @@ public class RoomSearchView extends SearchView {
     //Returns the selected floor
     private final OnItemChosenListener mFloorListener = new OnItemChosenListener() {
         @Override
-        public void onItemChosen(String _ItemId, int _ItemPos) {
+        public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null){
                 mViewListener.onFloorChosen(_ItemId);
             }
@@ -175,7 +175,7 @@ public class RoomSearchView extends SearchView {
     //Returns the selected room
     private final OnItemChosenListener mRoomListener = new OnItemChosenListener() {
         @Override
-        public void onItemChosen(String _ItemId, int _ItemPos) {
+        public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null){
                 mViewListener.onRoomChosen(_ItemId);
             }

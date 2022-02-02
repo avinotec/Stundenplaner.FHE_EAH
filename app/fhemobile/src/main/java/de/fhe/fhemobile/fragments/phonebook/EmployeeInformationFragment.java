@@ -39,15 +39,15 @@ public class EmployeeInformationFragment extends Fragment {
     }
 
     public static EmployeeInformationFragment newInstance() {
-        EmployeeInformationFragment fragment = new EmployeeInformationFragment();
-        Bundle args = new Bundle();
+        final EmployeeInformationFragment fragment = new EmployeeInformationFragment();
+        final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = (EmployeeInformationView) inflater.inflate(R.layout.fragment_employee_information, container, false);
         mView.initializeView(mViewListener);
@@ -56,7 +56,7 @@ public class EmployeeInformationFragment extends Fragment {
         return mView;
     }
 
-    public void setEmployee(EmployeeVo _Employee) {
+    public void setEmployee(final EmployeeVo _Employee) {
         mEmployee = _Employee;
     }
 
@@ -66,7 +66,7 @@ public class EmployeeInformationFragment extends Fragment {
             //Der alte Quellcode hatte explizit versucht GMail zu öffnen. War Gmail nicht installiert, gab es einen Absturz.
             //Jetzt wird nach einer App gesucht, die mit "mailto:"-Url umgehen kann. Ist eine gefunden, wird diese benutzt,
             //sind mehrere vorhanden, kann man auswählen. Ist keine installiert, zeigt das System dies selbstständig an.
-            Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
+            final Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
             sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { mEmployee.getMail()});
             sendIntent.setData(Uri.parse("mailto:"));
             sendIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.mail_default_subject));
@@ -76,7 +76,7 @@ public class EmployeeInformationFragment extends Fragment {
 
         @Override
         public void onPhoneClicked() {
-            Intent intent = new Intent(Intent.ACTION_DIAL);
+            final Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse("tel:" + PhonebookModel.PHONE_NUMBER_PREFIX + mEmployee.getPhone()));
             startActivity(intent);
         }

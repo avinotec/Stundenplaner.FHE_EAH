@@ -38,7 +38,7 @@ public class ResponseModel {
 		return error;
 	}
 
-	public void setError(Boolean error) {
+	public void setError(final Boolean error) {
 		this.error = error;
 	}
 
@@ -46,7 +46,7 @@ public class ResponseModel {
 		return counter;
 	}
 
-	public void setCounter(Integer counter) {
+	public void setCounter(final Integer counter) {
 		this.counter = counter;
 	}
 
@@ -54,7 +54,7 @@ public class ResponseModel {
 		return oldestDbTime;
 	}
 
-	public void setOldestDbTime(Integer oldestDbTime) {
+	public void setOldestDbTime(final Integer oldestDbTime) {
 		this.oldestDbTime = oldestDbTime;
 	}
 
@@ -62,7 +62,7 @@ public class ResponseModel {
 		return changes;
 	}
 
-	public void setChanges(List<Change> changes) {
+	public void setChanges(final List<Change> changes) {
 		this.changes = changes;
 	}
 	public class Change {
@@ -87,7 +87,7 @@ public class ResponseModel {
 			return eventSplusKey;
 		}
 
-		public void setEventSplusKey(String eventSplusKey) {
+		public void setEventSplusKey(final String eventSplusKey) {
 			this.eventSplusKey = eventSplusKey;
 		}
 
@@ -95,7 +95,7 @@ public class ResponseModel {
 			return changesReason;
 		}
 
-		public void setChangesReason(Integer changesReason) {
+		public void setChangesReason(final Integer changesReason) {
 			this.changesReason = changesReason;
 		}
 
@@ -103,7 +103,7 @@ public class ResponseModel {
 			return changesReasonText;
 		}
 
-		public void setChangesReasonText(String changesReasonText) {
+		public void setChangesReasonText(final String changesReasonText) {
 			this.changesReasonText = changesReasonText;
 		}
 
@@ -111,7 +111,7 @@ public class ResponseModel {
 			return newEventJson;
 		}
 
-		public void setNewEventJson(TimeTableEventVo newEventJson) {
+		public void setNewEventJson(final TimeTableEventVo newEventJson) {
 			this.newEventJson = newEventJson;
 		}
 
@@ -119,7 +119,7 @@ public class ResponseModel {
 			return changeDate;
 		}
 
-		public void setChangeDate(String changeDate) {
+		public void setChangeDate(final String changeDate) {
 			this.changeDate = changeDate;
 		}
 
@@ -127,7 +127,7 @@ public class ResponseModel {
 			return setSplusKey;
 		}
 
-		public void setSetSplusKey(String setSplusKey) {
+		public void setSetSplusKey(final String setSplusKey) {
 			this.setSplusKey = setSplusKey;
 		}
 
@@ -135,7 +135,7 @@ public class ResponseModel {
 			return modulSplusKey;
 		}
 
-		public void setModulSplusKey(String modulSplusKey) {
+		public void setModulSplusKey(final String modulSplusKey) {
 			this.modulSplusKey = modulSplusKey;
 		}
 

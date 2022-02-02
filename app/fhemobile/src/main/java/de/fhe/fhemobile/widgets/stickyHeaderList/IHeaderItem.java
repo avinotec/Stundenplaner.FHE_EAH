@@ -36,12 +36,12 @@ public abstract class IHeaderItem {
     //  Constructor
     // ---------------------------------------------------------------------------------------------
 
-    IHeaderItem(boolean _hasSectionHeader) {
+    IHeaderItem(final boolean _hasSectionHeader) {
         mHasSectionHeader = _hasSectionHeader;
         mItems            = new ArrayList<>();
     }
 
-    IHeaderItem(List<IRowItem> _items, boolean _hasSectionHeader) {
+    IHeaderItem(final List<IRowItem> _items, final boolean _hasSectionHeader) {
         mItems            = _items;
         mHasSectionHeader = _hasSectionHeader;
     }
@@ -54,11 +54,11 @@ public abstract class IHeaderItem {
         return mItems;
     }
 
-    public void setItems(List<IRowItem> _items) {
+    public void setItems(final List<IRowItem> _items) {
         mItems = _items;
     }
 
-    public void addItem(IRowItem _item) {
+    public void addItem(final IRowItem _item) {
         mItems.add(_item);
     }
 

@@ -40,16 +40,16 @@ public class TimeTableWeekFragment extends Fragment {
      *
      * @return A new instance of fragment TimeTableFragment.
      */
-    public static TimeTableWeekFragment newInstance(TimeTableWeekVo _Week) {
-        TimeTableWeekFragment fragment = new TimeTableWeekFragment();
-        Bundle args = new Bundle();
+    public static TimeTableWeekFragment newInstance(final TimeTableWeekVo _Week) {
+        final TimeTableWeekFragment fragment = new TimeTableWeekFragment();
+        final Bundle args = new Bundle();
         args.putParcelable(PARAM_TIMETABLE_WEEK, _Week);
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
@@ -58,8 +58,8 @@ public class TimeTableWeekFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = (TimeTableWeekView) inflater.inflate(R.layout.fragment_time_table_week, container, false);
         mView.initializeView(mWeek);

@@ -20,7 +20,7 @@ public class SimpleEvent implements Event {
 
 	private String type;
 	@Override public String getType() { return type; }
-	public void setType(String type) { 
+	public void setType(final String type) {
 		this.type = type; 
 	}
 	
@@ -28,11 +28,11 @@ public class SimpleEvent implements Event {
 	@Override public Object getSource() {
 		return source;
 	}
-	@Override public void setSource(Object source) {
+	@Override public void setSource(final Object source) {
 		this.source = source;
 	}
 	
-	public SimpleEvent(String type) {
+	public SimpleEvent(final String type) {
 		this.type = type;
 	}
 

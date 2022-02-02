@@ -50,7 +50,7 @@ public class NewsListWidgetConfigureActivity extends Activity {
     }
 
     @Override
-    public void onCreate(Bundle icicle) {
+    public void onCreate(final Bundle icicle) {
         super.onCreate(icicle);
 
         // Set the result to CANCELED.  This will cause the widget host to cancel
@@ -63,8 +63,8 @@ public class NewsListWidgetConfigureActivity extends Activity {
         mAvailableCategories.setOnItemClickListener(mItemClickListener);
 
         // Find the widget id from the intent.
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
+        final Intent intent = getIntent();
+        final Bundle extras = intent.getExtras();
         if (extras != null) {
             mAppWidgetId = extras.getInt(
                     AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -88,13 +88,13 @@ public class NewsListWidgetConfigureActivity extends Activity {
         // this intent is essential to show the widget
         // if this intent is not included,you can't show
         // widget on homescreen
-        Intent intent = new Intent();
+        final Intent intent = new Intent();
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
         setResult(Activity.RESULT_OK, intent);
 
         // start your service
         // to fetch data from web
-        Intent serviceIntent = new Intent(this, NewsListRemoteFetchService.class);
+        final Intent serviceIntent = new Intent(this, NewsListRemoteFetchService.class);
         serviceIntent
                 .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
         startService(serviceIntent);
@@ -106,7 +106,7 @@ public class NewsListWidgetConfigureActivity extends Activity {
 
     private final AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
 
             // Save News Id to prefs
             saveNewsWidgetPref(
@@ -120,28 +120,28 @@ public class NewsListWidgetConfigureActivity extends Activity {
     };
 
     // Write the prefix to the SharedPreferences object for this widget
-    static void saveNewsWidgetPref(Context context, int appWidgetId, String categoryId) {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
+    static void saveNewsWidgetPref(final Context context, final int appWidgetId, final String categoryId) {
+        final SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         prefs.putString(PREF_PREFIX_KEY + appWidgetId, categoryId);
         prefs.apply();
     }
 
     // Read the prefix from the SharedPreferences object for this widget.
     // If there is no preference saved, get the default from a resource
-    static String loadNewsWidgetPref(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
+    static String loadNewsWidgetPref(final Context context, final int appWidgetId) {
+        final SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
         return prefs.getString(PREF_PREFIX_KEY + appWidgetId, "0");
     }
 
-    static void deleteNewsWidgetPref(Context context, int appWidgetId) {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
+    static void deleteNewsWidgetPref(final Context context, final int appWidgetId) {
+        final SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         prefs.remove(PREF_PREFIX_KEY + appWidgetId);
         prefs.apply();
     }
 
     private final Callback<NewsCategoryResponse> mNewsCategoryCallback = new Callback<NewsCategoryResponse>() {
         @Override
-        public void onResponse(Call<NewsCategoryResponse> call, Response<NewsCategoryResponse> response) {
+        public void onResponse(final Call<NewsCategoryResponse> call, final Response<NewsCategoryResponse> response) {
             if ((mAvailableCategories != null) && (response.body().getNewsCategories() != null) && (response.body() != null)) {
                 mCategoryAdapter = new NewsCategoryAdapter(NewsListWidgetConfigureActivity.this, response.body().getNewsCategories());
                 mAvailableCategories.setAdapter(mCategoryAdapter);
@@ -149,7 +149,7 @@ public class NewsListWidgetConfigureActivity extends Activity {
         }
 
         @Override
-        public void onFailure(Call<NewsCategoryResponse> call, Throwable t) {
+        public void onFailure(final Call<NewsCategoryResponse> call, final Throwable t) {
 
         }
 

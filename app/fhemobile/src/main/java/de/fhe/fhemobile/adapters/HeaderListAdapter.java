@@ -31,7 +31,7 @@ import de.fhe.fhemobile.widgets.headerList.IBaseItem;
  */
 public class HeaderListAdapter extends BaseAdapter {
 
-    public HeaderListAdapter(Context _context, List<IBaseItem> _items) {
+    public HeaderListAdapter(final Context _context, final List<IBaseItem> _items) {
         mItems          = _items;
         mLayoutInflater = LayoutInflater.from(_context);
     }
@@ -42,17 +42,17 @@ public class HeaderListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public Object getItem(final int position) {
         return mItems.get(position);
     }
 
     @Override
-    public long getItemId(int position) {
+    public long getItemId(final int position) {
         return 0;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, final ViewGroup parent) {
         return mItems.get(position).getView(mLayoutInflater, convertView, parent);
     }
 
@@ -63,7 +63,7 @@ public class HeaderListAdapter extends BaseAdapter {
 
     //getItemViewType-------------------------------------------------------------------------------
     @Override
-    public int getItemViewType(int position) {
+    public int getItemViewType(final int position) {
         return mItems.get(position).getViewType();
     }
 

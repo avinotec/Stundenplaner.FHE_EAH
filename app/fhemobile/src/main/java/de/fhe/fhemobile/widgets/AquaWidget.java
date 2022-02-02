@@ -37,14 +37,14 @@ import retrofit2.Response;
  */
 public class AquaWidget extends RelativeLayout {
 
-    public AquaWidget(Context context, AttributeSet attrs) {
+    public AquaWidget(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
 
         preInitialize();
     }
 
-    public void update(boolean _forceUpdate) {
+    public void update(final boolean _forceUpdate) {
 
         final Date now = new Date();
         final long nowMilliSeconds = now.getTime();
@@ -60,7 +60,7 @@ public class AquaWidget extends RelativeLayout {
     }
 
     private void preInitialize() {
-        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.widget_aqua, this, true);
         setOnClickListener(mClickListener);
     }
@@ -88,7 +88,7 @@ public class AquaWidget extends RelativeLayout {
 
     private final Callback<CafeAquaResponse> mResponseCallback = new Callback<CafeAquaResponse>() {
         @Override
-        public void onResponse(Call<CafeAquaResponse> call, Response<CafeAquaResponse> response) {
+        public void onResponse(final Call<CafeAquaResponse> call, final Response<CafeAquaResponse> response) {
             mStartedFetching = false;
             if (mStatusLabel != null && response.body() != null ) {
                 mStatusLabel.setImageResource(response.body().isOpen() ? R.drawable.cafe_aqua_open : R.drawable.cafe_aqua_closed);
@@ -99,7 +99,7 @@ public class AquaWidget extends RelativeLayout {
         }
 
         @Override
-        public void onFailure(Call<CafeAquaResponse> call, Throwable t) {
+        public void onFailure(final Call<CafeAquaResponse> call, final Throwable t) {
             mStartedFetching = false;
         }
     };
@@ -114,7 +114,7 @@ public class AquaWidget extends RelativeLayout {
 
     private ImageView   mStatusLabel;
 
-    private long        mLastTimeUpdated = 0;
-    private boolean     mStartedFetching = false;
+    private long        mLastTimeUpdated;
+    private boolean     mStartedFetching;
 
 }

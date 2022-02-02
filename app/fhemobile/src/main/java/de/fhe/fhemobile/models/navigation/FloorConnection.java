@@ -32,8 +32,8 @@ public class FloorConnection{
     private static final String TAG = "FloorConnection"; //$NON-NLS
 
     //Variables
-    private String typeOfFloorConnection; //stairs, elevator, bridge
-    private ArrayList<FloorConnectionCell> connectedCells;
+    private final String typeOfFloorConnection; //stairs, elevator, bridge
+    private final ArrayList<FloorConnectionCell> connectedCells;
 
 
     public FloorConnection(final String type, final ArrayList<FloorConnectionCell> connectedCells){

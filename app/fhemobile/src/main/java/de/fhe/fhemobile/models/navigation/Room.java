@@ -33,8 +33,8 @@ public class Room extends Cell{
         super();
     }
 
-    public Room(String roomNumber, String building, String floor, String qrCode,
-                int x, int y, boolean walkable) {
+    public Room(final String roomNumber, final String building, final String floor, final String qrCode,
+                final int x, final int y, final boolean walkable) {
         super(x, y, building, floor, walkable, COSTS_ROOM);
         this.roomNumber = roomNumber;
         this.qrCode = qrCode;

@@ -29,13 +29,13 @@ public class PeriodVo implements Parcelable {
     public PeriodVo() {
     }
 
-    public PeriodVo(String mBegin, String mEnd, String mName) {
+    public PeriodVo(final String mBegin, final String mEnd, final String mName) {
         this.mBegin = mBegin;
         this.mEnd = mEnd;
         this.mName = mName;
     }
 
-    public PeriodVo(Parcel _In) {
+    public PeriodVo(final Parcel _In) {
         mBegin = _In.readString();
         mEnd = _In.readString();
         mName = _In.readString();
@@ -61,7 +61,7 @@ public class PeriodVo implements Parcelable {
      *              May be 0 or {@link #PARCELABLE_WRITE_RETURN_VALUE}.
      */
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(mBegin);
         dest.writeString(mEnd);
         dest.writeString(mName);
@@ -69,11 +69,11 @@ public class PeriodVo implements Parcelable {
 
     public static final Parcelable.Creator<PeriodVo> CREATOR
             = new Parcelable.Creator<PeriodVo>() {
-        public PeriodVo createFromParcel(Parcel in) {
+        public PeriodVo createFromParcel(final Parcel in) {
             return new PeriodVo(in);
         }
 
-        public PeriodVo[] newArray(int size) {
+        public PeriodVo[] newArray(final int size) {
             return new PeriodVo[size];
         }
     };

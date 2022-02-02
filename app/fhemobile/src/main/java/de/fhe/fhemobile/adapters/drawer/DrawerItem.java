@@ -20,7 +20,7 @@ package de.fhe.fhemobile.adapters.drawer;
  * Created by paul on 18.03.15.
  */
 public class DrawerItem {
-    public DrawerItem(int _id, String _text) {
+    public DrawerItem(final int _id, final String _text) {
         mId = _id;
         mText = _text;
     }
@@ -29,7 +29,7 @@ public class DrawerItem {
         return mId;
     }
 
-    public void setId(int _id) {
+    public void setId(final int _id) {
         mId = _id;
     }
 
@@ -37,7 +37,7 @@ public class DrawerItem {
         return mText;
     }
 
-    public void setText(String _text) {
+    public void setText(final String _text) {
         mText = _text;
     }
 

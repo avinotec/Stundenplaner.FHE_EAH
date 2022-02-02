@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 */
 
 
-        Bundle bundle = getIntent().getExtras();
+        final Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             //Push-Notification
             final RequestModel request = new RequestModel(RequestModel.ANDROID_DEVICE,
@@ -287,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
                 @Override
                 public void onFailure(final Call<ResponseModel> call, final Throwable t) {
-                    Log.d(TAG, "onFailure: "+t.toString());
+                    Log.d(TAG, "onFailure: "+ t);
                 }
             });
 
@@ -440,7 +440,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         if (!mDrawerFragment.isDrawerOpen()) {
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer

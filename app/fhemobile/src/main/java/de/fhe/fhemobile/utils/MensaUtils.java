@@ -34,14 +34,14 @@ public class MensaUtils {
      */
     public static List<MensaFoodItemCollectionVo> orderMensaItems(final MensaFoodItemVo[] _Items) {
 
-        List<MensaFoodItemCollectionVo> result = new ArrayList<MensaFoodItemCollectionVo>();
+        final List<MensaFoodItemCollectionVo> result = new ArrayList<MensaFoodItemCollectionVo>();
 
         long lastDate = _Items[0].getDate();
         String lastDateString = _Items[0].getDateString();
         List<MensaFoodItemVo> tempItems = new ArrayList<MensaFoodItemVo>();
 
-        for (MensaFoodItemVo item : _Items) {
-            long currentDate = item.getDate();
+        for (final MensaFoodItemVo item : _Items) {
+            final long currentDate = item.getDate();
             if (currentDate != lastDate) {
                 result.add(new MensaFoodItemCollectionVo(tempItems, lastDateString));
                 lastDate = currentDate;

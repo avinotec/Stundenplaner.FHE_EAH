@@ -74,7 +74,7 @@ public class MensaFoodItemVo implements Parcelable {
      *              May be 0 or {@link #PARCELABLE_WRITE_RETURN_VALUE}.
      */
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(mTitle);
         dest.writeString(mDescription);
         dest.writeString(mIngredients);
@@ -87,11 +87,11 @@ public class MensaFoodItemVo implements Parcelable {
 
     public static final Parcelable.Creator<MensaFoodItemVo> CREATOR
             = new Parcelable.Creator<MensaFoodItemVo>() {
-        public MensaFoodItemVo createFromParcel(Parcel in) {
+        public MensaFoodItemVo createFromParcel(final Parcel in) {
             return new MensaFoodItemVo(in);
         }
 
-        public MensaFoodItemVo[] newArray(int size) {
+        public MensaFoodItemVo[] newArray(final int size) {
             return new MensaFoodItemVo[size];
         }
     };
@@ -185,28 +185,28 @@ public class MensaFoodItemVo implements Parcelable {
 
     //********************************************************************************************
     @SerializedName("title")
-    private String mTitle;
+    private final String mTitle;
 
     @SerializedName("description")
-    private String mDescription;
+    private final String mDescription;
 
     @SerializedName("ingredients")
-    private String mIngredients;
+    private final String mIngredients;
 
     @SerializedName("price")
-    private String mPrice;
+    private final String mPrice;
 
     @SerializedName("date")
-    private long   mDate;
+    private final long   mDate;
 
     @SerializedName("dateAsString")
-    private String mDateString;
+    private final String mDateString;
 
     @SerializedName("mensaName")
-    private String mMensaName;
+    private final String mMensaName;
 
     @SerializedName("mensaId")
-    private Integer mMensaId;
+    private final Integer mMensaId;
 
 
 }

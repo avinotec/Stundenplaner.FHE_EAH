@@ -38,8 +38,8 @@ public class ImpressumFragment extends FeatureFragment {
     }
 
     public static ImpressumFragment newInstance() {
-        ImpressumFragment fragment = new ImpressumFragment();
-        Bundle args = new Bundle();
+        final ImpressumFragment fragment = new ImpressumFragment();
+        final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,8 +70,8 @@ public class ImpressumFragment extends FeatureFragment {
 */
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = (ImpressumView) inflater.inflate(R.layout.fragment_impressum, container, false);
         return mView;

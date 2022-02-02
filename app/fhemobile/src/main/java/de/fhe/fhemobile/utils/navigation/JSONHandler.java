@@ -28,6 +28,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -70,7 +71,7 @@ public class JSONHandler {
 
         try {
             final InputStream input = context.getResources().getAssets().open(jsonFile);
-            final InputStreamReader reader = new InputStreamReader(input, "UTF-8"); //$NON-NLS
+            final InputStreamReader reader = new InputStreamReader(input, StandardCharsets.UTF_8); //$NON-NLS
 
             final BufferedReader br = new BufferedReader(reader);
 
@@ -99,7 +100,7 @@ public class JSONHandler {
 
         try {
             final InputStream input = context.getResources().getAssets().open(filename);
-            final InputStreamReader reader = new InputStreamReader(input, "UTF-8"); //$NON-NLS
+            final InputStreamReader reader = new InputStreamReader(input, StandardCharsets.UTF_8); //$NON-NLS
 
             final BufferedReader br = new BufferedReader(reader);
 
@@ -301,12 +302,12 @@ public class JSONHandler {
      * Reads rooms from assets and saves list to MainActivity.rooms
      * @param context
      */
-    public static void loadRooms(Context context){
+    public static void loadRooms(final Context context){
         if (MainActivity.rooms.isEmpty()) {
             try {
-                String roomsJson = JSONHandler.readFromAssets(context, "rooms");
+                final String roomsJson = JSONHandler.readFromAssets(context, "rooms");
                 MainActivity.rooms = JSONHandler.parseJsonRooms(roomsJson);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 Log.e(TAG, "error reading or parsing rooms from JSON files:", e);
             }
         }
@@ -317,12 +318,12 @@ public class JSONHandler {
      * @param context
      * @return HashMap of {@link Person} objects, person's names used as key
      */
-    public static HashMap<String, Person> loadPersons(Context context){
+    public static HashMap<String, Person> loadPersons(final Context context){
         HashMap<String,Person> persons = null;
         try{
-            String personsJson = JSONHandler.readFromAssets(context, "persons");
+            final String personsJson = JSONHandler.readFromAssets(context, "persons");
             persons = JSONHandler.parseJsonPersons(personsJson);
-        } catch (Exception e){
+        } catch (final Exception e){
             Log.e(TAG, "error reading or parsing persons from JSON files:", e);
         }
         return persons;

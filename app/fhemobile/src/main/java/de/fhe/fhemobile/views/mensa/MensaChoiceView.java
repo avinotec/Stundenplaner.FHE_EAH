@@ -38,7 +38,7 @@ public class MensaChoiceView extends FrameLayout {
         void onMensaChosen(Integer _Id, Integer _Position);
     }
 
-    public MensaChoiceView(Context context, AttributeSet attrs) {
+    public MensaChoiceView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
         mModel = MensaFoodModel.getInstance();
@@ -46,7 +46,7 @@ public class MensaChoiceView extends FrameLayout {
         mModel.addListener(MensaFoodModel.ChangeEvent.RECEIVED_CHOICE_ITEMS, mChoiceItemsListener);
     }
 
-    public void initView(ViewListener _Listener) {
+    public void initView(final ViewListener _Listener) {
         mViewListener = _Listener;
     }
 
@@ -74,14 +74,14 @@ public class MensaChoiceView extends FrameLayout {
 
     private final AdapterView.OnItemClickListener mMensaSelectListener = new AdapterView.OnItemClickListener() {
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
             mViewListener.onMensaChosen((int) mAdapter.getItemId(position), position);
         }
     };
 
     private EventListener mChoiceItemsListener = new EventListener() {
         @Override
-        public void onEvent(Event event) {
+        public void onEvent(final Event event) {
             initContent();
         }
     };

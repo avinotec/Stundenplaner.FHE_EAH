@@ -74,31 +74,31 @@ public class FloatLabelLayout extends LinearLayout {
     private CharSequence mHint;
     private final Interpolator mInterpolator;
 
-    public FloatLabelLayout(Context context) {
+    public FloatLabelLayout(final Context context) {
         this(context, null);
     }
 
-    public FloatLabelLayout(Context context, AttributeSet attrs) {
+    public FloatLabelLayout(final Context context, final AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public FloatLabelLayout(Context context, AttributeSet attrs, int defStyle) {
+    public FloatLabelLayout(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
 
         setOrientation(VERTICAL);
 
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.FloatLabelLayout);
 
-        int leftPadding = a.getDimensionPixelSize(
+        final int leftPadding = a.getDimensionPixelSize(
                 R.styleable.FloatLabelLayout_floatLabelPaddingLeft,
                 dipsToPix(DEFAULT_LABEL_PADDING_LEFT));
-        int topPadding = a.getDimensionPixelSize(
+        final int topPadding = a.getDimensionPixelSize(
                 R.styleable.FloatLabelLayout_floatLabelPaddingTop,
                 dipsToPix(DEFAULT_LABEL_PADDING_TOP));
-        int rightPadding = a.getDimensionPixelSize(
+        final int rightPadding = a.getDimensionPixelSize(
                 R.styleable.FloatLabelLayout_floatLabelPaddingRight,
                 dipsToPix(DEFAULT_LABEL_PADDING_RIGHT));
-        int bottomPadding = a.getDimensionPixelSize(
+        final int bottomPadding = a.getDimensionPixelSize(
                 R.styleable.FloatLabelLayout_floatLabelPaddingBottom,
                 dipsToPix(DEFAULT_LABEL_PADDING_BOTTOM));
         mHint = a.getText(R.styleable.FloatLabelLayout_floatLabelHint);
@@ -124,7 +124,7 @@ public class FloatLabelLayout extends LinearLayout {
     }
 
     @Override
-    public final void addView(View child, int index, ViewGroup.LayoutParams params) {
+    public final void addView(final View child, final int index, final ViewGroup.LayoutParams params) {
         if (child instanceof EditText) {
             setEditText((EditText) child);
         }
@@ -133,7 +133,7 @@ public class FloatLabelLayout extends LinearLayout {
         super.addView(child, index, params);
     }
 
-    private void setEditText(EditText editText) {
+    private void setEditText(final EditText editText) {
         // If we already have an EditText, throw an exception
         if (mEditText != null) {
             throw new IllegalArgumentException("We already have an EditText, can only have one");
@@ -146,15 +146,15 @@ public class FloatLabelLayout extends LinearLayout {
         // Add a TextWatcher so that we know when the text input has changed
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(final Editable s) {
                 updateLabelVisibility(true);
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {}
         });
 
         // Add focus listener to the EditText so that we can notify the label that it is activated.
@@ -167,9 +167,9 @@ public class FloatLabelLayout extends LinearLayout {
         }
     }
 
-    private void updateLabelVisibility(boolean animate) {
-        boolean hasText = !TextUtils.isEmpty(mEditText.getText());
-        boolean isFocused = mEditText.isFocused();
+    private void updateLabelVisibility(final boolean animate) {
+        final boolean hasText = !TextUtils.isEmpty(mEditText.getText());
+        final boolean isFocused = mEditText.isFocused();
 
         mLabel.setActivated(isFocused);
 
@@ -203,7 +203,7 @@ public class FloatLabelLayout extends LinearLayout {
     /**
      * Set the hint to be displayed in the floating label
      */
-    private void setHint(CharSequence hint) {
+    private void setHint(final CharSequence hint) {
         mHint = hint;
         mLabel.setText(hint);
     }
@@ -211,12 +211,12 @@ public class FloatLabelLayout extends LinearLayout {
     /**
      * Show the label
      */
-    private void showLabel(boolean animate) {
+    private void showLabel(final boolean animate) {
         if (animate) {
             mLabel.setVisibility(View.VISIBLE);
             ViewCompat.setTranslationY(mLabel, mLabel.getHeight());
 
-            float scale = mEditText.getTextSize() / mLabel.getTextSize();
+            final float scale = mEditText.getTextSize() / mLabel.getTextSize();
             ViewCompat.setScaleX(mLabel, scale);
             ViewCompat.setScaleY(mLabel, scale);
 
@@ -237,9 +237,9 @@ public class FloatLabelLayout extends LinearLayout {
     /**
      * Hide the label
      */
-    private void hideLabel(boolean animate) {
+    private void hideLabel(final boolean animate) {
         if (animate) {
-            float scale = mEditText.getTextSize() / mLabel.getTextSize();
+            final float scale = mEditText.getTextSize() / mLabel.getTextSize();
             ViewCompat.setScaleX(mLabel, 1f);
             ViewCompat.setScaleY(mLabel, 1f);
             ViewCompat.setTranslationY(mLabel, 0f);
@@ -251,7 +251,7 @@ public class FloatLabelLayout extends LinearLayout {
                     .scaleY(scale)
                     .setListener(new ViewPropertyAnimatorListenerAdapter() {
                         @Override
-                        public void onAnimationEnd(View view) {
+                        public void onAnimationEnd(final View view) {
                             mLabel.setVisibility(INVISIBLE);
                             mEditText.setHint(mHint);
                         }
@@ -266,7 +266,7 @@ public class FloatLabelLayout extends LinearLayout {
     /**
      * Helper method to convert dips to pixels.
      */
-    private int dipsToPix(float dps) {
+    private int dipsToPix(final float dps) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dps,
                 getResources().getDisplayMetrics());
     }

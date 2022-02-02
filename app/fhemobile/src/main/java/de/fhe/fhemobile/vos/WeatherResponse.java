@@ -27,7 +27,7 @@ public class WeatherResponse {
         return mTemperature;
     }
 
-    public void setTemperature(String _temperature) {
+    public void setTemperature(final String _temperature) {
         mTemperature = _temperature;
     }
 
@@ -35,7 +35,7 @@ public class WeatherResponse {
         return mWindSpeed;
     }
 
-    public void setWindSpeed(String _windSpeed) {
+    public void setWindSpeed(final String _windSpeed) {
         mWindSpeed = _windSpeed;
     }
 
@@ -43,7 +43,7 @@ public class WeatherResponse {
         return mWindDirection;
     }
 
-    public void setWindDirection(String _windDirection) {
+    public void setWindDirection(final String _windDirection) {
         mWindDirection = _windDirection;
     }
 
@@ -51,7 +51,7 @@ public class WeatherResponse {
         return mChill;
     }
 
-    public void setChill(String _chill) {
+    public void setChill(final String _chill) {
         mChill = _chill;
     }
 
@@ -59,7 +59,7 @@ public class WeatherResponse {
         return mProvider;
     }
 
-    public void setProvider(String _provider) {
+    public void setProvider(final String _provider) {
         mProvider = _provider;
     }
 
@@ -67,7 +67,7 @@ public class WeatherResponse {
         return mCode;
     }
 
-    public void setCode(String _code) {
+    public void setCode(final String _code) {
         mCode = _code;
     }
 
@@ -75,7 +75,7 @@ public class WeatherResponse {
         return mBackgroundId;
     }
 
-    public void setBackgroundId(int _backgroundId) {
+    public void setBackgroundId(final int _backgroundId) {
         mBackgroundId = _backgroundId;
     }
 
@@ -83,7 +83,7 @@ public class WeatherResponse {
         return mIconId;
     }
 
-    public void setIconId(int _iconId) {
+    public void setIconId(final int _iconId) {
         mIconId = _iconId;
     }
 

@@ -30,7 +30,7 @@ public class NewsCategoryVo {
         return mId;
     }
 
-    public void setId(Integer mId) {
+    public void setId(final Integer mId) {
         this.mId = mId;
     }
 
@@ -38,7 +38,7 @@ public class NewsCategoryVo {
         return mName;
     }
 
-    public void setName(String mName) {
+    public void setName(final String mName) {
         this.mName = mName;
     }
 
@@ -46,7 +46,7 @@ public class NewsCategoryVo {
         return mUrl;
     }
 
-    public void setUrl(String mUrl) {
+    public void setUrl(final String mUrl) {
         this.mUrl = mUrl;
     }
 

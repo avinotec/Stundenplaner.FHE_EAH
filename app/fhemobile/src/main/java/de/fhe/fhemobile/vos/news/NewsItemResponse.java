@@ -30,7 +30,7 @@ public class NewsItemResponse {
         return mChannel;
     }
 
-    public void setChannel(NewsChannelVo _channel) {
+    public void setChannel(final NewsChannelVo _channel) {
         mChannel = _channel;
     }
 

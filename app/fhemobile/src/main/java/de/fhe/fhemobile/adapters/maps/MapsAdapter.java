@@ -33,7 +33,7 @@ import de.fhe.fhemobile.vos.maps.MapCollectionVo;
  */
 public class MapsAdapter extends BaseAdapter {
 
-    public MapsAdapter(Context _Context, List<MapCollectionVo> _Items) {
+    public MapsAdapter(final Context _Context, final List<MapCollectionVo> _Items) {
         mContext = _Context;
         mItems   = _Items;
     }
@@ -60,7 +60,7 @@ public class MapsAdapter extends BaseAdapter {
      * @return The data at the specified position.
      */
     @Override
-    public MapCollectionVo getItem(int position) {
+    public MapCollectionVo getItem(final int position) {
         return mItems.get(position);
     }
 
@@ -71,7 +71,7 @@ public class MapsAdapter extends BaseAdapter {
      * @return The id of the item at the specified position.
      */
     @Override
-    public long getItemId(int position) {
+    public long getItemId(final int position) {
         return 0;
     }
 
@@ -94,12 +94,12 @@ public class MapsAdapter extends BaseAdapter {
      * @return A View corresponding to the data at the specified position.
      */
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
 
-        LayoutInflater inflater = (LayoutInflater) mContext
+        final LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
         if(convertView == null) {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.item_map, parent, false);

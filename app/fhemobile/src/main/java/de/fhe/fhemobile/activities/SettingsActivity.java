@@ -33,19 +33,19 @@ public class SettingsActivity extends BaseActivity {
     private static final String TAG = "SettingsActivity";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBaseContent(R.layout.activity_settings);
 
         if (savedInstanceState == null) {
-            Intent intent = getIntent();
+            final Intent intent = getIntent();
             mSettingsId = intent.getIntExtra(EXTRA_SETTINGS_ID, -1);
         }
 
         loadFragments(mSettingsId);
     }
 
-    public void loadFragments(Integer _Id) {
+    public void loadFragments(final Integer _Id) {
         switch(_Id) {
             case Features.FeatureId.NEWS:
                 getSupportFragmentManager().beginTransaction()
@@ -61,7 +61,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
+    public void onSaveInstanceState(final Bundle savedInstanceState) {
         // Save the user's current game state
         savedInstanceState.putInt(STATE_SETTINGS_ID, mSettingsId);
 
@@ -70,7 +70,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     @Override
-    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+    public void onRestoreInstanceState(@NonNull final Bundle savedInstanceState) {
         // Always call the superclass so it can restore the view hierarchy
         super.onRestoreInstanceState(savedInstanceState);
 
@@ -79,7 +79,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.
 //        getMenuInflater().inflate(R.menu.settings, menu);
@@ -87,7 +87,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.

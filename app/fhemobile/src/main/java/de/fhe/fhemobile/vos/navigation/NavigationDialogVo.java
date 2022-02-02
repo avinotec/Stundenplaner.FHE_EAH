@@ -18,11 +18,11 @@ public class NavigationDialogVo implements Parcelable {
 
     }
 
-    public void setDestinationLocation(String destLoc) {
+    public void setDestinationLocation(final String destLoc) {
         this.mDestLocation = destLoc;
     }
 
-    public void setStartLocation(String startLoc) {
+    public void setStartLocation(final String startLoc) {
         this.mStartLocation = startLoc;
     }
 
@@ -38,7 +38,7 @@ public class NavigationDialogVo implements Parcelable {
     // Parcel Stuff
     //---------------------------------------------------------
 
-    public NavigationDialogVo(Parcel _In){
+    public NavigationDialogVo(final Parcel _In){
         mStartLocation = _In.readString();
         mDestLocation = _In.readString();
     }
@@ -63,18 +63,18 @@ public class NavigationDialogVo implements Parcelable {
      *              May be 0 or {@link #PARCELABLE_WRITE_RETURN_VALUE}.
      */
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(mStartLocation);
         dest.writeString(mDestLocation);
     }
 
     public static final Parcelable.Creator<NavigationDialogVo> CREATOR
             = new Parcelable.Creator<NavigationDialogVo>() {
-        public NavigationDialogVo createFromParcel(Parcel in) {
+        public NavigationDialogVo createFromParcel(final Parcel in) {
             return new NavigationDialogVo(in);
         }
 
-        public NavigationDialogVo[] newArray(int size) {
+        public NavigationDialogVo[] newArray(final int size) {
             return new NavigationDialogVo[size];
         }
     };

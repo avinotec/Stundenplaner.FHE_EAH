@@ -55,7 +55,7 @@ public class MapsActivity extends BaseActivity {
                     .add(R.id.container, MapsFragment.newInstance(mMapId))
                     .commit();
 
-            String title = getResources().getString(MapsModel.getInstance().getMaps().get(mMapId).getNameID());
+            final String title = getResources().getString(MapsModel.getInstance().getMaps().get(mMapId).getNameID());
             getSupportActionBar().setTitle(title);
         }
         catch (final Exception e){

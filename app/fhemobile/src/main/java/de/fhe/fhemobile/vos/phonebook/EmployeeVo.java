@@ -31,7 +31,7 @@ public class EmployeeVo implements Parcelable {
 
     }
 
-    public EmployeeVo(Integer mId, String mFirstName, String mLastName, String mTitle, String mPhone, String mFax, String mRole, String mMail, String mDivision, String mRoom) {
+    public EmployeeVo(final Integer mId, final String mFirstName, final String mLastName, final String mTitle, final String mPhone, final String mFax, final String mRole, final String mMail, final String mDivision, final String mRoom) {
         this.mId = mId;
         this.mFirstName = mFirstName;
         this.mLastName = mLastName;
@@ -52,7 +52,7 @@ public class EmployeeVo implements Parcelable {
         return mId;
     }
 
-    public void setId(Integer id) {
+    public void setId(final Integer id) {
         mId = id;
     }
 
@@ -60,7 +60,7 @@ public class EmployeeVo implements Parcelable {
         return mFirstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(final String firstName) {
         mFirstName = firstName;
     }
 
@@ -68,7 +68,7 @@ public class EmployeeVo implements Parcelable {
         return mLastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(final String lastName) {
         mLastName = lastName;
     }
 
@@ -76,7 +76,7 @@ public class EmployeeVo implements Parcelable {
         return mTitle;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         mTitle = checkForEmpty(title);
     }
 
@@ -84,7 +84,7 @@ public class EmployeeVo implements Parcelable {
         return mPhone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(final String phone) {
         mPhone = checkForEmpty(phone);
     }
 
@@ -92,7 +92,7 @@ public class EmployeeVo implements Parcelable {
         return mFax;
     }
 
-    public void setFax(String fax) {
+    public void setFax(final String fax) {
         mFax = checkForEmpty(fax);
     }
 
@@ -100,7 +100,7 @@ public class EmployeeVo implements Parcelable {
         return mRole;
     }
 
-    public void setRole(String role) {
+    public void setRole(final String role) {
         mRole = checkForEmpty(role);
     }
 
@@ -108,7 +108,7 @@ public class EmployeeVo implements Parcelable {
         return mMail;
     }
 
-    public void setMail(String mail) {
+    public void setMail(final String mail) {
         mMail = checkForEmpty(mail);
     }
 
@@ -116,7 +116,7 @@ public class EmployeeVo implements Parcelable {
         return mDivision;
     }
 
-    public void setDivision(String division) {
+    public void setDivision(final String division) {
         mDivision = checkForEmpty(division);
     }
 
@@ -124,12 +124,12 @@ public class EmployeeVo implements Parcelable {
         return mRoom;
     }
 
-    public void setRoom(String room) {
+    public void setRoom(final String room) {
         mRoom = checkForEmpty(room);
     }
 
-    private String checkForEmpty(String _Source) {
-        String temp;
+    private String checkForEmpty(final String _Source) {
+        final String temp;
         if(_Source.contentEquals("-;")) {
             temp = "";
         }
@@ -143,7 +143,7 @@ public class EmployeeVo implements Parcelable {
     // Parcel Stuff
     //---------------------------------------------------------
 
-    public EmployeeVo(Parcel _In) {
+    public EmployeeVo(final Parcel _In) {
         mId = _In.readInt();
         mFirstName = _In.readString();
         mLastName = _In.readString();
@@ -176,7 +176,7 @@ public class EmployeeVo implements Parcelable {
      *              May be 0 or {@link #PARCELABLE_WRITE_RETURN_VALUE}.
      */
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeInt(mId);
         dest.writeString(mFirstName);
         dest.writeString(mLastName);
@@ -191,11 +191,11 @@ public class EmployeeVo implements Parcelable {
 
     public static final Parcelable.Creator<EmployeeVo> CREATOR
             = new Parcelable.Creator<EmployeeVo>() {
-        public EmployeeVo createFromParcel(Parcel in) {
+        public EmployeeVo createFromParcel(final Parcel in) {
             return new EmployeeVo(in);
         }
 
-        public EmployeeVo[] newArray(int size) {
+        public EmployeeVo[] newArray(final int size) {
             return new EmployeeVo[size];
         }
     };

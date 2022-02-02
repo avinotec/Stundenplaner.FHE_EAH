@@ -38,8 +38,8 @@ public class HeaderImageItem implements IBaseItem {
     }
 
     @Override
-    public View getView(final LayoutInflater _inflater, View _convertView, ViewGroup _parent) {
-        ViewHolder holder;
+    public View getView(final LayoutInflater _inflater, View _convertView, final ViewGroup _parent) {
+        final ViewHolder holder;
         if (_convertView == null) {
             holder = new ViewHolder();
             _convertView = _inflater.inflate(R.layout.item_header_image, _parent, false);

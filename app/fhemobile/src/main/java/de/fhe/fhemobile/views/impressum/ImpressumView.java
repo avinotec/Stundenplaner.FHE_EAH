@@ -38,7 +38,7 @@ public class ImpressumView extends FrameLayout {
 
     private WebView mWebView;
 
-    public ImpressumView(Context context, AttributeSet attrs) {
+    public ImpressumView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
     }
@@ -54,9 +54,9 @@ public class ImpressumView extends FrameLayout {
         //Ohne JavascriptEnabled laesst sich das Impressum nicht scrollen.
 	    mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.loadUrl(Endpoints.IMPRESSUM_ENDPOINT);
-        TextView dataProtection = findViewById(R.id.data_protection_link);
+        final TextView dataProtection = findViewById(R.id.data_protection_link);
         dataProtection.setMovementMethod(LinkMovementMethod.getInstance());
-        TextView versionText = findViewById(R.id.version_number);
+        final TextView versionText = findViewById(R.id.version_number);
         String sText = "Vers.: " + BuildConfig.FLAVOR + " " +BuildConfig.VERSION_NAME +" ("+ BuildConfig.VERSION_CODE + ')'; //$NON-NLS
         if ( BuildConfig.DEBUG ) {
             sText += " DEBUG"; //NON-NLS

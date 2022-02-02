@@ -29,12 +29,12 @@ public class SemesterTimesVo implements Parcelable {
     public SemesterTimesVo() {
     }
 
-    public SemesterTimesVo(DateVo mDate, PeriodVo mPeriod) {
+    public SemesterTimesVo(final DateVo mDate, final PeriodVo mPeriod) {
         this.mDate = mDate;
         this.mPeriod = mPeriod;
     }
 
-    public SemesterTimesVo(Parcel _In) {
+    public SemesterTimesVo(final Parcel _In) {
         mDate = _In.readParcelable(DateVo.class.getClassLoader());
         mPeriod = _In.readParcelable(PeriodVo.class.getClassLoader());
     }
@@ -59,18 +59,18 @@ public class SemesterTimesVo implements Parcelable {
      *              May be 0 or {@link #PARCELABLE_WRITE_RETURN_VALUE}.
      */
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeParcelable(mDate, 0);
         dest.writeParcelable(mPeriod, 0);
     }
 
     public static final Parcelable.Creator<SemesterTimesVo> CREATOR
             = new Parcelable.Creator<SemesterTimesVo>() {
-        public SemesterTimesVo createFromParcel(Parcel in) {
+        public SemesterTimesVo createFromParcel(final Parcel in) {
             return new SemesterTimesVo(in);
         }
 
-        public SemesterTimesVo[] newArray(int size) {
+        public SemesterTimesVo[] newArray(final int size) {
             return new SemesterTimesVo[size];
         }
     };
@@ -80,7 +80,7 @@ public class SemesterTimesVo implements Parcelable {
         return mDate;
     }
 
-    public void setDate(DateVo mDate) {
+    public void setDate(final DateVo mDate) {
         this.mDate = mDate;
     }
 
@@ -88,7 +88,7 @@ public class SemesterTimesVo implements Parcelable {
         return mPeriod;
     }
 
-    public void setPeriod(PeriodVo mPeriod) {
+    public void setPeriod(final PeriodVo mPeriod) {
         this.mPeriod = mPeriod;
     }
 
