@@ -51,7 +51,17 @@ public class MyTimeTableUtils {
      */
     public static String getCourseName(final TimeTableEventVo event){
         //cut away all "/dd.dd" (where d stands for any digit)
-        return event.getTitle().replaceAll("/\\d\\d(\\.\\d*)?$","");
+        return getCourseName(event.getTitle());
+    }
+
+    /**
+     * Returns the name of the course which equals the event's name without numbers at the end
+     * @param title
+     * @return course name
+     */
+    public static String getCourseName(final String title){
+        //cut away all "/dd.dd" (where d stands for any digit)
+        return title.replaceAll("/\\d\\d(\\.\\d*)?$","");
     }
 
 

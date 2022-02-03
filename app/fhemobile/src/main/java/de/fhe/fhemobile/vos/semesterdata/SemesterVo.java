@@ -26,6 +26,8 @@ import java.util.List;
 
 /**
  * Created by paul on 27.01.14.
+ *
+ * Vo used when displaying semester dates
  */
 public class SemesterVo implements Parcelable {
 
@@ -126,6 +128,7 @@ public class SemesterVo implements Parcelable {
     public void setImportantDates(final List<SemesterTimesVo> mImportantDates) {
         this.mImportantDates = mImportantDates;
     }
+
 
     @SerializedName("name")
     private String mName;

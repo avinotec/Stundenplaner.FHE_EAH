@@ -47,7 +47,7 @@ public class StudyGroupPicker extends IdPicker {
 
     @Override
     protected String getName(final int _Position) {
-        return mItems.get(_Position).getTitle();
+        return mItems.get(_Position).getShortTitle();
     }
 
     @Override

@@ -16,6 +16,7 @@
  */
 package de.fhe.fhemobile.vos.timetable;
 
+import static de.fhe.fhemobile.utils.MyTimeTableUtils.getCourseName;
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
 import android.os.Parcel;
@@ -55,6 +56,10 @@ public class TimeTableEventVo implements Parcelable {
     public String getShortTitle() {
         //Todo: vorübergehender Fix für Veranstaltungen mit shortTitle = null
         return correctUmlauts(mShortTitle != null ? mShortTitle : mTitle);
+    }
+
+    public String getGuiTitle(){
+        return getCourseName(getShortTitle());
     }
 
 // --Commented out by Inspection START (02.11.2021 17:34):

@@ -17,8 +17,6 @@
 package de.fhe.fhemobile.adapters.mytimetable;
 
 import static de.fhe.fhemobile.Main.getSubscribedCourseComponents;
-import static de.fhe.fhemobile.utils.MyTimeTableUtils.getEventTitleWithoutEndingNumbers;
-import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -144,9 +142,7 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 		//set text of courseTitle
 		final TextView courseTitle = (TextView) convertView.findViewById(
 				R.id.textview_mytimetable_overview_courseTitle);
-		courseTitle.setText(
-				correctUmlauts(getEventTitleWithoutEndingNumbers(
-						currentItem.getFirstEvent().getShortTitle())));
+		courseTitle.setText(currentItem.getFirstEvent().getGuiTitle());
 
 
 		//todo: find out in which use case currentItem is not visible

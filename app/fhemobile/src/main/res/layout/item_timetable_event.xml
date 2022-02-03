@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="Heading"
+            android:text="Time"
             android:textColor="@color/primary_light"
             android:textSize="@dimen/abc_text_size_body_1_material"
             />
@@ -50,8 +50,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="New Text"
+            android:text="Lecturer"
             android:textColor="@color/primary_light"
+            android:textStyle="italic"
             />
 
         <TextView
@@ -60,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="New Text"
+            android:text="Room"
             android:textColor="@color/primary_light"
             android:textSize="@dimen/abc_text_size_body_1_material"
             />
@@ -71,12 +72,11 @@
         android:id="@+id/itemEventTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="New Text"
-        android:textColor="@color/primary_light"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:textStyle="italic"/>
+        android:gravity="center_vertical"
+        android:text="Event Title"
+        android:textColor="@color/primary_light" />
 
 
 </RelativeLayout>

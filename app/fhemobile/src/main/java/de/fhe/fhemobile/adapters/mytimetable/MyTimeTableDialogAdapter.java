@@ -16,8 +16,6 @@
  */
 package de.fhe.fhemobile.adapters.mytimetable;
 
-import static de.fhe.fhemobile.utils.MyTimeTableUtils.getEventTitleWithoutEndingNumbers;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -157,7 +155,7 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 		// if such a header has already been added because of processing another another component of the course
 		// then do not add header again (set its visibility to GONE)
 		if(position == 0 || !mItems.get(position).isSameCourse(mItems.get(position - 1))){
-			courseTitle.setText(getEventTitleWithoutEndingNumbers(currentItem.getFirstEvent().getShortTitle()));
+			courseTitle.setText(currentItem.getFirstEvent().getGuiTitle());
 			courseTitle.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);

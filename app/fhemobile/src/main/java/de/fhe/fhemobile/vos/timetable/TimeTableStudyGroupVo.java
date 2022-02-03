@@ -60,7 +60,7 @@ public class TimeTableStudyGroupVo implements Parcelable {
 
     public String getShortTitle() {
         //e.g. mTitle = "ET(BA)5.01(ATTITi)
-        return mTitle.replaceFirst("^\\w+\\([\\w|/]+\\)\\d\\.", "");
+        return mTitle.replaceFirst("^\\D+\\d\\.", "");
     }
 
 // --Commented out by Inspection START (02.11.2021 17:32):

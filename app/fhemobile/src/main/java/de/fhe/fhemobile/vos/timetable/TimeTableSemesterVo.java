@@ -76,6 +76,10 @@ public class TimeTableSemesterVo implements Parcelable {
         mStudyGroups = _studyGroups;
     }
 
+    public String getShortTitle(){
+        return getTitle().replaceFirst("^\\D+","");
+    }
+
     @SerializedName("id")
     private String                  mId;
 
