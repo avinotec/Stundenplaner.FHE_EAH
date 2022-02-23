@@ -33,7 +33,7 @@ import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.phonebook.PhonebookModel;
 import de.fhe.fhemobile.models.semesterdata.SemesterDataModel;
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
-import de.fhe.fhemobile.utils.MensaUtils;
+import de.fhe.fhemobile.utils.mensa.MensaUtils;
 import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.vos.CafeAquaResponse;
 import de.fhe.fhemobile.vos.WeatherResponse;

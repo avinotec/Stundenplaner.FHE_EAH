@@ -19,6 +19,7 @@ package de.fhe.fhemobile.utils;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.timetable.TimeTableFragment;
 import de.fhe.fhemobile.fragments.timetable.TimeTableDialogFragment;
+import de.fhe.fhemobile.utils.timetable.TimeTableSettings;
 
 /**
  * Created by paul on 16.03.15.

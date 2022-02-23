@@ -15,7 +15,7 @@
  *
  */
 
-package de.fhe.fhemobile.utils;
+package de.fhe.fhemobile.utils.timetable;
 
 public class TimeTableUtils {
 

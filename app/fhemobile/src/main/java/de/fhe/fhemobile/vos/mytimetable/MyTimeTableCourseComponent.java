@@ -17,8 +17,8 @@
 package de.fhe.fhemobile.vos.mytimetable;
 
 import static de.fhe.fhemobile.Main.getSubscribedCourseComponents;
-import static de.fhe.fhemobile.utils.MyTimeTableUtils.getCourseComponentName;
-import static de.fhe.fhemobile.utils.MyTimeTableUtils.getCourseName;
+import static de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils.getCourseComponentName;
+import static de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils.getCourseName;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -16,7 +16,7 @@
  */
 package de.fhe.fhemobile.vos.timetable;
 
-import static de.fhe.fhemobile.utils.MyTimeTableUtils.getCourseName;
+import static de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils.getCourseName;
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
 import android.os.Parcel;

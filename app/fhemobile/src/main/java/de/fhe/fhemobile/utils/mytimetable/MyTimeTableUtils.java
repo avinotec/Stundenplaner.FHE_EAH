@@ -1,4 +1,4 @@
-package de.fhe.fhemobile.utils;
+package de.fhe.fhemobile.utils.mytimetable;
 
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 

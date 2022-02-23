@@ -28,7 +28,7 @@ import de.fhe.fhemobile.adapters.StickyHeaderAdapter;
 import de.fhe.fhemobile.events.Event;
 import de.fhe.fhemobile.events.EventListener;
 import de.fhe.fhemobile.models.semesterdata.SemesterDataModel;
-import de.fhe.fhemobile.utils.SemesterDataUtils;
+import de.fhe.fhemobile.utils.semesterdata.SemesterDataUtils;
 import de.fhe.fhemobile.utils.headerlistview.HeaderListView;
 import de.fhe.fhemobile.vos.semesterdata.SemesterTimesVo;
 import de.fhe.fhemobile.vos.semesterdata.SemesterVo;

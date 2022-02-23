@@ -29,7 +29,7 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.network.NetworkHandler;
-import de.fhe.fhemobile.utils.TimeTableSettings;
+import de.fhe.fhemobile.utils.timetable.TimeTableSettings;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.timetable.TimeTableDialogView;
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;

@@ -40,7 +40,7 @@ import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableDialogAdapter;
 import de.fhe.fhemobile.comparator.CourseTitleComparator;
 import de.fhe.fhemobile.network.MyTimeTableCallback;
 import de.fhe.fhemobile.network.NetworkHandler;
-import de.fhe.fhemobile.utils.MyTimeTableUtils;
+import de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableDialogView;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;

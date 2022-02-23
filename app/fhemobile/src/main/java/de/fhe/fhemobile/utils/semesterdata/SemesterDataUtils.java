@@ -14,7 +14,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.utils;
+package de.fhe.fhemobile.utils.semesterdata;
 
 import de.fhe.fhemobile.vos.semesterdata.SemesterTimesVo;
 

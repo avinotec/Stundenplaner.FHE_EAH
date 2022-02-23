@@ -14,7 +14,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.utils;
+package de.fhe.fhemobile.utils.timetable;
 
 import android.content.Context;
 import android.content.SharedPreferences;

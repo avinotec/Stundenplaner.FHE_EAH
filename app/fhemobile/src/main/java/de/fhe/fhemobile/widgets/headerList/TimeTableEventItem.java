@@ -17,7 +17,7 @@
 package de.fhe.fhemobile.widgets.headerList;
 
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
-import static de.fhe.fhemobile.utils.TimeTableUtils.prettifyName;
+import static de.fhe.fhemobile.utils.timetable.TimeTableUtils.prettifyName;
 
 import android.view.LayoutInflater;
 import android.view.View;
