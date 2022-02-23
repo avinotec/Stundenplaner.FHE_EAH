@@ -36,9 +36,7 @@ import de.fhe.fhemobile.widgets.picker.StudyProgramPicker;
 import de.fhe.fhemobile.widgets.picker.SemesterPicker;
 import de.fhe.fhemobile.widgets.picker.base.OnItemChosenListener;
 
-/**
- * Created on 12.03.15.
- */
+
 public class MyTimeTableDialogView extends LinearLayout {
 
     public MyTimeTableDialogView(final Context context, final AttributeSet attrs) {
@@ -159,7 +157,7 @@ public class MyTimeTableDialogView extends LinearLayout {
 
     private IViewListener     mViewListener;
 
-    private StudyProgramPicker mStudyProgramPicker;
+    private StudyProgramPicker  mStudyProgramPicker;
     private SemesterPicker      mSemesterPicker;
     private ListView            mCourseListView;
 

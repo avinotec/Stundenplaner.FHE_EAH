@@ -120,7 +120,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         //todo: loading course list from shared preferences risks to display an outdated version,
         // the user has to re-select his study course and semester to update it.
         // This is not intuitive and not how the user predicts MyTimeTableDialog to work.
-        // Thus this function should be commented out till or replaced by a less risky method.
+        // Thus this function should be commented out or replaced by a less risky method.
         //loadSelectionFromSharedPreferences();
 
         return mView;
@@ -152,7 +152,6 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                 for(TimeTableWeekVo timeTableWeek : timeTableWeeks){
                     for(TimeTableDayVo timeTableDay : timeTableWeek.getDays()){
                         for(TimeTableEventVo timeTableEvent : timeTableDay.getEvents()){
-
 
                             //check if a course corresponding to timeTableEvent already exists in allCoursesInChosenSemester
                             // because the course has already been added with a previous study group or other event of the course

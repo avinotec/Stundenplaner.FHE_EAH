@@ -34,13 +34,13 @@ public class TimeTableEventVo implements Parcelable {
     public TimeTableEventVo() {
     }
 
-    public long getStartDate() {
-        return mStartDate;
+    public long getFullDateWithStartTime() {
+        return mFullDate;
     }
 
 // --Commented out by Inspection START (02.11.2021 17:34):
 //    public void setStartDate(long _startDate) {
-//        mStartDate = _startDate;
+//        mFullDate = _startDate;
 //    }
 // --Commented out by Inspection STOP (02.11.2021 17:34)
 
@@ -69,11 +69,11 @@ public class TimeTableEventVo implements Parcelable {
 // --Commented out by Inspection STOP (02.11.2021 17:34)
 
     public String getDate() {
-        return mDate;
+        return mDay;
     }
 
     public void setDate(final String _date) {
-        mDate = _date;
+        mDay = _date;
     }
 
     public String getDayOfWeek() {
@@ -145,7 +145,7 @@ public class TimeTableEventVo implements Parcelable {
 // --Commented out by Inspection STOP (02.11.2021 17:34)
 
     @SerializedName("startDate")
-    private long mStartDate;
+    private long mFullDate;
 
     @SerializedName("title")
     private String mTitle;
@@ -154,7 +154,7 @@ public class TimeTableEventVo implements Parcelable {
     private String mShortTitle;
 
     @SerializedName("date")
-    private String mDate;
+    private String mDay;
 
     @SerializedName("dayOfWeek")
     private String mDayOfWeek;
@@ -185,10 +185,10 @@ public class TimeTableEventVo implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeLong(this.mStartDate);
+        dest.writeLong(this.mFullDate);
         dest.writeString(this.mTitle);
         dest.writeString(this.mShortTitle);
-        dest.writeString(this.mDate);
+        dest.writeString(this.mDay);
         dest.writeString(this.mDayOfWeek);
         dest.writeInt(this.mWeekOfYear);
         dest.writeString(this.mStartTime);
@@ -199,10 +199,10 @@ public class TimeTableEventVo implements Parcelable {
     }
 
     private TimeTableEventVo(final Parcel in) {
-        this.mStartDate = in.readLong();
+        this.mFullDate = in.readLong();
         this.mTitle = correctUmlauts(in.readString());
         this.mShortTitle = correctUmlauts(in.readString());
-        this.mDate = in.readString();
+        this.mDay = in.readString();
         this.mDayOfWeek = in.readString();
         this.mWeekOfYear = in.readInt();
         this.mStartTime = in.readString();

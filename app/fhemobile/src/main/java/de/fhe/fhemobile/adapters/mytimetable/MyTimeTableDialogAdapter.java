@@ -136,29 +136,28 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 		});
 
 		//todo: just headers are supposed to switch between visibility after restructuring of MyTimeTableCourseComponent
-//		//currentItem can be invisible because initially only the next date
-//		// (and not all upcoming dates) are shown for a course
-//		if(currentItem.isVisible()){
-//			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
-//			convertView.setVisibility(View.VISIBLE);
-//		}
-//		else{
-//			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,1));
-//			convertView.setVisibility(View.GONE);
-//		}
+		//currentItem can be invisible because initially only the next date
+		// (and not all upcoming dates) are shown for a course
+		if(currentItem.isVisible()){
+			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
+			convertView.setVisibility(View.VISIBLE);
+		}
+		else{
+			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,1));
+			convertView.setVisibility(View.GONE);
+		}
 
 
 		final TextView courseTitle = (TextView) convertView.findViewById(R.id.textview_mytimetable_dialog_courseTitle);
 		final RelativeLayout headerLayout = convertView.findViewById(R.id.layout_mytimetable_dialog_header);
 
 		//Add a header displaying the course title
-		// if such a header has already been added because of processing another another component of the course
+		// if such a header has already been added because of processing another component of the course
 		// then do not add header again (set its visibility to GONE)
 		if(position == 0 || !mItems.get(position).isSameCourse(mItems.get(position - 1))){
 			courseTitle.setText(currentItem.getFirstEvent().getGuiTitle());
 			courseTitle.setVisibility(View.VISIBLE);
-			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
-			convertView.setVisibility(View.VISIBLE);
+
 			headerLayout.setVisibility(View.VISIBLE);
 		}
 		else{
@@ -183,32 +182,12 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 			}
 		});
 
+		//set texts: study group list, course time and day
 
 		final TextView textStudyGroupList = (TextView) convertView.findViewById(R.id.textview_mytimetable_dialog_studygroups);
 		textStudyGroupList.setText(currentItem.getStudyGroupListString());
 
-		final TextView labelStudyGroup = (TextView) convertView.findViewById(R.id.textview_mytimetable_dialog_label_sets);
-
-		//Add each event (lecture, training, practical, ...) belonging to the course title in the header
-		if(position == 0
-				|| !currentItem.isSameCourse(mItems.get(position-1))
-				|| !currentItem.getStudyGroupListString().equals(mItems.get(position-1).getStudyGroupListString())){
-			textStudyGroupList.setVisibility(View.VISIBLE);
-			labelStudyGroup.setVisibility(View.VISIBLE);
-			btnAddCourse.setVisibility(View.VISIBLE);
-			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
-			convertView.setVisibility(View.VISIBLE);
-		}
-		else{
-			textStudyGroupList.setVisibility(View.GONE);
-			labelStudyGroup.setVisibility(View.GONE);
-			btnAddCourse.setVisibility(View.GONE);
-		}
-
-
-		//set text for course time, weekday and room
-
-		final Date dateStartDate = new java.util.Date(currentItem.getFirstEvent().getStartDate());
+		final Date dateStartDate = new java.util.Date(currentItem.getFirstEvent().getFullDateWithStartTime());
 		//final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
 		final String date = sdf.format(dateStartDate);
 		final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(dateStartDate);
@@ -218,6 +197,8 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 				+ currentItem.getFirstEvent().getStartTime() + " – " + currentItem.getFirstEvent().getEndTime()); // $NON-NLS
 
 
+		convertView.setVisibility(View.VISIBLE); //otherwise it will sometimes be invisible
+		convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 		return convertView;
 	}
 

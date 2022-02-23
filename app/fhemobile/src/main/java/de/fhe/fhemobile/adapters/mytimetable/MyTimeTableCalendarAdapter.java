@@ -112,7 +112,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 		//set TextViews Week, Day, Title,... for the currentItem
 		final MyTimeTableCourseComponent currentItem = mItems.get(position);
-		final Date df = new Date(currentItem.getFirstEvent().getStartDate());
+		final Date df = new Date(currentItem.getFirstEvent().getFullDateWithStartTime());
 
 		final TextView courseWeekDay = (TextView) convertView.findViewById(R.id.textviewWeekDay);
 		courseWeekDay.setText(currentItem.getFirstEvent().getDayOfWeek());

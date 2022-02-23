@@ -194,7 +194,7 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 
 		//set text for course time, weekday and room
 
-		final Date dateStartDate = new java.util.Date(currentItem.getFirstEvent().getStartDate());
+		final Date dateStartDate = new java.util.Date(currentItem.getFirstEvent().getFullDateWithStartTime());
 		//final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
 		final String date = sdf.format(dateStartDate);
 		final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(dateStartDate);
