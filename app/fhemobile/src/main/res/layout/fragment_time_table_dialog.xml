@@ -52,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/list_single_item_height"
-                    app:idpHeadline="@string/timetable_study_course"
+                    app:idpHeadline="@string/timetable_study_program"
                     />
 
                 <de.fhe.fhemobile.widgets.picker.SemesterPicker

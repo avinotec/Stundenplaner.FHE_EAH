@@ -141,7 +141,7 @@ public class TimeTableDialogView extends LinearLayout {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
-                mViewListener.onStudyCourseChosen(_ItemId);
+                mViewListener.onStudyProgramChosen(_ItemId);
             }
         }
     };
@@ -176,7 +176,7 @@ public class TimeTableDialogView extends LinearLayout {
     };
 
     public interface IViewListener {
-        void onStudyCourseChosen(String _StudyCourseId);
+        void onStudyProgramChosen(String _StudyCourseId);
         void onSemesterChosen(String _SemesterId);
         void onGroupChosen(String _TimeTableId);
         void onSearchClicked();

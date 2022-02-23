@@ -99,7 +99,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
     private final TimeTableDialogView.IViewListener mViewListener = new TimeTableDialogView.IViewListener() {
         @Override
-        public void onStudyCourseChosen(String _StudyCourseId) {
+        public void onStudyProgramChosen(String _StudyCourseId) {
             mView.toggleGroupsPickerVisibility(false);
             mView.toggleButtonEnabled(false);
             mView.resetSemesterPicker();

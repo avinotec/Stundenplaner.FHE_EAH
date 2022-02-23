@@ -97,7 +97,7 @@ public class SemesterDataView extends LinearLayout {
         for (final SemesterTimesVo times : chosenSemester.getCourseTimes()) {
             courseRowItems.add(new DoubleRowItem(SemesterDataUtils.getHeadline(times), SemesterDataUtils.getSubHeadline(times)));
         }
-        sectionList.add(new DefaultHeaderItem(mContext.getString(R.string.semester_course_times), true, courseRowItems));
+        sectionList.add(new DefaultHeaderItem(mContext.getString(R.string.semester_periods), true, courseRowItems));
 
         final ArrayList<IRowItem> holidayRowItems = new ArrayList<>();
         for (final SemesterTimesVo times : chosenSemester.getHolidays()) {

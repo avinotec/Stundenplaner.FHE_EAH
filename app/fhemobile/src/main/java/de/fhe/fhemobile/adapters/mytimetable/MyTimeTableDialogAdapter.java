@@ -184,8 +184,8 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 		});
 
 
-		final TextView studyGroupTitle = (TextView) convertView.findViewById(R.id.textview_mytimetable_dialog_studygroups);
-		studyGroupTitle.setText(currentItem.getStudyGroupListString());
+		final TextView textStudyGroupList = (TextView) convertView.findViewById(R.id.textview_mytimetable_dialog_studygroups);
+		textStudyGroupList.setText(currentItem.getStudyGroupListString());
 
 		final TextView labelStudyGroup = (TextView) convertView.findViewById(R.id.textview_mytimetable_dialog_label_sets);
 
@@ -193,14 +193,14 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 		if(position == 0
 				|| !currentItem.isSameCourse(mItems.get(position-1))
 				|| !currentItem.getStudyGroupListString().equals(mItems.get(position-1).getStudyGroupListString())){
-			studyGroupTitle.setVisibility(View.VISIBLE);
+			textStudyGroupList.setVisibility(View.VISIBLE);
 			labelStudyGroup.setVisibility(View.VISIBLE);
 			btnAddCourse.setVisibility(View.VISIBLE);
 			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
 			convertView.setVisibility(View.VISIBLE);
 		}
 		else{
-			studyGroupTitle.setVisibility(View.GONE);
+			textStudyGroupList.setVisibility(View.GONE);
 			labelStudyGroup.setVisibility(View.GONE);
 			btnAddCourse.setVisibility(View.GONE);
 		}

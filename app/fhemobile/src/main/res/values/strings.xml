@@ -38,7 +38,7 @@
     <string name="phonebook_lastname" >Last name</string>
     <string name="phonebook_search" >Search</string>
 
-    <string name="semester_course_times" >Semester Periods</string>
+    <string name="semester_periods" >Semester Periods</string>
     <string name="semester_holidays">Holidays</string>
     <string name="semester_important_dates" >Important Dates</string>
 
@@ -53,13 +53,13 @@
     <string name="employee_mail" >Email</string>
     <string name="employee_room" >Room</string>
 
-    <string name="timetable_headline" >Please select your study course. (You can always change it under settings)</string>
-    <string name="timetable_study_course" >Study course</string>
+    <string name="timetable_headline" >Please select your study program. (You can always change it under settings)</string>
+    <string name="timetable_study_program" >Study program</string>
     <string name="timetable_study_group" >Group</string>
     <string name="timetable_term" >Semester</string>
     <string name="timetable_button" >Apply</string>
     <string name="timetable_input" >Please select</string>
-    <string name="timetable_error" >This course is empty.</string>
+    <string name="timetable_error" >This program is empty.</string>
     <string name="timetable_switch" >Save choice</string>
     <string name="timetable_reset" >Delete choice</string>
     <string name="timetable_week" >Calendar Week</string>
@@ -89,13 +89,14 @@
     <string name="loading">Loading…</string>
 
     <!-- My Time Table -->
+    <string name="my_time_table_dialog_headline" >Please select study program and semester.</string>
     <string name="my_time_table_add_course">Add course</string>
     <string name="my_timetable_modify_schedule">Modify schedule</string>
     <string name="my_time_table_empty_text_calendar">You did not compose a schedule.</string>
-    <string name="my_time_table_empty_text_edit">You did not choose a course.</string>
-    <string name="my_time_table_empty_text_select">Choose study course and semester.</string>
+    <string name="my_time_table_empty_text_select">Choose study program and semester.</string>
     <string name="jump_to_current_lesson">>> Today</string>
     <string name="today">Today</string>
+    <string name="my_time_table_overview_headline">My Courses</string>
 
     <string name="impress_data_protection_link" translatable="false"><a href="https://www.eah-jena.de/datenschutz">Data protection</a></string>
     <string name="notification_error_ssl_cert_invalid">A SSL-Certificate occurred. Do you want to proceed?</string>
@@ -166,7 +167,7 @@
     <string name="navigation_building">building</string>
     <string name="navigation_floor">floor</string>
     <string name="navigation_dialog_person">Person</string>
-    <string name="my_time_table_headline">My Courses</string>
+
 
 
 </resources>
