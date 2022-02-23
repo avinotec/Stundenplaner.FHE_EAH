@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,6 +30,8 @@ import android.widget.ToggleButton;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -123,29 +126,7 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 
 		//click on row of the course (at header, study groups, ...) expands the row of next date and room
 		// to a list of all upcoming dates with its rooms
-		convertView.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-
-				for (final TimeTableEventVo event : currentItem.getEvents()){
-					//todo: make all dates of the course visible
-				}
-				((ListView) parent).invalidateViews();
-
-			}
-		});
-
-		//todo: just headers are supposed to switch between visibility after restructuring of MyTimeTableCourseComponent
-		//currentItem can be invisible because initially only the next date
-		// (and not all upcoming dates) are shown for a course
-		if(currentItem.isVisible()){
-			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
-			convertView.setVisibility(View.VISIBLE);
-		}
-		else{
-			convertView.setLayoutParams(new AbsListView.LayoutParams(-1,1));
-			convertView.setVisibility(View.GONE);
-		}
+		convertView.setOnClickListener(new MyOnClickListener(convertView, parent, currentItem));
 
 
 		final TextView courseTitle = (TextView) convertView.findViewById(R.id.textview_mytimetable_dialog_courseTitle);
@@ -168,10 +149,8 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 		final ToggleButton btnAddCourse = (ToggleButton) convertView.findViewById(R.id.btnAddCourse);
 		btnAddCourse.setActivated(currentItem.isSubscribed());
 		btnAddCourse.setOnClickListener(new View.OnClickListener() {
-
 			@Override
 			public void onClick(final View v) {
-
 				btnAddCourse.setActivated(!btnAddCourse.isActivated());
 
 				if(btnAddCourse.isActivated()){
@@ -182,19 +161,26 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 			}
 		});
 
-		//set texts: study group list, course time and day
-
+		//set study group list text view
 		final TextView textStudyGroupList = (TextView) convertView.findViewById(R.id.textview_mytimetable_dialog_studygroups);
 		textStudyGroupList.setText(currentItem.getStudyGroupListString());
 
-		final Date dateStartDate = new java.util.Date(currentItem.getFirstEvent().getFullDateWithStartTime());
+		//set course date text views but only show first if not expanded
+		final LinearLayout layoutDates = (LinearLayout) convertView.findViewById(R.id.layout_my_time_table_course_dates);
+
+		TextView dateTextview = new TextView(mContext);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+		params.setMargins(0,5,5,10);
+		dateTextview.setLayoutParams(params);
+
+		TimeTableEventVo event = currentItem.getFirstEvent();
+		final Date dateStartDate = new java.util.Date(event.getFullDateWithStartTime());
 		//final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
 		final String date = sdf.format(dateStartDate);
 		final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(dateStartDate);
-
-		final TextView textEventTime = (TextView) convertView.findViewById(R.id.textCourseTime);
-		textEventTime.setText(dayOfWeek + ", " + date + "  "
-				+ currentItem.getFirstEvent().getStartTime() + " – " + currentItem.getFirstEvent().getEndTime()); // $NON-NLS
+		dateTextview.setText(dayOfWeek + ", " + date + "  "
+				+ event.getStartTime() + " – " + event.getEndTime()); // $NON-NLS
+		layoutDates.addView(dateTextview);
 
 
 		convertView.setVisibility(View.VISIBLE); //otherwise it will sometimes be invisible
@@ -203,5 +189,54 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 	}
 
 
+
 	private static final DateFormat sdf = SimpleDateFormat.getDateInstance();
+
+
+	/**
+	 * Listener for click on course datetime
+	 */
+	private class MyOnClickListener implements View.OnClickListener{
+
+		final private View convertView;
+		final private MyTimeTableCourseComponent currentCourse;
+		final private ViewGroup parent;
+
+		MyOnClickListener(final View view, final ViewGroup parent, final MyTimeTableCourseComponent currentItem){
+			convertView = view;
+			currentCourse = currentItem;
+			this.parent = parent;
+		}
+
+		@Override
+		public void onClick(View view) {
+			//remove first datetime textview to avoid duplicates
+			final LinearLayout layoutDates = convertView.findViewById(R.id.layout_my_time_table_course_dates);
+			final int layoutDatesSize = layoutDates.getChildCount();
+			layoutDates.removeAllViews();
+
+			List<TimeTableEventVo> eventList = new ArrayList<>();
+			//if list is expanded then reduce
+			if(layoutDatesSize > 1) eventList.add(currentCourse.getFirstEvent());
+			else eventList = currentCourse.getEvents();
+
+			for (final TimeTableEventVo event : eventList){
+				TextView dateTextview = new TextView(mContext);
+				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+				params.setMargins(0,5,5,10);
+				dateTextview.setLayoutParams(params);
+
+				final Date dateStartDate = new java.util.Date(event.getFullDateWithStartTime());
+				//final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
+				final String date = sdf.format(dateStartDate);
+				final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(dateStartDate);
+				dateTextview.setText(dayOfWeek + ", " + date + "  "
+						+ event.getStartTime() + " – " + event.getEndTime()); // $NON-NLS
+				layoutDates.addView(dateTextview);
+
+			}
+			convertView.invalidate();
+			convertView.setVisibility(View.VISIBLE);
+		}
+	}
 }

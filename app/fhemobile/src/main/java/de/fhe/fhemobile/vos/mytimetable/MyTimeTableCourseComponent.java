@@ -148,6 +148,18 @@ public class MyTimeTableCourseComponent implements Parcelable {
 		this.subscribed = added;
 	}
 
+	public boolean containsEvent(TimeTableEventVo _Event){
+		for(TimeTableEventVo event : events){
+			if(event.getTitle().equals(_Event.getTitle())
+					&& event.getFullDateWithStartTime() == _Event.getFullDateWithStartTime()
+					&& event.getEndTime().equals(_Event.getEndTime())
+					&& event.getRoom().equals(_Event.getRoom())){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	/**
 	 * Check if to components belong to the same course
 	 * @param other

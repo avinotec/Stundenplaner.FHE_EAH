@@ -78,18 +78,6 @@
 		android:textAppearance="@style/TextAppearance.AppCompat.Medium"
 		android:visibility="visible" />
 
-	<TextView
-		android:id="@+id/textCourseTime"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_below="@+id/textview_mytimetable_dialog_studygroups"
-		android:layout_marginStart="16dp"
-		android:layout_marginLeft="16dp"
-		android:layout_marginTop="5dp"
-		android:layout_marginBottom="10dp"
-		android:text="Time"
-		android:textAppearance="@style/TextAppearance.AppCompat.Small" />
-
 
 	<ToggleButton
 		android:id="@+id/btnAddCourse"
@@ -97,7 +85,7 @@
 		android:layout_height="30dp"
 		android:layout_below="@+id/layout_mytimetable_dialog_header"
 		android:layout_alignTop="@id/textview_mytimetable_dialog_label_sets"
-		android:layout_alignBottom="@id/textCourseTime"
+		android:layout_alignBottom="@id/layout_my_time_table_course_dates"
 		android:layout_alignParentEnd="true"
 		android:layout_centerVertical="true"
 		android:layout_marginTop="0dp"
@@ -108,5 +96,16 @@
 		android:contentDescription="Button to add a course"
 		android:textOff=""
 		android:textOn="" />
+
+	<LinearLayout
+		android:id="@+id/layout_my_time_table_course_dates"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignStart="@id/textview_mytimetable_dialog_label_sets"
+		android:layout_toLeftOf="@id/btnAddCourse"
+		android:layout_below="@+id/textview_mytimetable_dialog_studygroups"
+		android:layout_marginTop="5dp"
+		android:layout_marginBottom="5dp"
+		android:orientation="vertical" />
 
 </RelativeLayout>

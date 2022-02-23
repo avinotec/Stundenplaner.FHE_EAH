@@ -178,7 +178,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                     alreadyExistingCourse.addStudyGroup(studyGroup);
                                 }
                                 //if needed, add event to course
-                                if (!alreadyExistingCourse.getEvents().contains(timeTableEvent)){
+                                if (!alreadyExistingCourse.containsEvent(timeTableEvent)){
                                     alreadyExistingCourse.addEvent(timeTableEvent);
                                 }
                             }
@@ -370,5 +370,6 @@ public class MyTimeTableDialogFragment extends DialogFragment {
      *  wir warten, bis alle Antworten eingetroffen sind.
      */
     private volatile int requestCounter = 0;
+
 
 }
