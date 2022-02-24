@@ -31,7 +31,7 @@
     <string name="drawer_events" >Veranstaltungskalender</string>
     <string name="drawer_navigation" >Campusnavigation</string>
 
-    <string name="reallyClose">Drücken Sie zweimal Zurück zum Verlassen</string>
+    <string name="reallyClose">Zum Verlassen zweimal Zurück drücken</string>
 
     <string name="phonebook_firstname" >Vorname</string>
     <string name="phonebook_lastname" >Nachname</string>
@@ -57,7 +57,7 @@
     <string name="maps_up" >Etage höher</string>
     <string name="maps_down" >Etage runter</string>
 
-    <string name="timetable_headline" >Bitte wähle deinen Studiengang. (Deine Auswahl kannst du jederzeit in den Einstellungen ändern)</string>
+    <string name="timetable_headline" >Bitte wähle einen Studiengang.</string>
     <string name="timetable_study_program" >Studiengang</string>
     <string name="timetable_study_group" >Gruppe</string>
     <string name="timetable_term" >Fachsemester</string>
@@ -67,7 +67,7 @@
     <string name="timetable_switch" >Auswahl speichern</string>
     <string name="timetable_reset" >Auswahl löschen</string>
     <string name="timetable_week" >Kalenderwoche</string>
-    <string name="timetable_error_incomplete" >Bitte füll alle benötigten Felder aus.</string>
+    <string name="timetable_error_incomplete" >Bitte fülle alle benötigten Felder aus.</string>
 
     <string name="aqua_open" >Geöffnet</string>
     <string name="aqua_closed" >Geschlossen</string>
@@ -77,7 +77,7 @@
 
     <string name="network_error" >Keine Daten gefunden.</string>
 
-    <string name="title_activity_maps" >Lageplan</string>
+    <string name="title_activity_maps" >Lagepläne</string>
     <!-- string name="title_activity_time_table_events" >Stundenplan</string -->
 
     <string name="appwidget_news" >FH News Listen</string>

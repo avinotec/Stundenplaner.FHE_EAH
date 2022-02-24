@@ -43,7 +43,7 @@
     <dimen name="list_header_vertical_padding">12dp</dimen>
     <dimen name="list_header_horizontal_padding">16dp</dimen>
 
-    <dimen name="list_header_height">48dp</dimen>
+    <dimen name="list_header_height">44dp</dimen>
     
     <dimen name="list_header_text_size">16sp</dimen>
     <dimen name="list_header_big_text_size">20sp</dimen>

@@ -24,12 +24,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
-import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableOverviewFragment;
 
 
 public class MyTimeTableCalendarView extends LinearLayout {
@@ -45,8 +41,8 @@ public class MyTimeTableCalendarView extends LinearLayout {
 
 
 
-    public void initializeView(final FragmentManager _Manager) {
-        mFragmentManager = _Manager;
+    public void initializeView(final OnClickListener onClickListener) {
+        onClickListenerBtnModifySchedule = onClickListener;
     }
 
     @Override
@@ -56,20 +52,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
 
         // button "modify schedule"
         final Button mBtnModifySchedule = (Button) findViewById(R.id.btn_mytimetable_calendar_modify_Schedule);
-        mBtnModifySchedule.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-
-                //todo: listener ins Fragment verlagern
-                //((MainActivity) getActivity()).changeFragment() ...
-
-                final FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                transaction.replace(R.id.container, new MyTimeTableOverviewFragment(), MyTimeTableOverviewFragment.TAG)
-                        .addToBackStack(MyTimeTableOverviewFragment.TAG)
-                        .commit();
-                //Wechsle zum EditorFragment (MyTimeTableOverviewFragment) mittels backstack
-            }
-        });
+        mBtnModifySchedule.setOnClickListener(onClickListenerBtnModifySchedule);
 
         //TODO Behelf, soll automatisch auf den aktuellen Eintrag vorgesprungen werden
         final Button mJumpCurrentLesson = (Button) findViewById(R.id.btn_mytimetable_calendar_jump_to_today);
@@ -83,7 +66,9 @@ public class MyTimeTableCalendarView extends LinearLayout {
         mCalendarListView.setAdapter(MainActivity.myTimeTableCalendarAdapter);
     }
 
-    // Springen auf den aktuellen Tag
+    /**
+     * View scrolls to today
+     */
     public void jumpToToday(){
         final int currentDayIndex = MainActivity.myTimeTableCalendarAdapter.getPositionOfFirstCourseToday();
         if(currentDayIndex >= 0){
@@ -91,17 +76,6 @@ public class MyTimeTableCalendarView extends LinearLayout {
         }
     }
 
-
-
-
-// --Commented out by Inspection START (02.11.2021 17:22):
-//    private void createAddDialog(){
-//        final FragmentManager fm = mFragmentManager;
-//        MyTimeTableDialogFragment myTimeTableDialogFragment = MyTimeTableDialogFragment.newInstance();
-//        myTimeTableDialogFragment.show(fm, "fragment_edit_name");
-//
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:22)
 
     /**
      * Sets view to show if the course list is empty
@@ -113,7 +87,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
     }
 
 
-    private FragmentManager   mFragmentManager;
+    private OnClickListener onClickListenerBtnModifySchedule;
 
     private ListView mCalendarListView;
 

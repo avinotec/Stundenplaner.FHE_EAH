@@ -421,7 +421,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     /**
     Hier wird dafuer gesorgt, dass wenn in der Root-Activity der Back-Button gedrückt wird, erst beim 2. Mal Back-Button die App geschlossen wird.
     Die Variable backPressedTwice wird beim ersten Betätigen gesetzt und es wird ein Thread verzögert gestartet. In dem Thread wird die Variable
-    wieder zurückgesetzt. Nur wenn "backPressedTwice" gesetzt ist, und der Back-Button ein zweites mal betätigt wird, wird die App beendet.
+    wieder zurückgesetzt. Nur wenn "backPressedTwice" gesetzt ist, und der Back-Button ein zweites Mal betätigt wird, wird die App beendet.
     APP_CLOSING_DOUBLECLICK_DELAY_TIME (Standard 2000 ms)
     */
     private boolean backPressedTwice = false;

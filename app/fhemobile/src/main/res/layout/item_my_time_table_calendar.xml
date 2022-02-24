@@ -22,51 +22,19 @@
 	android:layout_height="wrap_content"
 	android:paddingBottom="10dp">
 
-    <RelativeLayout
-        android:id="@+id/layout_mytimetable_calendar_header"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/list_header_height"
-        android:paddingLeft="@dimen/list_header_horizontal_padding"
-        android:paddingRight="@dimen/list_header_horizontal_padding"
-        android:paddingTop="@dimen/list_item_vertical_padding"
-        android:paddingBottom="@dimen/list_item_vertical_padding"
-        android:background="@color/list_header_background">
-
-        <TextView
-            android:id="@+id/textviewWeekDay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="Weekday"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/list_header_text"
-            android:visibility="visible" />
-
-        <TextView
-            android:id="@+id/tvCourseDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="5dp"
-            android:text="Date"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/list_header_text"
-            android:visibility="visible" />
-    </RelativeLayout>
+    <include layout="@layout/item_header_text_default" />
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/itemHeader"
         android:minHeight="@dimen/list_double_item_height"
         android:paddingLeft="@dimen/list_item_horizontal_padding"
-        android:paddingRight="@dimen/list_item_horizontal_padding"
         android:paddingTop="@dimen/list_item_vertical_padding"
-        android:paddingBottom="@dimen/list_item_vertical_padding"
-        android:layout_below="@+id/layout_mytimetable_calendar_header"
-        >
+        android:paddingRight="@dimen/list_item_horizontal_padding"
+        android:paddingBottom="@dimen/list_item_vertical_padding">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Heading"
+                android:text="Time"
                 android:textColor="@color/primary_light"
                 android:textSize="@dimen/abc_text_size_body_1_material" />
 
@@ -91,7 +59,7 @@
                 android:gravity="center_horizontal"
                 android:text="Lecturer"
                 android:textColor="@color/primary_light"
-                android:textStyle="italic"/>
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/textviewRoom"
@@ -115,8 +83,7 @@
             android:gravity="center_vertical"
             android:text="Title"
             android:textColor="@color/primary_light"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
 
     </RelativeLayout>
 

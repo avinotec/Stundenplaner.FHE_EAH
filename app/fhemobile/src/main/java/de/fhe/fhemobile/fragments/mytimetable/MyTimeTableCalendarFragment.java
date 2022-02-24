@@ -45,7 +45,7 @@ import de.fhe.fhemobile.views.mytimetable.MyTimeTableCalendarView;
 public class MyTimeTableCalendarFragment extends FeatureFragment {
 
 	private MyTimeTableCalendarView mView;
-	private static final String PREFS_LAST_APP_OPENED = "lastAppOpened";
+	public static final String TAG = "TimeTableFragment"; //$NON-NLS
 
 	/**
 	 * Use this factory method to create a new instance of
@@ -75,7 +75,15 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 	                         final Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		mView = (MyTimeTableCalendarView) inflater.inflate(R.layout.fragment_my_time_table_calendar, container, false);
-		mView.initializeView(getActivity().getSupportFragmentManager());
+
+		View.OnClickListener onClickListenerBtnModifySchedule = new View.OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				((MainActivity) getActivity()).changeFragment(MyTimeTableOverviewFragment.newInstance(),
+						true, TAG);
+			}
+		};
+		mView.initializeView(onClickListenerBtnModifySchedule);
 
 		askForTimeTableDeletionAfterTurnOfSemester();
 
@@ -94,7 +102,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		//lastAppOpened muss dabei ungleich 0 sein, gleich 0 bedeutet, die App wurde vorher noch nicht gestartet.
 		// in Sekunden seit 1970, Unixtime
 		final SharedPreferences sharedPreferences = getContext().getSharedPreferences(SP_MYTIMETABLE, Context.MODE_PRIVATE);
-		final long lastAppOpened = sharedPreferences.getLong(PREFS_LAST_APP_OPENED, 0);
+		final long lastAppOpened = sharedPreferences.getLong(Define.PREFS_LAST_APP_OPENED, 0);
 
 		final Calendar calLastOpened = Calendar.getInstance(new Locale("de", "DE"));
 		calLastOpened.setTimeInMillis(lastAppOpened);
@@ -137,7 +145,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		}
 		//Speichere das letzte Datum, wann die App geöffnet wurde, damit wir nur beim Semesterwechsel gefragt werden.
 		SharedPreferences.Editor editor = sharedPreferences.edit();
-		editor.putLong(PREFS_LAST_APP_OPENED, new Date().getTime());
+		editor.putLong(Define.PREFS_LAST_APP_OPENED, new Date().getTime());
 		editor.apply();
 	}
 

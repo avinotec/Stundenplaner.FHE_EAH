@@ -29,9 +29,11 @@ public class Define {
 	public static final String SP_MYTIMETABLE = "my_time_table";
 	public static final String PREF_SUBSCRIBED_COURSES = "my_time_table_courses";
 
+	public static final String PREFS_LAST_APP_OPENED = "lastAppOpened";
+
 	public static final String SP_NAVIGATION = "navigation";
 
-	//created by Nadja 17.11.2021
+    //created by Nadja 17.11.2021
 	public static class Maps{
 		public static final String BUILDING_03_02_01_FLOOR_UG1 = "building_03_02_01_floor_ug1";   //$NON-NLS
 		public static final String BUILDING_03_02_01_FLOOR_00 = "building_03_02_01_floor_00";   //$NON-NLS

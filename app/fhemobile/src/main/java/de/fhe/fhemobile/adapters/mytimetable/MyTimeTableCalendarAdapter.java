@@ -22,7 +22,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -30,17 +29,21 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
+/**
+ * Edited by Nadja - 01/2022
+ */
 public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 	private static final String TAG = "MyTTCalenderAdapter";
 
 	private final Context context;
-	private List<MyTimeTableCourseComponent> mItems;
+	private final List<MyTimeTableCourseComponent> mItems;
 
 
 	public MyTimeTableCalendarAdapter(final Context context, final List<MyTimeTableCourseComponent> mItems) {
@@ -114,14 +117,26 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 		final MyTimeTableCourseComponent currentItem = mItems.get(position);
 		final Date df = new Date(currentItem.getFirstEvent().getFullDateWithStartTime());
 
-		final TextView courseWeekDay = (TextView) convertView.findViewById(R.id.textviewWeekDay);
-		courseWeekDay.setText(currentItem.getFirstEvent().getDayOfWeek());
+		final TextView weekdayHeader = (TextView) convertView.findViewById(R.id.itemHeader);
+		String weekDay = currentItem.getFirstEvent().getDayOfWeek();
+		//add "today" in brackets to mark today's day
 		if(sdf.format(df).compareTo(sdf.format(new Date())) == 0){
-			courseWeekDay.setText(context.getString(R.string.today) + " ("+currentItem.getFirstEvent().getDayOfWeek() + ")");
+			weekDay = context.getString(R.string.today) + " ("+currentItem.getFirstEvent().getDayOfWeek() + ")";
+		}
+		weekDay += ", " + new SimpleDateFormat("dd.MM.yy",
+				Locale.getDefault()).format(currentItem.getFirstEvent().getFullDateWithStartTime());
+		weekdayHeader.setText(weekDay);
+		//Add a header displaying WeekDay and Date
+		// if such a header has already been added with other courses at the same date,
+		// then do not add header again (set it invisible for this item)
+		if(position == 0 || !currentItem.getFirstEvent().getDate().equals(
+				mItems.get(position - 1).getFirstEvent().getDate())){
+			weekdayHeader.setVisibility(View.VISIBLE);
+		}
+		else{
+			weekdayHeader.setVisibility(View.GONE);
 		}
 
-		final TextView courseDate = (TextView) convertView.findViewById(R.id.tvCourseDate);
-		courseDate.setText(currentItem.getFirstEvent().getDate());
 
 		final TextView courseTitle = (TextView) convertView.findViewById(R.id.textviewTitle);
 		courseTitle.setText(currentItem.getFirstEvent().getGuiTitle());
@@ -135,23 +150,6 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 		final TextView courseLecturer = (TextView)convertView.findViewById(R.id.textviewLecturer);
 		courseLecturer.setText(currentItem.getFirstEvent().getLecturer());
-
-
-		//Add a header displaying WeekDay and Date
-		// if such a header has already been added with other courses at the same date,
-		// then do not add header again (set it invisible for this item)
-		final RelativeLayout headerLayout = convertView.findViewById(R.id.layout_mytimetable_calendar_header);
-		if(position == 0 || !currentItem.getFirstEvent().getDate().equals(
-				mItems.get(position - 1).getFirstEvent().getDate())){
-			headerLayout.setVisibility(View.VISIBLE);
-			courseWeekDay.setVisibility(View.VISIBLE);
-			courseDate.setVisibility(View.VISIBLE);
-		}
-		else{
-			headerLayout.setVisibility(View.GONE);
-			courseWeekDay.setVisibility(View.GONE);
-			courseDate.setVisibility(View.GONE);
-		}
 
 
 		return convertView;
