@@ -42,17 +42,16 @@ public class MyTimeTableCalendarView extends LinearLayout {
 
 
     public void initializeView(final OnClickListener onClickListener) {
-        onClickListenerBtnModifySchedule = onClickListener;
+        // button "modify schedule"
+        final Button mBtnModifySchedule = (Button) findViewById(R.id.btn_mytimetable_calendar_modify_Schedule);
+        mBtnModifySchedule.setOnClickListener(onClickListener);
+
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         mCalendarListView = (ListView) findViewById(R.id.listview_mytimetable_calendar_courses);
-
-        // button "modify schedule"
-        final Button mBtnModifySchedule = (Button) findViewById(R.id.btn_mytimetable_calendar_modify_Schedule);
-        mBtnModifySchedule.setOnClickListener(onClickListenerBtnModifySchedule);
 
         //TODO Behelf, soll automatisch auf den aktuellen Eintrag vorgesprungen werden
         final Button mJumpCurrentLesson = (Button) findViewById(R.id.btn_mytimetable_calendar_jump_to_today);
@@ -86,8 +85,6 @@ public class MyTimeTableCalendarView extends LinearLayout {
         mCalendarListView.setEmptyView(emptyView);
     }
 
-
-    private OnClickListener onClickListenerBtnModifySchedule;
 
     private ListView mCalendarListView;
 

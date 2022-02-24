@@ -27,28 +27,40 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.comparator.TimeTableEventComparator;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
 /**
- * Edited by Nadja - 01/2022
+ * Edited by Nadja - 02/2022
  */
 public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 	private static final String TAG = "MyTTCalenderAdapter";
 
 	private final Context context;
-	private final List<MyTimeTableCourseComponent> mItems;
+	private final List<TimeTableEventVo> mItems = new ArrayList<>();
 
 
-	public MyTimeTableCalendarAdapter(final Context context, final List<MyTimeTableCourseComponent> mItems) {
+	public MyTimeTableCalendarAdapter(final Context context, final List<MyTimeTableCourseComponent> items) {
 		this.context = context;
-		this.mItems = mItems;
+
+		//add all events of all subscribed courses to calendar
+		for(MyTimeTableCourseComponent course : items){
+			for(TimeTableEventVo event : course.getEvents()){
+				if(!this.mItems.contains(event)){
+					this.mItems.add(event);
+				}
+			}
+		}
+		Collections.sort(this.mItems, new TimeTableEventComparator());
 	}
 
 
@@ -60,7 +72,6 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	@Override
 	public int getCount() {
 		return mItems != null ? mItems.size() : 0;
-		//return 0;
 	}
 
 	/**
@@ -70,7 +81,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	 * @return The data at the specified position.
 	 */
 	@Override
-	public MyTimeTableCourseComponent getItem(int position) {
+	public TimeTableEventVo getItem(int position) {
 		return mItems.get(position);
 	}
 
@@ -82,7 +93,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	 */
 	@Override
 	public long getItemId(int position) {
-		//note: position is correct
+		//note: returning position is intended - no mistake
 		return position;
 	}
 
@@ -112,25 +123,25 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 					inflate(R.layout.item_my_time_table_calendar, parent, false);
 		}
 
+		final TimeTableEventVo currentItem = mItems.get(position);
 
-		//set TextViews Week, Day, Title,... for the currentItem
-		final MyTimeTableCourseComponent currentItem = mItems.get(position);
-		final Date df = new Date(currentItem.getFirstEvent().getFullDateWithStartTime());
 
-		final TextView weekdayHeader = (TextView) convertView.findViewById(R.id.itemHeader);
-		String weekDay = currentItem.getFirstEvent().getDayOfWeek();
-		//add "today" in brackets to mark today's day
-		if(sdf.format(df).compareTo(sdf.format(new Date())) == 0){
-			weekDay = context.getString(R.string.today) + " ("+currentItem.getFirstEvent().getDayOfWeek() + ")";
-		}
-		weekDay += ", " + new SimpleDateFormat("dd.MM.yy",
-				Locale.getDefault()).format(currentItem.getFirstEvent().getFullDateWithStartTime());
-		weekdayHeader.setText(weekDay);
 		//Add a header displaying WeekDay and Date
-		// if such a header has already been added with other courses at the same date,
-		// then do not add header again (set it invisible for this item)
-		if(position == 0 || !currentItem.getFirstEvent().getDate().equals(
-				mItems.get(position - 1).getFirstEvent().getDate())){
+		// if such a header has already been added with another event at that date,
+		// then do not add header again (set invisible)
+		final TextView weekdayHeader = (TextView) convertView.findViewById(R.id.itemHeader);
+		if(position == 0
+				|| !currentItem.getDate().equals(mItems.get(position - 1).getDate())){
+
+			String weekDay = currentItem.getDayOfWeek();
+			final Date df = new Date(currentItem.getFullDateWithStartTime());
+			//if necessary, add "today" in brackets to mark today's day
+			if(sdf.format(df).compareTo(sdf.format(new Date())) == 0){
+				weekDay = context.getString(R.string.today) + " ("+currentItem.getDayOfWeek() + ")";
+			}
+			weekDay += ", " + new SimpleDateFormat("dd.MM.yy",
+					Locale.getDefault()).format(currentItem.getFullDateWithStartTime());
+			weekdayHeader.setText(weekDay);
 			weekdayHeader.setVisibility(View.VISIBLE);
 		}
 		else{
@@ -138,18 +149,18 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 		}
 
 
+		//set texts: title, time, room, lecturer
 		final TextView courseTitle = (TextView) convertView.findViewById(R.id.textviewTitle);
-		courseTitle.setText(currentItem.getFirstEvent().getGuiTitle());
+		courseTitle.setText(currentItem.getGuiTitle());
 
 		final TextView courseTime = (TextView) convertView.findViewById(R.id.textCourseTime);
-		//String date = sdf.format(df);
-		courseTime.setText(currentItem.getFirstEvent().getStartTime() + " – " + currentItem.getFirstEvent().getEndTime()); // $NON-NLS
+		courseTime.setText(currentItem.getStartTime() + " – " + currentItem.getEndTime()); // $NON-NLS
 
 		final TextView courseRoom = (TextView)convertView.findViewById(R.id.textviewRoom);
-		courseRoom.setText(currentItem.getFirstEvent().getRoom());
+		courseRoom.setText(currentItem.getRoom());
 
 		final TextView courseLecturer = (TextView)convertView.findViewById(R.id.textviewLecturer);
-		courseLecturer.setText(currentItem.getFirstEvent().getLecturer());
+		courseLecturer.setText(currentItem.getLecturer());
 
 
 		return convertView;
@@ -171,7 +182,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 		for(int i = 0; i < mItems.size(); i++){
 
-			final TimeTableEventVo event = mItems.get(i).getFirstEvent();
+			final TimeTableEventVo event = mItems.get(i);
 			final Date now = new Date();
 
 			try {
