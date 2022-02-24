@@ -386,26 +386,15 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             // Wenn das Fragment MyTimeTableOverviewFragment irgendwo eingeblendet ist, dann wollen wir einfach auf dem Backstack wieder zurück,
 
             final FragmentManager fragmentManager = getSupportFragmentManager();
-            final Fragment aMyTimeTableOverviewFragment = fragmentManager.findFragmentByTag(MyTimeTableOverviewFragment.TAG);
-            final Fragment aNavigationFragment = fragmentManager.findFragmentByTag(NavigationFragment.TAG);
-
-            if ( aMyTimeTableOverviewFragment != null
-                || aNavigationFragment != null) {
-                // go back
-                super.onBackPressed();
-                return;
-            }
-
-            // in all other cases: leave the app
 
             //if there is no previous page, close app
             /*
              * Zum Beenden der App muss zwei Mal zurück gedrückt werden.
              ' Damit wird vermieden, dass man aus Versehen beim Klicken auf "zurück" aus der App herausgeht.
              */
-            if (backPressedTwice) {
+            if (backPressedTwice || fragmentManager.getBackStackEntryCount() > 0) {
 
-                // we go really one step back and destroy the app
+                // we go really one step back and if back pressed twice, destroy the app
                 super.onBackPressed();
                 return;
             }
