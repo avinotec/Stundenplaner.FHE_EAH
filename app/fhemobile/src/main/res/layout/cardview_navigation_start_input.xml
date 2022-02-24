@@ -55,7 +55,7 @@
                     android:layout_height="48dp"
                     android:textColorHint="#757575"
                     android:imeOptions="actionSearch"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:maxLines="1"
                     />
 
