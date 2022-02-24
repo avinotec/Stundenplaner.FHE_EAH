@@ -171,11 +171,25 @@ public class PersonSearchFragment extends FeatureFragment {
      */
     private boolean validateInputAndSetStartRoom(){
 
-        final String input = mView.getStartInputText();
+        String input = mView.getStartInputText();
 
         boolean valid = false;
         //a room number has been entered
         if(input != null){
+
+            //if room number has been entered without separating dots
+            if(input.matches("\\d{6}")){
+                input = input.substring(0,1) +"."+ input.substring(2,3) +"."+ input.substring(4,5);
+            }
+            //if room number has been entered without leading zeros
+            else if(!input.matches("\\d{2}\\.\\d{2}\\.\\d{2}")
+                    && input.matches("\\d{1,2}\\.\\d{1,2}\\.\\d{1,2}")){
+
+                String[] inputArray = input.split("\\.");
+                input = (String.format("%2s", inputArray[0]) + "."
+                        + String.format("%2s", inputArray[1]) + "."
+                        + String.format("%2s", inputArray[2])).replace(" ", "0");
+            }
 
             //check room list for matching names
             for (final Room room : MainActivity.rooms){
