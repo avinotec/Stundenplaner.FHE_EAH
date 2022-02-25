@@ -36,7 +36,7 @@
         android:background="@color/list_header_background">
 
 		<TextView
-			android:id="@+id/textview_mytimetable_overview_courseTitle"
+			android:id="@+id/tv_mytimetable_courseTitle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignParentTop="true"
@@ -91,7 +91,7 @@
 		android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
 	<TextView
-		android:id="@+id/textviewRoom"
+		android:id="@+id/tv_mytimetable_overview_room"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_below="@+id/textview_mytimetable_overview_studygroups"
@@ -111,7 +111,7 @@
 		android:layout_height="40dp"
 		android:layout_below="@+id/layout_mytimetable_overview_header"
 		android:layout_alignTop="@id/textview_mytimetable_overview_sets_label"
-		android:layout_alignBottom="@id/textviewRoom"
+		android:layout_alignBottom="@id/tv_mytimetable_overview_room"
 		android:layout_alignParentRight="true"
 		android:layout_marginTop="-5dp"
 		android:layout_marginEnd="-5dp"

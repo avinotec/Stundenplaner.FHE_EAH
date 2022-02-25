@@ -62,7 +62,7 @@
                 android:textStyle="italic" />
 
             <TextView
-                android:id="@+id/textviewRoom"
+                android:id="@+id/tv_mytimetable_overview_room"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

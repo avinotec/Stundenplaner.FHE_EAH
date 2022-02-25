@@ -53,15 +53,16 @@ public class MyTimeTableCourseComponent implements Parcelable {
 	}
 
 
-	public MyTimeTableCourseComponent(final TimeTableStudyProgramVo studyProgram,
-									  final TimeTableSemesterVo semester,
+	public MyTimeTableCourseComponent(
+									//final TimeTableStudyProgramVo studyProgram, //currently not used - Nadja 02/2022
+									  //final TimeTableSemesterVo semester, //currently not used - Nadja 02/2022
 									  final TimeTableEventVo event,
 									  final String studyGroup,
 									  final boolean subscribed) {
 		this.mTitle = getCourseComponentName(event);
 		this.mCourse = getCourseName(event);
-		this.studyProgram = studyProgram;
-		this.semester = semester;
+		//this.studyProgram = studyProgram; //currently not used - Nadja 02/2022
+		//this.semester = semester; //currently not used - Nadja 02/2022
 		events.add(event);
 		studyGroups.add(studyGroup);
 		this.subscribed = subscribed;
@@ -70,19 +71,20 @@ public class MyTimeTableCourseComponent implements Parcelable {
 	/**
 	 * Creates a new instance of {@link MyTimeTableCourseComponent}
 	 * and automatically sets the subscribed status
-	 * @param studyProgram study program the course belongs to
-	 * @param semester semester the course belongs to
+	// * @param studyProgram study program the course belongs to
+	 //* @param semester semester the course belongs to
 	 * @param event the event to initialize the event list with
 	 * @param studyGroup the study group the course is dedicated to and that to initialize the study group list with
 	 */
-	public MyTimeTableCourseComponent(final TimeTableStudyProgramVo studyProgram,
-									  final TimeTableSemesterVo semester,
+	public MyTimeTableCourseComponent(
+								//final TimeTableStudyProgramVo studyProgram, //currently not used - Nadja 02/2022
+									  //final TimeTableSemesterVo semester, //currently not used - Nadja 02/2022
 									  final TimeTableEventVo event,
 									  final TimeTableStudyGroupVo studyGroup) {
 		this.mTitle = getCourseComponentName(event.getTitle());
 		this.mCourse = getCourseName(event);
-		this.studyProgram = studyProgram;
-		this.semester = semester;
+		//this.studyProgram = studyProgram; //currently not used - Nadja 02/2022
+		//this.semester = semester; //currently not used - Nadja 02/2022
 		events.add(event);
 		studyGroups.add(studyGroup.getShortTitle());
 
@@ -98,9 +100,11 @@ public class MyTimeTableCourseComponent implements Parcelable {
 
 	public String getCourse() { return mCourse; }
 
-	public final TimeTableStudyProgramVo getStudyProgram() { return studyProgram; }
+	//currently not used - Nadja 02/2022
+	//public final TimeTableStudyProgramVo getStudyProgram() { return studyProgram; }
 
-	public final TimeTableSemesterVo getSemester() { return semester; }
+	//currently not used - Nadja 02/2022
+	//public final TimeTableSemesterVo getSemester() { return semester; }
 
 	public List<TimeTableEventVo> getEvents() { return events; }
 
@@ -108,7 +112,8 @@ public class MyTimeTableCourseComponent implements Parcelable {
 
 	public final void setStudyProgram(final TimeTableStudyProgramVo course) { this.studyProgram = course; }
 
-	public final void setSemester(final TimeTableSemesterVo semester) { this.semester = semester; }
+	//currently not used - Nadja 02/2022
+	//public final void setSemester(final TimeTableSemesterVo semester) { this.semester = semester; }
 
 	public void setEvents(List<TimeTableEventVo> events) {
 		this.events = events;
@@ -195,8 +200,11 @@ public class MyTimeTableCourseComponent implements Parcelable {
 	public MyTimeTableCourseComponent copy(){
 		final MyTimeTableCourseComponent copy = new MyTimeTableCourseComponent();
 		copy.id = MyTimeTableCourseComponent.incId++;
-		copy.setStudyProgram(this.getStudyProgram());
-		copy.setSemester(this.getSemester());
+
+		//currently not used - Nadja 02/2022
+		/*copy.setStudyProgram(this.getStudyProgram());
+		copy.setSemester(this.getSemester());*/
+
 		copy.setStudyGroups(this.getStudyGroups());
 		copy.setSubscribed(this.subscribed);
 		return copy;
@@ -232,7 +240,8 @@ public class MyTimeTableCourseComponent implements Parcelable {
 		mTitle = in.readString();
 		mCourse = in.readString();
 		studyProgram = in.readParcelable(TimeTableStudyProgramVo.class.getClassLoader());
-		semester = in.readParcelable(TimeTableSemesterVo.class.getClassLoader());
+		//currently not used - Nadja 02/2022
+		//semester = in.readParcelable(TimeTableSemesterVo.class.getClassLoader());
 
 		studyGroups = new ArrayList<>();
 		int sizeStudyGroups = in.readInt();
@@ -259,7 +268,8 @@ public class MyTimeTableCourseComponent implements Parcelable {
 		dest.writeString(mTitle);
 		dest.writeString(mCourse);
 		dest.writeParcelable(studyProgram, flags);
-		dest.writeParcelable(semester, flags);
+		//currently not used - Nadja 02/2022
+		//dest.writeParcelable(semester, flags);
 
 		//sizes needed for reading parcelable
 		dest.writeInt(studyGroups.size());
@@ -297,8 +307,9 @@ public class MyTimeTableCourseComponent implements Parcelable {
 	@SerializedName("studyProgram")
 	private TimeTableStudyProgramVo studyProgram;
 
-	@SerializedName("semester")
-	private TimeTableSemesterVo semester;
+	//currently not used - Nadja 02/2022
+//	@SerializedName("semester")
+//	private TimeTableSemesterVo semester;
 
 	@SerializedName("studyGroups")
 	private List<String> studyGroups = new ArrayList<>();

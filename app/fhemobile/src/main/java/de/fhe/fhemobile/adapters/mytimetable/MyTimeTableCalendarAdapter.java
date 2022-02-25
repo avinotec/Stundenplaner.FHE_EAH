@@ -137,7 +137,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 			final Date df = new Date(currentItem.getFullDateWithStartTime());
 			//if necessary, add "today" in brackets to mark today's day
 			if(sdf.format(df).compareTo(sdf.format(new Date())) == 0){
-				weekDay = context.getString(R.string.today) + " ("+currentItem.getDayOfWeek() + ")";
+				weekDay = "(" + context.getString(R.string.today) + ") "+currentItem.getDayOfWeek();
 			}
 			weekDay += ", " + new SimpleDateFormat("dd.MM.yy",
 					Locale.getDefault()).format(currentItem.getFullDateWithStartTime());
@@ -156,7 +156,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 		final TextView courseTime = (TextView) convertView.findViewById(R.id.textCourseTime);
 		courseTime.setText(currentItem.getStartTime() + " – " + currentItem.getEndTime()); // $NON-NLS
 
-		final TextView courseRoom = (TextView)convertView.findViewById(R.id.textviewRoom);
+		final TextView courseRoom = (TextView)convertView.findViewById(R.id.tv_mytimetable_overview_room);
 		courseRoom.setText(currentItem.getRoom());
 
 		final TextView courseLecturer = (TextView)convertView.findViewById(R.id.textviewLecturer);

@@ -163,8 +163,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                             if ( alreadyExistingCourse == null ) {
                                 //note: with this constructor "subscribed" is set automatically
                                 MyTimeTableCourseComponent courseToAdd = new MyTimeTableCourseComponent(
-                                        mChosenStudyProgram,
-                                        mChosenSemester,
+                                        //mChosenStudyProgram, //currently not used - Nadja 02/2022
+                                        //mChosenSemester, //currently not used - Nadja 02/2022
                                         timeTableEvent,
                                         studyGroup);
 

@@ -23,7 +23,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -31,7 +30,6 @@ import android.widget.ToggleButton;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -129,8 +127,8 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 		convertView.setOnClickListener(new MyOnClickListener(convertView, parent, currentItem));
 
 
-		final TextView courseTitle = (TextView) convertView.findViewById(R.id.textview_mytimetable_dialog_courseTitle);
-		final RelativeLayout headerLayout = convertView.findViewById(R.id.layout_mytimetable_dialog_header);
+		final TextView courseTitle = (TextView) convertView.findViewById(R.id.tv_mytimetable_courseTitle);
+		final RelativeLayout headerLayout = convertView.findViewById(R.id.layout_mytimetable_course_header);
 
 		//Add a header displaying the course title
 		// if such a header has already been added because of processing another component of the course
@@ -146,7 +144,7 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 		}
 
 
-		final ToggleButton btnAddCourse = (ToggleButton) convertView.findViewById(R.id.btnAddCourse);
+		final ToggleButton btnAddCourse = (ToggleButton) convertView.findViewById(R.id.btn_mytimetable_add_or_remove_course);
 		btnAddCourse.setActivated(currentItem.isSubscribed());
 		btnAddCourse.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -162,11 +160,11 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 		});
 
 		//set study group list text view
-		final TextView textStudyGroupList = (TextView) convertView.findViewById(R.id.textview_mytimetable_dialog_studygroups);
+		final TextView textStudyGroupList = (TextView) convertView.findViewById(R.id.tv_mytimetable_studygroups);
 		textStudyGroupList.setText(currentItem.getStudyGroupListString());
 
 		//set course date text views but only show first if not expanded
-		final LinearLayout layoutDates = (LinearLayout) convertView.findViewById(R.id.layout_my_time_table_course_dates);
+		final LinearLayout layoutDates = (LinearLayout) convertView.findViewById(R.id.layout_my_time_table_course_events);
 
 		TextView dateTextview = new TextView(mContext);
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -211,7 +209,7 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 		@Override
 		public void onClick(View view) {
 			//remove first datetime textview to avoid duplicates
-			final LinearLayout layoutDates = convertView.findViewById(R.id.layout_my_time_table_course_dates);
+			final LinearLayout layoutDates = convertView.findViewById(R.id.layout_my_time_table_course_events);
 			final int layoutDatesSize = layoutDates.getChildCount();
 			layoutDates.removeAllViews();
 

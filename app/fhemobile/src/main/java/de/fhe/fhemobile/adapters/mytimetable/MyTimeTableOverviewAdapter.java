@@ -141,7 +141,7 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 
 		//set text of courseTitle
 		final TextView courseTitle = (TextView) convertView.findViewById(
-				R.id.textview_mytimetable_overview_courseTitle);
+				R.id.tv_mytimetable_courseTitle);
 		courseTitle.setText(currentItem.getFirstEvent().getGuiTitle());
 
 
@@ -203,7 +203,7 @@ public class MyTimeTableOverviewAdapter extends BaseAdapter {
 		textEventTime.setText(dayOfWeek + ", " + date + "  "
 				+ currentItem.getFirstEvent().getStartTime() + " – " + currentItem.getFirstEvent().getEndTime()); // $NON-NLS
 
-		final TextView textRoom = (TextView) convertView.findViewById(R.id.textviewRoom);
+		final TextView textRoom = (TextView) convertView.findViewById(R.id.tv_mytimetable_overview_room);
 		textRoom.setText(currentItem.getFirstEvent().getRoom());
 
 

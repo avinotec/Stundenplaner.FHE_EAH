@@ -55,6 +55,7 @@ import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableCalendarAdapter;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableOverviewAdapter;
+import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableOverviewAdapterNEW;
 import de.fhe.fhemobile.fragments.DrawerFragment;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     public static ArrayList<Room> rooms = new ArrayList<>();
 
     public static MyTimeTableCalendarAdapter myTimeTableCalendarAdapter;
-    public static MyTimeTableOverviewAdapter myTimeTableOverviewAdapter;
+    public static MyTimeTableOverviewAdapterNEW myTimeTableOverviewAdapter;
 
 
     @Override
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         mTitle = getTitle();
 
 
-        myTimeTableOverviewAdapter = new MyTimeTableOverviewAdapter(
+        myTimeTableOverviewAdapter = new MyTimeTableOverviewAdapterNEW(
                 Main.getAppContext(), subscribedCourseComponents);
 
         myTimeTableCalendarAdapter = new MyTimeTableCalendarAdapter(
@@ -380,10 +381,6 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                 return;
             }
 
-            //Sonderbehandlung für myTimetable (Mein Stundenplan)
-            // im Fragment MyTimeTableCalendarFragment wird im ---R.id.container--- das Fragment zum
-            // Editieren des Courses eingeblendet "MyTimeTableOverviewFragment". Und nicht das gesamte Fragment ausgetauscht.
-            // Wenn das Fragment MyTimeTableOverviewFragment irgendwo eingeblendet ist, dann wollen wir einfach auf dem Backstack wieder zurück,
 
             final FragmentManager fragmentManager = getSupportFragmentManager();
 
