@@ -27,16 +27,11 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.comparator.CourseTitleComparator;
-import de.fhe.fhemobile.comparator.TimeTableEventComparator;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
 /**
@@ -146,16 +141,16 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 
 		//set texts: title, time, room, lecturer
-		final TextView courseTitle = (TextView) convertView.findViewById(R.id.textviewTitle);
+		final TextView courseTitle = (TextView) convertView.findViewById(R.id.tv_mytimetable_calendar_eventtitle);
 		courseTitle.setText(currentItem.getGuiTitle());
 
-		final TextView courseTime = (TextView) convertView.findViewById(R.id.textCourseTime);
+		final TextView courseTime = (TextView) convertView.findViewById(R.id.tv_mytimetable_calendar_eventtime);
 		courseTime.setText(currentItem.getStartTime() + " – " + currentItem.getEndTime()); // $NON-NLS
 
-		final TextView courseRoom = (TextView)convertView.findViewById(R.id.tv_mytimetable_overview_room);
+		final TextView courseRoom = (TextView)convertView.findViewById(R.id.tv_mytimetable_calendar_room);
 		courseRoom.setText(currentItem.getRoom());
 
-		final TextView courseLecturer = (TextView)convertView.findViewById(R.id.textviewLecturer);
+		final TextView courseLecturer = (TextView)convertView.findViewById(R.id.tv_mytimetable_calendar_lecturer);
 		courseLecturer.setText(currentItem.getLecturer());
 
 

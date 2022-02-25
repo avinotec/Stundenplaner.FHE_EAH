@@ -119,7 +119,7 @@ public class TimeTableEventVo implements Parcelable {
 // --Commented out by Inspection STOP (02.11.2021 17:34)
 
     public String getLecturer() {
-        return mLecturer;
+        return correctUmlauts(mLecturer);
     }
 
     public void setLecturer(final String _lecturer) {

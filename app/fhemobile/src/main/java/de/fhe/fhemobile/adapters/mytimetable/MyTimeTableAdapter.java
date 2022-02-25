@@ -229,7 +229,7 @@ public abstract class MyTimeTableAdapter extends BaseAdapter {
         final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(dateStartDate);
         String courseDateText = dayOfWeek + ", " + date + "  "
                 + event.getStartTime() + " – " + event.getEndTime();
-        if(roomVisible) courseDateText += "  "+ event.getRoom();
+        if(roomVisible && event.getRoom().length() > 0) courseDateText += "\n"+ event.getRoom();
         dateTextview.setText(courseDateText); // $NON-NLS
         layoutAllEvents.addView(dateTextview);
     }

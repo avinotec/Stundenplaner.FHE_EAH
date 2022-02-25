@@ -16,76 +16,78 @@
   ~
   -->
 
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:paddingBottom="10dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <include layout="@layout/item_header_text_default" />
 
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/itemHeader"
-        android:minHeight="@dimen/list_double_item_height"
-        android:paddingLeft="@dimen/list_item_horizontal_padding"
-        android:paddingTop="@dimen/list_item_vertical_padding"
-        android:paddingRight="@dimen/list_item_horizontal_padding"
-        android:paddingBottom="@dimen/list_item_vertical_padding">
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        android:paddingLeft="@dimen/list_header_horizontal_padding"
+        android:paddingRight="@dimen/list_header_horizontal_padding">
+
+        <TextView
+            android:id="@+id/tv_mytimetable_calendar_eventtime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:gravity="left"
+            android:padding="2dp"
+            android:text="Time"
+            android:textColor="@color/primary_light"
+            android:textSize="@dimen/abc_text_size_body_1_material" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:layout_weight="0.5"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textCourseTime"
-                android:layout_width="0dp"
+                android:id="@+id/tv_mytimetable_calendar_eventtitle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="Time"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="Title"
                 android:textColor="@color/primary_light"
-                android:textSize="@dimen/abc_text_size_body_1_material" />
+                android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/textviewLecturer"
-                android:layout_width="0dp"
+                android:id="@+id/tv_mytimetable_calendar_lecturer"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:gravity="center_horizontal"
+                android:padding="2dp"
+                android:paddingTop="7dp"
                 android:text="Lecturer"
                 android:textColor="@color/primary_light"
                 android:textStyle="italic" />
-
-            <TextView
-                android:id="@+id/tv_mytimetable_overview_room"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="Room"
-                android:textColor="@color/primary_light"
-                android:textSize="@dimen/abc_text_size_body_1_material" />
-
         </LinearLayout>
 
-
         <TextView
-            android:id="@+id/textviewTitle"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_mytimetable_calendar_room"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:gravity="center_vertical"
-            android:text="Title"
+            android:layout_weight="0.25"
+            android:gravity="right"
+            android:lines="2"
+            android:padding="2dp"
+            android:singleLine="false"
+            android:text="Room"
             android:textColor="@color/primary_light"
-            android:textSize="16sp" />
+            android:textSize="@dimen/abc_text_size_body_1_material" />
+    </LinearLayout>
 
-    </RelativeLayout>
 
-
-</RelativeLayout>
+</LinearLayout>
