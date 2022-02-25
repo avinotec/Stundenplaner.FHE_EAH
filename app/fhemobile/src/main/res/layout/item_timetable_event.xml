@@ -75,7 +75,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:gravity="right"
-            android:lines="2"
             android:padding="2dp"
             android:singleLine="false"
             android:text="Room"
