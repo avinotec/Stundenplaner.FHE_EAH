@@ -120,7 +120,7 @@ public abstract class MyTimeTableAdapter extends BaseAdapter {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).
-                    inflate(R.layout.item_my_time_table_dialog, parent, false);
+                    inflate(R.layout.item_my_time_table, parent, false);
         }
 
         final MyTimeTableCourseComponent currentItem = mItems.get(position);
@@ -150,7 +150,7 @@ public abstract class MyTimeTableAdapter extends BaseAdapter {
 
         final Button btnAddCourse = (Button) convertView.findViewById(R.id.btn_mytimetable_add_or_remove_course);
         btnAddCourse.setActivated(currentItem.isSubscribed());
-        btnAddCourse.setOnClickListener(getAddCourseBtnOnClickListener(currentItem, parent, btnAddCourse));
+        btnAddCourse.setOnClickListener(getAddCourseBtnOnClickListener(currentItem, btnAddCourse));
 
         //set study group list text view
         final TextView textStudyGroupList = (TextView) convertView.findViewById(R.id.tv_mytimetable_studygroups);
@@ -176,7 +176,7 @@ public abstract class MyTimeTableAdapter extends BaseAdapter {
      * @return an onClickListener for the button to add a course
      */
     protected abstract View.OnClickListener getAddCourseBtnOnClickListener(
-            MyTimeTableCourseComponent currentItem, ViewGroup parent, Button btnAddCourse);
+            MyTimeTableCourseComponent currentItem, Button btnAddCourse);
 
 
 

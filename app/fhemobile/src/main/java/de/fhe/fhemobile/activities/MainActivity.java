@@ -16,6 +16,7 @@
  */
 package de.fhe.fhemobile.activities;
 
+import static de.fhe.fhemobile.Main.getAllSubscribedTimeTableEvents;
 import static de.fhe.fhemobile.Main.getAppContext;
 import static de.fhe.fhemobile.Main.getSubscribedCourseComponents;
 import static de.fhe.fhemobile.Main.subscribedCourseComponents;
@@ -37,7 +38,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -55,13 +55,10 @@ import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableCalendarAdapter;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableOverviewAdapter;
-import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableOverviewAdapterNEW;
 import de.fhe.fhemobile.fragments.DrawerFragment;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
 import de.fhe.fhemobile.fragments.impressum.ImpressumFragment;
-import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableOverviewFragment;
-import de.fhe.fhemobile.fragments.navigation.NavigationFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdata.SemesterDataWebViewFragment;
 import de.fhe.fhemobile.models.navigation.Room;
@@ -90,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     public static ArrayList<Room> rooms = new ArrayList<>();
 
     public static MyTimeTableCalendarAdapter myTimeTableCalendarAdapter;
-    public static MyTimeTableOverviewAdapterNEW myTimeTableOverviewAdapter;
+    public static MyTimeTableOverviewAdapter myTimeTableOverviewAdapter;
 
 
     @Override
@@ -106,11 +103,11 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         mTitle = getTitle();
 
 
-        myTimeTableOverviewAdapter = new MyTimeTableOverviewAdapterNEW(
+        myTimeTableOverviewAdapter = new MyTimeTableOverviewAdapter(
                 Main.getAppContext(), subscribedCourseComponents);
 
-        myTimeTableCalendarAdapter = new MyTimeTableCalendarAdapter(
-                Main.getAppContext(), subscribedCourseComponents);
+        myTimeTableCalendarAdapter = new MyTimeTableCalendarAdapter(Main.getAppContext());
+        myTimeTableCalendarAdapter.setItems(getAllSubscribedTimeTableEvents());
 
 
         // Set up the drawer.
@@ -440,6 +437,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
         saveSubscribedCourseComponentsToSharedPreferences();
 
+        myTimeTableCalendarAdapter.setItems(getAllSubscribedTimeTableEvents());
         myTimeTableCalendarAdapter.notifyDataSetChanged();
         myTimeTableOverviewAdapter.notifyDataSetChanged();
     }
@@ -451,6 +449,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
         saveSubscribedCourseComponentsToSharedPreferences();
 
+        myTimeTableCalendarAdapter.setItems(getAllSubscribedTimeTableEvents());
         myTimeTableCalendarAdapter.notifyDataSetChanged();
         myTimeTableOverviewAdapter.notifyDataSetChanged();
     }

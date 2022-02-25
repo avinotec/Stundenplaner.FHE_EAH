@@ -4,33 +4,37 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
 
 import java.util.List;
 
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
 
-public class MyTimeTableOverviewAdapterNEW extends MyTimeTableAdapter{
+public class MyTimeTableDialogAdapterNEW extends MyTimeTableAdapter{
 
     private static final String TAG = "MyTimeTableOverviewAdapter";
 
-    public MyTimeTableOverviewAdapterNEW(Context context, List<MyTimeTableCourseComponent> _items) {
+    public MyTimeTableDialogAdapterNEW(Context context) {
         super(context);
-        setItems(_items);
-        setRoomVisible(true);
+        setRoomVisible(false);
     }
 
 
     @Override
     protected View.OnClickListener getAddCourseBtnOnClickListener(
-            final MyTimeTableCourseComponent currentItem, final ViewGroup parent, final Button btnAddCourse) {
+            final MyTimeTableCourseComponent currentItem, final Button btnAddCourse) {
 
         return new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
 
-                MainActivity.removeFromSubscribedCourseComponentsAndUpdateAdapters(currentItem);
+                btnAddCourse.setActivated(!btnAddCourse.isActivated());
+
+                if(btnAddCourse.isActivated()){
+                    MainActivity.addToSubscribedCourseComponentsAndUpdateAdapters(currentItem);
+                }else{
+                    MainActivity.removeFromSubscribedCourseComponentsAndUpdateAdapters(currentItem);
+                }
             }
         };
     }

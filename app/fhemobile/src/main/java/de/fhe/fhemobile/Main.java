@@ -36,9 +36,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import de.fhe.fhemobile.comparator.CourseDateComparator;
+import de.fhe.fhemobile.comparator.TimeTableEventComparator;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
+import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
 
 /**
@@ -104,6 +106,20 @@ public class Main extends Application {
 
     public static ArrayList<MyTimeTableCourseComponent> getSubscribedCourseComponents(){
         return subscribedCourseComponents;
+    }
+
+    public static ArrayList<TimeTableEventVo> getAllSubscribedTimeTableEvents(){
+        ArrayList<TimeTableEventVo> eventList = new ArrayList<>();
+
+        for(MyTimeTableCourseComponent course : subscribedCourseComponents){
+            for(TimeTableEventVo event : course.getEvents()){
+                if(!eventList.contains(event)){
+                    eventList.add(event);
+                }
+            }
+        }
+        Collections.sort(eventList, new TimeTableEventComparator());
+        return eventList;
     }
 
     //MS 201908 Multidex apk introduced

@@ -116,7 +116,7 @@ public class MyTimeTableDialogAdapter extends BaseAdapter {
 
 		if (convertView == null) {
 			convertView = LayoutInflater.from(mContext).
-					inflate(R.layout.item_my_time_table_dialog, parent, false);
+					inflate(R.layout.item_my_time_table, parent, false);
 		}
 
 		final MyTimeTableCourseComponent currentItem = mItems.get(position);

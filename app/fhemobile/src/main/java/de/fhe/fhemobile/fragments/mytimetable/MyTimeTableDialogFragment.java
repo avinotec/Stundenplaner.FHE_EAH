@@ -37,6 +37,7 @@ import java.util.List;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableDialogAdapter;
+import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableDialogAdapterNEW;
 import de.fhe.fhemobile.comparator.CourseTitleComparator;
 import de.fhe.fhemobile.network.MyTimeTableCallback;
 import de.fhe.fhemobile.network.NetworkHandler;
@@ -102,7 +103,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         mChosenStudyProgram = null;
         mChosenSemester = null;
 
-	    mCourseListAdapter = new MyTimeTableDialogAdapter(getAppContext());
+	    mCourseListAdapter = new MyTimeTableDialogAdapterNEW(getAppContext());
     }
 
     @Override
@@ -364,7 +365,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     //list of courses for the study course and semester currently chosen in MyTimeTableDialog
     private List<MyTimeTableCourseComponent> allCoursesInChosenSemester = new ArrayList<>();
 
-    private MyTimeTableDialogAdapter mCourseListAdapter;
+    private MyTimeTableDialogAdapterNEW mCourseListAdapter;
 
     /** es gibt zu EINEM Request unterschiedliche Anzahl von Anforderungen und Antworten
      *  wir warten, bis alle Antworten eingetroffen sind.

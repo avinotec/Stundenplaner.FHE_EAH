@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Locale;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.comparator.CourseTitleComparator;
 import de.fhe.fhemobile.comparator.TimeTableEventComparator;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
@@ -46,21 +47,15 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	private static final String TAG = "MyTTCalenderAdapter";
 
 	private final Context context;
-	private final List<TimeTableEventVo> mItems = new ArrayList<>();
+	private List<TimeTableEventVo> mItems;
 
 
-	public MyTimeTableCalendarAdapter(final Context context, final List<MyTimeTableCourseComponent> items) {
+	public MyTimeTableCalendarAdapter(final Context context) {
 		this.context = context;
+	}
 
-		//add all events of all subscribed courses to calendar
-		for(MyTimeTableCourseComponent course : items){
-			for(TimeTableEventVo event : course.getEvents()){
-				if(!this.mItems.contains(event)){
-					this.mItems.add(event);
-				}
-			}
-		}
-		Collections.sort(this.mItems, new TimeTableEventComparator());
+	public void setItems(List<TimeTableEventVo> items){
+		mItems = items;
 	}
 
 
@@ -118,6 +113,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	 */
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
+
 		if (convertView == null) {
 			convertView = LayoutInflater.from(context).
 					inflate(R.layout.item_my_time_table_calendar, parent, false);
@@ -214,6 +210,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 		}
 		return posToday;
 	}
+
 
 	//private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 	private static final DateFormat sdf = SimpleDateFormat.getDateInstance();
