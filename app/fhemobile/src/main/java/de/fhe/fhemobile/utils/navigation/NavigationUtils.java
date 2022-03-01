@@ -26,8 +26,8 @@ public class NavigationUtils {
      * All files concerning the floorplan of a certain complex and floor have the same name
      * (just different file extension e.g. json or png and different locations)
      * e.g. "building_05_floor_ug1" or "building_03_02_01_floor_02"
-     * @param complex
-     * @param floor (e.g. "ug1", "00", "02", "3Z")
+     * @param complex the complex of the floor plan
+     * @param floor the floor of the floor plan (e.g. "ug1", "00", "02", "3Z")
      * @return name of the floorplan file
      */
     private static String getFileNameOfFloorPlan(final Complex complex, final String floor){

@@ -27,7 +27,7 @@ public class MapVo {
     /**
      * Map Value Object
      * @param _stringID id of the string resource for the name of the map e.g. "House 4: 1st floor"
-     * @param _imageUrl
+     * @param _imageUrl the image's url
      */
     public MapVo(final int _stringID, final String _imageUrl) {
         mNameID = _stringID;        //edited by Nadja 17.11.2021

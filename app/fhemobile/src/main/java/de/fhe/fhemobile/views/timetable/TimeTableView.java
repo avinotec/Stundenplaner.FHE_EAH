@@ -58,9 +58,9 @@ public class TimeTableView extends LinearLayout {
     public void setPagerItems(final ArrayList<TimeTableWeekVo> _Items) {
 
         mAdapter = new TimeTableWeekPagerAdapter(mFragmentManager, _Items);
-        if (BuildConfig.DEBUG) Assert.assertTrue( mAdapter != null );
+        if (BuildConfig.DEBUG) Assert.assertNotNull(mAdapter);
         mPager.setAdapter(mAdapter);
-        if (BuildConfig.DEBUG) Assert.assertTrue( mPager != null );
+        if (BuildConfig.DEBUG) Assert.assertNotNull(mPager);
         //if (BuildConfig.DEBUG) Assert.assertTrue( mPageIndicator != null );
 
         //TODO Simon, warum ist das null?

@@ -14,13 +14,12 @@ import de.fhe.fhemobile.fragments.navigation.RoomSearchFragment;
 
 public class NavigationDialogPagerAdapter extends FragmentStateAdapter {
 
-    ArrayList<FeatureFragment> fragments = new ArrayList<FeatureFragment>();
+    final ArrayList<FeatureFragment> fragments = new ArrayList<FeatureFragment>();
 
     public NavigationDialogPagerAdapter(@NonNull final FragmentManager fragmentManager, @NonNull final Lifecycle lifecycle){
         super(fragmentManager, lifecycle);
 
         fragments.add(new RoomSearchFragment());
-        //todo: person search
         fragments.add(new PersonSearchFragment());
     }
 
@@ -30,7 +29,6 @@ public class NavigationDialogPagerAdapter extends FragmentStateAdapter {
         switch (position){
             case 0:
                 return fragments.get(0);
-            //todo: person search
             case 1:
                 return fragments.get(1);
         }

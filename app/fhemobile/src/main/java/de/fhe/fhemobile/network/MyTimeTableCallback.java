@@ -37,9 +37,9 @@ public class MyTimeTableCallback<T> implements Callback<T> {
 
 
 	/**
-	 * @param studyProgram
-	 * @param semester
-	 * @param studyGroup
+	 * @param studyProgram the study program
+	 * @param semester the semester
+	 * @param studyGroup the study group
 	 */
 	public MyTimeTableCallback(@NonNull TimeTableStudyProgramVo studyProgram,
 							   @NonNull TimeTableSemesterVo semester,

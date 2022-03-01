@@ -264,10 +264,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
         }
 
-        /**
-         *
-         * @param _SemesterId
-         */
+
         @Override
         public void onSemesterChosen(String _SemesterId) {
             mView.toggleCourseListVisibility(false);
@@ -362,7 +359,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     private TimeTableStudyProgramVo mChosenStudyProgram;
     private TimeTableSemesterVo mChosenSemester;
     //list of courses for the study course and semester currently chosen in MyTimeTableDialog
-    private List<MyTimeTableCourseComponent> allCoursesInChosenSemester = new ArrayList<>();
+    private final List<MyTimeTableCourseComponent> allCoursesInChosenSemester = new ArrayList<>();
 
     private MyTimeTableDialogAdapter mCourseListAdapter;
 

@@ -72,11 +72,11 @@ public class Cell {
 
     /**
      * Overloaded constructor for cell type {@link Room} and {@link BuildingExit}
-     * @param xCoordinate
-     * @param yCoordinate
-     * @param building
-     * @param floor
-     * @param walkable
+     * @param xCoordinate the x coordinate of the {@link Cell}
+     * @param yCoordinate the y coordinate of the {@link Cell}
+     * @param building the building the {@link Cell} belongs to
+     * @param floor the floor the {@link Cell} belongs to
+     * @param walkable true if the cell can be passed, false if the cell is not navigable
      */
     public Cell(final int xCoordinate, final int yCoordinate, final String building, final String floor,
                 final boolean walkable, final int costPassingCell) {

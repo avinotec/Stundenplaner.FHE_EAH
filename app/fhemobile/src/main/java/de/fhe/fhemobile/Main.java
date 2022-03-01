@@ -23,7 +23,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import com.google.gson.Gson;
@@ -88,7 +87,7 @@ public class Main extends Application {
             subscribedCourseComponents = gson.fromJson(json, listType);
         }
 
-        Assert.assertTrue("onCreate(): subscribed courses is not initialized", subscribedCourseComponents != null);
+        Assert.assertNotNull("onCreate(): subscribed courses is not initialized", subscribedCourseComponents);
     }
 
     /**

@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
                     final Gson gson = new Gson();
                     final String json = gson.toJson(response.body());
-                    if (BuildConfig.DEBUG) Assert.assertTrue( !json.isEmpty() );
+                    if (BuildConfig.DEBUG) Assert.assertFalse(json.isEmpty());
 
                     Log.d(TAG, "onResponse: " + response.raw().request().url());
                     Log.d(TAG, "onResponse code: " + response.code() + " geparsed: " + json );

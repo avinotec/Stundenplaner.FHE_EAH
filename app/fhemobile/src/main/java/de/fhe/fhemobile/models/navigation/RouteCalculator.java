@@ -61,11 +61,12 @@ public class RouteCalculator {
 
 
     /**
-     * Constructor
+     * Constructs a new {@link RouteCalculator} object
      * @param context
-     * @param startLocation
-     * @param destLocation
-     * @param floorConnections
+     * @param startLocation the start room
+     * @param destLocation the destination room
+     * @param floorConnections the list of {@link FloorConnection}s
+     * @param buildingExits the list of {@link BuildingExit}s
      */
     public RouteCalculator(final Context context, final Room startLocation, final Room destLocation,
                            final ArrayList<FloorConnection> floorConnections, final ArrayList<BuildingExit> buildingExits) {
@@ -107,17 +108,15 @@ public class RouteCalculator {
                 // and determine Exit to use for entering the destination complex
                 BuildingExit buildingExit = null;
                 BuildingExit entry = null;
-                for(final Iterator<BuildingExit> it = buildingExits.iterator(); it.hasNext(); ){
-                    final BuildingExit buildingExitIt = it.next();
-
+                for (final BuildingExit buildingExitIt : buildingExits) {
                     //use exitIt as exit if exitIt belongs to start complex
                     // and is an exit to the destination complex
-                    if(buildingExitIt.getComplex() == startComplex){
-                        if(buildingExitIt.getExitTo().contains(destComplex)){
-                            if(buildingExit == null) {
+                    if (buildingExitIt.getComplex() == startComplex) {
+                        if (buildingExitIt.getExitTo().contains(destComplex)) {
+                            if (buildingExit == null) {
                                 buildingExit = buildingExitIt;
-                            }
-                            else Log.i(TAG,"More than one possible exit for complex "+startComplex.toString()+" to "+destComplex.toString());
+                            } else
+                                Log.i(TAG, "More than one possible exit for complex " + startComplex.toString() + " to " + destComplex.toString());
 
                             //exit and entry found
                             if (entry != null) break;
@@ -134,7 +133,7 @@ public class RouteCalculator {
                                 Log.i(TAG, "More than one possible entry to complex " + destComplex.toString() + " from complex " + startComplex.toString());
 
                             //exit and entry found
-                            if(buildingExit != null) break;
+                            if (buildingExit != null) break;
                         }
                     }
                 }
@@ -156,14 +155,6 @@ public class RouteCalculator {
             Log.e(TAG, "error getting navigation cells", e);
         }
 
-//        Log.i("_____TEST_CELLS_TO_WALK_size_____", String.valueOf(cellsToWalk.size()));
-
-//        if (BuildConfig.DEBUG) {
-//            for (Cell cellToWalk : cellsToWalk) {
-//                Log.i("_____TEST_CELLS_TO_WALK_b.f x.y_____", cellToWalk.getBuilding() + "." + cellToWalk.getFloor() + " "
-//                        + cellToWalk.getXCoordinate() + "." + cellToWalk.getYCoordinate());
-//            }
-//        }
         return cellsToWalk;
     }
 
@@ -216,8 +207,8 @@ public class RouteCalculator {
 
     /**
      * Builds a grid of all cells of a floorplan
-     * @param complex {@link Complex}
-     * @param floorInt floor as integer (ug = -1)
+     * @param complex the {@link Complex} of the floor plan
+     * @param floorInt the floor of the floor plan as integer (ug = -1)
      * @return floorgrid as 2D Arraylist with all cells of the floor
      */
     private Cell[][] buildFloorGrid(final Complex complex, final int floorInt) {

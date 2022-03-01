@@ -2,10 +2,7 @@ package de.fhe.fhemobile.adapters.mytimetable;
 
 import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-
-import java.util.List;
 
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;

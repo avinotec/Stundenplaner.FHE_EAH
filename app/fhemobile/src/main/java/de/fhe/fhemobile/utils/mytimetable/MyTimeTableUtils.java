@@ -24,7 +24,7 @@ public class MyTimeTableUtils {
      * (event titles have no such number if entered for the first time,
      * but later added events belonging to the same course get one)
      *
-     * @param event
+     * @param event an event that belongs to the {@link MyTimeTableCourseComponent}
      * @return string corresponding to the title that identifies a {@link MyTimeTableCourseComponent}
      */
     public static String getCourseComponentName(final TimeTableEventVo event){
@@ -36,7 +36,7 @@ public class MyTimeTableUtils {
      * (event titles have no such number if entered for the first time,
      * but later added events belonging to the same course get one)
      *
-     * @param title
+     * @param title the title of an event that belongs to the {@link MyTimeTableCourseComponent}
      * @return string corresponding to the title that identifies a {@link MyTimeTableCourseComponent}
      */
     public static String getCourseComponentName(final String title){
@@ -46,7 +46,7 @@ public class MyTimeTableUtils {
 
     /**
      * Returns the name of the course which equals the event's name without numbers at the end
-     * @param event
+     * @param event an event in the course
      * @return course name
      */
     public static String getCourseName(final TimeTableEventVo event){
@@ -56,7 +56,7 @@ public class MyTimeTableUtils {
 
     /**
      * Returns the name of the course which equals the event's name without numbers at the end
-     * @param title
+     * @param title the title of an event in the course
      * @return course name
      */
     public static String getCourseName(final String title){
@@ -69,7 +69,7 @@ public class MyTimeTableUtils {
     public static String getEventTitleWithoutEndingNumbers(final String title) {
 
         //cuts away everything after the last letter (a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß), which means that "/01.2" is cut
-        final Pattern p = Pattern.compile("^(.*[a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß])"); //$NON-NLS
+        final Pattern p = Pattern.compile("^(.*[a-zA-ZäÄüÜöÖß])"); //$NON-NLS
 
         String changeEventTitle = correctUmlauts(title);
         try {
@@ -86,7 +86,7 @@ public class MyTimeTableUtils {
             Log.e(TAG, "onResponse: ", e);
         }
 
-        changeEventTitle = changeEventTitle.replaceAll("^[\\||\\)|/]","");
+        changeEventTitle = changeEventTitle.replaceAll("^[|)/]","");
         return changeEventTitle;
     }
 
@@ -96,8 +96,8 @@ public class MyTimeTableUtils {
      * @param eventTitle
      * @return
      */
-    public static List<MyTimeTableCourseComponent> getCoursesByEventTitle(final List<MyTimeTableCourseComponent> list,
-                                                                          final String eventTitle){
+    public static List<MyTimeTableCourseComponent> getCoursesByEventTitle(
+            final List<MyTimeTableCourseComponent> list, final String eventTitle){
 
         final List<MyTimeTableCourseComponent> filteredEvents = new ArrayList<>();
         for (final MyTimeTableCourseComponent event : list) {

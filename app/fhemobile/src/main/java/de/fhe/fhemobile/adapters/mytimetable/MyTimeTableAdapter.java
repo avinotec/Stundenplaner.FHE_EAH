@@ -164,7 +164,9 @@ public abstract class MyTimeTableAdapter extends BaseAdapter {
         }
         setAndAddEventDataTextViews(currentItem.getFirstEvent(), layoutAllEvents);
 
-        convertView.setVisibility(View.VISIBLE); //otherwise it will sometimes be invisible
+        //otherwise it will sometimes be invisible
+        convertView.setVisibility(View.VISIBLE);
+
         convertView.setLayoutParams(new AbsListView.LayoutParams(-1,0));
         return convertView;
     }
@@ -218,8 +220,8 @@ public abstract class MyTimeTableAdapter extends BaseAdapter {
     }
 
     private void setAndAddEventDataTextViews(TimeTableEventVo event, LinearLayout layoutAllEvents){
-        TextView dateTextview = new TextView(mContext);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        final TextView dateTextview = new TextView(mContext);
+        final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         params.setMargins(0,5,5,10);
         dateTextview.setLayoutParams(params);
 

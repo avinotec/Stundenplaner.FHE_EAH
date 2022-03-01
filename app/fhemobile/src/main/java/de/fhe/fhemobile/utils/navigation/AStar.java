@@ -66,9 +66,9 @@ public class AStar {
 
     /**
      * Constructs an AStar Object
-     * @param startCell
-     * @param endCell
-     * @param floorCellGrids
+     * @param startCell the cell the algorithm should start with
+     * @param endCell the cell the algorithm should find a way to
+     * @param floorCellGrids the floor plans as grids the way can lead through
      */
     public AStar(final Cell startCell, final Cell endCell,
                  final HashMap<Complex, HashMap<Integer, Cell[][]>> floorCellGrids,
@@ -91,12 +91,7 @@ public class AStar {
         try {
             //Set priority queue with comparator (prioritize cells based on their costsPathToCell)
             openCells = new PriorityQueue<>(16, new Comparator<Cell>() {
-                /**
-                 *
-                 * @param cellOne
-                 * @param cellTwo
-                 * @return
-                 */
+
                 @Override
                 public int compare(final Cell cellOne, final Cell cellTwo) {
                     return Integer.compare(cellOne.getCostsPathToCell(), cellTwo.getCostsPathToCell());
@@ -131,7 +126,7 @@ public class AStar {
                     cellsToWalk.get(new BuildingFloorKey(currentCell)).add(currentCell);
                 }
                 else{
-                    final ArrayList<Cell> list = new ArrayList<Cell>();
+                    final ArrayList<Cell> list = new ArrayList<>();
                     list.add(currentCell);
                     cellsToWalk.put(new BuildingFloorKey(currentCell), list);
                 }
@@ -145,7 +140,7 @@ public class AStar {
                     cellsToWalk.get(new BuildingFloorKey(currentCell)).add(currentCell);
                 }
                 else{
-                    final ArrayList<Cell> list = new ArrayList<Cell>();
+                    final ArrayList<Cell> list = new ArrayList<>();
                     list.add(currentCell);
                     cellsToWalk.put(new BuildingFloorKey(currentCell), list);
                 }
@@ -158,7 +153,7 @@ public class AStar {
                     cellsToWalk.get(new BuildingFloorKey(currentCell)).add(currentCell);
                 }
                 else{
-                    final ArrayList<Cell> list = new ArrayList<Cell>();
+                    final ArrayList<Cell> list = new ArrayList<>();
                     list.add(currentCell);
                     cellsToWalk.put(new BuildingFloorKey(currentCell), list);
                 }
@@ -250,8 +245,8 @@ public class AStar {
 
     /**
      * Update parent cell for the particular cell and the costs for the path to the cell
-     * @param cell
-     * @param parentCell
+     * @param cell the cell to update
+     * @param parentCell the cell's parent
      */
     private void updateParentAndPathToCellCosts(final Cell cell, final Cell parentCell) {
 

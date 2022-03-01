@@ -35,7 +35,7 @@ public class Building {
 
     /**
      * Constructor for non-walkable cells without a building
-     * @param complex
+     * @param complex the {@link Complex} to use for initializing a {@link Building} object
      */
     Building(final Complex complex){
         this.mBuilding = "_";

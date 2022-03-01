@@ -31,18 +31,18 @@ import java.util.ArrayList;
 public class BuildingExit extends Cell{
 
     // this exit should be use when changing to the complex "exitTo"
-    private final ArrayList<Complex> exitTo = new ArrayList<Complex>();
+    private final ArrayList<Complex> exitTo = new ArrayList<>();
     // this entry should be use when changing from complex "entryFrom"
-    private final ArrayList<Complex> entryFrom = new ArrayList<Complex>();
+    private final ArrayList<Complex> entryFrom = new ArrayList<>();
 
     /**
      *
-     * @param xCoordinate
-     * @param yCoordinate
-     * @param building
-     * @param floor
-     * @param exitTo list containing the buildings this exit should be used when changing to
-     * @param entryFrom the building of the exit should be entered via this exit when coming from the buildings of the entryFrom list
+     * @param xCoordinate the x coordinate of the {@link BuildingExit}
+     * @param yCoordinate the y coordinate of the {@link BuildingExit}
+     * @param building the building as string the {@link BuildingExit} belongs to
+     * @param floor the floor as string the {@link BuildingExit} belongs to
+     * @param exitTo list containing the buildings this {@link BuildingExit} should be used when changing to
+     * @param entryFrom the building of the {@link BuildingExit} should be entered via this exit when coming from the buildings of the entryFrom list
      */
     public BuildingExit(final int xCoordinate, final int yCoordinate, final String building, final String floor,
                         final ArrayList<String> exitTo, final ArrayList<String> entryFrom) {

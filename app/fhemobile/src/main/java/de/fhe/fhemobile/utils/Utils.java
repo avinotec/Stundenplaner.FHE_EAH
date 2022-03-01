@@ -46,7 +46,7 @@ public class Utils {
     public static String correctUmlauts(String str){
         //method added by Nadja - 05.01.2021
 
-        if ( BuildConfig.DEBUG ) Assert.assertTrue( str != null );
+        if ( BuildConfig.DEBUG ) Assert.assertNotNull(str);
 
         // falls der übergebene String tatsächlich null sein sollte :-(
         if ( str != null ) {

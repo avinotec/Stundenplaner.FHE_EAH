@@ -98,7 +98,7 @@ public class NavigationFragment extends FeatureFragment {
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (BuildConfig.DEBUG) Assert.assertTrue( getArguments() != null );
+        if (BuildConfig.DEBUG) Assert.assertNotNull(getArguments());
         final String start = getArguments().getString(PARAM_START);
         final String dest = getArguments().getString(PARAM_DEST);
 
@@ -254,7 +254,7 @@ public class NavigationFragment extends FeatureFragment {
      * Display route at the currently set building and floor (BuildingFloorKey)
      */
     private void drawRoute(){
-        if (BuildConfig.DEBUG) Assert.assertTrue( currentFloorPlan != null );
+        if (BuildConfig.DEBUG) Assert.assertNotNull(currentFloorPlan);
 
         if(!mStartRoom.getRoomName().equals(mDestRoom.getRoomName())) {
             // add route (path of cells) to overlay

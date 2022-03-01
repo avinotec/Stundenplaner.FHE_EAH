@@ -81,8 +81,7 @@ public class PersonSearchFragment extends FeatureFragment {
         mView.initializeView(getChildFragmentManager());
 
         persons = JSONHandler.loadPersons(getContext());
-        final List<Person> personList = new ArrayList();
-        personList.addAll(persons.values());
+        final List<Person> personList = new ArrayList<>(persons.values());
         mView.setPersonItems(personList);
 
         return mView;
@@ -179,7 +178,7 @@ public class PersonSearchFragment extends FeatureFragment {
 
             //if room number has been entered without separating dots
             if(input.matches("\\d{6}")){
-                input = input.substring(0,1) +"."+ input.substring(2,3) +"."+ input.substring(4,5);
+                input = input.substring(0,2) +"."+ input.substring(2,4) +"."+ input.substring(4,6);
             }
             //if room number has been entered without leading zeros
             else if(!input.matches("\\d{2}\\.\\d{2}\\.\\d{2}")

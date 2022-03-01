@@ -160,7 +160,7 @@ public class MyTimeTableCourseComponent implements Parcelable {
 
 	/**
 	 * Check if to components belong to the same course
-	 * @param other
+	 * @param other the {@link MyTimeTableCourseComponent} to compare to
 	 * @return true if components belong to the same course
 	 */
 	public boolean isSameCourse(final MyTimeTableCourseComponent other){

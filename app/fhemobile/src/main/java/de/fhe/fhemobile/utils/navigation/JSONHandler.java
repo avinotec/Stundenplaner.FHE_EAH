@@ -28,6 +28,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,24 +62,31 @@ public class JSONHandler {
 
     //reading --------------------------------------------------------------------------------------
     /**
-     * Read floorplan as json from assets
+     * Read the floor plan as json from assets
      * @param context
-     * @param jsonFile file name in assets
+     * @param jsonFile the file name in assets
      * @return read floor plan as json string
      */
     public static String readFloorGridFromAssets(final Context context, final String jsonFile){
-        final StringBuffer text = new StringBuffer();
+        final StringBuilder text = new StringBuilder();
 
         try {
             final InputStream input = context.getResources().getAssets().open(jsonFile);
-            final InputStreamReader reader = new InputStreamReader(input, StandardCharsets.UTF_8); //$NON-NLS
+            final InputStreamReader reader; //$NON-NLS
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                reader = new InputStreamReader(input, StandardCharsets.UTF_8);
+            }
+            //if android < 19
+            else {
+                reader = new InputStreamReader(input, Charset.forName("UTF-8"));
+            }
 
             final BufferedReader br = new BufferedReader(reader);
 
             for (String line; (line = br.readLine()) != null; ) {
                 text.append(line).append("\n");
             }
-        }catch (final Exception e){
+        } catch (final Exception e){
             Log.e(TAG, "reading floorplan from json failed", e);
         }
 
@@ -96,7 +104,7 @@ public class JSONHandler {
     public static String readFromAssets(final Context context, final String toRead){
         final String filename = toRead + ".json";
 
-        final StringBuffer text = new StringBuffer();
+        final StringBuilder text = new StringBuilder();
 
         try {
             final InputStream input = context.getResources().getAssets().open(filename);
@@ -119,7 +127,7 @@ public class JSONHandler {
 
     /**
      * Parse persons from json
-     * @param json
+     * @param json the json string
      * @return HashMap of {@link Person} objects, person's name used as key
      */
     public static HashMap<String, Person> parseJsonPersons(final String json){
@@ -148,7 +156,7 @@ public class JSONHandler {
 
     /**
      * Parse exits from json
-     * @param json
+     * @param json the json string
      * @return ArrayList of {@link BuildingExit} objects
      */
     public static ArrayList<BuildingExit> parseJsonExits(final String json){
@@ -193,7 +201,7 @@ public class JSONHandler {
 
     /**
      * Parse rooms from JSON
-     * @param json
+     * @param json the json string
      * @return ArrayList of {@link Room} objects
      */
     public static ArrayList<Room> parseJsonRooms(final String json) {
@@ -224,7 +232,7 @@ public class JSONHandler {
 
     /**
      * Parse floor connections from JSON
-     * @param json
+     * @param json the json string
      * @return ArrayList of {@link FloorConnection} objects
      */
     public static ArrayList<FloorConnection> parseJsonFloorConnection(final String json) {
@@ -267,7 +275,7 @@ public class JSONHandler {
 
     /**
      * Parse walkable cells from JSON
-     * @param json
+     * @param json the json string
      * @return ArrayList of walkable cells
      */
     public static HashMap<String, Cell> parseJsonWalkableCells(final String json) {

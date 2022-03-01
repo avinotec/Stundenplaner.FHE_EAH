@@ -21,6 +21,9 @@ import java.util.Comparator;
 
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
 
+/**
+ * Comparator for comparing study program by title
+ */
 public class StudyProgramComparator implements Comparator <TimeTableStudyProgramVo> {
 
 	@Override

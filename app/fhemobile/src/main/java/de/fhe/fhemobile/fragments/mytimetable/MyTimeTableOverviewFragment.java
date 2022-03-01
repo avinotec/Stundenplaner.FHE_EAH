@@ -152,7 +152,7 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 				@Override
 				public void onResponse(final Call<ResponseModel> call, final Response<ResponseModel> response) {
 
-					if (BuildConfig.DEBUG) Assert.assertTrue(response != null);
+					if (BuildConfig.DEBUG) Assert.assertNotNull(response);
 					//wieso assert und damit einen Absturz produzieren, wenn das einfach auftreten kann, wenn der Server nicht verfügbar ist?
 					//vorallem wenn darunter eh ein if das gleiche abfragt.
 					//	Assert.assertTrue( response.body() != null );
@@ -183,7 +183,7 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 
 					final Gson gson = new Gson();
 					final String json = gson.toJson(response.body());
-					if (BuildConfig.DEBUG) Assert.assertTrue(!json.isEmpty());
+					if (BuildConfig.DEBUG) Assert.assertFalse(json.isEmpty());
 
 					Log.d(TAG, "onResponse: " + response.raw().request().url());
 					Log.d(TAG, "onResponse code: " + response.code() + " geparsed: " + json);

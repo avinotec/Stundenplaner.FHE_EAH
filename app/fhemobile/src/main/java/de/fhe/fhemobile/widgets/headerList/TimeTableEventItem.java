@@ -38,11 +38,11 @@ public class TimeTableEventItem implements IBaseItem {
     private final String mPerson;
 
     /**
-     *
-     * @param _Time
-     * @param _Title
-     * @param _Room
-     * @param _Person
+     * Constructs a new {@link TimeTableEventItem} object
+     * @param _Time the time
+     * @param _Title the title
+     * @param _Room the room
+     * @param _Person the lecturer
      */
     public TimeTableEventItem(final String _Time, final String _Title, final String _Room, final String _Person) {
 
