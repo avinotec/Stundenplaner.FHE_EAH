@@ -98,12 +98,15 @@
     <string name="today">Today</string>
     <string name="my_time_table_overview_headline">My Courses</string>
 
+    <string name="deleteTimetableTitle">Semester Change</string>
+    <string name="deleteTimetableMessage">The semester is over. Do you want to clear your timetable?</string>
+    <string name="deleteTimeTableConfirm">Yes</string>
+    <string name="deleteTimeTableCancel">Cancel</string>
+
     <string name="impress_data_protection_link" translatable="false"><a href="https://www.eah-jena.de/datenschutz">Data protection</a></string>
     <string name="notification_error_ssl_cert_invalid">A SSL-Certificate occurred. Do you want to proceed?</string>
     <string name="ssl_error_continue">Continue</string>
     <string name="ssl_error_cancel">Cancel</string>
-    <string name="deleteTimetableTitle">Delete timetable?</string>
-    <string name="deleteTimetableMessage">The semester is over. Do you want to delete the timetable?</string>
 
     <!--    Campus Navigation -->
     <string name="title_scanner_activity">Scanner</string>

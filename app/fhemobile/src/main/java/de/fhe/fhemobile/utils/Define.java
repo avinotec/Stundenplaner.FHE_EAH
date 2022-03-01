@@ -29,7 +29,7 @@ public class Define {
 	public static final String SP_MYTIMETABLE = "my_time_table";
 	public static final String PREF_SUBSCRIBED_COURSES = "my_time_table_courses";
 
-	public static final String PREFS_LAST_APP_OPENED = "lastAppOpened";
+	public static final String PREFS_LAST_OPENED = "lastAppOpened";
 
 	public static final String SP_NAVIGATION = "navigation";
 

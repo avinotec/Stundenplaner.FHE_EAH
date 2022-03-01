@@ -100,12 +100,16 @@
     <string name="jump_to_current_lesson">>> Heute</string>
     <string name="today">Heute</string>
 
+    <string name="deleteTimetableTitle">Semesterwechsel</string>
+    <string name="deleteTimetableMessage">Das Semester ist zu Ende. Soll dein Stundenplan geleert werden?</string>
+    <string name="deleteTimeTableConfirm">Ja</string>
+    <string name="deleteTimeTableCancel">Abbrechen</string>
+
 
     <string name="notification_error_ssl_cert_invalid">Es ist ein Zertifikat-Fehler aufgetreten. Möchtest du die Seite trotzdem öffnen?</string>
     <string name="ssl_error_cancel">Abbrechen</string>
     <string name="ssl_error_continue">Fortfahren</string>
-    <string name="deleteTimetableTitle">Stundenplan löschen?</string>
-    <string name="deleteTimetableMessage">Das Semester ist zu Ende. Möchtest du den Stundenplan löschen?</string>
+
 
     <string name="mensa_food_no_data_available">Keine Daten verfügbar</string>
 

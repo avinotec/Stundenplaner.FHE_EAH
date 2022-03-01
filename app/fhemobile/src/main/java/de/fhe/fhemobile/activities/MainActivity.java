@@ -460,6 +460,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
         saveSubscribedCourseComponentsToSharedPreferences();
 
+        myTimeTableCalendarAdapter.setItems(getAllSubscribedTimeTableEvents());
         myTimeTableCalendarAdapter.notifyDataSetChanged();
         myTimeTableOverviewAdapter.notifyDataSetChanged();
     }
