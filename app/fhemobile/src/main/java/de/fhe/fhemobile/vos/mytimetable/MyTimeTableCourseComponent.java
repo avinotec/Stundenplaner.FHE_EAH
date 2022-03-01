@@ -54,7 +54,7 @@ public class MyTimeTableCourseComponent implements Parcelable {
 
 
 	public MyTimeTableCourseComponent(
-									//final TimeTableStudyProgramVo studyProgram, //currently not used - Nadja 02/2022
+									  //final TimeTableStudyProgramVo studyProgram, //currently not used - Nadja 02/2022
 									  //final TimeTableSemesterVo semester, //currently not used - Nadja 02/2022
 									  final TimeTableEventVo event,
 									  final String studyGroup,
@@ -77,7 +77,7 @@ public class MyTimeTableCourseComponent implements Parcelable {
 	 * @param studyGroup the study group the course is dedicated to and that to initialize the study group list with
 	 */
 	public MyTimeTableCourseComponent(
-								//final TimeTableStudyProgramVo studyProgram, //currently not used - Nadja 02/2022
+								      //final TimeTableStudyProgramVo studyProgram, //currently not used - Nadja 02/2022
 									  //final TimeTableSemesterVo semester, //currently not used - Nadja 02/2022
 									  final TimeTableEventVo event,
 									  final TimeTableStudyGroupVo studyGroup) {
@@ -110,7 +110,8 @@ public class MyTimeTableCourseComponent implements Parcelable {
 
 	public TimeTableEventVo getFirstEvent() {  return events.size() > 0 ? events.get(0) : null; }
 
-	public final void setStudyProgram(final TimeTableStudyProgramVo course) { this.studyProgram = course; }
+	//currently not used - Nadja 02/2022
+	//public final void setStudyProgram(final TimeTableStudyProgramVo course) { this.studyProgram = course; }
 
 	//currently not used - Nadja 02/2022
 	//public final void setSemester(final TimeTableSemesterVo semester) { this.semester = semester; }
@@ -135,14 +136,6 @@ public class MyTimeTableCourseComponent implements Parcelable {
 
 	public final int getId() {
 		return id;
-	}
-
-	public void setVisible(final boolean visible) {
-		this.visible = visible;
-	}
-
-	public final boolean isVisible() {
-		return visible;
 	}
 
 	public boolean isSubscribed() {
@@ -239,9 +232,9 @@ public class MyTimeTableCourseComponent implements Parcelable {
 	private MyTimeTableCourseComponent(final Parcel in) {
 		mTitle = in.readString();
 		mCourse = in.readString();
-		studyProgram = in.readParcelable(TimeTableStudyProgramVo.class.getClassLoader());
 		//currently not used - Nadja 02/2022
-		//semester = in.readParcelable(TimeTableSemesterVo.class.getClassLoader());
+		/*studyProgram = in.readParcelable(TimeTableStudyProgramVo.class.getClassLoader());
+		semester = in.readParcelable(TimeTableSemesterVo.class.getClassLoader()); */
 
 		studyGroups = new ArrayList<>();
 		int sizeStudyGroups = in.readInt();
@@ -267,9 +260,10 @@ public class MyTimeTableCourseComponent implements Parcelable {
 	public void writeToParcel(final Parcel dest, final int flags) {
 		dest.writeString(mTitle);
 		dest.writeString(mCourse);
-		dest.writeParcelable(studyProgram, flags);
+
 		//currently not used - Nadja 02/2022
-		//dest.writeParcelable(semester, flags);
+		/*dest.writeParcelable(studyProgram, flags);
+		dest.writeParcelable(semester, flags); */
 
 		//sizes needed for reading parcelable
 		dest.writeInt(studyGroups.size());
@@ -304,12 +298,13 @@ public class MyTimeTableCourseComponent implements Parcelable {
 	@SerializedName("course")
 	private String mCourse;
 
-	@SerializedName("studyProgram")
-	private TimeTableStudyProgramVo studyProgram;
+	//currently not used - Nadja 02/2022
+	/*@SerializedName("studyProgram")
+	private TimeTableStudyProgramVo studyProgram; */
 
 	//currently not used - Nadja 02/2022
-//	@SerializedName("semester")
-//	private TimeTableSemesterVo semester;
+	/*@SerializedName("semester")
+	private TimeTableSemesterVo semester; */
 
 	@SerializedName("studyGroups")
 	private List<String> studyGroups = new ArrayList<>();
@@ -321,28 +316,8 @@ public class MyTimeTableCourseComponent implements Parcelable {
 	private boolean subscribed = false;
 
 
-
-	private boolean visible = false;
-
 	private static int incId = 0;
 	private int id;
 
-
-
-/*
-	@NonNull
-	@Override
-	public final String toString() {
-		return this.getStudyProgram().getTitle() + "-->"
-				+ this.getSemester().getTitle() + "-->"
-				+ this.getStudyGroup().getTitle() + "-->"
-				+ this.getEventWeek().getWeekInYear() + "-->"
-				+ this.getEventDay().getDayInWeek() + "-->"
-				+ this.getEvent().getUid() + "-->"
-				+ this.getEvent().getTitle() + "-->"
-				+ this.getStudyGroups().size();
-
-	}
-*/
 }
 
