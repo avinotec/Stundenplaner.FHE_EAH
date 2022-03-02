@@ -20,6 +20,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.lifecycle.Lifecycle;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.ArrayList;
 
@@ -27,31 +29,34 @@ import de.fhe.fhemobile.fragments.timetable.TimeTableWeekFragment;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
 
 /**
- * Created by paul on 23.02.14.
+ * Created by paul on 23.02.14
+ * Updated by Nadja on 02.03.2022
  */
-public class TimeTableWeekPagerAdapter extends FragmentStatePagerAdapter {
+public class TimeTableWeekPagerAdapter extends FragmentStateAdapter {
 
-    public TimeTableWeekPagerAdapter(final FragmentManager fm, final ArrayList<TimeTableWeekVo> _Data) {
-        super(fm);
+    public TimeTableWeekPagerAdapter(final FragmentManager fm,
+                                     final Lifecycle lifecycle,
+                                     final ArrayList<TimeTableWeekVo> _Data) {
+        super(fm, lifecycle);
         mData = _Data;
     }
 
     /**
      * Return the Fragment associated with a specified position.
-     *
      * @param position
      */
     @NonNull
     @Override
-    public Fragment getItem(final int position) {
+    public Fragment createFragment(int position) {
         return TimeTableWeekFragment.newInstance(mData.get(position));
     }
 
     /**
      * Return the number of views available.
+     * @return
      */
     @Override
-    public int getCount() {
+    public int getItemCount() {
         return mData.size();
     }
 

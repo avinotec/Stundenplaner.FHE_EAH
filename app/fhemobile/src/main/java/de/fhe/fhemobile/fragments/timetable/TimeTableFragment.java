@@ -85,7 +85,7 @@ public class TimeTableFragment extends FeatureFragment {
 	                         final Bundle savedInstanceState) {
 		mView = (TimeTableView) inflater.inflate(R.layout.fragment_time_table, container, false);
 		mView.setViewListener(mViewListener);
-		mView.initializeView(getChildFragmentManager());
+		mView.initializeView(getChildFragmentManager(), getLifecycle());
 
 		return mView;
 	}

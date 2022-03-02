@@ -32,11 +32,9 @@ import de.fhe.fhemobile.views.navigation.NavigationDialogView;
  */
 public class NavigationDialogFragment extends FeatureFragment {
 
-    private NavigationDialogView mView;
 
     //Constants
     private static final String TAG = "NavigDialogFragment"; //$NON-NLS
-
 
     public NavigationDialogFragment(){
         // Required empty public constructor
@@ -68,8 +66,5 @@ public class NavigationDialogFragment extends FeatureFragment {
 
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//    }
+    private NavigationDialogView mView;
 }

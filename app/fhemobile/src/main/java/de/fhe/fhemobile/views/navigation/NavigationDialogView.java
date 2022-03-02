@@ -74,11 +74,5 @@ public class NavigationDialogView extends LinearLayout {
 
     }
 
-//    @Override
-//    protected void onFinishInflate(){
-//        super.onFinishInflate();
-//
-//    }
-
 
 }

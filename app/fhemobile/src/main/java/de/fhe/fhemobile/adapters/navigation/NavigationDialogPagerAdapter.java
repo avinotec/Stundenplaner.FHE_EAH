@@ -12,11 +12,13 @@ import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.navigation.PersonSearchFragment;
 import de.fhe.fhemobile.fragments.navigation.RoomSearchFragment;
 
+/**
+ * Created by Nadja on 12/2021
+ */
 public class NavigationDialogPagerAdapter extends FragmentStateAdapter {
 
-    final ArrayList<FeatureFragment> fragments = new ArrayList<FeatureFragment>();
-
-    public NavigationDialogPagerAdapter(@NonNull final FragmentManager fragmentManager, @NonNull final Lifecycle lifecycle){
+    public NavigationDialogPagerAdapter(@NonNull final FragmentManager fragmentManager,
+                                        @NonNull final Lifecycle lifecycle){
         super(fragmentManager, lifecycle);
 
         fragments.add(new RoomSearchFragment());
@@ -39,4 +41,6 @@ public class NavigationDialogPagerAdapter extends FragmentStateAdapter {
     public int getItemCount() {
         return fragments.size();
     }
+
+    private final ArrayList<FeatureFragment> fragments = new ArrayList<>();
 }
