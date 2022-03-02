@@ -42,7 +42,7 @@ android {
      * This property is optional because the plugin uses a recommended version of
      * the build tools by default.
      */
-    buildToolsVersion '32.1.0 rc1'
+    buildToolsVersion '33.0.0 rc1'
 
     compileOptions {
         // Error: Invoke-customs are only supported starting with Android O (--min-api 26)
@@ -63,8 +63,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 32
-        versionCode 23
-        versionName '1.8'
+        versionCode = 23
+        versionName = '1.8'
 
         multiDexEnabled = true
 	    resConfigs 'de', 'en'
@@ -248,7 +248,7 @@ dependencies {
     //implementation("com.squareup.okhttp3:okhttp3.RequestBody")
     
     
-    implementation 'com.google.firebase:firebase-analytics:20.0.2'
+    implementation 'com.google.firebase:firebase-analytics:20.1.0'
     implementation 'com.google.firebase:firebase-messaging:23.0.0'
 
 
@@ -270,8 +270,8 @@ dependencies {
 
 
 
-    implementation 'androidx.navigation:navigation-fragment:2.4.0'
-    implementation 'androidx.navigation:navigation-ui:2.4.0'
+    implementation 'androidx.navigation:navigation-fragment:2.4.1'
+    implementation 'androidx.navigation:navigation-ui:2.4.1'
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
     
     
