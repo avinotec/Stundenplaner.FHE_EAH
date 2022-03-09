@@ -32,7 +32,7 @@
         >
 
         <TextView
-            android:id="@+id/timeTableWeekHeading"
+            android:id="@+id/tv_timetable_week_heading"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
@@ -42,7 +42,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/timeTableWeekRange"
+            android:id="@+id/tv_timetable_week_range"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -55,7 +55,7 @@
     </RelativeLayout>
 
     <ListView
-        android:id="@+id/timeTableWeekList"
+        android:id="@+id/lv_timetable_week_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:listSelector="@android:color/transparent"

@@ -24,7 +24,7 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.adapters.mensa.MensaChoiceAdapter;
+import de.fhe.fhemobile.adapters.mensa.MensaSettingsAdapter;
 import de.fhe.fhemobile.events.Event;
 import de.fhe.fhemobile.events.EventListener;
 import de.fhe.fhemobile.models.mensa.MensaFoodModel;
@@ -32,13 +32,13 @@ import de.fhe.fhemobile.models.mensa.MensaFoodModel;
 /**
  * Created by paul on 12.02.14.
  */
-public class MensaChoiceView extends FrameLayout {
+public class MensaSettingsView extends FrameLayout {
 
     public interface ViewListener {
         void onMensaChosen(Integer _Id, Integer _Position);
     }
 
-    public MensaChoiceView(final Context context, final AttributeSet attrs) {
+    public MensaSettingsView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
         mModel = MensaFoodModel.getInstance();
@@ -46,7 +46,7 @@ public class MensaChoiceView extends FrameLayout {
         mModel.addListener(MensaFoodModel.ChangeEvent.RECEIVED_CHOICE_ITEMS, mChoiceItemsListener);
     }
 
-    public void initView(final ViewListener _Listener) {
+    public void initializeView(final ViewListener _Listener) {
         mViewListener = _Listener;
     }
 
@@ -58,7 +58,7 @@ public class MensaChoiceView extends FrameLayout {
     }
 
     public void initContent() {
-        mAdapter = new MensaChoiceAdapter(mContext, mModel.getChoiceItems());
+        mAdapter = new MensaSettingsAdapter(mContext, mModel.getChoiceItems());
         mChoiceListView.setAdapter(mAdapter);
         mChoiceListView.setOnItemClickListener(mMensaSelectListener);
         mChoiceListView.setItemChecked(mModel.getSelectedItemPosition(), true);
@@ -91,7 +91,7 @@ public class MensaChoiceView extends FrameLayout {
     private final MensaFoodModel mModel;
 
     private ViewListener mViewListener;
-    private MensaChoiceAdapter mAdapter;
+    private MensaSettingsAdapter mAdapter;
 
     private ListView mChoiceListView;
 

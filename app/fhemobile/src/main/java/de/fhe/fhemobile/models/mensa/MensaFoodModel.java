@@ -99,5 +99,5 @@ public class MensaFoodModel extends EventDispatcher {
     private MensaChoiceItemVo[]         mChoiceItems;
 
     private Integer                     mSelectedItemPosition   = 0;
-    private final String                      mSelectedItemName       = "Mensa";
+    private final String                mSelectedItemName       = "Mensa";
 }

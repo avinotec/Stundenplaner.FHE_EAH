@@ -35,12 +35,10 @@ import de.fhe.fhemobile.models.mensa.MensaFoodModel;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.utils.feature.Features;
-import de.fhe.fhemobile.views.mensa.MensaFoodView;
+import de.fhe.fhemobile.views.mensa.MensaView;
 
 
 public class MensaFoodFragment extends FeatureFragment {
-
-    private MensaFoodView mView;
 
     public MensaFoodFragment() {
         // Required empty public constructor
@@ -68,8 +66,8 @@ public class MensaFoodFragment extends FeatureFragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (MensaFoodView) inflater.inflate(R.layout.fragment_mensa_food, container, false);
-        mView.initView(null);
+        mView = (MensaView) inflater.inflate(R.layout.fragment_mensa_food, container, false);
+        mView.initializeView();
 
         if(MensaFoodModel.getInstance().getFoodItems() == null) {
             NetworkHandler.getInstance().fetchMensaData();
@@ -126,4 +124,6 @@ public class MensaFoodFragment extends FeatureFragment {
         super.onRestoreActionBar(_ActionBar);
         _ActionBar.setTitle(UserSettings.getInstance().getChosenMensaName());
     }
+
+    private MensaView mView;
 }

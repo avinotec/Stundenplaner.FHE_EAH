@@ -22,7 +22,7 @@
 	android:background="@color/background">
 
 	<androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/eventPager"
+        android:id="@+id/timetable_eventPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

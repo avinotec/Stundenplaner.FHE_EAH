@@ -29,13 +29,13 @@ import de.fhe.fhemobile.vos.mensa.MensaChoiceItemVo;
 /**
  * Created by paul on 13.02.14.
  */
-public class MensaChoiceAdapter extends BaseAdapter {
+public class MensaSettingsAdapter extends BaseAdapter {
 
     static class ViewHolder {
         TextView mMensaName;
     }
 
-    public MensaChoiceAdapter(final Context mContext, final MensaChoiceItemVo[] mItems) {
+    public MensaSettingsAdapter(final Context mContext, final MensaChoiceItemVo[] mItems) {
         this.mContext = mContext;
         this.mItems = mItems;
     }

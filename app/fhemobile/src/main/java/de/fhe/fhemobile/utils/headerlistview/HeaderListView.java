@@ -26,7 +26,7 @@ public class HeaderListView extends RelativeLayout {
     private static final int FADE_DURATION = 2000;
 
     private InternalListView mListView;
-    private SectionAdapter mAdapter;
+    private SectionAdapter   mAdapter;
     private RelativeLayout   mHeader;
     private View             mHeaderConvertView;
     private FrameLayout      mScrollView;

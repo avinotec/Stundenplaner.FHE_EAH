@@ -41,19 +41,19 @@ import de.fhe.fhemobile.widgets.stickyHeaderList.MensaRowItem;
 /**
  * Created by paul on 23.01.14.
  */
-public class MensaFoodView extends LinearLayout {
+public class MensaView extends LinearLayout {
 
     public interface ViewListener {
     }
 
-    public MensaFoodView(final Context context, final AttributeSet attrs) {
+    public MensaView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
         mModel  = MensaFoodModel.getInstance();
 
     }
 
-    public void initView(final ViewListener _Listener) {
+    public void initializeView() {
         if(mModel.getFoodItems() != null) {
             populateList();
         }
@@ -100,9 +100,9 @@ public class MensaFoodView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mMensaProgressBar   = (ProgressBar)     findViewById(R.id.mensaProgressIndicator);
+        mMensaProgressBar   = (ProgressBar)     findViewById(R.id.progress_indicator_mensa);
         mListView           = (HeaderListView)  findViewById(R.id.mensaListView);
-        mErrorText          = (TextView)        findViewById(R.id.mensaFoodError);
+        mErrorText          = (TextView)        findViewById(R.id.tv_mensa_error);
 
         // To prevent crashing.
         // See: https://github.com/applidium/HeaderListView/issues/28

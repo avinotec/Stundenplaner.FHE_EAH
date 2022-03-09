@@ -30,7 +30,7 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.models.mensa.MensaFoodModel;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.UserSettings;
-import de.fhe.fhemobile.views.mensa.MensaChoiceView;
+import de.fhe.fhemobile.views.mensa.MensaSettingsView;
 
 
 public class MensaSettingsFragment extends Fragment {
@@ -58,8 +58,8 @@ public class MensaSettingsFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (MensaChoiceView) inflater.inflate(R.layout.fragment_mensa_choice, container, false);
-        mView.initView(mViewListener);
+        mView = (MensaSettingsView) inflater.inflate(R.layout.fragment_mensa_settings, container, false);
+        mView.initializeView(mViewListener);
 
         if(MensaFoodModel.getInstance().getChoiceItems() == null) {
             NetworkHandler.getInstance().fetchAvailableMensas();
@@ -80,7 +80,7 @@ public class MensaSettingsFragment extends Fragment {
     }
 
 
-    private final MensaChoiceView.ViewListener mViewListener = new MensaChoiceView.ViewListener() {
+    private final MensaSettingsView.ViewListener mViewListener = new MensaSettingsView.ViewListener() {
         @Override
         public void onMensaChosen(final Integer _Id, final Integer _Position) {
 
@@ -91,6 +91,6 @@ public class MensaSettingsFragment extends Fragment {
         }
     };
 
-    private MensaChoiceView mView;
+    private MensaSettingsView mView;
 
 }
