@@ -22,7 +22,6 @@ import android.widget.LinearLayout;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import org.junit.Assert;
@@ -31,7 +30,7 @@ import java.util.ArrayList;
 
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.adapters.timetable.TimeTableWeekPagerAdapter;
+import de.fhe.fhemobile.adapters.timetable.TimeTablePagerAdapter;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
 
 //import com.viewpagerindicator.CirclePageIndicator;
@@ -60,7 +59,7 @@ public class TimeTableView extends LinearLayout {
 
     public void setPagerItems(final ArrayList<TimeTableWeekVo> _Items) {
 
-        mAdapter = new TimeTableWeekPagerAdapter(mFragmentManager, mLifecycle, _Items);
+        mAdapter = new TimeTablePagerAdapter(mFragmentManager, mLifecycle, _Items);
         if (BuildConfig.DEBUG) Assert.assertNotNull(mAdapter);
         mPager.setAdapter(mAdapter);
         if (BuildConfig.DEBUG) Assert.assertNotNull(mPager);
@@ -73,7 +72,7 @@ public class TimeTableView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mPager = (ViewPager2)findViewById(R.id.eventPager);
+        mPager = (ViewPager2) findViewById(R.id.timetable_eventPager);
     }
 
     private FragmentManager     mFragmentManager;
@@ -82,5 +81,5 @@ public class TimeTableView extends LinearLayout {
     private ViewPager2                   mPager;
     //private CirclePageIndicator         mPageIndicator;
 
-    private TimeTableWeekPagerAdapter   mAdapter;
+    private TimeTablePagerAdapter mAdapter;
 }

@@ -332,9 +332,9 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
     /**
      *
-     * @param _Fragment
-     * @param _AddToBackStack
-     * @param _Tag
+     * @param _Fragment the new fragment
+     * @param _AddToBackStack if false, then the fragment gets destroyed when removed/replaced sometime
+     * @param _Tag tag of the new fragment
      */
     public void changeFragment(final FeatureFragment _Fragment, final boolean _AddToBackStack, final String _Tag) {
 

@@ -80,7 +80,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 			@Override
 			public void onClick(final View v) {
 				((MainActivity) getActivity()).changeFragment(MyTimeTableOverviewFragment.newInstance(),
-						true, TAG);
+						true, MyTimeTableOverviewFragment.TAG);
 			}
 		};
 		mView.initializeView(onClickListenerBtnModifySchedule);

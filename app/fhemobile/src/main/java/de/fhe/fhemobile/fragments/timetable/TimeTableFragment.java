@@ -119,7 +119,8 @@ public class TimeTableFragment extends FeatureFragment {
 		if (_item.getItemId() == R.id.action_reset_selection) {
 			TimeTableSettings.saveTimeTableSelection(null);
 
-			((MainActivity) getActivity()).changeFragment(TimeTableDialogFragment.newInstance(), false, TAG);
+			((MainActivity) getActivity()).changeFragment(TimeTableDialogFragment.newInstance(),
+					false, TimeTableDialogFragment.TAG);
 
 			return true;
 

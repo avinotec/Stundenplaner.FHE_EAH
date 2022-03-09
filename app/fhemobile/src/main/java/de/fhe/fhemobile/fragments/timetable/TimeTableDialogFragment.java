@@ -94,7 +94,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
     private void proceedToTimetable(final String _TimeTableId) {
         ((MainActivity) getActivity()).changeFragment(TimeTableFragment.newInstance(_TimeTableId),
-                true, TAG);
+                true, TimeTableFragment.TAG);
     }
 
     private final TimeTableDialogView.IViewListener mViewListener = new TimeTableDialogView.IViewListener() {

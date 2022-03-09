@@ -43,6 +43,7 @@ public class RoomSearchView extends SearchView {
 
     public RoomSearchView(final Context context){ super(context); }
 
+    @Override
     public void initializeView(final FragmentManager _Manager){
         mBuildingPicker.setFragmentManager(_Manager);
         mBuildingPicker.toggleEnabled(false);
@@ -60,8 +61,9 @@ public class RoomSearchView extends SearchView {
 
     }
 
-    public void setViewListener(final IViewListener _Listener){
-        mViewListener = _Listener;
+    @Override
+    public void setViewListener(final SearchView.IViewListener _Listener) {
+        mViewListener = (RoomSearchView.IViewListener) _Listener;
     }
 
     @Override

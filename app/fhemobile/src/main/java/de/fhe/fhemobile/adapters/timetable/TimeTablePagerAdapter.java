@@ -32,11 +32,11 @@ import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
  * Created by paul on 23.02.14
  * Updated by Nadja on 02.03.2022
  */
-public class TimeTableWeekPagerAdapter extends FragmentStateAdapter {
+public class TimeTablePagerAdapter extends FragmentStateAdapter {
 
-    public TimeTableWeekPagerAdapter(final FragmentManager fm,
-                                     final Lifecycle lifecycle,
-                                     final ArrayList<TimeTableWeekVo> _Data) {
+    public TimeTablePagerAdapter(final FragmentManager fm,
+                                 final Lifecycle lifecycle,
+                                 final ArrayList<TimeTableWeekVo> _Data) {
         super(fm, lifecycle);
         mData = _Data;
     }

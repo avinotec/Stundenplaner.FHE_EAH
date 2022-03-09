@@ -48,6 +48,8 @@ import de.fhe.fhemobile.widgets.headerList.TimeTableEventItem;
  */
 public class TimeTableWeekView extends LinearLayout {
 
+    private static final String TAG = "TimeTableWeekView"; //$NON-NLS
+
     public TimeTableWeekView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
@@ -111,12 +113,10 @@ public class TimeTableWeekView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mHeading   = (TextView) findViewById(R.id.timeTableWeekHeading);
-        mWeekRange = (TextView) findViewById(R.id.timeTableWeekRange);
-        mDateList  = (ListView) findViewById(R.id.timeTableWeekList);
+        mHeading   = (TextView) findViewById(R.id.tv_timetable_week_heading);
+        mWeekRange = (TextView) findViewById(R.id.tv_timetable_week_range);
+        mDateList  = (ListView) findViewById(R.id.lv_timetable_week_list);
     }
-
-    private static final String LOG_TAG = TimeTableWeekView.class.getSimpleName();
 
     private final Context mContext;
 

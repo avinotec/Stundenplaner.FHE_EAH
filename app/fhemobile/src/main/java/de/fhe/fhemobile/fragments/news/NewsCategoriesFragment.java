@@ -58,7 +58,7 @@ public class NewsCategoriesFragment extends Fragment {
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = (NewsCategoriesView) inflater.inflate(R.layout.fragment_news_categories, container, false);
-        mView.initView(mViewsListener);
+        mView.initializeView(mViewsListener);
 
         if(NewsModel.getInstance().getCategoryItems() == null) {
             NetworkHandler.getInstance().fetchAvailableNewsLists();

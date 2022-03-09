@@ -27,18 +27,18 @@ public class PersonSearchView extends SearchView {
         super(context);
     }
 
-
+    @Override
     public void initializeView(final FragmentManager _Manager) {
+        super.initializeView();
+
         mPersonPicker.setFragmentManager(_Manager);
         mPersonPicker.toggleEnabled(false);
         mPersonPicker.setOnItemChosenListener(mPersonListener);
-
-        super.initializeView();
     }
 
-
-    public void setViewListener(final IViewListener _Listener) {
-        mViewListener = _Listener;
+    @Override
+    public void setViewListener(final SearchView.IViewListener _Listener) {
+        mViewListener = (PersonSearchView.IViewListener) _Listener;
     }
 
     @Override

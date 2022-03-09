@@ -46,7 +46,7 @@ public class NewsCategoriesView extends FrameLayout {
         mModel.addListener(NewsModel.ChangeEvent.RECEIVED_CATEGORY_ITEMS, mCategoryItemsListener);
     }
 
-    public void initView(final ViewListener _Listener) {
+    public void initializeView(final ViewListener _Listener) {
         mViewListener = _Listener;
     }
 

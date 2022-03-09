@@ -21,6 +21,7 @@ import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.views.navigation.SearchView;
 import de.fhe.fhemobile.vos.navigation.PersonVo;
 import de.fhe.fhemobile.vos.navigation.RoomVo;
 import de.fhe.fhemobile.utils.Utils;
@@ -31,8 +32,10 @@ import de.fhe.fhemobile.views.navigation.PersonSearchView;
  * A simple {@link Fragment} subclass.
  * Use the {@link PersonSearchFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
+ * created by Nadja
  */
-public class PersonSearchFragment extends FeatureFragment {
+public class PersonSearchFragment extends SearchFragment {
 
     public static final String TAG = "PersonSearchFragment"; //$NON-NLS
 
@@ -40,9 +43,6 @@ public class PersonSearchFragment extends FeatureFragment {
     public static final String PREFS_NAVIGATION_PERSON_CHOICE = "navigation person";
 
     private PersonSearchView mView;
-
-    private RoomVo mDestRoom;
-    private RoomVo mStartRoom;
 
     private HashMap<String, PersonVo> persons;
 
@@ -60,23 +60,24 @@ public class PersonSearchFragment extends FeatureFragment {
     }
 
     public PersonSearchFragment() {
-        // Required empty public constructor
+        super(PREFS_NAVIGATION_PERSON_CHOICE);
     }
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mDestRoom = null;
-        mStartRoom = null;
     }
 
+    /**
+     * Method is called within super.onCreateView()
+     * @param inflater the inflater to use
+     * @param container
+     */
     @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-                             final Bundle savedInstanceState) {
+    protected void inflateAndInitializeView(LayoutInflater inflater, ViewGroup container) {
 
         // Inflate the layout for this fragment
-        mView = (PersonSearchView) inflater.inflate(R.layout.fragment_person_search, container, false);
+                mView = (PersonSearchView) inflater.inflate(R.layout.fragment_person_search, container, false);
         mView.setViewListener(mViewListener);
         mView.initializeView(getChildFragmentManager());
 
@@ -84,24 +85,23 @@ public class PersonSearchFragment extends FeatureFragment {
         final List<PersonVo> personList = new ArrayList<>(persons.values());
         mView.setPersonItems(personList);
 
-        return mView;
     }
 
+    /**
+     * Is called within super.onResume() when previous person choice is loaded from shared preferences
+     * @param previousChoice String loaded from shared preferences
+     */
     @Override
-    public void onResume() {
-        super.onResume();
-        SharedPreferences mSP = Main.getAppContext().getSharedPreferences(SP_NAVIGATION, Context.MODE_PRIVATE);
-        String previousPersonChoice = mSP.getString(PREFS_NAVIGATION_PERSON_CHOICE, "");
-
-        if(!"".equals(previousPersonChoice)){
-            final PersonVo chosenPerson = persons.get(previousPersonChoice);
+    protected void initializePickersFromSharedPreferences(String previousChoice) {
+        if(!"".equals(previousChoice)){
+            final PersonVo chosenPerson = persons.get(previousChoice);
             if(chosenPerson != null){
                 final String chosenPersonsRoom = chosenPerson.getRoom();
                 for (final RoomVo room : MainActivity.rooms){
 
                     if(room.getRoomName().equals(chosenPersonsRoom)){
                         mDestRoom = room;
-                        mView.setPersonDisplayValue(previousPersonChoice);
+                        mView.setPersonDisplayValue(previousChoice);
 
                         mView.toggleStartInputCardVisibility(true);
                         mView.toggleGoButtonEnabled(true);
@@ -110,7 +110,14 @@ public class PersonSearchFragment extends FeatureFragment {
                     }
                 }
             }
+        }else{
+            mDestRoom = null;
         }
+    }
+
+    @Override
+    protected SearchView getSearchView() {
+        return mView;
     }
 
     private final PersonSearchView.IViewListener mViewListener = new PersonSearchView.IViewListener() {
@@ -129,10 +136,7 @@ public class PersonSearchFragment extends FeatureFragment {
                     mView.toggleGoButtonEnabled(true);
                     mView.toggleStartInputCardVisibility(true);
 
-                    final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(PREFS_NAVIGATION_PERSON_CHOICE, _person);
-                    editor.apply();
+                    saveToSharedPreferences(_person);
 
                     break;
                 }
@@ -142,69 +146,13 @@ public class PersonSearchFragment extends FeatureFragment {
 
         @Override
         public void onQrClicked() {
-            //todo: open QrScanner
+            onQrButtonClicked();
         }
+
 
         @Override
         public void onGoClicked() {
-            if(mDestRoom != null){
-                if(validateInputAndSetStartRoom()){
-                    ((MainActivity) getActivity()).changeFragment(
-                            new NavigationFragment().newInstance(mStartRoom, mDestRoom), true, TAG);
-
-                    mDestRoom = null;
-                    mStartRoom = null;
-                }
-
-            } else {
-                Utils.showToast(R.string.timetable_error_incomplete);
-            }
+            onGoButtonCLicked();
         }
     };
-
-    /**
-     * Checks if the room entered by the user as start is valid
-     * if true, then the startRoom variable is set
-     * if false, an error message is shown
-     * @return true if valid, false if invalid or input missing
-     */
-    private boolean validateInputAndSetStartRoom(){
-
-        String input = mView.getStartInputText();
-
-        boolean valid = false;
-        //a room number has been entered
-        if(input != null){
-
-            //if room number has been entered without separating dots
-            if(input.matches("\\d{6}")){
-                input = input.substring(0,2) +"."+ input.substring(2,4) +"."+ input.substring(4,6);
-            }
-            //if room number has been entered without leading zeros
-            else if(!input.matches("\\d{2}\\.\\d{2}\\.\\d{2}")
-                    && input.matches("\\d{1,2}\\.\\d{1,2}\\.\\d{1,2}")){
-
-                String[] inputArray = input.split("\\.");
-                input = (String.format("%2s", inputArray[0]) + "."
-                        + String.format("%2s", inputArray[1]) + "."
-                        + String.format("%2s", inputArray[2])).replace(" ", "0");
-            }
-
-            //check room list for matching names
-            for (final RoomVo room : MainActivity.rooms){
-                if (room.getRoomName().equals(input)){
-                    valid = true;
-                    mStartRoom = room;
-                }
-            }
-
-            if(!valid) mView.setInputErrorRoomNotFound();
-        }
-        //no start room input
-        else {
-            mView.setInputErrorNoInput();
-        }
-
-        return valid;
-    }
 }

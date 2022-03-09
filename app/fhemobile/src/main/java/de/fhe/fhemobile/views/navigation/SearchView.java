@@ -9,8 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -23,7 +25,16 @@ public abstract class SearchView extends LinearLayout {
 
     public SearchView(final Context context){ super(context); }
 
-    public void initializeView(){
+    /**
+     * Initialisation of child specific elements
+     * @param _manager
+     */
+    public abstract void initializeView(final FragmentManager _manager);
+
+    /**
+     * Initialisation of elements of this abstract super class
+     */
+    protected void initializeView(){
         toggleStartInputCardVisibility(false);
 
         mQrButton.setOnClickListener(mQrClickListener);
@@ -31,7 +42,7 @@ public abstract class SearchView extends LinearLayout {
         toggleGoButtonEnabled(false);
 
         //todo: delete when QR codes ready
-        findViewById(R.id.navigationButtonQR).setVisibility(GONE);
+        //findViewById(R.id.navigationButtonQR).setVisibility(GONE);
     }
 
     @Override
@@ -91,7 +102,9 @@ public abstract class SearchView extends LinearLayout {
                 getResources().getString(R.string.error_message_no_room_input));
     }
 
-
+    public void setStartInputText(String room) {
+        mStartInputText.setText(room, TextView.BufferType.EDITABLE);
+    }
 
     //Listener for QR-Code button
     private final View.OnClickListener mQrClickListener = new View.OnClickListener() {
@@ -114,6 +127,8 @@ public abstract class SearchView extends LinearLayout {
     };
 
     public abstract SearchView.IViewListener getViewListener();
+
+    public abstract void setViewListener(final SearchView.IViewListener _Listener);
 
     public interface IViewListener {
         void onQrClicked();
