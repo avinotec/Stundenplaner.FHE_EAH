@@ -1,8 +1,8 @@
-#Stundenplan-App der EAH Jena
+# Stundenplan-App der EAH Jena
 Die Android-App der Hochschule in Jena
 
 
-##Features
+## Features
 in der aktuellen Release-Version implementiert:
 - Stundenplan
 - Individueller Stundenplaner
@@ -16,33 +16,33 @@ in der aktuellen Release-Version implementiert:
 
 Sprachen in der App: Deutsch, Englisch
  
-##Beschreibung der Features, aktueller Stand, Hinweise
-####Stundenplan 
+## Beschreibung der Features, aktueller Stand, Hinweise
+#### Stundenplan 
   - Abruf des allgemeinen Stundenplans für ein spezifisches Semester in einem Studiengang 
-####Individueller Stundenplaner
+#### Individueller Stundenplaner
   - Zusammenstellung eines Stundenplans durch individuelle Auswahl von Kursen
   - *Status: Umbau abgeschlossen*
       - *noch nicht im aktuellem Release enthalten (Stand 02.03.2022)*
-####Mensa
+#### Mensa
   - Mensa-Menü und zugehörige Studentenpreise
   - *Status: Umbau begonnen*
-####Campus Lagepläne
+#### Campus Lagepläne
   - Etagenpläne der Campusgebäude sowie Campusübersicht
   - *Status: Pläne Ende 2021 überarbeitet*
-####Campus Navigation
+#### Campus Navigation
   - Routenberechnung von einem Startraum zu einem Zielraum oder Büro einer Person
   - *Status: Bachelorarbeit vollständig integriert und überarbeitet*
     - *noch nicht im aktuellem Release enthalten (Stand 02.03.2022)*
-####News
+#### News
   - aktuelle Pressemitteilungen der Hochschule
   - *Status: vorübergehende Lösung als WebView, da vorherige Variante zur Zeit nicht anwendbar*
-####Veranstaltungskalender
+#### Veranstaltungskalender
   - Veranstaltungen der Hochschule
   - *Status: initiale Lösung als WebView*
-####Semestertermine
+#### Semestertermine
   - Vorlesungszeiten, Prüfungszeitraum, Bewerbungsfristen, ...
   - Hinweis: manuelle Einspeißung der Daten, zukünftiges Ziel wäre eine dynamische Lösung
-####Impressum
+#### Impressum
   - Datenschutz-Verlinkung und Impressum der Hochschul-Homepage
 
 ## Lizenz
