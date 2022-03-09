@@ -15,11 +15,13 @@
  *
  */
 
-package de.fhe.fhemobile.models.navigation;
+package de.fhe.fhemobile.vos.navigation;
 
 import static de.fhe.fhemobile.utils.Define.Navigation.COSTS_EXIT;
 
 import java.util.ArrayList;
+
+import de.fhe.fhemobile.models.navigation.Cell;
 
 /*
     class created by Nadja, 23.11.2021
@@ -28,7 +30,7 @@ import java.util.ArrayList;
 /**
  * Class that models an exit of a building
  */
-public class BuildingExit extends Cell{
+public class BuildingExitVo extends Cell {
 
     // this exit should be use when changing to the complex "exitTo"
     private final ArrayList<Complex> exitTo = new ArrayList<>();
@@ -37,23 +39,23 @@ public class BuildingExit extends Cell{
 
     /**
      *
-     * @param xCoordinate the x coordinate of the {@link BuildingExit}
-     * @param yCoordinate the y coordinate of the {@link BuildingExit}
-     * @param building the building as string the {@link BuildingExit} belongs to
-     * @param floor the floor as string the {@link BuildingExit} belongs to
-     * @param exitTo list containing the buildings this {@link BuildingExit} should be used when changing to
-     * @param entryFrom the building of the {@link BuildingExit} should be entered via this exit when coming from the buildings of the entryFrom list
+     * @param xCoordinate the x coordinate of the {@link BuildingExitVo}
+     * @param yCoordinate the y coordinate of the {@link BuildingExitVo}
+     * @param building the building as string the {@link BuildingExitVo} belongs to
+     * @param floor the floor as string the {@link BuildingExitVo} belongs to
+     * @param exitTo list containing the buildings this {@link BuildingExitVo} should be used when changing to
+     * @param entryFrom the building of the {@link BuildingExitVo} should be entered via this exit when coming from the buildings of the entryFrom list
      */
-    public BuildingExit(final int xCoordinate, final int yCoordinate, final String building, final String floor,
-                        final ArrayList<String> exitTo, final ArrayList<String> entryFrom) {
+    public BuildingExitVo(final int xCoordinate, final int yCoordinate, final String building, final String floor,
+                          final ArrayList<String> exitTo, final ArrayList<String> entryFrom) {
         super(xCoordinate, yCoordinate, building, floor, true, COSTS_EXIT);
 
         for(final String destBuilding: exitTo){
-            this.exitTo.add(new Building(destBuilding).getComplex());
+            this.exitTo.add(new BuildingVo(destBuilding).getComplex());
         }
 
         for(final String startBuilding: entryFrom){
-            this.entryFrom.add(new Building(startBuilding).getComplex());
+            this.entryFrom.add(new BuildingVo(startBuilding).getComplex());
         }
     }
 

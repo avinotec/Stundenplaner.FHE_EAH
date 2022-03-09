@@ -15,15 +15,15 @@
  *
  */
 
-package de.fhe.fhemobile.models.navigation;
+package de.fhe.fhemobile.vos.navigation;
 
 
-public class Person {
+public class PersonVo {
 
     private final String name;
     private final String room;
 
-    public Person(final String _name, final String _room){
+    public PersonVo(final String _name, final String _room){
         this.name = _name;
         this.room = _room;
     }

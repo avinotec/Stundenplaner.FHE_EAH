@@ -21,8 +21,8 @@ import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.models.navigation.Person;
-import de.fhe.fhemobile.models.navigation.Room;
+import de.fhe.fhemobile.vos.navigation.PersonVo;
+import de.fhe.fhemobile.vos.navigation.RoomVo;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.navigation.JSONHandler;
 import de.fhe.fhemobile.views.navigation.PersonSearchView;
@@ -41,10 +41,10 @@ public class PersonSearchFragment extends FeatureFragment {
 
     private PersonSearchView mView;
 
-    private Room mDestRoom;
-    private Room mStartRoom;
+    private RoomVo mDestRoom;
+    private RoomVo mStartRoom;
 
-    private HashMap<String, Person> persons;
+    private HashMap<String, PersonVo> persons;
 
     /**
      * Use this factory method to create a new instance of
@@ -81,7 +81,7 @@ public class PersonSearchFragment extends FeatureFragment {
         mView.initializeView(getChildFragmentManager());
 
         persons = JSONHandler.loadPersons(getContext());
-        final List<Person> personList = new ArrayList<>(persons.values());
+        final List<PersonVo> personList = new ArrayList<>(persons.values());
         mView.setPersonItems(personList);
 
         return mView;
@@ -94,10 +94,10 @@ public class PersonSearchFragment extends FeatureFragment {
         String previousPersonChoice = mSP.getString(PREFS_NAVIGATION_PERSON_CHOICE, "");
 
         if(!"".equals(previousPersonChoice)){
-            final Person chosenPerson = persons.get(previousPersonChoice);
+            final PersonVo chosenPerson = persons.get(previousPersonChoice);
             if(chosenPerson != null){
                 final String chosenPersonsRoom = chosenPerson.getRoom();
-                for (final Room room : MainActivity.rooms){
+                for (final RoomVo room : MainActivity.rooms){
 
                     if(room.getRoomName().equals(chosenPersonsRoom)){
                         mDestRoom = room;
@@ -121,7 +121,7 @@ public class PersonSearchFragment extends FeatureFragment {
 
             //search for room object
             if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
-            for(Room room : MainActivity.rooms){
+            for(RoomVo room : MainActivity.rooms){
                 final String roomOfPerson = persons.get(_person).getRoom();
                 if(room.getRoomName() != null && room.getRoomName().equals(roomOfPerson)){
 
@@ -191,7 +191,7 @@ public class PersonSearchFragment extends FeatureFragment {
             }
 
             //check room list for matching names
-            for (final Room room : MainActivity.rooms){
+            for (final RoomVo room : MainActivity.rooms){
                 if (room.getRoomName().equals(input)){
                     valid = true;
                     mStartRoom = room;

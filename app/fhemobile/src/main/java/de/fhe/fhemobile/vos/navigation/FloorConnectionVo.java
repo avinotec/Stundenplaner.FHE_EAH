@@ -15,10 +15,12 @@
  *
  */
 
-package de.fhe.fhemobile.models.navigation;
+package de.fhe.fhemobile.vos.navigation;
 
 
 import java.util.ArrayList;
+
+import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
 
 
 /**
@@ -26,17 +28,17 @@ import java.util.ArrayList;
  * created: Bachelor Thesis from Tim Münziger from SS2020
  * edited by Nadja 15.09.21
  */
-public class FloorConnection{
+public class FloorConnectionVo {
 
     //Constants
-    private static final String TAG = "FloorConnection"; //$NON-NLS
+    private static final String TAG = "FloorConnectionVo"; //$NON-NLS
 
     //Variables
     private final String typeOfFloorConnection; //stairs, elevator, bridge
     private final ArrayList<FloorConnectionCell> connectedCells;
 
 
-    public FloorConnection(final String type, final ArrayList<FloorConnectionCell> connectedCells){
+    public FloorConnectionVo(final String type, final ArrayList<FloorConnectionCell> connectedCells){
         this.connectedCells = connectedCells;
         this.typeOfFloorConnection = type;
     }

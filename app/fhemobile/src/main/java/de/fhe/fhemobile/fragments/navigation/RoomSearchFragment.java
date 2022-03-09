@@ -37,8 +37,8 @@ import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.models.navigation.Building;
-import de.fhe.fhemobile.models.navigation.Room;
+import de.fhe.fhemobile.vos.navigation.BuildingVo;
+import de.fhe.fhemobile.vos.navigation.RoomVo;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.navigation.JSONHandler;
 import de.fhe.fhemobile.views.navigation.RoomSearchView;
@@ -62,8 +62,8 @@ public class RoomSearchFragment extends FeatureFragment {
     private String mChosenBuilding;
     private String mChosenFloor;
     // destination and start room
-    private Room mChosenRoom;
-    private Room mStartRoom;
+    private RoomVo mChosenRoom;
+    private RoomVo mStartRoom;
 
 
     /**
@@ -104,12 +104,12 @@ public class RoomSearchFragment extends FeatureFragment {
         mView.initializeView(getChildFragmentManager());
 
         //set items of building picker
-        final List<Building> buildings = new ArrayList<>();
-        buildings.add(new Building("01"));
-        buildings.add(new Building("03"));
-        buildings.add(new Building("02"));
-        buildings.add(new Building("04"));
-        buildings.add(new Building("05"));
+        final List<BuildingVo> buildings = new ArrayList<>();
+        buildings.add(new BuildingVo("01"));
+        buildings.add(new BuildingVo("03"));
+        buildings.add(new BuildingVo("02"));
+        buildings.add(new BuildingVo("04"));
+        buildings.add(new BuildingVo("05"));
         mView.setBuildingItems(buildings);
 
         return mView;
@@ -122,7 +122,7 @@ public class RoomSearchFragment extends FeatureFragment {
         final SharedPreferences mSP = Main.getAppContext().getSharedPreferences(SP_NAVIGATION, Context.MODE_PRIVATE);
         final String previousRoomChoice = mSP.getString(PREFS_NAVIGATION_ROOM_CHOICE, "");
         if(!"".equals(previousRoomChoice)){
-            for (final Room room : MainActivity.rooms){
+            for (final RoomVo room : MainActivity.rooms){
                 if(previousRoomChoice.equals(room.getRoomName())){
                     mChosenBuilding = room.getBuilding();
                     mChosenFloor = room.getFloorString();
@@ -163,14 +163,14 @@ public class RoomSearchFragment extends FeatureFragment {
 
             //check if building has any rooms
             boolean buildingValid = false;
-            final List<Integer> floors = new ArrayList<>();
+            final List<String> floors = new ArrayList<>();
             if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
-            for(final Room room : MainActivity.rooms){
+            for(final RoomVo room : MainActivity.rooms){
                 if(room.getBuilding() != null && room.getBuilding().equals(_building)){
 
                     //add floor to floor picker items if not yet contained
-                    if(!floors.contains(room.getFloorInt())){
-                        floors.add(room.getFloorInt());
+                    if(!floors.contains(room.getFloorString())){
+                        floors.add(room.getFloorString());
                     }
 
                     buildingValid = true;
@@ -198,14 +198,14 @@ public class RoomSearchFragment extends FeatureFragment {
 
             //check if floor has any rooms
             boolean floorValid = false;
-            final List<Room> rooms = new ArrayList<>();
+            final List<RoomVo> rooms = new ArrayList<>();
             if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
 
-            for(final Room room : MainActivity.rooms){
+            for(final RoomVo room : MainActivity.rooms){
 
-                //String _floor is a single digit "-1" or "3" --> treat as integer
+                //_floor is string "-1" or "03" or "3Z"
                 if(room.getBuilding().equals(mChosenBuilding)
-                        && room.getFloorInt() == Integer.parseInt(_floor)){
+                        && room.getFloorString().equals(_floor)){
                     floorValid = true;
                     rooms.add(room);
                 }
@@ -229,7 +229,7 @@ public class RoomSearchFragment extends FeatureFragment {
 
             //search for room object
             if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
-            for(final Room room : MainActivity.rooms){
+            for(final RoomVo room : MainActivity.rooms){
                 if(room.getRoomName() != null && room.getRoomName().equals(_room)){
 
                     mChosenRoom = room;
@@ -300,7 +300,7 @@ public class RoomSearchFragment extends FeatureFragment {
             }
 
             //check room list for matching names
-            for (final Room room : MainActivity.rooms){
+            for (final RoomVo room : MainActivity.rooms){
                 if (room.getRoomName().equals(input)){
                     valid = true;
                     mStartRoom = room;

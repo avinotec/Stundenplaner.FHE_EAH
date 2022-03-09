@@ -20,6 +20,11 @@ package de.fhe.fhemobile.models.navigation;
 import static de.fhe.fhemobile.utils.Define.Navigation.COSTS_CELL;
 import static de.fhe.fhemobile.utils.navigation.NavigationUtils.floorStringToInt;
 
+import de.fhe.fhemobile.vos.navigation.BuildingVo;
+import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
+import de.fhe.fhemobile.vos.navigation.Complex;
+import de.fhe.fhemobile.vos.navigation.RoomVo;
+
 /**
  * Model for a cell of the navigation route
  */
@@ -29,7 +34,7 @@ public class Cell {
     private static final String TAG = "Cell"; //$NON-NLS
 
     //Variables
-    private Building building;
+    private BuildingVo building;
     private String floor;
     private int xCoordinate;
     private int yCoordinate;
@@ -52,7 +57,7 @@ public class Cell {
 //    public Cell(final int xCoordinate, final int yCoordinate, final String building, final String floor, final boolean walkable) {
 //        this.xCoordinate = xCoordinate;
 //        this.yCoordinate = yCoordinate;
-//        this.building = new Building(building);
+//        this.building = new BuildingVo(building);
 //        this.floor = floor;
 //        this.walkable = walkable;
 //        this.costPassingCell = COSTS_CELL;
@@ -63,7 +68,8 @@ public class Cell {
     public Cell(final int xCoordinate, final int yCoordinate, final Complex complex, final String floor, final boolean walkable) {
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
-        this.building = new Building(complex);
+        this.building = new BuildingVo(complex);
+
         this.floor = floor;
         this.walkable = walkable;
         this.costPassingCell = COSTS_CELL;
@@ -71,7 +77,7 @@ public class Cell {
     }
 
     /**
-     * Overloaded constructor for cell type {@link Room} and {@link BuildingExit}
+     * Overloaded constructor for cell type {@link RoomVo} and {@link BuildingExitVo}
      * @param xCoordinate the x coordinate of the {@link Cell}
      * @param yCoordinate the y coordinate of the {@link Cell}
      * @param building the building the {@link Cell} belongs to
@@ -82,7 +88,7 @@ public class Cell {
                 final boolean walkable, final int costPassingCell) {
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
-        this.building = new Building(building);
+        this.building = new BuildingVo(building);
         this.floor = floor;
         this.walkable = walkable;
         this.costPassingCell = costPassingCell;
@@ -149,7 +155,7 @@ public class Cell {
     }
 
     public void setBuilding(final String building) {
-        this.building = new Building(building);
+        this.building = new BuildingVo(building);
     }
 
     public void setFloor(final String floor) {

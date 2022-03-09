@@ -22,7 +22,7 @@ import android.util.AttributeSet;
 
 import java.util.List;
 
-import de.fhe.fhemobile.models.navigation.Person;
+import de.fhe.fhemobile.vos.navigation.PersonVo;
 import de.fhe.fhemobile.widgets.picker.base.IdPicker;
 
 
@@ -33,10 +33,10 @@ public class PersonPicker extends IdPicker {
 
     public PersonPicker(final Context context, final AttributeSet attrs) { super(context, attrs); }
 
-    public void setItems(final List<Person> _items){
+    public void setItems(final List<PersonVo> _items){
         mItems = _items;
         if(mItems == null){
-            throw new AssertionError("Person items cannot be null!");
+            throw new AssertionError("PersonVo items cannot be null!");
         }
     }
 
@@ -55,5 +55,5 @@ public class PersonPicker extends IdPicker {
         return mItems.size();
     }
 
-    private List<Person> mItems;
+    private List<PersonVo> mItems;
 }

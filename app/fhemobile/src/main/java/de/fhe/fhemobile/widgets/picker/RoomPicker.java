@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 
 import java.util.List;
 
-import de.fhe.fhemobile.models.navigation.Room;
+import de.fhe.fhemobile.vos.navigation.RoomVo;
 import de.fhe.fhemobile.widgets.picker.base.IdPicker;
 
 /**
@@ -15,10 +15,10 @@ public class RoomPicker extends IdPicker {
 
     public RoomPicker(final Context context, final AttributeSet attrs) { super(context, attrs); }
 
-    public void setItems(final List<Room> _items){
+    public void setItems(final List<RoomVo> _items){
         mItems = _items;
         if(mItems == null){
-            throw new AssertionError("Room items cannot be null!");
+            throw new AssertionError("RoomVo items cannot be null!");
         }
     }
 
@@ -37,5 +37,5 @@ public class RoomPicker extends IdPicker {
         return mItems.size();
     }
 
-    private List<Room> mItems;
+    private List<RoomVo> mItems;
 }

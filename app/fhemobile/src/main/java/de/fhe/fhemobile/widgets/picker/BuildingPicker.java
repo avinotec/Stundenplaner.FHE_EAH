@@ -23,7 +23,7 @@ import android.util.AttributeSet;
 
 import java.util.List;
 
-import de.fhe.fhemobile.models.navigation.Building;
+import de.fhe.fhemobile.vos.navigation.BuildingVo;
 import de.fhe.fhemobile.widgets.picker.base.IdPicker;
 
 /**
@@ -33,10 +33,10 @@ public class BuildingPicker extends IdPicker {
 
     public BuildingPicker(final Context context, final AttributeSet attrs) { super(context, attrs); }
 
-    public void setItems(final List<Building> _items){
+    public void setItems(final List<BuildingVo> _items){
         mItems = _items;
         if(mItems == null){
-            throw new AssertionError("Building items cannot be null!");
+            throw new AssertionError("BuildingVo items cannot be null!");
         }
     }
 
@@ -55,5 +55,5 @@ public class BuildingPicker extends IdPicker {
         return mItems.size();
     }
 
-    private List<Building> mItems;
+    private List<BuildingVo> mItems;
 }

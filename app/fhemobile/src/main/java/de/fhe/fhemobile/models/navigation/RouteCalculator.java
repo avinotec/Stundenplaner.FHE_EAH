@@ -28,13 +28,16 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.utils.navigation.AStar;
 import de.fhe.fhemobile.utils.navigation.JSONHandler;
 import de.fhe.fhemobile.utils.navigation.BuildingFloorKey;
+import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
+import de.fhe.fhemobile.vos.navigation.Complex;
+import de.fhe.fhemobile.vos.navigation.FloorConnectionVo;
+import de.fhe.fhemobile.vos.navigation.RoomVo;
 
 
 /**
@@ -49,8 +52,8 @@ public class RouteCalculator {
 
     //Variables
     private final Context context;
-    private final ArrayList<FloorConnection> floorConnections;
-    private final ArrayList<BuildingExit> buildingExits;
+    private final ArrayList<FloorConnectionVo> floorConnections;
+    private final ArrayList<BuildingExitVo> buildingExits;
     private final Cell startLocation;
     private final Cell destLocation;
     //gesamte Route
@@ -65,11 +68,11 @@ public class RouteCalculator {
      * @param context
      * @param startLocation the start room
      * @param destLocation the destination room
-     * @param floorConnections the list of {@link FloorConnection}s
-     * @param buildingExits the list of {@link BuildingExit}s
+     * @param floorConnections the list of {@link FloorConnectionVo}s
+     * @param buildingExits the list of {@link BuildingExitVo}s
      */
-    public RouteCalculator(final Context context, final Room startLocation, final Room destLocation,
-                           final ArrayList<FloorConnection> floorConnections, final ArrayList<BuildingExit> buildingExits) {
+    public RouteCalculator(final Context context, final RoomVo startLocation, final RoomVo destLocation,
+                           final ArrayList<FloorConnectionVo> floorConnections, final ArrayList<BuildingExitVo> buildingExits) {
         this.context = context;
         this.startLocation = startLocation;
         this.destLocation = destLocation;
@@ -106,9 +109,9 @@ public class RouteCalculator {
 
                 //determine Exit to use for leaving complex to the start complex
                 // and determine Exit to use for entering the destination complex
-                BuildingExit buildingExit = null;
-                BuildingExit entry = null;
-                for (final BuildingExit buildingExitIt : buildingExits) {
+                BuildingExitVo buildingExit = null;
+                BuildingExitVo entry = null;
+                for (final BuildingExitVo buildingExitIt : buildingExits) {
                     //use exitIt as exit if exitIt belongs to start complex
                     // and is an exit to the destination complex
                     if (buildingExitIt.getComplex() == startComplex) {
@@ -224,19 +227,19 @@ public class RouteCalculator {
 
             //fill in rooms
             if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(context);
-            for(final Room r : MainActivity.rooms){
+            for(final RoomVo r : MainActivity.rooms){
                 if(r.getComplex() == complex && r.getFloorString().equals(floor)){
                     floorGrid[r.getXCoordinate()][r.getYCoordinate()] = r;
                 }
             }
             //fill in exits
-            for(final BuildingExit ex : buildingExits){
+            for(final BuildingExitVo ex : buildingExits){
                 if(ex.getComplex() == complex && ex.getFloorString().equals(floor)){
                     floorGrid[ex.getXCoordinate()][ex.getYCoordinate()] = ex;
                 }
             }
             //fill in floorconnections
-            for(final FloorConnection fc : floorConnections){
+            for(final FloorConnectionVo fc : floorConnections){
                 for(final FloorConnectionCell cell : fc.getConnectedCells())
                     if(cell.getComplex() == complex && cell.getFloorString().equals(floor)){
                         floorGrid[cell.getXCoordinate()][cell.getYCoordinate()] = cell;

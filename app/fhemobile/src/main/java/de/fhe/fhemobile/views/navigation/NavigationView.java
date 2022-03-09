@@ -38,11 +38,11 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.models.navigation.BuildingExit;
+import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
 import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
-import de.fhe.fhemobile.models.navigation.Room;
-import de.fhe.fhemobile.models.navigation.Complex;
+import de.fhe.fhemobile.vos.navigation.RoomVo;
+import de.fhe.fhemobile.vos.navigation.Complex;
 import de.fhe.fhemobile.utils.navigation.BuildingFloorKey;
 
 
@@ -60,7 +60,7 @@ public class NavigationView extends LinearLayout {
     }
 
 
-    public void initializeView(final Room startRoom, final Room destRoom){
+    public void initializeView(final RoomVo startRoom, final RoomVo destRoom){
 
         //set start and dest
         mTextViewStart.setText(getResources().getString(R.string.navigation_start) +"   "+ startRoom.getRoomName());
@@ -210,8 +210,8 @@ public class NavigationView extends LinearLayout {
             for(final Cell cell : cellList) {
                 if (cell instanceof FloorConnectionCell) {
                     drawFloorConnection((FloorConnectionCell) cell);
-                } else if (cell instanceof BuildingExit) {
-                    drawExit((BuildingExit) cell);
+                } else if (cell instanceof BuildingExitVo) {
+                    drawExit((BuildingExitVo) cell);
                 } else {
                     drawPathCell(cell);
                 }
@@ -225,7 +225,7 @@ public class NavigationView extends LinearLayout {
      * Draw start location
      * @param startRoom start room of the route
      */
-    public void drawStartLocation(final Room startRoom) {
+    public void drawStartLocation(final RoomVo startRoom) {
         try {
             //add start icon
             final ImageView startIcon = new ImageView(getContext());
@@ -244,7 +244,7 @@ public class NavigationView extends LinearLayout {
      * Draw destination location
      * @param destRoom destination room of the route
      */
-    public void drawDestinationLocation(final Room destRoom) {
+    public void drawDestinationLocation(final RoomVo destRoom) {
         try {
             //add destination icon
             final ImageView destinationIcon = new ImageView(getContext());
@@ -323,7 +323,7 @@ public class NavigationView extends LinearLayout {
      * Draw exit icon corresponding to the exitCell
      * @param buildingExitCell exit to display
      */
-    private void drawExit(final BuildingExit buildingExitCell){
+    private void drawExit(final BuildingExitVo buildingExitCell){
         final ImageView exitIcon = new ImageView(getContext());
         exitIcon.setImageResource(R.drawable.exit_icon);
         if (mNavigationLayout != null) mNavigationLayout.addView(exitIcon);

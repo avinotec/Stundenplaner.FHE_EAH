@@ -10,7 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.models.navigation.Person;
+import de.fhe.fhemobile.vos.navigation.PersonVo;
 import de.fhe.fhemobile.widgets.picker.PersonPicker;
 import de.fhe.fhemobile.widgets.picker.base.OnItemChosenListener;
 
@@ -45,10 +45,10 @@ public class PersonSearchView extends SearchView {
     public SearchView.IViewListener getViewListener(){ return mViewListener;}
 
 
-    public void setPersonItems(final List<Person> _Items) {
-        Collections.sort(_Items, new Comparator<Person>() {
+    public void setPersonItems(final List<PersonVo> _Items) {
+        Collections.sort(_Items, new Comparator<PersonVo>() {
             @Override
-            public int compare(final Person o1, final Person o2) {
+            public int compare(final PersonVo o1, final PersonVo o2) {
                 return o1.getName().compareTo(o2.getName());
             }
         });
@@ -58,14 +58,14 @@ public class PersonSearchView extends SearchView {
 
 
     /**
-     * Reset Person Picker to "please select"
+     * Reset PersonVo Picker to "please select"
      */
     public void resetPersonPicker() {
         mPersonPicker.reset(true);
     }
 
     /**
-     * Set displayed value of the Person Picker
+     * Set displayed value of the PersonVo Picker
      *
      * @param text to display
      */

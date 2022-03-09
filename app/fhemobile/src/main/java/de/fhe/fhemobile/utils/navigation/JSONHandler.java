@@ -34,12 +34,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.fhe.fhemobile.activities.MainActivity;
-import de.fhe.fhemobile.models.navigation.BuildingExit;
+import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
 import de.fhe.fhemobile.models.navigation.Cell;
-import de.fhe.fhemobile.models.navigation.FloorConnection;
+import de.fhe.fhemobile.vos.navigation.FloorConnectionVo;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
-import de.fhe.fhemobile.models.navigation.Person;
-import de.fhe.fhemobile.models.navigation.Room;
+import de.fhe.fhemobile.vos.navigation.PersonVo;
+import de.fhe.fhemobile.vos.navigation.RoomVo;
 
 public class JSONHandler {
 
@@ -128,10 +128,10 @@ public class JSONHandler {
     /**
      * Parse persons from json
      * @param json the json string
-     * @return HashMap of {@link Person} objects, person's name used as key
+     * @return HashMap of {@link PersonVo} objects, person's name used as key
      */
-    public static HashMap<String, Person> parseJsonPersons(final String json){
-        final HashMap<String, Person> persons = new HashMap<>();
+    public static HashMap<String, PersonVo> parseJsonPersons(final String json){
+        final HashMap<String, PersonVo> persons = new HashMap<>();
 
         try{
             final JSONArray jsonArray = new JSONArray(json);
@@ -140,7 +140,7 @@ public class JSONHandler {
 
                 final JSONObject jEntry = jsonArray.getJSONObject(i);
 
-                final Person newPerson = new Person(
+                final PersonVo newPerson = new PersonVo(
                         jEntry.optString(PERSON_NAME),
                         jEntry.getString(ROOM));
 
@@ -157,10 +157,10 @@ public class JSONHandler {
     /**
      * Parse exits from json
      * @param json the json string
-     * @return ArrayList of {@link BuildingExit} objects
+     * @return ArrayList of {@link BuildingExitVo} objects
      */
-    public static ArrayList<BuildingExit> parseJsonExits(final String json){
-        final ArrayList<BuildingExit> buildingExits = new ArrayList<>();
+    public static ArrayList<BuildingExitVo> parseJsonExits(final String json){
+        final ArrayList<BuildingExitVo> buildingExits = new ArrayList<>();
 
         try{
             final JSONArray jsonArray = new JSONArray(json);
@@ -181,7 +181,7 @@ public class JSONHandler {
                     entryFrom.add(entryFromJSON.optString(j));
                 }
 
-                final BuildingExit newBuildingExit = new BuildingExit(jEntry.optInt(X_COORDINATE),
+                final BuildingExitVo newBuildingExit = new BuildingExitVo(jEntry.optInt(X_COORDINATE),
                         jEntry.getInt(Y_COORDINATE),
                         jEntry.getString(BUILDING),
                         jEntry.getString(FLOOR),
@@ -202,11 +202,11 @@ public class JSONHandler {
     /**
      * Parse rooms from JSON
      * @param json the json string
-     * @return ArrayList of {@link Room} objects
+     * @return ArrayList of {@link RoomVo} objects
      */
-    public static ArrayList<Room> parseJsonRooms(final String json) {
+    public static ArrayList<RoomVo> parseJsonRooms(final String json) {
 
-        final ArrayList<Room> rooms = new ArrayList<>();
+        final ArrayList<RoomVo> rooms = new ArrayList<>();
 
         try {
             final JSONArray jsonArray = new JSONArray(json);
@@ -214,7 +214,7 @@ public class JSONHandler {
             for (int i = 0; i < jsonArray.length(); i++) {
 
                 final JSONObject jEntry = jsonArray.getJSONObject(i);
-                final Room newRoom = new Room(jEntry.optString(ROOM_NUMBER),
+                final RoomVo newRoom = new RoomVo(jEntry.optString(ROOM_NUMBER),
                         jEntry.optString(BUILDING),
                         jEntry.optString(FLOOR),
                         jEntry.optString(QR_CODE),
@@ -233,11 +233,11 @@ public class JSONHandler {
     /**
      * Parse floor connections from JSON
      * @param json the json string
-     * @return ArrayList of {@link FloorConnection} objects
+     * @return ArrayList of {@link FloorConnectionVo} objects
      */
-    public static ArrayList<FloorConnection> parseJsonFloorConnection(final String json) {
+    public static ArrayList<FloorConnectionVo> parseJsonFloorConnection(final String json) {
 
-        final ArrayList<FloorConnection> floorConnections = new ArrayList<>();
+        final ArrayList<FloorConnectionVo> floorConnections = new ArrayList<>();
 
         try {
             final JSONArray jsonArray = new JSONArray(json);
@@ -264,7 +264,7 @@ public class JSONHandler {
                     connectedCells.add(cell);
                 }
 
-                final FloorConnection newConnection = new FloorConnection(floorConnectionType, connectedCells);
+                final FloorConnectionVo newConnection = new FloorConnectionVo(floorConnectionType, connectedCells);
                 floorConnections.add(newConnection);
             }
         } catch (final Exception e) {
@@ -324,10 +324,10 @@ public class JSONHandler {
     /**
      * Reads persons from assets and returns them in a HashMap
      * @param context
-     * @return HashMap of {@link Person} objects, person's names used as key
+     * @return HashMap of {@link PersonVo} objects, person's names used as key
      */
-    public static HashMap<String, Person> loadPersons(final Context context){
-        HashMap<String,Person> persons = null;
+    public static HashMap<String, PersonVo> loadPersons(final Context context){
+        HashMap<String, PersonVo> persons = null;
         try{
             final String personsJson = JSONHandler.readFromAssets(context, "persons");
             persons = JSONHandler.parseJsonPersons(personsJson);

@@ -75,7 +75,7 @@ public abstract class SearchView extends LinearLayout {
 
     /**
      * Set error message that is displayed at the start input layout
-     * Message: Room not found!
+     * Message: RoomVo not found!
      */
     public void setInputErrorRoomNotFound() {
         mStartInputLayout.setError(
@@ -84,7 +84,7 @@ public abstract class SearchView extends LinearLayout {
 
     /**
      * Set error message that is displayed at the start input layout
-     * Message: No Room entered!
+     * Message: No RoomVo entered!
      */
     public void setInputErrorNoInput() {
         mStartInputLayout.setError(

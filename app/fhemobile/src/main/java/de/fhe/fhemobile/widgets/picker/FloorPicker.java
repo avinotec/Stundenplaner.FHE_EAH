@@ -31,7 +31,7 @@ public class FloorPicker extends IdPicker {
 
     public FloorPicker(final Context context, final AttributeSet attrs) { super(context, attrs); }
 
-    public void setItems(final List<Integer> _items){
+    public void setItems(final List<String> _items){
         mItems = _items;
         if(mItems == null){
             throw new AssertionError("Floor items cannot be null!");
@@ -40,12 +40,12 @@ public class FloorPicker extends IdPicker {
 
     @Override
     protected String getId(final int _Position) {
-        return mItems.get(_Position).toString();
+        return mItems.get(_Position);
     }
 
     @Override
     protected String getName(final int _Position) {
-        return String.format("%02d", Integer.parseInt(mItems.get(_Position).toString()));
+        return mItems.get(_Position);
     }
 
     @Override
@@ -53,5 +53,5 @@ public class FloorPicker extends IdPicker {
         return mItems.size();
     }
 
-    private List<Integer> mItems;
+    private List<String> mItems;
 }

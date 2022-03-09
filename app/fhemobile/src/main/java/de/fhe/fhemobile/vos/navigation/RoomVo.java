@@ -15,26 +15,28 @@
  *
  */
 
-package de.fhe.fhemobile.models.navigation;
+package de.fhe.fhemobile.vos.navigation;
 
 import static de.fhe.fhemobile.utils.Define.Navigation.COSTS_ROOM;
 
-public class Room extends Cell{
+import de.fhe.fhemobile.models.navigation.Cell;
+
+public class RoomVo extends Cell {
 
     //Constants
-    private static final String TAG = "Room"; //$NON-NLS
+    private static final String TAG = "RoomVo"; //$NON-NLS
 
     //Variables
     private String roomNumber;
     private String qrCode;
 
     //Constructors
-    public Room(){
+    public RoomVo(){
         super();
     }
 
-    public Room(final String roomNumber, final String building, final String floor, final String qrCode,
-                final int x, final int y, final boolean walkable) {
+    public RoomVo(final String roomNumber, final String building, final String floor, final String qrCode,
+                  final int x, final int y, final boolean walkable) {
         super(x, y, building, floor, walkable, COSTS_ROOM);
         this.roomNumber = roomNumber;
         this.qrCode = qrCode;

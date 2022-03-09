@@ -27,8 +27,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.models.navigation.Building;
-import de.fhe.fhemobile.models.navigation.Room;
+import de.fhe.fhemobile.vos.navigation.BuildingVo;
+import de.fhe.fhemobile.vos.navigation.RoomVo;
 import de.fhe.fhemobile.widgets.picker.BuildingPicker;
 import de.fhe.fhemobile.widgets.picker.FloorPicker;
 import de.fhe.fhemobile.widgets.picker.RoomPicker;
@@ -69,10 +69,10 @@ public class RoomSearchView extends SearchView {
         return mViewListener;
     }
 
-    public void setBuildingItems(final List<Building> _Items){
-        Collections.sort(_Items, new Comparator<Building>() {
+    public void setBuildingItems(final List<BuildingVo> _Items){
+        Collections.sort(_Items, new Comparator<BuildingVo>() {
             @Override
-            public int compare(final Building o1, final Building o2) {
+            public int compare(final BuildingVo o1, final BuildingVo o2) {
                 return o1.getBuilding().compareTo(o2.getBuilding());
             }
         });
@@ -80,16 +80,16 @@ public class RoomSearchView extends SearchView {
         mBuildingPicker.toggleEnabled(true);
     }
 
-    public void setFloorItems(final List<Integer> _Items){
+    public void setFloorItems(final List<String> _Items){
         Collections.sort(_Items);
         mFloorPicker.setItems(_Items);
         mFloorPicker.toggleEnabled(true);
     }
 
-    public void setRoomItems(final List<Room> _Items){
-        Collections.sort(_Items, new Comparator<Room>() {
+    public void setRoomItems(final List<RoomVo> _Items){
+        Collections.sort(_Items, new Comparator<RoomVo>() {
             @Override
-            public int compare(final Room o1, final Room o2) {
+            public int compare(final RoomVo o1, final RoomVo o2) {
                 return o1.getRoomName().compareTo(o2.getRoomName());
             }
         });
@@ -108,7 +108,7 @@ public class RoomSearchView extends SearchView {
 
 
     /**
-     * Reset Building Picker to "please select"
+     * Reset BuildingVo Picker to "please select"
      */
     public void resetBuildingPicker(){ mBuildingPicker.reset(true);}
 
@@ -118,13 +118,13 @@ public class RoomSearchView extends SearchView {
     public void resetFloorPicker(){ mFloorPicker.reset(true);}
 
     /**
-     * Reset Room Picker to "please select"
+     * Reset RoomVo Picker to "please select"
      */
     public void resetRoomPicker(){ mRoomPicker.reset(true);}
 
 
     /**
-     * Set displayed value of the Building Picker
+     * Set displayed value of the BuildingVo Picker
      * @param text to display
      */
     public void setBuildingDisplayValue(final String text){ mBuildingPicker.setDisplayValue(text); }
@@ -136,7 +136,7 @@ public class RoomSearchView extends SearchView {
     public void setFloorDisplayValue(final String text){ mFloorPicker.setDisplayValue(text);}
 
     /**
-     * Set displayed value of the Room Picker
+     * Set displayed value of the RoomVo Picker
      * @param text to display
      */
     public void setRoomDisplayValue(final String text){ mRoomPicker.setDisplayValue(text);}

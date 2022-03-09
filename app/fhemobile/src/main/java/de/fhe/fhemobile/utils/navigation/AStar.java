@@ -30,10 +30,10 @@ import java.util.LinkedHashMap;
 import java.util.Objects;
 import java.util.PriorityQueue;
 
-import de.fhe.fhemobile.models.navigation.BuildingExit;
+import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
 import de.fhe.fhemobile.models.navigation.Cell;
-import de.fhe.fhemobile.models.navigation.Complex;
-import de.fhe.fhemobile.models.navigation.FloorConnection;
+import de.fhe.fhemobile.vos.navigation.Complex;
+import de.fhe.fhemobile.vos.navigation.FloorConnectionVo;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
 
 /**
@@ -62,7 +62,7 @@ public class AStar {
     //for each building (key = building as string e.g. "01") and for each floor (key = floor as int) a grid of cells is stored
     private final HashMap<Complex, HashMap<Integer, Cell[][]>> floorGrids;
     //ArrayList of all floorconnections storing the particular set of connected cells
-    private final ArrayList<FloorConnection> floorConnections;
+    private final ArrayList<FloorConnectionVo> floorConnections;
 
     /**
      * Constructs an AStar Object
@@ -72,7 +72,7 @@ public class AStar {
      */
     public AStar(final Cell startCell, final Cell endCell,
                  final HashMap<Complex, HashMap<Integer, Cell[][]>> floorCellGrids,
-                 final ArrayList<FloorConnection> floorConnections) {
+                 final ArrayList<FloorConnectionVo> floorConnections) {
         this.startCell = startCell;
         this.destCell = endCell;
         this.floorGrids = floorCellGrids;
@@ -121,7 +121,7 @@ public class AStar {
 
 
             // if destination is exit then add it as cellToWalk
-            if(currentCell instanceof BuildingExit){
+            if(currentCell instanceof BuildingExitVo){
                 if(cellsToWalk.containsKey(new BuildingFloorKey(currentCell))){
                     cellsToWalk.get(new BuildingFloorKey(currentCell)).add(currentCell);
                 }
@@ -148,7 +148,7 @@ public class AStar {
                 currentCell = currentCell.getParentCell();
             }
             // if start is exit then add it as cellToWalk
-            if(currentCell.getParentCell() == null && currentCell instanceof BuildingExit){
+            if(currentCell.getParentCell() == null && currentCell instanceof BuildingExitVo){
                 if(cellsToWalk.containsKey(new BuildingFloorKey(currentCell))){
                     cellsToWalk.get(new BuildingFloorKey(currentCell)).add(currentCell);
                 }
@@ -280,12 +280,12 @@ public class AStar {
     }
 
     /**
-     * Finds the {@link FloorConnection} object the {@link FloorConnectionCell} belongs to
+     * Finds the {@link FloorConnectionVo} object the {@link FloorConnectionCell} belongs to
      * @param cell floorconnectionCell of a floorconnection object
      * @return List of all {@link FloorConnectionCell} objects connected with the cell
      */
     private ArrayList<FloorConnectionCell> findConnectedCells(final FloorConnectionCell cell){
-        for (final FloorConnection fc : floorConnections){
+        for (final FloorConnectionVo fc : floorConnections){
             for(final FloorConnectionCell _cell :  fc.getConnectedCells()){
                 if (_cell.getKey().equals(cell.getKey())){
                     return fc.getConnectedCells();

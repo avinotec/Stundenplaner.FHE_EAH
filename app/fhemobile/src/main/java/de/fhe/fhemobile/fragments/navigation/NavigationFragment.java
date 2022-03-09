@@ -37,10 +37,10 @@ import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.models.navigation.BuildingExit;
+import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
 import de.fhe.fhemobile.models.navigation.Cell;
-import de.fhe.fhemobile.models.navigation.FloorConnection;
-import de.fhe.fhemobile.models.navigation.Room;
+import de.fhe.fhemobile.vos.navigation.FloorConnectionVo;
+import de.fhe.fhemobile.vos.navigation.RoomVo;
 import de.fhe.fhemobile.models.navigation.RouteCalculator;
 import de.fhe.fhemobile.utils.navigation.BuildingFloorKey;
 import de.fhe.fhemobile.utils.navigation.FloorPlanIterator;
@@ -63,11 +63,11 @@ public class NavigationFragment extends FeatureFragment {
     //Variables
     private NavigationView mView;
 
-    private Room mStartRoom;
-    private Room mDestRoom;
+    private RoomVo mStartRoom;
+    private RoomVo mDestRoom;
 
-    private static ArrayList<BuildingExit> buildingExits = new ArrayList<>();
-    private static ArrayList<FloorConnection> floorConnections  = new ArrayList<>();
+    private static ArrayList<BuildingExitVo> buildingExits = new ArrayList<>();
+    private static ArrayList<FloorConnectionVo> floorConnections  = new ArrayList<>();
 
     //cellsToWalk here as LinkedHashMap to have a list sorted for flicking through floorplans by buttons
     //sorted by insertion order: first element is the last inserted (which is the destination floor)
@@ -84,7 +84,7 @@ public class NavigationFragment extends FeatureFragment {
         // Required empty public constructor
     }
 
-    public static NavigationFragment newInstance(final Room _startRoom, final Room _destRoom) {
+    public static NavigationFragment newInstance(final RoomVo _startRoom, final RoomVo _destRoom) {
         final NavigationFragment fragment = new NavigationFragment();
         final Bundle args = new Bundle();
         args.putString(PARAM_START, _startRoom.getRoomName());
@@ -105,7 +105,7 @@ public class NavigationFragment extends FeatureFragment {
         mStartRoom = null;
         mDestRoom = null;
 
-        for(final Room room : MainActivity.rooms){
+        for(final RoomVo room : MainActivity.rooms){
             if(room.getRoomName().equals(start)){
                 mStartRoom = room;
             }

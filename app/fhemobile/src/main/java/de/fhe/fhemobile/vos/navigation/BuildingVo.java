@@ -15,7 +15,7 @@
  *
  */
 
-package de.fhe.fhemobile.models.navigation;
+package de.fhe.fhemobile.vos.navigation;
 
 
 /**
@@ -23,21 +23,21 @@ package de.fhe.fhemobile.models.navigation;
  * buildings considered as one unit (3-2-1, 4, 5)
  * needed for route calculation
  */
-public class Building {
+public class BuildingVo {
 
     private final Complex mComplex;
     private final String mBuilding;
 
-    public Building(final String building){
+    public BuildingVo(final String building){
         this.mBuilding = building;
         this.mComplex = Complex.getEnum(building);
     }
 
     /**
      * Constructor for non-walkable cells without a building
-     * @param complex the {@link Complex} to use for initializing a {@link Building} object
+     * @param complex the {@link Complex} to use for initializing a {@link BuildingVo} object
      */
-    Building(final Complex complex){
+    public BuildingVo(final Complex complex){
         this.mBuilding = "_";
         this.mComplex = complex;
     }

@@ -18,7 +18,7 @@
 package de.fhe.fhemobile.utils.navigation;
 
 import de.fhe.fhemobile.models.navigation.Cell;
-import de.fhe.fhemobile.models.navigation.Complex;
+import de.fhe.fhemobile.vos.navigation.Complex;
 
 public class NavigationUtils {
 

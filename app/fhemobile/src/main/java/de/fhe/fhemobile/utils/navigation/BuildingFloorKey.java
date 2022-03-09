@@ -20,7 +20,7 @@ package de.fhe.fhemobile.utils.navigation;
 import java.util.Arrays;
 
 import de.fhe.fhemobile.models.navigation.Cell;
-import de.fhe.fhemobile.models.navigation.Complex;
+import de.fhe.fhemobile.vos.navigation.Complex;
 
 /**
  * Key for the HashMap containing the route (all cells to walk)
