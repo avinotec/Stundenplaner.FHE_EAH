@@ -56,7 +56,7 @@ public class NewsListView extends LinearLayout {
         mViewListener = _Listener;
     }
 
-    public void init(final ViewListener _Listener) {
+    public void initializeView(final ViewListener _Listener) {
         mViewListener = _Listener;
 
         if(mModel.getNewsItems() != null) {

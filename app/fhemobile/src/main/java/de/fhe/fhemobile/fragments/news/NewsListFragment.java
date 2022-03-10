@@ -69,7 +69,7 @@ public class NewsListFragment extends FeatureFragment {
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = (NewsListView) inflater.inflate(R.layout.fragment_news_list, container, false);
-        mView.init(mViewListener);
+        mView.initializeView(mViewListener);
 
         return mView;
     }

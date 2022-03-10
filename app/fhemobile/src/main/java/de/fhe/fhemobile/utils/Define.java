@@ -33,7 +33,10 @@ public class Define {
 
 	public static final String SP_NAVIGATION = "navigation";
 
-    //created by Nadja 17.11.2021
+    public static final String REQUEST_SCANNED_START_ROOM = "requestScannedStartRoom";
+	public static final String KEY_SCANNED_ROOM = "scannedRoom";
+
+	//created by Nadja 17.11.2021
 	public static class Maps{
 		public static final String BUILDING_03_02_01_FLOOR_UG1 = "building_03_02_01_floor_ug1";   //$NON-NLS
 		public static final String BUILDING_03_02_01_FLOOR_00 = "building_03_02_01_floor_00";   //$NON-NLS

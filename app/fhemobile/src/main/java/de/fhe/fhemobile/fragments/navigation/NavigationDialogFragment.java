@@ -17,13 +17,21 @@
 
 package de.fhe.fhemobile.fragments.navigation;
 
+import static de.fhe.fhemobile.utils.Define.KEY_SCANNED_ROOM;
+import static de.fhe.fhemobile.utils.Define.REQUEST_SCANNED_START_ROOM;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentResultListener;
+
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.views.navigation.NavigationDialogView;
 
 
@@ -31,7 +39,6 @@ import de.fhe.fhemobile.views.navigation.NavigationDialogView;
  * Created by Nadja 02.12.2021
  */
 public class NavigationDialogFragment extends FeatureFragment {
-
 
     //Constants
     private static final String TAG = "NavigDialogFragment"; //$NON-NLS
@@ -50,6 +57,22 @@ public class NavigationDialogFragment extends FeatureFragment {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //listen for NavigationScannerFragment to send scanning result
+        getParentFragmentManager().setFragmentResultListener(REQUEST_SCANNED_START_ROOM, this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
+                // We use a String here, but any type that can be put in a Bundle is supported
+                String result = bundle.getString(KEY_SCANNED_ROOM);
+
+                Log.d(TAG, "scanned QR code received in NavigationDialogFragment: "+result);
+                //send room to children
+                Bundle childBundle = new Bundle();
+                childBundle.putString(Define.KEY_SCANNED_ROOM, result);
+                getChildFragmentManager().setFragmentResult(Define.REQUEST_SCANNED_START_ROOM, childBundle);
+
+            }
+        });
     }
 
     @Override
@@ -65,6 +88,7 @@ public class NavigationDialogFragment extends FeatureFragment {
         return mView;
 
     }
+
 
     private NavigationDialogView mView;
 }
