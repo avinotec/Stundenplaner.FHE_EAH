@@ -19,6 +19,7 @@ package de.fhe.fhemobile.utils.mensa;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.fhe.fhemobile.vos.mensa.MensaDayVo;
 import de.fhe.fhemobile.vos.mensa.MensaFoodItemCollectionVo;
 import de.fhe.fhemobile.vos.mensa.MensaFoodItemVo;
 
@@ -52,6 +53,39 @@ public class MensaUtils {
         }
 
         result.add(new MensaFoodItemCollectionVo(tempItems, lastDateString));
+
+        return result;
+    }
+
+    /**
+     * Group MensaFoodItems per day and store each day in a {@link MensaDayVo}
+     * @param _Items Array of {@link MensaFoodItemVo} objects, sorted by date
+     * @return list of {@link MensaDayVo} objects
+     */
+    public static List<MensaDayVo> groupPerDay(final MensaFoodItemVo[] _Items) {
+
+        final List<MensaDayVo> result = new ArrayList<>();
+
+        //helpers and flags for for-loop
+        List<MensaFoodItemVo> itemsOfSameDate = new ArrayList<MensaFoodItemVo>();
+        long lastDate = _Items[0].getDate();
+        String lastDateString = _Items[0].getDateString();
+
+        for (final MensaFoodItemVo mensaFoodItem : _Items) {
+
+            final long currentDate = mensaFoodItem.getDate();
+            //if current item belongs to different date than item before,
+            // then all items for the last date are collected and can be stored in a MensaDayVo
+            if (currentDate != lastDate) {
+                result.add(new MensaDayVo(itemsOfSameDate, lastDateString));
+                lastDate = currentDate;
+                lastDateString = mensaFoodItem.getDateString();
+                itemsOfSameDate = new ArrayList<>();
+            }
+            itemsOfSameDate.add(mensaFoodItem);
+        }
+
+        result.add(new MensaDayVo(itemsOfSameDate, lastDateString));
 
         return result;
     }

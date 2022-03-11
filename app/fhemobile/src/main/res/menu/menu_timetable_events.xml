@@ -14,12 +14,15 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ~
   -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools"
-      tools:context="de.fhe.fhemobile.activities.timetable.TimeTableEventsActivity">
-    <item android:id="@+id/action_reset_selection"
-          android:title="@string/timetable_reset"
-          android:orderInCategory="100"
-          app:showAsAction="ifRoom"/>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="de.fhe.fhemobile.activities.timetable.TimeTableEventsActivity">
+
+    <item
+        android:id="@+id/action_reset_selection"
+        android:orderInCategory="100"
+        android:title="@string/timetable_reset"
+        app:showAsAction="ifRoom" />
 </menu>

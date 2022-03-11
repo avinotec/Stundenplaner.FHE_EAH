@@ -20,8 +20,8 @@ import static de.fhe.fhemobile.Main.getAllSubscribedTimeTableEvents;
 import static de.fhe.fhemobile.Main.getAppContext;
 import static de.fhe.fhemobile.Main.getSubscribedCourseComponents;
 import static de.fhe.fhemobile.Main.subscribedCourseComponents;
-import static de.fhe.fhemobile.utils.Define.PREF_SUBSCRIBED_COURSES;
-import static de.fhe.fhemobile.utils.Define.SP_MYTIMETABLE;
+import static de.fhe.fhemobile.utils.Define.MyTimeTable.PREF_SUBSCRIBED_COURSES;
+import static de.fhe.fhemobile.utils.Define.MyTimeTable.SP_MYTIMETABLE;
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
 import android.app.AlertDialog;

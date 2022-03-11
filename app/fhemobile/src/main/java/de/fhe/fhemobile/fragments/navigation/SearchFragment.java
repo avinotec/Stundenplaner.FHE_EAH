@@ -1,8 +1,8 @@
 package de.fhe.fhemobile.fragments.navigation;
 
-import static de.fhe.fhemobile.utils.Define.KEY_SCANNED_ROOM;
-import static de.fhe.fhemobile.utils.Define.REQUEST_SCANNED_START_ROOM;
-import static de.fhe.fhemobile.utils.Define.SP_NAVIGATION;
+import static de.fhe.fhemobile.utils.Define.Navigation.KEY_SCANNED_ROOM;
+import static de.fhe.fhemobile.utils.Define.Navigation.REQUEST_SCANNED_START_ROOM;
+import static de.fhe.fhemobile.utils.Define.Navigation.SP_NAVIGATION;
 
 import android.content.Context;
 import android.content.SharedPreferences;

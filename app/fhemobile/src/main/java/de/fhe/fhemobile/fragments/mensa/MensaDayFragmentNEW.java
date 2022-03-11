@@ -15,26 +15,40 @@
  *
  */
 
-package de.fhe.fhemobile.fragments.timetable;
+package de.fhe.fhemobile.fragments.mensa;
 
+import android.content.Intent;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.app.ActionBar;
+
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.activities.SettingsActivity;
+import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.fragments.timetable.TimeTableWeekFragment;
+import de.fhe.fhemobile.models.mensa.MensaFoodModel;
+import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.Define;
-import de.fhe.fhemobile.views.timetable.TimeTableWeekView;
-import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
+import de.fhe.fhemobile.utils.UserSettings;
+import de.fhe.fhemobile.utils.feature.Features;
+import de.fhe.fhemobile.views.mensa.MensaDayViewNEW;
+import de.fhe.fhemobile.views.mensa.MensaView;
+import de.fhe.fhemobile.views.mensa.MensaViewNEW;
+import de.fhe.fhemobile.vos.mensa.MensaDayVo;
 
 
-public class TimeTableWeekFragment extends Fragment {
+public class MensaDayFragmentNEW extends FeatureFragment {
 
-    public static final String TAG = TimeTableWeekFragment.class.getSimpleName();
+    public static final String TAG = MensaDayFragmentNEW.class.getSimpleName();
 
 
-    public TimeTableWeekFragment() {
+    public MensaDayFragmentNEW() {
         // Required empty public constructor
     }
 
@@ -42,12 +56,12 @@ public class TimeTableWeekFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment {@link TimeTableFragment}.
+     * @return A new instance of fragment {@link MensaDayFragmentNEW}
      */
-    public static TimeTableWeekFragment newInstance(final TimeTableWeekVo _Week) {
-        final TimeTableWeekFragment fragment = new TimeTableWeekFragment();
+    public static MensaDayFragmentNEW newInstance(MensaDayVo _MensaDay) {
+        final MensaDayFragmentNEW fragment = new MensaDayFragmentNEW();
         final Bundle args = new Bundle();
-        args.putParcelable(Define.TimeTable.PARAM_TIMETABLE_WEEK, _Week);
+        args.putParcelable(Define.Mensa.PARAM_MENSA_DAY, _MensaDay);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,8 +70,8 @@ public class TimeTableWeekFragment extends Fragment {
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mWeek = getArguments().getParcelable(Define.TimeTable.PARAM_TIMETABLE_WEEK);
+        if(getArguments() != null){
+            mMensaDay = getArguments().getParcelable(Define.Mensa.PARAM_MENSA_DAY);
         }
     }
 
@@ -65,13 +79,11 @@ public class TimeTableWeekFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (TimeTableWeekView) inflater.inflate(R.layout.fragment_time_table_week, container, false);
-        mView.initializeView(mWeek);
+        mView = (MensaDayViewNEW) inflater.inflate(R.layout.fragment_mensa_day, container, false);
+        mView.initializeView(mMensaDay);
         return mView;
     }
 
-
-    private TimeTableWeekView mView;
-    private TimeTableWeekVo   mWeek;
-
+    private MensaDayViewNEW mView;
+    private MensaDayVo mMensaDay;
 }

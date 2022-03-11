@@ -21,6 +21,7 @@ import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
 import de.fhe.fhemobile.fragments.impressum.ImpressumFragment;
 import de.fhe.fhemobile.fragments.maps.MapsDialogFragment;
 import de.fhe.fhemobile.fragments.mensa.MensaFoodFragment;
+import de.fhe.fhemobile.fragments.mensa.MensaFragmentNEW;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableCalendarFragment;
 import de.fhe.fhemobile.fragments.navigation.NavigationDialogFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
@@ -38,7 +39,8 @@ public class FeatureFragmentFactory {
         //TODO Features
         switch (_FeatureId) {
             //case Features.FeatureId.PHONEBOOK:       fragment = PhonebookSearchFragment.newInstance();   break;
-            case Features.FeatureId.MENSA:           fragment = MensaFoodFragment.newInstance();         break;
+            //case Features.FeatureId.MENSA:           fragment = MensaFoodFragment.newInstance();         break;
+            case Features.FeatureId.MENSA:           fragment = MensaFragmentNEW.newInstance();         break;
             case Features.FeatureId.MAPS:            fragment = MapsDialogFragment.newInstance();              break;
             case Features.FeatureId.SEMESTER_DATA:   fragment = SemesterDataFragment.newInstance();      break;
             //case FeatureId.SEMESTER_DATA:   fragment = SemesterDataWebViewFragment.newInstance();      break; //display from Browser/as Webview - Nadja 07.09.21

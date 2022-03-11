@@ -26,17 +26,33 @@ import org.jetbrains.annotations.NonNls;
 public class Define {
 
 	@NonNls
-	public static final String SP_MYTIMETABLE = "my_time_table";
-	public static final String PREF_SUBSCRIBED_COURSES = "my_time_table_courses";
+	public static final String PARAM_TIMETABLE_ID = "paramTimeTableId";
 
-	public static final String PREFS_LAST_OPENED = "lastAppOpened";
+	//created by Nadja 11.03.2022
+	public static class Mensa{
+		public static final String PARAM_MENSA_ID = "paramMensaId";
+        public static final String SP_MENSA_SETTINGS = "spMensa";
+		public static final String PREF_CHOSEN_MENSA_ID = "prefChosenMensaId";
+		public static final String PARAM_MENSA_DAY = "paramMensaDay";
+	}
 
-	public static final String SP_NAVIGATION = "navigation";
+	//created by Nadja 11.03.2022
+	public static class TimeTable{
+		public static final String SP_TIMETABLE_SETTINGS = "spTimeTable";
+		public static final String PREF_CHOSEN_TIMETABLE_ID = "prefChosenTimeTableId";
 
-    public static final String REQUEST_SCANNED_START_ROOM = "requestScannedStartRoom";
-	public static final String KEY_SCANNED_ROOM = "scannedRoom";
+        public static final String PARAM_TIMETABLE_WEEK = "paramTimeTableWeek";
+    }
 
-	//created by Nadja 17.11.2021
+	//created by Nadja 11.03.2022
+	public static class MyTimeTable{
+		public static final String SP_MYTIMETABLE = "my_time_table";
+		public static final String PREF_SUBSCRIBED_COURSES = "my_time_table_courses";
+
+		public static final String PREFS_LAST_OPENED = "lastAppOpened";
+	}
+
+    //created by Nadja 17.11.2021
 	public static class Maps{
 		public static final String BUILDING_03_02_01_FLOOR_UG1 = "building_03_02_01_floor_ug1";   //$NON-NLS
 		public static final String BUILDING_03_02_01_FLOOR_00 = "building_03_02_01_floor_00";   //$NON-NLS
@@ -81,11 +97,18 @@ public class Define {
 		// because the cell at the entered floor and the one at the reached floor are both counted
 		public static final int COSTS_FLOORCONNECTION = 1;
 
+		//shared preferences used to save latest user input for navigation destination
+		public static final String SP_NAVIGATION = "navigation";
+
+		//communication between NavigationDialogFragment and NavigationScannerFragment
+		public static final String REQUEST_SCANNED_START_ROOM = "requestScannedStartRoom";
+		public static final String KEY_SCANNED_ROOM = "scannedRoom";
 	}
 
-/** Push notifications from Google Firebase to the App */
-@NonNls
-public static final String PUSH_NOTIFICATION_CHANNEL_ID = "de.fhe.fhemobile.push";
+
+	/** Push notifications from Google Firebase to the App */
+	@NonNls
+	public static final String PUSH_NOTIFICATION_CHANNEL_ID = "de.fhe.fhemobile.push";
 	@NonNls
 	public static final String PUSH_NOTIFICATION_CHANNEL_NAME = "Notification";
 	@NonNls

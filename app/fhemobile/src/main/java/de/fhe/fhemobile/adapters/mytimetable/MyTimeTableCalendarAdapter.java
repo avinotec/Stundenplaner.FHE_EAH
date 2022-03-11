@@ -56,7 +56,6 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 	/**
 	 * How many items are in the data set represented by this Adapter.
-	 *
 	 * @return Count of items.
 	 */
 	@Override
@@ -159,8 +158,8 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 
 	/**
-	 *    gehe durch die Liste, bis die Startzeit eines Events größer ist als die angegebene Zeit und nehme den vorherigen Event
-	 *    und gebe den Index zurück.
+	 * Iterate over item list of the adapter till start time of an event is after now,
+	 * return the index of the previous event.
 	 * @return
 	 */
 	public int getPositionOfFirstCourseToday(){

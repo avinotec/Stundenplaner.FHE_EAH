@@ -1,12 +1,7 @@
 package de.fhe.fhemobile.fragments.navigation;
 
-import static de.fhe.fhemobile.utils.Define.SP_NAVIGATION;
-
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
@@ -17,14 +12,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
-import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.views.navigation.SearchView;
 import de.fhe.fhemobile.vos.navigation.PersonVo;
 import de.fhe.fhemobile.vos.navigation.RoomVo;
-import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.navigation.JSONHandler;
 import de.fhe.fhemobile.views.navigation.PersonSearchView;
 

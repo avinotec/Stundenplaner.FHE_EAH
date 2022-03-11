@@ -17,8 +17,8 @@
 
 package de.fhe.fhemobile.fragments.navigation;
 
-import static de.fhe.fhemobile.utils.Define.KEY_SCANNED_ROOM;
-import static de.fhe.fhemobile.utils.Define.REQUEST_SCANNED_START_ROOM;
+import static de.fhe.fhemobile.utils.Define.Navigation.KEY_SCANNED_ROOM;
+import static de.fhe.fhemobile.utils.Define.Navigation.REQUEST_SCANNED_START_ROOM;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -68,8 +68,8 @@ public class NavigationDialogFragment extends FeatureFragment {
                 Log.d(TAG, "scanned QR code received in NavigationDialogFragment: "+result);
                 //send room to children
                 Bundle childBundle = new Bundle();
-                childBundle.putString(Define.KEY_SCANNED_ROOM, result);
-                getChildFragmentManager().setFragmentResult(Define.REQUEST_SCANNED_START_ROOM, childBundle);
+                childBundle.putString(Define.Navigation.KEY_SCANNED_ROOM, result);
+                getChildFragmentManager().setFragmentResult(Define.Navigation.REQUEST_SCANNED_START_ROOM, childBundle);
 
             }
         });

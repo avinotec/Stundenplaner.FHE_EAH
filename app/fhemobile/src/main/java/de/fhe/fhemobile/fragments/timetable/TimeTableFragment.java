@@ -35,6 +35,7 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.network.NetworkHandler;
+import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.timetable.TimeTableSettings;
 import de.fhe.fhemobile.views.timetable.TimeTableView;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
@@ -61,7 +62,7 @@ public class TimeTableFragment extends FeatureFragment {
 	public static TimeTableFragment newInstance(final String _TimeTableId) {
 		final TimeTableFragment fragment = new TimeTableFragment();
 		final Bundle args = new Bundle();
-		args.putString(PARAM_TIMETABLE_ID, _TimeTableId);
+		args.putString(Define.PARAM_TIMETABLE_ID, _TimeTableId);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -74,7 +75,7 @@ public class TimeTableFragment extends FeatureFragment {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments() != null) {
-			mChosenTimeTableId = getArguments().getString(PARAM_TIMETABLE_ID);
+			mChosenTimeTableId = getArguments().getString(Define.PARAM_TIMETABLE_ID);
 		}
 
 		setHasOptionsMenu(true);
@@ -84,7 +85,9 @@ public class TimeTableFragment extends FeatureFragment {
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
 	                         final Bundle savedInstanceState) {
 		mView = (TimeTableView) inflater.inflate(R.layout.fragment_time_table, container, false);
+		//note from Nadja: the mViewListener is empty
 		mView.setViewListener(mViewListener);
+
 		mView.initializeView(getChildFragmentManager(), getLifecycle());
 
 		return mView;
@@ -102,7 +105,7 @@ public class TimeTableFragment extends FeatureFragment {
 		// showGlobalContextActionBar, which controls the top-left area of the action bar.
 		menu.clear();
 		if (TimeTableSettings.getTimeTableSelection() != null) {
-			inflater.inflate(R.menu.menu_time_table_events, menu);
+			inflater.inflate(R.menu.menu_timetable_events, menu);
 		}
 		super.onCreateOptionsMenu(menu, inflater);
 	}
@@ -147,10 +150,9 @@ public class TimeTableFragment extends FeatureFragment {
 	private final TimeTableView.IViewListener mViewListener = new TimeTableView.IViewListener() {
 	};
 
-	public static final String PARAM_TIMETABLE_ID = "paramTimeTableId";
+
 
 	private TimeTableView mView;
-
 	private String mChosenTimeTableId;
 
 }

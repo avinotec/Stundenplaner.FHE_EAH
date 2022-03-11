@@ -145,7 +145,7 @@ public class NetworkHandler {
 	}
 
 	/**
-	 *
+	 * Fetch menu of the mensa specified in {@link UserSettings}
 	 */
 	public void fetchMensaData() {
 		Assert.assertTrue( mApi != null );
@@ -184,6 +184,17 @@ public class NetworkHandler {
 				showErrorToast();
 			}
 		});
+	}
+
+	/**
+	 * Fetch menu of the mensa specified by given _MensaId
+	 * @param _MensaId
+	 * @param _Callback
+	 */
+	public void fetchMensaItems(final String _MensaId, final Callback<MensaFoodItemVo[]> _Callback) {
+		Assert.assertTrue( mApi != null );
+
+		mApi.fetchMensaData(_MensaId).enqueue(_Callback);
 	}
 
 	/**
@@ -276,6 +287,12 @@ public class NetworkHandler {
 				showErrorToast();
 			}
 		});
+	}
+
+	public void fetchAvailableMensas(final Callback<MensaChoiceItemVo[]> _Callback){
+		Assert.assertTrue( mApi != null );
+
+		mApi.fetchAvailableMensas().enqueue(_Callback);
 	}
 
 	/**

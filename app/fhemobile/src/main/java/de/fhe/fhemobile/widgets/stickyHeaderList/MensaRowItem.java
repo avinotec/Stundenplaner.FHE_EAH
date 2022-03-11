@@ -46,9 +46,9 @@ public class MensaRowItem extends IRowItem {
             viewHolder  = new ViewHolder();
             _convertView = _inflater.inflate(R.layout.item_mensa_food, _parent, false);
 
-            viewHolder.mTitle       = (TextView) _convertView.findViewById(R.id.mensaTitle);
-            viewHolder.mDescription = (TextView) _convertView.findViewById(R.id.mensaDescription);
-            viewHolder.mPrice       = (TextView) _convertView.findViewById(R.id.mensaPrice);
+            viewHolder.mTitle       = (TextView) _convertView.findViewById(R.id.tv_mensa_fooditem_title);
+            viewHolder.mDescription = (TextView) _convertView.findViewById(R.id.tv_mensa_fooditem_description);
+            viewHolder.mPrice       = (TextView) _convertView.findViewById(R.id.tv_mensa_fooditem_price);
 
             _convertView.setTag(viewHolder);
         }

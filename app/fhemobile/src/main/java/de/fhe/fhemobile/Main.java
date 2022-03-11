@@ -17,7 +17,7 @@
 
 package de.fhe.fhemobile;
 
-import static de.fhe.fhemobile.utils.Define.SP_MYTIMETABLE;
+import static de.fhe.fhemobile.utils.Define.MyTimeTable.SP_MYTIMETABLE;
 
 import android.app.Application;
 import android.content.Context;
@@ -78,7 +78,7 @@ public class Main extends Application {
 
         // load subscribed courses for My Time Table from Shared Preferences
         SharedPreferences sharedPreferences = getSharedPreferences(SP_MYTIMETABLE, Context.MODE_PRIVATE);
-        final String json = sharedPreferences.getString(Define.PREF_SUBSCRIBED_COURSES,"");
+        final String json = sharedPreferences.getString(Define.MyTimeTable.PREF_SUBSCRIBED_COURSES,"");
 
         // falls die Liste leer sein sollte, überspringen
         if ( !"".equals(json) && !"null".equals(json)) {

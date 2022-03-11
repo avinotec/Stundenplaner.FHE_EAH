@@ -17,7 +17,7 @@
 
 package de.fhe.fhemobile.fragments.mytimetable;
 
-import static de.fhe.fhemobile.utils.Define.SP_MYTIMETABLE;
+import static de.fhe.fhemobile.utils.Define.MyTimeTable.SP_MYTIMETABLE;
 
 
 import android.app.AlertDialog;
@@ -101,7 +101,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 	private void askForTimeTableDeletionAfterTurnOfSemester() {
 
 		final SharedPreferences sharedPreferences = getContext().getSharedPreferences(SP_MYTIMETABLE, Context.MODE_PRIVATE);
-		final long lastOpened = sharedPreferences.getLong(Define.PREFS_LAST_OPENED, 0);
+		final long lastOpened = sharedPreferences.getLong(Define.MyTimeTable.PREFS_LAST_OPENED, 0);
 
 		//if app has been opened last before
 		if(lastOpened != 0){
@@ -142,7 +142,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 
 		//save date of last opening to shared preferences
 		SharedPreferences.Editor editor = sharedPreferences.edit();
-		editor.putLong(Define.PREFS_LAST_OPENED, new Date().getTime());
+		editor.putLong(Define.MyTimeTable.PREFS_LAST_OPENED, new Date().getTime());
 		editor.apply();
 	}
 

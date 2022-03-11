@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 
 import com.google.zxing.Result;
 
-import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.utils.Define;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -116,8 +114,8 @@ public class NavigationScannerFragment extends FeatureFragment implements ZXingS
 
 
         Bundle bundle = new Bundle();
-        bundle.putString(Define.KEY_SCANNED_ROOM, room);
-        getActivity().getSupportFragmentManager().setFragmentResult(Define.REQUEST_SCANNED_START_ROOM, bundle);
+        bundle.putString(Define.Navigation.KEY_SCANNED_ROOM, room);
+        getActivity().getSupportFragmentManager().setFragmentResult(Define.Navigation.REQUEST_SCANNED_START_ROOM, bundle);
 
         getActivity().onBackPressed();
 

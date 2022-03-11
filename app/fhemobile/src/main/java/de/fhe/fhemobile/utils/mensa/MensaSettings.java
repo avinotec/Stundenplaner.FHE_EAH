@@ -14,7 +14,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.utils.timetable;
+package de.fhe.fhemobile.utils.mensa;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -22,30 +22,26 @@ import android.content.SharedPreferences;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.utils.Define;
 
-/**
- *
- */
-public class TimeTableSettings {
+public class MensaSettings {
 
-    public static String TAG = "TimeTableSettings";
+    public static String TAG = "MensaSettings";
 
     /**
-     * Saves timetable favourite to Shared Preferences
-     * @param _TimeTableId
+     * Saves chosen mensa to Shared Preferences
+     * @param _MensaId the id of the chosen mensa
      */
-    public static void saveTimeTableSelection(final String _TimeTableId) {
-        final SharedPreferences sp = Main.getAppContext().getSharedPreferences(Define.TimeTable.SP_TIMETABLE_SETTINGS, Context.MODE_PRIVATE);
-        sp.edit().putString(Define.TimeTable.PREF_CHOSEN_TIMETABLE_ID, _TimeTableId).apply();
+    public static void saveMensaSelection(final String _MensaId) {
+        final SharedPreferences sp = Main.getAppContext().getSharedPreferences(Define.Mensa.SP_MENSA_SETTINGS, Context.MODE_PRIVATE);
+        sp.edit().putString(Define.Mensa.PREF_CHOSEN_MENSA_ID, _MensaId).apply();
     }
 
     /**
-     * Loads timetable id that was set as favourite (is selected) from Shared Preferences
-     * @return the timetable id
+     * Loads the id of the mensa chosen by the user from Shared Preferences
+     * @return the mensa id
      */
-    public static String getTimeTableSelection() {
-
-        final SharedPreferences sp = Main.getAppContext().getSharedPreferences(Define.TimeTable.SP_TIMETABLE_SETTINGS, Context.MODE_PRIVATE);
-        final String result = sp.getString(Define.TimeTable.PREF_CHOSEN_TIMETABLE_ID, null);
+    public static String getMensaSelection(){
+        final SharedPreferences sp = Main.getAppContext().getSharedPreferences(Define.Mensa.SP_MENSA_SETTINGS, Context.MODE_PRIVATE);
+        final String result = sp.getString(Define.Mensa.PREF_CHOSEN_MENSA_ID, null);
 
         return result;
     }

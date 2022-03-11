@@ -44,8 +44,8 @@ public class NavigationDialogView extends LinearLayout {
     public void initializeView(@NonNull final FragmentManager _Manager, @NonNull final Lifecycle _Lifecycle) {
 
         //set up tab layout
-        final TabLayout tabLayout = findViewById(R.id.navigationDialogTablayout);
-        final ViewPager2 viewPager = findViewById(R.id.navigationDialogViewpager);
+        final TabLayout tabLayout = findViewById(R.id.tablayout_navigation_dialog);
+        final ViewPager2 viewPager = findViewById(R.id.viewpager_navigation_dialog);
         viewPager.setAdapter(new NavigationDialogPagerAdapter(_Manager, _Lifecycle));
 
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tablayout_tabtext_roomsearch));

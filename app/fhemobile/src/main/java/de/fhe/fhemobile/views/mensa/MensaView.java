@@ -19,6 +19,7 @@ package de.fhe.fhemobile.views.mensa;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ import de.fhe.fhemobile.events.Event;
 import de.fhe.fhemobile.events.EventListener;
 import de.fhe.fhemobile.models.mensa.MensaFoodModel;
 import de.fhe.fhemobile.utils.headerlistview.HeaderListView;
+import de.fhe.fhemobile.vos.mensa.MensaDayVo;
 import de.fhe.fhemobile.vos.mensa.MensaFoodItemCollectionVo;
 import de.fhe.fhemobile.vos.mensa.MensaFoodItemVo;
 import de.fhe.fhemobile.widgets.stickyHeaderList.DefaultHeaderItem;

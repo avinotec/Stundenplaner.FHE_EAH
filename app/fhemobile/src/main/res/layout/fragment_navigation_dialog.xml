@@ -26,7 +26,7 @@
     android:orientation="vertical">
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/navigationDialogTablayout"
+        android:id="@+id/tablayout_navigation_dialog"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:background="@color/tablayout_background"
@@ -38,7 +38,7 @@
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/navigationDialogViewpager"
+        android:id="@+id/viewpager_navigation_dialog"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layoutDirection="rtl"/>

@@ -35,6 +35,8 @@ import de.fhe.fhemobile.views.mensa.MensaSettingsView;
 
 public class MensaSettingsFragment extends Fragment {
 
+    public static final String TAG = "MensaSettingsFragment"; //$NON-NLS
+
     public MensaSettingsFragment() {
         // Required empty public constructor
     }
