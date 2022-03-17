@@ -2,7 +2,6 @@
 # Visit https://bit.ly/cffinit to generate yours today!
 
 cff-version: 1.2.0
-title: 'Stundenplan EAH '
 message: The Software is under GPL 3.0
 type: software
 authors:
@@ -11,3 +10,7 @@ authors:
     email: michael.stepping@eah-jena.de
     affiliation: EAH Jena
     orcid: 'https://orcid.org/0000-0002-5068-096X'
+title: "Die Stundenplan App der EAH Jena"
+version: 1.0
+doi: 10.5281/zenodo.123456789
+date-released: 2019-01-01
