@@ -1,9 +1,15 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
 cff-version: 1.2.0
-message: "If you use this software, please cite it as below."
+message: The Software is under GPL 3.0
+type: software
 authors:
-  - family-names: Stepping
-    given-names: Michael
-    orcid: https://orcid.org/0000-0002-5068-096X
+  - given-names: Michael
+    family-names: Stepping
+    email: michael.stepping@eah-jena.de
+    affiliation: EAH Jena
+    orcid: 'https://orcid.org/0000-0002-5068-096X'
 title: "Die Stundenplan App der EAH Jena"
 version: 1.0
 doi: 10.5281/zenodo.123456789
