@@ -111,6 +111,7 @@ public class RouteCalculator {
                 // and determine Exit to use for entering the destination complex
                 BuildingExitVo buildingExit = null;
                 BuildingExitVo entry = null;
+
                 for (final BuildingExitVo buildingExitIt : buildingExits) {
                     //use exitIt as exit if exitIt belongs to start complex
                     // and is an exit to the destination complex
@@ -122,7 +123,8 @@ public class RouteCalculator {
                                 Log.i(TAG, "More than one possible exit for complex " + startComplex.toString() + " to " + destComplex.toString());
 
                             //exit and entry found
-                            if (entry != null) break;
+                            if (entry != null)
+                                break;
                         }
                     }
 
@@ -136,7 +138,8 @@ public class RouteCalculator {
                                 Log.i(TAG, "More than one possible entry to complex " + destComplex.toString() + " from complex " + startComplex.toString());
 
                             //exit and entry found
-                            if (buildingExit != null) break;
+                            if (buildingExit != null)
+                                break;
                         }
                     }
                 }
@@ -149,8 +152,6 @@ public class RouteCalculator {
                 //route to get out of start complex
                 final AStar aStar1 = new AStar(startLocation, buildingExit, floorGrids, floorConnections);
                 cellsToWalk.putAll(aStar1.getCellsToWalk());
-
-
 
             }
 
