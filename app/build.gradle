@@ -24,6 +24,7 @@
  * Gradle as a dependency because it provides the additional instructions Gradle
  * needs to build Android app modules.
  */
+//file:noinspection HardCodedStringLiteral
 buildscript {
     
     /**
