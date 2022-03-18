@@ -136,26 +136,32 @@ public class AStar {
 
             //reconstruct path
             while (currentCell.getParentCell() != null) {
-                if(cellsToWalk.containsKey(new BuildingFloorKey(currentCell))){
-                    cellsToWalk.get(new BuildingFloorKey(currentCell)).add(currentCell);
+
+                final BuildingFloorKey buildingFloorKey = new BuildingFloorKey(currentCell);
+
+                if(cellsToWalk.containsKey( buildingFloorKey )){
+                    cellsToWalk.get(buildingFloorKey).add(currentCell);
                 }
                 else{
                     final ArrayList<Cell> list = new ArrayList<>();
                     list.add(currentCell);
-                    cellsToWalk.put(new BuildingFloorKey(currentCell), list);
+                    cellsToWalk.put(buildingFloorKey, list);
                 }
 
                 currentCell = currentCell.getParentCell();
             }
             // if start is exit then add it as cellToWalk
             if(currentCell.getParentCell() == null && currentCell instanceof BuildingExitVo){
-                if(cellsToWalk.containsKey(new BuildingFloorKey(currentCell))){
-                    cellsToWalk.get(new BuildingFloorKey(currentCell)).add(currentCell);
+
+                final BuildingFloorKey buildingFloorKey = new BuildingFloorKey(currentCell);
+
+                if(cellsToWalk.containsKey( buildingFloorKey )){
+                    cellsToWalk.get( buildingFloorKey ).add(currentCell);
                 }
                 else{
                     final ArrayList<Cell> list = new ArrayList<>();
                     list.add(currentCell);
-                    cellsToWalk.put(new BuildingFloorKey(currentCell), list);
+                    cellsToWalk.put(buildingFloorKey, list);
                 }
             }
 
