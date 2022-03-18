@@ -28,8 +28,8 @@ import org.jetbrains.annotations.NonNls;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.views.navigation.SearchView;
 import de.fhe.fhemobile.vos.navigation.BuildingVo;
 import de.fhe.fhemobile.vos.navigation.RoomVo;
@@ -113,7 +113,7 @@ public class RoomSearchFragment extends SearchFragment {
     @Override
     protected void initializePickersFromSharedPreferences(String previousChoice) {
         if(!"".equals(previousChoice)){
-            for (final RoomVo room : MainActivity.rooms){
+            for (final RoomVo room : Main.rooms){
                 if(previousChoice.equals(room.getRoomName())){
                     mDestBuilding = room.getBuilding();
                     mDestFloor = room.getFloorString();
@@ -158,8 +158,8 @@ public class RoomSearchFragment extends SearchFragment {
             //check if building has any rooms
             boolean buildingValid = false;
             final List<String> floors = new ArrayList<>();
-            if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
-            for(final RoomVo room : MainActivity.rooms){
+            if(Main.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
+            for(final RoomVo room : Main.rooms){
                 if(room.getBuilding() != null && room.getBuilding().equals(_building)){
 
                     //add floor to floor picker items if not yet contained
@@ -193,9 +193,9 @@ public class RoomSearchFragment extends SearchFragment {
             //check if floor has any rooms
             boolean floorValid = false;
             final List<RoomVo> rooms = new ArrayList<>();
-            if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
+            if(Main.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
 
-            for(final RoomVo room : MainActivity.rooms){
+            for(final RoomVo room : Main.rooms){
 
                 //_floor is string "-1" or "03" or "3Z"
                 if(room.getBuilding().equals(mDestBuilding)
@@ -222,8 +222,8 @@ public class RoomSearchFragment extends SearchFragment {
             mView.toggleGoButtonEnabled(false);
 
             //search for room object
-            if(MainActivity.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
-            for(final RoomVo room : MainActivity.rooms){
+            if(Main.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
+            for(final RoomVo room : Main.rooms){
                 if(room.getRoomName() != null && room.getRoomName().equals(_room)){
 
                     mDestRoom = room;

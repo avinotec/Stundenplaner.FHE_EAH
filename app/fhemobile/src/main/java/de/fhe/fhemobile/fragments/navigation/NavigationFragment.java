@@ -34,8 +34,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import de.fhe.fhemobile.BuildConfig;
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
 import de.fhe.fhemobile.models.navigation.Cell;
@@ -105,7 +105,7 @@ public class NavigationFragment extends FeatureFragment {
         mStartRoom = null;
         mDestRoom = null;
 
-        for(final RoomVo room : MainActivity.rooms){
+        for(final RoomVo room : Main.rooms){
             if(room.getRoomName().equals(start)){
                 mStartRoom = room;
             }

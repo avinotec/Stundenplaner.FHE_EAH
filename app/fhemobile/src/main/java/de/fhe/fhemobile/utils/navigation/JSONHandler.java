@@ -21,6 +21,7 @@ package de.fhe.fhemobile.utils.navigation;
 import android.content.Context;
 import android.util.Log;
 
+import org.jetbrains.annotations.NonNls;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,16 +29,15 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import de.fhe.fhemobile.activities.MainActivity;
-import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.models.navigation.Cell;
-import de.fhe.fhemobile.vos.navigation.FloorConnectionVo;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
+import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
+import de.fhe.fhemobile.vos.navigation.FloorConnectionVo;
 import de.fhe.fhemobile.vos.navigation.PersonVo;
 import de.fhe.fhemobile.vos.navigation.RoomVo;
 
@@ -58,6 +58,10 @@ public class JSONHandler {
     public static final String EXITTO = "exitTo";               //$NON-NLS
     public static final String ENTRYFROM = "entryFrom";         //$NON-NLS
     public static final String CONNECTED_CELLS = "connectedCells";  //$NON-NLS
+    @NonNls
+    static final String JSON_SECTION_ROOMS = "rooms";
+    @NonNls
+    static final String JSON_SECTION_PERSONS = "persons";
 
 
     //reading --------------------------------------------------------------------------------------
@@ -72,14 +76,15 @@ public class JSONHandler {
 
         try {
             final InputStream input = context.getResources().getAssets().open(jsonFile);
-            final InputStreamReader reader; //$NON-NLS
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                reader = new InputStreamReader(input, StandardCharsets.UTF_8);
-            }
-            //if android < 19
-            else {
-                reader = new InputStreamReader(input, Charset.forName("UTF-8"));
-            }
+//            final InputStreamReader reader; //$NON-NLS
+//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+//                reader = new InputStreamReader(input, StandardCharsets.UTF_8);
+//            }
+//            //if android < 19
+//            else {
+//                reader = new InputStreamReader(input, Charset.forName("UTF-8"));
+//            }
+            final InputStreamReader reader = new InputStreamReader(input, StandardCharsets.UTF_8);
 
             final BufferedReader br = new BufferedReader(reader);
 
@@ -300,7 +305,7 @@ public class JSONHandler {
 
             }
         } catch (final Exception e) {
-            Log.e(TAG, "error parsing JSON walkableCells", e);
+            Log.e(TAG, "error parsing JSON walkableCells", e); //$NON-NLS
         }
         return walkableCells;
     }
@@ -311,10 +316,10 @@ public class JSONHandler {
      * @param context
      */
     public static void loadRooms(final Context context){
-        if (MainActivity.rooms.isEmpty()) {
+        if (Main.rooms.isEmpty()) {
             try {
-                final String roomsJson = JSONHandler.readFromAssets(context, "rooms");
-                MainActivity.rooms = JSONHandler.parseJsonRooms(roomsJson);
+                final String roomsJson = JSONHandler.readFromAssets(context, JSON_SECTION_ROOMS);
+                Main.rooms = JSONHandler.parseJsonRooms(roomsJson);
             } catch (final Exception e) {
                 Log.e(TAG, "error reading or parsing rooms from JSON files:", e);
             }
@@ -329,7 +334,7 @@ public class JSONHandler {
     public static HashMap<String, PersonVo> loadPersons(final Context context){
         HashMap<String, PersonVo> persons = null;
         try{
-            final String personsJson = JSONHandler.readFromAssets(context, "persons");
+            final String personsJson = JSONHandler.readFromAssets(context, JSON_SECTION_PERSONS);
             persons = JSONHandler.parseJsonPersons(personsJson);
         } catch (final Exception e){
             Log.e(TAG, "error reading or parsing persons from JSON files:", e);

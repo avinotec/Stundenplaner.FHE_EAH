@@ -61,16 +61,15 @@ import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
 import de.fhe.fhemobile.fragments.impressum.ImpressumFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdata.SemesterDataWebViewFragment;
-import de.fhe.fhemobile.vos.navigation.RoomVo;
 import de.fhe.fhemobile.models.timeTableChanges.RequestModel;
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.utils.Define;
-import de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.feature.FeatureFragmentFactory;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
+import de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
 import retrofit2.Call;
@@ -80,11 +79,9 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements DrawerFragment.NavigationDrawerCallbacks {
     private static final String TAG = "MainActivity";
 
-    private final int CHANGEREASON_EDIT = 1;
-    private final int CHANGEREASON_NEW = 3;
-    private final int CHANGEREASON_DELETE = 2;
-
-    public static ArrayList<RoomVo> rooms = new ArrayList<>();
+    private static final int CHANGEREASON_EDIT = 1;
+    private static final int CHANGEREASON_NEW = 3;
+    private static final int CHANGEREASON_DELETE = 2;
 
     public static MyTimeTableCalendarAdapter myTimeTableCalendarAdapter;
     public static MyTimeTableOverviewAdapter myTimeTableOverviewAdapter;
@@ -430,7 +427,10 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         return super.onCreateOptionsMenu(menu);
     }
 
-
+    /**
+     *
+     * @param course
+     */
     public static void addToSubscribedCourseComponentsAndUpdateAdapters(final MyTimeTableCourseComponent course){
         course.setSubscribed(true);
         subscribedCourseComponents.add(course);

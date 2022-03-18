@@ -201,7 +201,7 @@ public abstract class SearchFragment extends FeatureFragment {
             }
 
             //check room list for matching names
-            for (final RoomVo room : MainActivity.rooms) {
+            for (final RoomVo room : Main.rooms) {
                 if (room.getRoomName().equals(inputRoom)) {
                     return room;
                 }
