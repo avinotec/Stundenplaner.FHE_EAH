@@ -86,8 +86,8 @@ public class Define {
 
 		//Size of the grid overlying the floorplan (unit: cells - needs to be integer)
 		//Note: cell numbering at gridded PNGs (docs folder) starts at 0 -> width/height = number + 1
-		public static final double cellgrid_width = 45;
-		public static final double cellgrid_height = 30;
+		public static final int cellgrid_width = 45;
+		public static final int cellgrid_height = 30;
 
 		//für A-Star Algorithmus
 		public static final int COSTS_CELL = 1;
@@ -98,21 +98,21 @@ public class Define {
 		public static final int COSTS_FLOORCONNECTION = 1;
 
 		//shared preferences used to save latest user input for navigation destination
-		public static final String SP_NAVIGATION = "navigation";
+		public static final String SP_NAVIGATION = "navigation";    //$NON-NLS
 
 		//communication between NavigationDialogFragment and NavigationScannerFragment
-		public static final String REQUEST_SCANNED_START_ROOM = "requestScannedStartRoom";
-		public static final String KEY_SCANNED_ROOM = "scannedRoom";
+		public static final String REQUEST_SCANNED_START_ROOM = "requestScannedStartRoom";  //$NON-NLS
+		public static final String KEY_SCANNED_ROOM = "scannedRoom";    //$NON-NLS
 	}
 
 
 	/** Push notifications from Google Firebase to the App */
 	@NonNls
-	public static final String PUSH_NOTIFICATION_CHANNEL_ID = "de.fhe.fhemobile.push";
+	public static final String PUSH_NOTIFICATION_CHANNEL_ID = "de.fhe.fhemobile.push";  //$NON-NLS
 	@NonNls
-	public static final String PUSH_NOTIFICATION_CHANNEL_NAME = "Notification";
+	public static final String PUSH_NOTIFICATION_CHANNEL_NAME = "Notification"; //$NON-NLS
 	@NonNls
-	public static final String PUSH_NOTIFICATION_STUNDENPLANAENDERUNG_TITLE_NOTIFICATION = "Stundenplanänderung";
+	public static final String PUSH_NOTIFICATION_STUNDENPLANAENDERUNG_TITLE_NOTIFICATION = "Stundenplanänderung";   //$NON-NLS
 	public static final long[] PUSH_NOTIFICATION_VIBRATION_PATTERN = {1000, 500, 1000, 0};
 
 
