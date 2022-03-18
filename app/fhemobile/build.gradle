@@ -20,6 +20,7 @@
  * Gradle to this build and makes the android block available to specify
  * Android-specific build options.
  */
+//file:noinspection HardCodedStringLiteral
 apply plugin: 'com.android.application'
 
 /**
@@ -42,7 +43,7 @@ android {
      * This property is optional because the plugin uses a recommended version of
      * the build tools by default.
      */
-    buildToolsVersion '33.0.0 rc1'
+    buildToolsVersion '33.0.0 rc2'
 
     compileOptions {
         // Error: Invoke-customs are only supported starting with Android O (--min-api 26)
@@ -61,7 +62,7 @@ android {
      * these values for different versions of your app.
      */
     defaultConfig {
-        minSdkVersion 16
+        minSdk 21
         targetSdkVersion 32
         versionCode = 23
         versionName = '1.8'
@@ -206,8 +207,22 @@ android {
     }
 	packagingOptions {
 		resources {
-			excludes += ['META-INF/ASL2.0', 'META-INF/LICENSE', 'META-INF/NOTICE', 'LICENCE.txt', 'junit/runner/smalllogo.gif', 'junit/runner/logo.gif', 'LICENSE-junit.txt']
-		}
+			//excludes += ['junit/runner/logo.gif', 'LICENSE-junit.txt']
+            exclude 'LICENCE.txt'
+            exclude 'junit/runner/smalllogo.gif'
+            exclude 'junit/runner/logo.gif'
+            exclude 'LICENSE-junit.txt'
+            //exclude 'META-INF/DEPENDENCIES'
+            //exclude 'META-INF/LICENSE'
+            //exclude 'META-INF/LICENSE.txt'
+            //exclude 'META-INF/license.txt'
+            //exclude 'META-INF/NOTICE'
+            //exclude 'META-INF/NOTICE.txt'
+            //exclude 'META-INF/notice.txt'
+            //exclude 'META-INF/ASL2.0'
+            exclude("META-INF/*.kotlin_module")
+            resources.excludes.add("META-INF/*")
+        }
 	}
 	
 	// Lint found fatal errors while assembling a release target
@@ -239,17 +254,30 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     
+    
+    // ------------ okhttp ------------------------
+    //The OkHttp 3.12.x branch supports Android 2.3+ (API level 9+) and Java 7+. These platforms lack
+    // support for **TLS 1.2** and should not be used. But because upgrading is difficult, we will backport
+    // critical fixes to the 3.12.x branch through December 31, 2021.
+    implementation('com.squareup.okhttp3:okhttp:5.0.0-alpha.6')
     // define a BOM and its version
-    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.0"))
-    // define any required OkHttp artifacts without version
-    implementation("com.squareup.okhttp3:okhttp")
+    //implementation(platform("com.squareup.okhttp3:okhttp-bom:3.12.0"))
     //implementation("com.squareup.okhttp3:logging-interceptor")
-    //implementation("com.squareup.okhttp3:okhttp3.MediaType")
-    //implementation("com.squareup.okhttp3:okhttp3.RequestBody")
+    
+    // OkHttp works on Android 5.0+ (API level 21+) and Java 8+.        <------ we run at SDK16
+    // The latest release is available on Maven Central.
+    //implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    // define a BOM and its version
+    //implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.0"))
+    
+    // define any required OkHttp artifacts without version
+    //implementation('com.squareup.okhttp3:okhttp')
+    //implementation("com.squareup.okhttp3:logging-interceptor")
+    // ------------ okhttp ------------------------
     
     
     implementation 'com.google.firebase:firebase-analytics:20.1.0'
-    implementation 'com.google.firebase:firebase-messaging:23.0.0'
+    implementation 'com.google.firebase:firebase-messaging:23.0.1'
 
 
 
