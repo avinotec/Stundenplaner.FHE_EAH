@@ -68,7 +68,7 @@ public class NavigationView extends LinearLayout {
 
         //set size of a floor plan cell
         final int displayWidth = getResources().getDisplayMetrics().widthPixels;
-        cellHeight = cellWidth = displayWidth / cellgrid_width;
+        cellHeight = cellWidth = (double) displayWidth / (double) cellgrid_width;
 
         //set listeners for buttons navigating between the floorplans
         mButtonPrevPlan.setOnClickListener(new OnClickListener() {
