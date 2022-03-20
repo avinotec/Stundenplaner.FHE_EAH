@@ -39,7 +39,7 @@ public class FeatureFragmentFactory {
         //TODO Features
         switch (_FeatureId) {
             //case Features.FeatureId.PHONEBOOK:       fragment = PhonebookSearchFragment.newInstance();   break;
-            //todo: change back to old MensaFoodFragment for diploy because new Mensa layout is missing settings
+            //todo: change back to old MensaFoodFragment for deploy because new Mensa layout is missing settings
             //case Features.FeatureId.MENSA:           fragment = MensaFoodFragment.newInstance();         break;
             case Features.FeatureId.MENSA:           fragment = MensaFragmentNEW.newInstance();         break;
             case Features.FeatureId.MAPS:            fragment = MapsDialogFragment.newInstance();              break;

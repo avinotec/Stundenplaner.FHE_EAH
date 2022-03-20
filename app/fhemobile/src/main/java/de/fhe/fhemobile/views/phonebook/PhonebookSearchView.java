@@ -69,7 +69,7 @@ public class PhonebookSearchView extends FrameLayout {
         mFirstName          = (EditText)    findViewById(R.id.phonebookFirstName);
         mLastName           = (EditText)    findViewById(R.id.phoneBookLastName);
         mSearchButton       = (Button)      findViewById(R.id.phonebookSearchButton);
-        mProgressIndicator  = (ProgressBar) findViewById(R.id.progressIndicator_mytimetable_dialog);
+        mProgressIndicator  = (ProgressBar) findViewById(R.id.progressbar_phonebook_search);
         mErrorText          = (TextView)    findViewById(R.id.phonebookError);
     }
 

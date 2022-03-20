@@ -20,6 +20,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.FragmentManager;
@@ -70,8 +71,9 @@ public class MyTimeTableDialogView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mStudyProgramPicker = (StudyProgramPicker) findViewById(R.id.studyprogrampicker_mytimetable_dialog);
-        mSemesterPicker =   (SemesterPicker)     findViewById(R.id.semesterpicker_mytimetable_dialog);
+        mStudyProgramPicker = (StudyProgramPicker)  findViewById(R.id.studyprogrampicker_mytimetable_dialog);
+        mSemesterPicker     = (SemesterPicker)      findViewById(R.id.semesterpicker_mytimetable_dialog);
+        mProgressIndicator  = (ProgressBar)         findViewById(R.id.progressbar_mytimetable_dialog);
 
         mCourseListView = (ListView) findViewById(R.id.listview_mytimetable_dialog_courses);
     }
@@ -96,6 +98,10 @@ public class MyTimeTableDialogView extends LinearLayout {
 
     public void toggleCourseListVisibility(final boolean _Visible){
         mCourseListView.setVisibility(_Visible ? VISIBLE : GONE);
+    }
+
+    public void toggleProgressIndicatorVisibility(final boolean _Visible){
+        mProgressIndicator.setVisibility(_Visible ? VISIBLE : GONE);
     }
 
     public void setCourseListAdapter(final MyTimeTableDialogAdapter adapter){
@@ -160,6 +166,7 @@ public class MyTimeTableDialogView extends LinearLayout {
     private StudyProgramPicker  mStudyProgramPicker;
     private SemesterPicker      mSemesterPicker;
     private ListView            mCourseListView;
+    private ProgressBar         mProgressIndicator;
 
 
 }

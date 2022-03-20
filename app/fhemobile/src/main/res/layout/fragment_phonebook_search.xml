@@ -106,7 +106,7 @@
 
                 <ProgressBar
                     style="?android:attr/progressBarStyleLarge"
-                    android:id="@+id/progressIndicator_mytimetable_dialog"
+                    android:id="@+id/progressbar_phonebook_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

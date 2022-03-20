@@ -74,12 +74,12 @@
 
 
             <ProgressBar
-                android:id="@+id/progressIndicator_mytimetable_dialog"
+                android:id="@+id/progressbar_mytimetable_dialog"
                 style="?android:attr/progressBarStyleLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
 
         </LinearLayout>

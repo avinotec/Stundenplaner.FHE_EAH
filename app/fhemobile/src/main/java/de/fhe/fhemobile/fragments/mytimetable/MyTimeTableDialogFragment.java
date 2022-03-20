@@ -267,6 +267,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
         @Override
         public void onSemesterChosen(String _SemesterId) {
+            mView.toggleProgressIndicatorVisibility(true);
             mView.toggleCourseListVisibility(false);
             allCoursesInChosenSemester.clear();
             mCourseListAdapter.setItems(allCoursesInChosenSemester);
@@ -344,6 +345,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                 mResponse = response.body();
 
                 mView.setStudyProgramItems(mResponse.getStudyPrograms());
+                mView.toggleProgressIndicatorVisibility(false);
             }
         }
 
