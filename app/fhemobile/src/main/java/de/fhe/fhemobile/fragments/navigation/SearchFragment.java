@@ -195,9 +195,16 @@ public abstract class SearchFragment extends FeatureFragment {
                     && inputRoom.matches("\\d{1,2}\\.(\\d{1,2}|(3Z))\\.\\d{1,3}")) {
 
                 String[] inputArray = inputRoom.split("\\.");
+                //format input
                 inputRoom = (String.format("%2s", inputArray[0]) + "."
                         + String.format("%2s", inputArray[1]) + "."
                         + String.format("%2s", inputArray[2])).replace(" ", "0");
+            }
+
+            //correct floor from 03 to 3Z if necessary
+            if(inputRoom.matches("05\\.03\\.\\d{3}")){
+                String[] inputArray = inputRoom.split("\\.");
+                inputRoom = inputArray[0] + ".3Z." + inputArray[2];
             }
 
             //check room list for matching names
