@@ -18,6 +18,7 @@ package de.fhe.fhemobile.utils.mensa;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.utils.Define;
@@ -30,7 +31,7 @@ public class MensaSettings {
      * Saves chosen mensa to Shared Preferences
      * @param _MensaId the id of the chosen mensa
      */
-    public static void saveMensaSelection(final String _MensaId) {
+    public static void saveMensaChoice(final String _MensaId) {
         final SharedPreferences sp = Main.getAppContext().getSharedPreferences(Define.Mensa.SP_MENSA_SETTINGS, Context.MODE_PRIVATE);
         sp.edit().putString(Define.Mensa.PREF_CHOSEN_MENSA_ID, _MensaId).apply();
     }
@@ -39,7 +40,7 @@ public class MensaSettings {
      * Loads the id of the mensa chosen by the user from Shared Preferences
      * @return the mensa id
      */
-    public static String getMensaSelection(){
+    public static String getMensaChoice(){
         final SharedPreferences sp = Main.getAppContext().getSharedPreferences(Define.Mensa.SP_MENSA_SETTINGS, Context.MODE_PRIVATE);
         final String result = sp.getString(Define.Mensa.PREF_CHOSEN_MENSA_ID, null);
 

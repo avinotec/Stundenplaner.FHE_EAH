@@ -27,13 +27,16 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.models.mensa.MensaFoodModel;
 import de.fhe.fhemobile.network.NetworkHandler;
+import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.UserSettings;
+import de.fhe.fhemobile.utils.mensa.MensaSettings;
 import de.fhe.fhemobile.views.mensa.MensaSettingsView;
 
 
-public class MensaSettingsFragment extends Fragment {
+public class MensaSettingsFragment extends FeatureFragment {
 
     public static final String TAG = "MensaSettingsFragment"; //$NON-NLS
 
