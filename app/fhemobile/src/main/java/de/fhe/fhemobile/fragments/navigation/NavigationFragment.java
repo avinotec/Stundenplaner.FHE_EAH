@@ -34,9 +34,9 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import de.fhe.fhemobile.BuildConfig;
-import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.utils.navigation.NavigationUtils;
 import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
 import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.vos.navigation.FloorConnectionVo;
@@ -44,7 +44,6 @@ import de.fhe.fhemobile.vos.navigation.RoomVo;
 import de.fhe.fhemobile.models.navigation.RouteCalculator;
 import de.fhe.fhemobile.utils.navigation.BuildingFloorKey;
 import de.fhe.fhemobile.utils.navigation.FloorPlanIterator;
-import de.fhe.fhemobile.utils.navigation.JSONHandler;
 import de.fhe.fhemobile.views.navigation.NavigationView;
 
 /**
@@ -59,6 +58,7 @@ public class NavigationFragment extends FeatureFragment {
 
     public static final String PARAM_START = "paramStartRoom"; //$NON-NLS
     public static final String PARAM_DEST = "paramDestRoom"; //$NON-NLS
+    public static ArrayList<RoomVo> rooms = new ArrayList<>();
 
     //Variables
     private NavigationView mView;
@@ -66,8 +66,8 @@ public class NavigationFragment extends FeatureFragment {
     private RoomVo mStartRoom;
     private RoomVo mDestRoom;
 
-    private static ArrayList<BuildingExitVo> buildingExits = new ArrayList<>();
-    private static ArrayList<FloorConnectionVo> floorConnections  = new ArrayList<>();
+    public static ArrayList<BuildingExitVo> buildingExits = new ArrayList<>();
+    public static ArrayList<FloorConnectionVo> floorConnections  = new ArrayList<>();
 
     //cellsToWalk here as LinkedHashMap to have a list sorted for flicking through floorplans by buttons
     //sorted by insertion order: first element is the last inserted (which is the destination floor)
@@ -105,7 +105,7 @@ public class NavigationFragment extends FeatureFragment {
         mStartRoom = null;
         mDestRoom = null;
 
-        for(final RoomVo room : Main.rooms){
+        for(final RoomVo room : rooms){
             if(room.getRoomName().equals(start)){
                 mStartRoom = room;
             }
@@ -116,8 +116,8 @@ public class NavigationFragment extends FeatureFragment {
             if(mStartRoom != null && mDestRoom != null) break;
         }
 
-        getFloorConnections();
-        getExits();
+        NavigationUtils.getFloorConnections();
+        NavigationUtils.getExits();
         getRoute();
 
     }
@@ -182,39 +182,6 @@ public class NavigationFragment extends FeatureFragment {
 
 
     //load from assets -----------------------------------------------------------------------------
-    /**
-     * Load stairs, elevators and exits from JSON
-     */
-    private static void getFloorConnections() {
-        try {
-            final String json;
-
-            // read only once
-            if(buildingExits.isEmpty()){
-                json = JSONHandler.readFromAssets("exits");
-                buildingExits = JSONHandler.parseJsonExits(json);
-            }
-        } catch (final Exception e) {
-            Log.e(TAG, "error reading or parsing JSON files:", e);
-        }
-    }
-
-    /**
-     * Load exits from JSON
-     */
-    private static void getExits() {
-        try {
-            final String json;
-
-            // read only once
-            if (floorConnections.isEmpty()) {
-                json = JSONHandler.readFromAssets("floorconnections");
-                floorConnections = JSONHandler.parseJsonFloorConnection(json);
-            }
-        } catch (final Exception e) {
-            Log.e(TAG, "error reading or parsing JSON files:", e);
-        }
-    }
 
 
     //calculations ---------------------------------------------------------------------------------

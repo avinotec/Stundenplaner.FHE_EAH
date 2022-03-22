@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import de.fhe.fhemobile.Main;
+import de.fhe.fhemobile.fragments.navigation.NavigationFragment;
 import de.fhe.fhemobile.utils.navigation.AStar;
 import de.fhe.fhemobile.utils.navigation.JSONHandler;
 import de.fhe.fhemobile.utils.navigation.BuildingFloorKey;
@@ -227,8 +227,8 @@ public class RouteCalculator {
             final HashMap<String, Cell> walkableCells = JSONHandler.parseJsonWalkableCells(json);
 
             //fill in rooms
-            if(Main.rooms.isEmpty()) JSONHandler.loadRooms(context);
-            for(final RoomVo r : Main.rooms){
+            if(NavigationFragment.rooms.isEmpty()) JSONHandler.loadRooms(context);
+            for(final RoomVo r : NavigationFragment.rooms){
                 if(r.getComplex() == complex && r.getFloorString().equals(floor)){
                     floorGrid[r.getXCoordinate()][r.getYCoordinate()] = r;
                 }

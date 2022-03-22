@@ -39,7 +39,6 @@ import de.fhe.fhemobile.comparator.TimeTableEventComparator;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
-import de.fhe.fhemobile.vos.navigation.RoomVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
 
@@ -50,9 +49,6 @@ public class Main extends Application {
 
     private static final String LOG_TAG = Main.class.getSimpleName();
     private static Application mAppContext;
-
-
-    public static ArrayList<RoomVo> rooms = new ArrayList<>();
 
 
     //My Time Table

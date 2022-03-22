@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.views.navigation.SearchView;
 import de.fhe.fhemobile.vos.navigation.PersonVo;
@@ -89,7 +88,7 @@ public class PersonSearchFragment extends SearchFragment {
             final PersonVo chosenPerson = persons.get(previousChoice);
             if(chosenPerson != null){
                 final String chosenPersonsRoom = chosenPerson.getRoom();
-                for (final RoomVo room : Main.rooms){
+                for (final RoomVo room : NavigationFragment.rooms){
 
                     if(room.getRoomName().equals(chosenPersonsRoom)){
                         mDestRoom = room;
@@ -119,8 +118,8 @@ public class PersonSearchFragment extends SearchFragment {
             mView.toggleGoButtonEnabled(false);
 
             //search for room object
-            if(Main.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
-            for(RoomVo room : Main.rooms){
+            if(NavigationFragment.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
+            for(RoomVo room : NavigationFragment.rooms){
                 final String roomOfPerson = persons.get(_person).getRoom();
                 if(room.getRoomName() != null && room.getRoomName().equals(roomOfPerson)){
 
