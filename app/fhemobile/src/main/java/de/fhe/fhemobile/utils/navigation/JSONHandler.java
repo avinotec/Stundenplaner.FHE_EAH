@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.fhe.fhemobile.Main;
+import de.fhe.fhemobile.fragments.navigation.NavigationFragment;
 import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
 import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
@@ -321,10 +322,10 @@ public class JSONHandler {
      * @param context
      */
     public static void loadRooms(final Context context){
-        if (Main.rooms.isEmpty()) {
+        if (NavigationFragment.rooms.isEmpty()) {
             try {
                 final String roomsJson = JSONHandler.readFromAssets(JSON_SECTION_ROOMS);
-                Main.rooms = JSONHandler.parseJsonRooms(roomsJson);
+                NavigationFragment.rooms = JSONHandler.parseJsonRooms(roomsJson);
             } catch (final Exception e) {
                 Log.e(TAG, "error reading or parsing rooms from JSON files:", e);
             }

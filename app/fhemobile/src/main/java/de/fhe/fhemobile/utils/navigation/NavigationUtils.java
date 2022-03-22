@@ -17,6 +17,9 @@
 
 package de.fhe.fhemobile.utils.navigation;
 
+import android.util.Log;
+
+import de.fhe.fhemobile.fragments.navigation.NavigationFragment;
 import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.vos.navigation.Complex;
 
@@ -159,4 +162,38 @@ public class NavigationUtils {
 			    (("03".equals(cell1.getBuilding()) && "01".equals(cell2.getBuilding()))
 					    || ("01".equals(cell1.getBuilding()) && "03".equals(cell2.getBuilding())));
     }
+
+	/**
+	 * Load stairs, elevators and exits from JSON
+	 */
+	public static void getFloorConnections() {
+	    try {
+	        final String json;
+
+	        // read only once
+	        if(NavigationFragment.buildingExits.isEmpty()){
+	            json = JSONHandler.readFromAssets("exits");
+	            NavigationFragment.buildingExits = JSONHandler.parseJsonExits(json);
+	        }
+	    } catch (final Exception e) {
+	        Log.e(NavigationFragment.TAG, "error reading or parsing JSON files:", e);
+	    }
+	}
+
+	/**
+	 * Load exits from JSON
+	 */
+	public static void getExits() {
+	    try {
+	        final String json;
+
+	        // read only once
+	        if (NavigationFragment.floorConnections.isEmpty()) {
+	            json = JSONHandler.readFromAssets("floorconnections");
+	            NavigationFragment.floorConnections = JSONHandler.parseJsonFloorConnection(json);
+	        }
+	    } catch (final Exception e) {
+	        Log.e(NavigationFragment.TAG, "error reading or parsing JSON files:", e);
+	    }
+	}
 }
