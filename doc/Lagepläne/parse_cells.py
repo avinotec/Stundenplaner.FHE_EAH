@@ -24,9 +24,9 @@ def generateJson(csv_reader, building, floor):
                 cell = { "xCoordinate": x, "yCoordinate": y, "walkable": True }
                 walkable_cells.append(cell)
 
-            #stairs
+            #floor conections like stairs and elevators
             elif row[x] == 's':
-                connected_cell = { "building": building, "floor": floornumber,
+                connected_cell = { "building": building, "floor": floor,
                                         "xCoordinate": x, "yCoordinate": y,
                                         "walkable": True
                                 }

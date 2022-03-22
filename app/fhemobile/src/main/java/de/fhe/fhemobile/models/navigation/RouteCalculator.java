@@ -87,7 +87,7 @@ public class RouteCalculator {
     public LinkedHashMap<BuildingFloorKey, ArrayList<Cell>> getWholeRoute() {
 
         //Get grids of floors to use - fills in variable floorGrids
-        getNeededFloorGrids();
+        getRequiredFloorGrids();
 
         try {
 
@@ -164,9 +164,9 @@ public class RouteCalculator {
 
 
     /**
-     * Builds grids of all needed floors in all used buildings and saves it to variable "floorGrids"
+     * Builds grids of all required floors in all used buildings and saves it to variable "floorGrids"
      */
-    private void getNeededFloorGrids() {
+    private void getRequiredFloorGrids() {
 
         final Complex startComplex = startLocation.getComplex();
         final Complex destinationComplex = destLocation.getComplex();
