@@ -104,6 +104,7 @@ public class Main extends Application {
         return mAppContext.getString(_ResId);
     }
 
+    // getApplicationContext()
     public static Application getAppContext() {
         return mAppContext;
     }
