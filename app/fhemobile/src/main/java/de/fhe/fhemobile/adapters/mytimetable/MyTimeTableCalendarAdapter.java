@@ -16,7 +16,6 @@
  */
 package de.fhe.fhemobile.adapters.mytimetable;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +30,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
@@ -41,12 +41,10 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 	private static final String TAG = "MyTTCalenderAdapter";
 
-	private final Context context;
 	private List<TimeTableEventVo> mItems;
 
 
-	public MyTimeTableCalendarAdapter(final Context context) {
-		this.context = context;
+	public MyTimeTableCalendarAdapter() {
 	}
 
 	public void setItems(List<TimeTableEventVo> items){
@@ -109,7 +107,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	public View getView(final int position, View convertView, ViewGroup parent) {
 
 		if (convertView == null) {
-			convertView = LayoutInflater.from(context).
+			convertView = LayoutInflater.from(Main.getAppContext()).
 					inflate(R.layout.item_my_time_table_calendar, parent, false);
 		}
 
@@ -127,7 +125,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 			final Date df = new Date(currentItem.getFullDateWithStartTime());
 			//if necessary, add "today" in brackets to mark today's day
 			if(sdf.format(df).compareTo(sdf.format(new Date())) == 0){
-				weekDay = "(" + context.getString(R.string.today) + ") "+currentItem.getDayOfWeek();
+				weekDay = "(" + Main.getAppContext().getString(R.string.today) + ") "+currentItem.getDayOfWeek();
 			}
 			weekDay += ", " + new SimpleDateFormat("dd.MM.yy",
 					Locale.getDefault()).format(currentItem.getFullDateWithStartTime());

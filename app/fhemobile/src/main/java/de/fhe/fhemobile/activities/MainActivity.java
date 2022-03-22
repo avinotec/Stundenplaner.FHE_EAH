@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         myTimeTableOverviewAdapter = new MyTimeTableOverviewAdapter(
                 Main.getAppContext(), subscribedCourseComponents);
 
-        myTimeTableCalendarAdapter = new MyTimeTableCalendarAdapter(Main.getAppContext());
+        myTimeTableCalendarAdapter = new MyTimeTableCalendarAdapter();
         myTimeTableCalendarAdapter.setItems(getAllSubscribedTimeTableEvents());
 
 
