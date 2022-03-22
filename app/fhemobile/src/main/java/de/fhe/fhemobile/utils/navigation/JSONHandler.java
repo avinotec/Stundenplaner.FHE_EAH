@@ -19,6 +19,7 @@ package de.fhe.fhemobile.utils.navigation;
 
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.util.Log;
 
 import org.jetbrains.annotations.NonNls;
@@ -102,17 +103,21 @@ public class JSONHandler {
 
     /**
      * Read in certain json file from assets
-     * @param context
-     * @param toRead name of json file that should be read in ("rooms", "exits", "floorconnections", "persons)
+     * @param filenameToRead name of json file that should be read in ("rooms", "exits", "floorconnections", "persons)
      * @return json string
      */
-    public static String readFromAssets(final Context context, final String toRead){
-        final String filename = toRead + ".json";
+    public static String readFromAssets(final String filenameToRead){
+        final String filename = filenameToRead + ".json";
 
         final StringBuilder text = new StringBuilder();
 
         try {
-            final InputStream input = context.getResources().getAssets().open(filename);
+            /* final InputStream input = context.getResources().getAssets().open(filename); */
+            // Wir holen uns hier den Applikationskontext, dann brauchen wir den nicht mehr durchzuschleifen
+            final Context application = Main.getAppContext();
+            final AssetManager assets = application.getAssets();
+            final InputStream input = assets.open(filename);
+
             final InputStreamReader reader = new InputStreamReader(input, StandardCharsets.UTF_8); //$NON-NLS
 
             final BufferedReader br = new BufferedReader(reader);
@@ -121,7 +126,7 @@ public class JSONHandler {
                 text.append(line).append("\n");
             }
         } catch (final Exception e){
-            Log.e(TAG, "reading" +toRead+ "from json failed", e);
+            Log.e(TAG, "reading" +filenameToRead+ "from json failed", e);
         }
 
         return text.toString();
@@ -318,7 +323,7 @@ public class JSONHandler {
     public static void loadRooms(final Context context){
         if (Main.rooms.isEmpty()) {
             try {
-                final String roomsJson = JSONHandler.readFromAssets(context, JSON_SECTION_ROOMS);
+                final String roomsJson = JSONHandler.readFromAssets(JSON_SECTION_ROOMS);
                 Main.rooms = JSONHandler.parseJsonRooms(roomsJson);
             } catch (final Exception e) {
                 Log.e(TAG, "error reading or parsing rooms from JSON files:", e);
@@ -334,7 +339,7 @@ public class JSONHandler {
     public static HashMap<String, PersonVo> loadPersons(final Context context){
         HashMap<String, PersonVo> persons = null;
         try{
-            final String personsJson = JSONHandler.readFromAssets(context, JSON_SECTION_PERSONS);
+            final String personsJson = JSONHandler.readFromAssets(JSON_SECTION_PERSONS);
             persons = JSONHandler.parseJsonPersons(personsJson);
         } catch (final Exception e){
             Log.e(TAG, "error reading or parsing persons from JSON files:", e);

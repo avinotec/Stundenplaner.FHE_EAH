@@ -185,13 +185,13 @@ public class NavigationFragment extends FeatureFragment {
     /**
      * Load stairs, elevators and exits from JSON
      */
-    private void getFloorConnections() {
+    private static void getFloorConnections() {
         try {
             final String json;
 
             // read only once
             if(buildingExits.isEmpty()){
-                json = JSONHandler.readFromAssets(getContext(), "exits");
+                json = JSONHandler.readFromAssets("exits");
                 buildingExits = JSONHandler.parseJsonExits(json);
             }
         } catch (final Exception e) {
@@ -202,13 +202,13 @@ public class NavigationFragment extends FeatureFragment {
     /**
      * Load exits from JSON
      */
-    private void getExits() {
+    private static void getExits() {
         try {
             final String json;
 
             // read only once
             if (floorConnections.isEmpty()) {
-                json = JSONHandler.readFromAssets(getContext(), "floorconnections");
+                json = JSONHandler.readFromAssets("floorconnections");
                 floorConnections = JSONHandler.parseJsonFloorConnection(json);
             }
         } catch (final Exception e) {
