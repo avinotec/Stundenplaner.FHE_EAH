@@ -17,6 +17,7 @@
 
 package de.fhe.fhemobile.fragments.mensa;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,10 +30,13 @@ import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.activities.MainActivity;
+import de.fhe.fhemobile.activities.SettingsActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.UserSettings;
+import de.fhe.fhemobile.utils.feature.Features;
 import de.fhe.fhemobile.utils.mensa.MensaSettings;
 import de.fhe.fhemobile.utils.mensa.MensaUtils;
 import de.fhe.fhemobile.views.mensa.MensaViewNEW;
@@ -112,9 +116,7 @@ public class MensaFragmentNEW extends FeatureFragment {
         // If the drawer is open, show the global app actions in the action bar. See also
         // showGlobalContextActionBar, which controls the top-left area of the action bar.
         menu.clear();
-        if(MensaSettings.getMensaSelection() != null){
-            inflater.inflate(R.menu.main, menu);
-        }
+        inflater.inflate(R.menu.main, menu);
 
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -124,16 +126,15 @@ public class MensaFragmentNEW extends FeatureFragment {
     public boolean onOptionsItemSelected(final MenuItem _item) {
 
         if (_item.getItemId() == R.id.action_settings) {
-            MensaSettings.saveMensaSelection(null);
+            MensaSettings.saveMensaChoice(null);
 
             //todo
-            //((MainActivity) getActivity()).changeFragment(MensaSettingsFragment.newInstance(), false, MensaSettingsFragment.TAG);
+            ((MainActivity) getActivity()).changeFragment(MensaSettingsFragment.newInstance(), false, MensaSettingsFragment.TAG);
 
-//            //todo make mensa setting a fragment instead of activity
-//            final Intent intent = new Intent(getActivity(), SettingsActivity.class);
-//            intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.MENSA);
-//            startActivity(intent);
-//            return true;
+            final Intent intent = new Intent(getActivity(), SettingsActivity.class);
+            intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.MENSA);
+            startActivity(intent);
+            return true;
         }
         return super.onOptionsItemSelected(_item);
     }

@@ -9,7 +9,7 @@ import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
 
 public class MyTimeTableDialogAdapter extends MyTimeTableAdapter{
 
-    private static final String TAG = "MyTimeTableOverviewAdapter";
+    private static final String TAG = "MyTimeTableDialogAdapter";
 
     public MyTimeTableDialogAdapter(Context context) {
         super(context);
