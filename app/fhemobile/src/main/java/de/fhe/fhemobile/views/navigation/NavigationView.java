@@ -34,10 +34,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.Map;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
 import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
@@ -95,16 +98,18 @@ public class NavigationView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mButtonPrevPlan = (Button) findViewById(R.id.navigationButtonPrevPlan);
-        mButtonNextPlan = (Button) findViewById(R.id.navigationButtonNextPlan);
+        mButtonPrevPlan = (Button) findViewById(R.id.btn_navigation_previousplan);
+        mButtonNextPlan = (Button) findViewById(R.id.btn_navigation_nextplan);
 
         mFloorPlanImageView = (ImageView) findViewById(R.id.imageview_floorplan);
 
-        mNavigationLayout = (RelativeLayout) findViewById(R.id.navigation_placeholder);
+        mNavigationLayout = (RelativeLayout) findViewById(R.id.layout_navigation_placeholder);
 
-        mTextViewStart = (TextView) findViewById(R.id.navigation_text_start);
-        mTextViewDest = (TextView) findViewById(R.id.navigation_text_dest);
-        mCurrentFloorPlan = (TextView) findViewById(R.id.navigation_text_current_floorplan);
+        mTextViewStart = (TextView) findViewById(R.id.tv_navigation_start);
+        mTextViewDest = (TextView) findViewById(R.id.tv_navigation_dest);
+        mCurrentFloorPlan = (TextView) findViewById(R.id.tv_navigation_current_floorplan);
+
+        mResetButton = (Button) findViewById(R.id.btn_navigation_back);
     }
 
     /**
@@ -138,7 +143,7 @@ public class NavigationView extends LinearLayout {
         mCurrentFloorPlan.setText(
                 getResources().getString(R.string.navigation_current_floorplan) +" "+
                         getResources().getString(R.string.navigation_building) + " "+
-                        currentFloorPlan.getComplex().toString() + ", "+
+                        currentFloorPlan.getComplex().toString().replace("_", "-") + ", "+
                         getResources().getString(R.string.navigation_floor) + " "+
                         currentFloorPlan.getFloorString());
 
@@ -147,6 +152,10 @@ public class NavigationView extends LinearLayout {
 
     public void setViewListener(final IViewListener _Listener) {
         mViewListener = _Listener;
+    }
+
+    public void setOnClickListener(final OnClickListener _Listener){
+        mResetButton.setOnClickListener(_Listener);
     }
 
     public interface IViewListener {
@@ -366,6 +375,7 @@ public class NavigationView extends LinearLayout {
 
     private Button mButtonPrevPlan;
     private Button mButtonNextPlan;
+    private Button mResetButton;
 
     private ImageView mFloorPlanImageView;
     private RelativeLayout mNavigationLayout;

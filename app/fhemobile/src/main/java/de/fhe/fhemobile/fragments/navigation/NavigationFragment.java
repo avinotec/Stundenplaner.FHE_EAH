@@ -129,6 +129,12 @@ public class NavigationFragment extends FeatureFragment {
         // Inflate the layout for this fragment
         mView = (NavigationView) inflater.inflate(R.layout.fragment_navigation, container, false);
         mView.setViewListener(mViewListener);
+        mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
 
         mView.initializeView(mStartRoom, mDestRoom);
 
