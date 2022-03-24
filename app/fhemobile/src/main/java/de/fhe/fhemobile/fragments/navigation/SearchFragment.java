@@ -180,19 +180,21 @@ public abstract class SearchFragment extends FeatureFragment {
     }
 
     private RoomVo validateAndGetRoom(String inputRoom) {
+        RoomVo roomFound = null;
+
         //a room number has been entered
         if (inputRoom != null && !"".equals(inputRoom)) {
 
             //reminder: there is an exception from room format xx.xx.xx -> 05.3Z.xxx
 
             //if room number has been entered without separating dots
-            if (inputRoom.matches("\\d{6,7}")) {
+            if (inputRoom.matches("\\d{6,7}|(\\d{2}-\\d{3})")) {
                 inputRoom = inputRoom.substring(0, 2) + "." + inputRoom.substring(2, 4) + "."
                         + inputRoom.substring(4);
             }
             //if room number has been entered without leading zeros
-            else if (!inputRoom.matches("\\d{2}\\.(\\d{2}|(3Z))\\.\\d{2,3}")
-                    && inputRoom.matches("\\d{1,2}\\.(\\d{1,2}|(3Z))\\.\\d{1,3}")) {
+            else if (!inputRoom.matches("\\d{2}\\.(\\d{2}|(3Z)|-\\d)\\.\\d{2,3}")
+                    && inputRoom.matches("\\d{1,2}\\.(\\d{1,2}|(3Z)|-\\d)\\.\\d{1,3}")) {
 
                 String[] inputArray = inputRoom.split("\\.");
                 //format input
@@ -201,21 +203,39 @@ public abstract class SearchFragment extends FeatureFragment {
                         + String.format("%2s", inputArray[2])).replace(" ", "0");
             }
 
+            //inputArray[0] = building, inputArray[1] = floor, inputArray[2] = room number
+            String[] inputArray = inputRoom.split("\\.");
+
             //correct floor from 03 to 3Z if necessary
             if(inputRoom.matches("05\\.03\\.\\d{3}")){
-                String[] inputArray = inputRoom.split("\\.");
                 inputRoom = inputArray[0] + ".3Z." + inputArray[2];
             }
 
             //check room list for matching names
             for (final RoomVo room : NavigationFragment.rooms) {
                 if (room.getRoomName().equals(inputRoom)) {
-                    return room;
+                    roomFound = room;
+                }
+                //if no room has been found then search for a close one
+                //check if room is in same building on same floor
+                else if (room.getBuilding().equals(inputArray[0])
+                        && room.getFloorString().equals(inputArray[1])){
+
+                    int inputRoomNumber = Integer.parseInt(inputArray[2]);
+                    int roomDiff = Math.abs(Integer.parseInt(room.getRoomNumber()) - inputRoomNumber);
+
+                    //if room is closer than room found before
+                    if(roomFound == null){
+                        roomFound = room;
+                    }
+                    else if(roomDiff < Math.abs(Integer.parseInt(roomFound.getRoomNumber()) - inputRoomNumber)){
+                        roomFound = room;
+                    }
                 }
             }
         }
 
-        return null;
+        return roomFound;
     }
 
 }
