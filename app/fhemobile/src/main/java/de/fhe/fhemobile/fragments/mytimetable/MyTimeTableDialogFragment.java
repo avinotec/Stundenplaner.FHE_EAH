@@ -228,7 +228,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
             boolean studyProgramEmpty = true;
 
-            for (TimeTableStudyProgramVo studyProgram : mResponse.getStudyPrograms()) {
+            for (final TimeTableStudyProgramVo studyProgram : mResponse.getStudyPrograms()) {
                 if (studyProgram != null && studyProgram.getId() != null && studyProgram.getId().equals(_StudyProgramId)) {
 
                     mChosenStudyProgram = studyProgram;
