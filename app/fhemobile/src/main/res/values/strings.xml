@@ -19,7 +19,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_settings">Einstellungen</string>
+    <string name="action_settings">Settings</string>
     <string name="drawer_news">News</string>
     <string name="drawer_mensa">Canteen</string>
     <string name="drawer_persons">Persons</string>
@@ -52,7 +52,7 @@
     <string name="employee_mail">Email</string>
     <string name="employee_room">Room</string>
 
-    <string name="timetable_headline">Please select your study program. (You can always change it under settings)</string>
+    <string name="timetable_headline">Please select your study program.</string>
     <string name="timetable_study_program">Study program</string>
     <string name="timetable_study_group">Group</string>
     <string name="timetable_term">Semester</string>
@@ -169,8 +169,6 @@
     <string name="navigation_building">building</string>
     <string name="navigation_floor">floor</string>
     <string name="navigation_dialog_person">Person</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

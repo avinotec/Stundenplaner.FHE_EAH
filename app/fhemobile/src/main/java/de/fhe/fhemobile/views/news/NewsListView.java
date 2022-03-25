@@ -141,9 +141,9 @@ public class NewsListView extends LinearLayout {
         }
     };
 
-    private final Context             mContext;
+    private final Context       mContext;
 
-    private final NewsModel           mModel;
+    private final NewsModel     mModel;
     private StickyHeaderAdapter mAdapter;
 
     private ProgressBar         mNewsProgressBar;
