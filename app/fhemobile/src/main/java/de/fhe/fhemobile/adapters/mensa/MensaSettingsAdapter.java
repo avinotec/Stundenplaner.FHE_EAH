@@ -93,8 +93,9 @@ public class MensaSettingsAdapter extends BaseAdapter {
      */
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
-        final LayoutInflater inflater = (LayoutInflater) mContext
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        final LayoutInflater inflater =
+                (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         final ViewHolder viewHolder;
         if(convertView == null) {
