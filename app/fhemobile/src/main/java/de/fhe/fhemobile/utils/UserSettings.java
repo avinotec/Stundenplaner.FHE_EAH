@@ -19,6 +19,8 @@ package de.fhe.fhemobile.utils;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import java.util.ArrayList;
+
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.models.mensa.MensaFoodModel;
 import de.fhe.fhemobile.models.news.NewsModel;
@@ -38,7 +40,8 @@ public class UserSettings {
 
     private final SharedPreferences   mSP;
 
-    private String              mChosenMensa        = null;
+    private String              mChosenMensaId = null;
+    private ArrayList<String>   mChosenMensas       = new ArrayList<>();
     private String              mChosenMensaName    = null;
     private String              mChosenNewsCategory = null;
 
@@ -56,7 +59,7 @@ public class UserSettings {
     private UserSettings() {
         mSP = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext());
 
-        mChosenMensa        = mSP.getString(PREF_CHOSEN_MENSA, UserDefaults.DEFAULT_MENSA_ID);
+        mChosenMensaId = mSP.getString(PREF_CHOSEN_MENSA, UserDefaults.DEFAULT_MENSA_ID);
         mChosenMensaName    = mSP.getString(PREF_CHOSEN_MENSA_NAME, UserDefaults.DEFAULT_MENSA_NAME);
         mChosenNewsCategory = mSP.getString(PREF_CHOSEN_NEWS_CATEGORY, UserDefaults.DEFAULT_NEWS_ID);
     }
@@ -65,8 +68,8 @@ public class UserSettings {
      * Mensa
      * @return
      */
-    public String getChosenMensa() {
-        return mChosenMensa;
+    public String getChosenMensaId() {
+        return mChosenMensaId;
     }
 
     /**
@@ -75,8 +78,8 @@ public class UserSettings {
      * @param _ChosenMensaName
      */
     public void setChosenMensa(final String _ChosenMensaId, final String _ChosenMensaName ) {
-        mChosenMensa = _ChosenMensaId;
-        mSP.edit().putString(PREF_CHOSEN_MENSA, mChosenMensa).apply();
+        mChosenMensaId = _ChosenMensaId;
+        mSP.edit().putString(PREF_CHOSEN_MENSA, mChosenMensaId).apply();
 
         mChosenMensaName = _ChosenMensaName;
         mSP.edit().putString(PREF_CHOSEN_MENSA_NAME, mChosenMensaName).apply();

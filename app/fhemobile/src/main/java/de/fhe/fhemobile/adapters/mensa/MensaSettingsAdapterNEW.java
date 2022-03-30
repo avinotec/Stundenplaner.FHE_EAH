@@ -14,7 +14,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.adapters.maps;
+package de.fhe.fhemobile.adapters.mensa;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -23,23 +23,22 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.List;
-
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.vos.maps.MapCollectionVo;
+import de.fhe.fhemobile.vos.mensa.MensaChoiceItemVo;
 
 /**
- * Created by paul on 23.02.14.
+ * Created by paul on 13.02.14.
+ * Edited by Nadja - 03/2022
  */
-public class MapsAdapter extends BaseAdapter {
-
-    public MapsAdapter(final Context _Context, final List<MapCollectionVo> _Items) {
-        mContext = _Context;
-        mItems   = _Items;
-    }
+public class MensaSettingsAdapterNEW extends BaseAdapter {
 
     static class ViewHolder {
-        TextView mMapName;
+        TextView mMensaTitle;
+    }
+
+    public MensaSettingsAdapterNEW(final Context mContext, final MensaChoiceItemVo[] mItems) {
+        this.mContext = mContext;
+        this.mItems = mItems;
     }
 
     /**
@@ -49,7 +48,7 @@ public class MapsAdapter extends BaseAdapter {
      */
     @Override
     public int getCount() {
-        return mItems.size();
+        return mItems.length;
     }
 
     /**
@@ -60,8 +59,8 @@ public class MapsAdapter extends BaseAdapter {
      * @return The data at the specified position.
      */
     @Override
-    public MapCollectionVo getItem(final int position) {
-        return mItems.get(position);
+    public Object getItem(final int position) {
+        return mItems[position];
     }
 
     /**
@@ -72,14 +71,14 @@ public class MapsAdapter extends BaseAdapter {
      */
     @Override
     public long getItemId(final int position) {
-        return 0;
+        return mItems[position].getId();
     }
 
     /**
      * Get a View that displays the data at the specified position in the data set. You can either
      * create a View manually or inflate it from an XML layout file. When the View is inflated, the
      * parent View (GridView, ListView...) will apply default layout parameters unless you use
-     * {@link android.view.LayoutInflater#inflate(int, android.view.ViewGroup, boolean)}
+     * {@link LayoutInflater#inflate(int, ViewGroup, boolean)}
      * to specify a root view and to prevent attachment to the root.
      *
      * @param position    The position of the item within the adapter's data set of the item whose view
@@ -102,9 +101,9 @@ public class MapsAdapter extends BaseAdapter {
         final ViewHolder viewHolder;
         if(convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.item_map, parent, false);
+            convertView = inflater.inflate(R.layout.item_mensa_choice, parent, false);
 
-            viewHolder.mMapName = (TextView) convertView.findViewById(R.id.mapItemTitle);
+            viewHolder.mMensaTitle = (TextView) convertView.findViewById(R.id.tv_mensa_choice_item);
 
             convertView.setTag(viewHolder);
         }
@@ -112,12 +111,12 @@ public class MapsAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.mMapName.setText(mContext.getResources().getString(mItems.get(position).getNameID()));
+        viewHolder.mMensaTitle.setText(mItems[position].getName());
 
         return convertView;
     }
 
-    private final Context               mContext;
-    private final List<MapCollectionVo> mItems;
+    private final Context mContext;
 
+    private final MensaChoiceItemVo[] mItems;
 }

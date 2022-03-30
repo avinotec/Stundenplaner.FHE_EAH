@@ -19,7 +19,7 @@
 
 <CheckedTextView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/text1"
+    android:id="@+id/tv_mensa_choice_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeight"

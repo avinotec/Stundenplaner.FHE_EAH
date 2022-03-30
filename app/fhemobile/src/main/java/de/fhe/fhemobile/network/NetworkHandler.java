@@ -149,9 +149,9 @@ public class NetworkHandler {
 	 */
 	public void fetchMensaData() {
 		Assert.assertTrue( mApi != null );
-		Log.d(TAG, "Mensa: "+UserSettings.getInstance().getChosenMensa());
+		Log.d(TAG, "Mensa: "+UserSettings.getInstance().getChosenMensaId());
 
-		mApi.fetchMensaData(UserSettings.getInstance().getChosenMensa()).enqueue( new Callback<MensaFoodItemVo[]>() {
+		mApi.fetchMensaData(UserSettings.getInstance().getChosenMensaId()).enqueue(new Callback<MensaFoodItemVo[]>() {
 
 			/**
 			 *
