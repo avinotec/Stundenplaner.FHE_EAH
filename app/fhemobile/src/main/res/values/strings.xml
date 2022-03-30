@@ -160,6 +160,7 @@
     <string name="text_view_oder">or</string>
     <string name="navigation_button_prev_plan">Previous Map</string>
     <string name="navigation_button_next_plan">Next Map</string>
+    <string name="navigation_button_back">Back to input</string>
     <string name="maps_up">One floor up</string>
     <string name="maps_down">One floor down</string>
     <string name="navigation_dialog_empty_building">No rooms here.</string>

@@ -42,7 +42,7 @@ public class JobOffersWebView extends FrameLayout {
         mWebView = (WebView) findViewById(R.id.webview_joboffers);
         //if the WebViewClient is not changed, the website is not able to load
         mWebView.setWebViewClient(new SSLTolerentWebViewClient(mContext));
-        //JavaScripted needs to be enabled
+        //JavaScript needs to be enabled to work properly
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.loadUrl(Endpoints.JOBOFFERS_ENDPOINT);
     }

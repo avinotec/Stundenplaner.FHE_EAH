@@ -145,11 +145,6 @@ public class NavigationFragment extends FeatureFragment {
     }
 
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//    }
-
     /**
      * Set currentFloorPlan to the next one, display floorplan image and navigationroute
      */

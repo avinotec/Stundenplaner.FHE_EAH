@@ -34,13 +34,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 import java.util.Map;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
 import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
@@ -109,7 +106,7 @@ public class NavigationView extends LinearLayout {
         mTextViewDest = (TextView) findViewById(R.id.tv_navigation_dest);
         mCurrentFloorPlan = (TextView) findViewById(R.id.tv_navigation_current_floorplan);
 
-        mResetButton = (Button) findViewById(R.id.btn_navigation_back);
+        mBackButton = (Button) findViewById(R.id.btn_navigation_back);
     }
 
     /**
@@ -155,7 +152,7 @@ public class NavigationView extends LinearLayout {
     }
 
     public void setOnClickListener(final OnClickListener _Listener){
-        mResetButton.setOnClickListener(_Listener);
+        mBackButton.setOnClickListener(_Listener);
     }
 
     public interface IViewListener {
@@ -176,8 +173,11 @@ public class NavigationView extends LinearLayout {
         mButtonNextPlan.setEnabled(_Enabled);
         if(_Enabled){
             mButtonNextPlan.setBackgroundResource(R.drawable.buttonshape_rectangle);
+            mBackButton.setVisibility(GONE);
         }else{
             mButtonNextPlan.setBackgroundResource(R.drawable.buttonshape_rectangle_disabled);
+            mBackButton.setVisibility(VISIBLE);
+
         }
     }
 
@@ -375,7 +375,7 @@ public class NavigationView extends LinearLayout {
 
     private Button mButtonPrevPlan;
     private Button mButtonNextPlan;
-    private Button mResetButton;
+    private Button mBackButton;
 
     private ImageView mFloorPlanImageView;
     private RelativeLayout mNavigationLayout;

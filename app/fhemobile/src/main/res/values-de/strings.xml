@@ -167,6 +167,7 @@
     <string name="error_message_room_input_invalid">Raum nicht gefunden!</string>
     <string name="navigation_button_prev_plan">Vorherige Karte</string>
     <string name="navigation_button_next_plan">Nächste Karte</string>
+    <string name="navigation_button_back">Zurück zur Eingabe</string>
     <string name="navigation_start">Start: </string>
     <string name="navigation_dest">Ziel: </string>
     <string name="navigation_current_floorplan">aktuelle Anzeige:</string>
