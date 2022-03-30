@@ -14,72 +14,52 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
-package de.fhe.fhemobile.fragments.news;
+package de.fhe.fhemobile.fragments.joboffers;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.views.news.NewsWebView;
+import de.fhe.fhemobile.views.joboffers.JobOffersWebView;
 
 /**
- * Created by Nadja on 06.09.21
- * for displaying News-Browser-Webpage using WebView
+ * Created by Nadja on 30.03.2022
  */
-public class NewsWebViewFragment extends FeatureFragment {
+public class JobOffersFragment extends FeatureFragment {
 
-    private NewsWebView mView;
+    private JobOffersWebView mView;
 
-    public NewsWebViewFragment() {
+    public JobOffersFragment(){
         // Required empty public constructor
     }
 
-    public static NewsWebViewFragment newInstance() {
-        final NewsWebViewFragment fragment = new NewsWebViewFragment();
+    public static JobOffersFragment newInstance(){
+        final JobOffersFragment fragment = new JobOffersFragment();
         final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
-
-/*
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-*/
-
-    @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-                             final Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        mView = (NewsWebView) inflater.inflate(R.layout.fragment_news_webview, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //Inflate the layout for this fragment
+        mView = (JobOffersWebView) inflater.inflate(R.layout.fragment_joboffers_webview, container, false);
         return mView;
     }
 
     /**
      * Return the web view object of the fragment,
-     * Needed for back button behavior
+     * needed for back button behavior
      * @return web view displayed in the fragment
      */
-    public WebView getWebView(){
-        return getView().findViewById(R.id.webview_news);
+    public JobOffersWebView getWebView(){
+        return getView().findViewById(R.id.webview_joboffers);
     }
 }

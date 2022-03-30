@@ -67,10 +67,10 @@ public interface ApiDeclaration {
     @GET(Endpoints.WEATHER)
     Call<WeatherResponse> fetchWeather();
     
-    @GET( Endpoints.AQUA)
+    @GET(Endpoints.AQUA)
     Call<CafeAquaResponse> fetchCafeAquaStatus();
     
-    @GET( Endpoints.TIMETABLE)
+    @GET(Endpoints.TIMETABLE)
     Call<TimeTableResponse> fetchTimeTable();
 
     @GET(Endpoints.TIMETABLE_EVENTS)

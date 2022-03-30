@@ -14,9 +14,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.views.news;
+package de.fhe.fhemobile.views.joboffers;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.webkit.WebView;
@@ -26,17 +25,12 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.network.Endpoints;
 import de.fhe.fhemobile.views.SSLTolerentWebViewClient;
 
-/**
- * Created by Nadja on 06.09.21
- * for displaying News-Browser-Webpage using WebView
- */
-public class NewsWebView extends FrameLayout {
+public class JobOffersWebView extends FrameLayout {
 
     private final Context mContext;
-
     private WebView mWebView;
 
-    public NewsWebView(final Context context, final AttributeSet attrs) {
+    public  JobOffersWebView(final Context context, final AttributeSet attrs){
         super(context, attrs);
         mContext = context;
     }
@@ -45,12 +39,11 @@ public class NewsWebView extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mWebView = (WebView) findViewById(R.id.webview_news);
-        //wird der WebViewClient nicht geaendert, kann die Seite nicht geladen werden, da die Webview
+        mWebView = (WebView) findViewById(R.id.webview_joboffers);
+        //if the WebViewClient is not changed, the website is not able to load
         mWebView.setWebViewClient(new SSLTolerentWebViewClient(mContext));
         //JavaScripted needs to be enabled
         mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.loadUrl(Endpoints.NEWS_ENDPOINT);
-
+        mWebView.loadUrl(Endpoints.JOBOFFERS_ENDPOINT);
     }
 }

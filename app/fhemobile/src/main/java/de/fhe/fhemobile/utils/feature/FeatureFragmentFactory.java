@@ -19,6 +19,7 @@ package de.fhe.fhemobile.utils.feature;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
 import de.fhe.fhemobile.fragments.impressum.ImpressumFragment;
+import de.fhe.fhemobile.fragments.joboffers.JobOffersFragment;
 import de.fhe.fhemobile.fragments.maps.MapsDialogFragment;
 import de.fhe.fhemobile.fragments.mensa.MensaFoodFragment;
 import de.fhe.fhemobile.fragments.mensa.MensaFragmentNEW;
@@ -38,19 +39,19 @@ public class FeatureFragmentFactory {
 
         //TODO Features
         switch (_FeatureId) {
+            case Features.FeatureId.TIMETABLE:       fragment = TimeTableFactory.getTimeTableFragment();    break;
+            case Features.FeatureId.MYTIMETABLE:     fragment = MyTimeTableCalendarFragment.newInstance();  break;
+            case Features.FeatureId.MENSA:           fragment = MensaFoodFragment.newInstance();            break;
+            //case Features.FeatureId.MENSA:           fragment = MensaFragmentNEW.newInstance();           break;
+            case Features.FeatureId.MAPS:            fragment = MapsDialogFragment.newInstance();           break;
+            //case FeatureId.NAVIGATION:                fragment = ComingSoonFragment.newInstance(); break;
+            case Features.FeatureId.NAVIGATION:      fragment = NavigationDialogFragment.newInstance();     break; //added by Nadja 02.12.21
+            case Features.FeatureId.SEMESTER_DATA:   fragment = SemesterDataFragment.newInstance();         break;
+            //case FeatureId.SEMESTER_DATA:             fragment = SemesterDataWebViewFragment.newInstance();   break; //display from Browser/as Webview - Nadja 07.09.21
+            case Features.FeatureId.EVENTS:          fragment = EventsWebViewFragment.newInstance();        break; //added by Nadja 07.09.21
             //case Features.FeatureId.PHONEBOOK:       fragment = PhonebookSearchFragment.newInstance();   break;
-            case Features.FeatureId.MENSA:           fragment = MensaFoodFragment.newInstance();         break;
-            //case Features.FeatureId.MENSA:           fragment = MensaFragmentNEW.newInstance();         break;
-            case Features.FeatureId.MAPS:            fragment = MapsDialogFragment.newInstance();              break;
-            case Features.FeatureId.SEMESTER_DATA:   fragment = SemesterDataFragment.newInstance();      break;
-            //case FeatureId.SEMESTER_DATA:   fragment = SemesterDataWebViewFragment.newInstance();      break; //display from Browser/as Webview - Nadja 07.09.21
-            case Features.FeatureId.IMPRESS:         fragment = ImpressumFragment.newInstance();         break;
-            case Features.FeatureId.TIMETABLE:       fragment = TimeTableFactory.getTimeTableFragment(); break;
-            case Features.FeatureId.MYTIMETABLE:     fragment = MyTimeTableCalendarFragment.newInstance();       break;
-            case Features.FeatureId.EVENTS:          fragment = EventsWebViewFragment.newInstance();       break; //added by Nadja 07.09.21
-            //case Features.FeatureId.NAVIGATION:      fragment = NavigationDialogFragmentOLD.newInstance();       break; //added by Nadja 09.09.21
-            case Features.FeatureId.NAVIGATION:      fragment = NavigationDialogFragment.newInstance();       break; //added by Nadja 02.12.21
-            //case FeatureId.NAVIGATION:      fragment = ComingSoonFragment.newInstance(); break;
+            case Features.FeatureId.JOBOFFERS:       fragment = JobOffersFragment.newInstance();            break; //added by Nadja on 30.03.2022
+            case Features.FeatureId.IMPRESS:         fragment = ImpressumFragment.newInstance();            break;
             case Features.FeatureId.NEWS:
             //default:                        fragment = NewsListFragment.newInstance();
             default:                        fragment = NewsWebViewFragment.newInstance(); //display from Browser/as Webview - Nadja 6.9.21

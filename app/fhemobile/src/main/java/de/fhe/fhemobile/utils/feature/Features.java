@@ -32,6 +32,7 @@ public class Features {
     public static boolean MYTIMETABLE     = false;
     public static boolean EVENTS          = false;
     public static boolean NAVIGATION      = false;
+    public static boolean JOBOFFERS       = false;
 
     /**
      *
@@ -47,5 +48,6 @@ public class Features {
         int MYTIMETABLE     = 7;
         int EVENTS          = 8;
         int NAVIGATION      = 9;
+        int JOBOFFERS       = 10;
     }
 }

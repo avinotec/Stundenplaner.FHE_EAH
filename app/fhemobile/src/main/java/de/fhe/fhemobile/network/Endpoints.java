@@ -35,6 +35,7 @@ public class Endpoints {
     public static final String NEWS_ENDPOINT = "https://www.eah-jena.de/hochschule/nachrichten";
     public static final String SEMESTERDATA_ENDPOINT = "https://www.eah-jena.de/hochschule/semestertermine";
     public static final String EVENTS_ENDPOINT = "https://www.eah-jena.de/veranstaltungskalender";
+    public static final String JOBOFFERS_ENDPOINT = "https://stellenticket.eah-jena.de/de/offers/fulltextsearch/EAH-Jena/#Inhalt";
 
     public static final String SCHEDULE_CHANGE_SERVER = "https://lustigtestt.de/fhjena/rest_api/public/changes";
 
@@ -73,6 +74,7 @@ public class Endpoints {
     public static final String PARAM_PUSH_DEVICE_ID = "pushId";
     public static final String PARAM_SUBSCRIBED_LESSONS = "subscribedLessons";
     public static final String PARAM_CHANGES_TIME_STAMP = "timeStamp";
+
 
 
 }

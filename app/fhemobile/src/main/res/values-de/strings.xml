@@ -30,6 +30,7 @@
     <string name="drawer_mytimetable" >Mein Stundenplan</string>
     <string name="drawer_events" >Veranstaltungskalender</string>
     <string name="drawer_navigation" >Campusnavigation</string>
+    <string name="drawer_joboffers">Stellenangebote</string>
 
     <string name="reallyClose">Zum Verlassen zweimal Zurück drücken</string>
 
