@@ -157,7 +157,7 @@ public class RoomSearchFragment extends SearchFragment {
             //check if building has any rooms
             boolean buildingValid = false;
             final List<String> floors = new ArrayList<>();
-            if(NavigationFragment.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
+            if(NavigationFragment.rooms.isEmpty()) JSONHandler.loadRooms();
             for(final RoomVo room : NavigationFragment.rooms){
                 if(room.getBuilding() != null && room.getBuilding().equals(_building)){
 
@@ -192,7 +192,7 @@ public class RoomSearchFragment extends SearchFragment {
             //check if floor has any rooms
             boolean floorValid = false;
             final List<RoomVo> rooms = new ArrayList<>();
-            if(NavigationFragment.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
+            if(NavigationFragment.rooms.isEmpty()) JSONHandler.loadRooms();
 
             for(final RoomVo room : NavigationFragment.rooms){
 
@@ -221,7 +221,7 @@ public class RoomSearchFragment extends SearchFragment {
             mView.toggleGoButtonEnabled(false);
 
             //search for room object
-            if(NavigationFragment.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
+            if(NavigationFragment.rooms.isEmpty()) JSONHandler.loadRooms();
             for(final RoomVo room : NavigationFragment.rooms){
                 if(room.getRoomName() != null && room.getRoomName().equals(_room)){
 

@@ -319,9 +319,8 @@ public class JSONHandler {
     //read, parse, save -------------------------------------------------------------------------------
     /**
      * Reads rooms from assets and saves list to MainActivity.rooms
-     * @param context
      */
-    public static void loadRooms(final Context context){
+    public static void loadRooms(){
         if (NavigationFragment.rooms.isEmpty()) {
             try {
                 final String roomsJson = JSONHandler.readFromAssets(JSON_SECTION_ROOMS);
@@ -334,10 +333,9 @@ public class JSONHandler {
 
     /**
      * Reads persons from assets and returns them in a HashMap
-     * @param context
      * @return HashMap of {@link PersonVo} objects, person's names used as key
      */
-    public static HashMap<String, PersonVo> loadPersons(final Context context){
+    public static HashMap<String, PersonVo> loadPersons(){
         HashMap<String, PersonVo> persons = null;
         try{
             final String personsJson = JSONHandler.readFromAssets(JSON_SECTION_PERSONS);

@@ -227,7 +227,7 @@ public class RouteCalculator {
             final HashMap<String, Cell> walkableCells = JSONHandler.parseJsonWalkableCells(json);
 
             //fill in rooms
-            if(NavigationFragment.rooms.isEmpty()) JSONHandler.loadRooms(context);
+            if(NavigationFragment.rooms.isEmpty()) JSONHandler.loadRooms();
             for(final RoomVo r : NavigationFragment.rooms){
                 if(r.getComplex() == complex && r.getFloorString().equals(floor)){
                     floorGrid[r.getXCoordinate()][r.getYCoordinate()] = r;

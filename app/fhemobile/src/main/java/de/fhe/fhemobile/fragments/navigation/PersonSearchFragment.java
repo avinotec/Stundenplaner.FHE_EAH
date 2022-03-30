@@ -72,7 +72,7 @@ public class PersonSearchFragment extends SearchFragment {
         mView.setViewListener(mViewListener);
         mView.initializeView(getChildFragmentManager());
 
-        persons = JSONHandler.loadPersons(getContext());
+        persons = JSONHandler.loadPersons();
         final List<PersonVo> personList = new ArrayList<>(persons.values());
         mView.setPersonItems(personList);
 
@@ -118,7 +118,7 @@ public class PersonSearchFragment extends SearchFragment {
             mView.toggleGoButtonEnabled(false);
 
             //search for room object
-            if(NavigationFragment.rooms.isEmpty()) JSONHandler.loadRooms(getContext());
+            if(NavigationFragment.rooms.isEmpty()) JSONHandler.loadRooms();
             for(RoomVo room : NavigationFragment.rooms){
                 final String roomOfPerson = persons.get(_person).getRoom();
                 if(room.getRoomName() != null && room.getRoomName().equals(roomOfPerson)){
