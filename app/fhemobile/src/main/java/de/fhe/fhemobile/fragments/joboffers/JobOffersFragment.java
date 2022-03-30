@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,7 +60,7 @@ public class JobOffersFragment extends FeatureFragment {
      * needed for back button behavior
      * @return web view displayed in the fragment
      */
-    public JobOffersWebView getWebView(){
+    public WebView getWebView(){
         return getView().findViewById(R.id.webview_joboffers);
     }
 }

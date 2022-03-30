@@ -59,6 +59,7 @@ import de.fhe.fhemobile.fragments.DrawerFragment;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
 import de.fhe.fhemobile.fragments.impressum.ImpressumFragment;
+import de.fhe.fhemobile.fragments.joboffers.JobOffersFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdata.SemesterDataWebViewFragment;
 import de.fhe.fhemobile.models.timeTableChanges.RequestModel;
@@ -368,6 +369,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                 webview = ((ImpressumFragment) mCurrentFragment).getWebView();
             }else if(mCurrentFragment instanceof EventsWebViewFragment){
                 webview = ((EventsWebViewFragment) mCurrentFragment).getWebView();
+            }else if(mCurrentFragment instanceof JobOffersFragment){
+                webview = ((JobOffersFragment) mCurrentFragment).getWebView();
             }
             if(webview != null && webview.canGoBack()){
                 // if there is previous page open it
