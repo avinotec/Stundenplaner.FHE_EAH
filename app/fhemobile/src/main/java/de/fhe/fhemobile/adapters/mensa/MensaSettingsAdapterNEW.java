@@ -28,14 +28,15 @@ import de.fhe.fhemobile.vos.mensa.MensaChoiceItemVo;
 
 /**
  * Created by paul on 13.02.14.
+ * Edited by Nadja - 03/2022
  */
-public class MensaSettingsAdapter extends BaseAdapter {
+public class MensaSettingsAdapterNEW extends BaseAdapter {
 
     static class ViewHolder {
-        TextView mMensaName;
+        TextView mMensaTitle;
     }
 
-    public MensaSettingsAdapter(final Context mContext, final MensaChoiceItemVo[] mItems) {
+    public MensaSettingsAdapterNEW(final Context mContext, final MensaChoiceItemVo[] mItems) {
         this.mContext = mContext;
         this.mItems = mItems;
     }
@@ -77,7 +78,7 @@ public class MensaSettingsAdapter extends BaseAdapter {
      * Get a View that displays the data at the specified position in the data set. You can either
      * create a View manually or inflate it from an XML layout file. When the View is inflated, the
      * parent View (GridView, ListView...) will apply default layout parameters unless you use
-     * {@link android.view.LayoutInflater#inflate(int, android.view.ViewGroup, boolean)}
+     * {@link LayoutInflater#inflate(int, ViewGroup, boolean)}
      * to specify a root view and to prevent attachment to the root.
      *
      * @param position    The position of the item within the adapter's data set of the item whose view
@@ -100,9 +101,9 @@ public class MensaSettingsAdapter extends BaseAdapter {
         final ViewHolder viewHolder;
         if(convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.item_singlechoice, parent, false);
+            convertView = inflater.inflate(R.layout.item_mensa_choice, parent, false);
 
-            viewHolder.mMensaName = (TextView) convertView.findViewById(android.R.id.text1);
+            viewHolder.mMensaTitle = (TextView) convertView.findViewById(R.id.tv_mensa_choice_item);
 
             convertView.setTag(viewHolder);
         }
@@ -110,7 +111,7 @@ public class MensaSettingsAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.mMensaName.setText(mItems[position].getName());
+        viewHolder.mMensaTitle.setText(mItems[position].getName());
 
         return convertView;
     }

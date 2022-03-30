@@ -23,12 +23,14 @@ import de.fhe.fhemobile.vos.mensa.MensaChoiceItemVo;
 import de.fhe.fhemobile.vos.mensa.MensaFoodItemCollectionVo;
 
 /**
- * Created by paul on 23.01.14.
+ * Created by paul on 23.01.14
+ * Edited by Nadja - 03/2022
  */
-public class MensaFoodModel extends EventDispatcher {
+public class MensaFoodModelNEW extends EventDispatcher {
 
     public static class ChangeEvent extends SimpleEvent {
         public static final String RECEIVED_FOOD_DATA       = "receivedFoodData";
+
         public static final String RECEIVED_EMPTY_FOOD_DATA = "receivedEmptyFoodData";
 
         public static final String RECEIVED_CHOICE_ITEMS    = "receivedChoiceItems";
@@ -36,7 +38,10 @@ public class MensaFoodModel extends EventDispatcher {
         public ChangeEvent(final String type) {
             super(type);
         }
+
     }
+
+    private MensaFoodModelNEW() { }
 
     public MensaFoodItemCollectionVo[] getFoodItems() {
         return mFoodItems;
@@ -60,7 +65,7 @@ public class MensaFoodModel extends EventDispatcher {
         final Integer selectedId = Integer.valueOf(UserSettings.getInstance().getChosenMensaId());
         for(int i = 0; i < mChoiceItems.length; i++) {
             if(selectedId.equals(mChoiceItems[i].getId())) {
-                mSelectedItemPosition = i;
+                mChosenItemPosition = i;
                 break;
             }
         }
@@ -70,34 +75,31 @@ public class MensaFoodModel extends EventDispatcher {
     }
 
     public Integer getSelectedItemPosition() {
-        return mSelectedItemPosition;
+        return mChosenItemPosition;
     }
 
     public void setSelectedItemPosition(final Integer mSelectedItemPosition) {
-        this.mSelectedItemPosition = mSelectedItemPosition;
+        this.mChosenItemPosition = mSelectedItemPosition;
     }
 
-    public static MensaFoodModel getInstance() {
+    public static MensaFoodModelNEW getInstance() {
         if(ourInstance == null) {
-            ourInstance = new MensaFoodModel();
+            ourInstance = new MensaFoodModelNEW();
         }
         return ourInstance;
-    }
-
-    private MensaFoodModel() {
     }
 
     private void notifyChange(final String type) {
         dispatchEvent(new ChangeEvent(type));
     }
 
-    private static final String LOG_TAG = MensaFoodModel.class.getSimpleName();
+    private static final String LOG_TAG = MensaFoodModelNEW.class.getSimpleName();
 
-    private static MensaFoodModel       ourInstance;
+    private static MensaFoodModelNEW ourInstance;
 
     private MensaFoodItemCollectionVo[] mFoodItems;
     private MensaChoiceItemVo[]         mChoiceItems;
 
-    private Integer                     mSelectedItemPosition   = 0;
-    private final String                mSelectedItemName       = "Mensa";
+    private Integer mChosenItemPosition = 0;
+    private final String mChosenItemName = "Mensa";
 }
