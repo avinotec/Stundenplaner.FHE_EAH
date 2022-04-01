@@ -104,7 +104,7 @@ public class AStar {
             openCells.add(startCell);
             //initialize set of closed cells (cells the A* algorithm has processed and removed from openCells)
             closedCells = new ArrayList<>();
-            //set costs of end cell to 0 to force algorithm to "enter" the destination room when reaching a neigboring cell of the room cell
+            //set costs of end cell to 0 to force algorithm to "enter" the destination room when reaching a neighboring cell of the room cell
             Objects.requireNonNull(floorGrids.get(destCell.getComplex()).get(destCell.getFloorInt()))
                     [destCell.getXCoordinate()][destCell.getYCoordinate()]
                     .setCostPassingCell(0);
@@ -131,7 +131,7 @@ public class AStar {
                     cellsToWalk.put(buildingFloorKeyCurrentCell, list);
                 }
             }
-            //do not add destination (and start cell) to walkable cells (displayed with path icon)
+            //do not add destination (and start cell) to walkable cells (bc those get displayed with path icon)
             currentCell = currentCell.getParentCell();
 
             //reconstruct path

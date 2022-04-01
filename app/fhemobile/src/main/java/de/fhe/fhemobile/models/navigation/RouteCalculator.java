@@ -23,7 +23,6 @@ import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_width;
 import static de.fhe.fhemobile.utils.navigation.NavigationUtils.floorIntToString;
 import static de.fhe.fhemobile.utils.navigation.NavigationUtils.getPathToFloorPlanGrid;
 
-import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -51,7 +50,6 @@ public class RouteCalculator {
     private static final String TAG = "RouteCalculator"; //$NON-NLS
 
     //Variables
-    private final Context context;
     private final ArrayList<FloorConnectionVo> floorConnections;
     private final ArrayList<BuildingExitVo> buildingExits;
     private final Cell startLocation;
@@ -65,15 +63,13 @@ public class RouteCalculator {
 
     /**
      * Constructs a new {@link RouteCalculator} object
-     * @param context
      * @param startLocation the start room
      * @param destLocation the destination room
      * @param floorConnections the list of {@link FloorConnectionVo}s
      * @param buildingExits the list of {@link BuildingExitVo}s
      */
-    public RouteCalculator(final Context context, final RoomVo startLocation, final RoomVo destLocation,
+    public RouteCalculator(final RoomVo startLocation, final RoomVo destLocation,
                            final ArrayList<FloorConnectionVo> floorConnections, final ArrayList<BuildingExitVo> buildingExits) {
-        this.context = context;
         this.startLocation = startLocation;
         this.destLocation = destLocation;
         this.floorConnections = floorConnections;
@@ -85,6 +81,9 @@ public class RouteCalculator {
      * @return Sorted Map of all cells at the route
      */
     public LinkedHashMap<BuildingFloorKey, ArrayList<Cell>> getWholeRoute() {
+
+        cellsToWalk.clear();
+        floorGrids.clear();
 
         //Get grids of floors to use - fills in variable floorGrids
         getRequiredFloorGrids();
@@ -223,7 +222,7 @@ public class RouteCalculator {
         try {
             //Get floor plan JSON from assets
             final String filename = getPathToFloorPlanGrid(complex, floor);
-            final String json = JSONHandler.readFloorGridFromAssets(context, filename);
+            final String json = JSONHandler.readFloorGridFromAssets(filename);
             final HashMap<String, Cell> walkableCells = JSONHandler.parseJsonWalkableCells(json);
 
             //fill in rooms

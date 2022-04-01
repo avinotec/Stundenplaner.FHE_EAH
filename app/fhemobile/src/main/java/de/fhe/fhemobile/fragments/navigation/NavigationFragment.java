@@ -193,8 +193,8 @@ public class NavigationFragment extends FeatureFragment {
      */
     private void getRoute() {
         try {
-            final RouteCalculator routeCalculator = new RouteCalculator(getContext(),
-                    mStartRoom, mDestRoom, floorConnections, buildingExits);
+            final RouteCalculator routeCalculator =
+                    new RouteCalculator(mStartRoom, mDestRoom, floorConnections, buildingExits);
             cellsToWalk = routeCalculator.getWholeRoute();
             floorPlanIterator = new FloorPlanIterator(new ArrayList<>(cellsToWalk.keySet()));
 

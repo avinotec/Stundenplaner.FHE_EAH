@@ -19,7 +19,6 @@ package de.fhe.fhemobile.utils.navigation;
 
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.util.Log;
 
 import org.jetbrains.annotations.NonNls;
@@ -69,15 +68,14 @@ public class JSONHandler {
     //reading --------------------------------------------------------------------------------------
     /**
      * Read the floor plan as json from assets
-     * @param context
      * @param jsonFile the file name in assets
      * @return read floor plan as json string
      */
-    public static String readFloorGridFromAssets(final Context context, final String jsonFile){
+    public static String readFloorGridFromAssets(final String jsonFile){
         final StringBuilder text = new StringBuilder();
 
         try {
-            final InputStream input = context.getResources().getAssets().open(jsonFile);
+            final InputStream input = Main.getAppContext().getAssets().open(jsonFile);
 //            final InputStreamReader reader; //$NON-NLS
 //            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
 //                reader = new InputStreamReader(input, StandardCharsets.UTF_8);
@@ -116,8 +114,7 @@ public class JSONHandler {
             /* final InputStream input = context.getResources().getAssets().open(filename); */
             // Wir holen uns hier den Applikationskontext, dann brauchen wir den nicht mehr durchzuschleifen
             final Context application = Main.getAppContext();
-            final AssetManager assets = application.getAssets();
-            final InputStream input = assets.open(filename);
+            final InputStream input = application.getAssets().open(filename);
 
             final InputStreamReader reader = new InputStreamReader(input, StandardCharsets.UTF_8); //$NON-NLS
 
