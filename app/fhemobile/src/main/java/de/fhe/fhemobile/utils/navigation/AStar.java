@@ -122,6 +122,7 @@ public class AStar {
             final BuildingFloorKey buildingFloorKeyCurrentCell = new BuildingFloorKey(currentCell);
             // if destination is exit then add it as cellToWalk
             if(currentCell instanceof BuildingExitVo){
+                //TODO analyzer sagt, die Bedingung wäre IMMER false ???
                 if(cellsToWalk.containsKey(buildingFloorKeyCurrentCell)){
                     cellsToWalk.get(buildingFloorKeyCurrentCell).add(currentCell);
                 }
