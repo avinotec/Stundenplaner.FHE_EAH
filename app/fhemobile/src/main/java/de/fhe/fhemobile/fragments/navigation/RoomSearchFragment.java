@@ -56,6 +56,8 @@ public class RoomSearchFragment extends SearchFragment {
     private String mDestBuilding;
     private String mDestFloor;
 
+    //set items of building picker
+    final static List<BuildingVo> buildings = new ArrayList<>();
 
     /**
      * Use this factory method to create a new instance of
@@ -96,12 +98,14 @@ public class RoomSearchFragment extends SearchFragment {
         mView.initializeView(getChildFragmentManager());
 
         //set items of building picker
-        final List<BuildingVo> buildings = new ArrayList<>();
-        buildings.add(new BuildingVo("01"));
-        buildings.add(new BuildingVo("03"));
-        buildings.add(new BuildingVo("02"));
-        buildings.add(new BuildingVo("04"));
-        buildings.add(new BuildingVo("05"));
+        // cache the values
+        if (buildings.isEmpty()) {
+            buildings.add(new BuildingVo("01"));
+            buildings.add(new BuildingVo("03"));
+            buildings.add(new BuildingVo("02"));
+            buildings.add(new BuildingVo("04"));
+            buildings.add(new BuildingVo("05"));
+        }
         ((RoomSearchView) mView).setBuildingItems(buildings);
     }
 
