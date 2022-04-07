@@ -53,7 +53,7 @@ public class ImpressumView extends FrameLayout {
         mWebView.setWebViewClient(new SSLTolerentWebViewClient(mContext));
         //Ohne JavascriptEnabled laesst sich das Impressum nicht scrollen.
 	    mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.loadUrl(Endpoints.IMPRESSUM_ENDPOINT);
+        mWebView.loadUrl(Endpoints.IMPRINT_ENDPOINT);
         final TextView dataProtection = findViewById(R.id.data_protection_link);
         dataProtection.setMovementMethod(LinkMovementMethod.getInstance());
         final TextView versionText = findViewById(R.id.version_number);

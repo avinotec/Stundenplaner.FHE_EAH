@@ -27,6 +27,7 @@ import de.fhe.fhemobile.vos.news.NewsCategoryResponse;
 import de.fhe.fhemobile.vos.news.NewsItemResponse;
 import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
 import de.fhe.fhemobile.vos.semesterdata.SemesterDataVo;
+import de.fhe.fhemobile.vos.timetable.StudyProgramsResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
 import okhttp3.RequestBody;
@@ -73,15 +74,18 @@ public interface ApiDeclaration {
     @GET(Endpoints.TIMETABLE)
     Call<TimeTableResponse> fetchTimeTable();
 
+    @GET(Endpoints.STUDYPROGRAMS)
+    Call<StudyProgramsResponse> fetchStudyPrograms();
+
     @GET(Endpoints.TIMETABLE_EVENTS)
     Call<ArrayList<TimeTableWeekVo>> fetchTimeTableEvents(@Query(Endpoints.PARAM_TIMETABLE_ID) String _TimeTableId);
 
     @Headers({
             "Content-Type:application/json"
     })
-    @POST( Endpoints.SCHEDULE_CHANGE_SERVER )
+    @POST(Endpoints.SCHEDULE_CHANGE_SERVER)
     Call<ResponseModel> registerTimeTableChanges(@Body RequestBody _json);
 
-    @HTTP(method="GET",path = Endpoints.SCHEDULE_CHANGE_SERVER, hasBody = true)
+    @HTTP(method="GET", path = Endpoints.SCHEDULE_CHANGE_SERVER, hasBody = true)
     Call<ResponseModel> getTimeTableChanges(@Body RequestBody _json);
 }

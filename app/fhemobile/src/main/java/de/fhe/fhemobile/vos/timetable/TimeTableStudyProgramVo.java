@@ -83,13 +83,13 @@ public class TimeTableStudyProgramVo implements Parcelable {
     static final String MASTER_AFTER =": M";
 
     public static void alterTitle(final List<TimeTableStudyProgramVo> list){
-        for (final TimeTableStudyProgramVo semester:list){
-            Log.d(TAG, "alterTitle: "+ semester.getTitle());
-            if(semester.getTitle().contains(BACHELOR_BEFORE)){
-                semester.setTitle(semester.getTitle().replace(BACHELOR_BEFORE,"")+BACHELOR_AFTER);
+        for (final TimeTableStudyProgramVo studyProgram : list){
+            Log.d(TAG, "alterTitle: "+ studyProgram.getTitle());
+            if(studyProgram.getTitle().contains(BACHELOR_BEFORE)){
+                studyProgram.setTitle(studyProgram.getTitle().replace(BACHELOR_BEFORE,"")+BACHELOR_AFTER);
             }
-            else if(semester.getTitle().contains(MASTER_BEFORE)){
-                semester.setTitle(semester.getTitle().replace(MASTER_BEFORE,"")+MASTER_AFTER);
+            else if(studyProgram.getTitle().contains(MASTER_BEFORE)){
+                studyProgram.setTitle(studyProgram.getTitle().replace(MASTER_BEFORE,"")+MASTER_AFTER);
             }
 //            else {
 //                //nothing

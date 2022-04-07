@@ -27,10 +27,11 @@ public class Endpoints {
     //public static final String SIMON_LOCAL_URL      = "http://10.12.24.58:8000";
 
     public static final String BASE_URL             = LIVE_URL;
+    public static final String BASE_URL_EAH         = "https://stundenplanung.eah-jena.de/";
     public static final String APP_NAME             = "/fheapp/";
 
     //TODO
-    public static final String IMPRESSUM_ENDPOINT = "https://www.eah-jena.de/impressum"; //URL fixed - Nadja 3.9.21
+    public static final String IMPRINT_ENDPOINT = "https://www.eah-jena.de/impressum"; //URL fixed - Nadja 3.9.21
     //Links for displaying as WebViews - Nadja 6.9.21
     public static final String NEWS_ENDPOINT = "https://www.eah-jena.de/hochschule/nachrichten";
     public static final String SEMESTERDATA_ENDPOINT = "https://www.eah-jena.de/hochschule/semestertermine";
@@ -52,18 +53,20 @@ public class Endpoints {
     * */
 
     // ---------------------------------------------------------------------------------------------
-    //                                           Enpoints
+    //                                           Endpoints
     // ---------------------------------------------------------------------------------------------
 
     public static final String RSS                  = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/news";
     public static final String MENSA                = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/canteens";
-    public static final String SEMESTER             = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/semester"; //Semestertermine
-    public static final String PHONEBOOK            = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/persons";  //funktioniert nicht
+    public static final String SEMESTER             = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/semester"; //semester dates
+    public static final String PHONEBOOK            = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/persons";  //not working
     //public static final String IMPRESSUM            = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/impress";
     public static final String WEATHER              = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/weather";
     public static final String AQUA                 = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/aqua";
     public static final String TIMETABLE            = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/timetable";
     public static final String TIMETABLE_EVENTS     = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/timetable/events";
+    public static final String STUDYPROGRAMS        = "api/v1/current/stglist";
+
 
     // ---------------------------------------------------------------------------------------------
     //                                          Parameters

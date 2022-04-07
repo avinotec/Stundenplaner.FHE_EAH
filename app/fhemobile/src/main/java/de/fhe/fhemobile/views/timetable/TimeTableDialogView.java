@@ -30,12 +30,15 @@ import java.util.List;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.comparator.StudyProgramComparator;
+import de.fhe.fhemobile.comparator.StudyProgramComparator2;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo2;
 import de.fhe.fhemobile.widgets.picker.StudyProgramPicker;
 import de.fhe.fhemobile.widgets.picker.StudyGroupPicker;
 import de.fhe.fhemobile.widgets.picker.SemesterPicker;
+import de.fhe.fhemobile.widgets.picker.StudyProgramPicker2;
 import de.fhe.fhemobile.widgets.picker.base.OnItemChosenListener;
 
 /**
@@ -57,9 +60,9 @@ public class TimeTableDialogView extends LinearLayout {
 
     public void initializeView(final FragmentManager _Manager) {
 
-        mStudyProgramPicker.setFragmentManager(_Manager);
-        mStudyProgramPicker.toggleEnabled(false);
-        mStudyProgramPicker.setOnItemChosenListener(mCourseListener);
+        mStudyProgramPicker2.setFragmentManager(_Manager);
+        mStudyProgramPicker2.toggleEnabled(false);
+        mStudyProgramPicker2.setOnItemChosenListener(mCourseListener);
 
         mSemesterPicker.setFragmentManager(_Manager);
         mSemesterPicker.toggleEnabled(false);
@@ -73,11 +76,18 @@ public class TimeTableDialogView extends LinearLayout {
         toggleButtonEnabled(false);
     }
 
+    /* OLD: version for working with OPML and API from FH Erfurt
     public void setStudyCourseItems(final List<TimeTableStudyProgramVo> _Items) {
         TimeTableStudyProgramVo.alterTitle(_Items);
         Collections.sort(_Items, new StudyProgramComparator());
         mStudyProgramPicker.setItems(_Items);
         mStudyProgramPicker.toggleEnabled(true);
+    }*/
+
+    public void setStudyCourseItems(final List<TimeTableStudyProgramVo2> _Items) {
+        Collections.sort(_Items, new StudyProgramComparator2());
+        mStudyProgramPicker2.setItems(_Items);
+        mStudyProgramPicker2.toggleEnabled(true);
     }
 
     public void setSemesterItems(final List<TimeTableSemesterVo> _Items) {
@@ -126,8 +136,8 @@ public class TimeTableDialogView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        //Studiengang
-        mStudyProgramPicker = (StudyProgramPicker) findViewById(R.id.timetableStudyCoursePicker);
+        //Study Program
+        mStudyProgramPicker2 = (StudyProgramPicker2) findViewById(R.id.timetableStudyCoursePicker);
         //Semester
         mSemesterPicker    = (SemesterPicker)    findViewById(R.id.timetableSemesterPicker);
         //Set
@@ -184,7 +194,7 @@ public class TimeTableDialogView extends LinearLayout {
 
     private IViewListener     mViewListener;
 
-    private StudyProgramPicker mStudyProgramPicker;
+    private StudyProgramPicker2 mStudyProgramPicker2;
     private SemesterPicker      mSemesterPicker;
     private StudyGroupPicker    mStudyGroupPicker;
 

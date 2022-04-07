@@ -46,6 +46,7 @@ import de.fhe.fhemobile.vos.news.NewsItemResponse;
 import de.fhe.fhemobile.vos.news.NewsItemVo;
 import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
 import de.fhe.fhemobile.vos.semesterdata.SemesterDataVo;
+import de.fhe.fhemobile.vos.timetable.StudyProgramsResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
 import okhttp3.MediaType;
@@ -66,7 +67,9 @@ public class NetworkHandler {
 	private static final NetworkHandler ourInstance = new NetworkHandler();
 
 	private Retrofit mRestAdapter = null;
-	private ApiDeclaration  mApi = null;
+	private Retrofit mRestAdapterEah = null;
+	private ApiDeclaration mApi = null;
+	private ApiDeclaration mApiEah = null;
 
 	/**
 	 *
@@ -345,6 +348,12 @@ public class NetworkHandler {
 		mApi.fetchWeather().enqueue(_Callback);
 	}
 
+	public void fetchStudyPrograms(final Callback<StudyProgramsResponse> _Callback){
+		Assert.assertTrue(mApi != null);
+
+		mApiEah.fetchStudyPrograms().enqueue(_Callback);
+	}
+
 	/**
 	 *
 	 * @param _Callback
@@ -363,7 +372,8 @@ public class NetworkHandler {
 	public void fetchTimeTableEvents(final String _TimeTableId, final Callback<ArrayList<TimeTableWeekVo>> _Callback) {
 		Assert.assertTrue( mApi != null );
 
-		mApi.fetchTimeTableEvents(_TimeTableId).enqueue(_Callback);
+		//mApi.fetchTimeTableEvents(_TimeTableId).enqueue(_Callback);
+		mApiEah.fetchTimeTableEvents(_TimeTableId).enqueue(_Callback);
 	}
 
 	public List<MyTimeTableCourseComponent> reloadEvents(final MyTimeTableCourseComponent event) {
@@ -450,6 +460,8 @@ public class NetworkHandler {
 	private NetworkHandler() {
 		Assert.assertTrue( mApi == null );
 		Assert.assertTrue( mRestAdapter == null );
+		Assert.assertTrue( mApiEah == null );
+		Assert.assertTrue( mRestAdapterEah == null );
 
 		final Gson gson = new GsonBuilder()
 				.setDateFormat("HH:mm:ss'T'yyyy-MM-dd")
@@ -461,10 +473,19 @@ public class NetworkHandler {
 				//.setConverter(new GsonConverter(gson))
 //                .setLogLevel(RestAdapter.LogLevel.FULL)
 				.build();
+		mRestAdapterEah = new Retrofit.Builder()
+				.baseUrl(Endpoints.BASE_URL_EAH)
+				.addConverterFactory(GsonConverterFactory.create(gson))
+				//.setConverter(new GsonConverter(gson))
+//                .setLogLevel(RestAdapter.LogLevel.FULL)
+				.build();
 
 		mApi = mRestAdapter.create(ApiDeclaration.class);
+		mApiEah = mRestAdapterEah.create(ApiDeclaration.class);
 		Assert.assertTrue( mApi != null );
 		Assert.assertTrue( mRestAdapter != null );
+		Assert.assertTrue( mApiEah != null );
+		Assert.assertTrue( mRestAdapterEah != null );
 
 	}
 

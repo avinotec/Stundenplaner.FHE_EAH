@@ -32,6 +32,7 @@ import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.timetable.TimeTableSettings;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.timetable.TimeTableDialogView;
+import de.fhe.fhemobile.vos.timetable.StudyProgramsResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
@@ -89,7 +90,10 @@ public class TimeTableDialogFragment extends FeatureFragment {
     @Override
     public void onResume() {
         super.onResume();
-        NetworkHandler.getInstance().fetchTimeTable(mTimeTableResponseCallback);
+        /*OLD: version for working with OPML and API from FH Erfurt
+        NetworkHandler.getInstance().fetchTimeTable(mTimeTableResponseCallback);*/
+
+        NetworkHandler.getInstance().fetchStudyPrograms(mStudyProgramsCallback);
     }
 
     private void proceedToTimetable(final String _TimeTableId) {
@@ -184,6 +188,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
         }
     };
 
+    /* OLD: version for working with OPML and API from FH Erfurt
     private final Callback<TimeTableResponse> mTimeTableResponseCallback = new Callback<TimeTableResponse>() {
         @Override
         public void onResponse(final Call<TimeTableResponse> call, final Response<TimeTableResponse> response) {
@@ -195,6 +200,21 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
         @Override
         public void onFailure(final Call<TimeTableResponse> call, Throwable t) {
+
+        }
+    };*/
+
+    private final Callback<StudyProgramsResponse> mStudyProgramsCallback = new Callback<StudyProgramsResponse>() {
+        @Override
+        public void onResponse(Call<StudyProgramsResponse> call, Response<StudyProgramsResponse> response) {
+            if(response.body() != null){
+
+                mView.setStudyCourseItems(response.body().getFilteredStudyPrograms());
+            }
+        }
+
+        @Override
+        public void onFailure(Call<StudyProgramsResponse> call, Throwable t) {
 
         }
     };
