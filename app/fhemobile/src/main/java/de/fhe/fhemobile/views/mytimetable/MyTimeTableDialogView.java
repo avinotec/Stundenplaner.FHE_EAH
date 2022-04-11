@@ -80,7 +80,7 @@ public class MyTimeTableDialogView extends LinearLayout {
 
 
     public void setStudyProgramItems(final List<TimeTableStudyProgramVo> _Items) {
-        TimeTableStudyProgramVo.alterTitle(_Items);
+        //TimeTableStudyProgramVo.alterTitle(_Items);
         Collections.sort(_Items, new StudyProgramComparator());
         mStudyProgramPicker.setItems(_Items);
         mStudyProgramPicker.toggleEnabled(true);

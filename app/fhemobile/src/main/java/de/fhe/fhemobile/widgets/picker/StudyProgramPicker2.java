@@ -23,9 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 import de.fhe.fhemobile.comparator.StudyProgramComparator;
-import de.fhe.fhemobile.comparator.StudyProgramComparator2;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo2;
 import de.fhe.fhemobile.widgets.picker.base.IdPicker;
 
 /**
@@ -37,8 +35,8 @@ public class StudyProgramPicker2 extends IdPicker {
         super(context, attrs);
     }
 
-    public void setItems(List<TimeTableStudyProgramVo2> _Items) {
-        Collections.sort(_Items, new StudyProgramComparator2());
+    public void setItems(List<TimeTableStudyProgramVo> _Items) {
+        Collections.sort(_Items, new StudyProgramComparator());
         mItems = _Items;
         if (mItems == null) {
             throw new AssertionError("StudyCourse items cannot be null!");
@@ -52,7 +50,7 @@ public class StudyProgramPicker2 extends IdPicker {
 
     @Override
     protected String getName(int _Position) {
-        return mItems.get(_Position).getTitleAndDegree();
+        return mItems.get(_Position).getLongTitle();
     }
 
     @Override
@@ -61,5 +59,5 @@ public class StudyProgramPicker2 extends IdPicker {
     }
 
 
-    private List<TimeTableStudyProgramVo2> mItems;
+    private List<TimeTableStudyProgramVo> mItems;
 }

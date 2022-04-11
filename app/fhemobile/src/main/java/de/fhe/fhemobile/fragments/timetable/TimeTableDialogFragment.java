@@ -19,6 +19,7 @@ package de.fhe.fhemobile.fragments.timetable;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,6 @@ import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.timetable.TimeTableSettings;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.timetable.TimeTableDialogView;
-import de.fhe.fhemobile.vos.timetable.StudyProgramsResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
@@ -73,7 +73,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
         mChosenCourse       = null;
         mChosenSemester     = null;
-        mChosenTimetableId  = null;
+        mChosenStudyGroup = null;
     }
 
     @Override
@@ -90,10 +90,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
     @Override
     public void onResume() {
         super.onResume();
-        /*OLD: version for working with OPML and API from FH Erfurt
-        NetworkHandler.getInstance().fetchTimeTable(mTimeTableResponseCallback);*/
-
-        NetworkHandler.getInstance().fetchStudyPrograms(mStudyProgramsCallback);
+        NetworkHandler.getInstance().fetchTimeTable(mTimeTableResponseCallback);
     }
 
     private void proceedToTimetable(final String _TimeTableId) {
@@ -114,7 +111,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
             boolean errorOccurred = false;
 
-            for (TimeTableStudyProgramVo courseVo : mResponse.getStudyPrograms()) {
+            for (TimeTableStudyProgramVo courseVo : mResponse.getStudyProgramsAsList()) {
                 if (courseVo.getId() != null && courseVo.getId().equals(_StudyCourseId)) {
                     mChosenCourse = courseVo;
 
@@ -153,7 +150,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
             mChosenSemester = null;
 
             for (final TimeTableSemesterVo timeTableSemesterVo : mChosenCourse.getSemesters()) {
-                if (timeTableSemesterVo.getId().equals(_SemesterId)) {
+                if (Integer.toString(timeTableSemesterVo.getNumber()).equals(_SemesterId)) {
                     mChosenSemester = timeTableSemesterVo;
                     mView.setStudyGroupItems(timeTableSemesterVo.getStudyGroups());
                 }
@@ -167,20 +164,20 @@ public class TimeTableDialogFragment extends FeatureFragment {
         @Override
         public void onGroupChosen(String _TimeTableId) {
             mView.toggleButtonEnabled(true);
-            mChosenTimetableId = _TimeTableId;
+            mChosenStudyGroup = _TimeTableId;
         }
 
         @Override
         public void onSearchClicked() {
-            if (mChosenTimetableId != null) {
+            if (mChosenStudyGroup != null) {
                 if (mView.isRememberActivated()) {
-                    TimeTableSettings.saveTimeTableSelection(mChosenTimetableId);
+                    TimeTableSettings.saveTimeTableSelection(mChosenStudyGroup);
                 }
-                proceedToTimetable(mChosenTimetableId);
+                proceedToTimetable(mChosenStudyGroup);
 
-                mChosenTimetableId = null;
                 mChosenCourse = null;
                 mChosenSemester = null;
+                mChosenStudyGroup = null;
             }
             else {
                 Utils.showToast(R.string.timetable_error_incomplete);
@@ -188,41 +185,26 @@ public class TimeTableDialogFragment extends FeatureFragment {
         }
     };
 
-    /* OLD: version for working with OPML and API from FH Erfurt
+
     private final Callback<TimeTableResponse> mTimeTableResponseCallback = new Callback<TimeTableResponse>() {
         @Override
         public void onResponse(final Call<TimeTableResponse> call, final Response<TimeTableResponse> response) {
             if ( response.body() != null ) {
                 mResponse = response.body();
-                mView.setStudyCourseItems(response.body().getStudyPrograms());
+                mView.setStudyCourseItems(response.body().getStudyProgramsAsList());
             }
         }
 
         @Override
         public void onFailure(final Call<TimeTableResponse> call, Throwable t) {
-
-        }
-    };*/
-
-    private final Callback<StudyProgramsResponse> mStudyProgramsCallback = new Callback<StudyProgramsResponse>() {
-        @Override
-        public void onResponse(Call<StudyProgramsResponse> call, Response<StudyProgramsResponse> response) {
-            if(response.body() != null){
-
-                mView.setStudyCourseItems(response.body().getFilteredStudyPrograms());
-            }
-        }
-
-        @Override
-        public void onFailure(Call<StudyProgramsResponse> call, Throwable t) {
-
+            Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
         }
     };
 
     private TimeTableDialogView mView;
 
-    private TimeTableResponse mResponse;
+    private TimeTableResponse       mResponse;
     private TimeTableStudyProgramVo mChosenCourse;
-    private TimeTableSemesterVo mChosenSemester;
-    private String            mChosenTimetableId;
+    private TimeTableSemesterVo     mChosenSemester;
+    private String                  mChosenStudyGroup;
 }

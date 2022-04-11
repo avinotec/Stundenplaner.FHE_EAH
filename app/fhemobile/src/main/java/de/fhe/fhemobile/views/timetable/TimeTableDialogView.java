@@ -25,17 +25,15 @@ import android.widget.LinearLayout;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.FragmentManager;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.comparator.StudyProgramComparator;
-import de.fhe.fhemobile.comparator.StudyProgramComparator2;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo2;
-import de.fhe.fhemobile.widgets.picker.StudyProgramPicker;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
 import de.fhe.fhemobile.widgets.picker.StudyGroupPicker;
 import de.fhe.fhemobile.widgets.picker.SemesterPicker;
 import de.fhe.fhemobile.widgets.picker.StudyProgramPicker2;
@@ -84,8 +82,8 @@ public class TimeTableDialogView extends LinearLayout {
         mStudyProgramPicker.toggleEnabled(true);
     }*/
 
-    public void setStudyCourseItems(final List<TimeTableStudyProgramVo2> _Items) {
-        Collections.sort(_Items, new StudyProgramComparator2());
+    public void setStudyCourseItems(final ArrayList<TimeTableStudyProgramVo> _Items) {
+        Collections.sort(_Items, new StudyProgramComparator());
         mStudyProgramPicker2.setItems(_Items);
         mStudyProgramPicker2.toggleEnabled(true);
     }

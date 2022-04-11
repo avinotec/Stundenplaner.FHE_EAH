@@ -86,7 +86,7 @@ public class MyTimeTableCourseComponent implements Parcelable {
 		//this.studyProgram = studyProgram; //currently not used - Nadja 02/2022
 		//this.semester = semester; //currently not used - Nadja 02/2022
 		events.add(event);
-		studyGroups.add(studyGroup.getShortTitle());
+		studyGroups.add(studyGroup.getNumber());
 
 		checkAndSetSubscribed();
 	}
@@ -131,7 +131,7 @@ public class MyTimeTableCourseComponent implements Parcelable {
 	public void setStudyGroups(final List<String> studyGroups) { this.studyGroups = studyGroups; }
 
 	public void addStudyGroup(final TimeTableStudyGroupVo studyGroup) {
-		this.studyGroups.add(studyGroup.getShortTitle());
+		this.studyGroups.add(studyGroup.getNumber());
 	}
 
 	public final int getId() {

@@ -174,7 +174,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                             //allCoursesInChosenSemester already contains the course the event belongs to
                             else {
                                 //if needed, add studyGroup to study group list
-                                if (!alreadyExistingCourse.getStudyGroups().contains(studyGroup.getShortTitle())){
+                                if (!alreadyExistingCourse.getStudyGroups().contains(studyGroup.getNumber())){
                                     alreadyExistingCourse.addStudyGroup(studyGroup);
                                 }
                                 //if needed, add event to course
@@ -228,7 +228,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
             boolean studyProgramEmpty = true;
 
-            for (final TimeTableStudyProgramVo studyProgram : mResponse.getStudyPrograms()) {
+            for (final TimeTableStudyProgramVo studyProgram : mResponse.getStudyProgramsAsList()) {
                 if (studyProgram != null && studyProgram.getId() != null && studyProgram.getId().equals(_StudyProgramId)) {
 
                     mChosenStudyProgram = studyProgram;
@@ -277,7 +277,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
             for (TimeTableSemesterVo semester : mChosenStudyProgram.getSemesters()) {
 
-                if (semester.getId().equals(_SemesterId)) {
+                if (Integer.toString(semester.getNumber()).equals(_SemesterId)) {
 
                     //set chosen semester
                     mChosenSemester = semester;
@@ -327,7 +327,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                     }
                                 };
 
-                        NetworkHandler.getInstance().fetchTimeTableEvents(timeTableStudyGroupVo.getTimeTableId(), callback);
+                        NetworkHandler.getInstance().fetchTimeTableEvents(timeTableStudyGroupVo.getStudyGroupId(), callback);
                         requestCounter++;
                     }
                 }
@@ -344,7 +344,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                 //store the response, to work on later
                 mResponse = response.body();
 
-                mView.setStudyProgramItems(mResponse.getStudyPrograms());
+                mView.setStudyProgramItems(mResponse.getStudyProgramsAsList());
                 mView.toggleProgressIndicatorVisibility(false);
             }
         }

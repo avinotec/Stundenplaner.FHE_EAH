@@ -47,7 +47,7 @@ public class StudyProgramPicker extends IdPicker {
 
     @Override
     protected String getName(int _Position) {
-        return mItems.get(_Position).getTitle();
+        return mItems.get(_Position).getLongTitle();
     }
 
     @Override
