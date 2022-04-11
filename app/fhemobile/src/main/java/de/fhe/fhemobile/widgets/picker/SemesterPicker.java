@@ -42,7 +42,7 @@ public class SemesterPicker extends IdPicker {
 
     @Override
     protected String getId(final int _Position) {
-        return Integer.toString(mItems.get(_Position).getNumber());
+        return mItems.get(_Position).getNumber();
     }
 
     @Override

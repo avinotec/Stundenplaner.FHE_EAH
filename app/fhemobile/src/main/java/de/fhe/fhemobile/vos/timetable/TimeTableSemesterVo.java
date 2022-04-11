@@ -39,7 +39,7 @@ public class TimeTableSemesterVo implements Parcelable {
     }
 
     protected TimeTableSemesterVo(final Parcel in) {
-        mNumber = in.readInt();
+        mNumber = in.readString();
         mTitle = correctUmlauts(in.readString());
         mStudyGroups = in.createTypedArrayList(TimeTableStudyGroupVo.CREATOR);
     }
@@ -56,11 +56,11 @@ public class TimeTableSemesterVo implements Parcelable {
         }
     };
 
-    public int getNumber() {
+    public String getNumber() {
         return mNumber;
     }
 
-    public void setId(final int _id) {
+    public void setId(final String _id) {
         mNumber = _id;
     }
 
@@ -83,14 +83,14 @@ public class TimeTableSemesterVo implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeInt(mNumber);
+        dest.writeString(mNumber);
         dest.writeString(mTitle);
         dest.writeTypedList(mStudyGroups);
     }
 
 
     @SerializedName("posNumber")
-    private int mNumber;
+    private String mNumber;
 
     @SerializedName("posName")
     private String mTitle;

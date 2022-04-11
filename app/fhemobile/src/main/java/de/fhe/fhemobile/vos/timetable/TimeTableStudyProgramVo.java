@@ -16,19 +16,13 @@
  */
 package de.fhe.fhemobile.vos.timetable;
 
-import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
-
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -80,31 +74,22 @@ public class TimeTableStudyProgramVo implements Parcelable {
         return mLongTitle;
     }
 
-    public ArrayList<TimeTableSemesterVo> getSemesters() {
+    public ArrayList<TimeTableSemesterVo> getSemestersAsList() {
         return new ArrayList(mSemesters.values());
     }
 
+    public Map<String, TimeTableSemesterVo> getSemesters() {
+        return mSemesters;
+    }
 
-    static final String BACHELOR_BEFORE="Bachelor: ";
-    static final String BACHELOR_AFTER=": B";
-    static final String MASTER_BEFORE ="Master: ";
-    static final String MASTER_AFTER =": M";
 
-//    public static void alterTitle(final List<TimeTableStudyProgramVo> list){
-//        for (final TimeTableStudyProgramVo studyProgram : list){
-//            Log.d(TAG, "alterTitle: "+ studyProgram.getTitle());
-//            if(studyProgram.getTitle().contains(BACHELOR_BEFORE)){
-//                studyProgram.setTitle(studyProgram.getTitle().replace(BACHELOR_BEFORE,"")+BACHELOR_AFTER);
-//            }
-//            else if(studyProgram.getTitle().contains(MASTER_BEFORE)){
-//                studyProgram.setTitle(studyProgram.getTitle().replace(MASTER_BEFORE,"")+MASTER_AFTER);
-//            }
-////            else {
-////                //nothing
-////            }
-//        }
-//
-//    }
+    static final String DEGREE_BACHELOR ="Bachelor";
+    static final String DEGREE_MASTER ="Master";
+
+    public String getTitleAndDegree(){
+        return mLongTitle + " (" + mDegree + ")";
+
+    }
 
     @Override
     public int describeContents() {

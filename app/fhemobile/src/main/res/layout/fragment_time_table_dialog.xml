@@ -47,8 +47,8 @@
                     android:textSize="@dimen/timetable_headline_textsize"
                     />
 
-                <de.fhe.fhemobile.widgets.picker.StudyProgramPicker2
-                    android:id="@+id/timetableStudyCoursePicker"
+                <de.fhe.fhemobile.widgets.picker.StudyProgramPicker
+                    android:id="@+id/picker_timetable_studyprogram"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/list_single_item_height"
@@ -56,7 +56,7 @@
                     />
 
                 <de.fhe.fhemobile.widgets.picker.SemesterPicker
-                    android:id="@+id/timetableSemesterPicker"
+                    android:id="@+id/picker_timetable_semester"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/list_single_item_height"
@@ -65,7 +65,7 @@
                     />
 
                 <de.fhe.fhemobile.widgets.picker.StudyGroupPicker
-                    android:id="@+id/timetableStudyGroupPicker"
+                    android:id="@+id/picker_timetable_studygroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/list_single_item_height"
@@ -74,7 +74,7 @@
                     />
 
                 <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/timetableRememberSelection"
+                    android:id="@+id/btn_timetable_savechoice"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:gravity="center_vertical"
@@ -84,7 +84,7 @@
                     />
 
                 <Button
-                    android:id="@+id/timetableSearchButton"
+                    android:id="@+id/btn_timetable_search"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="30dp"

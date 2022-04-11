@@ -31,9 +31,12 @@ import android.view.ViewGroup;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import org.junit.Assert;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableDialogAdapter;
@@ -238,7 +241,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                         studyProgramEmpty = false;
 
                         //set items of semester picker
-                        mView.setSemesterItems(studyProgram.getSemesters());
+                        mView.setSemesterItems(studyProgram.getSemestersAsList());
                     }
                     // No terms are available
                     else {
@@ -275,63 +278,65 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
             mChosenSemester = null;
 
-            for (TimeTableSemesterVo semester : mChosenStudyProgram.getSemesters()) {
+            Map<String, TimeTableSemesterVo> semesters = mChosenStudyProgram.getSemesters();
+            if (semesters.containsKey(_SemesterId)) {
 
-                if (Integer.toString(semester.getNumber()).equals(_SemesterId)) {
+                //set chosen semester
+                mChosenSemester = semesters.get(_SemesterId);
 
-                    //set chosen semester
-                    mChosenSemester = semester;
+                //get timetable (all courses/events) for each study group in the chosen semester
+                Assert.assertTrue(mChosenSemester != null);
+                for (TimeTableStudyGroupVo timeTableStudyGroupVo : mChosenSemester.getStudyGroups()) {
 
-                    //get timetable (all courses/events) for each study group in the chosen semester
-                    for (TimeTableStudyGroupVo timeTableStudyGroupVo : mChosenSemester.getStudyGroups()) {
+                    //get timetable of the timeTableStudyGroupVo
+                    MyTimeTableCallback<ArrayList<TimeTableWeekVo>> callback =
+                            new MyTimeTableCallback<ArrayList<TimeTableWeekVo>>(mChosenStudyProgram, mChosenSemester, timeTableStudyGroupVo) {
 
-                        //get timetable of the timeTableStudyGroupVo
-                        MyTimeTableCallback<ArrayList<TimeTableWeekVo>> callback =
-                                new MyTimeTableCallback<ArrayList<TimeTableWeekVo>>(mChosenStudyProgram, mChosenSemester, timeTableStudyGroupVo) {
+                                @Override
+                                public void onResponse(Call<ArrayList<TimeTableWeekVo>> call,
+                                                       Response<ArrayList<TimeTableWeekVo>> response) {
+                                    super.onResponse(call, response);
 
-                                    @Override
-                                    public void onResponse(Call<ArrayList<TimeTableWeekVo>> call,
-                                                           Response<ArrayList<TimeTableWeekVo>> response) {
-                                        super.onResponse(call, response);
+                                    if(response.code() >= 200) {
+                                        //week-wise timetables of the remaining semester for the current studyGroup in the for-loop
+                                        List<TimeTableWeekVo> timeTableWeek = response.body();
 
-                                        if(response.code() >= 200) {
-                                            //week-wise timetables of the remaining semester for the current studyGroup in the for-loop
-                                            List<TimeTableWeekVo> timeTableWeek = response.body();
-
-                                            //add all time table events of the remaining semester (= list of timetableWeeks)
-                                            // to the list of allCoursesInChosenSemester
-                                            addToAllCoursesInChosenSemester(timeTableWeek, this.getStudyGroup());
+                                        //add all time table events of the remaining semester (= list of timetableWeeks)
+                                        // to the list of allCoursesInChosenSemester
+                                        addToAllCoursesInChosenSemester(timeTableWeek, this.getStudyGroup());
 
 
-                                            // es gibt zu jedem Request unterschiedliche Anzahl von Anforderungen und Antworten
-                                            // wir warten, bis alle Antworten eingetroffen sind.
-                                            //Wir sortieren diesen letzten Stand der Liste
-                                            //Wichtig: --requestCounter nicht requestCounter--! Hier muss erst decrementiert werden und dann der vergleich stattfinden.
-                                            if (--requestCounter <= 0) {
+                                        // es gibt zu jedem Request unterschiedliche Anzahl von Anforderungen und Antworten
+                                        // wir warten, bis alle Antworten eingetroffen sind.
+                                        //Wir sortieren diesen letzten Stand der Liste
+                                        //Wichtig: --requestCounter nicht requestCounter--! Hier muss erst decrementiert werden und dann der vergleich stattfinden.
+                                        if (--requestCounter <= 0) {
 
-                                                Collections.sort(allCoursesInChosenSemester, new CourseTitleComparator());
+                                            Collections.sort(allCoursesInChosenSemester, new CourseTitleComparator());
 
-                                                mView.toggleCourseListVisibility(true);
-                                                mCourseListAdapter.setItems(allCoursesInChosenSemester);
-                                                mCourseListAdapter.notifyDataSetChanged();
-                                                mView.setCourseListAdapter(mCourseListAdapter);
+                                            mView.toggleCourseListVisibility(true);
+                                            mCourseListAdapter.setItems(allCoursesInChosenSemester);
+                                            mCourseListAdapter.notifyDataSetChanged();
+                                            mView.setCourseListAdapter(mCourseListAdapter);
 
-                                            }
                                         }
-
                                     }
 
-                                    @Override
-                                    public void onFailure(Call<ArrayList<TimeTableWeekVo>> call, Throwable t) {
-                                        super.onFailure(call, t);
-                                    }
-                                };
+                                }
 
-                        NetworkHandler.getInstance().fetchTimeTableEvents(timeTableStudyGroupVo.getStudyGroupId(), callback);
-                        requestCounter++;
-                    }
+                                @Override
+                                public void onFailure(Call<ArrayList<TimeTableWeekVo>> call, Throwable t) {
+                                    super.onFailure(call, t);
+                                }
+                            };
+
+                    NetworkHandler.getInstance().fetchTimeTableEvents(timeTableStudyGroupVo.getStudyGroupId(), callback);
+                    requestCounter++;
                 }
+
             }
+
+
         }
 
     };

@@ -26,6 +26,8 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import java.util.Map;
+
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
@@ -71,7 +73,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mChosenCourse       = null;
+        mChosenStudyProgram = null;
         mChosenSemester     = null;
         mChosenStudyGroup = null;
     }
@@ -100,34 +102,28 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
     private final TimeTableDialogView.IViewListener mViewListener = new TimeTableDialogView.IViewListener() {
         @Override
-        public void onStudyProgramChosen(String _StudyCourseId) {
+        public void onStudyProgramChosen(String _StudyProgramId) {
             mView.toggleGroupsPickerVisibility(false);
             mView.toggleButtonEnabled(false);
             mView.resetSemesterPicker();
             mView.resetGroupsPicker();
 
-            mChosenCourse = null;
+            mChosenStudyProgram = null;
             mChosenSemester = null;
 
             boolean errorOccurred = false;
+            Map<String, TimeTableStudyProgramVo> studyPrograms = mResponse.getStudyPrograms();
 
-            for (TimeTableStudyProgramVo courseVo : mResponse.getStudyProgramsAsList()) {
-                if (courseVo.getId() != null && courseVo.getId().equals(_StudyCourseId)) {
-                    mChosenCourse = courseVo;
+            if (studyPrograms.containsKey(_StudyProgramId)) {
+                mChosenStudyProgram = studyPrograms.get(_StudyProgramId);
 
-                    // Check if course has any terms available
-                    if (courseVo.getSemesters() != null) {
-                        errorOccurred = false;
-                        mView.setSemesterItems(courseVo.getSemesters());
-                    }
-                    else {
-                        // No terms are available
-                        errorOccurred = true;
-                    }
-                    break;
+                // Check if study program has any semesters
+                if (mChosenStudyProgram.getSemestersAsList() != null) {
+                    errorOccurred = false;
+                    mView.setSemesterItems(mChosenStudyProgram.getSemestersAsList());
                 }
                 else {
-                    // No Id is available
+                    // No semesters in this study program
                     errorOccurred = true;
                 }
             }
@@ -149,11 +145,10 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
             mChosenSemester = null;
 
-            for (final TimeTableSemesterVo timeTableSemesterVo : mChosenCourse.getSemesters()) {
-                if (Integer.toString(timeTableSemesterVo.getNumber()).equals(_SemesterId)) {
-                    mChosenSemester = timeTableSemesterVo;
-                    mView.setStudyGroupItems(timeTableSemesterVo.getStudyGroups());
-                }
+            Map<String, TimeTableSemesterVo> semesters = mChosenStudyProgram.getSemesters();
+            if(semesters.containsKey(_SemesterId)) {
+                mChosenSemester = semesters.get(_SemesterId);
+                mView.setStudyGroupItems(mChosenSemester.getStudyGroups());
             }
         }
 
@@ -162,7 +157,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
          * @param _TimeTableId
          */
         @Override
-        public void onGroupChosen(String _TimeTableId) {
+        public void onStudyGroupChosen(String _TimeTableId) {
             mView.toggleButtonEnabled(true);
             mChosenStudyGroup = _TimeTableId;
         }
@@ -175,7 +170,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
                 }
                 proceedToTimetable(mChosenStudyGroup);
 
-                mChosenCourse = null;
+                mChosenStudyProgram = null;
                 mChosenSemester = null;
                 mChosenStudyGroup = null;
             }
@@ -204,7 +199,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
     private TimeTableDialogView mView;
 
     private TimeTableResponse       mResponse;
-    private TimeTableStudyProgramVo mChosenCourse;
+    private TimeTableStudyProgramVo mChosenStudyProgram;
     private TimeTableSemesterVo     mChosenSemester;
     private String                  mChosenStudyGroup;
 }
