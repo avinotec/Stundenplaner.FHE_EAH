@@ -25,7 +25,8 @@ import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
 import de.fhe.fhemobile.widgets.picker.base.IdPicker;
 
 /**
- * Created by paul on 12.03.15.
+ * Created by paul on 12.03.15
+ * Edited by Nadja - 04/2022
  */
 public class SemesterPicker extends IdPicker {
 
@@ -36,23 +37,25 @@ public class SemesterPicker extends IdPicker {
     public void setItems(final List<TimeTableSemesterVo> _items) {
         mItems = _items;
         if (mItems == null) {
-            throw new AssertionError("Terms items cannot be null!");
+            throw new AssertionError("Semester items cannot be null!");
         }
     }
 
     @Override
     protected String getId(final int _Position) {
+        //use number not id because for the StudyGroupPicker we want the number of the chosen object,
+        // not the id (the number is used as key in the map containing all semesterVos)
         return mItems.get(_Position).getNumber();
     }
 
     @Override
     protected String getName(final int _Position) {
-        return mItems.get(_Position).getTitle();
+        return mItems.get(_Position).getNumber();
     }
 
     @Override
     protected int getCount() {
-        return mItems.size();
+        return mItems == null ? 0 : mItems.size();
     }
 
     private List<TimeTableSemesterVo> mItems;

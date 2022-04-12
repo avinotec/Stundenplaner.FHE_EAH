@@ -64,9 +64,8 @@ public class Endpoints {
     public static final String WEATHER              = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/weather";
     public static final String AQUA                 = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/aqua";
     //public static final String TIMETABLE            = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/timetable";
+    public static final String TIMETABLE            = "api/mobileapp/v1/studentset/list";
     public static final String TIMETABLE_EVENTS     = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/timetable/events";
-    //public static final String STUDYPROGRAMS        = "api/v1/current/stglist";
-    public static final String TIMETABLE        = "api/mobileapp/v1/studentset/3";
 
 
     // ---------------------------------------------------------------------------------------------

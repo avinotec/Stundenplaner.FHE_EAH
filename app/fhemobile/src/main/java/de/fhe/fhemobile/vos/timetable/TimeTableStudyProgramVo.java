@@ -37,7 +37,6 @@ public class TimeTableStudyProgramVo implements Parcelable {
     }
 
     protected TimeTableStudyProgramVo(final Parcel in) {
-        mId = in.readString();
         mShortTitle = in.readString();
         mLongTitle = in.readString();
         mDegree = in.readString();
@@ -59,11 +58,7 @@ public class TimeTableStudyProgramVo implements Parcelable {
     };
 
     public String getId() {
-        return mId;
-    }
-
-    public void setId(final String _id) {
-        mId = _id;
+        return mShortTitle;
     }
 
     public String getShortTitle() {
@@ -83,8 +78,8 @@ public class TimeTableStudyProgramVo implements Parcelable {
     }
 
 
-    static final String DEGREE_BACHELOR ="Bachelor";
-    static final String DEGREE_MASTER ="Master";
+    static final String DEGREE_BACHELOR = "Bachelor";
+    static final String DEGREE_MASTER = "Master";
 
     public String getTitleAndDegree(){
         return mLongTitle + " (" + mDegree + ")";
@@ -98,15 +93,12 @@ public class TimeTableStudyProgramVo implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeString(mId);
         dest.writeString(mShortTitle);
         dest.writeString(mLongTitle);
         dest.writeString(mDegree);
         dest.writeMap(mSemesters);
     }
 
-    @SerializedName("posId")
-    private String              mId;
 
     @SerializedName("stgNameshort")
     private String              mShortTitle;

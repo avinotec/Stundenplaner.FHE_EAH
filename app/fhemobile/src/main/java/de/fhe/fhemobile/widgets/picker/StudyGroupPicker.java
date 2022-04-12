@@ -52,7 +52,7 @@ public class StudyGroupPicker extends IdPicker {
 
     @Override
     protected int getCount() {
-        return mItems.size();
+        return mItems == null ? 0 : mItems.size();
     }
 
     private List<TimeTableStudyGroupVo> mItems;

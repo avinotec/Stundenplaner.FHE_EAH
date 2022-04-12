@@ -29,7 +29,7 @@ import java.util.ArrayList;
  * Value Object for a semester of a study program
  *
  * Created by paul on 12.03.15.
- * Edited by nadja - 04/2022
+ * Edited by Nadja - 04/2022
  */
 public class TimeTableSemesterVo implements Parcelable {
 
@@ -39,8 +39,9 @@ public class TimeTableSemesterVo implements Parcelable {
     }
 
     protected TimeTableSemesterVo(final Parcel in) {
+        mId = in.readString();
         mNumber = in.readString();
-        mTitle = correctUmlauts(in.readString());
+        mTitle = in.readString();
         mStudyGroups = in.createTypedArrayList(TimeTableStudyGroupVo.CREATOR);
     }
 
@@ -60,16 +61,8 @@ public class TimeTableSemesterVo implements Parcelable {
         return mNumber;
     }
 
-    public void setId(final String _id) {
-        mNumber = _id;
-    }
-
     public String getTitle() {
         return mTitle;
-    }
-
-    public void setTitle(final String _title) {
-        mTitle = _title;
     }
 
     public ArrayList<TimeTableStudyGroupVo> getStudyGroups() {
@@ -83,11 +76,14 @@ public class TimeTableSemesterVo implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
+        dest.writeString(mId);
         dest.writeString(mNumber);
         dest.writeString(mTitle);
         dest.writeTypedList(mStudyGroups);
     }
 
+    @SerializedName("posId")
+    private String mId;
 
     @SerializedName("posNumber")
     private String mNumber;
