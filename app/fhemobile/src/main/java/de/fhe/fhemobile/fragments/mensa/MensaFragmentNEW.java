@@ -19,6 +19,7 @@ package de.fhe.fhemobile.fragments.mensa;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -156,7 +157,7 @@ public class MensaFragmentNEW extends FeatureFragment {
 
         @Override
         public void onFailure(Call<MensaFoodItemVo[]> call, Throwable t) {
-
+            Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
         }
     };
 
@@ -172,7 +173,7 @@ public class MensaFragmentNEW extends FeatureFragment {
 
         @Override
         public void onFailure(Call call, Throwable t) {
-
+            Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
         }
     };
 

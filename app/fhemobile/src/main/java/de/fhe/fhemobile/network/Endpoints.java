@@ -65,7 +65,8 @@ public class Endpoints {
     public static final String AQUA                 = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/aqua";
     //public static final String TIMETABLE            = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/timetable";
     public static final String TIMETABLE            = "api/mobileapp/v1/studentset/list";
-    public static final String TIMETABLE_EVENTS     = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/timetable/events";
+    //public static final String TIMETABLE_EVENTS     = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/timetable/events";
+    public static final String TIMETABLE_EVENTS     = "api/mobileapp/v1/studentset";
 
 
     // ---------------------------------------------------------------------------------------------
@@ -73,7 +74,7 @@ public class Endpoints {
     // ---------------------------------------------------------------------------------------------
     public static final String PARAM_FNAME          = "firstName";
     public static final String PARAM_LNAME          = "lastName";
-    public static final String PARAM_TIMETABLE_ID   = "timetableId";
+    public static final String PARAM_STUDYGROUP_ID = "studyGroupId";
     public static final String PARAM_PUSH_DEVICE_ID = "pushId";
     public static final String PARAM_SUBSCRIBED_LESSONS = "subscribedLessons";
     public static final String PARAM_CHANGES_TIME_STAMP = "timeStamp";

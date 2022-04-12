@@ -46,7 +46,7 @@ import de.fhe.fhemobile.vos.news.NewsItemResponse;
 import de.fhe.fhemobile.vos.news.NewsItemVo;
 import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
 import de.fhe.fhemobile.vos.semesterdata.SemesterDataVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
+import de.fhe.fhemobile.vos.timetable.TimeTableDialogResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -145,6 +145,7 @@ public class NetworkHandler {
 			@Override
 			public void onFailure(final Call<ArrayList<EmployeeVo>> call, final Throwable t) {
 				showErrorToast();
+				Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 			}
 
 		});
@@ -178,6 +179,7 @@ public class NetworkHandler {
 			@Override
 			public void onFailure(final Call<SemesterDataVo> call, final Throwable t) {
 				showErrorToast();
+				Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 			}
 		});
 	}
@@ -220,6 +222,7 @@ public class NetworkHandler {
 			@Override
 			public void onFailure(final Call<MensaFoodItemVo[]> call, final Throwable t) {
 				showErrorToast();
+				Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 			}
 		});
 	}
@@ -282,6 +285,7 @@ public class NetworkHandler {
 			@Override
 			public void onFailure(final Call<NewsItemResponse> call, final Throwable t) {
 				showErrorToast();
+				Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 			}
 		});
 	}
@@ -323,6 +327,7 @@ public class NetworkHandler {
 			@Override
 			public void onFailure(final Call<MensaChoiceItemVo[]> call, final Throwable t) {
 				showErrorToast();
+				Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 			}
 		});
 	}
@@ -361,6 +366,7 @@ public class NetworkHandler {
 			@Override
 			public void onFailure(final Call<NewsCategoryResponse> call, final Throwable t) {
 				showErrorToast();
+				Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 			}
 		});
 	}
@@ -387,22 +393,21 @@ public class NetworkHandler {
 	 *
 	 * @param _Callback
 	 */
-	public void fetchTimeTable(final Callback<TimeTableResponse> _Callback) {
-		Assert.assertTrue( mApi != null );
+	public void fetchTimeTable(final Callback<TimeTableDialogResponse> _Callback) {
+		Assert.assertTrue( mApiEah != null );
 
 		mApiEah.fetchTimeTable().enqueue(_Callback);
 	}
 
 	/**
 	 *
-	 * @param _TimeTableId
+	 * @param _StudyGroupId
 	 * @param _Callback
 	 */
-	public void fetchTimeTableEvents(final String _TimeTableId, final Callback<ArrayList<TimeTableWeekVo>> _Callback) {
-		Assert.assertTrue( mApi != null );
+	public void fetchTimeTableEvents(final String _StudyGroupId, final Callback<ArrayList<TimeTableWeekVo>> _Callback) {
+		Assert.assertTrue( mApiEah != null );
 
-		//mApi.fetchTimeTableEvents(_TimeTableId).enqueue(_Callback);
-		mApiEah.fetchTimeTableEvents(_TimeTableId).enqueue(_Callback);
+		mApiEah.fetchTimeTableEvents(_StudyGroupId).enqueue(_Callback);
 	}
 
 	public List<MyTimeTableCourseComponent> reloadEvents(final MyTimeTableCourseComponent event) {

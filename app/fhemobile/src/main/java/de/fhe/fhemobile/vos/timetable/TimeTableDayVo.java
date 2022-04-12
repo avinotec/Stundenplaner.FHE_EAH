@@ -22,71 +22,32 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.Map;
+
+import de.fhe.fhemobile.utils.timetable.TimeTableUtils;
 
 /**
- * Created by paul on 16.03.15.
+ * Created by paul on 16.03.15
+ * Edited by Nadja - 04/2022
  */
 public final class TimeTableDayVo implements Parcelable {
 
-// --Commented out by Inspection START (02.11.2021 17:33):
-//    public TimeTableDayVo() {
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:33)
-
-    public Integer getDayInWeek() {
-        return mDayInWeek;
-    }
-
-// --Commented out by Inspection START (02.11.2021 17:32):
-//    public void setDayInWeek(Integer _dayInWeek) {
-//        mDayInWeek = _dayInWeek;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:32)
-
-    public String getName() {
-        return mWeekDayName;
-    }
-
-    public void setName(final String _name) {
-        mWeekDayName = _name;
-    }
-
-    public ArrayList<TimeTableEventVo> getEvents() {
-        return mEvents;
-    }
-
-// --Commented out by Inspection START (02.11.2021 17:33):
-//    public void setEvents(ArrayList<TimeTableEventVo> _events) {
-//        mEvents = _events;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:33)
-
-    @SerializedName("dayInWeek")
-    private final int mDayInWeek;
-
-    @SerializedName("name")
-    private String mWeekDayName;
-
-    @SerializedName("events")
-    private final ArrayList<TimeTableEventVo> mEvents = new ArrayList<>();
-
-
-    @Override
-    public int describeContents() {
-        return 0;
+    private TimeTableDayVo(final Parcel in) {
+        mDayNumber = in.readInt();
+        in.readTypedList(mEvents, TimeTableEventVo.CREATOR);
     }
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeInt(mDayInWeek);
-        dest.writeString(mWeekDayName);
+        dest.writeInt(mDayNumber);
         dest.writeTypedList(mEvents);
     }
 
-    private TimeTableDayVo(final Parcel in) {
-        mDayInWeek = in.readInt();
-        mWeekDayName = in.readString();
-        in.readTypedList(mEvents, TimeTableEventVo.CREATOR);
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Parcelable.Creator<TimeTableDayVo> CREATOR = new Parcelable.Creator<TimeTableDayVo>() {
@@ -98,4 +59,22 @@ public final class TimeTableDayVo implements Parcelable {
             return new TimeTableDayVo[size];
         }
     };
+
+
+
+    public String getDayName() {
+        return TimeTableUtils.getWeekDayName(mDayNumber);
+    }
+
+    public ArrayList<TimeTableEventVo> getEvents() {
+        return mEvents;
+    }
+
+
+
+    @SerializedName("dayNumber")
+    private final int mDayNumber;
+
+    @SerializedName("dataActivity")
+    private final ArrayList<TimeTableEventVo> mEvents = new ArrayList<>();
 }

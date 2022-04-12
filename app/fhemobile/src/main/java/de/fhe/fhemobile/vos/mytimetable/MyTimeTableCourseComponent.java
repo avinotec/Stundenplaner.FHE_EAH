@@ -32,9 +32,7 @@ import java.util.List;
 
 import de.fhe.fhemobile.comparator.TimeTableEventComparator;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
 
 
 /**
@@ -149,7 +147,7 @@ public class MyTimeTableCourseComponent implements Parcelable {
 	public boolean containsEvent(TimeTableEventVo _Event){
 		for(TimeTableEventVo event : events){
 			if(event.getTitle().equals(_Event.getTitle())
-					&& event.getFullDateWithStartTime() == _Event.getFullDateWithStartTime()
+					&& event.getStartDateTime() == _Event.getStartDateTime()
 					&& event.getEndTime().equals(_Event.getEndTime())
 					&& event.getRoom().equals(_Event.getRoom())){
 				return true;

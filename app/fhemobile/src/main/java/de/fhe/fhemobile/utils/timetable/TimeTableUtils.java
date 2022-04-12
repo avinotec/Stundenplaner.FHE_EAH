@@ -17,6 +17,10 @@
 
 package de.fhe.fhemobile.utils.timetable;
 
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.Map;
+
 public class TimeTableUtils {
 
     /**
@@ -32,6 +36,19 @@ public class TimeTableUtils {
             person = person.replaceFirst("[(]", " (");
         }
         return person;
+    }
+
+
+    private static final Map<String, Integer> weekDayNames = Calendar.getInstance()
+            .getDisplayNames(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+
+    public static String getWeekDayName(final int dayNumber){
+        for(Map.Entry<String, Integer> day : weekDayNames.entrySet()){
+            if(day.getValue() == dayNumber){
+                return day.getKey();
+            }
+        }
+        return null;
     }
 
 

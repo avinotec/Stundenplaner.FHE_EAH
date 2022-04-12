@@ -138,7 +138,7 @@ public abstract class MyTimeTableAdapter extends BaseAdapter {
         // if such a header has already been added because of processing another component of the course
         // then do not add header again (set its visibility to GONE)
         if(position == 0 || !mItems.get(position).isSameCourse(mItems.get(position - 1))){
-            courseTitle.setText(currentItem.getFirstEvent().getGuiTitle());
+            courseTitle.setText(currentItem.getFirstEvent().getTitle());
 
             courseTitle.setVisibility(View.VISIBLE);
             headerLayout.setVisibility(View.VISIBLE);
@@ -225,7 +225,7 @@ public abstract class MyTimeTableAdapter extends BaseAdapter {
         params.setMargins(0,5,5,10);
         dateTextview.setLayoutParams(params);
 
-        final Date dateStartDate = new java.util.Date(event.getFullDateWithStartTime());
+        final Date dateStartDate = new java.util.Date(event.getStartDateTime());
         //final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
         final String date = sdf.format(dateStartDate);
         final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(dateStartDate);

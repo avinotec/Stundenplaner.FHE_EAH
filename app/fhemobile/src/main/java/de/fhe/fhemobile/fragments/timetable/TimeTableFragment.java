@@ -19,18 +19,21 @@ package de.fhe.fhemobile.fragments.timetable;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
@@ -75,7 +78,7 @@ public class TimeTableFragment extends FeatureFragment {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments() != null) {
-			mChosenTimeTableId = getArguments().getString(Define.PARAM_TIMETABLE_ID);
+			mChosenStudyGroupId = getArguments().getString(Define.PARAM_TIMETABLE_ID);
 		}
 
 		setHasOptionsMenu(true);
@@ -96,7 +99,7 @@ public class TimeTableFragment extends FeatureFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		NetworkHandler.getInstance().fetchTimeTableEvents(mChosenTimeTableId, mCallback);
+		NetworkHandler.getInstance().fetchTimeTableEvents(mChosenStudyGroupId, mCallback);
 	}
 
 	@Override
@@ -142,10 +145,15 @@ public class TimeTableFragment extends FeatureFragment {
 
 		@Override
 		public void onFailure(final Call<ArrayList<TimeTableWeekVo>> call, final Throwable t) {
-
+			showErrorToast();
+			Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 		}
-
 	};
+
+	private void showErrorToast() {
+		Toast.makeText(Main.getAppContext(), "Cannot establish connection!",
+				Toast.LENGTH_LONG).show();
+	}
 
 	private final TimeTableView.IViewListener mViewListener = new TimeTableView.IViewListener() {
 	};
@@ -153,6 +161,6 @@ public class TimeTableFragment extends FeatureFragment {
 
 
 	private TimeTableView mView;
-	private String mChosenTimeTableId;
+	private String mChosenStudyGroupId;
 
 }

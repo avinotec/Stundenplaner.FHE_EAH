@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -38,6 +39,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableDialogAdapter;
 import de.fhe.fhemobile.comparator.CourseTitleComparator;
@@ -49,7 +51,7 @@ import de.fhe.fhemobile.views.mytimetable.MyTimeTableDialogView;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
 import de.fhe.fhemobile.vos.timetable.TimeTableDayVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
+import de.fhe.fhemobile.vos.timetable.TimeTableDialogResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
@@ -327,6 +329,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                 @Override
                                 public void onFailure(Call<ArrayList<TimeTableWeekVo>> call, Throwable t) {
                                     super.onFailure(call, t);
+                                    Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
                                 }
                             };
 
@@ -341,9 +344,9 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
     };
 
-    private final Callback<TimeTableResponse> mTimeTableResponseCallback = new Callback<TimeTableResponse>() {
+    private final Callback<TimeTableDialogResponse> mTimeTableResponseCallback = new Callback<TimeTableDialogResponse>() {
         @Override
-        public void onResponse(Call<TimeTableResponse> call, Response<TimeTableResponse> response) {
+        public void onResponse(Call<TimeTableDialogResponse> call, Response<TimeTableDialogResponse> response) {
             if ( response.body() != null ) {
 
                 //store the response, to work on later
@@ -355,14 +358,20 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         }
 
         @Override
-        public void onFailure(Call<TimeTableResponse> call, Throwable t) {
+        public void onFailure(Call<TimeTableDialogResponse> call, Throwable t) {
+            showErrorToast();
             Log.d(TAG, "failure: request " + call.request().url());
         }
     };
 
+    private void showErrorToast() {
+        Toast.makeText(Main.getAppContext(), "Cannot establish connection!",
+                Toast.LENGTH_LONG).show();
+    }
+
 
     private MyTimeTableDialogView mView;
-    private TimeTableResponse mResponse;
+    private TimeTableDialogResponse mResponse;
     private TimeTableStudyProgramVo mChosenStudyProgram;
     private TimeTableSemesterVo mChosenSemester;
     //list of courses for the study course and semester currently chosen in MyTimeTableDialog

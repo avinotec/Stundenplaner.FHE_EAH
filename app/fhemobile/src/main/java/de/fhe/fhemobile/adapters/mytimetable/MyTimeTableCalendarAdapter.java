@@ -119,16 +119,16 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 		// then do not add header again (set invisible)
 		final TextView weekdayHeader = (TextView) convertView.findViewById(R.id.itemHeader);
 		if(position == 0
-				|| !currentItem.getDate().equals(mItems.get(position - 1).getDate())){
+				|| !currentItem.getStartDate().equals(mItems.get(position - 1).getStartDate())){
 
-			String weekDay = currentItem.getDayOfWeek();
-			final Date df = new Date(currentItem.getFullDateWithStartTime());
+			String weekDay = currentItem.getWeekDayName();
+			final Date df = new Date(currentItem.getStartDateTime());
 			//if necessary, add "today" in brackets to mark today's day
 			if(sdf.format(df).compareTo(sdf.format(new Date())) == 0){
-				weekDay = "(" + Main.getAppContext().getString(R.string.today) + ") "+currentItem.getDayOfWeek();
+				weekDay = "(" + Main.getAppContext().getString(R.string.today) + ") "+currentItem.getWeekDayName();
 			}
 			weekDay += ", " + new SimpleDateFormat("dd.MM.yy",
-					Locale.getDefault()).format(currentItem.getFullDateWithStartTime());
+					Locale.getDefault()).format(currentItem.getStartDateTime());
 			weekdayHeader.setText(weekDay);
 			weekdayHeader.setVisibility(View.VISIBLE);
 		}
@@ -139,7 +139,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 		//set texts: title, time, room, lecturer
 		final TextView courseTitle = (TextView) convertView.findViewById(R.id.tv_mytimetable_calendar_eventtitle);
-		courseTitle.setText(currentItem.getGuiTitle());
+		courseTitle.setText(currentItem.getTitle());
 
 		final TextView courseTime = (TextView) convertView.findViewById(R.id.tv_mytimetable_calendar_eventtime);
 		courseTime.setText(currentItem.getStartTime() + " – " + currentItem.getEndTime()); // $NON-NLS
@@ -174,13 +174,13 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 			final Date now = new Date();
 
 			try {
-				Date eventStartTime = sdf.parse(event.getDate() + " " + event.getStartTime());
+				Date eventStartTime = sdf.parse(event.getStartDate() + " " + event.getStartTime());
 
 				//course starts now or in the future
 				if(eventStartTime.compareTo(now) >= 0) {
 
 					//if the event today has not finished yet (endTime after timeNow)
-					if(sdf.parse(event.getDate() + " " + event.getEndTime())
+					if(sdf.parse(event.getStartDate() + " " + event.getEndTime())
 							.compareTo(now) >= 0) {
 
 						//if the event is earlier on the same day than the one found before

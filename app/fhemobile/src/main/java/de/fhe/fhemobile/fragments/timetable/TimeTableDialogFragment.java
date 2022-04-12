@@ -23,11 +23,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import java.util.Map;
 
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
@@ -36,7 +38,7 @@ import de.fhe.fhemobile.utils.timetable.TimeTableSettings;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.timetable.TimeTableDialogView;
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
+import de.fhe.fhemobile.vos.timetable.TimeTableDialogResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -181,9 +183,9 @@ public class TimeTableDialogFragment extends FeatureFragment {
     };
 
 
-    private final Callback<TimeTableResponse> mTimeTableResponseCallback = new Callback<TimeTableResponse>() {
+    private final Callback<TimeTableDialogResponse> mTimeTableResponseCallback = new Callback<TimeTableDialogResponse>() {
         @Override
-        public void onResponse(final Call<TimeTableResponse> call, final Response<TimeTableResponse> response) {
+        public void onResponse(final Call<TimeTableDialogResponse> call, final Response<TimeTableDialogResponse> response) {
             if ( response.body() != null ) {
                 mResponse = response.body();
                 mView.setStudyCourseItems(response.body().getStudyProgramsAsList());
@@ -191,14 +193,20 @@ public class TimeTableDialogFragment extends FeatureFragment {
         }
 
         @Override
-        public void onFailure(final Call<TimeTableResponse> call, Throwable t) {
+        public void onFailure(final Call<TimeTableDialogResponse> call, Throwable t) {
+            showErrorToast();
             Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
         }
     };
 
+    private void showErrorToast() {
+        Toast.makeText(Main.getAppContext(), "Cannot establish connection!",
+                Toast.LENGTH_LONG).show();
+    }
+
     private TimeTableDialogView mView;
 
-    private TimeTableResponse       mResponse;
+    private TimeTableDialogResponse mResponse;
     private TimeTableStudyProgramVo mChosenStudyProgram;
     private TimeTableSemesterVo     mChosenSemester;
     private String                  mChosenStudyGroup;

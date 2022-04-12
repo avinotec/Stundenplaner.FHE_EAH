@@ -28,9 +28,9 @@ import java.util.Map;
  * Created by paul on 12.03.15
  * Edited by Nadja - 04/2022
  */
-public class TimeTableResponse {
+public class TimeTableDialogResponse {
 
-    public TimeTableResponse(){
+    public TimeTableDialogResponse(){
 
     }
 
