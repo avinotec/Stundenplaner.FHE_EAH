@@ -22,7 +22,7 @@ import android.preference.PreferenceManager;
 import java.util.ArrayList;
 
 import de.fhe.fhemobile.Main;
-import de.fhe.fhemobile.models.mensa.MensaFoodModel;
+import de.fhe.fhemobile.models.canteen.CanteenFoodModel;
 import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.settings.UserDefaults;
 
@@ -34,15 +34,15 @@ public class UserSettings {
 
     private static final String LOG_TAG = "UserSettings";
 
-    private static final String PREF_CHOSEN_MENSA           = "chosenMensa";        // $NON-NLS
-    private static final String PREF_CHOSEN_MENSA_NAME      = "chosenMensaName";    // $NON-NLS
+    private static final String PREF_CHOSEN_CANTEEN = "chosenCanteen";        // $NON-NLS
+    private static final String PREF_CHOSEN_CANTEEN_NAME = "chosenCanteenName";    // $NON-NLS
     private static final String PREF_CHOSEN_NEWS_CATEGORY   = "chosenNewsCategory"; // $NON-NLS
 
     private final SharedPreferences   mSP;
 
-    private String              mChosenMensaId = null;
-    private ArrayList<String>   mChosenMensas       = new ArrayList<>();
-    private String              mChosenMensaName    = null;
+    private String mChosenCanteenId = null;
+    private ArrayList<String> mChosenCanteens = new ArrayList<>();
+    private String mChosenCanteenName = null;
     private String              mChosenNewsCategory = null;
 
     /**
@@ -59,40 +59,40 @@ public class UserSettings {
     private UserSettings() {
         mSP = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext());
 
-        mChosenMensaId = mSP.getString(PREF_CHOSEN_MENSA, UserDefaults.DEFAULT_MENSA_ID);
-        mChosenMensaName    = mSP.getString(PREF_CHOSEN_MENSA_NAME, UserDefaults.DEFAULT_MENSA_NAME);
+        mChosenCanteenId = mSP.getString(PREF_CHOSEN_CANTEEN, UserDefaults.DEFAULT_CANTEEN_ID);
+        mChosenCanteenName = mSP.getString(PREF_CHOSEN_CANTEEN_NAME, UserDefaults.DEFAULT_CANTEEN_NAME);
         mChosenNewsCategory = mSP.getString(PREF_CHOSEN_NEWS_CATEGORY, UserDefaults.DEFAULT_NEWS_ID);
     }
 
     /**
-     * Mensa
+     * Canteen
      * @return
      */
-    public String getChosenMensaId() {
-        return mChosenMensaId;
+    public String getChosenCanteenId() {
+        return mChosenCanteenId;
     }
 
     /**
-     * Mensa
-     * @param _ChosenMensaId
-     * @param _ChosenMensaName
+     * Canteen
+     * @param _ChosenCanteenId
+     * @param _ChosenCanteenName
      */
-    public void setChosenMensa(final String _ChosenMensaId, final String _ChosenMensaName ) {
-        mChosenMensaId = _ChosenMensaId;
-        mSP.edit().putString(PREF_CHOSEN_MENSA, mChosenMensaId).apply();
+    public void setChosenCanteen(final String _ChosenCanteenId, final String _ChosenCanteenName) {
+        mChosenCanteenId = _ChosenCanteenId;
+        mSP.edit().putString(PREF_CHOSEN_CANTEEN, mChosenCanteenId).apply();
 
-        mChosenMensaName = _ChosenMensaName;
-        mSP.edit().putString(PREF_CHOSEN_MENSA_NAME, mChosenMensaName).apply();
+        mChosenCanteenName = _ChosenCanteenName;
+        mSP.edit().putString(PREF_CHOSEN_CANTEEN_NAME, mChosenCanteenName).apply();
 
-        MensaFoodModel.getInstance().setFoodItems(null);
+        CanteenFoodModel.getInstance().setFoodItems(null);
     }
 
     /**
-     * Mensa
+     * Canteen
      * @return
      */
-    public String getChosenMensaName() {
-        return mChosenMensaName;
+    public String getChosenCanteenName() {
+        return mChosenCanteenName;
     }
 
     /**

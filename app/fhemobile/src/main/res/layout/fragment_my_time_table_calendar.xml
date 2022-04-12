@@ -71,7 +71,7 @@
         <View style="@style/Divider"/>
 
         <ListView
-            android:id="@+id/listview_mytimetable_calendar_courses"
+            android:id="@+id/lv_mytimetable_calendar_courses"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 

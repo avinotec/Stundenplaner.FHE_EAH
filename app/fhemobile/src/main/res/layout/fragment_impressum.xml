@@ -30,7 +30,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/header_image_height"
-            android:id="@+id/imageView"
+            android:id="@+id/imageview_cafe_aqua"
             android:src="@drawable/th_impress"
             android:layout_alignParentTop="true"
             android:scaleType="centerCrop"
@@ -40,7 +40,7 @@
             android:id="@+id/impressumWebView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/imageView"
+            android:layout_below="@+id/imageview_cafe_aqua"
             android:layout_above="@id/data_protection_link"/>
 
 	    <TextView

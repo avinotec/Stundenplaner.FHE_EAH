@@ -132,7 +132,7 @@ public abstract class MyTimeTableAdapter extends BaseAdapter {
 
 
         final RelativeLayout headerLayout = convertView.findViewById(R.id.layout_mytimetable_course_header);
-        final TextView courseTitle = (TextView) convertView.findViewById(R.id.tv_mytimetable_courseTitle);
+        final TextView courseTitle = (TextView) convertView.findViewById(R.id.tv_mytimetable_coursetitle);
 
         //Add a header displaying the course title
         // if such a header has already been added because of processing another component of the course

@@ -28,18 +28,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fhe.fhemobile.Main;
-import de.fhe.fhemobile.models.mensa.MensaFoodModel;
+import de.fhe.fhemobile.models.canteen.CanteenFoodModel;
 import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.phonebook.PhonebookModel;
 import de.fhe.fhemobile.models.semesterdata.SemesterDataModel;
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
-import de.fhe.fhemobile.utils.mensa.MensaUtils;
+import de.fhe.fhemobile.utils.canteen.CanteenUtils;
 import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.vos.CafeAquaResponse;
 import de.fhe.fhemobile.vos.WeatherResponse;
-import de.fhe.fhemobile.vos.mensa.MensaChoiceItemVo;
-import de.fhe.fhemobile.vos.mensa.MensaFoodItemCollectionVo;
-import de.fhe.fhemobile.vos.mensa.MensaFoodItemVo;
+import de.fhe.fhemobile.vos.canteen.CanteenChoiceItemVo;
+import de.fhe.fhemobile.vos.canteen.CanteenFoodItemCollectionVo;
+import de.fhe.fhemobile.vos.canteen.CanteenFoodItemVo;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
 import de.fhe.fhemobile.vos.news.NewsCategoryResponse;
 import de.fhe.fhemobile.vos.news.NewsItemResponse;
@@ -145,13 +145,13 @@ public class NetworkHandler {
 	}
 
 	/**
-	 * Fetch menu of the mensa specified in {@link UserSettings}
+	 * Fetch menu of the canteen specified in {@link UserSettings}
 	 */
-	public void fetchMensaData() {
+	public void fetchCanteenData() {
 		Assert.assertTrue( mApi != null );
-		Log.d(TAG, "Mensa: "+UserSettings.getInstance().getChosenMensaId());
+		Log.d(TAG, "Canteen: "+UserSettings.getInstance().getChosenCanteenId());
 
-		mApi.fetchMensaData(UserSettings.getInstance().getChosenMensaId()).enqueue(new Callback<MensaFoodItemVo[]>() {
+		mApi.fetchCanteenData(UserSettings.getInstance().getChosenCanteenId()).enqueue(new Callback<CanteenFoodItemVo[]>() {
 
 			/**
 			 *
@@ -159,18 +159,18 @@ public class NetworkHandler {
 			 * @param response
 			 */
 			@Override
-			public void onResponse(final Call<MensaFoodItemVo[]> call, final Response<MensaFoodItemVo[]> response) {
-				Log.d(TAG, "Mensa: " + call.request().url());
-				final MensaFoodItemVo[] _mensaItems = response.body();
-				List<MensaFoodItemCollectionVo> orderedItems = null;
+			public void onResponse(final Call<CanteenFoodItemVo[]> call, final Response<CanteenFoodItemVo[]> response) {
+				Log.d(TAG, "Canteen: " + call.request().url());
+				final CanteenFoodItemVo[] _canteenItems = response.body();
+				List<CanteenFoodItemCollectionVo> orderedItems = null;
 
-				if (_mensaItems != null && _mensaItems.length > 0)
-					orderedItems = MensaUtils.orderMensaItems(_mensaItems);
+				if (_canteenItems != null && _canteenItems.length > 0)
+					orderedItems = CanteenUtils.orderCanteenItems(_canteenItems);
 
 				if (orderedItems != null) {
-					MensaFoodModel.getInstance().setFoodItems(orderedItems.toArray(new MensaFoodItemCollectionVo[0]));
+					CanteenFoodModel.getInstance().setFoodItems(orderedItems.toArray(new CanteenFoodItemCollectionVo[0]));
 				} else {
-					MensaFoodModel.getInstance().setFoodItems(null);
+					CanteenFoodModel.getInstance().setFoodItems(null);
 				}
 			}
 
@@ -180,21 +180,21 @@ public class NetworkHandler {
 			 * @param t
 			 */
 			@Override
-			public void onFailure(final Call<MensaFoodItemVo[]> call, final Throwable t) {
+			public void onFailure(final Call<CanteenFoodItemVo[]> call, final Throwable t) {
 				showErrorToast();
 			}
 		});
 	}
 
 	/**
-	 * Fetch menu of the mensa specified by given _MensaId
-	 * @param _MensaId
+	 * Fetch menu of the canteen specified by given _CanteenId
+	 * @param _CanteenId
 	 * @param _Callback
 	 */
-	public void fetchMensaItems(final String _MensaId, final Callback<MensaFoodItemVo[]> _Callback) {
+	public void fetchCanteenItems(final String _CanteenId, final Callback<CanteenFoodItemVo[]> _Callback) {
 		Assert.assertTrue( mApi != null );
 
-		mApi.fetchMensaData(_MensaId).enqueue(_Callback);
+		mApi.fetchCanteenData(_CanteenId).enqueue(_Callback);
 	}
 
 	/**
@@ -260,10 +260,10 @@ public class NetworkHandler {
 	/**
 	 * *
 	 */
-	public void fetchAvailableMensas() {
+	public void fetchAvailableCanteens() {
 		Assert.assertTrue( mApi != null );
 
-		mApi.fetchAvailableMensas().enqueue(new Callback<MensaChoiceItemVo[]>() {
+		mApi.fetchAvailableCanteens().enqueue(new Callback<CanteenChoiceItemVo[]>() {
 
 			/**
 			 *
@@ -271,9 +271,9 @@ public class NetworkHandler {
 			 * @param response
 			 */
 			@Override
-			public void onResponse(final Call<MensaChoiceItemVo[]> call, final Response<MensaChoiceItemVo[]> response) {
+			public void onResponse(final Call<CanteenChoiceItemVo[]> call, final Response<CanteenChoiceItemVo[]> response) {
 				if ( response.body() != null ) {
-					MensaFoodModel.getInstance().setChoiceItems(response.body());
+					CanteenFoodModel.getInstance().setChoiceItems(response.body());
 				}
 			}
 
@@ -283,16 +283,16 @@ public class NetworkHandler {
 			 * @param t
 			 */
 			@Override
-			public void onFailure(final Call<MensaChoiceItemVo[]> call, final Throwable t) {
+			public void onFailure(final Call<CanteenChoiceItemVo[]> call, final Throwable t) {
 				showErrorToast();
 			}
 		});
 	}
 
-	public void fetchAvailableMensas(final Callback<MensaChoiceItemVo[]> _Callback){
+	public void fetchAvailableCanteens(final Callback<CanteenChoiceItemVo[]> _Callback){
 		Assert.assertTrue( mApi != null );
 
-		mApi.fetchAvailableMensas().enqueue(_Callback);
+		mApi.fetchAvailableCanteens().enqueue(_Callback);
 	}
 
 	/**

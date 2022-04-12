@@ -21,7 +21,7 @@
     <string name="navigation_drawer_close" >Schließe Navigation</string>
         <string name="action_settings" >Settings</string>
     <string name="drawer_news" >News</string>
-    <string name="drawer_mensa" >Mensa</string>
+    <string name="drawer_canteen" >Mensa</string>
     <string name="drawer_persons" >Personen</string>
     <string name="drawer_semesterdates" >Semestertermine</string>
     <string name="drawer_campus" >Campusplan</string>
@@ -111,7 +111,7 @@
     <string name="ssl_error_continue">Fortfahren</string>
 
 
-    <string name="mensa_food_no_data_available">Keine Daten verfügbar</string>
+    <string name="canteen_food_no_data_available">Keine Daten verfügbar</string>
 
     <!--    Campus Navigation-->
     <string name="title_scanner_activity">Scanner</string>

@@ -30,6 +30,6 @@ public abstract class IRowItem {
     public abstract View getView(LayoutInflater _inflater, View _convertView, ViewGroup _parent);
 
     public enum EItemType {
-        MENSA, MENSA_IMAGE, DEFAULT_IMAGE, DOUBLE_ROW, NEWS, WEATHER
+        CANTEEN, CANTEEN_IMAGE, DEFAULT_IMAGE, DOUBLE_ROW, NEWS, WEATHER
     }
 }

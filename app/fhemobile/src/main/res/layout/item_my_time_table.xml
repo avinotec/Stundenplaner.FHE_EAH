@@ -36,7 +36,7 @@
 		android:paddingBottom="@dimen/list_item_vertical_padding">
 
 		<TextView
-			android:id="@+id/tv_mytimetable_courseTitle"
+			android:id="@+id/tv_mytimetable_coursetitle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignParentTop="true"

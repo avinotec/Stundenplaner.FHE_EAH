@@ -51,7 +51,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mCalendarListView = (ListView) findViewById(R.id.listview_mytimetable_calendar_courses);
+        mCalendarListView = (ListView) findViewById(R.id.lv_mytimetable_calendar_courses);
 
         //TODO Behelf, soll automatisch auf den aktuellen Eintrag vorgesprungen werden
         final Button mJumpCurrentLesson = (Button) findViewById(R.id.btn_mytimetable_calendar_jump_to_today);

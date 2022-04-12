@@ -16,12 +16,17 @@
   ~
   -->
 
-<resources>
-    <bool name="feature_news">true</bool>
-    <bool name="feature_phonebook">true</bool>
-    <bool name="feature_canteen">true</bool>
-    <bool name="feature_maps">true</bool>
-    <bool name="feature_semester_data">true</bool>
-    <bool name="feature_timetable">true</bool>
-    <bool name="feature_impress">true</bool>
-</resources>
+
+<CheckedTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_canteen_choice_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:textColor="@android:color/black"
+    android:gravity="center_vertical"
+    android:checkMark="@drawable/selector_checkbox"
+    android:ellipsize="marquee"
+    android:paddingLeft="@dimen/list_item_vertical_padding"
+    android:paddingRight="@dimen/list_item_vertical_padding" />

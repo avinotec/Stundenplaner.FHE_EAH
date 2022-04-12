@@ -21,7 +21,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
     <string name="drawer_news">News</string>
-    <string name="drawer_mensa">Canteen</string>
+    <string name="drawer_canteen">Canteen</string>
     <string name="drawer_persons">Persons</string>
     <string name="drawer_semesterdates">Semester Dates</string>
     <string name="drawer_campus">Campus Maps</string>
@@ -84,7 +84,7 @@
 
     <string name="professor">Professor</string>
     <string name="role">Role</string>
-    <string name="mensa_food_no_data_available">No data available</string>
+    <string name="canteen_food_no_data_available">No data available</string>
     <string name="loading">Loading…</string>
 
     <!-- My Time Table -->

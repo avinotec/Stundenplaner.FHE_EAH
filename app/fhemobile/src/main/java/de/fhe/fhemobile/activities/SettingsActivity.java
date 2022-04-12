@@ -24,7 +24,7 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.fragments.mensa.MensaSettingsFragment;
+import de.fhe.fhemobile.fragments.canteen.CanteenSettingsFragment;
 import de.fhe.fhemobile.fragments.news.NewsCategoriesFragment;
 import de.fhe.fhemobile.utils.feature.Features;
 
@@ -52,9 +52,9 @@ public class SettingsActivity extends BaseActivity {
                         .add(R.id.container, NewsCategoriesFragment.newInstance())
                         .commit();
                 break;
-            case Features.FeatureId.MENSA:
+            case Features.FeatureId.CANTEEN:
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, MensaSettingsFragment.newInstance())
+                        .add(R.id.container, CanteenSettingsFragment.newInstance())
                         .commit();
                 break;
         }

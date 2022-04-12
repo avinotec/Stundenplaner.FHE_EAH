@@ -18,8 +18,8 @@ package de.fhe.fhemobile.models.settings;
 
 public class UserDefaults
 {
-    public static final String DEFAULT_MENSA_ID = "4330";
-    public static final String DEFAULT_MENSA_NAME = "Mensa Altonaer Straße";
+    public static final String DEFAULT_CANTEEN_ID = "4330";
+    public static final String DEFAULT_CANTEEN_NAME = "Canteen Altonaer Straße";
 
     public static final String DEFAULT_NEWS_ID = "0";
 }

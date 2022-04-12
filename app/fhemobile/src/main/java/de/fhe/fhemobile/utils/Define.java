@@ -29,11 +29,11 @@ public class Define {
 	public static final String PARAM_TIMETABLE_ID = "paramTimeTableId";
 
 	//created by Nadja 11.03.2022
-	public static class Mensa{
-		public static final String PARAM_MENSA_ID = "paramMensaId";
-        public static final String SP_MENSA_SETTINGS = "spMensa";
-		public static final String PREF_CHOSEN_MENSA_ID = "prefChosenMensaId";
-		public static final String PARAM_MENSA_DAY = "paramMensaDay";
+	public static class Canteen {
+		public static final String PARAM_CANTEEN_ID = "paramCanteenId";
+        public static final String SP_CANTEEN_SETTINGS = "spCanteen";
+		public static final String PREF_CHOSEN_CANTEEN_ID = "prefChosenCanteenId";
+		public static final String PARAM_CANTEEN_DAY = "paramCanteenDay";
 	}
 
 	//created by Nadja 11.03.2022
