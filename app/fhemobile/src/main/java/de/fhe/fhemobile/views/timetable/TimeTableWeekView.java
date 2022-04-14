@@ -28,8 +28,6 @@ import org.junit.Assert;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -55,17 +53,17 @@ public class TimeTableWeekView extends LinearLayout {
         mContext = context;
     }
 
-    public void initializeView(final TimeTableWeekVo _Data) {
-        mHeading.setText(Main.getSafeString(R.string.timetable_week) + " " + _Data.getSemesterWeek()); // $NON-NLS
-        buildListEntries(_Data);
+    public void initializeView(final TimeTableWeekVo weekVo) {
+        mHeading.setText(Main.getSafeString(R.string.timetable_week) + " " + weekVo.getSemesterWeekForDisplay()); // $NON-NLS
+        buildListEntries(weekVo);
 
         final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.", Locale.getDefault()); // PST`
-        final String startDateStr = formatter.format(_Data.getWeekStart());
-        final String endDateStr = formatter.format(_Data.getWeekEnd());
+        final String startDateStr = formatter.format(weekVo.getWeekStart());
+        final String endDateStr = formatter.format(weekVo.getWeekEnd());
         mWeekRange.setText(startDateStr + " – " + endDateStr); // $NON-NLS
 
         final HeaderListAdapter adapter = new HeaderListAdapter(mContext, mData);
-        mDateList.setAdapter(adapter);
+        mEventList.setAdapter(adapter);
     }
 
     private void buildListEntries(final TimeTableWeekVo _Data) {
@@ -96,7 +94,7 @@ public class TimeTableWeekView extends LinearLayout {
 
         mHeading   = (TextView) findViewById(R.id.tv_timetable_week_heading);
         mWeekRange = (TextView) findViewById(R.id.tv_timetable_week_range);
-        mDateList  = (ListView) findViewById(R.id.lv_timetable_week_list);
+        mEventList = (ListView) findViewById(R.id.lv_timetable_week_list);
     }
 
     private final Context mContext;
@@ -105,6 +103,6 @@ public class TimeTableWeekView extends LinearLayout {
 
     private TextView mHeading;
     private TextView mWeekRange;
-    private ListView mDateList;
+    private ListView mEventList;
 
 }

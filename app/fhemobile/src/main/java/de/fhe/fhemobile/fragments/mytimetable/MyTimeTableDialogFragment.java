@@ -291,17 +291,17 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                 for (TimeTableStudyGroupVo timeTableStudyGroupVo : mChosenSemester.getStudyGroups()) {
 
                     //get timetable of the timeTableStudyGroupVo
-                    MyTimeTableCallback<ArrayList<TimeTableWeekVo>> callback =
-                            new MyTimeTableCallback<ArrayList<TimeTableWeekVo>>(mChosenStudyProgram, mChosenSemester, timeTableStudyGroupVo) {
+                    MyTimeTableCallback<Map<String, TimeTableWeekVo>> callback =
+                            new MyTimeTableCallback<Map<String,TimeTableWeekVo>>(mChosenStudyProgram, mChosenSemester, timeTableStudyGroupVo) {
 
                                 @Override
-                                public void onResponse(Call<ArrayList<TimeTableWeekVo>> call,
-                                                       Response<ArrayList<TimeTableWeekVo>> response) {
+                                public void onResponse(Call<Map<String,TimeTableWeekVo>> call,
+                                                       Response<Map<String,TimeTableWeekVo>> response) {
                                     super.onResponse(call, response);
 
                                     if(response.code() >= 200) {
                                         //week-wise timetables of the remaining semester for the current studyGroup in the for-loop
-                                        List<TimeTableWeekVo> timeTableWeek = response.body();
+                                        List<TimeTableWeekVo> timeTableWeek = new ArrayList<>(response.body().values());
 
                                         //add all time table events of the remaining semester (= list of timetableWeeks)
                                         // to the list of allCoursesInChosenSemester
@@ -327,7 +327,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                                 }
 
                                 @Override
-                                public void onFailure(Call<ArrayList<TimeTableWeekVo>> call, Throwable t) {
+                                public void onFailure(Call<Map<String,TimeTableWeekVo>> call, Throwable t) {
                                     super.onFailure(call, t);
                                     Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
                                 }

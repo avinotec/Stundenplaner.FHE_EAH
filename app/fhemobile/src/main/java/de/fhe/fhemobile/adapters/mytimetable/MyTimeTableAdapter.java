@@ -225,10 +225,8 @@ public abstract class MyTimeTableAdapter extends BaseAdapter {
         params.setMargins(0,5,5,10);
         dateTextview.setLayoutParams(params);
 
-        final Date dateStartDate = new java.util.Date(event.getStartDateTime());
-        //final String date = new SimpleDateFormat("dd.MM.yyyy").format(df);
-        final String date = sdf.format(dateStartDate);
-        final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(dateStartDate);
+        final String date = sdf.format(event.getStartDate());
+        final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(event.getStartDate());
         String courseDateText = dayOfWeek + ", " + date + "  "
                 + event.getStartTime() + " – " + event.getEndTime();
         if(roomVisible && event.getRoom().length() > 0) courseDateText += "\n"+ event.getRoom();

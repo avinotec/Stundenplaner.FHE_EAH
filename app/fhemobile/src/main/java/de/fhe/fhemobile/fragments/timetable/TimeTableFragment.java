@@ -32,6 +32,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
@@ -135,16 +136,16 @@ public class TimeTableFragment extends FeatureFragment {
 		return super.onOptionsItemSelected(_item);
 	}
 
-	private final Callback<ArrayList<TimeTableWeekVo>> mCallback = new Callback<ArrayList<TimeTableWeekVo>>() {
+	private final Callback<Map<String, TimeTableWeekVo>> mCallback = new Callback<Map<String, TimeTableWeekVo>>() {
 		@Override
-		public void onResponse(final Call<ArrayList<TimeTableWeekVo>> call, final Response<ArrayList<TimeTableWeekVo>> response) {
+		public void onResponse(final Call<Map<String, TimeTableWeekVo>> call, final Response<Map<String, TimeTableWeekVo>> response) {
 			if (response.body() != null) {
-				mView.setPagerItems(response.body());
+				mView.setPagerItems(new ArrayList(response.body().values()));
 			}
 		}
 
 		@Override
-		public void onFailure(final Call<ArrayList<TimeTableWeekVo>> call, final Throwable t) {
+		public void onFailure(final Call<Map<String, TimeTableWeekVo>> call, final Throwable t) {
 			showErrorToast();
 			Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 		}

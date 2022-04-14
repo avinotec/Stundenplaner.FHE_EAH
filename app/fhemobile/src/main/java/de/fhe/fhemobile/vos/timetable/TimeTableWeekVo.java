@@ -21,8 +21,10 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by paul on 16.03.15
@@ -37,7 +39,7 @@ public class TimeTableWeekVo implements Parcelable {
         mWeekStart = in.readLong();
         mWeekEnd = in.readLong();
         mSemesterWeek = in.readInt();
-        in.readTypedList(mDays, TimeTableDayVo.CREATOR);
+        in.readMap(mDays, TimeTableDayVo.class.getClassLoader());
     }
 
     @Override
@@ -45,7 +47,7 @@ public class TimeTableWeekVo implements Parcelable {
         dest.writeLong(mWeekStart);
         dest.writeLong(mWeekEnd);
         dest.writeInt(mSemesterWeek);
-        dest.writeTypedList(mDays);
+        dest.writeMap(mDays);
     }
 
     @Override
@@ -64,15 +66,15 @@ public class TimeTableWeekVo implements Parcelable {
     };
 
     public Date getWeekStart() {
-        return new Date(mWeekStart);
+        //multiply by 1000 to convert from seconds to milliseconds
+        Date date = new Date(mWeekStart * 1000);
+        return date;
     }
 
     public Date getWeekEnd() {
-        return new Date(mWeekEnd);
-    }
-
-    public int getSemesterWeek() {
-        return mSemesterWeek;
+        //multiply by 1000 to convert from seconds to milliseconds
+        Date date = new Date(mWeekEnd * 1000);
+        return date;
     }
 
     /**
@@ -82,8 +84,8 @@ public class TimeTableWeekVo implements Parcelable {
      */
     public int getSemesterWeekForDisplay(){ return mSemesterWeek+1;}
 
-    public ArrayList<TimeTableDayVo> getDays() {
-        return mDays;
+    public Collection<TimeTableDayVo> getDays() {
+        return mDays.values();
     }
 
     @SerializedName("weekStart")
@@ -96,5 +98,5 @@ public class TimeTableWeekVo implements Parcelable {
     private int mSemesterWeek;
 
     @SerializedName("dataDay")
-    private final ArrayList<TimeTableDayVo> mDays = new ArrayList<>();
+    private final Map<String, TimeTableDayVo> mDays = new HashMap<>();
 }

@@ -47,6 +47,6 @@ public class TimeTableLocationVo implements Parcelable {
     @SerializedName("locationId")
     private String mId;
 
-    @SerializedName("staffName")
+    @SerializedName("locationName")
     private String mName;
 }

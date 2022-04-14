@@ -27,6 +27,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.fhe.fhemobile.utils.timetable.TimeTableUtils;
 
@@ -56,8 +58,8 @@ public class TimeTableEventVo implements Parcelable {
         dest.writeLong(mEndDateTime);
         dest.writeString(mCourseName);
         dest.writeString(mCourseDescription);
-        dest.writeTypedList(mLecturerList);
-        dest.writeTypedList(mLocationList);
+        dest.writeMap(mLecturerList);
+        dest.writeMap(mLocationList);
     }
 
     private TimeTableEventVo(final Parcel in) {
@@ -69,8 +71,8 @@ public class TimeTableEventVo implements Parcelable {
         this.mEndDateTime = in.readLong();
         this.mCourseName = in.readString();
         mCourseDescription = in.readString();
-        mLecturerList = in.readArrayList(LecturerVo.class.getClassLoader());
-        mLocationList = in.readArrayList(TimeTableLocationVo.class.getClassLoader());
+        in.readMap(mLecturerList , LecturerVo.class.getClassLoader());
+        in.readMap(mLocationList, TimeTableLocationVo.class.getClassLoader());
     }
 
 
@@ -93,7 +95,11 @@ public class TimeTableEventVo implements Parcelable {
     }
 
     public long getStartDateTime() {
-        return mStartDateTime;
+        return mStartDateTime * 1000;
+    }
+
+    public long getEndDateTime() {
+        return mEndDateTime * 1000;
     }
 
     /**
@@ -101,20 +107,22 @@ public class TimeTableEventVo implements Parcelable {
      * @return
      */
     public Date getStartDate() {
-        return new Date(mStartDate);
+        //multiply by 1000 to convert from seconds to milliseconds
+        return new Date(mStartDate * 1000);
     }
 
     public String getStartTime(){
-        return sdf.format(new Date(mStartDateTime).getTime());
+        //multiply by 1000 to convert from seconds to milliseconds
+        return sdf.format(new Date(mStartDateTime * 1000));
     }
 
     public String getEndTime() {
-        return sdf.format(new Date((mEndDateTime)).getTime());
+        return sdf.format(new Date((mEndDateTime * 1000)));
     }
 
     public String getRoom(){
         StringBuilder stringBuilder = null;
-        for(TimeTableLocationVo room : mLocationList){
+        for(TimeTableLocationVo room : mLocationList.values()){
 
             if(stringBuilder == null){
                 stringBuilder = new StringBuilder();
@@ -128,13 +136,13 @@ public class TimeTableEventVo implements Parcelable {
 
     public String getWeekDayName(){
         Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date(mStartDate));
+        cal.setTime(new Date(mStartDate * 1000));
         return TimeTableUtils.getWeekDayName(cal.get(Calendar.DAY_OF_WEEK));
     }
 
     public String getLecturer(){
         StringBuilder stringBuilder = null;
-        for(LecturerVo lecturer: mLecturerList){
+        for(LecturerVo lecturer: mLecturerList.values()){
 
             if(stringBuilder == null){
                 stringBuilder = new StringBuilder();
@@ -158,10 +166,10 @@ public class TimeTableEventVo implements Parcelable {
     @SerializedName("activityEndDate")
     private long mEndDate;
 
-    @SerializedName("activityStartDateTime")
+    @SerializedName("activitydatetimeStartDateTime")
     private long mStartDateTime;
 
-    @SerializedName("activityEndDateTime")
+    @SerializedName("activitydatetimeEndDateTime")
     private long mEndDateTime;
 
     @SerializedName("moduleName")
@@ -171,8 +179,8 @@ public class TimeTableEventVo implements Parcelable {
     private String mCourseDescription;
 
     @SerializedName("dataStaff")
-    private ArrayList<LecturerVo> mLecturerList = new ArrayList<>();
+    private Map<String, LecturerVo> mLecturerList = new HashMap<>();
 
     @SerializedName("dataLocation")
-    private ArrayList<TimeTableLocationVo> mLocationList = new ArrayList<>();
+    private Map<String, TimeTableLocationVo> mLocationList = new HashMap<>();
 }

@@ -22,8 +22,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import de.fhe.fhemobile.utils.timetable.TimeTableUtils;
@@ -36,13 +36,13 @@ public final class TimeTableDayVo implements Parcelable {
 
     private TimeTableDayVo(final Parcel in) {
         mDayNumber = in.readInt();
-        in.readTypedList(mEvents, TimeTableEventVo.CREATOR);
+        in.readMap(mEvents, TimeTableEventVo.class.getClassLoader());
     }
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeInt(mDayNumber);
-        dest.writeTypedList(mEvents);
+        dest.writeMap(mEvents);
     }
 
     @Override
@@ -66,8 +66,8 @@ public final class TimeTableDayVo implements Parcelable {
         return TimeTableUtils.getWeekDayName(mDayNumber);
     }
 
-    public ArrayList<TimeTableEventVo> getEvents() {
-        return mEvents;
+    public Collection<TimeTableEventVo> getEvents() {
+        return mEvents.values();
     }
 
 
@@ -76,5 +76,5 @@ public final class TimeTableDayVo implements Parcelable {
     private final int mDayNumber;
 
     @SerializedName("dataActivity")
-    private final ArrayList<TimeTableEventVo> mEvents = new ArrayList<>();
+    private final Map<String, TimeTableEventVo> mEvents = new HashMap<>();
 }

@@ -39,10 +39,16 @@ public class TimeTableUtils {
     }
 
 
-    private static final Map<String, Integer> weekDayNames = Calendar.getInstance()
-            .getDisplayNames(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+    private static Map<String, Integer> weekDayNames = null;
 
     public static String getWeekDayName(final int dayNumber){
+
+        if(weekDayNames == null){
+            Calendar cal = Calendar.getInstance();
+            cal.setFirstDayOfWeek(Calendar.MONDAY);
+            weekDayNames = cal.getDisplayNames(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+        }
+
         for(Map.Entry<String, Integer> day : weekDayNames.entrySet()){
             if(day.getValue() == dayNumber){
                 return day.getKey();

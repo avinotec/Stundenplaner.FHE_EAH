@@ -17,6 +17,7 @@
 package de.fhe.fhemobile.network;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.vos.CafeAquaResponse;
@@ -75,7 +76,7 @@ public interface ApiDeclaration {
 
 
     @GET(Endpoints.TIMETABLE_EVENTS + "/{studyGroupId}/detail")
-    Call<ArrayList<TimeTableWeekVo>> fetchTimeTableEvents(@Path(Endpoints.PARAM_STUDYGROUP_ID) String _StudyGroupId);
+    Call<Map<String,TimeTableWeekVo>> fetchTimeTableEvents(@Path(Endpoints.PARAM_STUDYGROUP_ID) String _StudyGroupId);
 
     @Headers({
             "Content-Type:application/json"

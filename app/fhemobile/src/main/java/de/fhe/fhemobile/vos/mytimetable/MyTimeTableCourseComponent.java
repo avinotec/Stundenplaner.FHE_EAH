@@ -148,7 +148,7 @@ public class MyTimeTableCourseComponent implements Parcelable {
 		for(TimeTableEventVo event : events){
 			if(event.getTitle().equals(_Event.getTitle())
 					&& event.getStartDateTime() == _Event.getStartDateTime()
-					&& event.getEndTime().equals(_Event.getEndTime())
+					&& event.getEndDateTime() == (_Event.getEndDateTime())
 					&& event.getRoom().equals(_Event.getRoom())){
 				return true;
 			}

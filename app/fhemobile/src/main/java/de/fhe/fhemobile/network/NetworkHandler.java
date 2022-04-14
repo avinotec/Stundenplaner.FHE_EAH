@@ -26,6 +26,7 @@ import org.junit.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.models.mensa.MensaFoodModel;
@@ -404,7 +405,8 @@ public class NetworkHandler {
 	 * @param _StudyGroupId
 	 * @param _Callback
 	 */
-	public void fetchTimeTableEvents(final String _StudyGroupId, final Callback<ArrayList<TimeTableWeekVo>> _Callback) {
+	public void fetchTimeTableEvents(final String _StudyGroupId,
+									 final Callback<Map<String, TimeTableWeekVo>> _Callback) {
 		Assert.assertTrue( mApiEah != null );
 
 		mApiEah.fetchTimeTableEvents(_StudyGroupId).enqueue(_Callback);
@@ -448,7 +450,7 @@ public class NetworkHandler {
 	 * @param json
 	 * @param _Callback
 	 */
-	public void registerTimeTableChanges(final String json, final Callback<ResponseModel>_Callback){
+	public void registerTimeTableChanges(final String json, final Callback<ResponseModel> _Callback){
 		Assert.assertTrue( mApi != null );
 		//okhttp 4.x final RequestBody body =RequestBody.create( json, MediaType.parse("application/json"));
 		//okhttp 3.12 flip parameters
