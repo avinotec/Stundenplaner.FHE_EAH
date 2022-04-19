@@ -20,8 +20,8 @@ package de.fhe.fhemobile.models.navigation;
 import static de.fhe.fhemobile.utils.Define.Navigation.COSTS_CELL;
 import static de.fhe.fhemobile.utils.navigation.NavigationUtils.floorStringToInt;
 
-import de.fhe.fhemobile.vos.navigation.BuildingVo;
 import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
+import de.fhe.fhemobile.vos.navigation.BuildingVo;
 import de.fhe.fhemobile.vos.navigation.Complex;
 import de.fhe.fhemobile.vos.navigation.RoomVo;
 
@@ -66,14 +66,19 @@ public class Cell {
 // --Commented out by Inspection STOP (04.01.2022 18:46)
 
     public Cell(final int xCoordinate, final int yCoordinate, final Complex complex, final String floor, final boolean walkable) {
+    //TODO RouteRework
+    // public Cell(final int xCoordinate, final int yCoordinate, final String building, final String floor, final boolean walkable) {
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
+        //this.building = new BuildingVo(building);
         this.building = new BuildingVo(complex);
 
         this.floor = floor;
         this.walkable = walkable;
         this.costPassingCell = COSTS_CELL;
-        this.key = building + getFloorString() + xCoordinate + yCoordinate;
+        // create key for Cell
+        this.key = this.building.getBuilding() + getFloorString() +"-" + xCoordinate +"-"+ yCoordinate;
+        //old this.key = building + getFloorString() +"-" + xCoordinate +"-"+ yCoordinate;
     }
 
     /**
@@ -86,13 +91,10 @@ public class Cell {
      */
     public Cell(final int xCoordinate, final int yCoordinate, final String building, final String floor,
                 final boolean walkable, final int costPassingCell) {
-        this.xCoordinate = xCoordinate;
-        this.yCoordinate = yCoordinate;
+
+        this( xCoordinate, yCoordinate, null, floor, walkable );
         this.building = new BuildingVo(building);
-        this.floor = floor;
-        this.walkable = walkable;
         this.costPassingCell = costPassingCell;
-        this.key = this.building.getBuilding() + getFloorString() +"-" + xCoordinate +"-"+ yCoordinate;
     }
 
     //Getter
@@ -154,13 +156,15 @@ public class Cell {
         this.costsPathToCell =+costsPathToCell;
     }
 
-    public void setBuilding(final String building) {
-        this.building = new BuildingVo(building);
-    }
+    //unused
+    //public void setBuilding(final String building) {
+    //    this.building = new BuildingVo(building);
+    //}
 
-    public void setFloor(final String floor) {
-        this.floor = floor;
-    }
+    //unused
+    //public void setFloor(final String floor) {
+    //    this.floor = floor;
+    //}
 
     public void setXCoordinate(final int xCoordinate) {
         this.xCoordinate = xCoordinate;
