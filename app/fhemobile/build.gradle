@@ -28,14 +28,15 @@ apply plugin: 'com.android.application'
  * build options.
  */
 android {
-    /**
+	compileSdk 31
+	
+	/**
      * compileSdkVersion specifies the Android API level Gradle should use to
      * compile your app. This means your app can use the API features included in
      * this API level and lower.
      */
-    compileSdkVersion 32
-
-    /**
+	
+	/**
      * buildToolsVersion specifies the version of the SDK build tools, command-line
      * utilities, and compiler that Gradle should use to build your app. You need to
      * download the build tools using the SDK Manager.
