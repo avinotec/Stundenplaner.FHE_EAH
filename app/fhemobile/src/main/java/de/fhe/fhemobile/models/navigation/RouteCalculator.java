@@ -85,7 +85,7 @@ public class RouteCalculator {
         cellsToWalk.clear();
         floorGrids.clear();
 
-        //Get grids of floors to use - fills in variable floorGrids
+        //Get grids of floors to use - fills in variable floorGrids - initialize
         getRequiredFloorGrids();
 
         try {
@@ -95,16 +95,19 @@ public class RouteCalculator {
 
             //ROUTE OHNE GEBÄUDEWECHSEL
             //route just within one complex, user does not have to change between complexes
-            if(startComplex == destLocation.getComplex()){
+            if(startComplex == destComplex){
                 //construct an instance of the Navigation Algorithm (AStar)
-                final AStar aStar = new AStar(startLocation, destLocation, floorGrids, floorConnections);
+                AStar aStar = new AStar(startLocation, destLocation, floorGrids, floorConnections);
                 //compute route and save it to cellsToWalk
                 cellsToWalk.putAll(aStar.getCellsToWalk());
+
+                // force garbage collection
+                aStar = null;
             }
 
             //ROUTE MIT GEBÄUDEWECHSEL
             //start and destination complex differ -> user has to change between complexes
-            else{
+            else {
 
                 //determine Exit to use for leaving complex to the start complex
                 // and determine Exit to use for entering the destination complex
@@ -145,12 +148,17 @@ public class RouteCalculator {
 
                 //first add entry-dest and then exit-start to maintain the order important for prev/next-button navigation in NavigationFragment
                 //route to get to destination within the destination complex
-                final AStar aStar2 = new AStar(entry, destLocation, floorGrids, floorConnections);
+                AStar aStar2 = new AStar(entry, destLocation, floorGrids, floorConnections);
                 cellsToWalk.putAll(aStar2.getCellsToWalk());
+                // force garbage collection
+                aStar2 = null;
 
                 //route to get out of start complex
-                final AStar aStar1 = new AStar(startLocation, buildingExit, floorGrids, floorConnections);
+                AStar aStar1 = new AStar(startLocation, buildingExit, floorGrids, floorConnections);
                 cellsToWalk.putAll(aStar1.getCellsToWalk());
+                //force garbage collection
+                aStar1 = null;
+
 
             }
 
@@ -170,6 +178,7 @@ public class RouteCalculator {
         final Complex startComplex = startLocation.getComplex();
         final Complex destinationComplex = destLocation.getComplex();
 
+        floorGrids.clear();
 
         //add floorgrids of the start and destination building,
         //für einen Komplex/Gebäude werden immer alle floorgrids hinzugefügt,
@@ -209,14 +218,14 @@ public class RouteCalculator {
 
 
     /**
-     * Builds a grid of all cells of a floorplan
+     * Builds a grid of all cells of a floorplan, initialize
      * @param complex the {@link Complex} of the floor plan
      * @param floorInt the floor of the floor plan as integer (ug = -1)
      * @return floorgrid as 2D Arraylist with all cells of the floor
      */
     private Cell[][] buildFloorGrid(final Complex complex, final int floorInt) {
 
-        final Cell[][] floorGrid = new Cell[(int)cellgrid_width][(int)cellgrid_height];
+        final Cell[][] floorGrid = new Cell[cellgrid_width][cellgrid_height];
         final String floor = floorIntToString(complex, floorInt);
 
         try {
@@ -257,9 +266,11 @@ public class RouteCalculator {
                         if(aCell != null){
                             //add a walkable cell with coordinates x,y to grid
                             floorGrid[x][y] = new Cell(x, y, complex, floor, true);
+                            //TODO RouteRework floorGrid[x][y] = new Cell(x, y, complex.toString(), floor, true);
                         } else{
                             //then fill with non-walkable cell
                             floorGrid[x][y] = new Cell(x, y, complex, floor, false);
+                            //TODO RouteRework floorGrid[x][y] = new Cell(x, y, complex.toString(), floor, false);
                         }
                     }
                 }
