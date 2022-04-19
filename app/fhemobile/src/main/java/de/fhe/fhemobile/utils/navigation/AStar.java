@@ -37,38 +37,52 @@ import de.fhe.fhemobile.vos.navigation.FloorConnectionVo;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
 
 /**
- * Class for route calculation at a single floor using the A* algorithm
+ * Class for route calculation at a single floor using the A* algorithm;
+ *
+ * Details of the A* algorithm -> see pseudocode at the english wikipedia page
  */
 public class AStar {
-    //details of the A* algorithm -> see pseudocode at the english wikipedia page
 
     private static final String TAG = "AStar"; //$NON-NLS
 
     //Variables
-
-    //the set of nodes discovered but not closed by the AStar Algorithm
-    //sorted by costsPathToCell because the algorithm should always consider the cheapest path' first
+    /**
+     * The set of nodes discovered but not closed by the AStar Algorithm,
+     * sorted by costsPathToCell because the algorithm should always consider the cheapest path first
+     */
     private PriorityQueue<Cell> openCells;
-    //the set of nodes that have been fully looked at/processed by the AStar algorithm (had been in added to openCells, looked at again and then removed from the openCells Queue)
-    //information needed to avoid running in circles (I guess)
-    //stores only cell key (building+floor+x+y)
+
+    /**
+     * The set of nodes that have been fully looked at/processed by the AStar algorithm
+     * (that is when a cell had been added to openCells, checked a second time and then removed from the openCells Queue).
+     * This information is needed to avoid running in circles (I guess).
+     * Closed Cells are only stored as string/key (building+floor+x+y).
+     */
     private ArrayList<String> closedCells;
 
     private final Cell startCell;
     private final Cell destCell;
 
-    //Koordinatensystem aus allen begehbaren und nicht-begehbaren Zellen aller Stockwerke und Häuser
-    //generated from the information from the json files of each building and floor (building_xx_floor_xx_.json in eah\assets)
-    //for each building (key = building as string e.g. "01") and for each floor (key = floor as int) a grid of cells is stored
+    /**
+     * Coordinate system of all walkable and non-walkable cells for each building and floor.
+     *
+     * For each building/complex ({@link Complex} used as key),
+     * the Map contains a grid of cells (Cell Array) for each floor (floor int used as key) in that complex.
+     * It is generated from the corresponding json files of each building and floor (building_xx_floor_xx_.json in eah\assets).
+     */
     private final HashMap<Complex, HashMap<Integer, Cell[][]>> floorGrids;
-    //ArrayList of all floorconnections storing the particular set of connected cells
+    /**
+     * List of all {@link FloorConnectionVo}'s, each storing the particular set of connected cells
+     */
     private final ArrayList<FloorConnectionVo> floorConnections;
+
 
     /**
      * Constructs an AStar Object
-     * @param startCell the cell the algorithm should start with
-     * @param endCell the cell the algorithm should find a way to
-     * @param floorCellGrids the floor plans as grids the way can lead through
+     * @param startCell The cell the algorithm should start with
+     * @param endCell The cell the algorithm should find a way to
+     * @param floorCellGrids The required floor plans as grids, sorted by complex and floor
+     * @param floorConnections The list of all floor connections in all buildings and floors
      */
     public AStar(final Cell startCell, final Cell endCell,
                  final HashMap<Complex, HashMap<Integer, Cell[][]>> floorCellGrids,
@@ -81,8 +95,9 @@ public class AStar {
 
 
     /**
-     * Calculates the cells to walk from start to destination using the shortest path
-     * @return sorted Map of cells to walk
+     * Call the A* algorithm to calculate a route from start to destination using the shortest path,
+     * then get the list of all cells to walk by backtracing.
+     * @return Map of cells to walk, sorted for displaying
      */
     public final LinkedHashMap<BuildingFloorKey, ArrayList<Cell>> getCellsToWalk() {
 
@@ -173,7 +188,9 @@ public class AStar {
     }
 
     /**
-     * Performs A* algorithm
+     * Perform A* algorithm.
+     *
+     * Only costs of path' and parent cells are computed, no backtracing of cells to walk.
      */
     private void performAStarAlgorithm() {
 
@@ -197,10 +214,12 @@ public class AStar {
 
                     //if currentCell is floorconnection,
                     // then also consider all cells connected by the floorconnection as neighbors
-                    //if start and destination are located at the same floor,
-                    // floorconnections are not need and thus should not be considered to save runtime
-                    // check exceptional case building 3 and 1, floor -1
                     if(currentCell instanceof FloorConnectionCell)
+
+                        //if start and destination are located at the same floor,
+                        // floorconnections are not needed and thus should not be considered to save runtime
+                        //attention: in the exceptional case of a route between building 3 and 1 at floor -1,
+                        // floorconnections are needed due to lack of a connection of building 3 and 1 at floor -1
                         if (startCell.getComplex() != destCell.getComplex()
                                 || startCell.getFloorInt() != destCell.getFloorInt()
                                 || checkExceptCaseBuild321FloorUG(startCell, destCell) ) {
@@ -252,7 +271,7 @@ public class AStar {
     }
 
     /**
-     * Update parent cell for the particular cell and the costs for the path to the cell
+     * Update parent cell for the particular cell and the costs for the path to it
      * @param cell the cell to update
      * @param parentCell the cell's parent
      */
@@ -281,16 +300,17 @@ public class AStar {
                 cell.setParentCell(parentCell);
 
                 if (!isInOpenQueue) {
-                    openCells.add(cell); //update status of cell from unknown to "open"
+                    //update status of cell from unknown to "open"
+                    openCells.add(cell);
                 }
             }
         }
     }
 
     /**
-     * Finds the {@link FloorConnectionVo} object the {@link FloorConnectionCell} belongs to
-     * @param cell floorconnectionCell of a floorconnection object
-     * @return List of all {@link FloorConnectionCell} objects connected with the cell
+     * Find the {@link FloorConnectionVo} object the {@link FloorConnectionCell} belongs to
+     * @param cell The {@link FloorConnectionCell} of a {@link FloorConnectionVo} object
+     * @return List of all {@link FloorConnectionCell}s connected with the specified {@link FloorConnectionCell}
      */
     private ArrayList<FloorConnectionCell> findConnectedCells(final FloorConnectionCell cell){
         for (final FloorConnectionVo fc : floorConnections){
