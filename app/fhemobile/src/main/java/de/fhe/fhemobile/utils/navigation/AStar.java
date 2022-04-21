@@ -138,6 +138,7 @@ public class AStar {
             // if destination is exit then add it as cellToWalk
             if(currentCell instanceof BuildingExitVo){
                 //TODO analyzer sagt, die Bedingung wäre IMMER false ???
+                //Antwort Nadja: cellsToWalk wird im Aufruf performAStarAlgorithm weiter oben gefüllt, das erkennt der vermutlich nicht
                 if(cellsToWalk.containsKey(buildingFloorKeyCurrentCell)){
                     cellsToWalk.get(buildingFloorKeyCurrentCell).add(currentCell);
                 }
