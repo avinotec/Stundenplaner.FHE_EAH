@@ -223,8 +223,8 @@ public class RouteCalculator {
 
     /**
      * Build a grid of all cells of a floorplan, initialize
-     * @param complex the {@link Complex} of the floor plan
-     * @param floorInt the floor of the floor plan as integer (ug = -1)
+     * @param complex The {@link Complex} of the floor plan
+     * @param floorInt The floor of the floor plan as integer (ug = -1)
      * @return floorgrid as 2D Arraylist with all cells of the floor
      */
     private Cell[][] buildFloorGrid(final Complex complex, final int floorInt) {
@@ -270,11 +270,9 @@ public class RouteCalculator {
                         if(aCell != null){
                             //add a walkable cell with coordinates x,y to grid
                             floorGrid[x][y] = new Cell(x, y, complex, floor, true);
-                            //TODO RouteRework floorGrid[x][y] = new Cell(x, y, complex.toString(), floor, true);
                         } else{
                             //then fill with non-walkable cell
                             floorGrid[x][y] = new Cell(x, y, complex, floor, false);
-                            //TODO RouteRework floorGrid[x][y] = new Cell(x, y, complex.toString(), floor, false);
                         }
                     }
                 }
