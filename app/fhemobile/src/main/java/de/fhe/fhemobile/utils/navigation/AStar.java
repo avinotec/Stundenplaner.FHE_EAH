@@ -55,7 +55,9 @@ public class AStar {
     /**
      * The set of nodes that have been fully looked at/processed by the AStar algorithm
      * (that is when a cell had been added to openCells, checked a second time and then removed from the openCells Queue).
-     * This information is needed to avoid running in circles (I guess).
+     * This information ensures to not touch a cell again after it has been discovered and processed.
+     * (I guess, this is needed to prevent running in circles).
+     *
      * Closed Cells are only stored as string/key (building+floor+x+y).
      */
     private ArrayList<String> closedCells;
@@ -273,8 +275,8 @@ public class AStar {
 
     /**
      * Update parent cell for the particular cell and the costs for the path to it
-     * @param cell the cell to update
-     * @param parentCell the cell's parent
+     * @param cell The cell to update
+     * @param parentCell The cell's parent
      */
     private void updateParentAndPathToCellCosts(final Cell cell, final Cell parentCell) {
 

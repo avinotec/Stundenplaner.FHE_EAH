@@ -40,33 +40,37 @@ import de.fhe.fhemobile.vos.navigation.RoomVo;
 
 
 /**
- *  Klasse für Routenberechnung über mehrere Stockwerke und Gebäude
+ *  Class for route calculation over multiple floors ans buildings
+ *
  *  source: Bachelor Thesis from Tim Münziger from SS2020
- *  edit by Nadja in October 2021
+ *  edited by Nadja in October 2021
  */
 public class RouteCalculator {
 
-    //Constants
     private static final String TAG = "RouteCalculator"; //$NON-NLS
 
-    //Variables
+
     private final ArrayList<FloorConnectionVo> floorConnections;
     private final ArrayList<BuildingExitVo> buildingExits;
     private final Cell startLocation;
     private final Cell destLocation;
-    //gesamte Route
+    /**
+     * Complete route
+     */
     private final LinkedHashMap<BuildingFloorKey, ArrayList<Cell>> cellsToWalk = new LinkedHashMap<>();
-    //Koordinatensysteme aller Stockwerke
-    //for each building (key = complex e.g. BUILDING_321) and for each floor (key = floor as int) a grid of cells is stored
+    /**
+     * Coordinate system of all floors.
+     * A grid of cells is stored for each {@link Complex} (e.g. BUILDING_321) and floor integer.
+     */
     private final HashMap<Complex, HashMap<Integer, Cell[][]>> floorGrids = new HashMap<>();
 
 
     /**
-     * Constructs a new {@link RouteCalculator} object
-     * @param startLocation the start room
-     * @param destLocation the destination room
-     * @param floorConnections the list of {@link FloorConnectionVo}s
-     * @param buildingExits the list of {@link BuildingExitVo}s
+     * Construct a new {@link RouteCalculator} object
+     * @param startLocation The start room
+     * @param destLocation The destination room
+     * @param floorConnections The list of {@link FloorConnectionVo}s
+     * @param buildingExits The list of {@link BuildingExitVo}s
      */
     public RouteCalculator(final RoomVo startLocation, final RoomVo destLocation,
                            final ArrayList<FloorConnectionVo> floorConnections, final ArrayList<BuildingExitVo> buildingExits) {
@@ -171,7 +175,8 @@ public class RouteCalculator {
 
 
     /**
-     * Builds grids of all required floors in all used buildings and saves it to variable "floorGrids"
+     * Build grids of all required floors in all used buildings
+     * and save it to variable "floorGrids"
      */
     private void getRequiredFloorGrids() {
 
@@ -180,9 +185,8 @@ public class RouteCalculator {
 
         floorGrids.clear();
 
-        //add floorgrids of the start and destination building,
-        //für einen Komplex/Gebäude werden immer alle floorgrids hinzugefügt,
-        //es werden nur Gebäude ausgelassen die weder Start noch Ziel enthalten
+        // Add floorgrids of the start and destination complex.
+        // Grids of ALL floors of each complex are added (not only ones used, becomes we don't know them here, yet.)
         try {
             if(startComplex == Complex.COMPLEX_321
                     || destinationComplex == Complex.COMPLEX_321){
@@ -218,7 +222,7 @@ public class RouteCalculator {
 
 
     /**
-     * Builds a grid of all cells of a floorplan, initialize
+     * Build a grid of all cells of a floorplan, initialize
      * @param complex the {@link Complex} of the floor plan
      * @param floorInt the floor of the floor plan as integer (ug = -1)
      * @return floorgrid as 2D Arraylist with all cells of the floor
