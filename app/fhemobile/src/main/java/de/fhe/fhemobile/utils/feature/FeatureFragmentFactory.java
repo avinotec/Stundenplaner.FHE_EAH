@@ -39,8 +39,8 @@ public class FeatureFragmentFactory {
 
         //TODO Features
         switch (_FeatureId) {
-            case Features.FeatureId.TIMETABLE:       fragment = TimeTableFactory.getTimeTableFragment();    break;
-            case Features.FeatureId.MYTIMETABLE:     fragment = MyTimeTableCalendarFragment.newInstance();  break;
+            case Features.FeatureId.TIMETABLE:       //fragment = TimeTableFactory.getTimeTableFragment();    break;
+            case Features.FeatureId.MYTIMETABLE:     //fragment = MyTimeTableCalendarFragment.newInstance();  break;
             case Features.FeatureId.MENSA:           fragment = MensaFoodFragment.newInstance();            break;
             //case Features.FeatureId.MENSA:           fragment = MensaFragmentNEW.newInstance();           break;
             case Features.FeatureId.MAPS:            fragment = MapsDialogFragment.newInstance();           break;
