@@ -31,21 +31,21 @@ import androidx.appcompat.app.ActionBar;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.SettingsActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.models.canteen.CanteenFoodModel;
+import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.utils.feature.Features;
 import de.fhe.fhemobile.views.canteen.CanteenView;
 
 
-public class CanteenFoodFragment extends FeatureFragment {
+public class CanteenMenuFragment extends FeatureFragment {
 
-    public CanteenFoodFragment() {
+    public CanteenMenuFragment() {
         // Required empty public constructor
     }
 
-    public static CanteenFoodFragment newInstance() {
-        final CanteenFoodFragment fragment = new CanteenFoodFragment();
+    public static CanteenMenuFragment newInstance() {
+        final CanteenMenuFragment fragment = new CanteenMenuFragment();
         final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -55,10 +55,7 @@ public class CanteenFoodFragment extends FeatureFragment {
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        if (getArguments() != null) {
-//
-//        }
-
+        //enable settings in app bar
         setHasOptionsMenu(true);
     }
 
@@ -69,7 +66,7 @@ public class CanteenFoodFragment extends FeatureFragment {
         mView = (CanteenView) inflater.inflate(R.layout.fragment_canteen_food, container, false);
         mView.initializeView();
 
-        if(CanteenFoodModel.getInstance().getFoodItems() == null) {
+        if(CanteenModel.getInstance().getMenus() == null) {
             NetworkHandler.getInstance().fetchCanteenData();
         }
 

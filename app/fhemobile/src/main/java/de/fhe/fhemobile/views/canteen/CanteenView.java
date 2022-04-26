@@ -28,10 +28,10 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.StickyHeaderAdapter;
 import de.fhe.fhemobile.events.Event;
 import de.fhe.fhemobile.events.EventListener;
-import de.fhe.fhemobile.models.canteen.CanteenFoodModel;
+import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.utils.headerlistview.HeaderListView;
-import de.fhe.fhemobile.vos.canteen.CanteenFoodItemCollectionVo;
-import de.fhe.fhemobile.vos.canteen.CanteenFoodItemVo;
+import de.fhe.fhemobile.vos.canteen.CanteenMenuDayVo;
+import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
 import de.fhe.fhemobile.widgets.stickyHeaderList.DefaultHeaderItem;
 import de.fhe.fhemobile.widgets.stickyHeaderList.IHeaderItem;
 import de.fhe.fhemobile.widgets.stickyHeaderList.IRowItem;
@@ -49,12 +49,12 @@ public class CanteenView extends LinearLayout {
     public CanteenView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
-        mModel  = CanteenFoodModel.getInstance();
+        mModel  = CanteenModel.getInstance();
 
     }
 
     public void initializeView() {
-        if(mModel.getFoodItems() != null) {
+        if(mModel.getMenus() != null) {
             populateList();
         }
         else {
@@ -63,14 +63,14 @@ public class CanteenView extends LinearLayout {
     }
 
     public void registerModelListener() {
-        mModel.addListener(CanteenFoodModel.ChangeEvent.RECEIVED_FOOD_DATA, mReceivedCanteenFoodListener);
-        mModel.addListener(CanteenFoodModel.ChangeEvent.RECEIVED_EMPTY_FOOD_DATA, mReceivedEmptyCanteenFoodListener);
+        mModel.addListener(CanteenModel.ChangeEvent.RECEIVED_FOOD_DATA, mReceivedCanteenFoodListener);
+        mModel.addListener(CanteenModel.ChangeEvent.RECEIVED_EMPTY_FOOD_DATA, mReceivedEmptyCanteenFoodListener);
 
     }
 
     public void deregisterModelListener() {
-        mModel.removeListener(CanteenFoodModel.ChangeEvent.RECEIVED_FOOD_DATA, mReceivedCanteenFoodListener);
-        mModel.removeListener(CanteenFoodModel.ChangeEvent.RECEIVED_EMPTY_FOOD_DATA, mReceivedEmptyCanteenFoodListener);
+        mModel.removeListener(CanteenModel.ChangeEvent.RECEIVED_FOOD_DATA, mReceivedCanteenFoodListener);
+        mModel.removeListener(CanteenModel.ChangeEvent.RECEIVED_EMPTY_FOOD_DATA, mReceivedEmptyCanteenFoodListener);
 
     }
 
@@ -82,10 +82,10 @@ public class CanteenView extends LinearLayout {
 
         sectionList.add(headerSection);
 
-        for (final CanteenFoodItemCollectionVo collection : mModel.getFoodItems()) {
+        for (final CanteenMenuDayVo collection : mModel.getMenus()) {
             final ArrayList<IRowItem> rowItems = new ArrayList<>();
 
-            for (final CanteenFoodItemVo canteenItem : collection.getItems()) {
+            for (final CanteenDishVo canteenItem : collection.getItems()) {
                 rowItems.add(new CanteenRowItem(canteenItem));
             }
 
@@ -131,7 +131,7 @@ public class CanteenView extends LinearLayout {
 
     private final Context mContext;
 
-    private CanteenFoodModel mModel              = null;
+    private CanteenModel mModel              = null;
 
     private StickyHeaderAdapter mAdapter;
 

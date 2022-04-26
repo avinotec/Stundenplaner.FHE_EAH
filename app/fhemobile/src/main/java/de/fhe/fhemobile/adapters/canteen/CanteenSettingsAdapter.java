@@ -24,7 +24,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.vos.canteen.CanteenChoiceItemVo;
+import de.fhe.fhemobile.vos.canteen.CanteenVo;
 
 /**
  * Created by paul on 13.02.14.
@@ -35,7 +35,7 @@ public class CanteenSettingsAdapter extends BaseAdapter {
         TextView mCanteenName;
     }
 
-    public CanteenSettingsAdapter(final Context mContext, final CanteenChoiceItemVo[] mItems) {
+    public CanteenSettingsAdapter(final Context mContext, final CanteenVo[] mItems) {
         this.mContext = mContext;
         this.mItems = mItems;
     }
@@ -70,7 +70,7 @@ public class CanteenSettingsAdapter extends BaseAdapter {
      */
     @Override
     public long getItemId(final int position) {
-        return mItems[position].getId();
+        return Long.parseLong(mItems[position].getCanteenId());
     }
 
     /**
@@ -117,5 +117,5 @@ public class CanteenSettingsAdapter extends BaseAdapter {
 
     private final Context mContext;
 
-    private final CanteenChoiceItemVo[] mItems;
+    private final CanteenVo[] mItems;
 }

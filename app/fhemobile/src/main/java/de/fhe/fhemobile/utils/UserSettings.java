@@ -16,34 +16,39 @@
  */
 package de.fhe.fhemobile.utils;
 
+import static de.fhe.fhemobile.utils.Define.MyTimeTable.PREF_SUBSCRIBED_COURSES;
+
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import de.fhe.fhemobile.Main;
-import de.fhe.fhemobile.models.canteen.CanteenFoodModel;
+import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.settings.UserDefaults;
+import de.fhe.fhemobile.vos.canteen.CanteenVo;
 
 /**
- * Created by paul on 22.01.14.
+ * Created by paul on 22.01.14
+ * Edited by Nadja - 04/2022
  */
 public class UserSettings {
     private static final UserSettings ourInstance = new UserSettings();
 
-    private static final String LOG_TAG = "UserSettings";
+    private static final String TAG = UserSettings.class.getSimpleName();
 
-    private static final String PREF_CHOSEN_CANTEEN = "chosenCanteen";        // $NON-NLS
-    private static final String PREF_CHOSEN_CANTEEN_NAME = "chosenCanteenName";    // $NON-NLS
+    private static final String PREF_CHOSEN_CANTEENS        = "chosenCanteens";        // $NON-NLS
     private static final String PREF_CHOSEN_NEWS_CATEGORY   = "chosenNewsCategory"; // $NON-NLS
 
     private final SharedPreferences   mSP;
 
-    private String mChosenCanteenId = null;
-    private ArrayList<String> mChosenCanteens = new ArrayList<>();
-    private String mChosenCanteenName = null;
-    private String              mChosenNewsCategory = null;
+    private ArrayList<CanteenVo> mChosenCanteens = new ArrayList<>();
+    private String mChosenNewsCategory = null;
 
     /**
      *
@@ -59,40 +64,59 @@ public class UserSettings {
     private UserSettings() {
         mSP = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext());
 
-        mChosenCanteenId = mSP.getString(PREF_CHOSEN_CANTEEN, UserDefaults.DEFAULT_CANTEEN_ID);
-        mChosenCanteenName = mSP.getString(PREF_CHOSEN_CANTEEN_NAME, UserDefaults.DEFAULT_CANTEEN_NAME);
+        //Canteen
+        final String json = mSP.getString(PREF_CHOSEN_CANTEENS,"");
+        //skip if json is empty
+        if ( !"".equals(json) && !"null".equals(json)) {
+            final Gson gson = new Gson();
+            Type listType = new TypeToken<ArrayList<CanteenVo>>(){}.getType();
+            mChosenCanteens = gson.fromJson(json, listType);
+        }
+
+        //News
         mChosenNewsCategory = mSP.getString(PREF_CHOSEN_NEWS_CATEGORY, UserDefaults.DEFAULT_NEWS_ID);
     }
 
-    /**
-     * Canteen
-     * @return
-     */
-    public String getChosenCanteenId() {
-        return mChosenCanteenId;
+    public ArrayList<CanteenVo> getChosenCanteens() {
+        return mChosenCanteens;
     }
 
-    /**
-     * Canteen
-     * @param _ChosenCanteenId
-     * @param _ChosenCanteenName
-     */
-    public void setChosenCanteen(final String _ChosenCanteenId, final String _ChosenCanteenName) {
-        mChosenCanteenId = _ChosenCanteenId;
-        mSP.edit().putString(PREF_CHOSEN_CANTEEN, mChosenCanteenId).apply();
+    public ArrayList<Integer> getListOfChosenCanteenIdsAsInt(){
 
-        mChosenCanteenName = _ChosenCanteenName;
-        mSP.edit().putString(PREF_CHOSEN_CANTEEN_NAME, mChosenCanteenName).apply();
-
-        CanteenFoodModel.getInstance().setFoodItems(null);
+        ArrayList<Integer> ids = new ArrayList<>();
+        for(CanteenVo canteen : mChosenCanteens){
+            ids.add(Integer.valueOf(canteen.getCanteenId()));
+        }
+        return ids;
     }
 
-    /**
-     * Canteen
-     * @return
-     */
-    public String getChosenCanteenName() {
-        return mChosenCanteenName;
+    public ArrayList<String> getListOfChosenCanteenIdsAsString(){
+
+        ArrayList<String> ids = new ArrayList<>();
+        for(CanteenVo canteen : mChosenCanteens){
+            ids.add(canteen.getCanteenId());
+        }
+        return ids;
+    }
+
+    public void setChosenCanteens(final ArrayList<CanteenVo> _ChosenCanteens) {
+
+        mChosenCanteens = _ChosenCanteens;
+
+        final Gson gson = new Gson();
+        final String json = gson.toJson(mChosenCanteens, ArrayList.class);
+        mSP.edit().putString(PREF_SUBSCRIBED_COURSES, json).apply();
+
+        //todo: warum???
+        //CanteenModel.getInstance().addMenu(null);
+    }
+
+    public void addChosenCanteens(final CanteenVo _ChosenCanteen){
+        mChosenCanteens.add(_ChosenCanteen);
+
+        final Gson gson = new Gson();
+        final String json = gson.toJson(mChosenCanteens, ArrayList.class);
+        mSP.edit().putString(PREF_SUBSCRIBED_COURSES, json).apply();
     }
 
     /**

@@ -23,7 +23,7 @@
     >
 
     <ListView
-        android:id="@+id/lv_canteen_settings"
+        android:id="@+id/lv_canteen_choice"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:footerDividersEnabled="false"

@@ -27,7 +27,7 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.canteen.CanteenSettingsAdapter;
 import de.fhe.fhemobile.events.Event;
 import de.fhe.fhemobile.events.EventListener;
-import de.fhe.fhemobile.models.canteen.CanteenFoodModel;
+import de.fhe.fhemobile.models.canteen.CanteenModel;
 
 /**
  * Created by paul on 12.02.14.
@@ -41,9 +41,9 @@ public class CanteenSettingsView extends FrameLayout {
     public CanteenSettingsView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
-        mModel = CanteenFoodModel.getInstance();
+        mModel = CanteenModel.getInstance();
 
-        mModel.addListener(CanteenFoodModel.ChangeEvent.RECEIVED_CHOICE_ITEMS, mChoiceItemsListener);
+        mModel.addListener(CanteenModel.ChangeEvent.RECEIVED_CHOICE_ITEMS, mChoiceItemsListener);
     }
 
     public void initializeView(final ViewListener _Listener) {
@@ -51,7 +51,7 @@ public class CanteenSettingsView extends FrameLayout {
     }
 
     public void destroy() {
-        mModel.removeListener(CanteenFoodModel.ChangeEvent.RECEIVED_CHOICE_ITEMS, mChoiceItemsListener);
+        mModel.removeListener(CanteenModel.ChangeEvent.RECEIVED_CHOICE_ITEMS, mChoiceItemsListener);
 
         mViewListener = null;
         mChoiceItemsListener = null;
@@ -61,14 +61,14 @@ public class CanteenSettingsView extends FrameLayout {
         mAdapter = new CanteenSettingsAdapter(mContext, mModel.getChoiceItems());
         mChoiceListView.setAdapter(mAdapter);
         mChoiceListView.setOnItemClickListener(mCanteenSelectListener);
-        mChoiceListView.setItemChecked(mModel.getSelectedItemPosition(), true);
+        mChoiceListView.setItemChecked(mModel.getSelectedItemPositions(), true);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mChoiceListView = (ListView) findViewById(R.id.lv_canteen_settings);
+        mChoiceListView = (ListView) findViewById(R.id.lv_canteen_choice);
 
     }
 
@@ -88,7 +88,7 @@ public class CanteenSettingsView extends FrameLayout {
 
     private final Context mContext;
 
-    private final CanteenFoodModel mModel;
+    private final CanteenModel mModel;
 
     private ViewListener mViewListener;
     private CanteenSettingsAdapter mAdapter;

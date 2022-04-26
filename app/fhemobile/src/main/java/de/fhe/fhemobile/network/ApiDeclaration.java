@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.vos.CafeAquaResponse;
 import de.fhe.fhemobile.vos.WeatherResponse;
-import de.fhe.fhemobile.vos.canteen.CanteenChoiceItemVo;
-import de.fhe.fhemobile.vos.canteen.CanteenFoodItemVo;
+import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
+import de.fhe.fhemobile.vos.canteen.CanteenVo;
 import de.fhe.fhemobile.vos.news.NewsCategoryResponse;
 import de.fhe.fhemobile.vos.news.NewsItemResponse;
 import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
@@ -53,10 +53,10 @@ public interface ApiDeclaration {
     Call<SemesterDataVo> fetchSemesterData();
     
     @GET(Endpoints.CANTEEN + "/{canteenId}")
-    Call<CanteenFoodItemVo[]> fetchCanteenData(@Path("canteenId") String _CanteenId);
+    Call<CanteenDishVo[]> fetchCanteenData(@Path("canteenId") String _CanteenId);
     
     @GET(Endpoints.CANTEEN)
-    Call<CanteenChoiceItemVo[]> fetchAvailableCanteens();
+    Call<CanteenVo[]> fetchAvailableCanteens();
 
     @GET(Endpoints.RSS + "/{newsListId}")
     Call<NewsItemResponse> fetchNewsData(@Path("newsListId") String _NewsListId);

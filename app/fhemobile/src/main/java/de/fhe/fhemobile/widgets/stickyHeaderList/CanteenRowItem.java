@@ -22,14 +22,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.vos.canteen.CanteenFoodItemVo;
+import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
 
 /**
  * Created by Paul Cech on 13.05.15.
  */
 public class CanteenRowItem extends IRowItem {
 
-    public CanteenRowItem(final CanteenFoodItemVo _item) {
+    public CanteenRowItem(final CanteenDishVo _item) {
         mItem           = _item;
     }
 
@@ -80,5 +80,5 @@ public class CanteenRowItem extends IRowItem {
 
     private static final String LOG_TAG = CanteenRowItem.class.getSimpleName();
 
-    private final CanteenFoodItemVo mItem;
+    private final CanteenDishVo mItem;
 }

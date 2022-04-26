@@ -21,7 +21,7 @@
 	android:layout_height="match_parent"
 	android:orientation="vertical"
 	android:animateLayoutChanges="true"
-	tools:context="de.fhe.fhemobile.fragments.canteen.CanteenFoodFragment">
+	tools:context="de.fhe.fhemobile.fragments.canteen.CanteenMenuFragment">
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"

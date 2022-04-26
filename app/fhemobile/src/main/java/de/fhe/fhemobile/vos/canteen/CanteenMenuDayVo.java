@@ -23,17 +23,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Nadja - 03/2022
+ * Value object for a menu (a collection of {@link CanteenDishVo}s) of one day
+ * Created by paul on 10.02.14
  */
-public class CanteenDayVo implements Parcelable {
+public class CanteenMenuDayVo implements Parcelable {
 
-    public CanteenDayVo(final List<CanteenFoodItemVo> items, final String date) {
-        this.mItems = items;
-        this.mDate = date;
+    public CanteenMenuDayVo(final List<CanteenDishVo> mDishes, final String mDate) {
+        this.mDishes = mDishes;
+        this.mDate = mDate;
     }
 
-    public CanteenDayVo(final Parcel _In) {
-        _In.readTypedList(mItems, CanteenFoodItemVo.CREATOR);
+    public CanteenMenuDayVo(final Parcel _In) {
+        _In.readTypedList(mDishes, CanteenDishVo.CREATOR);
         mDate = _In.readString();
     }
 
@@ -58,31 +59,31 @@ public class CanteenDayVo implements Parcelable {
      */
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeTypedList(mItems);
+        dest.writeTypedList(mDishes);
         dest.writeString(mDate);
     }
 
-    public static final Creator<CanteenDayVo> CREATOR
-            = new Creator<CanteenDayVo>() {
-        public CanteenDayVo createFromParcel(final Parcel in) {
-            return new CanteenDayVo(in);
+    public static final Parcelable.Creator<CanteenMenuDayVo> CREATOR
+            = new Parcelable.Creator<CanteenMenuDayVo>() {
+        public CanteenMenuDayVo createFromParcel(final Parcel in) {
+            return new CanteenMenuDayVo(in);
         }
 
-        public CanteenDayVo[] newArray(final int size) {
-            return new CanteenDayVo[size];
+        public CanteenMenuDayVo[] newArray(final int size) {
+            return new CanteenMenuDayVo[size];
         }
     };
 
-    public List<CanteenFoodItemVo> getItems() {
-        return mItems;
+    public List<CanteenDishVo> getItems() {
+        return mDishes;
     }
 
-    public String getDate() {
+    public String getHeadline() {
         return mDate;
     }
 
 
 
-    private List<CanteenFoodItemVo> mItems = new ArrayList<CanteenFoodItemVo>();
+    private List<CanteenDishVo> mDishes = new ArrayList<CanteenDishVo>();
     private final String mDate;
 }

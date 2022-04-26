@@ -26,10 +26,11 @@ import android.view.ViewGroup;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.models.canteen.CanteenFoodModel;
+import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.views.canteen.CanteenSettingsView;
+import de.fhe.fhemobile.vos.canteen.CanteenVo;
 
 
 public class CanteenSettingsFragment extends FeatureFragment {
@@ -62,7 +63,7 @@ public class CanteenSettingsFragment extends FeatureFragment {
         mView = (CanteenSettingsView) inflater.inflate(R.layout.fragment_canteen_settings, container, false);
         mView.initializeView(mViewListener);
 
-        if(CanteenFoodModel.getInstance().getChoiceItems() == null) {
+        if(CanteenModel.getInstance().getChoiceItems() == null) {
             NetworkHandler.getInstance().fetchAvailableCanteens();
         }
         else {
@@ -85,10 +86,10 @@ public class CanteenSettingsFragment extends FeatureFragment {
         @Override
         public void onCanteenChosen(final Integer _Id, final Integer _Position) {
 
-            final String canteenName = CanteenFoodModel.getInstance().getChoiceItems()[_Position].getName();
+            final CanteenVo canteen = CanteenModel.getInstance().getChoiceItems()[_Position];
 
-            UserSettings.getInstance().setChosenCanteen( String.valueOf(_Id), canteenName);
-            CanteenFoodModel.getInstance().setSelectedItemPosition(_Position);
+            UserSettings.getInstance().addChosenCanteens(canteen);
+            CanteenModel.getInstance().addSelectedItemPosition(_Position);
         }
     };
 

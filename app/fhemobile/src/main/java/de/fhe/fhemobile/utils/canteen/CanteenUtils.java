@@ -19,9 +19,8 @@ package de.fhe.fhemobile.utils.canteen;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.fhe.fhemobile.vos.canteen.CanteenDayVo;
-import de.fhe.fhemobile.vos.canteen.CanteenFoodItemCollectionVo;
-import de.fhe.fhemobile.vos.canteen.CanteenFoodItemVo;
+import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
+import de.fhe.fhemobile.vos.canteen.CanteenMenuDayVo;
 
 /**
  * Created by paul on 20.03.15.
@@ -33,18 +32,18 @@ public class CanteenUtils {
      * @param _Items
      * @return
      */
-    public static List<CanteenFoodItemCollectionVo> orderCanteenItems(final CanteenFoodItemVo[] _Items) {
+    public static List<CanteenMenuDayVo> sortCanteenItems(final CanteenDishVo[] _Items) {
 
-        final List<CanteenFoodItemCollectionVo> result = new ArrayList<CanteenFoodItemCollectionVo>();
+        final List<CanteenMenuDayVo> result = new ArrayList<>();
 
         long lastDate = _Items[0].getDate();
         String lastDateString = _Items[0].getDateString();
-        List<CanteenFoodItemVo> tempItems = new ArrayList<CanteenFoodItemVo>();
+        List<CanteenDishVo> tempItems = new ArrayList<CanteenDishVo>();
 
-        for (final CanteenFoodItemVo item : _Items) {
+        for (final CanteenDishVo item : _Items) {
             final long currentDate = item.getDate();
             if (currentDate != lastDate) {
-                result.add(new CanteenFoodItemCollectionVo(tempItems, lastDateString));
+                result.add(new CanteenMenuDayVo(tempItems, lastDateString));
                 lastDate = currentDate;
                 lastDateString = item.getDateString();
                 tempItems = new ArrayList<>();
@@ -52,32 +51,32 @@ public class CanteenUtils {
             tempItems.add(item);
         }
 
-        result.add(new CanteenFoodItemCollectionVo(tempItems, lastDateString));
+        result.add(new CanteenMenuDayVo(tempItems, lastDateString));
 
         return result;
     }
 
     /**
-     * Group CanteenFoodItems per day and store each day in a {@link CanteenDayVo}
-     * @param _Items Array of {@link CanteenFoodItemVo} objects, sorted by date
-     * @return list of {@link CanteenDayVo} objects
+     * Group CanteenFoodItems per day and store each day in a {@link CanteenMenuDayVo}
+     * @param _Items Array of {@link CanteenDishVo} objects, sorted by date
+     * @return list of {@link CanteenMenuDayVo} objects
      */
-    public static List<CanteenDayVo> groupPerDay(final CanteenFoodItemVo[] _Items) {
+    public static List<CanteenMenuDayVo> groupPerDay(final CanteenDishVo[] _Items) {
 
-        final List<CanteenDayVo> result = new ArrayList<>();
+        final List<CanteenMenuDayVo> result = new ArrayList<>();
 
         //helpers and flags for for-loop
-        List<CanteenFoodItemVo> itemsOfSameDate = new ArrayList<CanteenFoodItemVo>();
+        List<CanteenDishVo> itemsOfSameDate = new ArrayList<CanteenDishVo>();
         long lastDate = _Items[0].getDate();
         String lastDateString = _Items[0].getDateString();
 
-        for (final CanteenFoodItemVo canteenFoodItem : _Items) {
+        for (final CanteenDishVo canteenFoodItem : _Items) {
 
             final long currentDate = canteenFoodItem.getDate();
             //if current item belongs to different date than item before,
-            // then all items for the last date are collected and can be stored in a CanteenDayVo
+            // then all items for the last date are collected and can be stored in a CanteenMenuDayVo
             if (currentDate != lastDate) {
-                result.add(new CanteenDayVo(itemsOfSameDate, lastDateString));
+                result.add(new CanteenMenuDayVo(itemsOfSameDate, lastDateString));
                 lastDate = currentDate;
                 lastDateString = canteenFoodItem.getDateString();
                 itemsOfSameDate = new ArrayList<>();
@@ -85,7 +84,7 @@ public class CanteenUtils {
             itemsOfSameDate.add(canteenFoodItem);
         }
 
-        result.add(new CanteenDayVo(itemsOfSameDate, lastDateString));
+        result.add(new CanteenMenuDayVo(itemsOfSameDate, lastDateString));
 
         return result;
     }

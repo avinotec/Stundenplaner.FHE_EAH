@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fhe.fhemobile.Main;
-import de.fhe.fhemobile.models.canteen.CanteenFoodModel;
+import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.phonebook.PhonebookModel;
 import de.fhe.fhemobile.models.semesterdata.SemesterDataModel;
@@ -37,9 +37,9 @@ import de.fhe.fhemobile.utils.canteen.CanteenUtils;
 import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.vos.CafeAquaResponse;
 import de.fhe.fhemobile.vos.WeatherResponse;
-import de.fhe.fhemobile.vos.canteen.CanteenChoiceItemVo;
-import de.fhe.fhemobile.vos.canteen.CanteenFoodItemCollectionVo;
-import de.fhe.fhemobile.vos.canteen.CanteenFoodItemVo;
+import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
+import de.fhe.fhemobile.vos.canteen.CanteenMenuDayVo;
+import de.fhe.fhemobile.vos.canteen.CanteenVo;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
 import de.fhe.fhemobile.vos.news.NewsCategoryResponse;
 import de.fhe.fhemobile.vos.news.NewsItemResponse;
@@ -149,52 +149,45 @@ public class NetworkHandler {
 	 */
 	public void fetchCanteenData() {
 		Assert.assertTrue( mApi != null );
-		Log.d(TAG, "Canteen: "+UserSettings.getInstance().getChosenCanteenId());
 
-		mApi.fetchCanteenData(UserSettings.getInstance().getChosenCanteenId()).enqueue(new Callback<CanteenFoodItemVo[]>() {
+		ArrayList<String> chosenCanteenIds = UserSettings.getInstance().getListOfChosenCanteenIdsAsString();
+		Log.d(TAG, "Chosen Canteens: " + chosenCanteenIds);
 
-			/**
-			 *
-			 * @param call
-			 * @param response
-			 */
-			@Override
-			public void onResponse(final Call<CanteenFoodItemVo[]> call, final Response<CanteenFoodItemVo[]> response) {
-				Log.d(TAG, "Canteen: " + call.request().url());
-				final CanteenFoodItemVo[] _canteenItems = response.body();
-				List<CanteenFoodItemCollectionVo> orderedItems = null;
+		for(String canteenId : chosenCanteenIds){
+			mApi.fetchCanteenData(canteenId).enqueue(new Callback<CanteenDishVo[]>() {
 
-				if (_canteenItems != null && _canteenItems.length > 0)
-					orderedItems = CanteenUtils.orderCanteenItems(_canteenItems);
+				/**
+				 *
+				 * @param call
+				 * @param response
+				 */
+				@Override
+				public void onResponse(final Call<CanteenDishVo[]> call, final Response<CanteenDishVo[]> response) {
+					Log.d(TAG, "Canteen: " + call.request().url());
+					final CanteenDishVo[] dishes = response.body();
+					List<CanteenMenuDayVo> sortedDishes = null;
 
-				if (orderedItems != null) {
-					CanteenFoodModel.getInstance().setFoodItems(orderedItems.toArray(new CanteenFoodItemCollectionVo[0]));
-				} else {
-					CanteenFoodModel.getInstance().setFoodItems(null);
+					if (dishes != null && dishes.length > 0)
+						sortedDishes = CanteenUtils.sortCanteenItems(dishes);
+
+					if (sortedDishes != null) {
+						CanteenModel.getInstance().addMenu(canteenId, sortedDishes);
+					} else {
+						CanteenModel.getInstance().addMenu(canteenId, null);
+					}
 				}
-			}
 
-			/**
-			 *
-			 * @param call
-			 * @param t
-			 */
-			@Override
-			public void onFailure(final Call<CanteenFoodItemVo[]> call, final Throwable t) {
-				showErrorToast();
-			}
-		});
-	}
-
-	/**
-	 * Fetch menu of the canteen specified by given _CanteenId
-	 * @param _CanteenId
-	 * @param _Callback
-	 */
-	public void fetchCanteenItems(final String _CanteenId, final Callback<CanteenFoodItemVo[]> _Callback) {
-		Assert.assertTrue( mApi != null );
-
-		mApi.fetchCanteenData(_CanteenId).enqueue(_Callback);
+				/**
+				 *
+				 * @param call
+				 * @param t
+				 */
+				@Override
+				public void onFailure(final Call<CanteenDishVo[]> call, final Throwable t) {
+					showErrorToast();
+				}
+			});
+		}
 	}
 
 	/**
@@ -263,7 +256,7 @@ public class NetworkHandler {
 	public void fetchAvailableCanteens() {
 		Assert.assertTrue( mApi != null );
 
-		mApi.fetchAvailableCanteens().enqueue(new Callback<CanteenChoiceItemVo[]>() {
+		mApi.fetchAvailableCanteens().enqueue(new Callback<CanteenVo[]>() {
 
 			/**
 			 *
@@ -271,9 +264,9 @@ public class NetworkHandler {
 			 * @param response
 			 */
 			@Override
-			public void onResponse(final Call<CanteenChoiceItemVo[]> call, final Response<CanteenChoiceItemVo[]> response) {
+			public void onResponse(final Call<CanteenVo[]> call, final Response<CanteenVo[]> response) {
 				if ( response.body() != null ) {
-					CanteenFoodModel.getInstance().setChoiceItems(response.body());
+					CanteenModel.getInstance().setChoiceItems(response.body());
 				}
 			}
 
@@ -283,13 +276,13 @@ public class NetworkHandler {
 			 * @param t
 			 */
 			@Override
-			public void onFailure(final Call<CanteenChoiceItemVo[]> call, final Throwable t) {
+			public void onFailure(final Call<CanteenVo[]> call, final Throwable t) {
 				showErrorToast();
 			}
 		});
 	}
 
-	public void fetchAvailableCanteens(final Callback<CanteenChoiceItemVo[]> _Callback){
+	public void fetchAvailableCanteens(final Callback<CanteenVo[]> _Callback){
 		Assert.assertTrue( mApi != null );
 
 		mApi.fetchAvailableCanteens().enqueue(_Callback);

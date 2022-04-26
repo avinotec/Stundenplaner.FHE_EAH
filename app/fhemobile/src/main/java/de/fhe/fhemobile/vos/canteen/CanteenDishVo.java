@@ -24,15 +24,15 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by paul on 04.02.14.
  */
-public class CanteenFoodItemVo implements Parcelable {
+public class CanteenDishVo implements Parcelable {
 
 // --Commented out by Inspection START (02.11.2021 17:19):
-//    public CanteenFoodItemVo() {
+//    public CanteenDishVo() {
 //    }
 // --Commented out by Inspection STOP (02.11.2021 17:19)
 
-    public CanteenFoodItemVo(final String mTitle, final String mDescription, final String mIngredients, final String mPrice, final long mDate,
-                             final String mDateString, final String mCanteenName, final Integer mCanteenId) {
+    public CanteenDishVo(final String mTitle, final String mDescription, final String mIngredients, final String mPrice, final long mDate,
+                         final String mDateString, final String mCanteenName, final Integer mCanteenId) {
         this.mTitle         = mTitle;
         this.mDescription   = mDescription;
         this.mIngredients   = mIngredients;
@@ -43,7 +43,7 @@ public class CanteenFoodItemVo implements Parcelable {
         this.mCanteenId = mCanteenId;
     }
 
-    public CanteenFoodItemVo(final Parcel _In) {
+    public CanteenDishVo(final Parcel _In) {
         mTitle          = _In.readString();
         mDescription    = _In.readString();
         mIngredients    = _In.readString();
@@ -85,14 +85,14 @@ public class CanteenFoodItemVo implements Parcelable {
         dest.writeInt(mCanteenId);
     }
 
-    public static final Parcelable.Creator<CanteenFoodItemVo> CREATOR
-            = new Parcelable.Creator<CanteenFoodItemVo>() {
-        public CanteenFoodItemVo createFromParcel(final Parcel in) {
-            return new CanteenFoodItemVo(in);
+    public static final Parcelable.Creator<CanteenDishVo> CREATOR
+            = new Parcelable.Creator<CanteenDishVo>() {
+        public CanteenDishVo createFromParcel(final Parcel in) {
+            return new CanteenDishVo(in);
         }
 
-        public CanteenFoodItemVo[] newArray(final int size) {
-            return new CanteenFoodItemVo[size];
+        public CanteenDishVo[] newArray(final int size) {
+            return new CanteenDishVo[size];
         }
     };
 

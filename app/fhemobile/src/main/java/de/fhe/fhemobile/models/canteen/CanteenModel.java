@@ -16,21 +16,27 @@
  */
 package de.fhe.fhemobile.models.canteen;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import de.fhe.fhemobile.events.EventDispatcher;
 import de.fhe.fhemobile.events.SimpleEvent;
 import de.fhe.fhemobile.utils.UserSettings;
-import de.fhe.fhemobile.vos.canteen.CanteenChoiceItemVo;
-import de.fhe.fhemobile.vos.canteen.CanteenFoodItemCollectionVo;
+import de.fhe.fhemobile.vos.canteen.CanteenMenuDayVo;
+import de.fhe.fhemobile.vos.canteen.CanteenVo;
 
 /**
  * Created by paul on 23.01.14
- * Edited by Nadja - 03/2022
+ * Edited by Nadja - 04/2022
  */
-public class CanteenFoodModelNEW extends EventDispatcher {
+public class CanteenModel extends EventDispatcher {
+
+    private static final String TAG = CanteenModel.class.getSimpleName();
 
     public static class ChangeEvent extends SimpleEvent {
         public static final String RECEIVED_FOOD_DATA       = "receivedFoodData";
-
         public static final String RECEIVED_EMPTY_FOOD_DATA = "receivedEmptyFoodData";
 
         public static final String RECEIVED_CHOICE_ITEMS    = "receivedChoiceItems";
@@ -41,15 +47,13 @@ public class CanteenFoodModelNEW extends EventDispatcher {
 
     }
 
-    private CanteenFoodModelNEW() { }
-
-    public CanteenFoodItemCollectionVo[] getFoodItems() {
-        return mFoodItems;
+    public Map<String, List<CanteenMenuDayVo>> getMenus() {
+        return mMenus;
     }
 
-    public void setFoodItems(final CanteenFoodItemCollectionVo[] mFoodItems) {
-        this.mFoodItems = mFoodItems;
-        if(this.mFoodItems != null && this.mFoodItems.length > 0) {
+    public void addMenu(final String canteenId, final List<CanteenMenuDayVo> mMenuDays) {
+        if(canteenId != null && mMenuDays != null && mMenuDays.size() > 0) {
+            this.mMenus.put(canteenId, mMenuDays);
             notifyChange(ChangeEvent.RECEIVED_FOOD_DATA);
         }
         else {
@@ -57,49 +61,50 @@ public class CanteenFoodModelNEW extends EventDispatcher {
         }
     }
 
-    public CanteenChoiceItemVo[] getChoiceItems() {
-        return mChoiceItems;
+    public CanteenVo[] getChoiceItems() {
+        return mCanteenChoiceItems;
     }
 
-    public void setChoiceItems(final CanteenChoiceItemVo[] mChoiceItems) {
-        final Integer selectedId = Integer.valueOf(UserSettings.getInstance().getChosenCanteenId());
-        for(int i = 0; i < mChoiceItems.length; i++) {
-            if(selectedId.equals(mChoiceItems[i].getId())) {
-                mChosenItemPosition = i;
-                break;
+    public void setChoiceItems(final CanteenVo[] mCanteenChoiceItems) {
+        final ArrayList<Integer> selectedIds = UserSettings.getInstance().getListOfChosenCanteenIdsAsInt();
+        for(int i = 0; i <= mCanteenChoiceItems.length; i++) {
+            for(Integer id : selectedIds){
+                if(id.equals(mCanteenChoiceItems[i])){
+                    mSelectedItemPositions.add(i);
+                }
             }
         }
 
-        this.mChoiceItems = mChoiceItems;
+        this.mCanteenChoiceItems = mCanteenChoiceItems;
         notifyChange(ChangeEvent.RECEIVED_CHOICE_ITEMS);
     }
 
-    public Integer getSelectedItemPosition() {
-        return mChosenItemPosition;
+    public ArrayList<Integer> getSelectedItemPositions() {
+        return mSelectedItemPositions;
     }
 
-    public void setSelectedItemPosition(final Integer mSelectedItemPosition) {
-        this.mChosenItemPosition = mSelectedItemPosition;
+    public void addSelectedItemPosition(final int mSelectedItemPosition) {
+        mSelectedItemPositions.add(mSelectedItemPosition);
     }
 
-    public static CanteenFoodModelNEW getInstance() {
+    public static CanteenModel getInstance() {
         if(ourInstance == null) {
-            ourInstance = new CanteenFoodModelNEW();
+            ourInstance = new CanteenModel();
         }
         return ourInstance;
+    }
+
+    private CanteenModel() {
     }
 
     private void notifyChange(final String type) {
         dispatchEvent(new ChangeEvent(type));
     }
 
-    private static final String LOG_TAG = CanteenFoodModelNEW.class.getSimpleName();
+    private static CanteenModel ourInstance;
 
-    private static CanteenFoodModelNEW ourInstance;
+    private Map<String, List<CanteenMenuDayVo>> mMenus = new HashMap();
 
-    private CanteenFoodItemCollectionVo[] mFoodItems;
-    private CanteenChoiceItemVo[]         mChoiceItems;
-
-    private Integer mChosenItemPosition = 0;
-    private final String mChosenItemName = "Canteen";
+    private CanteenVo[] mCanteenChoiceItems;
+    private ArrayList<Integer> mSelectedItemPositions = new ArrayList();
 }
