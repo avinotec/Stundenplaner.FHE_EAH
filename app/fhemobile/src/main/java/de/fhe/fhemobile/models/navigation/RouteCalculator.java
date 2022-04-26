@@ -40,7 +40,7 @@ import de.fhe.fhemobile.vos.navigation.RoomVo;
 
 
 /**
- *  Class for route calculation over multiple floors ans buildings
+ *  Class for route calculation over multiple floors and buildings
  *
  *  source: Bachelor Thesis from Tim Münziger from SS2020
  *  edited by Nadja in October 2021
@@ -52,6 +52,9 @@ public class RouteCalculator {
 
     private final ArrayList<FloorConnectionVo> floorConnections;
     private final ArrayList<BuildingExitVo> buildingExits;
+    //attention: do not use NavigationFragment.rooms here because certain attributes are set
+    // during route calculating that are specific to each calculation
+    private final ArrayList<RoomVo> rooms;
     private final Cell startLocation;
     private final Cell destLocation;
     /**
@@ -78,6 +81,7 @@ public class RouteCalculator {
         this.destLocation = destLocation;
         this.floorConnections = floorConnections;
         this.buildingExits = buildingExits;
+        this.rooms = JSONHandler.getRooms();
     }
 
     /**
@@ -149,20 +153,23 @@ public class RouteCalculator {
                         }
                     }
                 }
+                if(buildingExit == null){
+                    Log.e(TAG, "No exit found from " + startComplex.toString() + " to " + destComplex.toString());
+                    throw new Exception();
+                }
+                if(entry == null){
+                    Log.e(TAG, "No entry found to " + destComplex.toString() + " from " + startComplex.toString());
+                    throw new Exception();
+                }
 
                 //first add entry-dest and then exit-start to maintain the order important for prev/next-button navigation in NavigationFragment
                 //route to get to destination within the destination complex
-                AStar aStar2 = new AStar(entry, destLocation, floorGrids, floorConnections);
+                final AStar aStar2 = new AStar(entry, destLocation, floorGrids, floorConnections);
                 cellsToWalk.putAll(aStar2.getCellsToWalk());
-                // force garbage collection
-                aStar2 = null;
 
                 //route to get out of start complex
-                AStar aStar1 = new AStar(startLocation, buildingExit, floorGrids, floorConnections);
+                final AStar aStar1 = new AStar(startLocation, buildingExit, floorGrids, floorConnections);
                 cellsToWalk.putAll(aStar1.getCellsToWalk());
-                //force garbage collection
-                aStar1 = null;
-
 
             }
 
@@ -222,7 +229,7 @@ public class RouteCalculator {
 
 
     /**
-     * Build a grid of all cells of a floorplan, initialize
+     * Build a grid of all cells of a floorplan
      * @param complex The {@link Complex} of the floor plan
      * @param floorInt The floor of the floor plan as integer (ug = -1)
      * @return floorgrid as 2D Arraylist with all cells of the floor
@@ -239,8 +246,7 @@ public class RouteCalculator {
             final HashMap<String, Cell> walkableCells = JSONHandler.parseJsonWalkableCells(json);
 
             //fill in rooms
-            if(NavigationFragment.rooms.isEmpty()) JSONHandler.loadRooms();
-            for(final RoomVo r : NavigationFragment.rooms){
+            for(final RoomVo r : rooms){
                 if(r.getComplex() == complex && r.getFloorString().equals(floor)){
                     floorGrid[r.getXCoordinate()][r.getYCoordinate()] = r;
                 }

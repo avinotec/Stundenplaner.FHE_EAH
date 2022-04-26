@@ -105,88 +105,82 @@ public class AStar {
 
         final LinkedHashMap<BuildingFloorKey, ArrayList<Cell>> cellsToWalk = new LinkedHashMap<>();
 
+        //Set priority queue with comparator (prioritize cells based on their costsPathToCell)
+        openCells = new PriorityQueue<>(16, new Comparator<Cell>() {
+
+            @Override
+            public int compare(final Cell cellOne, final Cell cellTwo) {
+                return Integer.compare(cellOne.getCostsPathToCell(), cellTwo.getCostsPathToCell());
+            }
+        });
+
         try {
-            //Set priority queue with comparator (prioritize cells based on their costsPathToCell)
-            openCells = new PriorityQueue<>(16, new Comparator<Cell>() {
 
-                @Override
-                public int compare(final Cell cellOne, final Cell cellTwo) {
-                    return Integer.compare(cellOne.getCostsPathToCell(), cellTwo.getCostsPathToCell());
-                }
-            });
-
-            //initialize start cell
-            startCell.setCostsPathToCell(-1);
-            //add startCell to priority queue (cells the A* algorithm has discovered)
-            openCells.add(startCell);
-            //initialize set of closed cells (cells the A* algorithm has processed and removed from openCells)
-            closedCells = new ArrayList<>();
-            //set costs of end cell to 0 to force algorithm to "enter" the destination room when reaching a neighboring cell of the room cell
-            Objects.requireNonNull(floorGrids.get(destCell.getComplex()).get(destCell.getFloorInt()))
-                    [destCell.getXCoordinate()][destCell.getYCoordinate()]
-                    .setCostPassingCell(0);
-            //set start cell costs to 0
-            Objects.requireNonNull(floorGrids.get(startCell.getComplex()).get(startCell.getFloorInt()))
-                    [startCell.getXCoordinate()][(startCell.getYCoordinate())].setCostPassingCell(0);
             //run A* algorithm
             performAStarAlgorithm();
+
+            //force garbage collection
+            closedCells = null;
 
             //backtracing to reconstruct navigation path
             //get end cell as start cell for backtracing
             Cell currentCell = Objects.requireNonNull(floorGrids.get(destCell.getComplex()).get(destCell.getFloorInt()))
                     [destCell.getXCoordinate()][destCell.getYCoordinate()];
 
-            final BuildingFloorKey buildingFloorKeyCurrentCell = new BuildingFloorKey(currentCell);
+            final BuildingFloorKey bfKeyCurrentCell = new BuildingFloorKey(currentCell);
             // if destination is exit then add it as cellToWalk
             if(currentCell instanceof BuildingExitVo){
-                //TODO analyzer sagt, die Bedingung wäre IMMER false ???
+                //Note: Analyzer sagt, die Bedingung wäre IMMER false
                 //Antwort Nadja: cellsToWalk wird im Aufruf performAStarAlgorithm weiter oben gefüllt, das erkennt der vermutlich nicht
-                if(cellsToWalk.containsKey(buildingFloorKeyCurrentCell)){
-                    cellsToWalk.get(buildingFloorKeyCurrentCell).add(currentCell);
-                }
-                else{
+
+                // if cellsToWalk already contains cells at this floor
+                if(cellsToWalk.containsKey(bfKeyCurrentCell)){
+                    cellsToWalk.get(bfKeyCurrentCell).add(currentCell);
+                } else {
                     final ArrayList<Cell> list = new ArrayList<>();
                     list.add(currentCell);
-                    cellsToWalk.put(buildingFloorKeyCurrentCell, list);
+                    cellsToWalk.put(bfKeyCurrentCell, list);
                 }
             }
-            //do not add destination (and start cell) to walkable cells (bc those get displayed with path icon)
+            //note: do not add destination (and start cell) to walkable cells
+            // (because they get displayed by start and destination icon not by path icon)
             currentCell = currentCell.getParentCell();
 
             //reconstruct path
             while (currentCell.getParentCell() != null) {
 
-                final BuildingFloorKey buildingFloorKeyNewCurrentCell = new BuildingFloorKey(currentCell);
+                final BuildingFloorKey bfKeyCurrentCellLoop = new BuildingFloorKey(currentCell);
 
-                if(cellsToWalk.containsKey( buildingFloorKeyNewCurrentCell )){
-                    cellsToWalk.get(buildingFloorKeyNewCurrentCell).add(currentCell);
-                }
-                else{
+                // if cellsToWalk already contains cells at this floor
+                if(cellsToWalk.containsKey(bfKeyCurrentCellLoop)){
+                    cellsToWalk.get(bfKeyCurrentCellLoop).add(currentCell);
+                } else {
                     final ArrayList<Cell> list = new ArrayList<>();
                     list.add(currentCell);
-                    cellsToWalk.put(buildingFloorKeyNewCurrentCell, list);
+                    cellsToWalk.put(bfKeyCurrentCellLoop, list);
                 }
 
                 currentCell = currentCell.getParentCell();
             }
-            // if start is exit then add it as cellToWalk
+            // if start is exit then add it as cell to walk
             if(currentCell.getParentCell() == null && currentCell instanceof BuildingExitVo){
 
-                final BuildingFloorKey buildingFloorKey = new BuildingFloorKey(currentCell);
+                final BuildingFloorKey bfKeyCurrentCell2 = new BuildingFloorKey(currentCell);
 
-                if(cellsToWalk.containsKey( buildingFloorKey )){
-                    cellsToWalk.get( buildingFloorKey ).add(currentCell);
+                if(cellsToWalk.containsKey(bfKeyCurrentCell2)){
+                    cellsToWalk.get(bfKeyCurrentCell2).add(currentCell);
                 }
                 else{
                     final ArrayList<Cell> list = new ArrayList<>();
                     list.add(currentCell);
-                    cellsToWalk.put(buildingFloorKey, list);
+                    cellsToWalk.put(bfKeyCurrentCell2, list);
                 }
             }
 
         } catch (final Exception e) {
             Log.e(TAG, "error calculating route ", e);
         }
+
         return cellsToWalk;
     }
 
@@ -196,6 +190,23 @@ public class AStar {
      * Only costs of path' and parent cells are computed, no backtracing of cells to walk.
      */
     private void performAStarAlgorithm() {
+
+        //initialize
+
+        //initialize start cell
+        startCell.setCostsPathToCell(-1);
+        //add startCell to openCells to set it as discovered by the algorithm
+        openCells.add(startCell);
+        //initialize set of closed cells
+        closedCells = new ArrayList<>();
+        //set costs of end cell to 0 to force algorithm to "enter" the destination room when reaching a neighboring cell of the room cell
+        Objects.requireNonNull(floorGrids.get(destCell.getComplex()).get(destCell.getFloorInt()))
+                [destCell.getXCoordinate()][destCell.getYCoordinate()]
+                .setCostPassingCell(0);
+        //set start cell costs to 0
+        Objects.requireNonNull(floorGrids.get(startCell.getComplex()).get(startCell.getFloorInt()))
+                [startCell.getXCoordinate()][(startCell.getYCoordinate())].setCostPassingCell(0);
+
 
         // while there are cells to walk through
         while (!openCells.isEmpty()) {
@@ -242,8 +253,7 @@ public class AStar {
                     //if-conditions ensure that current cell is not at edge of grid (so the left/right/... neighbor cell is valid)
                     //left neighbor
                     if (currentCell.getXCoordinate() > 0) {
-                        final Cell neighbouringCell =
-                                currentFloorGrid[currentCell.getXCoordinate() - 1][currentCell.getYCoordinate()];
+                        final Cell neighbouringCell = currentFloorGrid[currentCell.getXCoordinate() - 1][currentCell.getYCoordinate()];
                         updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
 
@@ -268,7 +278,9 @@ public class AStar {
                         updateParentAndPathToCellCosts(neighbouringCell, currentCell);
                     }
                 }
-                else return;
+                else{
+                    return;
+                }
             }
         }
     }
@@ -279,21 +291,21 @@ public class AStar {
      * @param parentCell The cell's parent
      */
     private void updateParentAndPathToCellCosts(final Cell cell, final Cell parentCell) {
+        //if cell is not walkable, then it should not be considered by the algorithm
+        // if cell has status "closed", it has already been fully processed by the algorithm
+        if(cell.getWalkability() && !closedCells.contains(cell.getKey())){
 
-        final int parentCellPathCosts = parentCell.getCostsPathToCell();
-        //note: CostsPathToCell is initialized with -1
+            final int parentCellPathCosts = parentCell.getCostsPathToCell();
+            //note: CostsPathToCell is initialized with -1
 
-        //if CostsPathToCell of parent has not been set yet (just initialized with -1),
-        // then set it to the costs for passing the "cell",
-        // otherwise add those costs to the previous costsPathToCell of the parent cell
-        final int costsPathToCell = parentCellPathCosts >= 0 ?
-                cell.getCostPassingCell() + parentCellPathCosts : cell.getCostPassingCell();
+            //if CostsPathToCell of parent has not been set yet (just initialized with -1),
+            // then set it to the costs for passing the "cell",
+            // otherwise add those costs to the previous costsPathToCell of the parent cell
+            final int costsPathToCell = parentCellPathCosts >= 0 ?
+                    cell.getCostPassingCell() + parentCellPathCosts : cell.getCostPassingCell();
 
-        // cell has already status "open"
-        final boolean isInOpenQueue = openCells.contains(cell);
-
-        //check if cell is walkable and does not have status "closed" (not contained in closedCells)
-        if (cell.getWalkability() && !closedCells.contains(cell.getKey())) {
+            // cell has already status "open"
+            final boolean isInOpenQueue = openCells.contains(cell);
 
             // cell has status "unknown" or this path to the cell is cheaper than the path currently known
             if (!isInOpenQueue || costsPathToCell < cell.getCostsPathToCell()) {

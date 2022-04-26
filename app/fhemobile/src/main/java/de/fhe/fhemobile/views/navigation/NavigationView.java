@@ -63,8 +63,8 @@ public class NavigationView extends LinearLayout {
     public void initializeView(final RoomVo startRoom, final RoomVo destRoom){
 
         //set start and dest
-        mTextViewStart.setText(getResources().getString(R.string.navigation_start) +"   "+ startRoom.getRoomName());
-        mTextViewDest.setText(getResources().getString(R.string.navigation_dest) +"   "+ destRoom.getRoomName());
+        mTextStart.setText(getResources().getString(R.string.navigation_start) +"   "+ startRoom.getRoomName());
+        mTextDest.setText(getResources().getString(R.string.navigation_dest) +"   "+ destRoom.getRoomName());
 
         //set size of a floor plan cell
         final int displayWidth = getResources().getDisplayMetrics().widthPixels;
@@ -102,9 +102,9 @@ public class NavigationView extends LinearLayout {
 
         mNavigationLayout = (RelativeLayout) findViewById(R.id.layout_navigation_placeholder);
 
-        mTextViewStart = (TextView) findViewById(R.id.tv_navigation_start);
-        mTextViewDest = (TextView) findViewById(R.id.tv_navigation_dest);
-        mCurrentFloorPlan = (TextView) findViewById(R.id.tv_navigation_current_floorplan);
+        mTextStart = (TextView) findViewById(R.id.tv_navigation_start);
+        mTextDest = (TextView) findViewById(R.id.tv_navigation_dest);
+        mTextCurrentFloorPlan = (TextView) findViewById(R.id.tv_navigation_current_floorplan);
 
         mBackButton = (Button) findViewById(R.id.btn_navigation_back);
     }
@@ -137,7 +137,7 @@ public class NavigationView extends LinearLayout {
         mFloorPlanImageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
 
-        mCurrentFloorPlan.setText(
+        mTextCurrentFloorPlan.setText(
                 getResources().getString(R.string.navigation_current_floorplan) +" "+
                         getResources().getString(R.string.navigation_building) + " "+
                         currentFloorPlan.getComplex().toString().replace("_", "-") + ", "+
@@ -380,9 +380,9 @@ public class NavigationView extends LinearLayout {
     private ImageView mFloorPlanImageView;
     private RelativeLayout mNavigationLayout;
 
-    private TextView mTextViewStart;
-    private TextView mTextViewDest;
-    private TextView mCurrentFloorPlan;
+    private TextView mTextStart;
+    private TextView mTextDest;
+    private TextView mTextCurrentFloorPlan;
 
     private double cellWidth;
     private double cellHeight;

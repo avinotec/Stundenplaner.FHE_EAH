@@ -53,7 +53,7 @@ import de.fhe.fhemobile.views.navigation.NavigationView;
  */
 public class NavigationFragment extends FeatureFragment {
 
-    public static final String TAG = "NavigationFragment"; //$NON-NLS
+    public static final String TAG = NavigationFragment.class.getSimpleName();
 
 
     public static final String PARAM_START = "paramStartRoom"; //$NON-NLS
@@ -146,7 +146,7 @@ public class NavigationFragment extends FeatureFragment {
 
 
     /**
-     * Set currentFloorPlan to the next one, display floorplan image and navigationroute
+     * Set currentFloorPlan to the next one, display floorplan image and navigation route
      */
     private void drawNextNavigation(){
         if(floorPlanIterator.hasNext()){
@@ -182,10 +182,8 @@ public class NavigationFragment extends FeatureFragment {
     }
 
 
-    //load from assets -----------------------------------------------------------------------------
-
-
     //calculations ---------------------------------------------------------------------------------
+
     /**
      * Calculate route using the class RouteCalculator
      * Get an Arraylist of cells to walk through and add them to cellsToWalk
@@ -252,7 +250,7 @@ public class NavigationFragment extends FeatureFragment {
             final String path = getPathToFloorPlanPNG(currentFloorPlan.getComplex(),
                     currentFloorPlan.getFloorString());
             //grid for debugging: path = "floorplan_images/grid_for_debug.png"
-            final InputStream input = getActivity().getAssets().open(path);
+            final InputStream input = getContext().getAssets().open(path);
             final Drawable image = Drawable.createFromStream(input, null);
             //setFloorPlanImage
             mView.drawFloorPlanImage(image, currentFloorPlan);
@@ -260,7 +258,6 @@ public class NavigationFragment extends FeatureFragment {
             Log.e(TAG, "Loading Floorplan Image from assets failed", e);
         }
     }
-
 
     //Listeners-------------------------------------------------------------------------------------
     private final NavigationView.IViewListener mViewListener = new NavigationView.IViewListener() {

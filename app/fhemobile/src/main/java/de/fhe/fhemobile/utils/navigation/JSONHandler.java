@@ -315,7 +315,7 @@ public class JSONHandler {
 
     //read, parse, save -------------------------------------------------------------------------------
     /**
-     * Reads rooms from assets and saves list to MainActivity.rooms
+     * Read rooms from assets and save list to MainActivity.rooms
      */
     public static void loadRooms(){
         if (NavigationFragment.rooms.isEmpty()) {
@@ -329,7 +329,22 @@ public class JSONHandler {
     }
 
     /**
-     * Reads persons from assets and returns them in a HashMap
+     * Read rooms from assets
+     * @return ArrayList of {@link RoomVo}s
+     */
+    public static ArrayList<RoomVo> getRooms(){
+        try {
+            final String roomsJson = JSONHandler.readFromAssets(JSON_SECTION_ROOMS);
+            return JSONHandler.parseJsonRooms(roomsJson);
+        } catch (final Exception e) {
+            Log.e(TAG, "error reading or parsing rooms from JSON files:", e);
+        }
+
+        return null;
+    }
+
+    /**
+     * Read persons from assets and returns them in a HashMap
      * @return HashMap of {@link PersonVo} objects, person's names used as key
      */
     public static HashMap<String, PersonVo> loadPersons(){
