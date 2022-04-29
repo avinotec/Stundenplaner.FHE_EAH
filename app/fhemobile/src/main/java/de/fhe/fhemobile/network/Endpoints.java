@@ -60,7 +60,7 @@ public class Endpoints {
     public static final String MENSA                = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/canteens";
     public static final String SEMESTER             = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/semester"; //semester dates
     public static final String PHONEBOOK            = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/persons";  //not working
-    //public static final String IMPRESSUM            = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/impress";
+    //public static final String IMPRINT            = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/impress";
     public static final String WEATHER              = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/weather";
     public static final String AQUA                 = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/aqua";
     //public static final String TIMETABLE            = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/timetable";

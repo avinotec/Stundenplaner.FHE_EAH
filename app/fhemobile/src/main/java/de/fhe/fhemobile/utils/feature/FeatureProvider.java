@@ -43,7 +43,7 @@ public class FeatureProvider {
         Features.SEMESTER_DATA  = _Context.getResources().getBoolean(R.bool.feature_semester_data);
         Features.TIMETABLE      = _Context.getResources().getBoolean(R.bool.feature_timetable);
         Features.MYTIMETABLE    = _Context.getResources().getBoolean(R.bool.feature_mytimetable);
-        Features.IMPRESS        = _Context.getResources().getBoolean(R.bool.feature_impress);
+        Features.IMPRINT        = _Context.getResources().getBoolean(R.bool.feature_imprint);
         Features.EVENTS         = _Context.getResources().getBoolean(R.bool.feature_events);
         Features.NAVIGATION     = _Context.getResources().getBoolean(R.bool.feature_navigation);
         Features.JOBOFFERS      = _Context.getResources().getBoolean(R.bool.feature_joboffers);
@@ -97,8 +97,8 @@ public class FeatureProvider {
             list.add(new DrawerItem(Features.FeatureId.JOBOFFERS, getFeatureTitle(Features.FeatureId.JOBOFFERS)));
         }
 
-        if (Features.IMPRESS) {
-            list.add(new DrawerItem(Features.FeatureId.IMPRESS, getFeatureTitle(Features.FeatureId.IMPRESS)));
+        if (Features.IMPRINT) {
+            list.add(new DrawerItem(Features.FeatureId.IMPRINT, getFeatureTitle(Features.FeatureId.IMPRINT)));
         }
 
         return list;
@@ -125,7 +125,7 @@ public class FeatureProvider {
             case Features.FeatureId.SEMESTER_DATA:   stringRes = R.string.drawer_semesterdates;     break;
             case Features.FeatureId.PHONEBOOK:       stringRes = R.string.drawer_persons;   break;
             case Features.FeatureId.JOBOFFERS:       stringRes = R.string.drawer_joboffers; break;
-            case Features.FeatureId.IMPRESS:         stringRes = R.string.drawer_impressum; break;
+            case Features.FeatureId.IMPRINT:         stringRes = R.string.drawer_imprint; break;
         }
 
         if (stringRes != -1) {

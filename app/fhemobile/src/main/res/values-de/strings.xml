@@ -25,7 +25,7 @@
     <string name="drawer_persons" >Personen</string>
     <string name="drawer_semesterdates" >Semestertermine</string>
     <string name="drawer_campus" >Campusplan</string>
-    <string name="drawer_impressum" >Impressum</string>
+    <string name="drawer_imprint" >Impressum</string>
     <string name="drawer_timetable" >Stundenplan</string>
     <string name="drawer_mytimetable" >Mein Stundenplan</string>
     <string name="drawer_events" >Veranstaltungskalender</string>

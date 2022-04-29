@@ -49,7 +49,7 @@ public class SemesterDataWebView extends FrameLayout {
         mWebView = (WebView) findViewById(R.id.semesterDataWebView);
         //wird der WebViewClient nicht geaendert, kann die Seite nicht geladen werden, da die Webview
         mWebView.setWebViewClient(new SSLTolerentWebViewClient(mContext));
-        //Ohne JavascriptEnabled laesst sich das Impressum nicht scrollen.
+        //Ohne JavascriptEnabled laesst sich das WebView nicht scrollen.
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.loadUrl(Endpoints.SEMESTERDATA_ENDPOINT);
 

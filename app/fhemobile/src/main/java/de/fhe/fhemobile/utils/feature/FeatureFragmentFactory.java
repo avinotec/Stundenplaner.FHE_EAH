@@ -18,19 +18,16 @@ package de.fhe.fhemobile.utils.feature;
 
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
-import de.fhe.fhemobile.fragments.impressum.ImpressumFragment;
+import de.fhe.fhemobile.fragments.imprint.ImprintFragment;
 import de.fhe.fhemobile.fragments.joboffers.JobOffersFragment;
 import de.fhe.fhemobile.fragments.maps.MapsDialogFragment;
 import de.fhe.fhemobile.fragments.mensa.MensaFoodFragment;
-import de.fhe.fhemobile.fragments.mensa.MensaFragmentNEW;
-import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableCalendarFragment;
 import de.fhe.fhemobile.fragments.navigation.NavigationDialogFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdata.SemesterDataFragment;
-import de.fhe.fhemobile.utils.TimeTableFactory;
 
 /**
- * Created by paul on 18.03.15.
+ * Created by paul on 18.03.15
  */
 public class FeatureFragmentFactory {
 
@@ -51,7 +48,7 @@ public class FeatureFragmentFactory {
             case Features.FeatureId.EVENTS:          fragment = EventsWebViewFragment.newInstance();        break; //added by Nadja 07.09.21
             //case Features.FeatureId.PHONEBOOK:       fragment = PhonebookSearchFragment.newInstance();   break;
             case Features.FeatureId.JOBOFFERS:       fragment = JobOffersFragment.newInstance();            break; //added by Nadja on 30.03.2022
-            case Features.FeatureId.IMPRESS:         fragment = ImpressumFragment.newInstance();            break;
+            case Features.FeatureId.IMPRINT:         fragment = ImprintFragment.newInstance();            break;
             case Features.FeatureId.NEWS:
             //default:                        fragment = NewsListFragment.newInstance();
             default:                        fragment = NewsWebViewFragment.newInstance(); //display from Browser/as Webview - Nadja 6.9.21

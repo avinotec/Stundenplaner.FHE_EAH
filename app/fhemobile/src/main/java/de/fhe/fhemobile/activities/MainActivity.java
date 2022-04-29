@@ -58,7 +58,7 @@ import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableOverviewAdapter;
 import de.fhe.fhemobile.fragments.DrawerFragment;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
-import de.fhe.fhemobile.fragments.impressum.ImpressumFragment;
+import de.fhe.fhemobile.fragments.imprint.ImprintFragment;
 import de.fhe.fhemobile.fragments.joboffers.JobOffersFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdata.SemesterDataWebViewFragment;
@@ -365,8 +365,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                 webview = ((NewsWebViewFragment) mCurrentFragment).getWebView();
             }else if( mCurrentFragment instanceof SemesterDataWebViewFragment){
                 webview = ((SemesterDataWebViewFragment) mCurrentFragment).getWebView();
-            }else if (mCurrentFragment instanceof ImpressumFragment){
-                webview = ((ImpressumFragment) mCurrentFragment).getWebView();
+            }else if (mCurrentFragment instanceof ImprintFragment){
+                webview = ((ImprintFragment) mCurrentFragment).getWebView();
             }else if(mCurrentFragment instanceof EventsWebViewFragment){
                 webview = ((EventsWebViewFragment) mCurrentFragment).getWebView();
             }else if(mCurrentFragment instanceof JobOffersFragment){

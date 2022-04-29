@@ -15,7 +15,7 @@
  *
  */
 
-package de.fhe.fhemobile.fragments.impressum;
+package de.fhe.fhemobile.fragments.imprint;
 
 
 import android.os.Bundle;
@@ -26,19 +26,19 @@ import android.webkit.WebView;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.views.impressum.ImpressumView;
+import de.fhe.fhemobile.views.imprint.ImprintView;
 
 
-public class ImpressumFragment extends FeatureFragment {
+public class ImprintFragment extends FeatureFragment {
 
-    private ImpressumView mView;
+    private ImprintView mView;
 
-    public ImpressumFragment() {
+    public ImprintFragment() {
         // Required empty public constructor
     }
 
-    public static ImpressumFragment newInstance() {
-        final ImpressumFragment fragment = new ImpressumFragment();
+    public static ImprintFragment newInstance() {
+        final ImprintFragment fragment = new ImprintFragment();
         final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -73,7 +73,7 @@ public class ImpressumFragment extends FeatureFragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (ImpressumView) inflater.inflate(R.layout.fragment_impressum, container, false);
+        mView = (ImprintView) inflater.inflate(R.layout.fragment_imprint, container, false);
         return mView;
     }
 
@@ -83,6 +83,6 @@ public class ImpressumFragment extends FeatureFragment {
      * @return webview displayed in the fragment
      */
     public WebView getWebView(){
-        return getView().findViewById(R.id.impressumWebView);
+        return getView().findViewById(R.id.webview_imprint);
     }
 }
