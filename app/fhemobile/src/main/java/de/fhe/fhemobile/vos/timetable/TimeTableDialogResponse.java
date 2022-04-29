@@ -21,45 +21,27 @@ import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Created by paul on 12.03.15.
+ * Created by paul on 12.03.15
+ * Edited by Nadja - 04/2022
  */
-public class TimeTableResponse {
+public class TimeTableDialogResponse {
 
-    public TimeTableResponse() {
+    public TimeTableDialogResponse(){
+
     }
 
-    public String getTitle() {
-        return mTitle;
+    public ArrayList<TimeTableStudyProgramVo> getStudyProgramsAsList() {
+        return new ArrayList(mStudyPrograms.values());
     }
 
-    public void setTitle(final String _title) {
-        mTitle = correctUmlauts(_title);
-    }
-
-    public String getModified() {
-        return mModified;
-    }
-
-    public void setModified(final String _modified) {
-        mModified = _modified;
-    }
-
-    public ArrayList<TimeTableStudyProgramVo> getStudyPrograms() {
+    public Map<String, TimeTableStudyProgramVo> getStudyPrograms() {
         return mStudyPrograms;
     }
 
-    public void setStudyPrograms(final ArrayList<TimeTableStudyProgramVo> _studyPrograms) {
-        mStudyPrograms = _studyPrograms;
-    }
-
-    @SerializedName("title")
-    private String                   mTitle;
-
-    @SerializedName("modified")
-    private String                   mModified;
-
-    @SerializedName("courseOfStudies")
-    private ArrayList<TimeTableStudyProgramVo> mStudyPrograms;
+    @SerializedName("studentset")
+    private Map<String, TimeTableStudyProgramVo> mStudyPrograms;
 }

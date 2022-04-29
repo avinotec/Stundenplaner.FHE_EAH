@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                         //Aenderung einer Veranstaltung: suche das Event (= einzelne Veranstaltung) und ueberschreibe ihre Daten
                         if(change.getChangesReason() == CHANGEREASON_EDIT) {
                             final MyTimeTableCourseComponent event = MyTimeTableUtils.getEventByID(
-                                    myTimetableList, change.getNewEventJson().getUid());
+                                    myTimetableList, change.getNewEventJson().getId());
                             if(event != null){
                                 //todo: auskommentiert im Zuge von Umbauarbeiten
                                // event.setEvent(change.getNewEventJson());
@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                         //Loeschen einer Veranstaltung: Suche die Veranstaltung mit der SplusID und lösche sie aus der Liste.
                         if(change.getChangesReason() == CHANGEREASON_DELETE){
                             final MyTimeTableCourseComponent event = MyTimeTableUtils.getEventByID(
-                                    myTimetableList, change.getNewEventJson().getUid());
+                                    myTimetableList, change.getNewEventJson().getId());
 
                             //todo: bad static use to update MyTimeTableCalendar
                             //MyTimeTableCalendarAdapter.removeCourseAndUpdateSharedPreferences(event);

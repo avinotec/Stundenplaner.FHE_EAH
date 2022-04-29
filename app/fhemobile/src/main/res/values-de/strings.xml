@@ -67,7 +67,7 @@
     <string name="timetable_error" >Dieser Kurs enthält keine Elemente.</string>
     <string name="timetable_switch" >Auswahl speichern</string>
     <string name="timetable_reset" >Auswahl löschen</string>
-    <string name="timetable_week" >Kalenderwoche</string>
+    <string name="timetable_week" >Semesterwoche</string>
     <string name="timetable_error_incomplete" >Bitte fülle alle benötigten Felder aus.</string>
 
     <string name="aqua_open" >Geöffnet</string>

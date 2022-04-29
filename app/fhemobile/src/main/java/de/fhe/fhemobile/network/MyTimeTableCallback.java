@@ -16,8 +16,12 @@
  */
 package de.fhe.fhemobile.network;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
@@ -31,7 +35,8 @@ import retrofit2.Response;
  */
 public class MyTimeTableCallback<T> implements Callback<T> {
 
-	final private TimeTableStudyProgramVo studyProgram;
+    private static final String TAG = MyTimeTableCallback.class.getSimpleName();
+    final private TimeTableStudyProgramVo studyProgram;
 	final private TimeTableSemesterVo semester;
 	final private TimeTableStudyGroupVo studyGroup;
 
@@ -66,7 +71,13 @@ public class MyTimeTableCallback<T> implements Callback<T> {
 	 */
 	@Override
 	public void onFailure(Call<T> call, Throwable t) {
+		showErrorToast();
+		Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
+	}
 
+	private void showErrorToast() {
+		Toast.makeText(Main.getAppContext(), "Cannot establish connection!",
+				Toast.LENGTH_LONG).show();
 	}
 
 	public TimeTableSemesterVo getSemester() {

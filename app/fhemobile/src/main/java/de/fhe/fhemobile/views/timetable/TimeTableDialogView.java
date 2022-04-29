@@ -25,17 +25,18 @@ import android.widget.LinearLayout;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.FragmentManager;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.comparator.StudyProgramComparator;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
-import de.fhe.fhemobile.widgets.picker.StudyProgramPicker;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
 import de.fhe.fhemobile.widgets.picker.StudyGroupPicker;
 import de.fhe.fhemobile.widgets.picker.SemesterPicker;
+import de.fhe.fhemobile.widgets.picker.StudyProgramPicker;
 import de.fhe.fhemobile.widgets.picker.base.OnItemChosenListener;
 
 /**
@@ -57,9 +58,9 @@ public class TimeTableDialogView extends LinearLayout {
 
     public void initializeView(final FragmentManager _Manager) {
 
-        mStudyProgramPicker.setFragmentManager(_Manager);
-        mStudyProgramPicker.toggleEnabled(false);
-        mStudyProgramPicker.setOnItemChosenListener(mCourseListener);
+        mStudyProgramPicker2.setFragmentManager(_Manager);
+        mStudyProgramPicker2.toggleEnabled(false);
+        mStudyProgramPicker2.setOnItemChosenListener(mStudyProgramListener);
 
         mSemesterPicker.setFragmentManager(_Manager);
         mSemesterPicker.toggleEnabled(false);
@@ -67,17 +68,16 @@ public class TimeTableDialogView extends LinearLayout {
 
         mStudyGroupPicker.setFragmentManager(_Manager);
         mStudyGroupPicker.toggleEnabled(false);
-        mStudyGroupPicker.setOnItemChosenListener(mGroupsListener);
+        mStudyGroupPicker.setOnItemChosenListener(mStudyGroupListener);
 
         mSearchButton.setOnClickListener(mSearchClickListener);
         toggleButtonEnabled(false);
     }
 
-    public void setStudyCourseItems(final List<TimeTableStudyProgramVo> _Items) {
-        TimeTableStudyProgramVo.alterTitle(_Items);
+    public void setStudyCourseItems(final ArrayList<TimeTableStudyProgramVo> _Items) {
         Collections.sort(_Items, new StudyProgramComparator());
-        mStudyProgramPicker.setItems(_Items);
-        mStudyProgramPicker.toggleEnabled(true);
+        mStudyProgramPicker2.setItems(_Items);
+        mStudyProgramPicker2.toggleEnabled(true);
     }
 
     public void setSemesterItems(final List<TimeTableSemesterVo> _Items) {
@@ -107,7 +107,7 @@ public class TimeTableDialogView extends LinearLayout {
     }
 
     public boolean isRememberActivated() {
-        return mRememberSwitch.isChecked();
+        return mSaveChoiceButton.isChecked();
     }
 
     public void toggleButtonEnabled(final boolean _Enabled) {
@@ -126,18 +126,17 @@ public class TimeTableDialogView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        //Studiengang
-        mStudyProgramPicker = (StudyProgramPicker) findViewById(R.id.timetableStudyCoursePicker);
+        //Study Program
+        mStudyProgramPicker2 = (StudyProgramPicker) findViewById(R.id.picker_timetable_studyprogram);
         //Semester
-        mSemesterPicker    = (SemesterPicker)    findViewById(R.id.timetableSemesterPicker);
+        mSemesterPicker    = (SemesterPicker)    findViewById(R.id.picker_timetable_semester);
         //Set
-        mStudyGroupPicker  = (StudyGroupPicker)  findViewById(R.id.timetableStudyGroupPicker);
-        mRememberSwitch    = (SwitchCompat)      findViewById(R.id.timetableRememberSelection);
-        mSearchButton      = (Button)            findViewById(R.id.timetableSearchButton);
+        mStudyGroupPicker   = (StudyGroupPicker)  findViewById(R.id.picker_timetable_studygroup);
+        mSaveChoiceButton   = (SwitchCompat)      findViewById(R.id.btn_timetable_savechoice);
+        mSearchButton       = (Button)            findViewById(R.id.btn_timetable_search);
     }
 
-    // Returns the chosen SemesterId
-    private final OnItemChosenListener mCourseListener = new OnItemChosenListener() {
+    private final OnItemChosenListener mStudyProgramListener = new OnItemChosenListener() {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
@@ -146,7 +145,6 @@ public class TimeTableDialogView extends LinearLayout {
         }
     };
 
-    // Returns the GroupId
     private final OnItemChosenListener mSemesterListener = new OnItemChosenListener() {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
@@ -156,12 +154,11 @@ public class TimeTableDialogView extends LinearLayout {
         }
     };
 
-    // Returns the TimeTableId
-    private final OnItemChosenListener mGroupsListener = new OnItemChosenListener() {
+    private final OnItemChosenListener mStudyGroupListener = new OnItemChosenListener() {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
-                mViewListener.onGroupChosen(_ItemId);
+                mViewListener.onStudyGroupChosen(_ItemId);
             }
         }
     };
@@ -178,17 +175,17 @@ public class TimeTableDialogView extends LinearLayout {
     public interface IViewListener {
         void onStudyProgramChosen(String _StudyCourseId);
         void onSemesterChosen(String _SemesterId);
-        void onGroupChosen(String _TimeTableId);
+        void onStudyGroupChosen(String _TimeTableId);
         void onSearchClicked();
     }
 
-    private IViewListener     mViewListener;
+    private IViewListener       mViewListener;
 
-    private StudyProgramPicker mStudyProgramPicker;
+    private StudyProgramPicker mStudyProgramPicker2;
     private SemesterPicker      mSemesterPicker;
     private StudyGroupPicker    mStudyGroupPicker;
 
-    private SwitchCompat      mRememberSwitch;
+    private SwitchCompat      mSaveChoiceButton;
     private Button            mSearchButton;
 
 }

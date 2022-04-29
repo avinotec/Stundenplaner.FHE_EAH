@@ -133,7 +133,7 @@ public class MyTimeTableUtils {
 
             Date eventDate = null;
             try {
-                eventDate = sdf.parse(event.getFirstEvent().getDate()+" "+event.getFirstEvent().getStartTime());
+                eventDate = sdf.parse(event.getFirstEvent().getStartDate()+" "+event.getFirstEvent().getStartTime());
             } catch (final ParseException e) {
                 Log.e(TAG, "Fehler beim Parsen der Daten: ",e );
             }
@@ -152,7 +152,7 @@ public class MyTimeTableUtils {
      */
     public static final MyTimeTableCourseComponent getEventByID (final List<MyTimeTableCourseComponent> list, final String ID){
         for ( final MyTimeTableCourseComponent event:list ) {
-            if(ID.equals(event.getFirstEvent().getUid())){
+            if(ID.equals(event.getFirstEvent().getId())){
                 return event;
             }
         }

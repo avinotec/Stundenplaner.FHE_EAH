@@ -32,9 +32,7 @@ import java.util.List;
 
 import de.fhe.fhemobile.comparator.TimeTableEventComparator;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
 
 
 /**
@@ -86,7 +84,7 @@ public class MyTimeTableCourseComponent implements Parcelable {
 		//this.studyProgram = studyProgram; //currently not used - Nadja 02/2022
 		//this.semester = semester; //currently not used - Nadja 02/2022
 		events.add(event);
-		studyGroups.add(studyGroup.getShortTitle());
+		studyGroups.add(studyGroup.getNumber());
 
 		checkAndSetSubscribed();
 	}
@@ -131,7 +129,7 @@ public class MyTimeTableCourseComponent implements Parcelable {
 	public void setStudyGroups(final List<String> studyGroups) { this.studyGroups = studyGroups; }
 
 	public void addStudyGroup(final TimeTableStudyGroupVo studyGroup) {
-		this.studyGroups.add(studyGroup.getShortTitle());
+		this.studyGroups.add(studyGroup.getNumber());
 	}
 
 	public final int getId() {
@@ -149,8 +147,8 @@ public class MyTimeTableCourseComponent implements Parcelable {
 	public boolean containsEvent(TimeTableEventVo _Event){
 		for(TimeTableEventVo event : events){
 			if(event.getTitle().equals(_Event.getTitle())
-					&& event.getFullDateWithStartTime() == _Event.getFullDateWithStartTime()
-					&& event.getEndTime().equals(_Event.getEndTime())
+					&& event.getStartDateTime() == _Event.getStartDateTime()
+					&& event.getEndDateTime() == (_Event.getEndDateTime())
 					&& event.getRoom().equals(_Event.getRoom())){
 				return true;
 			}

@@ -19,12 +19,17 @@ package de.fhe.fhemobile.fragments.timetable;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import java.util.Map;
+
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
@@ -33,7 +38,7 @@ import de.fhe.fhemobile.utils.timetable.TimeTableSettings;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.timetable.TimeTableDialogView;
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
+import de.fhe.fhemobile.vos.timetable.TimeTableDialogResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -70,9 +75,9 @@ public class TimeTableDialogFragment extends FeatureFragment {
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mChosenCourse       = null;
+        mChosenStudyProgram = null;
         mChosenSemester     = null;
-        mChosenTimetableId  = null;
+        mChosenStudyGroup = null;
     }
 
     @Override
@@ -99,34 +104,28 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
     private final TimeTableDialogView.IViewListener mViewListener = new TimeTableDialogView.IViewListener() {
         @Override
-        public void onStudyProgramChosen(String _StudyCourseId) {
+        public void onStudyProgramChosen(String _StudyProgramId) {
             mView.toggleGroupsPickerVisibility(false);
             mView.toggleButtonEnabled(false);
             mView.resetSemesterPicker();
             mView.resetGroupsPicker();
 
-            mChosenCourse = null;
+            mChosenStudyProgram = null;
             mChosenSemester = null;
 
             boolean errorOccurred = false;
+            Map<String, TimeTableStudyProgramVo> studyPrograms = mResponse.getStudyPrograms();
 
-            for (TimeTableStudyProgramVo courseVo : mResponse.getStudyPrograms()) {
-                if (courseVo.getId() != null && courseVo.getId().equals(_StudyCourseId)) {
-                    mChosenCourse = courseVo;
+            if (studyPrograms.containsKey(_StudyProgramId)) {
+                mChosenStudyProgram = studyPrograms.get(_StudyProgramId);
 
-                    // Check if course has any terms available
-                    if (courseVo.getSemesters() != null) {
-                        errorOccurred = false;
-                        mView.setSemesterItems(courseVo.getSemesters());
-                    }
-                    else {
-                        // No terms are available
-                        errorOccurred = true;
-                    }
-                    break;
+                // Check if study program has any semesters
+                if (mChosenStudyProgram.getSemestersAsList() != null) {
+                    errorOccurred = false;
+                    mView.setSemesterItems(mChosenStudyProgram.getSemestersAsList());
                 }
                 else {
-                    // No Id is available
+                    // No semesters in this study program
                     errorOccurred = true;
                 }
             }
@@ -148,11 +147,10 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
             mChosenSemester = null;
 
-            for (final TimeTableSemesterVo timeTableSemesterVo : mChosenCourse.getSemesters()) {
-                if (timeTableSemesterVo.getId().equals(_SemesterId)) {
-                    mChosenSemester = timeTableSemesterVo;
-                    mView.setStudyGroupItems(timeTableSemesterVo.getStudyGroups());
-                }
+            Map<String, TimeTableSemesterVo> semesters = mChosenStudyProgram.getSemesters();
+            if(semesters.containsKey(_SemesterId)) {
+                mChosenSemester = semesters.get(_SemesterId);
+                mView.setStudyGroupItems(mChosenSemester.getStudyGroups());
             }
         }
 
@@ -161,22 +159,22 @@ public class TimeTableDialogFragment extends FeatureFragment {
          * @param _TimeTableId
          */
         @Override
-        public void onGroupChosen(String _TimeTableId) {
+        public void onStudyGroupChosen(String _TimeTableId) {
             mView.toggleButtonEnabled(true);
-            mChosenTimetableId = _TimeTableId;
+            mChosenStudyGroup = _TimeTableId;
         }
 
         @Override
         public void onSearchClicked() {
-            if (mChosenTimetableId != null) {
+            if (mChosenStudyGroup != null) {
                 if (mView.isRememberActivated()) {
-                    TimeTableSettings.saveTimeTableSelection(mChosenTimetableId);
+                    TimeTableSettings.saveTimeTableSelection(mChosenStudyGroup);
                 }
-                proceedToTimetable(mChosenTimetableId);
+                proceedToTimetable(mChosenStudyGroup);
 
-                mChosenTimetableId = null;
-                mChosenCourse = null;
+                mChosenStudyProgram = null;
                 mChosenSemester = null;
+                mChosenStudyGroup = null;
             }
             else {
                 Utils.showToast(R.string.timetable_error_incomplete);
@@ -184,25 +182,32 @@ public class TimeTableDialogFragment extends FeatureFragment {
         }
     };
 
-    private final Callback<TimeTableResponse> mTimeTableResponseCallback = new Callback<TimeTableResponse>() {
+
+    private final Callback<TimeTableDialogResponse> mTimeTableResponseCallback = new Callback<TimeTableDialogResponse>() {
         @Override
-        public void onResponse(final Call<TimeTableResponse> call, final Response<TimeTableResponse> response) {
+        public void onResponse(final Call<TimeTableDialogResponse> call, final Response<TimeTableDialogResponse> response) {
             if ( response.body() != null ) {
                 mResponse = response.body();
-                mView.setStudyCourseItems(response.body().getStudyPrograms());
+                mView.setStudyCourseItems(response.body().getStudyProgramsAsList());
             }
         }
 
         @Override
-        public void onFailure(final Call<TimeTableResponse> call, Throwable t) {
-
+        public void onFailure(final Call<TimeTableDialogResponse> call, Throwable t) {
+            showErrorToast();
+            Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
         }
     };
 
+    private void showErrorToast() {
+        Toast.makeText(Main.getAppContext(), "Cannot establish connection!",
+                Toast.LENGTH_LONG).show();
+    }
+
     private TimeTableDialogView mView;
 
-    private TimeTableResponse mResponse;
-    private TimeTableStudyProgramVo mChosenCourse;
-    private TimeTableSemesterVo mChosenSemester;
-    private String            mChosenTimetableId;
+    private TimeTableDialogResponse mResponse;
+    private TimeTableStudyProgramVo mChosenStudyProgram;
+    private TimeTableSemesterVo     mChosenSemester;
+    private String                  mChosenStudyGroup;
 }

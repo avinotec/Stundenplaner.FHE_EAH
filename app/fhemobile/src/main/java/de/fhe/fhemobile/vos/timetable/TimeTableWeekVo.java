@@ -21,64 +21,38 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Created by paul on 16.03.15.
+ * Created by paul on 16.03.15
+ * Edited by Nadja - 04/2022
  */
 public class TimeTableWeekVo implements Parcelable {
 
     public TimeTableWeekVo() {
     }
 
-    public int getWeekInYear() {
-        return mWeekInYear;
-    }
-
-    public void setWeekInYear(final int _weekInYear) { mWeekInYear = _weekInYear; }
-
-    public int getYear() {
-        return mYear;
-    }
-
-    public void setYear(final int _year) { mYear = _year; }
-
-
-    public ArrayList<TimeTableDayVo> getDays() {
-        return mDays;
-    }
-
-// --Commented out by Inspection START (02.11.2021 17:38):
-//    public void setDays(ArrayList<TimeTableDayVo> _days) {
-//        mDays = _days;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:38)
-
-    @SerializedName("weekInYear")
-    private int mWeekInYear;
-
-    @SerializedName("year")
-    private int mYear;
-
-    @SerializedName("weekdays")
-    private final ArrayList<TimeTableDayVo> mDays = new ArrayList<>();
-
-    @Override
-    public int describeContents() {
-        return 0;
+    private TimeTableWeekVo(final Parcel in) {
+        mWeekStart = in.readLong();
+        mWeekEnd = in.readLong();
+        mSemesterWeek = in.readInt();
+        in.readMap(mDays, TimeTableDayVo.class.getClassLoader());
     }
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeInt(mWeekInYear);
-        dest.writeInt(mYear);
-        dest.writeTypedList(mDays);
+        dest.writeLong(mWeekStart);
+        dest.writeLong(mWeekEnd);
+        dest.writeInt(mSemesterWeek);
+        dest.writeMap(mDays);
     }
 
-    private TimeTableWeekVo(final Parcel in) {
-        mWeekInYear = in.readInt();
-        mYear = in.readInt();
-        in.readTypedList(mDays, TimeTableDayVo.CREATOR);
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Parcelable.Creator<TimeTableWeekVo> CREATOR = new Parcelable.Creator<TimeTableWeekVo>() {
@@ -90,4 +64,39 @@ public class TimeTableWeekVo implements Parcelable {
             return new TimeTableWeekVo[size];
         }
     };
+
+    public Date getWeekStart() {
+        //multiply by 1000 to convert from seconds to milliseconds
+        Date date = new Date(mWeekStart * 1000);
+        return date;
+    }
+
+    public Date getWeekEnd() {
+        //multiply by 1000 to convert from seconds to milliseconds
+        Date date = new Date(mWeekEnd * 1000);
+        return date;
+    }
+
+    /**
+     * The semester week is stored as 0-based, but officially it is counted 1-based.
+     * That's why one need to be added when the semester week number is displayed
+     * @return
+     */
+    public int getSemesterWeekForDisplay(){ return mSemesterWeek+1;}
+
+    public Collection<TimeTableDayVo> getDays() {
+        return mDays.values();
+    }
+
+    @SerializedName("weekStart")
+    private long mWeekStart;
+
+    @SerializedName("weekEnd")
+    private long mWeekEnd;
+
+    @SerializedName("weekNumber")
+    private int mSemesterWeek;
+
+    @SerializedName("dataDay")
+    private final Map<String, TimeTableDayVo> mDays = new HashMap<>();
 }

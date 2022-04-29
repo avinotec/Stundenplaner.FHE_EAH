@@ -17,6 +17,7 @@
 package de.fhe.fhemobile.network;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.vos.CafeAquaResponse;
@@ -27,7 +28,7 @@ import de.fhe.fhemobile.vos.news.NewsCategoryResponse;
 import de.fhe.fhemobile.vos.news.NewsItemResponse;
 import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
 import de.fhe.fhemobile.vos.semesterdata.SemesterDataVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
+import de.fhe.fhemobile.vos.timetable.TimeTableDialogResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -71,17 +72,18 @@ public interface ApiDeclaration {
     Call<CafeAquaResponse> fetchCafeAquaStatus();
     
     @GET(Endpoints.TIMETABLE)
-    Call<TimeTableResponse> fetchTimeTable();
+    Call<TimeTableDialogResponse> fetchTimeTable();
 
-    @GET(Endpoints.TIMETABLE_EVENTS)
-    Call<ArrayList<TimeTableWeekVo>> fetchTimeTableEvents(@Query(Endpoints.PARAM_TIMETABLE_ID) String _TimeTableId);
+
+    @GET(Endpoints.TIMETABLE_EVENTS + "/{studyGroupId}/detail")
+    Call<Map<String,TimeTableWeekVo>> fetchTimeTableEvents(@Path(Endpoints.PARAM_STUDYGROUP_ID) String _StudyGroupId);
 
     @Headers({
             "Content-Type:application/json"
     })
-    @POST( Endpoints.SCHEDULE_CHANGE_SERVER )
+    @POST(Endpoints.SCHEDULE_CHANGE_SERVER)
     Call<ResponseModel> registerTimeTableChanges(@Body RequestBody _json);
 
-    @HTTP(method="GET",path = Endpoints.SCHEDULE_CHANGE_SERVER, hasBody = true)
+    @HTTP(method="GET", path = Endpoints.SCHEDULE_CHANGE_SERVER, hasBody = true)
     Call<ResponseModel> getTimeTableChanges(@Body RequestBody _json);
 }

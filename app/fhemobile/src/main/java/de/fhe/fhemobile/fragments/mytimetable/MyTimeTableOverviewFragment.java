@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -41,6 +42,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import de.fhe.fhemobile.BuildConfig;
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.comparator.CourseTitleComparator;
@@ -242,7 +244,7 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 
 						//Aenderung eines Events: suche das Event und ueberschreibe es
 						if (change.getChangesReason() == CHANGEREASON_EDIT) {
-							final MyTimeTableCourseComponent event = MyTimeTableUtils.getEventByID(myTimetableList, change.getNewEventJson().getUid());
+							final MyTimeTableCourseComponent event = MyTimeTableUtils.getEventByID(myTimetableList, change.getNewEventJson().getId());
 							if (event != null) {
 								//todo: auskommentiert im Zuge von Umbauarbeiten
 								//event.setEvent(change.getNewEventJson());
@@ -259,7 +261,7 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 						}
 						//Loeschen eines Events: Suche den Event mit der SplusID und lösche ihn aus der Liste.
 						if (change.getChangesReason() == CHANGEREASON_DELETE) {
-							final MyTimeTableCourseComponent event = MyTimeTableUtils.getEventByID(myTimetableList, change.getNewEventJson().getUid());
+							final MyTimeTableCourseComponent event = MyTimeTableUtils.getEventByID(myTimetableList, change.getNewEventJson().getId());
 							((MainActivity) getActivity()).removeFromSubscribedCourseComponentsAndUpdateAdapters(event);
 						}
 					}
@@ -268,12 +270,16 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 
 				@Override
 				public void onFailure(final Call<ResponseModel> call, Throwable t) {
+					showErrorToast();
 					Log.d(TAG, "onFailure: " + t.toString());
 				}
 			});
 		}
 	}
 
-	// static --------------------------------------------------------------------------------------
+	private void showErrorToast() {
+		Toast.makeText(Main.getAppContext(), "Cannot establish connection!",
+				Toast.LENGTH_LONG).show();
+	}
 
 }

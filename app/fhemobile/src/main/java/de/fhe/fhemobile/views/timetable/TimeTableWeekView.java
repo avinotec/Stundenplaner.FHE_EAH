@@ -28,8 +28,6 @@ import org.junit.Assert;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -55,36 +53,17 @@ public class TimeTableWeekView extends LinearLayout {
         mContext = context;
     }
 
-    public void initializeView(final TimeTableWeekVo _Data) {
-        mHeading.setText(Main.getSafeString(R.string.timetable_week) + " " + _Data.getWeekInYear()); // $NON-NLS
-        buildListEntries(_Data);
-        calculateWeekRange(_Data);
-
-        final HeaderListAdapter adapter = new HeaderListAdapter(mContext, mData);
-        mDateList.setAdapter(adapter);
-    }
-
-    private void calculateWeekRange(final TimeTableWeekVo _Data) {
-
-        //initialize calendar with german locale to ensure correct week numbers
-        final Calendar calendar = Calendar.getInstance(new Locale("de", "DE"));
-        calendar.clear();
-        calendar.set(Calendar.YEAR, _Data.getYear());
-        //calendar values are not really set until calling getTime() so uncomment for true debugging values
-        //calendar.getTime();
-        calendar.set(Calendar.WEEK_OF_YEAR, _Data.getWeekInYear());
-        //calendar.getTime();
+    public void initializeView(final TimeTableWeekVo weekVo) {
+        mHeading.setText(Main.getSafeString(R.string.timetable_week) + " " + weekVo.getSemesterWeekForDisplay()); // $NON-NLS
+        buildListEntries(weekVo);
 
         final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.", Locale.getDefault()); // PST`
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        final Date startDate = calendar.getTime();
-        final String startDateInStr = formatter.format(startDate);
+        final String startDateStr = formatter.format(weekVo.getWeekStart());
+        final String endDateStr = formatter.format(weekVo.getWeekEnd());
+        mWeekRange.setText(startDateStr + " – " + endDateStr); // $NON-NLS
 
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
-        final Date endDate = calendar.getTime();
-        final String endDaString = formatter.format(endDate);
-
-        mWeekRange.setText(startDateInStr + " – " + endDaString); // $NON-NLS
+        final HeaderListAdapter adapter = new HeaderListAdapter(mContext, mData);
+        mEventList.setAdapter(adapter);
     }
 
     private void buildListEntries(final TimeTableWeekVo _Data) {
@@ -92,14 +71,14 @@ public class TimeTableWeekView extends LinearLayout {
 
         for (final TimeTableDayVo dayVo : _Data.getDays()) {
 
-            mData.add(new HeaderItem(dayVo.getName()));
+            mData.add(new HeaderItem(dayVo.getDayName()));
             for (final TimeTableEventVo eventVo : dayVo.getEvents()) {
 
                 if ( BuildConfig.DEBUG ) Assert.assertTrue( eventVo != null );
                 if ( eventVo != null ) {
                     mData.add(new TimeTableEventItem(
                                     eventVo.getStartTime() + " – " + eventVo.getEndTime(),
-                                    eventVo.getGuiTitle(),
+                                    eventVo.getTitle(),
                                     eventVo.getRoom(),
                                     eventVo.getLecturer()
                             )
@@ -115,7 +94,7 @@ public class TimeTableWeekView extends LinearLayout {
 
         mHeading   = (TextView) findViewById(R.id.tv_timetable_week_heading);
         mWeekRange = (TextView) findViewById(R.id.tv_timetable_week_range);
-        mDateList  = (ListView) findViewById(R.id.lv_timetable_week_list);
+        mEventList = (ListView) findViewById(R.id.lv_timetable_week_list);
     }
 
     private final Context mContext;
@@ -124,6 +103,6 @@ public class TimeTableWeekView extends LinearLayout {
 
     private TextView mHeading;
     private TextView mWeekRange;
-    private ListView mDateList;
+    private ListView mEventList;
 
 }

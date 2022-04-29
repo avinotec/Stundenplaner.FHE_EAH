@@ -26,17 +26,22 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 /**
+ * Value Object for a semester of a study program
+ *
  * Created by paul on 12.03.15.
- * Value Object für das Semester eines Studiengangs, speichert die verfügbaren Sets
+ * Edited by Nadja - 04/2022
  */
 public class TimeTableSemesterVo implements Parcelable {
+
+    private static final String TAG = "TimeTableSemesterVo";
 
     public TimeTableSemesterVo() {
     }
 
     protected TimeTableSemesterVo(final Parcel in) {
         mId = in.readString();
-        mTitle = correctUmlauts(in.readString());
+        mNumber = in.readString();
+        mTitle = in.readString();
         mStudyGroups = in.createTypedArrayList(TimeTableStudyGroupVo.CREATOR);
     }
 
@@ -52,42 +57,17 @@ public class TimeTableSemesterVo implements Parcelable {
         }
     };
 
-    public String getId() {
-        return mId;
-    }
-
-    public void setId(final String _id) {
-        mId = _id;
+    public String getNumber() {
+        return mNumber;
     }
 
     public String getTitle() {
         return mTitle;
     }
 
-    public void setTitle(final String _title) {
-        mTitle = _title;
-    }
-
     public ArrayList<TimeTableStudyGroupVo> getStudyGroups() {
         return mStudyGroups;
     }
-
-    public void setStudyGroups(final ArrayList<TimeTableStudyGroupVo> _studyGroups) {
-        mStudyGroups = _studyGroups;
-    }
-
-    public String getShortTitle(){
-        return getTitle().replaceFirst("^\\D+","");
-    }
-
-    @SerializedName("id")
-    private String                  mId;
-
-    @SerializedName("title")
-    private String                  mTitle;
-
-    @SerializedName("studyGroups")
-    private ArrayList<TimeTableStudyGroupVo> mStudyGroups;
 
     @Override
     public int describeContents() {
@@ -97,7 +77,20 @@ public class TimeTableSemesterVo implements Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(mId);
+        dest.writeString(mNumber);
         dest.writeString(mTitle);
         dest.writeTypedList(mStudyGroups);
     }
+
+    @SerializedName("posId")
+    private String mId;
+
+    @SerializedName("posNumber")
+    private String mNumber;
+
+    @SerializedName("posName")
+    private String mTitle;
+
+    @SerializedName("studentsetData")
+    private ArrayList<TimeTableStudyGroupVo> mStudyGroups;
 }
