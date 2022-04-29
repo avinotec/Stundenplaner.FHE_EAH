@@ -15,7 +15,10 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ~
   -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle" >
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle" >
+
     <corners
         android:radius="0dp"
         />
@@ -33,4 +36,5 @@
         android:width="0dp"
         android:color="#CCCCCC"
         />
+
 </shape>

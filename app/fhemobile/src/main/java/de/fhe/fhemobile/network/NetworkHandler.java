@@ -26,6 +26,7 @@ import org.junit.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
@@ -46,7 +47,7 @@ import de.fhe.fhemobile.vos.news.NewsItemResponse;
 import de.fhe.fhemobile.vos.news.NewsItemVo;
 import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
 import de.fhe.fhemobile.vos.semesterdata.SemesterDataVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableResponse;
+import de.fhe.fhemobile.vos.timetable.TimeTableDialogResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -57,16 +58,54 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by paul on 22.01.14.
+ * Created by paul on 22.01.14
  */
+//RetroFitClient
 public class NetworkHandler {
+
 	private static final String TAG = "NetworkHandler";
-	private static final String LOG_TAG = NetworkHandler.class.getSimpleName();
 
 	private static final NetworkHandler ourInstance = new NetworkHandler();
 
 	private Retrofit mRestAdapter = null;
-	private ApiDeclaration  mApi = null;
+	private Retrofit mRestAdapterEah = null;
+	private ApiDeclaration mApi = null;
+	private ApiDeclaration mApiEah = null;
+
+	/**
+	 * Private constructor
+	 */
+	private NetworkHandler() {
+		Assert.assertTrue( mApi == null );
+		Assert.assertTrue( mRestAdapter == null );
+		Assert.assertTrue( mApiEah == null );
+		Assert.assertTrue( mRestAdapterEah == null );
+
+		final Gson gson = new GsonBuilder()
+				.setDateFormat("HH:mm:ss'T'yyyy-MM-dd")
+				.create();
+
+		mRestAdapter = new Retrofit.Builder()
+				.baseUrl(Endpoints.BASE_URL + Endpoints.APP_NAME)
+				.addConverterFactory(GsonConverterFactory.create(gson))
+				//.setConverter(new GsonConverter(gson))
+//                .setLogLevel(RestAdapter.LogLevel.FULL)
+				.build();
+		mRestAdapterEah = new Retrofit.Builder()
+				.baseUrl(Endpoints.BASE_URL_EAH)
+				.addConverterFactory(GsonConverterFactory.create(gson))
+				//.setConverter(new GsonConverter(gson))
+//                .setLogLevel(RestAdapter.LogLevel.FULL)
+				.build();
+
+		mApi = mRestAdapter.create(ApiDeclaration.class);
+		mApiEah = mRestAdapterEah.create(ApiDeclaration.class);
+		Assert.assertTrue( mApi != null );
+		Assert.assertTrue( mRestAdapter != null );
+		Assert.assertTrue( mApiEah != null );
+		Assert.assertTrue( mRestAdapterEah != null );
+
+	}
 
 	/**
 	 *
@@ -107,6 +146,7 @@ public class NetworkHandler {
 			@Override
 			public void onFailure(final Call<ArrayList<EmployeeVo>> call, final Throwable t) {
 				showErrorToast();
+				Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 			}
 
 		});
@@ -140,6 +180,7 @@ public class NetworkHandler {
 			@Override
 			public void onFailure(final Call<SemesterDataVo> call, final Throwable t) {
 				showErrorToast();
+				Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 			}
 		});
 	}
@@ -237,6 +278,7 @@ public class NetworkHandler {
 			@Override
 			public void onFailure(final Call<NewsItemResponse> call, final Throwable t) {
 				showErrorToast();
+				Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 			}
 		});
 	}
@@ -268,6 +310,7 @@ public class NetworkHandler {
 			@Override
 			public void onFailure(final Call<CanteenVo[]> call, final Throwable t) {
 				showErrorToast();
+				Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 			}
 		});
 	}
@@ -306,6 +349,7 @@ public class NetworkHandler {
 			@Override
 			public void onFailure(final Call<NewsCategoryResponse> call, final Throwable t) {
 				showErrorToast();
+				Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 			}
 		});
 	}
@@ -332,21 +376,22 @@ public class NetworkHandler {
 	 *
 	 * @param _Callback
 	 */
-	public void fetchTimeTable(final Callback<TimeTableResponse> _Callback) {
-		Assert.assertTrue( mApi != null );
+	public void fetchTimeTable(final Callback<TimeTableDialogResponse> _Callback) {
+		Assert.assertTrue( mApiEah != null );
 
-		mApi.fetchTimeTable().enqueue(_Callback);
+		mApiEah.fetchTimeTable().enqueue(_Callback);
 	}
 
 	/**
 	 *
-	 * @param _TimeTableId
+	 * @param _StudyGroupId
 	 * @param _Callback
 	 */
-	public void fetchTimeTableEvents(final String _TimeTableId, final Callback<ArrayList<TimeTableWeekVo>> _Callback) {
-		Assert.assertTrue( mApi != null );
+	public void fetchTimeTableEvents(final String _StudyGroupId,
+									 final Callback<Map<String, TimeTableWeekVo>> _Callback) {
+		Assert.assertTrue( mApiEah != null );
 
-		mApi.fetchTimeTableEvents(_TimeTableId).enqueue(_Callback);
+		mApiEah.fetchTimeTableEvents(_StudyGroupId).enqueue(_Callback);
 	}
 
 	public List<MyTimeTableCourseComponent> reloadEvents(final MyTimeTableCourseComponent event) {
@@ -387,7 +432,7 @@ public class NetworkHandler {
 	 * @param json
 	 * @param _Callback
 	 */
-	public void registerTimeTableChanges(final String json, final Callback<ResponseModel>_Callback){
+	public void registerTimeTableChanges(final String json, final Callback<ResponseModel> _Callback){
 		Assert.assertTrue( mApi != null );
 		//okhttp 4.x final RequestBody body =RequestBody.create( json, MediaType.parse("application/json"));
 		//okhttp 3.12 flip parameters
@@ -426,29 +471,5 @@ public class NetworkHandler {
 	}
 
 
-
-	/**
-	 *
-	 */
-	private NetworkHandler() {
-		Assert.assertTrue( mApi == null );
-		Assert.assertTrue( mRestAdapter == null );
-
-		final Gson gson = new GsonBuilder()
-				.setDateFormat("HH:mm:ss'T'yyyy-MM-dd")
-				.create();
-
-		mRestAdapter = new Retrofit.Builder()
-				.baseUrl(Endpoints.BASE_URL + Endpoints.APP_NAME)
-				.addConverterFactory(GsonConverterFactory.create(gson))
-				//.setConverter(new GsonConverter(gson))
-//                .setLogLevel(RestAdapter.LogLevel.FULL)
-				.build();
-
-		mApi = mRestAdapter.create(ApiDeclaration.class);
-		Assert.assertTrue( mApi != null );
-		Assert.assertTrue( mRestAdapter != null );
-
-	}
 
 }

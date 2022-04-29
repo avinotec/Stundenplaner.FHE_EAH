@@ -28,7 +28,7 @@ public class StudyProgramComparator implements Comparator <TimeTableStudyProgram
 
 	@Override
 	public int compare(final TimeTableStudyProgramVo t1, final TimeTableStudyProgramVo t2) {
-		return t1.getTitle().compareTo(t2.getTitle());
+		return t1.getLongTitle().compareTo(t2.getLongTitle());
 	}
 }
 

@@ -34,13 +34,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 import java.util.Map;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
 import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
@@ -66,8 +63,8 @@ public class NavigationView extends LinearLayout {
     public void initializeView(final RoomVo startRoom, final RoomVo destRoom){
 
         //set start and dest
-        mTextViewStart.setText(getResources().getString(R.string.navigation_start) +"   "+ startRoom.getRoomName());
-        mTextViewDest.setText(getResources().getString(R.string.navigation_dest) +"   "+ destRoom.getRoomName());
+        mTextStart.setText(getResources().getString(R.string.navigation_start) +"   "+ startRoom.getRoomName());
+        mTextDest.setText(getResources().getString(R.string.navigation_dest) +"   "+ destRoom.getRoomName());
 
         //set size of a floor plan cell
         final int displayWidth = getResources().getDisplayMetrics().widthPixels;
@@ -105,11 +102,11 @@ public class NavigationView extends LinearLayout {
 
         mNavigationLayout = (RelativeLayout) findViewById(R.id.layout_navigation_placeholder);
 
-        mTextViewStart = (TextView) findViewById(R.id.tv_navigation_start);
-        mTextViewDest = (TextView) findViewById(R.id.tv_navigation_dest);
-        mCurrentFloorPlan = (TextView) findViewById(R.id.tv_navigation_current_floorplan);
+        mTextStart = (TextView) findViewById(R.id.tv_navigation_start);
+        mTextDest = (TextView) findViewById(R.id.tv_navigation_dest);
+        mTextCurrentFloorPlan = (TextView) findViewById(R.id.tv_navigation_current_floorplan);
 
-        mResetButton = (Button) findViewById(R.id.btn_navigation_back);
+        mBackButton = (Button) findViewById(R.id.btn_navigation_back);
     }
 
     /**
@@ -140,7 +137,7 @@ public class NavigationView extends LinearLayout {
         mFloorPlanImageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
 
-        mCurrentFloorPlan.setText(
+        mTextCurrentFloorPlan.setText(
                 getResources().getString(R.string.navigation_current_floorplan) +" "+
                         getResources().getString(R.string.navigation_building) + " "+
                         currentFloorPlan.getComplex().toString().replace("_", "-") + ", "+
@@ -155,7 +152,7 @@ public class NavigationView extends LinearLayout {
     }
 
     public void setOnClickListener(final OnClickListener _Listener){
-        mResetButton.setOnClickListener(_Listener);
+        mBackButton.setOnClickListener(_Listener);
     }
 
     public interface IViewListener {
@@ -176,8 +173,11 @@ public class NavigationView extends LinearLayout {
         mButtonNextPlan.setEnabled(_Enabled);
         if(_Enabled){
             mButtonNextPlan.setBackgroundResource(R.drawable.buttonshape_rectangle);
+            mBackButton.setVisibility(GONE);
         }else{
             mButtonNextPlan.setBackgroundResource(R.drawable.buttonshape_rectangle_disabled);
+            mBackButton.setVisibility(VISIBLE);
+
         }
     }
 
@@ -375,14 +375,14 @@ public class NavigationView extends LinearLayout {
 
     private Button mButtonPrevPlan;
     private Button mButtonNextPlan;
-    private Button mResetButton;
+    private Button mBackButton;
 
     private ImageView mFloorPlanImageView;
     private RelativeLayout mNavigationLayout;
 
-    private TextView mTextViewStart;
-    private TextView mTextViewDest;
-    private TextView mCurrentFloorPlan;
+    private TextView mTextStart;
+    private TextView mTextDest;
+    private TextView mTextCurrentFloorPlan;
 
     private double cellWidth;
     private double cellHeight;

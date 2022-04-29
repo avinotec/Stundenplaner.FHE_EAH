@@ -37,7 +37,7 @@ public abstract class SearchFragment extends FeatureFragment {
     protected RoomVo mDestRoom;
     protected RoomVo mStartRoom;
 
-    public SearchFragment(String prefTag) {
+    public SearchFragment(final String prefTag) {
         // Required empty public constructor
         PREFS_NAVIGATION = prefTag;
     }
@@ -53,9 +53,9 @@ public abstract class SearchFragment extends FeatureFragment {
         //note: the listener does not fire until the fragment is STARTED
         getParentFragmentManager().setFragmentResultListener(REQUEST_SCANNED_START_ROOM, this, new FragmentResultListener() {
             @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
+            public void onFragmentResult(@NonNull final String requestKey, @NonNull final Bundle bundle) {
                 // We use a String here, but any type that can be put in a Bundle is supported
-                String result = bundle.getString(KEY_SCANNED_ROOM);
+                final String result = bundle.getString(KEY_SCANNED_ROOM);
                 Log.d(TAG, "scanned QR code received in SearchFragment: "+result);
 
                 mStartRoom = validateAndGetRoom(result);
@@ -67,7 +67,7 @@ public abstract class SearchFragment extends FeatureFragment {
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+    public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
 
         inflateAndInitializeView(inflater, container);
@@ -85,8 +85,8 @@ public abstract class SearchFragment extends FeatureFragment {
     @Override
     public void onResume() {
         super.onResume();
-        SharedPreferences mSP = Main.getAppContext().getSharedPreferences(SP_NAVIGATION, Context.MODE_PRIVATE);
-        String previousChoice = mSP.getString(PREFS_NAVIGATION, "");
+        final SharedPreferences mSP = Main.getAppContext().getSharedPreferences(SP_NAVIGATION, Context.MODE_PRIVATE);
+        final String previousChoice = mSP.getString(PREFS_NAVIGATION, "");
 
         initializePickersFromSharedPreferences(previousChoice);
     }
@@ -94,7 +94,7 @@ public abstract class SearchFragment extends FeatureFragment {
     protected abstract void initializePickersFromSharedPreferences(String previousChoice);
 
 
-    public void setStartRoom(String startRoom) {
+    public void setStartRoom(final String startRoom) {
         validateInputAndSetStartRoom(startRoom);
     }
 
@@ -145,9 +145,9 @@ public abstract class SearchFragment extends FeatureFragment {
      * Save the user's choice to shared preferences
      * @param choice the chosen room or person
      */
-    protected void saveToSharedPreferences(String choice){
+    protected void saveToSharedPreferences(final String choice){
         final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences(SP_NAVIGATION, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(PREFS_NAVIGATION, choice);
         editor.apply();
     }
@@ -159,9 +159,9 @@ public abstract class SearchFragment extends FeatureFragment {
      * @param inputRoom room to validate
      * @return true if room is valid, false if inputRoom is invalid, missing or empty
      */
-    protected boolean validateInputAndSetStartRoom(String inputRoom){
+    protected boolean validateInputAndSetStartRoom(final String inputRoom){
 
-        if(inputRoom != null && !"".equals(inputRoom)){
+        if(inputRoom != null && !inputRoom.isEmpty()){
 
             mStartRoom = validateAndGetRoom(inputRoom);
             if(mStartRoom == null) {
@@ -183,7 +183,7 @@ public abstract class SearchFragment extends FeatureFragment {
         RoomVo roomFound = null;
 
         //a room number has been entered
-        if (inputRoom != null && !"".equals(inputRoom)) {
+        if (inputRoom != null && !inputRoom.isEmpty()) {
 
             //reminder: there is an exception from room format xx.xx.xx -> 05.3Z.xxx
 
@@ -211,6 +211,13 @@ public abstract class SearchFragment extends FeatureFragment {
                 inputRoom = inputArray[0] + ".3Z." + inputArray[2];
             }
 
+            // ab hier ist der inputRoom im Format
+            // 03.03.41
+            // 05.3Z.205
+
+//TODO für die folgende Prüfung dürfen keine Buchstaben in den Räumen sein, daher wird mit dem nicht-korrigierten "3Z" als "3" weiter gearbeitet.
+//TODO, stimmt das?
+
             //check room list for matching names
             for (final RoomVo room : NavigationFragment.rooms) {
                 if (room.getRoomName().equals(inputRoom)) {
@@ -221,8 +228,17 @@ public abstract class SearchFragment extends FeatureFragment {
                 else if (room.getBuilding().equals(inputArray[0])
                         && room.getFloorString().equals(inputArray[1])){
 
-                    int inputRoomNumber = Integer.parseInt(inputArray[2]);
-                    int roomDiff = Math.abs(Integer.parseInt(room.getRoomNumber()) - inputRoomNumber);
+                    int inputRoomNumber;
+                    int roomNumber;
+                    try {
+                        inputRoomNumber = Integer.parseInt(inputArray[2]);
+                        roomNumber = Integer.parseInt(room.getRoomNumber());
+                    }catch (NumberFormatException e) {
+                        ; /* do nothing, we use initialized values */
+                        inputRoomNumber = 1;
+                        roomNumber = 1;
+                    }
+                    final int roomDiff = Math.abs( roomNumber - inputRoomNumber);
 
                     //if room is closer than room found before
                     if(roomFound == null){

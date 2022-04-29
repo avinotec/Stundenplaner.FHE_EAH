@@ -17,166 +17,31 @@
 package de.fhe.fhemobile.vos.timetable;
 
 import static de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils.getCourseName;
-import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.annotation.NonNull;
-
 import com.google.gson.annotations.SerializedName;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import de.fhe.fhemobile.utils.timetable.TimeTableUtils;
+
 /**
- * Created by paul on 16.03.15.
+ * Created by paul on 16.03.15
+ * Edited by Nadja - 04/2022
  */
 public class TimeTableEventVo implements Parcelable {
 
+    final static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+
     public TimeTableEventVo() {
     }
-
-    public long getFullDateWithStartTime() {
-        return mFullDate;
-    }
-
-// --Commented out by Inspection START (02.11.2021 17:34):
-//    public void setStartDate(long _startDate) {
-//        mFullDate = _startDate;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:34)
-
-    public String getTitle() {
-        return mTitle;
-    }
-
-    public void setTitle(final String _title) {
-        mTitle = _title;
-    }
-
-    @NonNull
-    public String getShortTitle() {
-        //Todo: vorübergehender Fix für Veranstaltungen mit shortTitle = null
-        return correctUmlauts(mShortTitle != null ? mShortTitle : mTitle);
-    }
-
-    public String getGuiTitle(){
-        return getCourseName(getShortTitle());
-    }
-
-// --Commented out by Inspection START (02.11.2021 17:34):
-//    public void setShortTitle(String _shortTitle) {
-//        mShortTitle = _shortTitle;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:34)
-
-    public String getDate() {
-        return mDay;
-    }
-
-    public void setDate(final String _date) {
-        mDay = _date;
-    }
-
-    public String getDayOfWeek() {
-        return mDayOfWeek;
-    }
-
-// --Commented out by Inspection START (02.11.2021 17:34):
-//    public void setDayOfWeek(String _dayOfWeek) {
-//        mDayOfWeek = _dayOfWeek;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:34)
-
-// --Commented out by Inspection START (02.11.2021 17:35):
-//    public int getWeekOfYear() {
-//        return mWeekOfYear;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:35)
-
-// --Commented out by Inspection START (02.11.2021 17:34):
-//    public void setWeekOfYear(int _weekOfYear) {
-//        mWeekOfYear = _weekOfYear;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:34)
-
-    public String getStartTime() {
-        return mStartTime;
-    }
-
-// --Commented out by Inspection START (02.11.2021 17:34):
-//    public void setStartTime(String _startTime) {
-//        mStartTime = _startTime;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:34)
-
-    public String getEndTime() {
-        return mEndTime;
-    }
-
-// --Commented out by Inspection START (02.11.2021 17:34):
-//    public void setEndTime(String _endTime) {
-//        mEndTime = _endTime;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:34)
-
-    public String getLecturer() {
-        return correctUmlauts(mLecturer);
-    }
-
-    public void setLecturer(final String _lecturer) {
-        mLecturer = _lecturer;
-    }
-
-    public String getRoom() {
-        return mRoom;
-    }
-
-    public void setRoom(final String _room) {
-        mRoom = _room;
-    }
-
-    public String getUid() {
-        return mUid;
-    }
-
-// --Commented out by Inspection START (02.11.2021 17:34):
-//    public void setUid(String _uid) {
-//        mUid = _uid;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:34)
-
-    @SerializedName("startDate")
-    private long mFullDate;
-
-    @SerializedName("title")
-    private String mTitle;
-
-    @SerializedName("shortTitle")
-    private String mShortTitle;
-
-    @SerializedName("date")
-    private String mDay;
-
-    @SerializedName("dayOfWeek")
-    private String mDayOfWeek;
-
-    @SerializedName("weekOfYear")
-    private int mWeekOfYear;
-
-    @SerializedName("startTime")
-    private String mStartTime;
-
-    @SerializedName("endTime")
-    private String mEndTime;
-
-    @SerializedName("lecturer")
-    private String mLecturer;
-
-    @SerializedName("room")
-    private String mRoom;
-
-    @SerializedName("uid")
-    private String mUid;
-
 
     @Override
     public int describeContents() {
@@ -185,32 +50,31 @@ public class TimeTableEventVo implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeLong(this.mFullDate);
-        dest.writeString(this.mTitle);
-        dest.writeString(this.mShortTitle);
-        dest.writeString(this.mDay);
-        dest.writeString(this.mDayOfWeek);
-        dest.writeInt(this.mWeekOfYear);
-        dest.writeString(this.mStartTime);
-        dest.writeString(this.mEndTime);
-        dest.writeString(this.mLecturer);
-        dest.writeString(this.mRoom);
-        dest.writeString(this.mUid);
+        dest.writeString(mId);
+        dest.writeString(mTitle);
+        dest.writeLong(mStartDate);
+        dest.writeLong(mEndDate);
+        dest.writeLong(mStartDateTime);
+        dest.writeLong(mEndDateTime);
+        dest.writeString(mCourseName);
+        dest.writeString(mCourseDescription);
+        dest.writeMap(mLecturerList);
+        dest.writeMap(mLocationList);
     }
 
     private TimeTableEventVo(final Parcel in) {
-        this.mFullDate = in.readLong();
-        this.mTitle = correctUmlauts(in.readString());
-        this.mShortTitle = correctUmlauts(in.readString());
-        this.mDay = in.readString();
-        this.mDayOfWeek = in.readString();
-        this.mWeekOfYear = in.readInt();
-        this.mStartTime = in.readString();
-        this.mEndTime = in.readString();
-        this.mLecturer = correctUmlauts(in.readString());
-        this.mRoom = correctUmlauts(in.readString());
-        this.mUid = in.readString();
+        mId = in.readString();
+        this.mTitle = in.readString();
+        mStartDate = in.readLong();
+        mEndDate = in.readLong();
+        this.mStartDateTime = in.readLong();
+        this.mEndDateTime = in.readLong();
+        this.mCourseName = in.readString();
+        mCourseDescription = in.readString();
+        in.readMap(mLecturerList , LecturerVo.class.getClassLoader());
+        in.readMap(mLocationList, TimeTableLocationVo.class.getClassLoader());
     }
+
 
     public static final Parcelable.Creator<TimeTableEventVo> CREATOR = new Parcelable.Creator<TimeTableEventVo>() {
         public TimeTableEventVo createFromParcel(final Parcel source) {
@@ -221,4 +85,102 @@ public class TimeTableEventVo implements Parcelable {
             return new TimeTableEventVo[size];
         }
     };
+
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public String getId() {
+        return mId;
+    }
+
+    public long getStartDateTime() {
+        return mStartDateTime * 1000;
+    }
+
+    public long getEndDateTime() {
+        return mEndDateTime * 1000;
+    }
+
+    /**
+     * Returns only date (Date object with time 00:00:00)
+     * @return
+     */
+    public Date getStartDate() {
+        //multiply by 1000 to convert from seconds to milliseconds
+        return new Date(mStartDate * 1000);
+    }
+
+    public String getStartTime(){
+        //multiply by 1000 to convert from seconds to milliseconds
+        return sdf.format(new Date(mStartDateTime * 1000));
+    }
+
+    public String getEndTime() {
+        return sdf.format(new Date((mEndDateTime * 1000)));
+    }
+
+    public String getRoom(){
+        StringBuilder stringBuilder = null;
+        for(TimeTableLocationVo room : mLocationList.values()){
+
+            if(stringBuilder == null){
+                stringBuilder = new StringBuilder();
+            }else{
+                stringBuilder.append(", ");
+            }
+            stringBuilder.append(room.getName());
+        }
+        return stringBuilder != null ? stringBuilder.toString() : "";
+    }
+
+    public String getWeekDayName(){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date(mStartDate * 1000));
+        return TimeTableUtils.getWeekDayName(cal.get(Calendar.DAY_OF_WEEK));
+    }
+
+    public String getLecturer(){
+        StringBuilder stringBuilder = null;
+        for(LecturerVo lecturer: mLecturerList.values()){
+
+            if(stringBuilder == null){
+                stringBuilder = new StringBuilder();
+            }else{
+                stringBuilder.append(", ");
+            }
+            stringBuilder.append(lecturer.getName());
+        }
+        return stringBuilder != null ? stringBuilder.toString() : "";
+    }
+
+    @SerializedName("activityId")
+    private String mId;
+
+    @SerializedName("activityName")
+    private String mTitle;
+
+    @SerializedName("activityStartDate")
+    private long mStartDate;
+
+    @SerializedName("activityEndDate")
+    private long mEndDate;
+
+    @SerializedName("activitydatetimeStartDateTime")
+    private long mStartDateTime;
+
+    @SerializedName("activitydatetimeEndDateTime")
+    private long mEndDateTime;
+
+    @SerializedName("moduleName")
+    private String mCourseName;
+
+    @SerializedName("moduleDescription")
+    private String mCourseDescription;
+
+    @SerializedName("dataStaff")
+    private Map<String, LecturerVo> mLecturerList = new HashMap<>();
+
+    @SerializedName("dataLocation")
+    private Map<String, TimeTableLocationVo> mLocationList = new HashMap<>();
 }

@@ -42,9 +42,10 @@ public class FeatureProvider {
         Features.SEMESTER_DATA  = _Context.getResources().getBoolean(R.bool.feature_semester_data);
         Features.TIMETABLE      = _Context.getResources().getBoolean(R.bool.feature_timetable);
         Features.MYTIMETABLE    = _Context.getResources().getBoolean(R.bool.feature_mytimetable);
-        Features.IMPRESS        = _Context.getResources().getBoolean(R.bool.feature_impress);
+        Features.IMPRINT        = _Context.getResources().getBoolean(R.bool.feature_imprint);
         Features.EVENTS         = _Context.getResources().getBoolean(R.bool.feature_events);
         Features.NAVIGATION     = _Context.getResources().getBoolean(R.bool.feature_navigation);
+        Features.JOBOFFERS      = _Context.getResources().getBoolean(R.bool.feature_joboffers);
     }
 
     /**
@@ -91,8 +92,12 @@ public class FeatureProvider {
 //            list.add(new DrawerItem(Features.FeatureId.PHONEBOOK, getFeatureTitle(Features.FeatureId.PHONEBOOK)));
 //        }
 
-        if (Features.IMPRESS) {
-            list.add(new DrawerItem(Features.FeatureId.IMPRESS, getFeatureTitle(Features.FeatureId.IMPRESS)));
+        if(Features.JOBOFFERS){
+            list.add(new DrawerItem(Features.FeatureId.JOBOFFERS, getFeatureTitle(Features.FeatureId.JOBOFFERS)));
+        }
+
+        if (Features.IMPRINT) {
+            list.add(new DrawerItem(Features.FeatureId.IMPRINT, getFeatureTitle(Features.FeatureId.IMPRINT)));
         }
 
         return list;
@@ -109,16 +114,17 @@ public class FeatureProvider {
 
         //TODO Features
         switch (_FeatureId) {
-            case Features.FeatureId.NEWS:            stringRes = R.string.drawer_news;      break;
-            case Features.FeatureId.PHONEBOOK:       stringRes = R.string.drawer_persons;   break;
-            case Features.FeatureId.CANTEEN:           stringRes = R.string.drawer_canteen;     break;
-            case Features.FeatureId.MAPS:            stringRes = R.string.drawer_campus;    break;
-            case Features.FeatureId.EVENTS:          stringRes = R.string.drawer_events; break;
-            case Features.FeatureId.SEMESTER_DATA:   stringRes = R.string.drawer_semesterdates;     break;
             case Features.FeatureId.TIMETABLE:       stringRes = R.string.drawer_timetable; break;
             case Features.FeatureId.MYTIMETABLE:     stringRes = R.string.drawer_mytimetable; break;
-            case Features.FeatureId.IMPRESS:         stringRes = R.string.drawer_impressum; break;
+            case Features.FeatureId.CANTEEN:           stringRes = R.string.drawer_mensa;     break;
+            case Features.FeatureId.MAPS:            stringRes = R.string.drawer_campus;    break;
             case Features.FeatureId.NAVIGATION:      stringRes = R.string.drawer_navigation; break;
+            case Features.FeatureId.NEWS:            stringRes = R.string.drawer_news;      break;
+            case Features.FeatureId.EVENTS:          stringRes = R.string.drawer_events; break;
+            case Features.FeatureId.SEMESTER_DATA:   stringRes = R.string.drawer_semesterdates;     break;
+            case Features.FeatureId.PHONEBOOK:       stringRes = R.string.drawer_persons;   break;
+            case Features.FeatureId.JOBOFFERS:       stringRes = R.string.drawer_joboffers; break;
+            case Features.FeatureId.IMPRINT:         stringRes = R.string.drawer_imprint; break;
         }
 
         if (stringRes != -1) {

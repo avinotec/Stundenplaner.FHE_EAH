@@ -29,7 +29,7 @@
         <include layout="@layout/item_header_weather"/>
 
         <WebView
-            android:id="@+id/newsWebView"
+            android:id="@+id/webview_news"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/weatherHeader" />

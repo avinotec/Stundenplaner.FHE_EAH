@@ -19,15 +19,14 @@ public class TimeTableEventComparator implements Comparator<TimeTableEventVo> {
 
     @Override
     public int compare(TimeTableEventVo o1, TimeTableEventVo o2) {
-//        try{
-//            Date eventDate = sdf.parse(o1.getDate()+" "+o1.getStartTime());
-//            Date otherEventDate = sdf.parse(o2.getDate()+" "+o2.getStartTime());
-//            return eventDate.compareTo(otherEventDate);
-//
-//        } catch (ParseException e){
-//            Log.e(TAG, "Error parsing TimeTableEvent Dates", e);
-//            return 0;
-//        }
-        return 0;
+        try{
+            Date eventDate = sdf.parse(o1.getStartDate()+" "+o1.getStartTime());
+            Date otherEventDate = sdf.parse(o2.getStartDate()+" "+o2.getStartTime());
+            return eventDate.compareTo(otherEventDate);
+
+        } catch (ParseException e){
+            Log.e(TAG, "Error parsing TimeTableEvent Dates", e);
+            return 0;
+        }
     }
 }

@@ -22,7 +22,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by paul on 12.03.15.
+ * Created by paul on 12.03.15
+ * Edited by Nadja - 04/2022
  */
 public class TimeTableStudyGroupVo implements Parcelable {
 
@@ -30,8 +31,9 @@ public class TimeTableStudyGroupVo implements Parcelable {
     }
 
     protected TimeTableStudyGroupVo(final Parcel in) {
+        mId = in.readString();
         mTitle = in.readString();
-        mTimeTableId = in.readString();
+        mNumber = in.readString();
     }
 
     public static final Creator<TimeTableStudyGroupVo> CREATOR = new Creator<TimeTableStudyGroupVo>() {
@@ -54,27 +56,13 @@ public class TimeTableStudyGroupVo implements Parcelable {
         mTitle = _title;
     }
 
-    public String getTimeTableId() {
-        return mTimeTableId;
+    public String getStudyGroupId() {
+        return mId;
     }
 
-    public String getShortTitle() {
-        //e.g. mTitle = "ET(BA)5.01(ATTITi)
-        return mTitle.replaceFirst("^\\D+\\d\\.", "");
+    public String getNumber() {
+        return mNumber;
     }
-
-// --Commented out by Inspection START (02.11.2021 17:32):
-//    public void setTimeTableId(final String _timeTableId) {
-//        mTimeTableId = _timeTableId;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:32)
-
-    @SerializedName("title")
-    private String mTitle;
-
-    //SPLUS-Id
-    @SerializedName("timetableId")
-    private String mTimeTableId;
 
     @Override
     public int describeContents() {
@@ -83,7 +71,18 @@ public class TimeTableStudyGroupVo implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
+        dest.writeString(mId);
         dest.writeString(mTitle);
-        dest.writeString(mTimeTableId);
+        dest.writeString(mNumber);
     }
+
+    //not SPLUS-Id
+    @SerializedName("studentsetId")
+    private String mId;
+
+    @SerializedName("studentsetName")
+    private String mTitle;
+
+    @SerializedName("studentsetNumber")
+    private String mNumber;
 }

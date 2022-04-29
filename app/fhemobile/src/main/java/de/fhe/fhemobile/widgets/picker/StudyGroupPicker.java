@@ -25,7 +25,7 @@ import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
 import de.fhe.fhemobile.widgets.picker.base.IdPicker;
 
 /**
- * Created by paul on 12.03.15.
+ * Created by paul on 12.03.15
  */
 public class StudyGroupPicker extends IdPicker {
 
@@ -42,17 +42,17 @@ public class StudyGroupPicker extends IdPicker {
 
     @Override
     protected String getId(final int _Position) {
-        return mItems.get(_Position).getTimeTableId();
+        return mItems.get(_Position).getStudyGroupId();
     }
 
     @Override
     protected String getName(final int _Position) {
-        return mItems.get(_Position).getShortTitle();
+        return mItems.get(_Position).getNumber();
     }
 
     @Override
     protected int getCount() {
-        return mItems.size();
+        return mItems == null ? 0 : mItems.size();
     }
 
     private List<TimeTableStudyGroupVo> mItems;

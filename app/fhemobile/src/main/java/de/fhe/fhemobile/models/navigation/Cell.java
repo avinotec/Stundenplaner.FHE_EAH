@@ -20,8 +20,8 @@ package de.fhe.fhemobile.models.navigation;
 import static de.fhe.fhemobile.utils.Define.Navigation.COSTS_CELL;
 import static de.fhe.fhemobile.utils.navigation.NavigationUtils.floorStringToInt;
 
-import de.fhe.fhemobile.vos.navigation.BuildingVo;
 import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
+import de.fhe.fhemobile.vos.navigation.BuildingVo;
 import de.fhe.fhemobile.vos.navigation.Complex;
 import de.fhe.fhemobile.vos.navigation.RoomVo;
 
@@ -31,40 +31,47 @@ import de.fhe.fhemobile.vos.navigation.RoomVo;
 public class Cell {
 
     //Constants
-    private static final String TAG = "Cell"; //$NON-NLS
+    private static final String TAG = Cell.class.getSimpleName();
 
     //Variables
     private BuildingVo building;
     private String floor;
     private int xCoordinate;
     private int yCoordinate;
-    //Kosten für Nutzung/Durchquerung einer Zelle
+    /**
+     * Costs for using/passing a cell
+     */
     private int costPassingCell;
-    //Kosten für den Weg bis zu dieser Zelle + Kosten für aktuelle Zelle
+    /**
+     * Costs of the path to this cell plus costs of this cell (costPassingCell)
+     */
     private int costsPathToCell = 0;
-    // parent cell auf dem Weg davor liegende Zelle (für Rückverfolgung benötigt)
+    /**
+     * The parent cell is the calculated {@link Cell} that is used to get to this {@link Cell}.
+     * It is needed for backtracing in {@link de.fhe.fhemobile.utils.navigation.AStar}.
+     */
     private Cell parentCell;
-    //boolean ob die Zelle begehbar ist
+    /**
+     * True, if the cell should be considered by the navigation algorithm.
+     */
     private boolean walkable;
-    //Eindeutigen Key für Zelle
+    /**
+     * Unique key of this {@link Cell}
+     */
     private String key;
 
     //Constructors
     public Cell() {
     }
 
-// --Commented out by Inspection START (04.01.2022 18:46):
-//    public Cell(final int xCoordinate, final int yCoordinate, final String building, final String floor, final boolean walkable) {
-//        this.xCoordinate = xCoordinate;
-//        this.yCoordinate = yCoordinate;
-//        this.building = new BuildingVo(building);
-//        this.floor = floor;
-//        this.walkable = walkable;
-//        this.costPassingCell = COSTS_CELL;
-//        this.key = building + getFloorString() + xCoordinate + yCoordinate;
-//    }
-// --Commented out by Inspection STOP (04.01.2022 18:46)
-
+    /**
+     * Construct a {@link Cell}
+     * @param xCoordinate The x coordinate of the {@link Cell}
+     * @param yCoordinate The y coordinate of the {@link Cell}
+     * @param complex The {@link Complex} the {@link Cell} belongs to
+     * @param floor The floor the {@link Cell} belongs to
+     * @param walkable False, if the cell should not be considered by the navigation algorithm.
+     */
     public Cell(final int xCoordinate, final int yCoordinate, final Complex complex, final String floor, final boolean walkable) {
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
@@ -73,26 +80,24 @@ public class Cell {
         this.floor = floor;
         this.walkable = walkable;
         this.costPassingCell = COSTS_CELL;
-        this.key = building + getFloorString() + xCoordinate + yCoordinate;
+        // create key for Cell
+        this.key = this.building.getBuilding() + getFloorString() +"-" + xCoordinate +"-"+ yCoordinate;
     }
 
     /**
      * Overloaded constructor for cell type {@link RoomVo} and {@link BuildingExitVo}
-     * @param xCoordinate the x coordinate of the {@link Cell}
-     * @param yCoordinate the y coordinate of the {@link Cell}
-     * @param building the building the {@link Cell} belongs to
-     * @param floor the floor the {@link Cell} belongs to
-     * @param walkable true if the cell can be passed, false if the cell is not navigable
+     * @param xCoordinate The x coordinate of the {@link Cell}
+     * @param yCoordinate The y coordinate of the {@link Cell}
+     * @param building The building the {@link Cell} belongs to
+     * @param floor The floor the {@link Cell} belongs to
+     * @param walkable True, if the cell can be passed. False, if the cell should not be used by the navigation algorithm.
      */
     public Cell(final int xCoordinate, final int yCoordinate, final String building, final String floor,
                 final boolean walkable, final int costPassingCell) {
-        this.xCoordinate = xCoordinate;
-        this.yCoordinate = yCoordinate;
+
+        this( xCoordinate, yCoordinate, null, floor, walkable );
         this.building = new BuildingVo(building);
-        this.floor = floor;
-        this.walkable = walkable;
         this.costPassingCell = costPassingCell;
-        this.key = this.building.getBuilding() + getFloorString() +"-" + xCoordinate +"-"+ yCoordinate;
     }
 
     //Getter
@@ -105,9 +110,9 @@ public class Cell {
     }
 
     /**
-     * Returns the building of the Cell ("01", "02", "03", "04", "05")
-     * Complex 3, 2 and 1 are not considered as the same building
-     * @return
+     * Get the building of this {@link Cell} ("01", "02", "03", "04", "05").
+     * Note that building 3, 2 and 1 are considered as different buildings but the samte {@link Complex}
+     * @return The building name of this cell
      */
     public String getBuilding() {
         return building.getBuilding();
@@ -118,16 +123,15 @@ public class Cell {
     }
 
     /**
-     * Returns an instance of the {@link Complex} enum class
-     * Complex 3, 2 and 1 are considered as the same (Building_321)
-     * @return the building complex of the cell
+     * Get the {@link Complex} of this {@link Cell}
+     * Note that building 3, 2 and 1 are considered as the same {@link Complex}(Building_321).
+     * @return The {@link Complex} of this {@link Cell}
      */
     public Complex getComplex() {
         return building.getComplex();
     }
 
     public int getFloorInt() {
-
         return floorStringToInt(floor);
     }
 
@@ -154,14 +158,6 @@ public class Cell {
         this.costsPathToCell =+costsPathToCell;
     }
 
-    public void setBuilding(final String building) {
-        this.building = new BuildingVo(building);
-    }
-
-    public void setFloor(final String floor) {
-        this.floor = floor;
-    }
-
     public void setXCoordinate(final int xCoordinate) {
         this.xCoordinate = xCoordinate;
     }
@@ -175,8 +171,8 @@ public class Cell {
     }
 
     /**
-     * Compose a key for the cell for use in a hash map
-     * @return unique key
+     * Get the key for this {@link Cell} for usage in a hash map
+     * @return The unique key
      */
     public String getKey(){
         return this.key;

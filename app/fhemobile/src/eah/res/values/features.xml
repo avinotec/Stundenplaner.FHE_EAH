@@ -25,8 +25,9 @@
     <bool name="feature_events">true</bool>
     <bool name="feature_semester_data">true</bool>
     <bool name="feature_timetable">true</bool>
-    <bool name="feature_mytimetable">true</bool>
-    <bool name="feature_impress">true</bool>
+    <bool name="feature_mytimetable">false</bool>
+    <bool name="feature_imprint">true</bool>
     <bool name="feature_navigation">true</bool>
+    <bool name="feature_joboffers">true</bool>
 
 </resources>

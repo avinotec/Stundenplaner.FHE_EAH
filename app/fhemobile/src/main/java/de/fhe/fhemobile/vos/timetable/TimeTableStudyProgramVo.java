@@ -16,30 +16,33 @@
  */
 package de.fhe.fhemobile.vos.timetable;
 
-import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
-
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Created by paul on 12.03.15.
+ * Created by paul on 12.03.15
+ * Edited by Nadja - 04/2022
  */
 public class TimeTableStudyProgramVo implements Parcelable {
+
     private static final String TAG = "TimeTableStudyProgramVo";
 
     public TimeTableStudyProgramVo() {
     }
 
     protected TimeTableStudyProgramVo(final Parcel in) {
-        mId = in.readString();
-        mTitle = correctUmlauts(in.readString());
-        mSemesters = in.createTypedArrayList(TimeTableSemesterVo.CREATOR);
+        mShortTitle = in.readString();
+        mLongTitle = in.readString();
+        mDegree = in.readString();
+        //note: readHashMap reads data from a Parcel into an EXISTING map
+        mSemesters = new HashMap<>();
+        mSemesters = in.readHashMap(TimeTableSemesterVo.class.getClassLoader());
     }
 
     public static final Creator<TimeTableStudyProgramVo> CREATOR = new Creator<TimeTableStudyProgramVo>() {
@@ -55,57 +58,33 @@ public class TimeTableStudyProgramVo implements Parcelable {
     };
 
     public String getId() {
-        return mId;
+        return mShortTitle;
     }
 
-    public void setId(final String _id) {
-        mId = _id;
+    public String getShortTitle() {
+        return mShortTitle;
     }
 
-    public String getTitle() {
-        return mTitle;
+    public String getLongTitle() {
+        return mLongTitle;
     }
 
-    public void setTitle(final String _title) {
-        mTitle = _title;
+    public ArrayList<TimeTableSemesterVo> getSemestersAsList() {
+        return new ArrayList(mSemesters.values());
     }
 
-    public ArrayList<TimeTableSemesterVo> getSemesters() {
+    public Map<String, TimeTableSemesterVo> getSemesters() {
         return mSemesters;
     }
 
-    public void setSemesters(final ArrayList<TimeTableSemesterVo> _semesters) {
-        mSemesters = _semesters;
-    }
-    static final String BACHELOR_BEFORE="Bachelor: ";
-    static final String BACHELOR_AFTER=": B";
-    static final String MASTER_BEFORE ="Master: ";
-    static final String MASTER_AFTER =": M";
 
-    public static void alterTitle(final List<TimeTableStudyProgramVo> list){
-        for (final TimeTableStudyProgramVo semester:list){
-            Log.d(TAG, "alterTitle: "+ semester.getTitle());
-            if(semester.getTitle().contains(BACHELOR_BEFORE)){
-                semester.setTitle(semester.getTitle().replace(BACHELOR_BEFORE,"")+BACHELOR_AFTER);
-            }
-            else if(semester.getTitle().contains(MASTER_BEFORE)){
-                semester.setTitle(semester.getTitle().replace(MASTER_BEFORE,"")+MASTER_AFTER);
-            }
-//            else {
-//                //nothing
-//            }
-        }
+    static final String DEGREE_BACHELOR = "Bachelor";
+    static final String DEGREE_MASTER = "Master";
+
+    public String getTitleAndDegree(){
+        return mLongTitle + " (" + mDegree + ")";
 
     }
-
-    @SerializedName("id")
-    private String              mId;
-
-    @SerializedName("title")
-    private String              mTitle;
-
-    @SerializedName("terms")
-    private ArrayList<TimeTableSemesterVo> mSemesters;
 
     @Override
     public int describeContents() {
@@ -114,8 +93,22 @@ public class TimeTableStudyProgramVo implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeString(mId);
-        dest.writeString(mTitle);
-        dest.writeTypedList(mSemesters);
+        dest.writeString(mShortTitle);
+        dest.writeString(mLongTitle);
+        dest.writeString(mDegree);
+        dest.writeMap(mSemesters);
     }
+
+
+    @SerializedName("stgNameshort")
+    private String              mShortTitle;
+
+    @SerializedName("stgNamelong")
+    private String              mLongTitle;
+
+    @SerializedName("stgDegree")
+    private String              mDegree;
+
+    @SerializedName("semesterData")
+    private Map<String, TimeTableSemesterVo> mSemesters;
 }

@@ -14,7 +14,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.views.impressum;
+package de.fhe.fhemobile.views.imprint;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -32,13 +32,13 @@ import de.fhe.fhemobile.views.SSLTolerentWebViewClient;
 /**
  * Created by paul on 22.01.14.
  */
-public class ImpressumView extends FrameLayout {
+public class ImprintView extends FrameLayout {
 
     private final Context mContext;
 
     private WebView mWebView;
 
-    public ImpressumView(final Context context, final AttributeSet attrs) {
+    public ImprintView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
     }
@@ -48,12 +48,12 @@ public class ImpressumView extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mWebView = (WebView) findViewById(R.id.impressumWebView);
+        mWebView = (WebView) findViewById(R.id.webview_imprint);
         //wird der WebViewClient nicht geaendert, kann die Seite nicht geladen werden, da die Webview
         mWebView.setWebViewClient(new SSLTolerentWebViewClient(mContext));
-        //Ohne JavascriptEnabled laesst sich das Impressum nicht scrollen.
+        //Ohne JavascriptEnabled laesst sich das WebView nicht scrollen.
 	    mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.loadUrl(Endpoints.IMPRESSUM_ENDPOINT);
+        mWebView.loadUrl(Endpoints.IMPRINT_ENDPOINT);
         final TextView dataProtection = findViewById(R.id.data_protection_link);
         dataProtection.setMovementMethod(LinkMovementMethod.getInstance());
         final TextView versionText = findViewById(R.id.version_number);

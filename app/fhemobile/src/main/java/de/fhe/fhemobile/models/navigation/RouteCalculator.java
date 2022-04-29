@@ -23,7 +23,6 @@ import static de.fhe.fhemobile.utils.Define.Navigation.cellgrid_width;
 import static de.fhe.fhemobile.utils.navigation.NavigationUtils.floorIntToString;
 import static de.fhe.fhemobile.utils.navigation.NavigationUtils.getPathToFloorPlanGrid;
 
-import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -41,43 +40,48 @@ import de.fhe.fhemobile.vos.navigation.RoomVo;
 
 
 /**
- *  Klasse für Routenberechnung über mehrere Stockwerke und Gebäude
+ *  Class for route calculation over multiple floors and buildings
+ *
  *  source: Bachelor Thesis from Tim Münziger from SS2020
- *  edit by Nadja in October 2021
+ *  edited by Nadja in October 2021
  */
 public class RouteCalculator {
 
-    //Constants
     private static final String TAG = "RouteCalculator"; //$NON-NLS
 
-    //Variables
-    private final Context context;
+
     private final ArrayList<FloorConnectionVo> floorConnections;
     private final ArrayList<BuildingExitVo> buildingExits;
+    //attention: do not use NavigationFragment.rooms here because certain attributes are set
+    // during route calculating that are specific to each calculation
+    private final ArrayList<RoomVo> rooms;
     private final Cell startLocation;
     private final Cell destLocation;
-    //gesamte Route
+    /**
+     * Complete route
+     */
     private final LinkedHashMap<BuildingFloorKey, ArrayList<Cell>> cellsToWalk = new LinkedHashMap<>();
-    //Koordinatensysteme aller Stockwerke
-    //for each building (key = complex e.g. BUILDING_321) and for each floor (key = floor as int) a grid of cells is stored
+    /**
+     * Coordinate system of all floors.
+     * A grid of cells is stored for each {@link Complex} (e.g. BUILDING_321) and floor integer.
+     */
     private final HashMap<Complex, HashMap<Integer, Cell[][]>> floorGrids = new HashMap<>();
 
 
     /**
-     * Constructs a new {@link RouteCalculator} object
-     * @param context
-     * @param startLocation the start room
-     * @param destLocation the destination room
-     * @param floorConnections the list of {@link FloorConnectionVo}s
-     * @param buildingExits the list of {@link BuildingExitVo}s
+     * Construct a new {@link RouteCalculator} object
+     * @param startLocation The start room
+     * @param destLocation The destination room
+     * @param floorConnections The list of {@link FloorConnectionVo}s
+     * @param buildingExits The list of {@link BuildingExitVo}s
      */
-    public RouteCalculator(final Context context, final RoomVo startLocation, final RoomVo destLocation,
+    public RouteCalculator(final RoomVo startLocation, final RoomVo destLocation,
                            final ArrayList<FloorConnectionVo> floorConnections, final ArrayList<BuildingExitVo> buildingExits) {
-        this.context = context;
         this.startLocation = startLocation;
         this.destLocation = destLocation;
         this.floorConnections = floorConnections;
         this.buildingExits = buildingExits;
+        this.rooms = JSONHandler.getRooms();
     }
 
     /**
@@ -86,7 +90,10 @@ public class RouteCalculator {
      */
     public LinkedHashMap<BuildingFloorKey, ArrayList<Cell>> getWholeRoute() {
 
-        //Get grids of floors to use - fills in variable floorGrids
+        cellsToWalk.clear();
+        floorGrids.clear();
+
+        //Get grids of floors to use - fills in variable floorGrids - initialize
         getRequiredFloorGrids();
 
         try {
@@ -96,16 +103,19 @@ public class RouteCalculator {
 
             //ROUTE OHNE GEBÄUDEWECHSEL
             //route just within one complex, user does not have to change between complexes
-            if(startComplex == destLocation.getComplex()){
+            if(startComplex == destComplex){
                 //construct an instance of the Navigation Algorithm (AStar)
-                final AStar aStar = new AStar(startLocation, destLocation, floorGrids, floorConnections);
+                AStar aStar = new AStar(startLocation, destLocation, floorGrids, floorConnections);
                 //compute route and save it to cellsToWalk
                 cellsToWalk.putAll(aStar.getCellsToWalk());
+
+                // force garbage collection
+                aStar = null;
             }
 
             //ROUTE MIT GEBÄUDEWECHSEL
             //start and destination complex differ -> user has to change between complexes
-            else{
+            else {
 
                 //determine Exit to use for leaving complex to the start complex
                 // and determine Exit to use for entering the destination complex
@@ -143,6 +153,14 @@ public class RouteCalculator {
                         }
                     }
                 }
+                if(buildingExit == null){
+                    Log.e(TAG, "No exit found from " + startComplex.toString() + " to " + destComplex.toString());
+                    throw new Exception();
+                }
+                if(entry == null){
+                    Log.e(TAG, "No entry found to " + destComplex.toString() + " from " + startComplex.toString());
+                    throw new Exception();
+                }
 
                 //first add entry-dest and then exit-start to maintain the order important for prev/next-button navigation in NavigationFragment
                 //route to get to destination within the destination complex
@@ -164,17 +182,18 @@ public class RouteCalculator {
 
 
     /**
-     * Builds grids of all required floors in all used buildings and saves it to variable "floorGrids"
+     * Build grids of all required floors in all used buildings
+     * and save it to variable "floorGrids"
      */
     private void getRequiredFloorGrids() {
 
         final Complex startComplex = startLocation.getComplex();
         final Complex destinationComplex = destLocation.getComplex();
 
+        floorGrids.clear();
 
-        //add floorgrids of the start and destination building,
-        //für einen Komplex/Gebäude werden immer alle floorgrids hinzugefügt,
-        //es werden nur Gebäude ausgelassen die weder Start noch Ziel enthalten
+        // Add floorgrids of the start and destination complex.
+        // Grids of ALL floors of each complex are added (not only ones used, becomes we don't know them here, yet.)
         try {
             if(startComplex == Complex.COMPLEX_321
                     || destinationComplex == Complex.COMPLEX_321){
@@ -210,25 +229,24 @@ public class RouteCalculator {
 
 
     /**
-     * Builds a grid of all cells of a floorplan
-     * @param complex the {@link Complex} of the floor plan
-     * @param floorInt the floor of the floor plan as integer (ug = -1)
+     * Build a grid of all cells of a floorplan
+     * @param complex The {@link Complex} of the floor plan
+     * @param floorInt The floor of the floor plan as integer (ug = -1)
      * @return floorgrid as 2D Arraylist with all cells of the floor
      */
     private Cell[][] buildFloorGrid(final Complex complex, final int floorInt) {
 
-        final Cell[][] floorGrid = new Cell[(int)cellgrid_width][(int)cellgrid_height];
+        final Cell[][] floorGrid = new Cell[cellgrid_width][cellgrid_height];
         final String floor = floorIntToString(complex, floorInt);
 
         try {
             //Get floor plan JSON from assets
             final String filename = getPathToFloorPlanGrid(complex, floor);
-            final String json = JSONHandler.readFloorGridFromAssets(context, filename);
+            final String json = JSONHandler.readFloorGridFromAssets(filename);
             final HashMap<String, Cell> walkableCells = JSONHandler.parseJsonWalkableCells(json);
 
             //fill in rooms
-            if(NavigationFragment.rooms.isEmpty()) JSONHandler.loadRooms(context);
-            for(final RoomVo r : NavigationFragment.rooms){
+            for(final RoomVo r : rooms){
                 if(r.getComplex() == complex && r.getFloorString().equals(floor)){
                     floorGrid[r.getXCoordinate()][r.getYCoordinate()] = r;
                 }

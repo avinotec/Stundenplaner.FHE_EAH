@@ -25,11 +25,12 @@
     <string name="drawer_persons">Persons</string>
     <string name="drawer_semesterdates">Semester Dates</string>
     <string name="drawer_campus">Campus Maps</string>
-    <string name="drawer_impressum">Imprint</string>
+    <string name="drawer_imprint">Imprint</string>
     <string name="drawer_timetable">Schedule</string>
     <string name="drawer_mytimetable">My Schedule</string>
     <string name="drawer_events">Event Calendar</string>
     <string name="drawer_navigation">Campus Navigation</string>
+    <string name="drawer_joboffers">Job Offers</string>
 
     <string name="reallyClose">Please click back twice to exit</string>
 
@@ -61,7 +62,7 @@
     <string name="timetable_error">This program is empty.</string>
     <string name="timetable_switch">Save choice</string>
     <string name="timetable_reset">Delete choice</string>
-    <string name="timetable_week">Calendar Week</string>
+    <string name="timetable_week">Semester Week</string>
     <string name="timetable_error_incomplete">Please set all fields.</string>
 
     <string name="aqua_open">Open</string>
@@ -102,7 +103,7 @@
     <string name="deleteTimeTableConfirm">Yes</string>
     <string name="deleteTimeTableCancel">Cancel</string>
 
-    <string name="impress_data_protection_link" translatable="false"><a href="https://www.eah-jena.de/datenschutz">Data protection</a></string>
+    <string name="imprint_data_protection_link" translatable="false"><a href="https://www.eah-jena.de/datenschutz">Data protection</a></string>
     <string name="notification_error_ssl_cert_invalid">A SSL-Certificate occurred. Do you want to proceed?</string>
     <string name="ssl_error_continue">Continue</string>
     <string name="ssl_error_cancel">Cancel</string>
@@ -159,6 +160,7 @@
     <string name="text_view_oder">or</string>
     <string name="navigation_button_prev_plan">Previous Map</string>
     <string name="navigation_button_next_plan">Next Map</string>
+    <string name="navigation_button_back">Back to input</string>
     <string name="maps_up">One floor up</string>
     <string name="maps_down">One floor down</string>
     <string name="navigation_dialog_empty_building">No rooms here.</string>

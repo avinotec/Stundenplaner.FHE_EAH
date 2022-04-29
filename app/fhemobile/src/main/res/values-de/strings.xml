@@ -25,11 +25,12 @@
     <string name="drawer_persons" >Personen</string>
     <string name="drawer_semesterdates" >Semestertermine</string>
     <string name="drawer_campus" >Campusplan</string>
-    <string name="drawer_impressum" >Impressum</string>
+    <string name="drawer_imprint" >Impressum</string>
     <string name="drawer_timetable" >Stundenplan</string>
     <string name="drawer_mytimetable" >Mein Stundenplan</string>
     <string name="drawer_events" >Veranstaltungskalender</string>
     <string name="drawer_navigation" >Campusnavigation</string>
+    <string name="drawer_joboffers">Stellenangebote</string>
 
     <string name="reallyClose">Zum Verlassen zweimal Zurück drücken</string>
 
@@ -66,7 +67,7 @@
     <string name="timetable_error" >Dieser Kurs enthält keine Elemente.</string>
     <string name="timetable_switch" >Auswahl speichern</string>
     <string name="timetable_reset" >Auswahl löschen</string>
-    <string name="timetable_week" >Kalenderwoche</string>
+    <string name="timetable_week" >Semesterwoche</string>
     <string name="timetable_error_incomplete" >Bitte fülle alle benötigten Felder aus.</string>
 
     <string name="aqua_open" >Geöffnet</string>
@@ -166,6 +167,7 @@
     <string name="error_message_room_input_invalid">Raum nicht gefunden!</string>
     <string name="navigation_button_prev_plan">Vorherige Karte</string>
     <string name="navigation_button_next_plan">Nächste Karte</string>
+    <string name="navigation_button_back">Zurück zur Eingabe</string>
     <string name="navigation_start">Start: </string>
     <string name="navigation_dest">Ziel: </string>
     <string name="navigation_current_floorplan">aktuelle Anzeige:</string>

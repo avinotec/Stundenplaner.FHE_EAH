@@ -14,12 +14,12 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ~
   -->
-<de.fhe.fhemobile.views.impressum.ImpressumView
+<de.fhe.fhemobile.views.imprint.ImprintView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="de.fhe.fhemobile.fragments.impressum.ImpressumFragment">
+    tools:context="de.fhe.fhemobile.fragments.imprint.ImprintFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -30,17 +30,18 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/header_image_height"
-            android:id="@+id/imageview_cafe_aqua"
             android:src="@drawable/th_impress"
+            android:id="@+id/imageView"
+            android:src="@drawable/th_imprint"
             android:layout_alignParentTop="true"
             android:scaleType="centerCrop"
-	        android:contentDescription="Impress Background Logo" />
+	        android:contentDescription="Imprint Background Logo" />
 
         <WebView
-            android:id="@+id/impressumWebView"
+            android:id="@+id/webview_imprint"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/imageview_cafe_aqua"
+            android:layout_below="@+id/imageView"
             android:layout_above="@id/data_protection_link"/>
 
 	    <TextView
@@ -48,7 +49,7 @@
 		    android:layout_above="@id/version_number"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
-		    android:text="@string/impress_data_protection_link"
+		    android:text="@string/imprint_data_protection_link"
 		    android:textSize="15sp"
 		    android:linksClickable="true" />
 
@@ -63,4 +64,4 @@
 
     </RelativeLayout>
 
-</de.fhe.fhemobile.views.impressum.ImpressumView>
+</de.fhe.fhemobile.views.imprint.ImprintView>

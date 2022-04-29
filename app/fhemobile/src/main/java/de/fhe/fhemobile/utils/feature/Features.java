@@ -28,10 +28,11 @@ public class Features {
     public static boolean MAPS            = false;
     public static boolean SEMESTER_DATA   = false;
     public static boolean TIMETABLE       = false;
-    public static boolean IMPRESS         = false;
+    public static boolean IMPRINT = false;
     public static boolean MYTIMETABLE     = false;
     public static boolean EVENTS          = false;
     public static boolean NAVIGATION      = false;
+    public static boolean JOBOFFERS       = false;
 
     /**
      *
@@ -43,9 +44,10 @@ public class Features {
         int MAPS            = 3;
         int SEMESTER_DATA   = 4;
         int TIMETABLE       = 5;
-        int IMPRESS         = 6;
+        int IMPRINT         = 6;
         int MYTIMETABLE     = 7;
         int EVENTS          = 8;
         int NAVIGATION      = 9;
+        int JOBOFFERS       = 10;
     }
 }

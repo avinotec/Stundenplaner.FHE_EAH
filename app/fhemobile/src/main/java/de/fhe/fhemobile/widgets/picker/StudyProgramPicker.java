@@ -19,13 +19,16 @@ package de.fhe.fhemobile.widgets.picker;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import java.util.Collections;
 import java.util.List;
 
+import de.fhe.fhemobile.comparator.StudyProgramComparator;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
 import de.fhe.fhemobile.widgets.picker.base.IdPicker;
 
 /**
- * Created by paul on 12.03.15.
+ * Created by paul on 12.03.15
+ * Edited by Nadja - 04/2022
  */
 public class StudyProgramPicker extends IdPicker {
 
@@ -33,8 +36,9 @@ public class StudyProgramPicker extends IdPicker {
         super(context, attrs);
     }
 
-    public void setItems(List<TimeTableStudyProgramVo> _items) {
-        mItems = _items;
+    public void setItems(List<TimeTableStudyProgramVo> _Items) {
+        Collections.sort(_Items, new StudyProgramComparator());
+        mItems = _Items;
         if (mItems == null) {
             throw new AssertionError("StudyCourse items cannot be null!");
         }
@@ -47,7 +51,7 @@ public class StudyProgramPicker extends IdPicker {
 
     @Override
     protected String getName(int _Position) {
-        return mItems.get(_Position).getTitle();
+        return mItems.get(_Position).getTitleAndDegree();
     }
 
     @Override
