@@ -25,6 +25,7 @@ import de.fhe.fhemobile.fragments.mensa.MensaFoodFragment;
 import de.fhe.fhemobile.fragments.navigation.NavigationDialogFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdata.SemesterDataFragment;
+import de.fhe.fhemobile.utils.TimeTableFactory;
 
 /**
  * Created by paul on 18.03.15
@@ -36,7 +37,7 @@ public class FeatureFragmentFactory {
 
         //TODO Features
         switch (_FeatureId) {
-            case Features.FeatureId.TIMETABLE:       //fragment = TimeTableFactory.getTimeTableFragment();    break;
+            case Features.FeatureId.TIMETABLE:       fragment = TimeTableFactory.getTimeTableFragment();    break;
             case Features.FeatureId.MYTIMETABLE:     //fragment = MyTimeTableCalendarFragment.newInstance();  break;
             case Features.FeatureId.MENSA:           fragment = MensaFoodFragment.newInstance();            break;
             //case Features.FeatureId.MENSA:           fragment = MensaFragmentNEW.newInstance();           break;

@@ -16,7 +16,7 @@
  */
 package de.fhe.fhemobile.vos.timetable;
 
-import static de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils.getCourseName;
+import static de.fhe.fhemobile.utils.timetable.TimeTableUtils.cutStudyProgramPrefix;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -87,7 +87,7 @@ public class TimeTableEventVo implements Parcelable {
     };
 
     public String getTitle() {
-        return mTitle;
+        return cutStudyProgramPrefix(mTitle);
     }
 
     public String getId() {
