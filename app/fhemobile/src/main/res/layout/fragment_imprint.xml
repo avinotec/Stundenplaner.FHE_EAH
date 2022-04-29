@@ -30,9 +30,8 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/header_image_height"
-            android:src="@drawable/th_impress"
-            android:id="@+id/imageView"
             android:src="@drawable/th_imprint"
+            android:id="@+id/imageView"
             android:layout_alignParentTop="true"
             android:scaleType="centerCrop"
 	        android:contentDescription="Imprint Background Logo" />

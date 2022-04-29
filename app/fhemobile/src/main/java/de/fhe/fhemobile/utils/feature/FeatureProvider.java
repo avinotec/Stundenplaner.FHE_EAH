@@ -37,7 +37,7 @@ public class FeatureProvider {
     public static void loadFeatures(final Context _Context) {
         Features.NEWS           = _Context.getResources().getBoolean(R.bool.feature_news);
         Features.PHONEBOOK      = _Context.getResources().getBoolean(R.bool.feature_phonebook);
-        Features.CANTEEN = _Context.getResources().getBoolean(R.bool.feature_canteen);
+        Features.CANTEEN        = _Context.getResources().getBoolean(R.bool.feature_canteen);
         Features.MAPS           = _Context.getResources().getBoolean(R.bool.feature_maps);
         Features.SEMESTER_DATA  = _Context.getResources().getBoolean(R.bool.feature_semester_data);
         Features.TIMETABLE      = _Context.getResources().getBoolean(R.bool.feature_timetable);
@@ -116,7 +116,7 @@ public class FeatureProvider {
         switch (_FeatureId) {
             case Features.FeatureId.TIMETABLE:       stringRes = R.string.drawer_timetable; break;
             case Features.FeatureId.MYTIMETABLE:     stringRes = R.string.drawer_mytimetable; break;
-            case Features.FeatureId.CANTEEN:           stringRes = R.string.drawer_mensa;     break;
+            case Features.FeatureId.CANTEEN:         stringRes = R.string.drawer_canteen;     break;
             case Features.FeatureId.MAPS:            stringRes = R.string.drawer_campus;    break;
             case Features.FeatureId.NAVIGATION:      stringRes = R.string.drawer_navigation; break;
             case Features.FeatureId.NEWS:            stringRes = R.string.drawer_news;      break;

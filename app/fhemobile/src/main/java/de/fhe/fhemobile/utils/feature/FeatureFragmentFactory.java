@@ -26,6 +26,7 @@ import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableCalendarFragment;
 import de.fhe.fhemobile.fragments.navigation.NavigationDialogFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdata.SemesterDataFragment;
+import de.fhe.fhemobile.utils.TimeTableFactory;
 
 /**
  * Created by paul on 18.03.15
