@@ -70,6 +70,9 @@ public class CanteenMenuFragment extends FeatureFragment {
             NetworkHandler.getInstance().fetchCanteenData();
         }
 
+        //todo: reconstruction canteen
+        //evtl. immer data fetchen
+
         return mView;
     }
 
@@ -119,7 +122,8 @@ public class CanteenMenuFragment extends FeatureFragment {
     @Override
     public void onRestoreActionBar(final ActionBar _ActionBar) {
         super.onRestoreActionBar(_ActionBar);
-        _ActionBar.setTitle(UserSettings.getInstance().getChosenCanteenName());
+        //todo: reconstruction canteen
+        //_ActionBar.setTitle(UserSettings.getInstance().getChosenCanteenName());
     }
 
     private CanteenView mView;

@@ -63,15 +63,14 @@ public class CanteenView extends LinearLayout {
     }
 
     public void registerModelListener() {
-        mModel.addListener(CanteenModel.ChangeEvent.RECEIVED_FOOD_DATA, mReceivedCanteenFoodListener);
-        mModel.addListener(CanteenModel.ChangeEvent.RECEIVED_EMPTY_FOOD_DATA, mReceivedEmptyCanteenFoodListener);
+        mModel.addListener(CanteenModel.CanteenChangeEvent.RECEIVED_CANTEEN_MENU, mReceivedCanteenFoodListener);
+        mModel.addListener(CanteenModel.CanteenChangeEvent.RECEIVED_EMPTY_MENU, mReceivedEmptyCanteenFoodListener);
 
     }
 
     public void deregisterModelListener() {
-        mModel.removeListener(CanteenModel.ChangeEvent.RECEIVED_FOOD_DATA, mReceivedCanteenFoodListener);
-        mModel.removeListener(CanteenModel.ChangeEvent.RECEIVED_EMPTY_FOOD_DATA, mReceivedEmptyCanteenFoodListener);
-
+        mModel.removeListener(CanteenModel.CanteenChangeEvent.RECEIVED_CANTEEN_MENU, mReceivedCanteenFoodListener);
+        mModel.removeListener(CanteenModel.CanteenChangeEvent.RECEIVED_EMPTY_MENU, mReceivedEmptyCanteenFoodListener);
     }
 
     public void populateList() {
@@ -82,7 +81,8 @@ public class CanteenView extends LinearLayout {
 
         sectionList.add(headerSection);
 
-        for (final CanteenMenuDayVo collection : mModel.getMenus()) {
+        //todo: reconstruction canteen
+       /* for (final CanteenMenuDayVo collection : mModel.getMenus()) {
             final ArrayList<IRowItem> rowItems = new ArrayList<>();
 
             for (final CanteenDishVo canteenItem : collection.getItems()) {
@@ -90,7 +90,7 @@ public class CanteenView extends LinearLayout {
             }
 
             sectionList.add(new DefaultHeaderItem(collection.getHeadline(), true, rowItems));
-        }
+        }*/
 
         mAdapter = new StickyHeaderAdapter(mContext, sectionList);
         mListView.setAdapter(mAdapter);

@@ -39,7 +39,7 @@ public class MapsAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        TextView mMapName;
+        TextView mMapNameView;
     }
 
     /**
@@ -104,7 +104,7 @@ public class MapsAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.item_map, parent, false);
 
-            viewHolder.mMapName = (TextView) convertView.findViewById(R.id.mapItemTitle);
+            viewHolder.mMapNameView = (TextView) convertView.findViewById(R.id.mapItemTitle);
 
             convertView.setTag(viewHolder);
         }
@@ -112,7 +112,7 @@ public class MapsAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.mMapName.setText(mContext.getResources().getString(mItems.get(position).getNameID()));
+        viewHolder.mMapNameView.setText(mContext.getResources().getString(mItems.get(position).getNameID()));
 
         return convertView;
     }

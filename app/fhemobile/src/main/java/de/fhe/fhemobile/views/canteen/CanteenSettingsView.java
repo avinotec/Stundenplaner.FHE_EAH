@@ -28,71 +28,81 @@ import de.fhe.fhemobile.adapters.canteen.CanteenSettingsAdapter;
 import de.fhe.fhemobile.events.Event;
 import de.fhe.fhemobile.events.EventListener;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
+import de.fhe.fhemobile.utils.UserSettings;
 
 /**
- * Created by paul on 12.02.14.
+ * Created by paul on 12.02.14
+ * Edited by Nadja - 04/2022
  */
 public class CanteenSettingsView extends FrameLayout {
 
     public interface ViewListener {
-        void onCanteenChosen(Integer _Id, Integer _Position);
+        void onCanteenSelected(Integer _Id, Integer _Position);
     }
 
     public CanteenSettingsView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
-        mModel = CanteenModel.getInstance();
+        mCanteenModel = CanteenModel.getInstance();
 
-        mModel.addListener(CanteenModel.ChangeEvent.RECEIVED_CHOICE_ITEMS, mChoiceItemsListener);
+        mCanteenModel.addListener(CanteenModel.CanteenChangeEvent.RECEIVED_CANTEENS, mCanteenSelectedListener);
     }
 
     public void initializeView(final ViewListener _Listener) {
-        mViewListener = _Listener;
+        mCanteenViewListener = _Listener;
     }
 
     public void destroy() {
-        mModel.removeListener(CanteenModel.ChangeEvent.RECEIVED_CHOICE_ITEMS, mChoiceItemsListener);
+        mCanteenModel.removeListener(CanteenModel.CanteenChangeEvent.RECEIVED_CANTEENS, mCanteenSelectedListener);
 
-        mViewListener = null;
-        mChoiceItemsListener = null;
+        mCanteenViewListener = null;
+        mCanteenSelectedListener = null;
     }
 
-    public void initContent() {
-        mAdapter = new CanteenSettingsAdapter(mContext, mModel.getChoiceItems());
-        mChoiceListView.setAdapter(mAdapter);
-        mChoiceListView.setOnItemClickListener(mCanteenSelectListener);
-        mChoiceListView.setItemChecked(mModel.getSelectedItemPositions(), true);
+    /**
+     * Set adapter and OnItemClickListener of canteen list view,
+     * and set selected canteens as checked
+     */
+    public void initCanteenSelectionListView() {
+        mCanteenListAdapter = new CanteenSettingsAdapter(mContext, mCanteenModel.getCanteens());
+        mCanteenListView.setAdapter(mCanteenListAdapter);
+        mCanteenListView.setOnItemClickListener(mCanteenSelectListener);
+
+        for(int i : UserSettings.getInstance().getListOfSelectedCanteenIdsAsInt()){
+            mCanteenListView.setItemChecked(i, true);
+        }
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mChoiceListView = (ListView) findViewById(R.id.lv_canteen_choice);
+        mCanteenListView = (ListView) findViewById(R.id.lv_canteen_choice);
+        mCanteenListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
     }
 
     private final AdapterView.OnItemClickListener mCanteenSelectListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
-            mViewListener.onCanteenChosen((int) mAdapter.getItemId(position), position);
+            mCanteenViewListener.onCanteenSelected((int) mCanteenListAdapter.getItemId(position), position);
         }
     };
 
-    private EventListener mChoiceItemsListener = new EventListener() {
+    private EventListener mCanteenSelectedListener = new EventListener() {
         @Override
         public void onEvent(final Event event) {
-            initContent();
+            initCanteenSelectionListView();
         }
     };
 
-    private final Context mContext;
+    private final Context           mContext;
+    private final CanteenModel      mCanteenModel;
 
-    private final CanteenModel mModel;
+    private ViewListener            mCanteenViewListener;
 
-    private ViewListener mViewListener;
-    private CanteenSettingsAdapter mAdapter;
+    private ListView                mCanteenListView;
+    private CanteenSettingsAdapter  mCanteenListAdapter;
 
-    private ListView mChoiceListView;
 
 }

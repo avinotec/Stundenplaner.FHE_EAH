@@ -10,20 +10,15 @@ import com.google.gson.annotations.SerializedName;
  */
 public class CanteenVo implements Parcelable {
 
-    final private String canteenId;
-    final private String canteenName;
-
-    public CanteenVo(String id, String name){
-        canteenId = id;
-        canteenName = name;
+    public CanteenVo(){
     }
 
     public String getCanteenId() {
-        return canteenId;
+        return mCanteenId;
     }
 
-    public String getName() {
-        return canteenName;
+    public String getCanteenName() {
+        return mCanteenName;
     }
 
 
@@ -34,13 +29,13 @@ public class CanteenVo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int i) {
-        dest.writeString(canteenId);
-        dest.writeString(canteenName);
+        dest.writeString(mCanteenId);
+        dest.writeString(mCanteenName);
     }
 
     public CanteenVo(Parcel in){
-        canteenId = in.readString();
-        canteenName = in.readString();
+        mCanteenId = in.readString();
+        mCanteenName = in.readString();
     }
 
     public static final Creator<CanteenVo> CREATOR = new Creator<CanteenVo>() {
@@ -57,8 +52,13 @@ public class CanteenVo implements Parcelable {
 
 
     @SerializedName("id")
-    private Integer mId;
+    private String mCanteenId;
 
     @SerializedName("name")
-    private String mName;
+    private String mCanteenName;
+
+    /*
+    attributes delivered but not needed/used:
+    @SerializedName("city")
+    @SerializedName("urlPath") */
 }

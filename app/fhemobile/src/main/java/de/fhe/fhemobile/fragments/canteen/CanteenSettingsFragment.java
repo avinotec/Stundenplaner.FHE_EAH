@@ -51,9 +51,6 @@ public class CanteenSettingsFragment extends FeatureFragment {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//
-//        }
     }
 
     @Override
@@ -63,11 +60,11 @@ public class CanteenSettingsFragment extends FeatureFragment {
         mView = (CanteenSettingsView) inflater.inflate(R.layout.fragment_canteen_settings, container, false);
         mView.initializeView(mViewListener);
 
-        if(CanteenModel.getInstance().getChoiceItems() == null) {
+        if(CanteenModel.getInstance().getCanteens() == null) {
             NetworkHandler.getInstance().fetchAvailableCanteens();
         }
         else {
-            mView.initContent();
+            mView.initCanteenSelectionListView();
         }
 
         return mView;
@@ -84,12 +81,12 @@ public class CanteenSettingsFragment extends FeatureFragment {
 
     private final CanteenSettingsView.ViewListener mViewListener = new CanteenSettingsView.ViewListener() {
         @Override
-        public void onCanteenChosen(final Integer _Id, final Integer _Position) {
+        public void onCanteenSelected(final Integer _Id, final Integer _Position) {
 
-            final CanteenVo canteen = CanteenModel.getInstance().getChoiceItems()[_Position];
+            //id has been used as position
+            final CanteenVo canteen = CanteenModel.getInstance().getCanteens()[_Position];
 
-            UserSettings.getInstance().addChosenCanteens(canteen);
-            CanteenModel.getInstance().addSelectedItemPosition(_Position);
+            UserSettings.getInstance().addOrRemoveFromSelectedCanteens(canteen);
         }
     };
 

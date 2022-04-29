@@ -32,7 +32,7 @@ import de.fhe.fhemobile.vos.canteen.CanteenVo;
 public class CanteenSettingsAdapter extends BaseAdapter {
 
     static class ViewHolder {
-        TextView mCanteenName;
+        TextView mCanteenNameView;
     }
 
     public CanteenSettingsAdapter(final Context mContext, final CanteenVo[] mItems) {
@@ -70,6 +70,7 @@ public class CanteenSettingsAdapter extends BaseAdapter {
      */
     @Override
     public long getItemId(final int position) {
+        //use canteenId as position
         return Long.parseLong(mItems[position].getCanteenId());
     }
 
@@ -100,9 +101,9 @@ public class CanteenSettingsAdapter extends BaseAdapter {
         final ViewHolder viewHolder;
         if(convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.item_singlechoice, parent, false);
+            convertView = inflater.inflate(R.layout.item_multiplechoice, parent, false);
 
-            viewHolder.mCanteenName = (TextView) convertView.findViewById(android.R.id.text1);
+            viewHolder.mCanteenNameView = (TextView) convertView.findViewById(R.id.tv_canteen_choice_item);
 
             convertView.setTag(viewHolder);
         }
@@ -110,7 +111,7 @@ public class CanteenSettingsAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.mCanteenName.setText(mItems[position].getName());
+        viewHolder.mCanteenNameView.setText(mItems[position].getCanteenName());
 
         return convertView;
     }

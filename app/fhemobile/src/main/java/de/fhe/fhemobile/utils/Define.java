@@ -30,10 +30,7 @@ public class Define {
 
 	//created by Nadja 11.03.2022
 	public static class Canteen {
-		public static final String PARAM_CANTEEN_ID = "paramCanteenId";
-        public static final String SP_CANTEEN_SETTINGS = "spCanteen";
-		public static final String PREF_CHOSEN_CANTEEN_ID = "prefChosenCanteenId";
-		public static final String PARAM_CANTEEN_DAY = "paramCanteenDay";
+		static final String PREF_SELECTED_CANTEENS = "selectedCanteens";        // $NON-NLS
 	}
 
 	//created by Nadja 11.03.2022

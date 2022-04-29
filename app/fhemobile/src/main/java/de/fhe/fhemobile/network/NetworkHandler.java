@@ -150,10 +150,10 @@ public class NetworkHandler {
 	public void fetchCanteenData() {
 		Assert.assertTrue( mApi != null );
 
-		ArrayList<String> chosenCanteenIds = UserSettings.getInstance().getListOfChosenCanteenIdsAsString();
-		Log.d(TAG, "Chosen Canteens: " + chosenCanteenIds);
+		ArrayList<String> selectedCanteenIds = UserSettings.getInstance().getListOfSelectedCanteenIdsAsString();
+		Log.d(TAG, "Selected Canteens: " + selectedCanteenIds);
 
-		for(String canteenId : chosenCanteenIds){
+		for(String canteenId : selectedCanteenIds){
 			mApi.fetchCanteenData(canteenId).enqueue(new Callback<CanteenDishVo[]>() {
 
 				/**
@@ -258,11 +258,6 @@ public class NetworkHandler {
 
 		mApi.fetchAvailableCanteens().enqueue(new Callback<CanteenVo[]>() {
 
-			/**
-			 *
-			 * @param call
-			 * @param response
-			 */
 			@Override
 			public void onResponse(final Call<CanteenVo[]> call, final Response<CanteenVo[]> response) {
 				if ( response.body() != null ) {
@@ -270,11 +265,6 @@ public class NetworkHandler {
 				}
 			}
 
-			/**
-			 *
-			 * @param call
-			 * @param t
-			 */
 			@Override
 			public void onFailure(final Call<CanteenVo[]> call, final Throwable t) {
 				showErrorToast();
