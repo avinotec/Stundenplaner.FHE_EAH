@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import de.fhe.fhemobile.Main;
@@ -188,7 +189,18 @@ public class TimeTableDialogFragment extends FeatureFragment {
         public void onResponse(final Call<TimeTableDialogResponse> call, final Response<TimeTableDialogResponse> response) {
             if ( response.body() != null ) {
                 mResponse = response.body();
-                mView.setStudyCourseItems(response.body().getStudyProgramsAsList());
+
+                ArrayList<TimeTableStudyProgramVo> studyPrograms = new ArrayList<>();
+                //remove "Brückenkurse" and only keep bachelor and master study programs
+                for(TimeTableStudyProgramVo studyProgramVo : response.body().getStudyProgramsAsList()){
+
+                    if(studyProgramVo.getDegree().equals("Bachelor")
+                            || studyProgramVo.getDegree().equals("Master")){
+                        studyPrograms.add(studyProgramVo);
+                    }
+                }
+
+                mView.setStudyCourseItems(studyPrograms);
             }
         }
 
@@ -204,7 +216,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
                 Toast.LENGTH_LONG).show();
     }
 
-    private TimeTableDialogView mView;
+    private TimeTableDialogView     mView;
 
     private TimeTableDialogResponse mResponse;
     private TimeTableStudyProgramVo mChosenStudyProgram;

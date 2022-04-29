@@ -78,12 +78,12 @@ public class TimeTableStudyProgramVo implements Parcelable {
     }
 
 
-    static final String DEGREE_BACHELOR = "Bachelor";
-    static final String DEGREE_MASTER = "Master";
-
     public String getTitleAndDegree(){
         return mLongTitle + " (" + mDegree + ")";
+    }
 
+    public String getDegree() {
+        return mDegree;
     }
 
     @Override
