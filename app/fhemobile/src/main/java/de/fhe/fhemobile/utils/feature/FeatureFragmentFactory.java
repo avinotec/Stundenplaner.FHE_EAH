@@ -17,6 +17,7 @@
 package de.fhe.fhemobile.utils.feature;
 
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.fragments.canteen.CanteenFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
 import de.fhe.fhemobile.fragments.imprint.ImprintFragment;
 import de.fhe.fhemobile.fragments.joboffers.JobOffersFragment;
@@ -40,7 +41,7 @@ public class FeatureFragmentFactory {
         switch (_FeatureId) {
             case Features.FeatureId.TIMETABLE:       fragment = TimeTableFactory.getTimeTableFragment();    break;
             case Features.FeatureId.MYTIMETABLE:     //fragment = MyTimeTableCalendarFragment.newInstance();  break;
-            case Features.FeatureId.CANTEEN:           fragment = CanteenMenuFragment.newInstance();            break;
+            case Features.FeatureId.CANTEEN:         fragment = CanteenFragment.newInstance();            break;
             case Features.FeatureId.MAPS:            fragment = MapsDialogFragment.newInstance();           break;
             //case FeatureId.NAVIGATION:                fragment = ComingSoonFragment.newInstance(); break;
             case Features.FeatureId.NAVIGATION:      fragment = NavigationDialogFragment.newInstance();     break; //added by Nadja 02.12.21

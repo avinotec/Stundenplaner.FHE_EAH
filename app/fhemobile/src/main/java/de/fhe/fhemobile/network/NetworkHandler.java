@@ -186,7 +186,7 @@ public class NetworkHandler {
 	}
 
 	/**
-	 * Fetch menu of the canteen specified in {@link UserSettings}
+	 * Fetch menu of the canteens specified in {@link UserSettings}
 	 */
 	public void fetchCanteenData() {
 		Assert.assertTrue( mApi != null );
@@ -214,7 +214,7 @@ public class NetworkHandler {
 					if (sortedDishes != null) {
 						CanteenModel.getInstance().addMenu(canteenId, sortedDishes);
 					} else {
-						CanteenModel.getInstance().addMenu(canteenId, null);
+						CanteenModel.getInstance().addMenu(canteenId, new ArrayList<>());
 					}
 				}
 

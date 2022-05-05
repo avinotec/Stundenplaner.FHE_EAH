@@ -23,12 +23,16 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.canteen.CanteenSettingsAdapter;
+import de.fhe.fhemobile.events.CanteenChangeEvent;
 import de.fhe.fhemobile.events.Event;
 import de.fhe.fhemobile.events.EventListener;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.utils.UserSettings;
+import de.fhe.fhemobile.vos.canteen.CanteenVo;
 
 /**
  * Created by paul on 12.02.14
@@ -37,7 +41,7 @@ import de.fhe.fhemobile.utils.UserSettings;
 public class CanteenSettingsView extends FrameLayout {
 
     public interface ViewListener {
-        void onCanteenSelected(Integer _Id, Integer _Position);
+        void onCanteenClicked(final String _CanteenId);
     }
 
     public CanteenSettingsView(final Context context, final AttributeSet attrs) {
@@ -45,7 +49,7 @@ public class CanteenSettingsView extends FrameLayout {
         mContext = context;
         mCanteenModel = CanteenModel.getInstance();
 
-        mCanteenModel.addListener(CanteenModel.CanteenChangeEvent.RECEIVED_CANTEENS, mCanteenSelectedListener);
+        mCanteenModel.addListener(CanteenChangeEvent.RECEIVED_CANTEENS, mCanteenSelectedListener);
     }
 
     public void initializeView(final ViewListener _Listener) {
@@ -53,7 +57,7 @@ public class CanteenSettingsView extends FrameLayout {
     }
 
     public void destroy() {
-        mCanteenModel.removeListener(CanteenModel.CanteenChangeEvent.RECEIVED_CANTEENS, mCanteenSelectedListener);
+        mCanteenModel.removeListener(CanteenChangeEvent.RECEIVED_CANTEENS, mCanteenSelectedListener);
 
         mCanteenViewListener = null;
         mCanteenSelectedListener = null;
@@ -68,8 +72,13 @@ public class CanteenSettingsView extends FrameLayout {
         mCanteenListView.setAdapter(mCanteenListAdapter);
         mCanteenListView.setOnItemClickListener(mCanteenSelectListener);
 
-        for(int i : UserSettings.getInstance().getListOfSelectedCanteenIdsAsInt()){
-            mCanteenListView.setItemChecked(i, true);
+        ArrayList<String> selectedCanteens = UserSettings.getInstance().getListOfSelectedCanteenIdsAsString();
+        for(int i = 0; i < mCanteenListView.getCount(); i++){
+            String canteenId = ((CanteenVo) mCanteenListView.getItemAtPosition(i)).getCanteenId();
+
+            if(selectedCanteens.contains(canteenId)){
+                mCanteenListView.setItemChecked(i, true);
+            }
         }
     }
 
@@ -85,7 +94,8 @@ public class CanteenSettingsView extends FrameLayout {
     private final AdapterView.OnItemClickListener mCanteenSelectListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
-            mCanteenViewListener.onCanteenSelected((int) mCanteenListAdapter.getItemId(position), position);
+            mCanteenViewListener.onCanteenClicked(
+                    ((CanteenVo) mCanteenListView.getItemAtPosition(position)).getCanteenId());
         }
     };
 

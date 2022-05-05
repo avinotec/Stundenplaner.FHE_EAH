@@ -81,12 +81,9 @@ public class CanteenSettingsFragment extends FeatureFragment {
 
     private final CanteenSettingsView.ViewListener mViewListener = new CanteenSettingsView.ViewListener() {
         @Override
-        public void onCanteenSelected(final Integer _Id, final Integer _Position) {
+        public void onCanteenClicked(final String _CanteenId) {
 
-            //id has been used as position
-            final CanteenVo canteen = CanteenModel.getInstance().getCanteens()[_Position];
-
-            UserSettings.getInstance().addOrRemoveFromSelectedCanteens(canteen);
+            UserSettings.getInstance().addOrRemoveFromSelectedCanteens(_CanteenId);
         }
     };
 

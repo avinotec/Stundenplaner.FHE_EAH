@@ -16,12 +16,14 @@
  */
 package de.fhe.fhemobile.models.canteen;
 
+import androidx.annotation.NonNull;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.fhe.fhemobile.events.CanteenChangeEvent;
 import de.fhe.fhemobile.events.EventDispatcher;
-import de.fhe.fhemobile.events.SimpleEvent;
 import de.fhe.fhemobile.vos.canteen.CanteenMenuDayVo;
 import de.fhe.fhemobile.vos.canteen.CanteenVo;
 
@@ -33,28 +35,21 @@ public class CanteenModel extends EventDispatcher {
 
     private static final String TAG = CanteenModel.class.getSimpleName();
 
-    public static class CanteenChangeEvent extends SimpleEvent {
-        public static final String RECEIVED_CANTEEN_MENU = "receivedCanteenMenu";
-        public static final String RECEIVED_EMPTY_MENU = "receivedEmptyMenu";
-        public static final String RECEIVED_CANTEENS = "receivedCanteens";
-
-        public CanteenChangeEvent(final String type) {
-            super(type);
-        }
-
-    }
-
     public Map<String, List<CanteenMenuDayVo>> getMenus() {
         return mMenus;
     }
 
-    public void addMenu(final String canteenId, final List<CanteenMenuDayVo> mMenuDays) {
-        if(canteenId != null && mMenuDays != null && mMenuDays.size() > 0) {
+    public List<CanteenMenuDayVo> getMenu(String canteenId){
+        return mMenus.get(canteenId);
+    }
+
+    public void addMenu(final @NonNull String canteenId, final List<CanteenMenuDayVo> mMenuDays) {
+        if(mMenuDays != null && mMenuDays.size() > 0) {
             this.mMenus.put(canteenId, mMenuDays);
-            notifyChange(CanteenChangeEvent.RECEIVED_CANTEEN_MENU);
-        }
-        else {
-            notifyChange(CanteenChangeEvent.RECEIVED_EMPTY_MENU);
+            notifyChange(CanteenChangeEvent.getReceivedCanteenMenuEventWithCanteenId(canteenId));
+
+        } else {
+            notifyChange(CanteenChangeEvent.getReceivedEmptyMenuEventWithCanteenId(canteenId));
         }
     }
 
@@ -62,9 +57,18 @@ public class CanteenModel extends EventDispatcher {
         return mCanteens;
     }
 
+    public CanteenVo getCanteen(String canteenId){
+        for(CanteenVo canteen : mCanteens){
+            if(canteen.getCanteenId().equals(canteenId)){
+                return canteen;
+            }
+        }
+        return null;
+    }
+
     public void setChoiceItems(final CanteenVo[] mCanteenChoiceItems) {
         this.mCanteens = mCanteenChoiceItems;
-        notifyChange(CanteenChangeEvent.RECEIVED_CANTEENS);
+        notifyChange(de.fhe.fhemobile.events.CanteenChangeEvent.RECEIVED_CANTEENS);
     }
 
     public static CanteenModel getInstance() {

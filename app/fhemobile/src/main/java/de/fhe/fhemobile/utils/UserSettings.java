@@ -18,6 +18,7 @@ package de.fhe.fhemobile.utils;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -26,6 +27,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import de.fhe.fhemobile.Main;
+import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.settings.UserDefaults;
 import de.fhe.fhemobile.vos.canteen.CanteenVo;
@@ -39,7 +41,7 @@ public class UserSettings {
 
     private static final String TAG = UserSettings.class.getSimpleName();
 
-    private static final String PREF_CHOSEN_NEWS_CATEGORY   = "chosenNewsCategory"; // $NON-NLS
+    private static final String PREF_CHOSEN_NEWS_CATEGORY = "chosenNewsCategory"; // $NON-NLS
 
     private final SharedPreferences   mSP;
 
@@ -73,18 +75,6 @@ public class UserSettings {
         mChosenNewsCategory = mSP.getString(PREF_CHOSEN_NEWS_CATEGORY, UserDefaults.DEFAULT_NEWS_ID);
     }
 
-    public ArrayList<CanteenVo> getSelectedCanteens() {
-        return mSelectedCanteens;
-    }
-
-    public ArrayList<Integer> getListOfSelectedCanteenIdsAsInt(){
-
-        ArrayList<Integer> ids = new ArrayList<>();
-        for(CanteenVo canteen : mSelectedCanteens){
-            ids.add(Integer.valueOf(canteen.getCanteenId()));
-        }
-        return ids;
-    }
 
     public ArrayList<String> getListOfSelectedCanteenIdsAsString(){
 
@@ -95,28 +85,25 @@ public class UserSettings {
         return ids;
     }
 
-    public void setSelectedCanteens(final ArrayList<CanteenVo> _SelectedCanteen) {
-
-        mSelectedCanteens = _SelectedCanteen;
-
-        final Gson gson = new Gson();
-        final String json = gson.toJson(mSelectedCanteens, ArrayList.class);
-        mSP.edit().putString(Define.Canteen.PREF_SELECTED_CANTEENS, json).apply();
-
-        //todo: warum???
-        //CanteenModel.getInstance().addMenu(null);
-    }
 
     /**
-     * Add or remove the selected canteen depending on selectedCanteens containing it or nor
-     * @param _SelectedCanteen The canteen to add or remove
+     * Add the {@link CanteenVo} with the corresponding id if it is not contained in selectedCanteens yet.
+     * Remove it from selectedCanteen if its contained.
+     * @param canteenId
      */
-    public void addOrRemoveFromSelectedCanteens(final CanteenVo _SelectedCanteen){
+    public void addOrRemoveFromSelectedCanteens(String canteenId){
 
-        if(mSelectedCanteens.contains(_SelectedCanteen)) {
-            mSelectedCanteens.remove(_SelectedCanteen);
-        } else {
-            mSelectedCanteens.add(_SelectedCanteen);
+        boolean canteenFound = false;
+
+        for(CanteenVo canteenVo : mSelectedCanteens){
+            if(canteenVo.getCanteenId().equals(canteenId)){
+                mSelectedCanteens.remove(canteenVo);
+                canteenFound = true;
+            }
+        }
+
+        if(!canteenFound) {
+            mSelectedCanteens.add(CanteenModel.getInstance().getCanteen(canteenId));
         }
 
         final Gson gson = new Gson();
@@ -124,6 +111,7 @@ public class UserSettings {
         mSP.edit().putString(Define.Canteen.PREF_SELECTED_CANTEENS, json).apply();
 
     }
+
 
     /**
      *  News

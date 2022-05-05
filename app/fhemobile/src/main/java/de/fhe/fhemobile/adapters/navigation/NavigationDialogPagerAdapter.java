@@ -28,13 +28,7 @@ public class NavigationDialogPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(final int position) {
-        switch (position){
-            case 0:
-                return fragments.get(0);
-            case 1:
-                return fragments.get(1);
-        }
-        return null;
+        return fragments.get(position);
     }
 
     @Override

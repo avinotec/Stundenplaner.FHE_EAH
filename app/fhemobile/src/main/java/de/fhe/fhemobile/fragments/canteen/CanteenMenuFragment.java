@@ -17,61 +17,49 @@
 
 package de.fhe.fhemobile.fragments.canteen;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.activities.SettingsActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
-import de.fhe.fhemobile.network.NetworkHandler;
-import de.fhe.fhemobile.utils.UserSettings;
-import de.fhe.fhemobile.utils.feature.Features;
-import de.fhe.fhemobile.views.canteen.CanteenView;
+import de.fhe.fhemobile.views.canteen.CanteenMenuView;
 
-
+/**
+ * Edited by Nadja - 05.2022
+ */
 public class CanteenMenuFragment extends FeatureFragment {
 
-    public CanteenMenuFragment() {
-        // Required empty public constructor
-    }
+    private final String TAG = CanteenMenuFragment.class.getSimpleName();
 
-    public static CanteenMenuFragment newInstance() {
-        final CanteenMenuFragment fragment = new CanteenMenuFragment();
-        final Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+    /**
+     * Construct a {@link CanteenMenuFragment}
+     * @param canteenId The ID of the canteen that's menu is shown
+     */
+    public CanteenMenuFragment(String canteenId) {
+        this.mCanteenId = canteenId;
+
+        Log.d(TAG, "CanteenMenuFragment created");
     }
 
     @Override
-    public void onCreate(final Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //enable settings in app bar
-        setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-        mView = (CanteenView) inflater.inflate(R.layout.fragment_canteen_food, container, false);
-        mView.initializeView();
-
-        if(CanteenModel.getInstance().getMenus() == null) {
-            NetworkHandler.getInstance().fetchCanteenData();
-        }
-
-        //todo: reconstruction canteen
-        //evtl. immer data fetchen
+        mView = (CanteenMenuView) inflater.inflate(R.layout.fragment_canteen_menu, container, false);
+        mView.initializeView(mCanteenId);
 
         return mView;
     }
@@ -88,43 +76,14 @@ public class CanteenMenuFragment extends FeatureFragment {
         mView.deregisterModelListener();
     }
 
-    @Override
-    public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-        // If the drawer is open, show the global app actions in the action bar. See also
-        // showGlobalContextActionBar, which controls the top-left area of the action bar.
-        menu.clear();
-        inflater.inflate(R.menu.main, menu);
-
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    //onOptionsItemSelected-------------------------------------------------------------------------
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem _item) {
-
-        /* Checks use of resource IDs in places requiring constants
-            Avoid the usage of resource IDs where constant expressions are required.
-            A future version of the Android Gradle Plugin will generate R classes with
-            non-constant IDs in order to improve the performance of incremental compilation.
-            Issue id: NonConstantResourceId
-         */
-        if (_item.getItemId() == R.id.action_settings) {
-            final Intent intent = new Intent(getActivity(), SettingsActivity.class);
-            intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.CANTEEN);
-            startActivity(intent);
-            return true;
-
-            //other item
-        }
-        return super.onOptionsItemSelected(_item);
-    }
 
     @Override
     public void onRestoreActionBar(final ActionBar _ActionBar) {
         super.onRestoreActionBar(_ActionBar);
-        //todo: reconstruction canteen
-        //_ActionBar.setTitle(UserSettings.getInstance().getChosenCanteenName());
+        _ActionBar.setTitle(CanteenModel.getInstance().getCanteen(mCanteenId).getCanteenName());
     }
 
-    private CanteenView mView;
+    private CanteenMenuView mView;
+    final private String mCanteenId;
+
 }

@@ -21,9 +21,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.vos.canteen.CanteenVo;
 
 /**
@@ -32,7 +35,7 @@ import de.fhe.fhemobile.vos.canteen.CanteenVo;
 public class CanteenSettingsAdapter extends BaseAdapter {
 
     static class ViewHolder {
-        TextView mCanteenNameView;
+        CheckedTextView mCanteenNameView;
     }
 
     public CanteenSettingsAdapter(final Context mContext, final CanteenVo[] mItems) {
@@ -70,7 +73,6 @@ public class CanteenSettingsAdapter extends BaseAdapter {
      */
     @Override
     public long getItemId(final int position) {
-        //use canteenId as position
         return Long.parseLong(mItems[position].getCanteenId());
     }
 
@@ -103,7 +105,7 @@ public class CanteenSettingsAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.item_multiplechoice, parent, false);
 
-            viewHolder.mCanteenNameView = (TextView) convertView.findViewById(R.id.tv_canteen_choice_item);
+            viewHolder.mCanteenNameView = (CheckedTextView) convertView.findViewById(R.id.tv_canteen_choice_item);
 
             convertView.setTag(viewHolder);
         }
