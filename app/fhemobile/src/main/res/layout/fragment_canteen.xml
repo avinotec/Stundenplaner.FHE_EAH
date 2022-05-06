@@ -23,6 +23,14 @@
     android:orientation="vertical"
     android:background="@color/background">
 
+    <TextView
+        android:id="@+id/tv_canteen_no_canteens_selected"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/canteen_no_canteens_selected"
+        android:gravity="center"
+        android:visibility="gone"/>
+
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager_canteen"

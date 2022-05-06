@@ -19,6 +19,7 @@ package de.fhe.fhemobile.views.canteen;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
@@ -26,6 +27,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.canteen.CanteenPagerAdapter;
+import de.fhe.fhemobile.utils.UserSettings;
 
 
 /**
@@ -37,12 +39,23 @@ public class CanteenView extends LinearLayout {
         super(context, attrs);
     }
 
-    public void initializeView(final FragmentManager _Manager, final Lifecycle _Lifecycle){
-        final ViewPager2 viewPager = findViewById(R.id.viewpager_canteen);
-        viewPager.setAdapter(new CanteenPagerAdapter(_Manager, _Lifecycle));
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+
+        mNoCanteensSelectedText = (TextView) findViewById(R.id.tv_canteen_no_canteens_selected);
     }
 
+    public void initializeView(final FragmentManager _Manager, final Lifecycle _Lifecycle){
 
-    //todo reconstruction canteen - listener for on canteen choice (user settings) changed
+        if(UserSettings.getInstance().getSelectedCanteenIds().size() > 0){
+            final ViewPager2 viewPager = findViewById(R.id.viewpager_canteen);
+            viewPager.setAdapter(new CanteenPagerAdapter(_Manager, _Lifecycle));
+        } else{
+            mNoCanteensSelectedText.setVisibility(VISIBLE);
+        }
+    }
+
+    TextView mNoCanteensSelectedText;
 
 }
