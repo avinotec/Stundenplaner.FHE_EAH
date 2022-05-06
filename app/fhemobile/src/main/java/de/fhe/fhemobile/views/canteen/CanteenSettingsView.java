@@ -72,7 +72,7 @@ public class CanteenSettingsView extends FrameLayout {
         mCanteenListView.setAdapter(mCanteenListAdapter);
         mCanteenListView.setOnItemClickListener(mCanteenSelectListener);
 
-        ArrayList<String> selectedCanteens = UserSettings.getInstance().getListOfSelectedCanteenIdsAsString();
+        ArrayList<String> selectedCanteens = UserSettings.getInstance().getSelectedCanteenIds();
         for(int i = 0; i < mCanteenListView.getCount(); i++){
             String canteenId = ((CanteenVo) mCanteenListView.getItemAtPosition(i)).getCanteenId();
 
@@ -99,6 +99,9 @@ public class CanteenSettingsView extends FrameLayout {
         }
     };
 
+    /**
+     * Listener for {@link CanteenChangeEvent#RECEIVED_CANTEENS}
+     */
     private EventListener mCanteenSelectedListener = new EventListener() {
         @Override
         public void onEvent(final Event event) {

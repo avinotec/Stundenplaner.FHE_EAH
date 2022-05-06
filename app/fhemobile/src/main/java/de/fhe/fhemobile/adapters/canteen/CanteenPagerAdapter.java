@@ -19,9 +19,9 @@ public class CanteenPagerAdapter extends FragmentStateAdapter {
                                final Lifecycle lifecycle){
         super(fragmentManager, lifecycle);
 
-        ArrayList<String> selectedCanteens = UserSettings.getInstance().getListOfSelectedCanteenIdsAsString();
+        ArrayList<String> selectedCanteens = UserSettings.getInstance().getSelectedCanteenIds();
         for(String canteenId : selectedCanteens){
-            fragments.add(new CanteenMenuFragment(canteenId));
+            fragments.add(CanteenMenuFragment.newInstance(canteenId));
         }
 
     }

@@ -188,10 +188,10 @@ public class NetworkHandler {
 	/**
 	 * Fetch menu of the canteens specified in {@link UserSettings}
 	 */
-	public void fetchCanteenData() {
+	public void fetchCanteenMenus() {
 		Assert.assertTrue( mApi != null );
 
-		ArrayList<String> selectedCanteenIds = UserSettings.getInstance().getListOfSelectedCanteenIdsAsString();
+		ArrayList<String> selectedCanteenIds = UserSettings.getInstance().getSelectedCanteenIds();
 		Log.d(TAG, "Selected Canteens: " + selectedCanteenIds);
 
 		for(String canteenId : selectedCanteenIds){
@@ -303,7 +303,7 @@ public class NetworkHandler {
 			@Override
 			public void onResponse(final Call<CanteenVo[]> call, final Response<CanteenVo[]> response) {
 				if ( response.body() != null ) {
-					CanteenModel.getInstance().setChoiceItems(response.body());
+					CanteenModel.getInstance().setCanteens(response.body());
 				}
 			}
 
@@ -313,12 +313,6 @@ public class NetworkHandler {
 				Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 			}
 		});
-	}
-
-	public void fetchAvailableCanteens(final Callback<CanteenVo[]> _Callback){
-		Assert.assertTrue( mApi != null );
-
-		mApi.fetchAvailableCanteens().enqueue(_Callback);
 	}
 
 	/**

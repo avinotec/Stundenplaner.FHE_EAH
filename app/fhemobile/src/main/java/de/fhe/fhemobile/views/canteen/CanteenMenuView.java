@@ -32,6 +32,7 @@ import de.fhe.fhemobile.events.CanteenChangeEvent;
 import de.fhe.fhemobile.events.Event;
 import de.fhe.fhemobile.events.EventListener;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
+import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.utils.headerlistview.HeaderListView;
 import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
 import de.fhe.fhemobile.vos.canteen.CanteenMenuDayVo;
@@ -58,25 +59,27 @@ public class CanteenMenuView extends LinearLayout {
 
 
 
-    public void initializeView(String _CanteenId){
-        mCanteenId = _CanteenId;
-
-//        if(CanteenModel.getInstance().getMenu(mCanteenId) != null) {
-//            populateMenuDaysList();
-//        } else {
-//            mCanteenProgressBar.setVisibility(VISIBLE);
-//        }
-
-        Log.d(TAG, mCanteenId + " View initialized");
-    }
-
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
 
         mCanteenProgressBar = (ProgressBar)     findViewById(R.id.progress_indicator_canteen);
-        mMenuDaysListView   = (HeaderListView)  findViewById(R.id.lv_canteen_menu);
         mErrorText          = (TextView)        findViewById(R.id.tv_canteen_error);
+        mMenuDaysListView   = (HeaderListView)  findViewById(R.id.lv_canteen_menu);
+        mCanteenNameText    = (TextView)        findViewById(R.id.tv_canteen_title);
+    }
+
+    public void initializeView(String _CanteenId){
+        mCanteenId = _CanteenId;
+        mCanteenNameText.setText(UserSettings.getInstance().getSelectedCanteen(mCanteenId).getCanteenName());
+
+        if(CanteenModel.getInstance().getMenu(mCanteenId) != null) {
+            populateMenuDaysList();
+        } else {
+            mCanteenProgressBar.setVisibility(VISIBLE);
+        }
+
+        Log.d(TAG, mCanteenId + " View initialized");
     }
 
     public void registerModelListener() {
@@ -153,6 +156,7 @@ public class CanteenMenuView extends LinearLayout {
 
     private StickyHeaderAdapter mAdapter;
     private HeaderListView mMenuDaysListView;
+    private TextView mCanteenNameText;
 
     private ProgressBar mCanteenProgressBar;
     private TextView mErrorText;

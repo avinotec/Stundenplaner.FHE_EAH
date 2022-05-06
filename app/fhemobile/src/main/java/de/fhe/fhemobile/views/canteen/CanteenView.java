@@ -43,7 +43,6 @@ public class CanteenView extends LinearLayout {
     }
 
 
-
     //todo reconstruction canteen - listener for on canteen choice (user settings) changed
 
 }

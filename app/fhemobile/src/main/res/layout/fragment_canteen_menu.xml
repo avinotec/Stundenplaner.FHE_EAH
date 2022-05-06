@@ -23,12 +23,26 @@
 	android:animateLayoutChanges="true"
 	tools:context="de.fhe.fhemobile.fragments.canteen.CanteenMenuFragment">
 
+   <TextView
+	   android:id="@+id/tv_canteen_title"
+	   android:layout_width="match_parent"
+	   android:layout_height="wrap_content"
+	   android:textColor="@color/canteen_text_color"
+	   android:background="@color/canteen_text_background"
+	   android:fontFamily="@font/roboto_condensed_bold"
+	   android:textSize="18sp"
+	   android:textAllCaps="true"
+	   android:gravity="center"
+	   android:padding="3dp"
+	   />
+
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
         android:id="@+id/progress_indicator_canteen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+		android:layout_margin="5dp"
         android:visibility="gone"
         />
 

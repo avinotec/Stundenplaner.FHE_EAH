@@ -23,9 +23,12 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.junit.Assert;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.models.news.NewsModel;
@@ -40,8 +43,6 @@ public class UserSettings {
     private static final UserSettings ourInstance = new UserSettings();
 
     private static final String TAG = UserSettings.class.getSimpleName();
-
-    private static final String PREF_CHOSEN_NEWS_CATEGORY = "chosenNewsCategory"; // $NON-NLS
 
     private final SharedPreferences   mSP;
 
@@ -69,20 +70,39 @@ public class UserSettings {
             final Gson gson = new Gson();
             Type listType = new TypeToken<ArrayList<CanteenVo>>(){}.getType();
             mSelectedCanteens = gson.fromJson(json, listType);
+            Log.d(TAG, "Loaded selected canteens "+mSelectedCanteens);
         }
 
         //News
-        mChosenNewsCategory = mSP.getString(PREF_CHOSEN_NEWS_CATEGORY, UserDefaults.DEFAULT_NEWS_ID);
+        mChosenNewsCategory = mSP.getString(Define.News.PREF_CHOSEN_NEWS_CATEGORY, UserDefaults.DEFAULT_NEWS_ID);
     }
 
 
-    public ArrayList<String> getListOfSelectedCanteenIdsAsString(){
+    public ArrayList<String> getSelectedCanteenIds(){
+
+        if(BuildConfig.DEBUG) Assert.assertNotNull(mSelectedCanteens);
 
         ArrayList<String> ids = new ArrayList<>();
         for(CanteenVo canteen : mSelectedCanteens){
+            if(canteen == null) {
+                if(BuildConfig.DEBUG) Assert.assertNotNull(canteen);
+                Log.e(TAG, "CanteenVo in selectedCanteens is null");
+            }
             ids.add(canteen.getCanteenId());
         }
         return ids;
+    }
+
+    public CanteenVo getSelectedCanteen(String canteenId){
+        if(BuildConfig.DEBUG) Assert.assertNotNull(mSelectedCanteens);
+
+        for(CanteenVo canteenVo : mSelectedCanteens){
+            if(canteenVo.getCanteenId().equals(canteenId)){
+                return canteenVo;
+            }
+        }
+        Log.e(TAG, "No canteen with id " + canteenId + " found in selectedCanteens");
+        return null;
     }
 
 
@@ -99,11 +119,17 @@ public class UserSettings {
             if(canteenVo.getCanteenId().equals(canteenId)){
                 mSelectedCanteens.remove(canteenVo);
                 canteenFound = true;
+                break;
             }
         }
 
         if(!canteenFound) {
-            mSelectedCanteens.add(CanteenModel.getInstance().getCanteen(canteenId));
+            CanteenVo canteenToAdd = CanteenModel.getInstance().getCanteen(canteenId);
+            if(canteenToAdd != null){
+                mSelectedCanteens.add(canteenToAdd);
+            } else {
+                Log.e(TAG, "Canteen " + canteenId + " is null / not found in CanteenModel");
+            }
         }
 
         final Gson gson = new Gson();
@@ -127,7 +153,7 @@ public class UserSettings {
      */
     public void setChosenNewsCategory(final String _ChosenNewsCategory) {
         mChosenNewsCategory = _ChosenNewsCategory;
-        mSP.edit().putString(PREF_CHOSEN_NEWS_CATEGORY, this.mChosenNewsCategory).apply();
+        mSP.edit().putString(Define.News.PREF_CHOSEN_NEWS_CATEGORY, this.mChosenNewsCategory).apply();
         NewsModel.getInstance().setNewsItems(null);
     }
 }

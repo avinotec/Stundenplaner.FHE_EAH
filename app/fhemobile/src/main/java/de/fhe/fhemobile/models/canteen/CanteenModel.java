@@ -16,6 +16,8 @@
  */
 package de.fhe.fhemobile.models.canteen;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import java.util.HashMap;
@@ -24,6 +26,7 @@ import java.util.Map;
 
 import de.fhe.fhemobile.events.CanteenChangeEvent;
 import de.fhe.fhemobile.events.EventDispatcher;
+import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.vos.canteen.CanteenMenuDayVo;
 import de.fhe.fhemobile.vos.canteen.CanteenVo;
 
@@ -54,10 +57,29 @@ public class CanteenModel extends EventDispatcher {
     }
 
     public CanteenVo[] getCanteens() {
+
+        if(mCanteens == null){
+            NetworkHandler.getInstance().fetchAvailableCanteens();
+        }
         return mCanteens;
     }
 
+    /**
+     * Get canteen with the specified id.
+     * Note that, this is null if canteens have not been fetched before.
+     *
+     * To get the the {@link CanteenVo} of an selected canteen,
+     * use {@link de.fhe.fhemobile.utils.UserSettings#getSelectedCanteen(String)}.
+     *
+     * @param canteenId The id of the canteen
+     * @return The {@link CanteenVo} of the canteen with the given id
+     */
     public CanteenVo getCanteen(String canteenId){
+        if(mCanteens == null){
+            Log.e(TAG, "mCanteens is null");
+            return null;
+        }
+
         for(CanteenVo canteen : mCanteens){
             if(canteen.getCanteenId().equals(canteenId)){
                 return canteen;
@@ -66,7 +88,7 @@ public class CanteenModel extends EventDispatcher {
         return null;
     }
 
-    public void setChoiceItems(final CanteenVo[] mCanteenChoiceItems) {
+    public void setCanteens(final CanteenVo[] mCanteenChoiceItems) {
         this.mCanteens = mCanteenChoiceItems;
         notifyChange(de.fhe.fhemobile.events.CanteenChangeEvent.RECEIVED_CANTEENS);
     }

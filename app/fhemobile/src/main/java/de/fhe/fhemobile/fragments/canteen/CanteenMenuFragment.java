@@ -26,9 +26,13 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 
+import org.junit.Assert;
+
+import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
+import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.views.canteen.CanteenMenuView;
 
 /**
@@ -38,19 +42,31 @@ public class CanteenMenuFragment extends FeatureFragment {
 
     private final String TAG = CanteenMenuFragment.class.getSimpleName();
 
-    /**
-     * Construct a {@link CanteenMenuFragment}
-     * @param canteenId The ID of the canteen that's menu is shown
-     */
-    public CanteenMenuFragment(String canteenId) {
-        this.mCanteenId = canteenId;
+    public static final String PARAM_CANTEEN_ID = "paramCanteenId"; //$NON-NLS
 
-        Log.d(TAG, "CanteenMenuFragment created");
+
+    public CanteenMenuFragment(){
+        // Required empty public constructor
+    }
+
+    /**
+     * Construct a new {@link CanteenMenuFragment} instance
+     * @param _CanteenId The ID of the canteen that's menu is shown in this fragment
+     */
+    public static CanteenMenuFragment newInstance(String _CanteenId) {
+        final CanteenMenuFragment fragment = new CanteenMenuFragment();
+        Bundle args = new Bundle();
+        args.putString(PARAM_CANTEEN_ID, _CanteenId);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (BuildConfig.DEBUG) Assert.assertNotNull(getArguments());
+        this.mCanteenId = getArguments().getString(PARAM_CANTEEN_ID);
     }
 
     @Override
@@ -59,6 +75,8 @@ public class CanteenMenuFragment extends FeatureFragment {
 
         // Inflate the layout for this fragment
         mView = (CanteenMenuView) inflater.inflate(R.layout.fragment_canteen_menu, container, false);
+
+        if(BuildConfig.DEBUG) Assert.assertNotNull(mCanteenId);
         mView.initializeView(mCanteenId);
 
         return mView;
@@ -77,13 +95,7 @@ public class CanteenMenuFragment extends FeatureFragment {
     }
 
 
-    @Override
-    public void onRestoreActionBar(final ActionBar _ActionBar) {
-        super.onRestoreActionBar(_ActionBar);
-        _ActionBar.setTitle(CanteenModel.getInstance().getCanteen(mCanteenId).getCanteenName());
-    }
-
     private CanteenMenuView mView;
-    final private String mCanteenId;
+    private String mCanteenId;
 
 }
