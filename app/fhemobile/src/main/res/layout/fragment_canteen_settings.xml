@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~  Copyright (c) 2014-2019 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
   ~  This program is free software: you can redistribute it and/or modify
@@ -15,13 +14,20 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ~
   -->
+<de.fhe.fhemobile.views.canteen.CanteenSettingsView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.fhe.fhemobile.fragments.canteen.CanteenSettingsFragment"
+    >
 
-<resources>
-    <bool name="feature_news">true</bool>
-    <bool name="feature_phonebook">true</bool>
-    <bool name="feature_canteen">true</bool>
-    <bool name="feature_maps">true</bool>
-    <bool name="feature_semester_data">true</bool>
-    <bool name="feature_timetable">true</bool>
-    <bool name="feature_imprint">true</bool>
-</resources>
+    <ListView
+        android:id="@+id/lv_canteen_choice"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:footerDividersEnabled="false"
+        android:choiceMode="singleChoice"
+        />
+
+</de.fhe.fhemobile.views.canteen.CanteenSettingsView>

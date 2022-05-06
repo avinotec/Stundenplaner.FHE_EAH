@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~  Copyright (c) 2014-2019 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
   ~  This program is free software: you can redistribute it and/or modify
@@ -14,13 +15,29 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ~
   -->
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/action_settings"
-        android:icon="@drawable/ic_action_settings"
-        app:showAsAction="always"
-        android:title="Button Settings" />
-</menu>
+<de.fhe.fhemobile.views.canteen.CanteenView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <TextView
+        android:id="@+id/tv_canteen_no_canteens_selected"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/canteen_no_canteens_selected"
+        android:gravity="center"
+        android:visibility="gone"/>
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpager_canteen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layoutDirection="rtl"
+        />
+
+
+</de.fhe.fhemobile.views.canteen.CanteenView>

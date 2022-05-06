@@ -24,7 +24,8 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.fragments.mensa.MensaSettingsFragment;
+import de.fhe.fhemobile.fragments.canteen.CanteenSettingsFragment;
+import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableOverviewFragment;
 import de.fhe.fhemobile.fragments.news.NewsCategoriesFragment;
 import de.fhe.fhemobile.utils.feature.Features;
 
@@ -47,14 +48,16 @@ public class SettingsActivity extends BaseActivity {
 
     public void loadFragments(final Integer _Id) {
         switch(_Id) {
+
             case Features.FeatureId.NEWS:
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, NewsCategoriesFragment.newInstance())
+                        .replace(R.id.container, NewsCategoriesFragment.newInstance())
                         .commit();
                 break;
-            case Features.FeatureId.MENSA:
+
+            case Features.FeatureId.CANTEEN:
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, MensaSettingsFragment.newInstance())
+                        .replace(R.id.container, CanteenSettingsFragment.newInstance())
                         .commit();
                 break;
         }
@@ -95,7 +98,13 @@ public class SettingsActivity extends BaseActivity {
 //        if (id == R.id.action_settings) {
 //            return true;
 //        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //disable back button
     }
 
     public static final String  EXTRA_SETTINGS_ID  = "extraSettingsId";

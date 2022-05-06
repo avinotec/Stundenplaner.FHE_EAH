@@ -26,30 +26,31 @@ import org.jetbrains.annotations.NonNls;
 public class Define {
 
 	@NonNls
-	public static final String PARAM_TIMETABLE_ID = "paramTimeTableId";
+	public static final String PARAM_TIMETABLE_ID = "paramTimeTableId";			// $NON-NLS
 
 	//created by Nadja 11.03.2022
-	public static class Mensa{
-		public static final String PARAM_MENSA_ID = "paramMensaId";
-        public static final String SP_MENSA_SETTINGS = "spMensa";
-		public static final String PREF_CHOSEN_MENSA_ID = "prefChosenMensaId";
-		public static final String PARAM_MENSA_DAY = "paramMensaDay";
+	public static class Canteen {
+		static final String PREF_SELECTED_CANTEENS = "selectedCanteens";      // $NON-NLS
+	}
+
+	public static class News {
+		static final String PREF_CHOSEN_NEWS_CATEGORY = "chosenNewsCategory"; // $NON-NLS
 	}
 
 	//created by Nadja 11.03.2022
 	public static class TimeTable{
-		public static final String SP_TIMETABLE_SETTINGS = "spTimeTable";
-		public static final String PREF_CHOSEN_TIMETABLE_ID = "prefChosenTimeTableId";
+		public static final String SP_TIMETABLE_SETTINGS = "spTimeTable";				// $NON-NLS
+		public static final String PREF_CHOSEN_TIMETABLE_ID = "prefChosenTimeTableId";	// $NON-NLS
 
-        public static final String PARAM_TIMETABLE_WEEK = "paramTimeTableWeek";
+        public static final String PARAM_TIMETABLE_WEEK = "paramTimeTableWeek";			// $NON-NLS
     }
 
 	//created by Nadja 11.03.2022
 	public static class MyTimeTable{
-		public static final String SP_MYTIMETABLE = "my_time_table";
-		public static final String PREF_SUBSCRIBED_COURSES = "my_time_table_courses";
+		public static final String SP_MYTIMETABLE = "my_time_table"; 					// $NON-NLS
+		public static final String PREF_SUBSCRIBED_COURSES = "my_time_table_courses";	// $NON-NLS
 
-		public static final String PREFS_LAST_OPENED = "lastAppOpened";
+		public static final String PREFS_LAST_OPENED = "lastAppOpened";					// $NON-NLS
 	}
 
     //created by Nadja 17.11.2021

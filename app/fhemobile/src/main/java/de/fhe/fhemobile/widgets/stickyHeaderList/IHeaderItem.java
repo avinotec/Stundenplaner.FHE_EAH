@@ -29,7 +29,7 @@ import java.util.List;
 public abstract class IHeaderItem {
 
     public enum EItemType {
-        LARGE_HEADER, DEFAULT_HEADER, MENSA_IMAGE, WEATHER
+        LARGE_HEADER, DEFAULT_HEADER, CANTEEN_IMAGE, WEATHER
     }
 
     // ---------------------------------------------------------------------------------------------

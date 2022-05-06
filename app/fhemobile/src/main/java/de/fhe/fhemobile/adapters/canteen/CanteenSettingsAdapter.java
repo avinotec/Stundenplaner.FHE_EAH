@@ -14,32 +14,33 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.adapters.maps;
+package de.fhe.fhemobile.adapters.canteen;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.TextView;
 
-import java.util.List;
-
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.vos.maps.MapCollectionVo;
+import de.fhe.fhemobile.utils.UserSettings;
+import de.fhe.fhemobile.vos.canteen.CanteenVo;
 
 /**
- * Created by paul on 23.02.14.
+ * Created by paul on 13.02.14.
  */
-public class MapsAdapter extends BaseAdapter {
-
-    public MapsAdapter(final Context _Context, final List<MapCollectionVo> _Items) {
-        mContext = _Context;
-        mItems   = _Items;
-    }
+public class CanteenSettingsAdapter extends BaseAdapter {
 
     static class ViewHolder {
-        TextView mMapNameView;
+        CheckedTextView mCanteenNameView;
+    }
+
+    public CanteenSettingsAdapter(final Context mContext, final CanteenVo[] mItems) {
+        this.mContext = mContext;
+        this.mItems = mItems;
     }
 
     /**
@@ -49,7 +50,7 @@ public class MapsAdapter extends BaseAdapter {
      */
     @Override
     public int getCount() {
-        return mItems.size();
+        return mItems.length;
     }
 
     /**
@@ -60,8 +61,8 @@ public class MapsAdapter extends BaseAdapter {
      * @return The data at the specified position.
      */
     @Override
-    public MapCollectionVo getItem(final int position) {
-        return mItems.get(position);
+    public Object getItem(final int position) {
+        return mItems[position];
     }
 
     /**
@@ -72,7 +73,7 @@ public class MapsAdapter extends BaseAdapter {
      */
     @Override
     public long getItemId(final int position) {
-        return 0;
+        return Long.parseLong(mItems[position].getCanteenId());
     }
 
     /**
@@ -102,9 +103,9 @@ public class MapsAdapter extends BaseAdapter {
         final ViewHolder viewHolder;
         if(convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.item_map, parent, false);
+            convertView = inflater.inflate(R.layout.item_multiplechoice, parent, false);
 
-            viewHolder.mMapNameView = (TextView) convertView.findViewById(R.id.mapItemTitle);
+            viewHolder.mCanteenNameView = (CheckedTextView) convertView.findViewById(R.id.tv_canteen_choice_item);
 
             convertView.setTag(viewHolder);
         }
@@ -112,12 +113,12 @@ public class MapsAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.mMapNameView.setText(mContext.getResources().getString(mItems.get(position).getNameID()));
+        viewHolder.mCanteenNameView.setText(mItems[position].getCanteenName());
 
         return convertView;
     }
 
-    private final Context               mContext;
-    private final List<MapCollectionVo> mItems;
+    private final Context mContext;
 
+    private final CanteenVo[] mItems;
 }

@@ -24,7 +24,7 @@ public class Features {
     //TODO Features
     public static boolean NEWS            = false;
     public static boolean PHONEBOOK       = false;
-    public static boolean MENSA           = false;
+    public static boolean CANTEEN = false;
     public static boolean MAPS            = false;
     public static boolean SEMESTER_DATA   = false;
     public static boolean TIMETABLE       = false;
@@ -40,7 +40,7 @@ public class Features {
     public interface FeatureId {
         int NEWS            = 0;
         int PHONEBOOK       = 1;
-        int MENSA           = 2;
+        int CANTEEN         = 2;
         int MAPS            = 3;
         int SEMESTER_DATA   = 4;
         int TIMETABLE       = 5;

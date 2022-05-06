@@ -17,11 +17,13 @@
 package de.fhe.fhemobile.utils.feature;
 
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.fragments.canteen.CanteenFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
 import de.fhe.fhemobile.fragments.imprint.ImprintFragment;
 import de.fhe.fhemobile.fragments.joboffers.JobOffersFragment;
 import de.fhe.fhemobile.fragments.maps.MapsDialogFragment;
-import de.fhe.fhemobile.fragments.mensa.MensaFoodFragment;
+import de.fhe.fhemobile.fragments.canteen.CanteenMenuFragment;
+import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableCalendarFragment;
 import de.fhe.fhemobile.fragments.navigation.NavigationDialogFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdata.SemesterDataFragment;
@@ -39,8 +41,7 @@ public class FeatureFragmentFactory {
         switch (_FeatureId) {
             case Features.FeatureId.TIMETABLE:       fragment = TimeTableFactory.getTimeTableFragment();    break;
             case Features.FeatureId.MYTIMETABLE:     //fragment = MyTimeTableCalendarFragment.newInstance();  break;
-            case Features.FeatureId.MENSA:           fragment = MensaFoodFragment.newInstance();            break;
-            //case Features.FeatureId.MENSA:           fragment = MensaFragmentNEW.newInstance();           break;
+            case Features.FeatureId.CANTEEN:         fragment = CanteenFragment.newInstance();            break;
             case Features.FeatureId.MAPS:            fragment = MapsDialogFragment.newInstance();           break;
             //case FeatureId.NAVIGATION:                fragment = ComingSoonFragment.newInstance(); break;
             case Features.FeatureId.NAVIGATION:      fragment = NavigationDialogFragment.newInstance();     break; //added by Nadja 02.12.21

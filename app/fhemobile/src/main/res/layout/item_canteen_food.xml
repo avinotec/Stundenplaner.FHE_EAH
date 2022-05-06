@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  Copyright (c) 2014-2019 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
+  ~  This program is free software: you can redistribute it and/or modify
+  ~  it under the terms of the GNU General Public License as published by
+  ~  the Free Software Foundation, either version 3 of the License, or
+  ~  (at your option) any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful,
+  ~  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~  GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License
+  ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/list_item_vertical_padding"
+    android:paddingBottom="@dimen/list_item_vertical_padding"
+    android:paddingLeft="@dimen/list_item_horizontal_padding"
+    android:paddingRight="@dimen/list_item_horizontal_padding"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:id="@+id/tv_canteen_fooditem_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_bottom_default"
+        android:textStyle="bold"
+        android:textColor="@color/third_color"
+        android:textSize="9pt"
+        android:text="New Text"
+        />
+
+    <TextView
+        android:id="@+id/tv_canteen_fooditem_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_bottom_default"
+        android:paddingTop="2dp"
+        android:textColor="@color/primary_color"
+        android:text="New Text"
+        />
+
+    <TextView
+        android:id="@+id/tv_canteen_fooditem_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:textColor="@color/third_color"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="New Text"
+        />
+
+    <!--<TextView-->
+        <!--android:id="@+id/mensaIngredients"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textColor="@color/third_color"-->
+        <!--android:textStyle="bold"-->
+        <!--android:text=""-->
+        <!--/>-->
+
+</LinearLayout>

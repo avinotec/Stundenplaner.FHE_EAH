@@ -57,7 +57,7 @@ public class Endpoints {
     // ---------------------------------------------------------------------------------------------
 
     public static final String RSS                  = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/news";
-    public static final String MENSA                = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/canteens";
+    public static final String CANTEEN              = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/canteens";
     public static final String SEMESTER             = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/semester"; //semester dates
     public static final String PHONEBOOK            = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/persons";  //not working
     //public static final String IMPRINT            = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/impress";

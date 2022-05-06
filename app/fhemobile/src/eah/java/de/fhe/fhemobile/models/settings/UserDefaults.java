@@ -22,8 +22,8 @@ package de.fhe.fhemobile.models.settings;
  */
 public class UserDefaults
 {
-    public static final String DEFAULT_MENSA_ID = "3391";
-    public static final String DEFAULT_MENSA_NAME = "Mensa Carl-Zeiss-Promenade";
+    public static final String DEFAULT_CANTEEN_ID = "3391";
+    public static final String DEFAULT_CANTEEN_NAME = "Canteen Carl-Zeiss-Promenade";
 
     public static final String DEFAULT_NEWS_ID = "1";
 }

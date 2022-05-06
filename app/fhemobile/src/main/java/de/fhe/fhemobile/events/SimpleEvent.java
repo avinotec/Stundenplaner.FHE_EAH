@@ -18,22 +18,31 @@ package de.fhe.fhemobile.events;
 
 public class SimpleEvent implements Event {
 
-	private String type;
-	@Override public String getType() { return type; }
-	public void setType(final String type) {
-		this.type = type; 
-	}
-	
 	protected Object source;
-	@Override public Object getSource() {
-		return source;
-	}
-	@Override public void setSource(final Object source) {
-		this.source = source;
-	}
-	
+	private String type;
+
+
 	public SimpleEvent(final String type) {
 		this.type = type;
 	}
+
+    @Override
+    public String getType() {
+        return type;
+    }
+
+    public void setType(final String type) {
+        this.type = type;
+    }
+
+    @Override
+    public Object getSource() {
+        return source;
+    }
+
+    @Override
+    public void setSource(final Object source) {
+        this.source = source;
+    }
 
 }

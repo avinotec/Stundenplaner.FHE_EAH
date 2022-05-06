@@ -52,6 +52,10 @@
     <color name="list_item_text_secondary">@color/third_color</color>
     <color name="list_header_text">@color/primary_color</color>
     <color name="list_header_background">#12009990</color>
+
+    <!--Canteen-->
+    <color name="canteen_text_color">@color/primary_color</color>
+    <color name="canteen_text_background">#20009990</color>
     
     <!--Navigation Dialog-->
     
