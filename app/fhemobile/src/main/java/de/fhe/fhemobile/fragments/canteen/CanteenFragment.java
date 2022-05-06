@@ -69,10 +69,7 @@ public class CanteenFragment extends FeatureFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        if(CanteenModel.getInstance().getMenus().size() == 0) {
-            NetworkHandler.getInstance().fetchCanteenMenus();
-        }
-        //todo: reconstruction canteen - evtl. immer data fetchen - könnte Problem lösen dass veraltete Mensa Stände angezeigt werden
+        NetworkHandler.getInstance().fetchCanteenMenus();
 
         // Inflate the layout for this fragment
         mView = (CanteenView) inflater.inflate(R.layout.fragment_canteen, container, false);
