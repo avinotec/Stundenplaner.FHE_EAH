@@ -14,20 +14,29 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.comparator;
+package de.fhe.fhemobile.vos.mytimetable;
 
-import java.util.Comparator;
+import com.google.gson.annotations.SerializedName;
 
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
 
 /**
- * This Comparator compares two {@link MyTimeTableCourseComponent} objects
- * based on the next upcoming event in there event list
+ * Created by Nadja - 05/2022
  */
-public class CourseDateComparator implements Comparator<MyTimeTableCourseComponent> {
+public class MyTimeTableDialogResponse {
 
-	@Override
-	public int compare(final MyTimeTableCourseComponent o1, final MyTimeTableCourseComponent o2) {
-		return new TimeTableEventComparator().compare(o1.getFirstEvent(), o2.getFirstEvent());
-	}
+    public MyTimeTableDialogResponse(){
+
+    }
+
+    public List<MyTimeTableEventSeriesVo> getEventSeries() {
+        return new ArrayList<>(mEventSeries.values());
+    }
+
+    @SerializedName("studentset")
+    private Map<String, MyTimeTableEventSeriesVo> mEventSeries;
 }

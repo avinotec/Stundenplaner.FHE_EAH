@@ -44,8 +44,8 @@ import de.fhe.fhemobile.views.mytimetable.MyTimeTableCalendarView;
 
 public class MyTimeTableCalendarFragment extends FeatureFragment {
 
-	private MyTimeTableCalendarView mView;
-	public static final String TAG = "TimeTableFragment"; //$NON-NLS
+	public static final String TAG = MyTimeTableCalendarFragment.class.getSimpleName();
+
 
 	/**
 	 * Use this factory method to create a new instance of
@@ -59,7 +59,6 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		fragment.setArguments(args);
 		return fragment;
 	}
-
 	public MyTimeTableCalendarFragment() {
 		// Required empty public constructor
 	}
@@ -87,6 +86,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 
 		askForTimeTableDeletionAfterTurnOfSemester();
 
+		//todo: check if this comment is up to date
 		//unterhalb der Liste wird immer "Kein Kurs gewählt" angezeigt. Dieser Text ist aber nicht immer sichtbar.
 		// Daher ist das Feld in den Fragment Ressourcen vorhanden
 		mView.setEmptyCalenderView();
@@ -106,15 +106,16 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		//if app has been opened last before
 		if(lastOpened != 0){
 
-			final Calendar calLastOpened = Calendar.getInstance(new Locale("de", "DE"));
+
+			final Calendar calLastOpened = Calendar.getInstance(LOCALE_GERMAN);
 			calLastOpened.setTimeInMillis(lastOpened);
 
 			// Semester change in app on 1st of March
-			final Calendar calSemester1HolidayStart = Calendar.getInstance(new Locale("de", "DE"));
+			final Calendar calSemester1HolidayStart = Calendar.getInstance(LOCALE_GERMAN);
 			calSemester1HolidayStart.set(Calendar.MONTH, Calendar.MARCH);
 			calSemester1HolidayStart.set(Calendar.DAY_OF_MONTH, 1);
 			// Semester change in app on 1st of September
-			Calendar calSemester2HolidayStart = Calendar.getInstance(new Locale("de", "DE"));
+			Calendar calSemester2HolidayStart = Calendar.getInstance(LOCALE_GERMAN);
 			calSemester2HolidayStart.set(Calendar.MONTH, Calendar.SEPTEMBER);
 			calSemester2HolidayStart.set(Calendar.DAY_OF_MONTH, 1);
 			// today
@@ -131,7 +132,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 						.setPositiveButton(R.string.deleteTimeTableConfirm, new DialogInterface.OnClickListener() {
 
 							public void onClick(DialogInterface dialog, int which) {
-								MainActivity.clearSubscribedCourseComponentsAndUpdateAdapters();
+								MainActivity.clearSubscribedEventSeriesAndUpdateAdapters();
 							}
 						})
 						.setNegativeButton(R.string.deleteTimeTableCancel, null)
@@ -155,6 +156,10 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 
 		mView.jumpToToday();
 	}
-	
+
+
+	final private static Locale LOCALE_GERMAN = new Locale("de", "DE");
+
+	private MyTimeTableCalendarView mView;
 }
 

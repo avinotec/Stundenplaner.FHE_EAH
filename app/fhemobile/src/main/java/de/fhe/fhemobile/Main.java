@@ -34,11 +34,12 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import de.fhe.fhemobile.comparator.CourseDateComparator;
+import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
 import de.fhe.fhemobile.comparator.TimeTableEventComparator;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventTimeVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
 
@@ -52,19 +53,19 @@ public class Main extends Application {
 
 
     //My Time Table
-    //note: always keep subscribedCourseComponents sorted for display in the view
-    public static ArrayList<MyTimeTableCourseComponent> subscribedCourseComponents = new ArrayList<MyTimeTableCourseComponent>(){
+    //note: always keep subscribedEventSeries sorted for display in the view
+    public static ArrayList<MyTimeTableEventSeriesVo> subscribedEventSeries = new ArrayList<MyTimeTableEventSeriesVo>(){
         @Override
-        public boolean add(MyTimeTableCourseComponent myTimeTableCourseComponent) {
-            super.add(myTimeTableCourseComponent);
-            Collections.sort(subscribedCourseComponents, new CourseDateComparator());
+        public boolean add(MyTimeTableEventSeriesVo myTimeTableEventSeriesVo) {
+            super.add(myTimeTableEventSeriesVo);
+            Collections.sort(subscribedEventSeries, new EventSeriesTitleComparator());
             return true;
         }
 
         @Override
         public boolean remove(Object o) {
             super.remove(o);
-            Collections.sort(subscribedCourseComponents, new CourseDateComparator());
+            Collections.sort(subscribedEventSeries, new EventSeriesTitleComparator());
             return true;
         }
     };
@@ -84,11 +85,11 @@ public class Main extends Application {
         // falls die Liste leer sein sollte, überspringen
         if ( !"".equals(json) && !"null".equals(json)) {
             final Gson gson = new Gson();
-            Type listType = new TypeToken<ArrayList<MyTimeTableCourseComponent>>(){}.getType();
-            subscribedCourseComponents = gson.fromJson(json, listType);
+            Type listType = new TypeToken<ArrayList<MyTimeTableEventSeriesVo>>(){}.getType();
+            subscribedEventSeries = gson.fromJson(json, listType);
         }
 
-        Assert.assertNotNull("onCreate(): subscribed courses is not initialized", subscribedCourseComponents);
+        Assert.assertNotNull("onCreate(): subscribed courses is not initialized", subscribedEventSeries);
     }
 
     /**
@@ -105,18 +106,24 @@ public class Main extends Application {
         return mAppContext;
     }
 
-    public static ArrayList<MyTimeTableCourseComponent> getSubscribedCourseComponents(){
-        return subscribedCourseComponents;
+    public static ArrayList<MyTimeTableEventSeriesVo> getSubscribedEventSeries(){
+        return subscribedEventSeries;
     }
 
     public static ArrayList<TimeTableEventVo> getAllSubscribedTimeTableEvents(){
         ArrayList<TimeTableEventVo> eventList = new ArrayList<>();
 
-        for(MyTimeTableCourseComponent course : subscribedCourseComponents){
-            for(TimeTableEventVo event : course.getEvents()){
-                if(!eventList.contains(event)){
-                    eventList.add(event);
-                }
+        for(MyTimeTableEventSeriesVo eventSeries : subscribedEventSeries){
+            for(MyTimeTableEventTimeVo eventTime : eventSeries.getEvents()){
+
+                TimeTableEventVo eventToAdd = new TimeTableEventVo(
+                        eventSeries.getEventSeriesName(),
+                        eventTime.getStartDateTimeInSec(),
+                        eventTime.getEndDateTimeInSec(),
+                        eventSeries.getLecturerMap(),
+                        eventSeries.getLocationMap());
+
+                eventList.add(eventToAdd);
             }
         }
         Collections.sort(eventList, new TimeTableEventComparator());

@@ -24,11 +24,11 @@ public class Features {
     //TODO Features
     public static boolean NEWS            = false;
     public static boolean PHONEBOOK       = false;
-    public static boolean CANTEEN = false;
+    public static boolean CANTEEN         = false;
     public static boolean MAPS            = false;
     public static boolean SEMESTER_DATA   = false;
     public static boolean TIMETABLE       = false;
-    public static boolean IMPRINT = false;
+    public static boolean IMPRINT         = false;
     public static boolean MYTIMETABLE     = false;
     public static boolean EVENTS          = false;
     public static boolean NAVIGATION      = false;

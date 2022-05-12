@@ -5,9 +5,9 @@ import android.view.View;
 import android.widget.Button;
 
 import de.fhe.fhemobile.activities.MainActivity;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
 
-public class MyTimeTableDialogAdapter extends MyTimeTableAdapter{
+public class MyTimeTableDialogAdapter extends AbstractMyTimeTableAdapter {
 
     private static final String TAG = "MyTimeTableDialogAdapter";
 
@@ -19,7 +19,7 @@ public class MyTimeTableDialogAdapter extends MyTimeTableAdapter{
 
     @Override
     protected View.OnClickListener getAddCourseBtnOnClickListener(
-            final MyTimeTableCourseComponent currentItem, final Button btnAddCourse) {
+            final MyTimeTableEventSeriesVo currentItem, final Button btnAddCourse) {
 
         return new View.OnClickListener() {
             @Override
@@ -28,9 +28,9 @@ public class MyTimeTableDialogAdapter extends MyTimeTableAdapter{
                 btnAddCourse.setActivated(!btnAddCourse.isActivated());
 
                 if(btnAddCourse.isActivated()){
-                    MainActivity.addToSubscribedCourseComponentsAndUpdateAdapters(currentItem);
+                    MainActivity.addToSubscribedEventSeriesAndUpdateAdapters(currentItem);
                 }else{
-                    MainActivity.removeFromSubscribedCourseComponentsAndUpdateAdapters(currentItem);
+                    MainActivity.removeFromSubscribedEventSeriesAndUpdateAdapters(currentItem);
                 }
             }
         };

@@ -41,7 +41,7 @@ import de.fhe.fhemobile.vos.WeatherResponse;
 import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
 import de.fhe.fhemobile.vos.canteen.CanteenMenuDayVo;
 import de.fhe.fhemobile.vos.canteen.CanteenVo;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
 import de.fhe.fhemobile.vos.news.NewsCategoryResponse;
 import de.fhe.fhemobile.vos.news.NewsItemResponse;
 import de.fhe.fhemobile.vos.news.NewsItemVo;
@@ -69,14 +69,14 @@ public class NetworkHandler {
 
 	private Retrofit mRestAdapter = null;
 	private Retrofit mRestAdapterEah = null;
-	private ApiDeclaration mApi = null;
+	private ApiDeclaration mApiErfurt = null;
 	private ApiDeclaration mApiEah = null;
 
 	/**
 	 * Private constructor
 	 */
 	private NetworkHandler() {
-		Assert.assertTrue( mApi == null );
+		Assert.assertTrue( mApiErfurt == null );
 		Assert.assertTrue( mRestAdapter == null );
 		Assert.assertTrue( mApiEah == null );
 		Assert.assertTrue( mRestAdapterEah == null );
@@ -98,9 +98,9 @@ public class NetworkHandler {
 //                .setLogLevel(RestAdapter.LogLevel.FULL)
 				.build();
 
-		mApi = mRestAdapter.create(ApiDeclaration.class);
+		mApiErfurt = mRestAdapter.create(ApiDeclaration.class);
 		mApiEah = mRestAdapterEah.create(ApiDeclaration.class);
-		Assert.assertTrue( mApi != null );
+		Assert.assertTrue( mApiErfurt != null );
 		Assert.assertTrue( mRestAdapter != null );
 		Assert.assertTrue( mApiEah != null );
 		Assert.assertTrue( mRestAdapterEah != null );
@@ -123,8 +123,8 @@ public class NetworkHandler {
 	 */
 	public void fetchEmployees(final String _FirstName, final String _LastName) {
 
-		Assert.assertTrue( mApi != null );
-		mApi.fetchEmployees(_FirstName, _LastName).enqueue(new Callback<ArrayList<EmployeeVo>>() {
+		Assert.assertTrue( mApiErfurt != null );
+		mApiErfurt.fetchEmployees(_FirstName, _LastName).enqueue(new Callback<ArrayList<EmployeeVo>>() {
 
 			/**
 			 *
@@ -156,9 +156,9 @@ public class NetworkHandler {
 	 * *
 	 */
 	public void fetchSemesterData() {
-		Assert.assertTrue( mApi != null );
+		Assert.assertTrue( mApiErfurt != null );
 
-		mApi.fetchSemesterData().enqueue( new Callback<SemesterDataVo>() {
+		mApiErfurt.fetchSemesterData().enqueue(new Callback<SemesterDataVo>() {
 
 			/**
 			 *
@@ -189,13 +189,13 @@ public class NetworkHandler {
 	 * Fetch menu of the canteens specified in {@link UserSettings}
 	 */
 	public void fetchCanteenMenus() {
-		Assert.assertTrue( mApi != null );
+		Assert.assertTrue( mApiErfurt != null );
 
 		ArrayList<String> selectedCanteenIds = UserSettings.getInstance().getSelectedCanteenIds();
 		Log.d(TAG, "Selected Canteens: " + selectedCanteenIds);
 
 		for(String canteenId : selectedCanteenIds){
-			mApi.fetchCanteenData(canteenId).enqueue(new Callback<CanteenDishVo[]>() {
+			mApiErfurt.fetchCanteenData(canteenId).enqueue(new Callback<CanteenDishVo[]>() {
 
 				/**
 				 *
@@ -287,18 +287,18 @@ public class NetworkHandler {
 	 * *
 	 */
 	public void fetchNewsData(final String _NewsCategory, final Callback<NewsItemResponse> _Callback) {
-		Assert.assertTrue( mApi != null );
+		Assert.assertTrue( mApiErfurt != null );
 
-		mApi.fetchNewsData(_NewsCategory ).enqueue(_Callback);
+		mApiErfurt.fetchNewsData(_NewsCategory ).enqueue(_Callback);
 	}
 
 	/**
 	 * *
 	 */
 	public void fetchAvailableCanteens() {
-		Assert.assertTrue( mApi != null );
+		Assert.assertTrue( mApiErfurt != null );
 
-		mApi.fetchAvailableCanteens().enqueue(new Callback<CanteenVo[]>() {
+		mApiErfurt.fetchAvailableCanteens().enqueue(new Callback<CanteenVo[]>() {
 
 			@Override
 			public void onResponse(final Call<CanteenVo[]> call, final Response<CanteenVo[]> response) {
@@ -352,28 +352,28 @@ public class NetworkHandler {
 	 * *
 	 */
 	public void fetchAvailableNewsLists(final Callback<NewsCategoryResponse> _Callback) {
-		Assert.assertTrue( mApi != null );
+		Assert.assertTrue( mApiErfurt != null );
 
-		mApi.fetchAvailableNewsLists().enqueue(_Callback);
+		mApiErfurt.fetchAvailableNewsLists().enqueue(_Callback);
 	}
 
 	/**
 	 * *
 	 */
 	public void fetchWeather(final Callback<WeatherResponse> _Callback) {
-		Assert.assertTrue( mApi != null );
+		Assert.assertTrue( mApiErfurt != null );
 
-		mApi.fetchWeather().enqueue(_Callback);
+		mApiErfurt.fetchWeather().enqueue(_Callback);
 	}
 
 	/**
 	 *
 	 * @param _Callback
 	 */
-	public void fetchTimeTable(final Callback<TimeTableDialogResponse> _Callback) {
+	public void fetchStudyProgramData(final Callback<TimeTableDialogResponse> _Callback) {
 		Assert.assertTrue( mApiEah != null );
 
-		mApiEah.fetchTimeTable().enqueue(_Callback);
+		mApiEah.fetchStudyProgramData().enqueue(_Callback);
 	}
 
 	/**
@@ -388,25 +388,39 @@ public class NetworkHandler {
 		mApiEah.fetchTimeTableEvents(_StudyGroupId).enqueue(_Callback);
 	}
 
-	public List<MyTimeTableCourseComponent> reloadEvents(final MyTimeTableCourseComponent event) {
-		Assert.assertTrue( mApi != null );
+	/**
+	 *
+	 * @param _SemesterId
+	 * @param _Callback
+	 */
+	public void fetchSemesterTimeTable(final String _SemesterId,
+									   final Callback<Map<String, MyTimeTableEventSeriesVo>> _Callback){
+
+		Assert.assertTrue(mApiEah != null);
+
+		mApiEah.fetchSemesterTimeTable(_SemesterId).enqueue(_Callback);
+	}
+
+
+	public List<MyTimeTableEventSeriesVo> reloadEvents(final MyTimeTableEventSeriesVo event) {
+		Assert.assertTrue( mApiErfurt != null );
 		Assert.assertTrue( event != null );
 
 
-		final List<MyTimeTableCourseComponent> eventList = new ArrayList<>();
+		final List<MyTimeTableEventSeriesVo> eventList = new ArrayList<>();
 
 		//todo: auskommentiert im Zuge von Umbauarbeiten
 		/*try {
 
-			final ArrayList<TimeTableWeekVo> timeTable = mApi.fetchTimeTableEvents(
+			final ArrayList<TimeTableWeekVo> timeTable = mApiErfurt.fetchTimeTableEvents(
 					event.getStudyGroup().getTimeTableId()).execute().body();
 			Assert.assertTrue( timeTable != null );
 
 			for (final TimeTableWeekVo weekEntry : timeTable){
 				for(final TimeTableDayVo dayEntry : weekEntry.getDays() ){
-					for(final TimeTableEventVo eventEntry : dayEntry.getEvents() ){
+					for(final TimeTableEventVo eventEntry : dayEntry.getmEventTimes() ){
 						if(eventEntry.getTitle().equals(event.getEvent().getTitle())){
-							final MyTimeTableCourseComponent item = event.copy();
+							final MyTimeTableEventSeriesVo item = event.copy();
 							item.setEventWeek(weekEntry);
 							item.setEventDay(dayEntry);
 							item.setEvent(eventEntry);
@@ -427,11 +441,11 @@ public class NetworkHandler {
 	 * @param _Callback
 	 */
 	public void registerTimeTableChanges(final String json, final Callback<ResponseModel> _Callback){
-		Assert.assertTrue( mApi != null );
+		Assert.assertTrue( mApiErfurt != null );
 		//okhttp 4.x final RequestBody body =RequestBody.create( json, MediaType.parse("application/json"));
 		//okhttp 3.12 flip parameters
 		final RequestBody body =RequestBody.create(MediaType.parse("application/json"), json);
-		mApi.registerTimeTableChanges(body).enqueue(_Callback);
+		mApiErfurt.registerTimeTableChanges(body).enqueue(_Callback);
 	}
 
 	/**
@@ -440,11 +454,11 @@ public class NetworkHandler {
 	 * @param _Callback
 	 */
 	public void getTimeTableChanges(final String json, final Callback<ResponseModel>_Callback){
-		Assert.assertTrue( mApi != null );
+		Assert.assertTrue( mApiErfurt != null );
 		//okhttp 4.x final RequestBody body =RequestBody.create( json, MediaType.parse("application/json"));
 		//okhttp 3.12 flip parameters
 		final RequestBody body =RequestBody.create(MediaType.parse("application/json"), json);
-		mApi.getTimeTableChanges(body).enqueue(_Callback);
+		mApiErfurt.getTimeTableChanges(body).enqueue(_Callback);
 	}
 
 	/**
@@ -452,8 +466,8 @@ public class NetworkHandler {
 	 * @param _Callback
 	 */
 	public void fetchCafeAquaStatus(final Callback<CafeAquaResponse> _Callback) {
-		Assert.assertTrue( mApi != null );
-		mApi.fetchCafeAquaStatus().enqueue(_Callback);
+		Assert.assertTrue( mApiErfurt != null );
+		mApiErfurt.fetchCafeAquaStatus().enqueue(_Callback);
 	}
 
 	/**

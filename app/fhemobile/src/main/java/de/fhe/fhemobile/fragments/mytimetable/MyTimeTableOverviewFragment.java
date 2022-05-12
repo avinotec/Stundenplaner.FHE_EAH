@@ -18,7 +18,7 @@
 package de.fhe.fhemobile.fragments.mytimetable;
 
 
-import static de.fhe.fhemobile.Main.getSubscribedCourseComponents;
+import static de.fhe.fhemobile.Main.getSubscribedEventSeries;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -44,16 +44,14 @@ import java.util.List;
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.activities.MainActivity;
-import de.fhe.fhemobile.comparator.CourseTitleComparator;
+import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.models.timeTableChanges.RequestModel;
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.services.PushNotificationService;
-import de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -114,8 +112,8 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 	@Override
 	public void onAttach(@NonNull final Context context) {
 		super.onAttach(context);
-		if(!getSubscribedCourseComponents().isEmpty()){
-			Collections.sort(getSubscribedCourseComponents(), new CourseTitleComparator());
+		if(!getSubscribedEventSeries().isEmpty()){
+			Collections.sort(getSubscribedEventSeries(), new EventSeriesTitleComparator());
 		}
 	}
 
@@ -128,12 +126,12 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 	}
 
 	private void PushNotificationsRegisterAndUpdateCourses() {
-		if (!getSubscribedCourseComponents().isEmpty()) {
+		if (!getSubscribedEventSeries().isEmpty()) {
 			final RequestModel request = new RequestModel(RequestModel.ANDROID_DEVICE, PushNotificationService.getFirebaseToken(), new Date().getTime() - 86400000);
 			String title = "";
 			String setID = "";
 
-			for (MyTimeTableCourseComponent course : getSubscribedCourseComponents()) {
+			for (MyTimeTableEventSeriesVo course : getSubscribedEventSeries()) {
 				final String eventTitleShort = course.getTitle();
 
 				//todo: all setIds in the course's studyGroupList has to be searched
@@ -236,35 +234,35 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 //                        // A null listener allows the button to dismiss the dialog and take no further action.
 //                        .show();
 
-
+					//todo: auskommentiert im Zuge von Umbauarbeiten
+					/*
 					for (final ResponseModel.Change change : changes) {
 
 						// Shortcut to the list
-						final List<MyTimeTableCourseComponent> myTimetableList = getSubscribedCourseComponents();
+						final List<MyTimeTableEventSeriesVo> myTimetableList = getSubscribedEventSeries();
 
 						//Aenderung eines Events: suche das Event und ueberschreibe es
 						if (change.getChangesReason() == CHANGEREASON_EDIT) {
-							final MyTimeTableCourseComponent event = MyTimeTableUtils.getEventByID(myTimetableList, change.getNewEventJson().getId());
+							final MyTimeTableEventSeriesVo event = MyTimeTableUtils.getEventByID(myTimetableList, change.getNewEventJson().getId());
 							if (event != null) {
 								//todo: auskommentiert im Zuge von Umbauarbeiten
 								//event.setEvent(change.getNewEventJson());
 							}
 						}
-						//Hinzufuegen eines neuen Events: Erstelle ein neues Element vom Typ MyTimeTableCourseComponent, schreibe alle Set-, Semester- und Studiengangdaten in dieses
+						//Hinzufuegen eines neuen Events: Erstelle ein neues Element vom Typ MyTimeTableEventSeriesVo, schreibe alle Set-, Semester- und Studiengangdaten in dieses
 						//und fuege dann die Eventdaten des neuen Events hinzu. Anschliessend in die Liste hinzufuegen.
 						if (change.getChangesReason() == CHANGEREASON_NEW) {
-							final MyTimeTableCourseComponent event = MyTimeTableUtils.getCoursesByStudyGroupTitle(myTimetableList, change.getSetSplusKey()).get(0).copy();
-							//todo: auskommentiert im Zuge von Umbauarbeiten
-							//event.setEvent(change.getNewEventJson());
-							((MainActivity) getActivity()).addToSubscribedCourseComponentsAndUpdateAdapters(event);
+							final MyTimeTableEventSeriesVo event = MyTimeTableUtils.getCoursesByStudyGroupTitle(myTimetableList, change.getSetSplusKey()).get(0).copy();
+							event.setEvent(change.getNewEventJson());
+							((MainActivity) getActivity()).addToSubscribedEventSeriesAndUpdateAdapters(event);
 
 						}
 						//Loeschen eines Events: Suche den Event mit der SplusID und lösche ihn aus der Liste.
 						if (change.getChangesReason() == CHANGEREASON_DELETE) {
-							final MyTimeTableCourseComponent event = MyTimeTableUtils.getEventByID(myTimetableList, change.getNewEventJson().getId());
-							((MainActivity) getActivity()).removeFromSubscribedCourseComponentsAndUpdateAdapters(event);
+							final MyTimeTableEventSeriesVo event = MyTimeTableUtils.getEventByID(myTimetableList, change.getNewEventJson().getId());
+							((MainActivity) getActivity()).removeFromSubscribedEventSeriesAndUpdateAdapters(event);
 						}
-					}
+					}*/
 
 				}
 

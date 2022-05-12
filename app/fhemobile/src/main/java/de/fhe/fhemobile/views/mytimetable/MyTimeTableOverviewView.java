@@ -81,12 +81,12 @@ public class MyTimeTableOverviewView extends LinearLayout {
 
     	//todo: überarbeiten, coursesOfChosenSemester should not be needed here
     	//Durchsuche alle Vorlesungen
-//    	for(MyTimeTableCourseComponent eventInCompleteList : MyTimeTableDialogFragment.coursesOfChosenSemester){
+//    	for(MyTimeTableEventSeriesVo eventInCompleteList : MyTimeTableDialogFragment.coursesOfChosenSemester){
 //            boolean exists = false;
 //
 //            //überspringe einzelne Vorlesungsevents wenn der Vorlesungstitel schon zur negativeList hinzugefügt wurde
 //    		for(String[] eventdata : negativeList) {
-//    		    if(eventdata[0].equals( MyTimeTableCourseComponent.cutEventTitle(eventInCompleteList.getEvent().getTitle()))
+//    		    if(eventdata[0].equals( MyTimeTableEventSeriesVo.cutEventTitle(eventInCompleteList.getEvent().getTitle()))
 //                && eventdata[1].equals( eventInCompleteList.getStudyGroup().getTimeTableId())){
 //                    exists = true;
 //                    break;
@@ -96,22 +96,22 @@ public class MyTimeTableOverviewView extends LinearLayout {
 //    		//dieses eventInCompleteList gibt es noch nicht in der negativeList
 //    		if(!exists) {
 //    		    boolean isSelected = false;
-//    		    //durchsuche subscribedCourseComponents nach dem eventInCompletedList
-//                for (MyTimeTableCourseComponent eventInSelectedList : getSubscribedCourses()) {
+//    		    //durchsuche subscribedEventSeries nach dem eventInCompletedList
+//                for (MyTimeTableEventSeriesVo eventInSelectedList : getSubscribedCourses()) {
 //
-//                    if (MyTimeTableCourseComponent.cutEventTitle(eventInCompleteList.getEvent().getTitle())
-//                            .equals(MyTimeTableCourseComponent.cutEventTitle(eventInSelectedList.getEvent().getTitle()))
+//                    if (MyTimeTableEventSeriesVo.cutEventTitle(eventInCompleteList.getEvent().getTitle())
+//                            .equals(MyTimeTableEventSeriesVo.cutEventTitle(eventInSelectedList.getEvent().getTitle()))
 //                    && eventInCompleteList.getStudyGroup().getTimeTableId()
 //                            .equals(eventInSelectedList.getStudyGroup().getTimeTableId())){
 //                        isSelected = true;
 //                    }
 //
 //                }
-//                //add event to negative List if eventInCompletedList is in subscribedCourseComponents
+//                //add event to negative List if eventInCompletedList is in subscribedEventSeries
 //                if(!isSelected){
 //                    final String[] eventdata = new String[2];
 //                    //add an event (title + id) to negativeList
-//                    eventdata[0] = MyTimeTableCourseComponent.cutEventTitle(eventInCompleteList.getEvent().getTitle());
+//                    eventdata[0] = MyTimeTableEventSeriesVo.cutEventTitle(eventInCompleteList.getEvent().getTitle());
 //                    eventdata[1] = eventInCompleteList.getStudyGroup().getTimeTableId();
 //                    negativeList.add(eventdata);
 //                }

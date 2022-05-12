@@ -16,8 +16,6 @@
  */
 package de.fhe.fhemobile.vos.timetable;
 
-import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -33,7 +31,7 @@ import java.util.ArrayList;
  */
 public class TimeTableSemesterVo implements Parcelable {
 
-    private static final String TAG = "TimeTableSemesterVo";
+    private static final String TAG = TimeTableSemesterVo.class.getSimpleName();
 
     public TimeTableSemesterVo() {
     }
@@ -56,6 +54,8 @@ public class TimeTableSemesterVo implements Parcelable {
             return new TimeTableSemesterVo[size];
         }
     };
+
+    public String getId() { return mId;  }
 
     public String getNumber() {
         return mNumber;

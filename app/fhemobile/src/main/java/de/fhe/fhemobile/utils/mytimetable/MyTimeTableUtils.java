@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableCourseComponent;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
 public class MyTimeTableUtils {
@@ -24,11 +24,11 @@ public class MyTimeTableUtils {
      * (event titles have no such number if entered for the first time,
      * but later added events belonging to the same course get one)
      *
-     * @param event an event that belongs to the {@link MyTimeTableCourseComponent}
-     * @return string corresponding to the title that identifies a {@link MyTimeTableCourseComponent}
+     * @param event an event that belongs to the {@link MyTimeTableEventSeriesVo}
+     * @return string corresponding to the title that identifies a {@link MyTimeTableEventSeriesVo}
      */
-    public static String getCourseComponentName(final TimeTableEventVo event){
-        return getCourseComponentName(event.getTitle());
+    public static String getEventSeriesName(final TimeTableEventVo event){
+        return getEventSeriesName(event.getTitle());
     }
 
     /**
@@ -36,10 +36,10 @@ public class MyTimeTableUtils {
      * (event titles have no such number if entered for the first time,
      * but later added events belonging to the same course get one)
      *
-     * @param title the title of an event that belongs to the {@link MyTimeTableCourseComponent}
-     * @return string corresponding to the title that identifies a {@link MyTimeTableCourseComponent}
+     * @param title the title of an event that belongs to the {@link MyTimeTableEventSeriesVo}
+     * @return string corresponding to the title that identifies a {@link MyTimeTableEventSeriesVo}
      */
-    public static String getCourseComponentName(final String title){
+    public static String getEventSeriesName(final String title){
         //cut away all ".d" (where d stands for any digit)
         return title.replaceAll("\\.\\d+$","");
     }
@@ -90,23 +90,24 @@ public class MyTimeTableUtils {
         return changeEventTitle;
     }
 
-    /**
-     * Returns a list filtered by the given event title
-     * @param list
-     * @param eventTitle
-     * @return
-     */
-    public static List<MyTimeTableCourseComponent> getCoursesByEventTitle(
-            final List<MyTimeTableCourseComponent> list, final String eventTitle){
-
-        final List<MyTimeTableCourseComponent> filteredEvents = new ArrayList<>();
-        for (final MyTimeTableCourseComponent event : list) {
-            if(event.getFirstEvent().getTitle().contains(eventTitle)){
-                filteredEvents.add(event);
-            }
-        }
-        return filteredEvents;
-    }
+    //todo: auskommentiert wegen Umbau von MyTimeTable
+//    /**
+//     * Returns a list filtered by the given event title
+//     * @param list
+//     * @param eventTitle
+//     * @return
+//     */
+//    public static List<MyTimeTableEventSeriesVo> getCoursesByEventTitle(
+//            final List<MyTimeTableEventSeriesVo> list, final String eventTitle){
+//
+//        final List<MyTimeTableEventSeriesVo> filteredEvents = new ArrayList<>();
+//        for (final MyTimeTableEventSeriesVo event : list) {
+//            if(event.getFirstEvent().getTitle().contains(eventTitle)){
+//                filteredEvents.add(event);
+//            }
+//        }
+//        return filteredEvents;
+//    }
 
     /**
      * Returns a list filtered by the given study group
@@ -114,11 +115,11 @@ public class MyTimeTableUtils {
      * @param studyGroupTitle
      * @return
      */
-    public static List<MyTimeTableCourseComponent> getCoursesByStudyGroupTitle(
-            final List<MyTimeTableCourseComponent>list, final String studyGroupTitle){
+    public static List<MyTimeTableEventSeriesVo> getCoursesByStudyGroupTitle(
+            final List<MyTimeTableEventSeriesVo>list, final String studyGroupTitle){
 
-        final List<MyTimeTableCourseComponent> filteredEvents = new ArrayList<>();
-        for(final MyTimeTableCourseComponent event : list){
+        final List<MyTimeTableEventSeriesVo> filteredEvents = new ArrayList<>();
+        for(final MyTimeTableEventSeriesVo event : list){
             if(event.getStudyGroupListString().equals(studyGroupTitle)){
                 filteredEvents.add(event);
             }
@@ -126,38 +127,34 @@ public class MyTimeTableUtils {
         return filteredEvents;
     }
 
-    public static List<MyTimeTableCourseComponent> queryfutureEvents(final List<MyTimeTableCourseComponent>list){
+    //todo: auskommentiert wegen Umbau von MyTimeTable
+//    public static List<MyTimeTableEventSeriesVo> queryfutureEvents(final List<MyTimeTableEventSeriesVo>list){
+//
+//        final List<MyTimeTableEventSeriesVo> filteredEvents = new ArrayList<>();
+//        for(final MyTimeTableEventSeriesVo event : list){
+//
+//            Date eventDate = null;
+//            try {
+//                eventDate = sdf.parse(event.getFirstEvent().getStartDate()+" "+event.getFirstEvent().getStartTime());
+//            } catch (final ParseException e) {
+//                Log.e(TAG, "Fehler beim Parsen der Daten: ",e );
+//            }
+//            if(eventDate.after(new Date())){
+//                filteredEvents.add(event);
+//            }
+//        }
+//        return filteredEvents;
+//    }
 
-        final List<MyTimeTableCourseComponent> filteredEvents = new ArrayList<>();
-        for(final MyTimeTableCourseComponent event : list){
-
-            Date eventDate = null;
-            try {
-                eventDate = sdf.parse(event.getFirstEvent().getStartDate()+" "+event.getFirstEvent().getStartTime());
-            } catch (final ParseException e) {
-                Log.e(TAG, "Fehler beim Parsen der Daten: ",e );
-            }
-            if(eventDate.after(new Date())){
-                filteredEvents.add(event);
-            }
-        }
-        return filteredEvents;
-    }
-
-    /**
-     *
-     * @param list
-     * @param ID
-     * @return
-     */
-    public static final MyTimeTableCourseComponent getEventByID (final List<MyTimeTableCourseComponent> list, final String ID){
-        for ( final MyTimeTableCourseComponent event:list ) {
+    //todo: auskommentiert im Zuge der Umbauarbeiten für MyTimeTable
+    /*public static final MyTimeTableEventSeriesVo getEventByID(final List<MyTimeTableEventSeriesVo> list, final String ID){
+        for ( final MyTimeTableEventSeriesVo event:list ) {
             if(ID.equals(event.getFirstEvent().getId())){
                 return event;
             }
         }
         return null;
-    }
+    }*/
 
     /**
      *
@@ -165,8 +162,8 @@ public class MyTimeTableUtils {
      * @param data
      * @return
      */
-    public static final boolean listContainsEvent(final List<MyTimeTableCourseComponent> list, final MyTimeTableCourseComponent data){
-        for(final MyTimeTableCourseComponent event : list){
+    public static final boolean listContainsEvent(final List<MyTimeTableEventSeriesVo> list, final MyTimeTableEventSeriesVo data){
+        for(final MyTimeTableEventSeriesVo event : list){
 //			Log.d(TAG, "Eventvergleich1: "+event);
 //			Log.d(TAG, "Eventvergleich2: "+data);
 //			Log.d(TAG, "listContainsEvent: "+event.getEvent().getTitle()+" "+data.getEvent().getTitle());

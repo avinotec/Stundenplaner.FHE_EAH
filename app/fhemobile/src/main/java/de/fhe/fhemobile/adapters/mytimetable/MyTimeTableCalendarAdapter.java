@@ -32,6 +32,7 @@ import java.util.Locale;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableCalendarFragment;
 import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
 /**
@@ -39,9 +40,7 @@ import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
  */
 public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
-	private static final String TAG = "MyTTCalenderAdapter";
-
-	private List<TimeTableEventVo> mItems;
+	private static final String TAG = MyTimeTableCalendarFragment.class.getSimpleName();
 
 
 	public MyTimeTableCalendarAdapter() {
@@ -158,7 +157,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	/**
 	 * Iterate over item list of the adapter till start time of an event is after now,
 	 * return the index of the previous event.
-	 * @return
+	 * @return The position of the first course with today's date
 	 */
 	public int getPositionOfFirstCourseToday(){
 		final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
@@ -193,16 +192,19 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 				}
 			} catch (ParseException e) {
-				Log.e(TAG, "error getting position of first event today",e );
+				Log.e(TAG, "error getting position of first event today", e);
 			}
 			catch (NullPointerException e) {
-				Log.e(TAG, "wrong Date format", e);
+				Log.e(TAG, "Invalid Date format", e);
 			}
 		}
 		return posToday;
 	}
 
 
+
 	//private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 	private static final DateFormat sdf = SimpleDateFormat.getDateInstance();
+
+	private List<TimeTableEventVo> mItems;
 }

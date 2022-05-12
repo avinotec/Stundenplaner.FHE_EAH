@@ -24,7 +24,6 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -43,6 +42,21 @@ public class TimeTableEventVo implements Parcelable {
     public TimeTableEventVo() {
     }
 
+    public TimeTableEventVo(String title,
+                            long startDateTime,
+                            long endDateTime,
+                            Map<String, LecturerVo> lecturerList,
+                            Map<String, TimeTableLocationVo> locationList){
+        mTitle = title;
+        mStartDate = startDateTime;
+        mEndDate = endDateTime;
+        mStartDateTime = startDateTime;
+        mEndDateTime = endDateTime;
+        mLecturerList = lecturerList;
+        mLocationList = locationList;
+
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -56,8 +70,6 @@ public class TimeTableEventVo implements Parcelable {
         dest.writeLong(mEndDate);
         dest.writeLong(mStartDateTime);
         dest.writeLong(mEndDateTime);
-        dest.writeString(mCourseName);
-        dest.writeString(mCourseDescription);
         dest.writeMap(mLecturerList);
         dest.writeMap(mLocationList);
     }
@@ -69,8 +81,6 @@ public class TimeTableEventVo implements Parcelable {
         mEndDate = in.readLong();
         this.mStartDateTime = in.readLong();
         this.mEndDateTime = in.readLong();
-        this.mCourseName = in.readString();
-        mCourseDescription = in.readString();
         in.readMap(mLecturerList , LecturerVo.class.getClassLoader());
         in.readMap(mLocationList, TimeTableLocationVo.class.getClassLoader());
     }
@@ -171,12 +181,6 @@ public class TimeTableEventVo implements Parcelable {
 
     @SerializedName("activitydatetimeEndDateTime")
     private long mEndDateTime;
-
-    @SerializedName("moduleName")
-    private String mCourseName;
-
-    @SerializedName("moduleDescription")
-    private String mCourseDescription;
 
     @SerializedName("dataStaff")
     private Map<String, LecturerVo> mLecturerList = new HashMap<>();

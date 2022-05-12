@@ -39,8 +39,7 @@ public class FeatureFragmentFactory {
 
         //TODO Features
         switch (_FeatureId) {
-            case Features.FeatureId.TIMETABLE:       fragment = TimeTableFactory.getTimeTableFragment();    break;
-            case Features.FeatureId.MYTIMETABLE:     //fragment = MyTimeTableCalendarFragment.newInstance();  break;
+            case Features.FeatureId.MYTIMETABLE:     fragment = MyTimeTableCalendarFragment.newInstance();  break;
             case Features.FeatureId.CANTEEN:         fragment = CanteenFragment.newInstance();            break;
             case Features.FeatureId.MAPS:            fragment = MapsDialogFragment.newInstance();           break;
             //case FeatureId.NAVIGATION:                fragment = ComingSoonFragment.newInstance(); break;
@@ -51,9 +50,9 @@ public class FeatureFragmentFactory {
             //case Features.FeatureId.PHONEBOOK:       fragment = PhonebookSearchFragment.newInstance();   break;
             case Features.FeatureId.JOBOFFERS:       fragment = JobOffersFragment.newInstance();            break; //added by Nadja on 30.03.2022
             case Features.FeatureId.IMPRINT:         fragment = ImprintFragment.newInstance();            break;
-            case Features.FeatureId.NEWS:
-            //default:                        fragment = NewsListFragment.newInstance();
-            default:                        fragment = NewsWebViewFragment.newInstance(); //display from Browser/as Webview - Nadja 6.9.21
+            case Features.FeatureId.NEWS:            fragment = NewsWebViewFragment.newInstance();       break; //display as Webview - Nadja 6.9.21
+            case Features.FeatureId.TIMETABLE:
+            default:                        fragment = TimeTableFactory.getTimeTableFragment();
 
         }
 

@@ -11,7 +11,7 @@ import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
 public class TimeTableEventComparator implements Comparator<TimeTableEventVo> {
 
-    private static final String TAG = "TimeTableEventCompare";
+    private static final String TAG = TimeTableEventComparator.class.getSimpleName();
 
     //don't use SimpleDateFormat.getDateTimeInstance() because it includes seconds
     final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");

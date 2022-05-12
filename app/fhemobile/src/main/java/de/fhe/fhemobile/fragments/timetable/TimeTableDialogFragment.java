@@ -53,7 +53,7 @@ import retrofit2.Response;
  */
 public class TimeTableDialogFragment extends FeatureFragment {
 
-    public static final String TAG = "TimeTableDialogFragment"; //$NON-NLS
+    public static final String TAG = TimeTableDialogFragment.class.getSimpleName();
 
     /**
      * Use this factory method to create a new instance of
@@ -95,7 +95,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
     @Override
     public void onResume() {
         super.onResume();
-        NetworkHandler.getInstance().fetchTimeTable(mTimeTableResponseCallback);
+        NetworkHandler.getInstance().fetchStudyProgramData(mFetchStudyProgramDataCallback);
     }
 
     private void proceedToTimetable(final String _TimeTableId) {
@@ -184,7 +184,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
     };
 
 
-    private final Callback<TimeTableDialogResponse> mTimeTableResponseCallback = new Callback<TimeTableDialogResponse>() {
+    private final Callback<TimeTableDialogResponse> mFetchStudyProgramDataCallback = new Callback<TimeTableDialogResponse>() {
         @Override
         public void onResponse(final Call<TimeTableDialogResponse> call, final Response<TimeTableDialogResponse> response) {
             if ( response.body() != null ) {
