@@ -230,8 +230,8 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
         params.setMargins(0,5,5,10);
         dateTextview.setLayoutParams(params);
 
-        Date startDateTime = _EventTime.getStartDateTime();
-        Date endDateTime =  _EventTime.getEndDateTime();
+        final Date startDateTime = _EventTime.getStartDateTime();
+        final Date endDateTime =  _EventTime.getEndDateTime();
         final String date = sdf.format(startDateTime);
         final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(startDateTime);
         final String startTime = new SimpleDateFormat("h:mm", Locale.getDefault()).format(startDateTime);
@@ -239,17 +239,14 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
         String courseDateText = dayOfWeek + ", " + date + "  " + startTime + " – " + endTime;
 
 
-        StringBuilder stringBuilder = null;
+        StringBuilder stringBuilder = new StringBuilder();
         for(TimeTableLocationVo room : _Rooms){
 
-            if(stringBuilder == null){
-                stringBuilder = new StringBuilder();
-            }else{
-                stringBuilder.append(", ");
-            }
             stringBuilder.append(room.getName());
+            // jetzt bleibt (immer noch) ein Komma am Ende übrig
+            stringBuilder.append(", ");
         }
-        if(roomVisible && stringBuilder != null) {
+        if(roomVisible && stringBuilder.length()>0) {
             courseDateText += "\n"+ stringBuilder;
         }
         dateTextview.setText(courseDateText);
