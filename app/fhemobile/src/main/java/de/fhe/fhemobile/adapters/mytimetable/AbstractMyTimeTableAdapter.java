@@ -17,6 +17,7 @@
 package de.fhe.fhemobile.adapters.mytimetable;
 
 import static de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils.getEventSeriesBaseTitle;
+import static de.fhe.fhemobile.utils.timetable.TimeTableUtils.cutStudyProgramPrefix;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -143,7 +144,7 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
         // if such a header has already been added because of processing another event series with the same base title
         // then do not add header again (set its visibility to GONE)
         if(position == 0 || !mItems.get(position).canBeGroupedForDisplay(mItems.get(position - 1))){
-            eventSeriesBaseTitle.setText(getEventSeriesBaseTitle(currentItem.getTitle()));
+            eventSeriesBaseTitle.setText(cutStudyProgramPrefix(getEventSeriesBaseTitle(currentItem.getTitle())));
 
             eventSeriesBaseTitle.setVisibility(View.VISIBLE);
             headerLayout.setVisibility(View.VISIBLE);
@@ -227,10 +228,10 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
 
     private void setAndAddEventDataTextViews(MyTimeTableEventVo _Event,
                                              LinearLayout _LayoutAllEvents){
-        final TextView dateTextview = new TextView(mContext);
+        final TextView dateAndRoomTextView = new TextView(mContext);
         final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         params.setMargins(0,5,5,10);
-        dateTextview.setLayoutParams(params);
+        dateAndRoomTextView.setLayoutParams(params);
 
         Date startDateTime = new Date(_Event.getStartDateTime());
         Date endDateTime =  new Date(_Event.getEndDateTime());
@@ -238,21 +239,13 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
         final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(startDateTime);
         final String startTime = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(startDateTime);
         final String endTime = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(endDateTime);
-        String courseDateText = dayOfWeek + ", " + date + "  " + startTime + " – " + endTime;
+        String eventDateAndRoomText = dayOfWeek + ", " + date + "  " + startTime + " – " + endTime;
 
-
-        StringBuilder stringBuilder = new StringBuilder();
-        for(TimeTableLocationVo room : _Event.getLocationList()){
-
-            stringBuilder.append(room.getName());
-            // jetzt bleibt (immer noch) ein Komma am Ende übrig
-            stringBuilder.append(", ");
+        if(roomVisible) {
+            eventDateAndRoomText += "\n"+ _Event.getLocationListAsString();
         }
-        if(roomVisible && stringBuilder.length() > 0) {
-            courseDateText += "\n"+ stringBuilder.toString().substring(0, stringBuilder.length() - 2);
-        }
-        dateTextview.setText(courseDateText);
-        _LayoutAllEvents.addView(dateTextview);
+        dateAndRoomTextView.setText(eventDateAndRoomText);
+        _LayoutAllEvents.addView(dateAndRoomTextView);
     }
 
 

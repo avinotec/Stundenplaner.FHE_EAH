@@ -64,7 +64,7 @@ public class TimeTableStudyGroupVo implements Parcelable {
         //mNumber not available when fetched for MyTimeTable
         if(mNumber == null){
             String[] splitString = mTitle.split("\\.");
-            mNumber = splitString[splitString.length-1];
+            mNumber = splitString[splitString.length-1].replaceAll("\\D", "");
         }
         return mNumber;
     }

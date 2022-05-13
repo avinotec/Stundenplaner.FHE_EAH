@@ -29,6 +29,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import de.fhe.fhemobile.utils.timetable.TimeTableUtils;
@@ -42,7 +43,7 @@ import de.fhe.fhemobile.vos.timetable.TimeTableLocationVo;
  */
 public class MyTimeTableEventVo implements Parcelable{
 
-    final static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+    final static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm a", Locale.getDefault());
 
     public MyTimeTableEventVo() {
     }
@@ -81,6 +82,13 @@ public class MyTimeTableEventVo implements Parcelable{
         this.mEndDateTime = in.readLong();
         in.readList(mLecturerList , LecturerVo.class.getClassLoader());
         in.readList(mLocationList, TimeTableLocationVo.class.getClassLoader());
+
+        //remove null objects
+        for(TimeTableLocationVo location : mLocationList){
+            if(location.getName() == null){
+                mLocationList.remove(location);
+            }
+        }
     }
 
 
@@ -110,12 +118,12 @@ public class MyTimeTableEventVo implements Parcelable{
         return mEndDateTime * 1000;
     }
 
-    public String getStartTime(){
+    public String getStartTimeString(){
         //multiply by 1000 to convert from seconds to milliseconds
         return sdf.format(new Date(mStartDateTime * 1000));
     }
 
-    public String getEndTime() {
+    public String getEndTimeString() {
         //multiply by 1000 to convert from seconds to milliseconds
         return sdf.format(new Date((mEndDateTime * 1000)));
     }
@@ -125,17 +133,14 @@ public class MyTimeTableEventVo implements Parcelable{
     }
 
     public String getLocationListAsString(){
-        StringBuilder stringBuilder = null;
-        for(TimeTableLocationVo room : mLocationList){
+        StringBuilder stringBuilder = new StringBuilder();
 
-            if(stringBuilder == null){
-                stringBuilder = new StringBuilder();
-            }else{
-                stringBuilder.append(", ");
-            }
-            stringBuilder.append(room.getName());
+        if(mLocationList.size() == 0) return "";
+
+        for(TimeTableLocationVo room : mLocationList){
+            stringBuilder.append(room.getName() + ", ");
         }
-        return stringBuilder != null ? stringBuilder.toString() : "";
+        return stringBuilder.substring(0, stringBuilder.length() - 2);
     }
 
     public String getWeekDayName(){

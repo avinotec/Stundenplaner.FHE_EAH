@@ -119,36 +119,36 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 		final TextView weekdayHeader = (TextView) convertView.findViewById(R.id.itemHeader);
 		if(position == 0 || new TimeIgnoringDateComparator()
 				.compare(new Date(currentItem.getStartDateTime()),
-						new Date(mItems.get(position - 1).getStartDateTime())) == 0){
+						new Date(mItems.get(position - 1).getStartDateTime())) != 0){
 
 			String weekDay = currentItem.getWeekDayName();
 			final Date df = new Date(currentItem.getStartDateTime());
 			//if necessary, add "today" in brackets to mark today's day
-			if(sdf.format(df).compareTo(sdf.format(new Date())) == 0){
+			if(new TimeIgnoringDateComparator().compare(df, new Date()) == 0){
 				weekDay = "(" + Main.getAppContext().getString(R.string.today) + ") "+currentItem.getWeekDayName(); //$NON-NLS
 			}
 			weekDay += ", " + new SimpleDateFormat("dd.MM.yy",
 					Locale.getDefault()).format(new Date(currentItem.getStartDateTime()));
 			weekdayHeader.setText(weekDay);
 			weekdayHeader.setVisibility(View.VISIBLE);
-		}
-		else{
+
+		} else{
 			weekdayHeader.setVisibility(View.GONE);
 		}
 
 
 		//set texts: title, time, room, lecturer
-		final TextView courseTitle = (TextView) convertView.findViewById(R.id.tv_mytimetable_calendar_eventtitle);
-		courseTitle.setText(currentItem.getTitle());
+		final TextView eventTitle = (TextView) convertView.findViewById(R.id.tv_mytimetable_calendar_eventtitle);
+		eventTitle.setText(currentItem.getTitle());
 
-		final TextView courseTime = (TextView) convertView.findViewById(R.id.tv_mytimetable_calendar_eventtime);
-		courseTime.setText(currentItem.getStartTime() + " – " + currentItem.getEndTime()); // $NON-NLS
+		final TextView eventTime = (TextView) convertView.findViewById(R.id.tv_mytimetable_calendar_eventtime);
+		eventTime.setText(currentItem.getStartTimeString() + " – " + currentItem.getEndTimeString()); // $NON-NLS
 
-		final TextView courseRoom = (TextView)convertView.findViewById(R.id.tv_mytimetable_calendar_room);
-		courseRoom.setText(currentItem.getLocationListAsString());
+		final TextView eventLocation = (TextView) convertView.findViewById(R.id.tv_mytimetable_calendar_room);
+		eventLocation.setText(currentItem.getLocationListAsString());
 
-		final TextView courseLecturer = (TextView)convertView.findViewById(R.id.tv_mytimetable_calendar_lecturer);
-		courseLecturer.setText(currentItem.getLecturerListAsString());
+		final TextView eventLecturer = (TextView) convertView.findViewById(R.id.tv_mytimetable_calendar_lecturer);
+		eventLecturer.setText(currentItem.getLecturerListAsString());
 
 
 		return convertView;

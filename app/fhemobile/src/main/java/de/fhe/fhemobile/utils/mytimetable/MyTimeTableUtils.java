@@ -41,7 +41,7 @@ public class MyTimeTableUtils {
      * @return
      */
     public static String getEventSeriesBaseTitle(String title){
-        return title.substring(0, title.length() - 2);
+        return title.replaceAll("\\d\\d$","");
     }
 
     /**
@@ -93,7 +93,7 @@ public class MyTimeTableUtils {
                 MyTimeTableEventVo eventToAdd = new MyTimeTableEventVo(
                         eventSet.getTitle(),
                         eventDate.getStartDateTimeInSec(),
-                        eventDate.getStartDateTimeInSec(),
+                        eventDate.getEndDateTimeInSec(),
                         eventSet.getLecturerList(),
                         eventSet.getLocationList());
 
