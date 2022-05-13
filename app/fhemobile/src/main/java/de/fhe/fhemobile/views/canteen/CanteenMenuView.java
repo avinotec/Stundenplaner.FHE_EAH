@@ -48,7 +48,7 @@ import de.fhe.fhemobile.widgets.stickyHeaderList.IRowItem;
  */
 public class CanteenMenuView extends LinearLayout {
 
-    final private String TAG = CanteenMenuView.class.getSimpleName();
+    final private static String TAG = CanteenMenuView.class.getSimpleName();
 
     public interface ViewListener {
     }
