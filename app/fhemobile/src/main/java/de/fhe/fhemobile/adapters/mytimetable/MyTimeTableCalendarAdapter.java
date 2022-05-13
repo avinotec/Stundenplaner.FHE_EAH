@@ -191,10 +191,10 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 					}
 
 				}
-			} catch (ParseException e) {
+			} catch (final ParseException e) {
 				Log.e(TAG, "error getting position of first event today", e);
 			}
-			catch (NullPointerException e) {
+			catch (final NullPointerException e) {
 				Log.e(TAG, "Invalid Date format", e);
 			}
 		}

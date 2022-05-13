@@ -35,7 +35,6 @@ import org.junit.Assert;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import de.fhe.fhemobile.Main;
@@ -43,17 +42,12 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableDialogAdapter;
 import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
 import de.fhe.fhemobile.network.NetworkHandler;
-import de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableDialogView;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableDayVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableDialogResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -264,7 +258,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         }
     };
 
-    private void showErrorToast() {
+    private static void showErrorToast() {
         Toast.makeText(Main.getAppContext(), "Cannot establish connection!",
                 Toast.LENGTH_LONG).show();
     }

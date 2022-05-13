@@ -18,21 +18,17 @@
 package de.fhe.fhemobile.fragments.canteen;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 
 import org.junit.Assert;
 
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.models.canteen.CanteenModel;
-import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.views.canteen.CanteenMenuView;
 
 /**
@@ -40,7 +36,7 @@ import de.fhe.fhemobile.views.canteen.CanteenMenuView;
  */
 public class CanteenMenuFragment extends FeatureFragment {
 
-    private final String TAG = CanteenMenuFragment.class.getSimpleName();
+    private final static String TAG = CanteenMenuFragment.class.getSimpleName();
 
     public static final String PARAM_CANTEEN_ID = "paramCanteenId"; //$NON-NLS
 

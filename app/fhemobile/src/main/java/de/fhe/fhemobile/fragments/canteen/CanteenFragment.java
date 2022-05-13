@@ -28,17 +28,12 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 
-import java.util.ArrayList;
-
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.SettingsActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.network.NetworkHandler;
-import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.utils.feature.Features;
 import de.fhe.fhemobile.views.canteen.CanteenView;
-import de.fhe.fhemobile.vos.canteen.CanteenVo;
 
 /**
  * Created by Nadja - 05.05.022

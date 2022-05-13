@@ -21,12 +21,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.CheckedTextView;
-import android.widget.TextView;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.vos.canteen.CanteenVo;
 
 /**

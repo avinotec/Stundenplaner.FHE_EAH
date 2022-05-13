@@ -19,13 +19,11 @@ package de.fhe.fhemobile.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.canteen.CanteenSettingsFragment;
-import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableOverviewFragment;
 import de.fhe.fhemobile.fragments.news.NewsCategoriesFragment;
 import de.fhe.fhemobile.utils.feature.Features;
 
@@ -89,8 +87,8 @@ public class SettingsActivity extends BaseActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
+//    @Override
+//    public boolean onOptionsItemSelected(final MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -99,8 +97,8 @@ public class SettingsActivity extends BaseActivity {
 //            return true;
 //        }
 
-        return super.onOptionsItemSelected(item);
-    }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void onBackPressed() {

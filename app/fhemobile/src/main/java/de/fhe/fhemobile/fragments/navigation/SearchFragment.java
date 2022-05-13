@@ -30,7 +30,7 @@ import de.fhe.fhemobile.vos.navigation.RoomVo;
  */
 public abstract class SearchFragment extends FeatureFragment {
 
-    public static String TAG = "SearchFragment"; //$NON-NLS
+    public final static String TAG = "SearchFragment"; //$NON-NLS
 
     private final String PREFS_NAVIGATION;
 
@@ -179,7 +179,7 @@ public abstract class SearchFragment extends FeatureFragment {
         }
     }
 
-    private RoomVo validateAndGetRoom(String inputRoom) {
+    private static RoomVo validateAndGetRoom(String inputRoom) {
         RoomVo roomFound = null;
 
         //a room number has been entered

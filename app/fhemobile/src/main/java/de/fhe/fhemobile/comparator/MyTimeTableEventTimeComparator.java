@@ -1,14 +1,8 @@
 package de.fhe.fhemobile.comparator;
 
-import android.util.Log;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Comparator;
-import java.util.Date;
 
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventTimeVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
 public class MyTimeTableEventTimeComparator implements Comparator<MyTimeTableEventTimeVo> {
 

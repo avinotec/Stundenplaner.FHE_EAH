@@ -54,10 +54,10 @@ public class PersonSearchFragment extends SearchFragment {
         super(PREFS_NAVIGATION_PERSON_CHOICE);
     }
 
-    @Override
-    public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+//    @Override
+//    public void onCreate(final Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//    }
 
     /**
      * Method is called within super.onCreateView()
@@ -84,7 +84,7 @@ public class PersonSearchFragment extends SearchFragment {
      */
     @Override
     protected void initializePickersFromSharedPreferences(String previousChoice) {
-        if(!"".equals(previousChoice)){
+        if(previousChoice == null || !previousChoice.isEmpty()){
             final PersonVo chosenPerson = persons.get(previousChoice);
             if(chosenPerson != null){
                 final String chosenPersonsRoom = chosenPerson.getRoom();

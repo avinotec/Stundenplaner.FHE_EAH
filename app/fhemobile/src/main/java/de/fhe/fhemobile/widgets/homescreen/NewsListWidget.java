@@ -65,7 +65,7 @@ public class NewsListWidget extends AppWidgetProvider {
         // Enter relevant functionality for when the last widget is disabled
     }
 
-    private RemoteViews updateWidgetListView(final Context context, final int appWidgetId) {
+    private static RemoteViews updateWidgetListView(final Context context, final int appWidgetId) {
 
         //which layout to show on widget
         final RemoteViews remoteViews = new RemoteViews(
@@ -136,7 +136,7 @@ public class NewsListWidget extends AppWidgetProvider {
         }
     }
 
-    private void fetchData(final Context _Context, final int _AppWidgetId) {
+    private static void fetchData(final Context _Context, final int _AppWidgetId) {
         final Intent serviceIntent = new Intent(_Context, NewsListRemoteFetchService.class);
         serviceIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, _AppWidgetId);
         _Context.startService(serviceIntent);

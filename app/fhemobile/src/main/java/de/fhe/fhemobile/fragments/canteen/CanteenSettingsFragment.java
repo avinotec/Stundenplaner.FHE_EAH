@@ -30,7 +30,6 @@ import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.views.canteen.CanteenSettingsView;
-import de.fhe.fhemobile.vos.canteen.CanteenVo;
 
 
 public class CanteenSettingsFragment extends FeatureFragment {

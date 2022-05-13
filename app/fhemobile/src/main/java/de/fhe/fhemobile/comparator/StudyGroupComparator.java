@@ -20,7 +20,6 @@ package de.fhe.fhemobile.comparator;
 import java.util.Comparator;
 
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
 
 /**
  * Comparator for comparing study groups by number

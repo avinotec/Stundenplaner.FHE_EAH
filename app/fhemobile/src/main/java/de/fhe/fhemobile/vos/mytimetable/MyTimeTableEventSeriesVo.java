@@ -17,8 +17,6 @@
 package de.fhe.fhemobile.vos.mytimetable;
 
 import static de.fhe.fhemobile.Main.getSubscribedEventSeries;
-import static de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils.getEventSeriesName;
-import static de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils.getCourseName;
 
 import android.os.Parcel;
 import android.os.Parcelable;

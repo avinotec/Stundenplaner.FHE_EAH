@@ -84,7 +84,7 @@ public class TimeTableEventItem implements IBaseItem {
         return _convertView;
     }
 
-    private class ViewHolder {
+    private static class ViewHolder {
         TextView mTime;
         TextView mTitle;
         TextView mRoom;

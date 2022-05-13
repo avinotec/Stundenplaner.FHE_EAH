@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import de.fhe.fhemobile.fragments.navigation.NavigationFragment;
 import de.fhe.fhemobile.utils.navigation.AStar;
 import de.fhe.fhemobile.utils.navigation.JSONHandler;
 import de.fhe.fhemobile.utils.navigation.BuildingFloorKey;

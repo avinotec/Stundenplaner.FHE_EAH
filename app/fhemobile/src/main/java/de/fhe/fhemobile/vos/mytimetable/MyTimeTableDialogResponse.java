@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
-
 /**
  * Created by Nadja - 05/2022
  */
