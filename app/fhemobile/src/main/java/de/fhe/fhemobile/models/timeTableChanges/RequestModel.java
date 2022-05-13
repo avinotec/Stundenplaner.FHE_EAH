@@ -62,16 +62,14 @@ public class RequestModel {
 	}
 
 	class Module {
-		public Module(final String setID, final String moduleTitle){
+		Module(final String setID, final String moduleTitle){
 			this.setID=setID;
 			this.moduleTitle=moduleTitle;
 		}
 		@SerializedName("set_title")
-		final
-		String setID;
+		final String setID;
 		@SerializedName("module_title")
-		final
-		String moduleTitle;
+		final String moduleTitle;
 	}
 
 

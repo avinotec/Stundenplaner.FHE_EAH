@@ -30,7 +30,7 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import java.util.Random;
+import java.security.SecureRandom;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.utils.Define;
@@ -75,7 +75,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 				.setContentTitle(title)
 				.setContentText(body)
 				.setContentInfo("Info");
-		notificationManager.notify(new Random().nextInt(),notificationBuilder.build());
+		notificationManager.notify(new SecureRandom().nextInt(),notificationBuilder.build());
 
 
 	}

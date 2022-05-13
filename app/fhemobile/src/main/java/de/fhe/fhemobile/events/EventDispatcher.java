@@ -83,8 +83,8 @@ public class EventDispatcher implements Dispatcher {
 			list = listenerMap.get(type);
 		}
 		if (list == null) return;
-		for (final EventListener l : list) {
-			l.onEvent(event);
+		for (final EventListener listener : list) {
+			listener.onEvent(event);
 		}
 	}
 	
