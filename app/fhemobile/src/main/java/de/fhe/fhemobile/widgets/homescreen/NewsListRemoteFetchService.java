@@ -77,14 +77,15 @@ public class NewsListRemoteFetchService extends Service {
     }
 
     public static NewsItemVo[] getNewsItems(final int _AppWidgetId) {
-        NewsItemVo[] result;
 
         if (mNewsData == null) {
             mNewsData = new SparseArray<>();
         }
 
-        result = mNewsData.get(_AppWidgetId);
+        // returns null, if nothing is found
+        NewsItemVo[] result = mNewsData.get(_AppWidgetId);
 
+        // so we fake an empty object
         if (result == null) {
             result = new NewsItemVo[]{};
         }
