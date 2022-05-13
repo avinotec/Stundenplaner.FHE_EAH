@@ -63,10 +63,10 @@ public class FloatLabelLayout extends LinearLayout {
 
     private static final long ANIMATION_DURATION = 150;
 
-    private static final float DEFAULT_LABEL_PADDING_LEFT = 3f;
-    private static final float DEFAULT_LABEL_PADDING_TOP = 4f;
-    private static final float DEFAULT_LABEL_PADDING_RIGHT = 3f;
-    private static final float DEFAULT_LABEL_PADDING_BOTTOM = 4f;
+    private static final float DEFAULT_LABEL_PADDING_LEFT = 3.00f;
+    private static final float DEFAULT_LABEL_PADDING_TOP = 4.0f;
+    private static final float DEFAULT_LABEL_PADDING_RIGHT = 3.0f;
+    private static final float DEFAULT_LABEL_PADDING_BOTTOM = 4.0f;
 
     private EditText mEditText;
     private final TextView mLabel;
@@ -107,8 +107,8 @@ public class FloatLabelLayout extends LinearLayout {
         mLabel.setPadding(leftPadding, topPadding, rightPadding, bottomPadding);
         mLabel.setVisibility(INVISIBLE);
         mLabel.setText(mHint);
-        ViewCompat.setPivotX(mLabel, 0f);
-        ViewCompat.setPivotY(mLabel, 0f);
+        ViewCompat.setPivotX(mLabel, 0.0f);
+        ViewCompat.setPivotY(mLabel, 0.0f);
 
         mLabel.setTextAppearance(context,
                 a.getResourceId(R.styleable.FloatLabelLayout_floatLabelTextAppearance,
@@ -221,9 +221,9 @@ public class FloatLabelLayout extends LinearLayout {
             ViewCompat.setScaleY(mLabel, scale);
 
             ViewCompat.animate(mLabel)
-                    .translationY(0f)
-                    .scaleY(1f)
-                    .scaleX(1f)
+                    .translationY(0.0f)
+                    .scaleY(1.0f)
+                    .scaleX(1.0f)
                     .setDuration(ANIMATION_DURATION)
                     .setListener(null)
                     .setInterpolator(mInterpolator).start();
@@ -240,9 +240,9 @@ public class FloatLabelLayout extends LinearLayout {
     private void hideLabel(final boolean animate) {
         if (animate) {
             final float scale = mEditText.getTextSize() / mLabel.getTextSize();
-            ViewCompat.setScaleX(mLabel, 1f);
-            ViewCompat.setScaleY(mLabel, 1f);
-            ViewCompat.setTranslationY(mLabel, 0f);
+            ViewCompat.setScaleX(mLabel, 1.0f);
+            ViewCompat.setScaleY(mLabel, 1.0f);
+            ViewCompat.setTranslationY(mLabel, 0.0f);
 
             ViewCompat.animate(mLabel)
                     .translationY(mLabel.getHeight())

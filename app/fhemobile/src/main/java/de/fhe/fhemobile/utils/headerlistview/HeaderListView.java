@@ -105,7 +105,7 @@ public class HeaderListView extends RelativeLayout {
         private int            prevH;
         private View           previous;
         private View           next;
-        private final AlphaAnimation fadeOut                  = new AlphaAnimation(1f, 0f);
+        private final AlphaAnimation fadeOut                  = new AlphaAnimation(1.0f, 0.0f);
         private boolean        noHeaderUpToHeader       = false;
         private boolean        didScroll = false;
 

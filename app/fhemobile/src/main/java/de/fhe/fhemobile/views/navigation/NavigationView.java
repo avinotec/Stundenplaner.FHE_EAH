@@ -68,7 +68,7 @@ public class NavigationView extends LinearLayout {
 
         //set size of a floor plan cell
         final int displayWidth = getResources().getDisplayMetrics().widthPixels;
-        cellHeight = cellWidth = (double) displayWidth / (double) cellgrid_width;
+        cellHeight = cellWidth = displayWidth / (double) cellgrid_width;
 
         //set listeners for buttons navigating between the floorplans
         mButtonPrevPlan.setOnClickListener(new OnClickListener() {
@@ -129,7 +129,7 @@ public class NavigationView extends LinearLayout {
         final int floorPlanImageHeight = image.getIntrinsicHeight();
         //Dreisatz: imageheight_new / cellheight = intrinsicHeight / cellheight_original
         //      cellHeight_original = intrinsicHeight / cellgridHeight
-        layoutParams.height = (int) Math.round(floorPlanImageHeight * cellHeight / (floorPlanImageHeight/cellgrid_height)) ;
+        layoutParams.height = (int) Math.round(floorPlanImageHeight * cellHeight / (floorPlanImageHeight/(float)cellgrid_height)) ;
         mFloorPlanImageView.setLayoutParams(layoutParams);
 
         //TODO: find solution that also works when rotating the device
@@ -387,5 +387,5 @@ public class NavigationView extends LinearLayout {
     private double cellWidth;
     private double cellHeight;
 
-    private final String TAG = "NavigationView"; //$NON-NLS
+    private final static String TAG = "NavigationView"; //$NON-NLS
 }
