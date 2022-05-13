@@ -115,7 +115,7 @@ public class RoomSearchFragment extends SearchFragment {
      */
     @Override
     protected void initializePickersFromSharedPreferences(String previousChoice) {
-        if(!"".equals(previousChoice)){
+        if(previousChoice == null || !previousChoice.isEmpty()){
             for (final RoomVo room : NavigationFragment.rooms){
                 if(previousChoice.equals(room.getRoomName())){
                     mDestBuilding = room.getBuilding();

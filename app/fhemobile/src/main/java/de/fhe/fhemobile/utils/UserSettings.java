@@ -66,7 +66,7 @@ public class UserSettings {
         //Canteen
         final String json = mSP.getString(Define.Canteen.PREF_SELECTED_CANTEENS,"");
         //skip if json is empty
-        if ( !"".equals(json) && !"null".equals(json)) {
+        if ( (json == null || !json.isEmpty()) && !"null".equals(json)) {
             final Gson gson = new Gson();
             Type listType = new TypeToken<ArrayList<CanteenVo>>(){}.getType();
             mSelectedCanteens = gson.fromJson(json, listType);

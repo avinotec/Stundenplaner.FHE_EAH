@@ -83,7 +83,7 @@ public class Main extends Application {
         final String json = sharedPreferences.getString(Define.MyTimeTable.PREF_SUBSCRIBED_COURSES,"");
 
         // falls die Liste leer sein sollte, überspringen
-        if ( !"".equals(json) && !"null".equals(json)) {
+        if ( (json == null || !json.isEmpty()) && !"null".equals(json)) {
             final Gson gson = new Gson();
             Type listType = new TypeToken<ArrayList<MyTimeTableEventSeriesVo>>(){}.getType();
             subscribedEventSeries = gson.fromJson(json, listType);
