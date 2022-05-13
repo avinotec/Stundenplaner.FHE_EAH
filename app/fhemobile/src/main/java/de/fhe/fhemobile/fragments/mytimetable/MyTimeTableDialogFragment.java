@@ -224,7 +224,17 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
                 mStudyProgramDataResponse = response.body();
 
-                mView.setStudyProgramItems(mStudyProgramDataResponse.getStudyProgramsAsList());
+                ArrayList<TimeTableStudyProgramVo> studyPrograms = new ArrayList<>();
+                //remove "Brückenkurse" and only keep bachelor and master study programs
+                for(TimeTableStudyProgramVo studyProgramVo : response.body().getStudyProgramsAsList()){
+
+                    if(studyProgramVo.getDegree().equals("Bachelor")
+                            || studyProgramVo.getDegree().equals("Master")){
+                        studyPrograms.add(studyProgramVo);
+                    }
+                }
+
+                mView.setStudyProgramItems(studyPrograms);
                 mView.toggleProgressIndicatorVisibility(false);
             }
         }
