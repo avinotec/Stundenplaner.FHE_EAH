@@ -20,6 +20,8 @@ package de.fhe.fhemobile.fragments.mytimetable;
 
 import static android.content.ContentValues.TAG;
 
+import static de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils.groupByEventTitle;
+
 import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +37,7 @@ import org.junit.Assert;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import de.fhe.fhemobile.Main;
@@ -45,6 +48,7 @@ import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableDialogView;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableDialogResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
@@ -220,7 +224,17 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
                 mStudyProgramDataResponse = response.body();
 
-                mView.setStudyProgramItems(mStudyProgramDataResponse.getStudyProgramsAsList());
+                ArrayList<TimeTableStudyProgramVo> studyPrograms = new ArrayList<>();
+                //remove "Brückenkurse" and only keep bachelor and master study programs
+                for(TimeTableStudyProgramVo studyProgramVo : response.body().getStudyProgramsAsList()){
+
+                    if(studyProgramVo.getDegree().equals("Bachelor")
+                            || studyProgramVo.getDegree().equals("Master")){
+                        studyPrograms.add(studyProgramVo);
+                    }
+                }
+
+                mView.setStudyProgramItems(studyPrograms);
                 mView.toggleProgressIndicatorVisibility(false);
             }
         }
@@ -234,12 +248,12 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
 
 
-    private final Callback<Map<String, MyTimeTableEventSeriesVo>> mFetchSemesterTimeTableCallback = new Callback<Map<String, MyTimeTableEventSeriesVo>>() {
+    private final Callback<Map<String, MyTimeTableEventSetVo>> mFetchSemesterTimeTableCallback = new Callback<Map<String, MyTimeTableEventSetVo>>() {
         @Override
-        public void onResponse(Call<Map<String, MyTimeTableEventSeriesVo>> call, Response<Map<String, MyTimeTableEventSeriesVo>> response) {
+        public void onResponse(Call<Map<String, MyTimeTableEventSetVo>> call, Response<Map<String, MyTimeTableEventSetVo>> response) {
             if(response.body() != null){
 
-                ArrayList<MyTimeTableEventSeriesVo> eventSeriesVos = new ArrayList<>(response.body().values());
+                List<MyTimeTableEventSeriesVo> eventSeriesVos = groupByEventTitle(response.body());
 
                 Collections.sort(eventSeriesVos, new EventSeriesTitleComparator());
 
@@ -252,13 +266,13 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         }
 
         @Override
-        public void onFailure(Call<Map<String, MyTimeTableEventSeriesVo>> call, Throwable t) {
+        public void onFailure(Call<Map<String, MyTimeTableEventSetVo>> call, Throwable t) {
             showErrorToast();
             Log.d(TAG, "failure: request " + call.request().url());
         }
     };
 
-    private static void showErrorToast() {
+    private void showErrorToast() {
         Toast.makeText(Main.getAppContext(), "Cannot establish connection!",
                 Toast.LENGTH_LONG).show();
     }

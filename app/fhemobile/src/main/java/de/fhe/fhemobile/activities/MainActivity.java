@@ -72,6 +72,7 @@ import de.fhe.fhemobile.utils.feature.FeatureFragmentFactory;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -239,11 +240,11 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 //                    for(final ResponseModel.Change change : changes){
 //
 //                        // Shortcut to the list
-//                        final List<MyTimeTableEventSeriesVo> myTimetableList = subscribedEventSeries;
+//                        final List<MyTimeTableEventSetVo> myTimetableList = subscribedEventSeries;
 //
 //                        //Aenderung einer Veranstaltung: suche das Event (= einzelne Veranstaltung) und ueberschreibe ihre Daten
 //                        if(change.getChangesReason() == CHANGEREASON_EDIT) {
-//                            final MyTimeTableEventSeriesVo event = MyTimeTableUtils.getEventByID(
+//                            final MyTimeTableEventSetVo event = MyTimeTableUtils.getEventByID(
 //                                    myTimetableList, change.getNewEventJson().getId());
 //                            if(event != null){
 //
@@ -251,10 +252,10 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 //                            }
 //                        }
 //                        //Hinzufuegen einer neuen veranstaltung:
-//                        // Erstelle ein neues Element vom Typ MyTimeTableEventSeriesVo, schreibe alle Set-, Semester- und Studiengangdaten in diesen
+//                        // Erstelle ein neues Element vom Typ MyTimeTableEventSetVo, schreibe alle Set-, Semester- und Studiengangdaten in diesen
 //                        //und fuege dann die Eventdaten des neuen Events hinzu. Anschliessend in die Liste hinzufuegen.
 //                        if(change.getChangesReason() == CHANGEREASON_NEW) {
-//                            final MyTimeTableEventSeriesVo event =
+//                            final MyTimeTableEventSetVo event =
 //                                    MyTimeTableUtils.getCoursesByStudyGroupTitle(
 //                                            myTimetableList, change.getSetSplusKey()).get(0).copy();
 //                            //todo: auskommentiert im Zuge von Umbauarbeiten
@@ -266,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 //                        }
 //                        //Loeschen einer Veranstaltung: Suche die Veranstaltung mit der SplusID und lösche sie aus der Liste.
 //                        if(change.getChangesReason() == CHANGEREASON_DELETE){
-//                            final MyTimeTableEventSeriesVo event = MyTimeTableUtils.getEventByID(
+//                            final MyTimeTableEventSetVo event = MyTimeTableUtils.getEventByID(
 //                                    myTimetableList, change.getNewEventJson().getId());
 //
 //                            //todo: bad static use to update MyTimeTableCalendar

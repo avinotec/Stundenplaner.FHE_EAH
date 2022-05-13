@@ -1,0 +1,158 @@
+/*
+ *  Copyright (c) 2014-2019 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+package de.fhe.fhemobile.vos.mytimetable;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import de.fhe.fhemobile.comparator.MyTimeTableEventTimeComparator;
+import de.fhe.fhemobile.comparator.StudyGroupComparator;
+import de.fhe.fhemobile.vos.timetable.LecturerVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableLocationVo;
+import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
+
+
+/**
+ * Class stores information of a set of grouped events.
+ *
+ * Use this class to parse the API response
+ * and construct {@link MyTimeTableEventSetVo}s from grouped {@link MyTimeTableEventSetVo}s.
+ *
+ * by Nadja - 05/2022
+ */
+public class MyTimeTableEventSetVo implements Parcelable {
+
+	private static final String TAG = MyTimeTableEventSetVo.class.getSimpleName();
+
+	public MyTimeTableEventSetVo(){
+		//empty constructor needed
+	}
+
+
+	public final String getId() {
+		return mId;
+	}
+
+	public String getTitle() { return mTitle; }
+
+	public void setTitle(String title) { this.mTitle = title; }
+
+	public List<MyTimeTableEventDateVo> getEventDates() { return new ArrayList<>(mEventDates.values()); }
+
+	public void setEvents(Map<String, MyTimeTableEventDateVo> events) { this.mEventDates = events; }
+
+	public List<TimeTableStudyGroupVo> getStudyGroups() { return new ArrayList<>(mStudyGroups.values()); }
+
+	public List<LecturerVo> getLecturerList() { return new ArrayList<>(mLecturerMap.values());	}
+
+	public List<TimeTableLocationVo> getLocationList() { return new ArrayList<>(mLocationMap.values()); }
+
+	public Map<String, TimeTableLocationVo> getLocationMap() {
+		return mLocationMap;
+	}
+
+	public MyTimeTableEventDateVo getFirstEvent() {
+		List<MyTimeTableEventDateVo> eventTimes = new ArrayList<>(mEventDates.values());
+		Collections.sort(eventTimes, new MyTimeTableEventTimeComparator());
+		return mEventDates.size() > 0 ? eventTimes.get(0) : null;
+	}
+
+
+	/**
+	 * Adds all names of the study groups list to one long string
+	 * @return study group list as string
+	 */
+	public String getStudyGroupListString(){
+
+		List<TimeTableStudyGroupVo> studyGroups = new ArrayList<>(mStudyGroups.values());
+		Collections.sort(studyGroups, new StudyGroupComparator());
+		StringBuilder combinedStudyGroups = new StringBuilder();
+
+		if(mStudyGroups.size() > 0) {
+			for (TimeTableStudyGroupVo studyGroup : studyGroups) {
+				combinedStudyGroups.append(studyGroup.getNumber()).append(", ");
+			}
+			return combinedStudyGroups.substring(0, combinedStudyGroups.length() - 2);
+
+		} else {
+			return "";
+		}
+	}
+
+	// PARCELABLE --------------------------------------------------------------------------------
+
+	private MyTimeTableEventSetVo(final Parcel in) {
+		mTitle = in.readString();
+		in.readMap(mStudyGroups, TimeTableStudyGroupVo.class.getClassLoader());
+		in.readMap(mEventDates, MyTimeTableEventDateVo.class.getClassLoader());
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(final Parcel dest, final int flags) {
+		dest.writeString(mTitle);
+		dest.writeMap(mStudyGroups);
+		dest.writeMap(mEventDates);
+
+	}
+
+	public static final Creator<MyTimeTableEventSetVo> CREATOR = new Creator<MyTimeTableEventSetVo>() {
+		@Override
+		public MyTimeTableEventSetVo createFromParcel(Parcel in) {
+			return new MyTimeTableEventSetVo(in);
+		}
+
+		@Override
+		public MyTimeTableEventSetVo[] newArray(int size) {
+			return new MyTimeTableEventSetVo[size];
+		}
+	};
+
+
+	@SerializedName("activityId")
+	private String mId;
+
+	@SerializedName("activityName")
+	private String mTitle;
+
+	@SerializedName("dataStudentset")
+	private Map<String, TimeTableStudyGroupVo> mStudyGroups = new HashMap<>();
+
+	@SerializedName("dataStaff")
+	private Map<String, LecturerVo> mLecturerMap;
+
+	@SerializedName("dataLocation")
+	private Map<String, TimeTableLocationVo> mLocationMap;
+
+	@SerializedName("dataDatetime")
+	private Map<String, MyTimeTableEventDateVo> mEventDates = new HashMap<>();
+
+
+}
+

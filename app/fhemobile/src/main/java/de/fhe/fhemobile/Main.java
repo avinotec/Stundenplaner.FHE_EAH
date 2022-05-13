@@ -35,12 +35,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
-import de.fhe.fhemobile.comparator.TimeTableEventComparator;
+import de.fhe.fhemobile.comparator.MyTimeTableEventComparator;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventTimeVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventVo;
 
 
 /**
@@ -110,23 +110,13 @@ public class Main extends Application {
         return subscribedEventSeries;
     }
 
-    public static ArrayList<TimeTableEventVo> getAllSubscribedTimeTableEvents(){
-        ArrayList<TimeTableEventVo> eventList = new ArrayList<>();
+    public static ArrayList<MyTimeTableEventVo> getAllSubscribedTimeTableEvents(){
+        ArrayList<MyTimeTableEventVo> eventList = new ArrayList<>();
 
-        for(MyTimeTableEventSeriesVo eventSeries : subscribedEventSeries){
-            for(MyTimeTableEventTimeVo eventTime : eventSeries.getEvents()){
-
-                TimeTableEventVo eventToAdd = new TimeTableEventVo(
-                        eventSeries.getEventSeriesName(),
-                        eventTime.getStartDateTimeInSec(),
-                        eventTime.getEndDateTimeInSec(),
-                        eventSeries.getLecturerMap(),
-                        eventSeries.getLocationMap());
-
-                eventList.add(eventToAdd);
-            }
+        for(MyTimeTableEventSeriesVo eventSeries : subscribedEventSeries) {
+            eventList.addAll(eventSeries.getEvents());
         }
-        Collections.sort(eventList, new TimeTableEventComparator());
+        Collections.sort(eventList, new MyTimeTableEventComparator());
         return eventList;
     }
 

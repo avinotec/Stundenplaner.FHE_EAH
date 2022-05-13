@@ -42,6 +42,7 @@ import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
 import de.fhe.fhemobile.vos.canteen.CanteenMenuDayVo;
 import de.fhe.fhemobile.vos.canteen.CanteenVo;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
 import de.fhe.fhemobile.vos.news.NewsCategoryResponse;
 import de.fhe.fhemobile.vos.news.NewsItemResponse;
 import de.fhe.fhemobile.vos.news.NewsItemVo;
@@ -394,23 +395,21 @@ public class NetworkHandler {
 	 * @param _Callback
 	 */
 	public void fetchSemesterTimeTable(final String _SemesterId,
-									   final Callback<Map<String, MyTimeTableEventSeriesVo>> _Callback){
+									   final Callback<Map<String, MyTimeTableEventSetVo>> _Callback){
 
 		Assert.assertTrue(mApiEah != null);
 
 		mApiEah.fetchSemesterTimeTable(_SemesterId).enqueue(_Callback);
 	}
-
-
-	public List<MyTimeTableEventSeriesVo> reloadEvents(final MyTimeTableEventSeriesVo event) {
+		//todo: auskommentiert im Zuge von Umbauarbeiten
+	/*public List<MyTimeTableEventSeriesVo> reloadEvents(final MyTimeTableEventSeriesVo event) {
 		Assert.assertTrue( mApiErfurt != null );
 		Assert.assertTrue( event != null );
 
 
-		final List<MyTimeTableEventSeriesVo> eventList = new ArrayList<>();
+		final List<MyTimeTableEventSetVo> eventList = new ArrayList<>();
 
-		//todo: auskommentiert im Zuge von Umbauarbeiten
-		/*try {
+		try {
 
 			final ArrayList<TimeTableWeekVo> timeTable = mApiErfurt.fetchTimeTableEvents(
 					event.getStudyGroup().getTimeTableId()).execute().body();
@@ -420,7 +419,7 @@ public class NetworkHandler {
 				for(final TimeTableDayVo dayEntry : weekEntry.getDays() ){
 					for(final TimeTableEventVo eventEntry : dayEntry.getmEventTimes() ){
 						if(eventEntry.getTitle().equals(event.getEvent().getTitle())){
-							final MyTimeTableEventSeriesVo item = event.copy();
+							final MyTimeTableEventSetVo item = event.copy();
 							item.setEventWeek(weekEntry);
 							item.setEventDay(dayEntry);
 							item.setEvent(eventEntry);
@@ -431,9 +430,9 @@ public class NetworkHandler {
 			}
 		} catch (final IOException e) {
 			Log.e(TAG, "fetchTimeTableEventsSynchron: ",e );
-		}*/
+		}
 		return eventList;
-	}
+	} */
 
 	/**
 	 *

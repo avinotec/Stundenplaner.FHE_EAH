@@ -69,7 +69,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
      * View scrolls to today
      */
     public void jumpToToday(){
-        final int currentDayIndex = MainActivity.myTimeTableCalendarAdapter.getPositionOfFirstCourseToday();
+        final int currentDayIndex = MainActivity.myTimeTableCalendarAdapter.getPositionOfFirstEventToday();
         if(currentDayIndex >= 0){
             mCalendarListView.smoothScrollToPosition(currentDayIndex);
         }

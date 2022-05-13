@@ -16,6 +16,9 @@
  */
 package de.fhe.fhemobile.adapters.mytimetable;
 
+import static de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils.getEventSeriesBaseTitle;
+import static de.fhe.fhemobile.utils.timetable.TimeTableUtils.cutStudyProgramPrefix;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +39,8 @@ import java.util.Locale;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventTimeVo;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableLocationVo;
 
 /**
@@ -130,19 +134,19 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
 
         //click on row of the course (at header, study groups, ...) expands the row of next date and room
         // to a list of all upcoming dates with its rooms
-        convertView.setOnClickListener(new CourseOnClickListener(convertView, currentItem, roomVisible));
+        convertView.setOnClickListener(new EventSeriesOnClickListener(convertView, currentItem, roomVisible));
 
 
         final RelativeLayout headerLayout = convertView.findViewById(R.id.layout_mytimetable_course_header);
-        final TextView courseTitle = (TextView) convertView.findViewById(R.id.tv_mytimetable_coursetitle);
+        final TextView eventSeriesBaseTitle = (TextView) convertView.findViewById(R.id.tv_mytimetable_coursetitle);
 
         //Add a header displaying the event series title
         // if such a header has already been added because of processing another event series with the same base title
         // then do not add header again (set its visibility to GONE)
         if(position == 0 || !mItems.get(position).canBeGroupedForDisplay(mItems.get(position - 1))){
-            courseTitle.setText(currentItem.getTitle());
+            eventSeriesBaseTitle.setText(cutStudyProgramPrefix(getEventSeriesBaseTitle(currentItem.getTitle())));
 
-            courseTitle.setVisibility(View.VISIBLE);
+            eventSeriesBaseTitle.setVisibility(View.VISIBLE);
             headerLayout.setVisibility(View.VISIBLE);
         }
         else{
@@ -152,7 +156,7 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
 
         final Button btnAddCourse = (Button) convertView.findViewById(R.id.btn_mytimetable_add_or_remove_course);
         btnAddCourse.setActivated(currentItem.isSubscribed());
-        btnAddCourse.setOnClickListener(getAddCourseBtnOnClickListener(currentItem, btnAddCourse));
+        btnAddCourse.setOnClickListener(getAddEventSeriesBtnOnClickListener(currentItem, btnAddCourse));
 
         //set study group list text view
         final TextView textStudyGroupList = (TextView) convertView.findViewById(R.id.tv_mytimetable_studygroups);
@@ -164,7 +168,7 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
         if(layoutAllEvents.getChildCount() >= 0){
            layoutAllEvents.removeAllViews();
         }
-        setAndAddEventDataTextViews(currentItem.getFirstEvent(), currentItem.getLocationList(), layoutAllEvents);
+        setAndAddEventDataTextViews(currentItem.getFirstEvent(), layoutAllEvents);
 
         //otherwise it will sometimes be invisible
         convertView.setVisibility(View.VISIBLE);
@@ -175,11 +179,11 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
 
     /**
      * Create OnClickListener for the button to add a course by overriding onClick()
-     * @param currentItem {@link MyTimeTableEventSeriesVo} the button belongs to
+     * @param currentItem {@link MyTimeTableEventSetVo} the button belongs to
      * @param btnAddCourse the button to add a course that is clicked
      * @return an onClickListener for the button to add a course
      */
-    protected abstract View.OnClickListener getAddCourseBtnOnClickListener(
+    protected abstract View.OnClickListener getAddEventSeriesBtnOnClickListener(
             MyTimeTableEventSeriesVo currentItem, Button btnAddCourse);
 
 
@@ -189,14 +193,14 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
      * On click, the view changes between displaying only the first event of the series
      * and displaying all dates
      */
-    private class CourseOnClickListener implements View.OnClickListener{
+    private class EventSeriesOnClickListener implements View.OnClickListener{
 
         final private View convertView;
         final boolean roomVisible;
 
         final private MyTimeTableEventSeriesVo currentEventSeries;
 
-        CourseOnClickListener(final View view, final MyTimeTableEventSeriesVo currentItem, boolean showRoom){
+        EventSeriesOnClickListener(final View view, final MyTimeTableEventSeriesVo currentItem, boolean showRoom){
             convertView = view;
             currentEventSeries = currentItem;
             roomVisible = showRoom;
@@ -209,48 +213,39 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
             final int layoutAllEventsSize = layoutAllEvents.getChildCount();
             layoutAllEvents.removeAllViews();
 
-            List<MyTimeTableEventTimeVo> eventList = new ArrayList<>();
+            List<MyTimeTableEventVo> eventList = new ArrayList<>();
             //if list is expanded then reduce
             if(layoutAllEventsSize > 1) eventList.add(currentEventSeries.getFirstEvent());
             else eventList = currentEventSeries.getEvents();
 
-            for (final MyTimeTableEventTimeVo event : eventList){
-                setAndAddEventDataTextViews(event, currentEventSeries.getLocationList(), layoutAllEvents);
+            for (final MyTimeTableEventVo event : eventList){
+                setAndAddEventDataTextViews(event, layoutAllEvents);
             }
             convertView.invalidate();
             convertView.setVisibility(View.VISIBLE);
         }
     }
 
-    private void setAndAddEventDataTextViews(MyTimeTableEventTimeVo _EventTime,
-                                             List<TimeTableLocationVo> _Rooms,
-                                             LinearLayout layoutAllEvents){
-        final TextView dateTextview = new TextView(mContext);
+    private void setAndAddEventDataTextViews(MyTimeTableEventVo _Event,
+                                             LinearLayout _LayoutAllEvents){
+        final TextView dateAndRoomTextView = new TextView(mContext);
         final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         params.setMargins(0,5,5,10);
-        dateTextview.setLayoutParams(params);
+        dateAndRoomTextView.setLayoutParams(params);
 
-        final Date startDateTime = _EventTime.getStartDateTime();
-        final Date endDateTime =  _EventTime.getEndDateTime();
+        Date startDateTime = new Date(_Event.getStartDateTime());
+        Date endDateTime =  new Date(_Event.getEndDateTime());
         final String date = sdf.format(startDateTime);
         final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(startDateTime);
-        final String startTime = new SimpleDateFormat("h:mm", Locale.getDefault()).format(startDateTime);
-        final String endTime = new SimpleDateFormat("h:mm", Locale.getDefault()).format(endDateTime);
-        String courseDateText = dayOfWeek + ", " + date + "  " + startTime + " – " + endTime;
+        final String startTime = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(startDateTime);
+        final String endTime = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(endDateTime);
+        String eventDateAndRoomText = dayOfWeek + ", " + date + "  " + startTime + " – " + endTime;
 
-
-        StringBuilder stringBuilder = new StringBuilder();
-        for(TimeTableLocationVo room : _Rooms){
-
-            stringBuilder.append(room.getName());
-            // jetzt bleibt (immer noch) ein Komma am Ende übrig
-            stringBuilder.append(", ");
+        if(roomVisible) {
+            eventDateAndRoomText += "\n"+ _Event.getLocationListAsString();
         }
-        if(roomVisible && stringBuilder.length()>0) {
-            courseDateText += "\n"+ stringBuilder;
-        }
-        dateTextview.setText(courseDateText);
-        layoutAllEvents.addView(dateTextview);
+        dateAndRoomTextView.setText(eventDateAndRoomText);
+        _LayoutAllEvents.addView(dateAndRoomTextView);
     }
 
 

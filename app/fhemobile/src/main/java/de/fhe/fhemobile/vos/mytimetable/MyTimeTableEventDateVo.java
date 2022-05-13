@@ -7,9 +7,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-public class MyTimeTableEventTimeVo implements Parcelable{
+public class MyTimeTableEventDateVo implements Parcelable{
 
-    public MyTimeTableEventTimeVo() {
+    public MyTimeTableEventDateVo() {
     }
 
     @Override
@@ -23,19 +23,19 @@ public class MyTimeTableEventTimeVo implements Parcelable{
         dest.writeLong(mEndDateTime);
     }
 
-    private MyTimeTableEventTimeVo(final Parcel in) {
+    private MyTimeTableEventDateVo(final Parcel in) {
         this.mStartDateTime = in.readLong();
         this.mEndDateTime = in.readLong();
     }
 
 
-    public static final Parcelable.Creator<MyTimeTableEventTimeVo> CREATOR = new Parcelable.Creator<MyTimeTableEventTimeVo>() {
-        public MyTimeTableEventTimeVo createFromParcel(final Parcel source) {
-            return new MyTimeTableEventTimeVo(source);
+    public static final Parcelable.Creator<MyTimeTableEventDateVo> CREATOR = new Parcelable.Creator<MyTimeTableEventDateVo>() {
+        public MyTimeTableEventDateVo createFromParcel(final Parcel source) {
+            return new MyTimeTableEventDateVo(source);
         }
 
-        public MyTimeTableEventTimeVo[] newArray(final int size) {
-            return new MyTimeTableEventTimeVo[size];
+        public MyTimeTableEventDateVo[] newArray(final int size) {
+            return new MyTimeTableEventDateVo[size];
         }
     };
 
