@@ -52,6 +52,7 @@ import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -239,27 +240,27 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 					for (final ResponseModel.Change change : changes) {
 
 						// Shortcut to the list
-						final List<MyTimeTableEventSeriesVo> myTimetableList = getSubscribedEventSeries();
+						final List<MyTimeTableEventSetVo> myTimetableList = getSubscribedEventSeries();
 
 						//Aenderung eines Events: suche das Event und ueberschreibe es
 						if (change.getChangesReason() == CHANGEREASON_EDIT) {
-							final MyTimeTableEventSeriesVo event = MyTimeTableUtils.getEventByID(myTimetableList, change.getNewEventJson().getId());
+							final MyTimeTableEventSetVo event = MyTimeTableUtils.getEventByID(myTimetableList, change.getNewEventJson().getId());
 							if (event != null) {
 								//todo: auskommentiert im Zuge von Umbauarbeiten
 								//event.setEvent(change.getNewEventJson());
 							}
 						}
-						//Hinzufuegen eines neuen Events: Erstelle ein neues Element vom Typ MyTimeTableEventSeriesVo, schreibe alle Set-, Semester- und Studiengangdaten in dieses
+						//Hinzufuegen eines neuen Events: Erstelle ein neues Element vom Typ MyTimeTableEventSetVo, schreibe alle Set-, Semester- und Studiengangdaten in dieses
 						//und fuege dann die Eventdaten des neuen Events hinzu. Anschliessend in die Liste hinzufuegen.
 						if (change.getChangesReason() == CHANGEREASON_NEW) {
-							final MyTimeTableEventSeriesVo event = MyTimeTableUtils.getCoursesByStudyGroupTitle(myTimetableList, change.getSetSplusKey()).get(0).copy();
+							final MyTimeTableEventSetVo event = MyTimeTableUtils.getCoursesByStudyGroupTitle(myTimetableList, change.getSetSplusKey()).get(0).copy();
 							event.setEvent(change.getNewEventJson());
 							((MainActivity) getActivity()).addToSubscribedEventSeriesAndUpdateAdapters(event);
 
 						}
 						//Loeschen eines Events: Suche den Event mit der SplusID und lösche ihn aus der Liste.
 						if (change.getChangesReason() == CHANGEREASON_DELETE) {
-							final MyTimeTableEventSeriesVo event = MyTimeTableUtils.getEventByID(myTimetableList, change.getNewEventJson().getId());
+							final MyTimeTableEventSetVo event = MyTimeTableUtils.getEventByID(myTimetableList, change.getNewEventJson().getId());
 							((MainActivity) getActivity()).removeFromSubscribedEventSeriesAndUpdateAdapters(event);
 						}
 					}*/

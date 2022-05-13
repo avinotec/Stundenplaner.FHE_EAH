@@ -17,8 +17,7 @@
 package de.fhe.fhemobile.vos.mytimetable;
 
 import static de.fhe.fhemobile.Main.getSubscribedEventSeries;
-import static de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils.getEventSeriesName;
-import static de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils.getCourseName;
+import static de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils.getEventSeriesBaseTitle;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -28,27 +27,22 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import de.fhe.fhemobile.comparator.MyTimeTableEventTimeComparator;
+import de.fhe.fhemobile.comparator.MyTimeTableEventComparator;
 import de.fhe.fhemobile.comparator.StudyGroupComparator;
-import de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils;
-import de.fhe.fhemobile.vos.timetable.LecturerVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableLocationVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
 
 
 /**
  * Class stores information of an time table event series,
  *
- * An event series is a set of mEventTimes that create a unit
+ * An event series is a set of mEvents that create a unit
  * and are shared by timetables of the study groups specified
  *
  * by Nadja - 01/2022
  */
-public class MyTimeTableEventSeriesVo implements Parcelable {
+public class MyTimeTableEventSeriesVo implements Parcelable{
 
 	private static final String TAG = MyTimeTableEventSeriesVo.class.getSimpleName();
 
@@ -56,62 +50,38 @@ public class MyTimeTableEventSeriesVo implements Parcelable {
 		//empty constructor needed
 	}
 
-//	/**
-//	 * Creates a new instance of {@link MyTimeTableEventSeriesVo}
-//	 * and automatically sets the subscribed status
-//	 * @param event the event to initialize the event list with
-//	 * @param studyGroup the study group the course is dedicated to and that to initialize the study group list with
-//	 */
-//	public MyTimeTableEventSeriesVo(final TimeTableEventVo event, final String studyGroup) {
-//		this.mTitle = getEventSeriesName(event);
-//		this.mTitle = getCourseName(event);
-//		mEventTimes.add(event);
-//		mStudyGroups.add(studyGroup);
-//		checkAndSetSubscribed();
-//	}
-
-
-	public final int getId() {
-		return mId;
+	/**
+	 * Create a new instance of {@link MyTimeTableEventSeriesVo}
+	 * and automatically set the subscribed status
+	 * @param title The title of the event series
+	 * @param studyGroups The studyGroups the events in this {@link MyTimeTableEventSetVo} are registered for
+	 * @param events The events of this event series
+	 */
+	public MyTimeTableEventSeriesVo(final String title,
+									final List<TimeTableStudyGroupVo> studyGroups,
+									final List<MyTimeTableEventVo> events) {
+		this.mTitle = title;
+		this.mStudyGroups = studyGroups;
+		this.mEvents = events;
+		checkAndSetSubscribed();
 	}
+
 
 	public String getTitle() { return mTitle; }
 
 	public void setTitle(String title) { this.mTitle = title; }
 
-	public String getEventSeriesName() {
-		if(mEventSeriesName == null) {
-			mEventSeriesName = MyTimeTableUtils.getEventSeriesName(mTitle);
-		}
-		return mEventSeriesName;
+	public List<MyTimeTableEventVo> getEvents() { return mEvents; }
+
+	public List<TimeTableStudyGroupVo> getStudyGroups() { return mStudyGroups; }
+
+	public void addEvent(MyTimeTableEventVo event) {
+		this.mEvents.add(event);
 	}
 
-	public List<MyTimeTableEventTimeVo> getEvents() { return new ArrayList<>(mEventTimes.values()); }
-
-	public void setEvents(Map<String, MyTimeTableEventTimeVo> events) { this.mEventTimes = events; }
-
-	public List<TimeTableStudyGroupVo> getStudyGroups() { return new ArrayList<>(mStudyGroups.values()); }
-
-	public Map<String, LecturerVo> getLecturerMap() { return mLecturerList; }
-
-	public List<TimeTableLocationVo> getLocationList() { return new ArrayList<>(mLocationList.values()); }
-
-	public Map<String, TimeTableLocationVo> getLocationMap() {
-		return mLocationList;
-	}
-
-	public void addStudyGroup(final TimeTableStudyGroupVo studyGroup) {
-		this.mStudyGroups.put(studyGroup.getStudyGroupId(), studyGroup);
-	}
-
-	public void addEvent(MyTimeTableEventTimeVo eventTime) {
-		this.mEventTimes.put(eventTime.getStartDateTimeAsString(), eventTime);
-	}
-
-	public MyTimeTableEventTimeVo getFirstEvent() {
-		List<MyTimeTableEventTimeVo> eventTimes = new ArrayList<>(mEventTimes.values());
-		Collections.sort(eventTimes, new MyTimeTableEventTimeComparator());
-		return mEventTimes.size() > 0 ? eventTimes.get(0) : null;
+	public MyTimeTableEventVo getFirstEvent() {
+		Collections.sort(mEvents, new MyTimeTableEventComparator());
+		return mEvents.size() > 0 ? mEvents.get(0) : null;
 	}
 
 
@@ -124,13 +94,15 @@ public class MyTimeTableEventSeriesVo implements Parcelable {
 	}
 
 	/**
-	 * Check if two {@link MyTimeTableEventSeriesVo} instances actually belong to the same event series,
-	 * i. e. they only differ in entry number, and thus can be merged
+	 * Check if two {@link MyTimeTableEventSeriesVo} have the same base title,
+	 * i. e. they only differ in group number
 	 * @param other the {@link MyTimeTableEventSeriesVo} to compare to
 	 * @return true if components belong to the same course
 	 */
 	public boolean canBeGroupedForDisplay(final MyTimeTableEventSeriesVo other){
-		return getEventSeriesName().equals(other.getEventSeriesName());
+		String baseTitle = getEventSeriesBaseTitle(mTitle);
+		String otherBaseTitle = getEventSeriesBaseTitle(other.getTitle());
+		return baseTitle.equals(otherBaseTitle);
 	}
 
 	/**
@@ -138,16 +110,14 @@ public class MyTimeTableEventSeriesVo implements Parcelable {
 	 * @return study group list as string
 	 */
 	public String getStudyGroupListString(){
-
-		List<TimeTableStudyGroupVo> studyGroups = new ArrayList<>(mStudyGroups.values());
-		Collections.sort(studyGroups, new StudyGroupComparator());
-		StringBuilder combinedStudyGroups = new StringBuilder();
+		Collections.sort(mStudyGroups, new StudyGroupComparator());
+		StringBuilder studyGroupsString = new StringBuilder();
 
 		if(mStudyGroups.size() > 0) {
-			for (TimeTableStudyGroupVo studyGroup : studyGroups) {
-				combinedStudyGroups.append(studyGroup.getNumber()).append(", ");
+			for (TimeTableStudyGroupVo studyGroup : mStudyGroups) {
+				studyGroupsString.append(studyGroup.getNumber()).append(", ");
 			}
-			return combinedStudyGroups.substring(0, combinedStudyGroups.length() - 2);
+			return studyGroupsString.substring(0, studyGroupsString.length() - 2);
 
 		} else {
 			return "";
@@ -183,9 +153,8 @@ public class MyTimeTableEventSeriesVo implements Parcelable {
 
 	private MyTimeTableEventSeriesVo(final Parcel in) {
 		mTitle = in.readString();
-		mEventSeriesName = in.readString();
-		in.readMap(mStudyGroups, TimeTableStudyGroupVo.class.getClassLoader());
-		in.readMap(mEventTimes, MyTimeTableEventTimeVo.class.getClassLoader());
+		in.readList(mStudyGroups, TimeTableStudyGroupVo.class.getClassLoader());
+		in.readList(mEvents, MyTimeTableEventDateVo.class.getClassLoader());
 		subscribed = in.readByte() != 0;
 	}
 
@@ -197,9 +166,8 @@ public class MyTimeTableEventSeriesVo implements Parcelable {
 	@Override
 	public void writeToParcel(final Parcel dest, final int flags) {
 		dest.writeString(mTitle);
-		dest.writeString(mEventSeriesName);
-		dest.writeMap(mStudyGroups);
-		dest.writeMap(mEventTimes);
+		dest.writeList(mStudyGroups);
+		dest.writeList(mEvents);
 		dest.writeByte((byte) (subscribed ? 1 : 0));
 
 	}
@@ -216,32 +184,17 @@ public class MyTimeTableEventSeriesVo implements Parcelable {
 		}
 	};
 
-
-
-	@SerializedName("activityName")
+	@SerializedName("title")
 	private String mTitle;
 
-	@SerializedName("eventSeriesName")
-	private String mEventSeriesName;
+	@SerializedName("studyGroups")
+	private List<TimeTableStudyGroupVo> mStudyGroups = new ArrayList<>();
 
-	@SerializedName("dataStudentset")
-	private Map<String, TimeTableStudyGroupVo> mStudyGroups = new HashMap<>();
-
-	@SerializedName("dataStaff")
-	private Map<String, LecturerVo> mLecturerList;
-
-	@SerializedName("dataLocation")
-	private Map<String, TimeTableLocationVo> mLocationList;
-
-	@SerializedName("dataDatetime")
-	private Map<String, MyTimeTableEventTimeVo> mEventTimes = new HashMap<>();
+	@SerializedName("events")
+	private List<MyTimeTableEventVo> mEvents = new ArrayList<>();
 
 	@SerializedName("subscribed")
 	private boolean subscribed = false;
-
-
-	private static int incId = 0;
-	private int mId;
 
 }
 

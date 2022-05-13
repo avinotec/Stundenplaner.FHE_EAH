@@ -19,6 +19,7 @@ package de.fhe.fhemobile.comparator;
 import java.util.Comparator;
 
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
+import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
 
 /**
  * Edited by Nadja - 01/2022
@@ -39,7 +40,6 @@ public class EventSeriesTitleComparator implements Comparator<MyTimeTableEventSe
 	 */
 	@Override
 	public int compare(final MyTimeTableEventSeriesVo o1, final MyTimeTableEventSeriesVo o2) {
-		//studyGroups are also taken into account because the title includes the group a certain subset of studygroups belong to
 		return o1.getTitle().compareTo(o2.getTitle());
 	}
 }

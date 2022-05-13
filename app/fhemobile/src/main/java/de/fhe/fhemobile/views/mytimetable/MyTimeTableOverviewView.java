@@ -81,12 +81,12 @@ public class MyTimeTableOverviewView extends LinearLayout {
 
     	//todo: überarbeiten, coursesOfChosenSemester should not be needed here
     	//Durchsuche alle Vorlesungen
-//    	for(MyTimeTableEventSeriesVo eventInCompleteList : MyTimeTableDialogFragment.coursesOfChosenSemester){
+//    	for(MyTimeTableEventSetVo eventInCompleteList : MyTimeTableDialogFragment.coursesOfChosenSemester){
 //            boolean exists = false;
 //
 //            //überspringe einzelne Vorlesungsevents wenn der Vorlesungstitel schon zur negativeList hinzugefügt wurde
 //    		for(String[] eventdata : negativeList) {
-//    		    if(eventdata[0].equals( MyTimeTableEventSeriesVo.cutEventTitle(eventInCompleteList.getEvent().getTitle()))
+//    		    if(eventdata[0].equals( MyTimeTableEventSetVo.cutEventTitle(eventInCompleteList.getEvent().getTitle()))
 //                && eventdata[1].equals( eventInCompleteList.getStudyGroup().getTimeTableId())){
 //                    exists = true;
 //                    break;
@@ -97,10 +97,10 @@ public class MyTimeTableOverviewView extends LinearLayout {
 //    		if(!exists) {
 //    		    boolean isSelected = false;
 //    		    //durchsuche subscribedEventSeries nach dem eventInCompletedList
-//                for (MyTimeTableEventSeriesVo eventInSelectedList : getSubscribedCourses()) {
+//                for (MyTimeTableEventSetVo eventInSelectedList : getSubscribedCourses()) {
 //
-//                    if (MyTimeTableEventSeriesVo.cutEventTitle(eventInCompleteList.getEvent().getTitle())
-//                            .equals(MyTimeTableEventSeriesVo.cutEventTitle(eventInSelectedList.getEvent().getTitle()))
+//                    if (MyTimeTableEventSetVo.cutEventTitle(eventInCompleteList.getEvent().getTitle())
+//                            .equals(MyTimeTableEventSetVo.cutEventTitle(eventInSelectedList.getEvent().getTitle()))
 //                    && eventInCompleteList.getStudyGroup().getTimeTableId()
 //                            .equals(eventInSelectedList.getStudyGroup().getTimeTableId())){
 //                        isSelected = true;
@@ -111,7 +111,7 @@ public class MyTimeTableOverviewView extends LinearLayout {
 //                if(!isSelected){
 //                    final String[] eventdata = new String[2];
 //                    //add an event (title + id) to negativeList
-//                    eventdata[0] = MyTimeTableEventSeriesVo.cutEventTitle(eventInCompleteList.getEvent().getTitle());
+//                    eventdata[0] = MyTimeTableEventSetVo.cutEventTitle(eventInCompleteList.getEvent().getTitle());
 //                    eventdata[1] = eventInCompleteList.getStudyGroup().getTimeTableId();
 //                    negativeList.add(eventdata);
 //                }
