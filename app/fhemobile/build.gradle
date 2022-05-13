@@ -28,9 +28,9 @@ apply plugin: 'com.android.application'
  * build options.
  */
 android {
-	compileSdk 31
-	
-	/**
+    compileSdk 32
+    
+    /**
      * compileSdkVersion specifies the Android API level Gradle should use to
      * compile your app. This means your app can use the API features included in
      * this API level and lower.
@@ -44,7 +44,7 @@ android {
      * This property is optional because the plugin uses a recommended version of
      * the build tools by default.
      */
-    buildToolsVersion '33.0.0 rc2'
+    buildToolsVersion '33.0.0 rc4'
 
     compileOptions {
         // Error: Invoke-customs are only supported starting with Android O (--min-api 26)
@@ -65,8 +65,8 @@ android {
     defaultConfig {
         minSdk 21
         targetSdkVersion 32
-        versionCode = 23
-        versionName = '1.8'
+        versionCode = 24
+        versionName = '2.0'
 
         multiDexEnabled = true
 	    resConfigs 'de', 'en'
@@ -231,8 +231,9 @@ android {
 	lint {
 		abortOnError false
 	}
-	
-	
+    namespace 'de.fhe.fhemobile'
+    
+    
 }
 
 /**
@@ -260,7 +261,7 @@ dependencies {
     //The OkHttp 3.12.x branch supports Android 2.3+ (API level 9+) and Java 7+. These platforms lack
     // support for **TLS 1.2** and should not be used. But because upgrading is difficult, we will backport
     // critical fixes to the 3.12.x branch through December 31, 2021.
-    implementation('com.squareup.okhttp3:okhttp:5.0.0-alpha.6')
+    implementation('com.squareup.okhttp3:okhttp:5.0.0-alpha.7')
     // define a BOM and its version
     //implementation(platform("com.squareup.okhttp3:okhttp-bom:3.12.0"))
     //implementation("com.squareup.okhttp3:logging-interceptor")
@@ -277,8 +278,8 @@ dependencies {
     // ------------ okhttp ------------------------
     
     
-    implementation 'com.google.firebase:firebase-analytics:20.1.0'
-    implementation 'com.google.firebase:firebase-messaging:23.0.1'
+    implementation 'com.google.firebase:firebase-analytics:21.0.0'
+    implementation 'com.google.firebase:firebase-messaging:23.0.4'
 
 
 
@@ -289,7 +290,7 @@ dependencies {
     implementation 'androidx.test:rules:1.4.0'
     
     implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'com.google.android.material:material:1.6.0'
 
     // Adds libraries defining annotations to only the compile classpath.
     //compileOnly 'com.google.dagger:dagger:2.29.1'
@@ -299,8 +300,8 @@ dependencies {
 
 
 
-    implementation 'androidx.navigation:navigation-fragment:2.4.1'
-    implementation 'androidx.navigation:navigation-ui:2.4.1'
+    implementation 'androidx.navigation:navigation-fragment:2.4.2'
+    implementation 'androidx.navigation:navigation-ui:2.4.2'
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
     
     
