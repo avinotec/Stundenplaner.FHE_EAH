@@ -154,8 +154,9 @@ public class Cell {
         this.costPassingCell = costPassingCell;
     }
 
+    //TODO war das vielleicht unser Fehler? anstelle += stand hier =+
     public void setCostsPathToCell(final int costsPathToCell) {
-        this.costsPathToCell =+costsPathToCell;
+        this.costsPathToCell += costsPathToCell;
     }
 
     public void setXCoordinate(final int xCoordinate) {
