@@ -31,7 +31,7 @@ import de.fhe.fhemobile.utils.TimeTableFactory;
 /**
  * Created by paul on 18.03.15
  */
-public class FeatureFragmentFactory {
+public final class FeatureFragmentFactory {
 
     public static FeatureFragment getFeaturedFragment(final int _FeatureId) {
         final FeatureFragment fragment;

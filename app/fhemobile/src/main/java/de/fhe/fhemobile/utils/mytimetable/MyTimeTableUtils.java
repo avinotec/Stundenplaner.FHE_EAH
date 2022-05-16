@@ -16,9 +16,8 @@ import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventDateVo;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
 
-public class MyTimeTableUtils {
+public final class MyTimeTableUtils {
 
     private static final String TAG = "MyTimeTableUtils";
 

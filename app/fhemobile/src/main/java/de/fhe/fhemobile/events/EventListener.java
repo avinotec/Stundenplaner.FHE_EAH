@@ -18,6 +18,7 @@ package de.fhe.fhemobile.events;
 
 
 
+@FunctionalInterface
 public interface EventListener {
 	
 	void onEvent(Event event);

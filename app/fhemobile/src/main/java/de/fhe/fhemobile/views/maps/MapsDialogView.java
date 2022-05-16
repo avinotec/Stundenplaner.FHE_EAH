@@ -35,6 +35,7 @@ import de.fhe.fhemobile.models.maps.MapsModel;
  */
 public class MapsDialogView extends FrameLayout {
 
+    @FunctionalInterface
     public interface ViewListener {
         void onMapItemClicked(Integer _Position);
     }

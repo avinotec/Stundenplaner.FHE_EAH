@@ -37,7 +37,7 @@ import de.fhe.fhemobile.utils.timetable.TimeTableUtils;
  */
 public class TimeTableEventVo implements Parcelable {
 
-    final static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+    static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 
     public TimeTableEventVo() {
     }

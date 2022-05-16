@@ -41,7 +41,6 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableLocationVo;
 
 /**
  * Abstract class for {@link MyTimeTableDialogAdapter} and {@link MyTimeTableOverviewAdapter}
@@ -195,10 +194,10 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
      */
     private class EventSeriesOnClickListener implements View.OnClickListener{
 
-        final private View convertView;
+        private final View convertView;
         final boolean roomVisible;
 
-        final private MyTimeTableEventSeriesVo currentEventSeries;
+        private final MyTimeTableEventSeriesVo currentEventSeries;
 
         EventSeriesOnClickListener(final View view, final MyTimeTableEventSeriesVo currentItem, boolean showRoom){
             convertView = view;

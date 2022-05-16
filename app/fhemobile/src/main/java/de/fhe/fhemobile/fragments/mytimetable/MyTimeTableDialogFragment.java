@@ -228,8 +228,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                 //remove "Brückenkurse" and only keep bachelor and master study programs
                 for(TimeTableStudyProgramVo studyProgramVo : response.body().getStudyProgramsAsList()){
 
-                    if(studyProgramVo.getDegree().equals("Bachelor")
-                            || studyProgramVo.getDegree().equals("Master")){
+                    if("Bachelor".equals(studyProgramVo.getDegree())
+                            || "Master".equals(studyProgramVo.getDegree())){
                         studyPrograms.add(studyProgramVo);
                     }
                 }

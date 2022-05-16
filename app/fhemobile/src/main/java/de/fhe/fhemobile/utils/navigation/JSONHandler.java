@@ -42,7 +42,7 @@ import de.fhe.fhemobile.vos.navigation.FloorConnectionVo;
 import de.fhe.fhemobile.vos.navigation.PersonVo;
 import de.fhe.fhemobile.vos.navigation.RoomVo;
 
-public class JSONHandler {
+public final class JSONHandler {
 
     //Constants
     private static final String TAG = "JSONHandler";            //$NON-NLS

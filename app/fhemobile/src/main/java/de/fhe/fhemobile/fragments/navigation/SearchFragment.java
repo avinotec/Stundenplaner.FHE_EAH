@@ -30,7 +30,7 @@ import de.fhe.fhemobile.vos.navigation.RoomVo;
  */
 public abstract class SearchFragment extends FeatureFragment {
 
-    public final static String TAG = "SearchFragment"; //$NON-NLS
+    public static final String TAG = "SearchFragment"; //$NON-NLS
 
     private final String PREFS_NAVIGATION;
 
@@ -234,7 +234,7 @@ public abstract class SearchFragment extends FeatureFragment {
                         inputRoomNumber = Integer.parseInt(inputArray[2]);
                         roomNumber = Integer.parseInt(room.getRoomNumber());
                     }catch (NumberFormatException e) {
-                        ; /* do nothing, we use initialized values */
+                        /* do nothing, we use initialized values */
                         inputRoomNumber = 1;
                         roomNumber = 1;
                     }

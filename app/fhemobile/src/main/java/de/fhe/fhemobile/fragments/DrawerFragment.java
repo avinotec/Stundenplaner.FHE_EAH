@@ -201,9 +201,6 @@ public class DrawerFragment extends Fragment {
         }
     }
 
-//    public Integer getCurrentFragmentId() {
-//        return mCurrentSelectedId;
-//    }
 
     @Override
     public void onAttach(@NonNull final Activity activity) {
@@ -272,6 +269,7 @@ public class DrawerFragment extends Fragment {
     /**
      * Callbacks interface that all activities using this fragment must implement.
      */
+    @FunctionalInterface
     public interface NavigationDrawerCallbacks {
         /**
          * Called when an item in the navigation drawer is selected.

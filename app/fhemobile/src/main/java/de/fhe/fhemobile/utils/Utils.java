@@ -32,7 +32,7 @@ import de.fhe.fhemobile.Main;
 /**
  * Created by paul on 04.03.15.
  */
-public class Utils {
+public final class Utils {
 
     public static final String TAG = "utils.Utils";
 

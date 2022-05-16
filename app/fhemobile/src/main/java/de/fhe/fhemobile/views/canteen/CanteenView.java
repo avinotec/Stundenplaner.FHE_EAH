@@ -48,7 +48,7 @@ public class CanteenView extends LinearLayout {
 
     public void initializeView(final FragmentManager _Manager, final Lifecycle _Lifecycle){
 
-        if(UserSettings.getInstance().getSelectedCanteenIds().size() > 0){
+        if(!UserSettings.getInstance().getSelectedCanteenIds().isEmpty()){
             final ViewPager2 viewPager = findViewById(R.id.viewpager_canteen);
             viewPager.setAdapter(new CanteenPagerAdapter(_Manager, _Lifecycle));
         } else{

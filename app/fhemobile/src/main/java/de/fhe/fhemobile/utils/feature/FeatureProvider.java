@@ -28,7 +28,7 @@ import de.fhe.fhemobile.adapters.drawer.DrawerItem;
 /**
  *
  */
-public class FeatureProvider {
+public final class FeatureProvider {
 
     /**
      * Loads the feature settings from the corresponding XML-file into the Features class

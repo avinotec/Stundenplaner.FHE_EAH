@@ -46,8 +46,8 @@ public class CanteenModel extends EventDispatcher {
         return mMenus.get(canteenId);
     }
 
-    public void addMenu(final @NonNull String canteenId, final List<CanteenMenuDayVo> mMenuDays) {
-        if(mMenuDays != null && mMenuDays.size() > 0) {
+    public void addMenu(@NonNull final String canteenId, final List<CanteenMenuDayVo> mMenuDays) {
+        if(mMenuDays != null && !mMenuDays.isEmpty()) {
             this.mMenus.put(canteenId, mMenuDays);
             notifyChange(CanteenChangeEvent.getReceivedCanteenMenuEventWithCanteenId(canteenId));
 

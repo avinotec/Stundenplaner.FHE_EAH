@@ -36,7 +36,7 @@ import de.fhe.fhemobile.views.canteen.CanteenMenuView;
  */
 public class CanteenMenuFragment extends FeatureFragment {
 
-    private final static String TAG = CanteenMenuFragment.class.getSimpleName();
+    private static final String TAG = CanteenMenuFragment.class.getSimpleName();
 
     public static final String PARAM_CANTEEN_ID = "paramCanteenId"; //$NON-NLS
 

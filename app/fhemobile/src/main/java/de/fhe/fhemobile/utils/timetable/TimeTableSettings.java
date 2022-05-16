@@ -25,9 +25,9 @@ import de.fhe.fhemobile.utils.Define;
 /**
  *
  */
-public class TimeTableSettings {
+public final class TimeTableSettings {
 
-    public final static String TAG = "TimeTableSettings";
+    public static final String TAG = "TimeTableSettings";
 
     /**
      * Saves timetable favourite to Shared Preferences

@@ -34,6 +34,7 @@ import de.fhe.fhemobile.models.news.NewsModel;
  */
 public class NewsCategoriesView extends FrameLayout {
 
+    @FunctionalInterface
     public interface ViewListener {
         void onNewsCategoryChosen(Integer _Id, Integer _Position);
     }

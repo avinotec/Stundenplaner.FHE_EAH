@@ -68,7 +68,7 @@ public class UserSettings {
         //skip if json is empty
         if ( (json == null || !json.isEmpty()) && !"null".equals(json)) {
             final Gson gson = new Gson();
-            Type listType = new TypeToken<ArrayList<CanteenVo>>(){}.getType();
+            final Type listType = new TypeToken<ArrayList<CanteenVo>>(){}.getType();
             mSelectedCanteens = gson.fromJson(json, listType);
             Log.d(TAG, "Loaded selected canteens "+mSelectedCanteens);
         }

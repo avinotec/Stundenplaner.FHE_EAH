@@ -32,6 +32,7 @@ import de.fhe.fhemobile.views.phonebook.EmployeeListView;
 
 public class EmployeeListFragment extends Fragment {
 
+    @FunctionalInterface
     public interface EmployeeListCallbacks {
         void onEmployeeChosen(Integer _ListPosition);
     }

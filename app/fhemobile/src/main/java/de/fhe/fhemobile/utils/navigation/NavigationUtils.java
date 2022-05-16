@@ -23,7 +23,7 @@ import de.fhe.fhemobile.fragments.navigation.NavigationFragment;
 import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.vos.navigation.Complex;
 
-public class NavigationUtils {
+public final class NavigationUtils {
 
     /**
      * All files concerning the floorplan of a certain complex and floor have the same name

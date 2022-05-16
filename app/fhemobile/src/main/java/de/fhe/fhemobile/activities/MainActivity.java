@@ -72,7 +72,6 @@ import de.fhe.fhemobile.utils.feature.FeatureFragmentFactory;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -237,6 +236,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                     //folgender Code basiert auf generateNegativeList welche wie es Änderungen der Veranstaltungen in subscribedEventSeries berücksichtigt
 
                     //todo: auskommentiert im Zuge von Umbauarbeiten
+                    //TODO PushNotifications
 //                    for(final ResponseModel.Change change : changes){
 //
 //                        // Shortcut to the list

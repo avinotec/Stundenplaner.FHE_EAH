@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NonNls;
  * we define all static defines centrally here.
  * constants etc.
  */
-public class Define {
+public final class Define {
 
 	@NonNls
 	public static final String PARAM_TIMETABLE_ID = "paramTimeTableId";			// $NON-NLS

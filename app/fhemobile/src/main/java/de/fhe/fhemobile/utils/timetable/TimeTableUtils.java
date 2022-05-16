@@ -21,7 +21,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
 
-public class TimeTableUtils {
+public final class TimeTableUtils {
 
     /**
      * if there are more than one lecturer with this name the department e.g. SciTec is added in brackets

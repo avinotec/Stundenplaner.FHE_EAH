@@ -20,7 +20,7 @@ package de.fhe.fhemobile.models.settings;
 /**
  * Created by kern on 18.09.14.
  */
-public class UserDefaults
+public final class UserDefaults
 {
     public static final String DEFAULT_CANTEEN_ID = "3391";
     public static final String DEFAULT_CANTEEN_NAME = "Canteen Carl-Zeiss-Promenade";

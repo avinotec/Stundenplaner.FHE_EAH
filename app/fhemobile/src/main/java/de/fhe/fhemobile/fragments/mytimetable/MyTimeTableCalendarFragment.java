@@ -158,7 +158,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 	}
 
 
-	final private static Locale LOCALE_GERMAN = new Locale("de", "DE");
+	private static final Locale LOCALE_GERMAN = new Locale("de", "DE");
 
 	private MyTimeTableCalendarView mView;
 }

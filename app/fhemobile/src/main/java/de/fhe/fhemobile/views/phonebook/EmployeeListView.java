@@ -32,6 +32,7 @@ import de.fhe.fhemobile.models.phonebook.PhonebookModel;
  */
 public class EmployeeListView extends FrameLayout {
 
+    @FunctionalInterface
     public interface ViewListener {
         void onListItemClicked(Integer _ListPosition);
     }

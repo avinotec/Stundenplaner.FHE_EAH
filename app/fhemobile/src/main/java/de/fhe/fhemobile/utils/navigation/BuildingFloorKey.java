@@ -27,9 +27,6 @@ import de.fhe.fhemobile.vos.navigation.Complex;
  */
 public class BuildingFloorKey implements Comparable {
 
-    //private final Complex mComplex;
-    //private final int mFloor;
-
     private final Cell cell;
 
     /**
@@ -37,8 +34,6 @@ public class BuildingFloorKey implements Comparable {
      * @param cell
      */
     public BuildingFloorKey(final Cell cell) {
-        //mComplex = cell.getComplex();
-        //mFloor = cell.getFloorInt();
         this.cell = cell;
     }
 
@@ -96,10 +91,11 @@ public class BuildingFloorKey implements Comparable {
             return 0;
         //gleiches Gebäude -> Etage vergleichen
         else if (this.getComplex() == otherKey.getComplex()) {
-            return otherKey.getFloorInt() > this.getFloorInt() ? 1 : -1;
+            return ( (otherKey.getFloorInt() > this.getFloorInt()) ? 1 : -1);
         }
         //verschiedene Gebäude: COMPLEX_4 < COMPLEX_321 < COMPLEX_5 (the order of declaration of enum values in Complex class is used)
-        else return this.getComplex().compareTo(otherKey.getComplex());
+        else
+            return (this.getComplex().compareTo(otherKey.getComplex()));
     }
 
 }

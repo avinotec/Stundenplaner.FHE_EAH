@@ -27,10 +27,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import de.fhe.fhemobile.utils.timetable.TimeTableUtils;
 import de.fhe.fhemobile.vos.timetable.LecturerVo;
@@ -43,7 +41,7 @@ import de.fhe.fhemobile.vos.timetable.TimeTableLocationVo;
  */
 public class MyTimeTableEventVo implements Parcelable{
 
-    final static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm a", Locale.getDefault());
+    static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm a", Locale.getDefault());
 
     public MyTimeTableEventVo() {
     }
@@ -135,7 +133,7 @@ public class MyTimeTableEventVo implements Parcelable{
     public String getLocationListAsString(){
         StringBuilder stringBuilder = new StringBuilder();
 
-        if(mLocationList.size() == 0) return "";
+        if(mLocationList.isEmpty()) return "";
 
         for(TimeTableLocationVo room : mLocationList){
             stringBuilder.append(room.getName() + ", ");

@@ -34,14 +34,13 @@ import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.phonebook.PhonebookModel;
 import de.fhe.fhemobile.models.semesterdata.SemesterDataModel;
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
-import de.fhe.fhemobile.utils.canteen.CanteenUtils;
 import de.fhe.fhemobile.utils.UserSettings;
+import de.fhe.fhemobile.utils.canteen.CanteenUtils;
 import de.fhe.fhemobile.vos.CafeAquaResponse;
 import de.fhe.fhemobile.vos.WeatherResponse;
 import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
 import de.fhe.fhemobile.vos.canteen.CanteenMenuDayVo;
 import de.fhe.fhemobile.vos.canteen.CanteenVo;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
 import de.fhe.fhemobile.vos.news.NewsCategoryResponse;
 import de.fhe.fhemobile.vos.news.NewsItemResponse;
@@ -443,7 +442,7 @@ public class NetworkHandler {
 		Assert.assertTrue( mApiErfurt != null );
 		//okhttp 4.x final RequestBody body =RequestBody.create( json, MediaType.parse("application/json"));
 		//okhttp 3.12 flip parameters
-		final RequestBody body =RequestBody.create(MediaType.parse("application/json"), json);
+		final RequestBody body =RequestBody.create(json, MediaType.parse("application/json"));
 		mApiErfurt.registerTimeTableChanges(body).enqueue(_Callback);
 	}
 
@@ -456,7 +455,7 @@ public class NetworkHandler {
 		Assert.assertTrue( mApiErfurt != null );
 		//okhttp 4.x final RequestBody body =RequestBody.create( json, MediaType.parse("application/json"));
 		//okhttp 3.12 flip parameters
-		final RequestBody body =RequestBody.create(MediaType.parse("application/json"), json);
+		final RequestBody body =RequestBody.create( json, MediaType.parse("application/json"));
 		mApiErfurt.getTimeTableChanges(body).enqueue(_Callback);
 	}
 

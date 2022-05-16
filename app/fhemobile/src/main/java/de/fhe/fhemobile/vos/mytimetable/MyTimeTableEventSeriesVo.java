@@ -81,7 +81,7 @@ public class MyTimeTableEventSeriesVo implements Parcelable{
 
 	public MyTimeTableEventVo getFirstEvent() {
 		Collections.sort(mEvents, new MyTimeTableEventComparator());
-		return mEvents.size() > 0 ? mEvents.get(0) : null;
+		return !mEvents.isEmpty() ? mEvents.get(0) : null;
 	}
 
 
@@ -113,7 +113,7 @@ public class MyTimeTableEventSeriesVo implements Parcelable{
 		Collections.sort(mStudyGroups, new StudyGroupComparator());
 		StringBuilder studyGroupsString = new StringBuilder();
 
-		if(mStudyGroups.size() > 0) {
+		if(!mStudyGroups.isEmpty()) {
 			for (TimeTableStudyGroupVo studyGroup : mStudyGroups) {
 				studyGroupsString.append(studyGroup.getNumber()).append(", ");
 			}

@@ -25,7 +25,7 @@ import de.fhe.fhemobile.vos.canteen.CanteenMenuDayVo;
 /**
  * Created by paul on 20.03.15.
  */
-public class CanteenUtils {
+public final class CanteenUtils {
 
     /**
      *

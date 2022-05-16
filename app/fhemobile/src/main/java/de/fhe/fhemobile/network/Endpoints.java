@@ -19,7 +19,7 @@ package de.fhe.fhemobile.network;
 /**
  *
  */
-public class Endpoints {
+public final class Endpoints {
 
     public static final String LIVE_URL             = "http://app.fh-erfurt.de:8080";
     //public static final String LIVE_URL             = "http://193.174.232.89:8080";

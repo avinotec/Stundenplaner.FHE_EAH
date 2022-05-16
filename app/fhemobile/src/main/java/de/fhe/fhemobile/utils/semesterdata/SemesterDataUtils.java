@@ -21,7 +21,7 @@ import de.fhe.fhemobile.vos.semesterdata.SemesterTimesVo;
 /**
  * Created by Paul Cech on 13.05.15.
  */
-public class SemesterDataUtils {
+public final class SemesterDataUtils {
 
     private static final String LOG_TAG = SemesterDataUtils.class.getSimpleName();
 

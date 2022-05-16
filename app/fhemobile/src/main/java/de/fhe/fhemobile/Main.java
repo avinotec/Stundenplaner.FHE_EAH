@@ -39,7 +39,6 @@ import de.fhe.fhemobile.comparator.MyTimeTableEventComparator;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventVo;
 
 
@@ -85,7 +84,7 @@ public class Main extends Application {
         // falls die Liste leer sein sollte, überspringen
         if ( (json == null || !json.isEmpty()) && !"null".equals(json)) {
             final Gson gson = new Gson();
-            Type listType = new TypeToken<ArrayList<MyTimeTableEventSeriesVo>>(){}.getType();
+            final Type listType = new TypeToken<ArrayList<MyTimeTableEventSeriesVo>>(){}.getType();
             subscribedEventSeries = gson.fromJson(json, listType);
         }
 

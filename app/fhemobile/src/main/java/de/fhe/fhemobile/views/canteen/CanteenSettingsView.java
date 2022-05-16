@@ -40,6 +40,7 @@ import de.fhe.fhemobile.vos.canteen.CanteenVo;
  */
 public class CanteenSettingsView extends FrameLayout {
 
+    @FunctionalInterface
     public interface ViewListener {
         void onCanteenClicked(final String _CanteenId);
     }

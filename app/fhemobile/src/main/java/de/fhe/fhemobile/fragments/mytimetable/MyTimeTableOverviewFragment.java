@@ -52,7 +52,6 @@ import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -236,6 +235,7 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 //                        .show();
 
 					//todo: auskommentiert im Zuge von Umbauarbeiten
+					//TODO PushNotifications
 					/*
 					for (final ResponseModel.Change change : changes) {
 

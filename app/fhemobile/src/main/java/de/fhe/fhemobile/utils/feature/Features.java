@@ -19,7 +19,7 @@ package de.fhe.fhemobile.utils.feature;
 /**
  *
  */
-public class Features {
+public final class Features {
 
     //TODO Features
     public static boolean NEWS            = false;

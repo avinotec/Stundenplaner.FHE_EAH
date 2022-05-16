@@ -4,14 +4,13 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.content.ContextCompat;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.zxing.Result;
 
@@ -118,11 +117,6 @@ public class NavigationScannerFragment extends FeatureFragment implements ZXingS
         getActivity().getSupportFragmentManager().setFragmentResult(Define.Navigation.REQUEST_SCANNED_START_ROOM, bundle);
 
         getActivity().onBackPressed();
-
-//        FragmentManager fragmentManager = getParentFragmentManager();
-//        fragmentManager.popBackStackImmediate();
-
-
     }
 
 

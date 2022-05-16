@@ -24,7 +24,7 @@ import de.fhe.fhemobile.utils.timetable.TimeTableSettings;
 /**
  * Created by paul on 16.03.15.
  */
-public class TimeTableFactory {
+public final class TimeTableFactory {
 
     /**
      *

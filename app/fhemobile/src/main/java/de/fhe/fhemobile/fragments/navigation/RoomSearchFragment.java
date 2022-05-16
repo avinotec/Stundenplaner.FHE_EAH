@@ -57,7 +57,7 @@ public class RoomSearchFragment extends SearchFragment {
     private String mDestFloor;
 
     //set items of building picker
-    final static List<BuildingVo> buildings = new ArrayList<>();
+    static final List<BuildingVo> buildings = new ArrayList<>();
 
     /**
      * Use this factory method to create a new instance of

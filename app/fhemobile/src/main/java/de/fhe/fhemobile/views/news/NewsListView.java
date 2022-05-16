@@ -42,6 +42,7 @@ import de.fhe.fhemobile.widgets.stickyHeaderList.WeatherRowItem;
  */
 public class NewsListView extends LinearLayout {
 
+    @FunctionalInterface
     public interface ViewListener {
         void onNewsItemClick(Integer _Id);
     }
