@@ -79,7 +79,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	 */
 	@Override
 	public long getItemId(int position) {
-		//note: returning position is intended - no mistake
+		//note: returning position is intended because MyTimeTableEventVo has no id
 		return position;
 	}
 
@@ -165,22 +165,21 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 		int posToday = -1;
 		Long k = null;
 
-		for(int i = 0; i < mItems.size(); i++){
+		for(MyTimeTableEventVo eventVo : mItems){
 
-			final MyTimeTableEventVo event = mItems.get(i);
 			final Date now = new Date();
 
 			try {
 				//course starts now or in the future
-				if(new Date(event.getStartDateTime()).compareTo(now) >= 0) {
+				if(new Date(eventVo.getStartDateTime()).compareTo(now) >= 0) {
 
 					//if event has not finished yet
-					if(new Date(event.getEndDateTime()).compareTo(now) >= 0) {
+					if(new Date(eventVo.getEndDateTime()).compareTo(now) >= 0) {
 
 						//update, if event startTime is earlier the event found before
-						if(k == null || event.getStartDateTime() <= k){
-							k = event.getStartDateTime();
-							posToday = i;
+						if(k == null || eventVo.getStartDateTime() <= k){
+							k = eventVo.getStartDateTime();
+							posToday = mItems.indexOf(eventVo);
 						}
 					}
 

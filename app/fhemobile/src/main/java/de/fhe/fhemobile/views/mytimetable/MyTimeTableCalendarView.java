@@ -71,13 +71,13 @@ public class MyTimeTableCalendarView extends LinearLayout {
     public void jumpToToday(){
         final int currentDayIndex = MainActivity.myTimeTableCalendarAdapter.getPositionOfFirstEventToday();
         if(currentDayIndex >= 0){
-            mCalendarListView.smoothScrollToPosition(currentDayIndex);
+            mCalendarListView.setSelection(currentDayIndex);
         }
     }
 
 
     /**
-     * Sets view to show if the course list is empty
+     * Sets view to show if the event list is empty
      */
     public void setEmptyCalenderView(){
         final TextView emptyView = new TextView( getContext() );

@@ -171,7 +171,6 @@ public class MyTimeTableEventVo implements Parcelable{
     @SerializedName("title")
     private String mTitle;
 
-
     @SerializedName("startDateTime")
     private long mStartDateTime;
 
