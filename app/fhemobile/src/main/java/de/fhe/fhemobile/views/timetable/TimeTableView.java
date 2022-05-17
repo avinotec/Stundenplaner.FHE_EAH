@@ -27,6 +27,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import org.junit.Assert;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
@@ -63,6 +64,19 @@ public class TimeTableView extends LinearLayout {
         if (BuildConfig.DEBUG) Assert.assertNotNull(mAdapter);
         mPager.setAdapter(mAdapter);
         if (BuildConfig.DEBUG) Assert.assertNotNull(mPager);
+        //set current pager item to current semester week
+        for(TimeTableWeekVo item : _Items){
+            //if the item's week end is after or equal now
+            // and the item's week start is before or equal now
+            if(!item.getWeekEnd().before(new Date())){
+                if(!item.getWeekStart().after(new Date())){
+                    //set current pager item
+                    mPager.setCurrentItem(_Items.indexOf(item));
+                }
+            }
+        }
+
+
         //if (BuildConfig.DEBUG) Assert.assertTrue( mPageIndicator != null );
 
         //TODO Simon, warum ist das null?
