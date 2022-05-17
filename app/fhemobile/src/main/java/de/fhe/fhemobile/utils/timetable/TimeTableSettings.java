@@ -47,7 +47,10 @@ public final class TimeTableSettings {
         final SharedPreferences sp = Main.getAppContext().getSharedPreferences(Define.TimeTable.SP_TIMETABLE_SETTINGS, Context.MODE_PRIVATE);
         String result = sp.getString(Define.TimeTable.PREF_CHOSEN_TIMETABLE_ID, null);
         //avoid errors due to usage of old SplusId
-        if(result.startsWith("SPLUS")) result = null;
+        if(result != null && result.startsWith("SPLUS")) {
+            saveTimeTableSelection(null);
+            result = null;
+        }
 
         return result;
     }
