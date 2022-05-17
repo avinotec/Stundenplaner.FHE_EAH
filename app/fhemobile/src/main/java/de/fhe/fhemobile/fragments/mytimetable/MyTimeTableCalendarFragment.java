@@ -26,6 +26,9 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -46,7 +49,6 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 
 	public static final String TAG = MyTimeTableCalendarFragment.class.getSimpleName();
 
-
 	/**
 	 * Use this factory method to create a new instance of
 	 * this fragment using the provided parameters.
@@ -59,6 +61,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		fragment.setArguments(args);
 		return fragment;
 	}
+
 	public MyTimeTableCalendarFragment() {
 		// Required empty public constructor
 	}
@@ -66,6 +69,8 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		setHasOptionsMenu(true);
 	}
 
 
@@ -75,21 +80,44 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		// Inflate the layout for this fragment
 		mView = (MyTimeTableCalendarView) inflater.inflate(R.layout.fragment_my_time_table_calendar, container, false);
 
-		View.OnClickListener onClickListenerBtnModifySchedule = new View.OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				((MainActivity) getActivity()).changeFragment(MyTimeTableOverviewFragment.newInstance(),
-						true, MyTimeTableOverviewFragment.TAG);
-			}
-		};
-		mView.initializeView(onClickListenerBtnModifySchedule);
-
 		askForTimeTableDeletionAfterTurnOfSemester();
 
 		//Set text view to show if list is empty
 		mView.setEmptyCalenderView();
 
 		return mView;
+	}
+
+	/**
+	 * Now adapters and list are initiated and layouts inflated, so the view can jump to today's courses
+	 */
+	@Override
+	public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+
+		mView.jumpToToday();
+	}
+
+	@Override
+	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+		menu.clear();
+		inflater.inflate(R.menu.menu_mytimetable_calendar, menu);
+
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(@NonNull MenuItem _Item) {
+		if (_Item.getItemId() == R.id.action_jump_to_today) {
+			mView.jumpToToday();
+			return true;
+		}
+		if (_Item.getItemId() == R.id.action_edit_my_courses) {
+			((MainActivity) getActivity()).changeFragment(MyTimeTableOverviewFragment.newInstance(),
+					true, MyTimeTableOverviewFragment.TAG);
+			return true;
+		}
+		return super.onOptionsItemSelected(_Item);
 	}
 
 	/**
@@ -143,16 +171,6 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		SharedPreferences.Editor editor = sharedPreferences.edit();
 		editor.putLong(Define.MyTimeTable.PREFS_LAST_OPENED, new Date().getTime());
 		editor.apply();
-	}
-
-	/**
-	 * Now adapters and list are initiated and layouts inflated, so the view can jump to today's courses
-	 */
-	@Override
-	public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-
-		mView.jumpToToday();
 	}
 
 

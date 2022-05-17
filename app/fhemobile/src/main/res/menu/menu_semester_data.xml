@@ -16,13 +16,15 @@
   ~
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/action_settings"
+    <item android:id="@+id/action_next_semester"
           android:icon="@drawable/ic_next_semester"
           android:title="@string/action_settings"
           android:orderInCategory="100"
           app:showAsAction="always" />
+
 
 </menu>

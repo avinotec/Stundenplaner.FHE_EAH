@@ -58,7 +58,7 @@ public class MyTimeTableOverviewView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        final FloatingActionButton mAddButton = (FloatingActionButton) findViewById(R.id.btn_mytimetable_overview_add_course);
+        final FloatingActionButton mAddButton = (FloatingActionButton) findViewById(R.id.btn_mytimetable_overview_add_eventseries);
         mAddButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {

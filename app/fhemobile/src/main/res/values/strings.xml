@@ -20,6 +20,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
+    <string name="action_jump_to_today">Today</string>
+    <string name="action_edit_my_courses">Edit my courses</string>
     <string name="drawer_news">News</string>
     <string name="drawer_canteen">Canteen</string>
     <string name="drawer_persons">Persons</string>
@@ -98,6 +100,7 @@
     <string name="jump_to_current_lesson">>> Today</string>
     <string name="today">Today</string>
     <string name="my_time_table_overview_headline">My Courses</string>
+    <string name="my_time_table_calendar_headline">My Timetable</string>
 
     <string name="deleteTimetableTitle">Semester Change</string>
     <string name="deleteTimetableMessage">The semester is over. Do you want to clear your timetable?</string>

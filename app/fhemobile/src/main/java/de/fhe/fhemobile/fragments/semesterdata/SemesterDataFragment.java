@@ -95,7 +95,7 @@ public class SemesterDataFragment extends FeatureFragment {
             non-constant IDs in order to improve the performance of incremental compilation.
             Issue id: NonConstantResourceId
          */
-        if (_item.getItemId() == R.id.action_settings) {
+        if (_item.getItemId() == R.id.action_next_semester) {
             if (null != mModel && null != mModel.getSemesterData()) {
                 if (mModel.getChosenSemester() < mModel.getSemesterData().length - 1) {
                     mModel.setChosenSemester(mModel.getChosenSemester() + 1);

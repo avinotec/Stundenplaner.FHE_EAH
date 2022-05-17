@@ -59,7 +59,7 @@
 		</LinearLayout>
 
 		<com.google.android.material.floatingactionbutton.FloatingActionButton
-			android:id="@+id/btn_mytimetable_overview_add_course"
+			android:id="@+id/btn_mytimetable_overview_add_eventseries"
 			android:layout_marginRight="16dp"
 			android:layout_marginBottom="16dp"
 			android:layout_marginTop="16dp"
@@ -68,7 +68,8 @@
 			android:background="@drawable/buttonshape"
 			android:src="@drawable/ic_add_white"
 			android:layout_alignParentTop="true"
-			android:layout_alignParentRight="true" />
+			android:layout_alignParentRight="true"
+			android:contentDescription="Button to add a course" />
 
 	</RelativeLayout>
 

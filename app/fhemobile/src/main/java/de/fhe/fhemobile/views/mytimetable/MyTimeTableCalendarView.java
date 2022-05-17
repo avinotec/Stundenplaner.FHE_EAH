@@ -18,11 +18,12 @@ package de.fhe.fhemobile.views.mytimetable;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
@@ -40,27 +41,11 @@ public class MyTimeTableCalendarView extends LinearLayout {
     }
 
 
-
-    public void initializeView(final OnClickListener onClickListener) {
-        // button "modify schedule"
-        final Button mBtnModifySchedule = (Button) findViewById(R.id.btn_mytimetable_calendar_my_courses);
-        mBtnModifySchedule.setOnClickListener(onClickListener);
-
-    }
-
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+
         mCalendarListView = (ListView) findViewById(R.id.lv_mytimetable_calendar_courses);
-
-        final Button mJumpCurrentLesson = (Button) findViewById(R.id.btn_mytimetable_calendar_jump_to_today);
-        mJumpCurrentLesson.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                jumpToToday();
-            }
-        });
-
         mCalendarListView.setAdapter(MainActivity.myTimeTableCalendarAdapter);
     }
 

@@ -17,9 +17,11 @@
   -->
 
 <resources>
-        <string name="navigation_drawer_open" >Öffne Navigation</string>
+    <string name="navigation_drawer_open" >Öffne Navigation</string>
     <string name="navigation_drawer_close" >Schließe Navigation</string>
-        <string name="action_settings" >Settings</string>
+    <string name="action_settings" >Settings</string>
+    <string name="action_jump_to_today">Heute</string>
+    <string name="action_edit_my_courses">Meine Kurse bearbeiten</string>
     <string name="drawer_news" >News</string>
     <string name="drawer_canteen" >Mensa</string>
     <string name="drawer_persons" >Personen</string>
@@ -93,6 +95,7 @@
 
     <!-- My Time Table -->
     <string name="my_time_table_overview_headline">Meine Kurse</string>
+    <string name="my_time_table_calendar_headline">Mein Stundenplan</string>
 	<string name="my_time_table_add_course">Kurs hinzufügen</string>
     <string name="my_time_table_dialog_headline" >Wähle bitte Studiengang und Semester.</string>
     <string name="my_timetable_modify_schedule">Meine Kurse</string>

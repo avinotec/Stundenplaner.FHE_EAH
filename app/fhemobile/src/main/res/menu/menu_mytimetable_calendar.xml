@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~  Copyright (c) 2014-2019 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
   ~  This program is free software: you can redistribute it and/or modify
@@ -14,15 +15,21 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ~
   -->
+
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="de.fhe.fhemobile.MainActivity" >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/action_settings"
-        android:icon="@drawable/ic_action_settings"
+    <item android:id="@+id/action_jump_to_today"
+          android:icon="@drawable/ic_today"
+          android:title="@string/action_jump_to_today"
+          android:orderInCategory="100"
+          app:showAsAction="always" />
+
+    <item android:id="@+id/action_edit_my_courses"
+        android:icon="@drawable/ic_tune"
         android:title="@string/action_settings"
         android:orderInCategory="100"
         app:showAsAction="always" />
+
 </menu>
