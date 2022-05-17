@@ -77,7 +77,8 @@ public class TimeTableEventVo implements Parcelable {
 
         for(TimeTableLocationVo room : mLocationList.values()){
             if(room.getName() != null) {
-                stringBuilder.append(room.getName() + ", ");
+                String roomName = room.getName().replaceAll("\\(", " (");
+                stringBuilder.append(roomName + ", ");
             }
         }
 
