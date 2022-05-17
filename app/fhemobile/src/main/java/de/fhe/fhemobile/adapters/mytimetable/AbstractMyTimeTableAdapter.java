@@ -236,8 +236,8 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
         Date endDateTime =  new Date(_Event.getEndDateTime());
         final String date = sdf.format(startDateTime);
         final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(startDateTime);
-        final String startTime = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(startDateTime);
-        final String endTime = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(endDateTime);
+        final String startTime = new SimpleDateFormat("HH:mm", new Locale("de", "DE")).format(startDateTime);
+        final String endTime = new SimpleDateFormat("HH:mm", new Locale("de", "DE")).format(endDateTime);
         String eventDateAndRoomText = dayOfWeek + ", " + date + "  " + startTime + " – " + endTime;
 
         if(roomVisible) {

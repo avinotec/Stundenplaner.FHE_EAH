@@ -41,7 +41,7 @@ import de.fhe.fhemobile.vos.timetable.TimeTableLocationVo;
  */
 public class MyTimeTableEventVo implements Parcelable{
 
-    static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm a", Locale.getDefault());
+    static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", new Locale("de", "DE"));
 
     public MyTimeTableEventVo() {
     }
