@@ -387,5 +387,5 @@ public class NavigationView extends LinearLayout {
     private double cellWidth;
     private double cellHeight;
 
-    private static final String TAG = "NavigationView"; //$NON-NLS
+    private static final String TAG = NavigationView.class.getSimpleName();
 }

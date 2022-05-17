@@ -42,7 +42,7 @@ import de.fhe.fhemobile.R;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
-    private static final String TAG = "BaseActivity";
+    private static final String TAG = BaseActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -177,8 +177,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 //        return mSpinner.getSelectedItemPosition();
 //    }
 // --Commented out by Inspection STOP (01.11.2019 00:18)
-
-    private static final String LOG_TAG = BaseActivity.class.getSimpleName();
 
     protected Toolbar   mToolbar;
     protected ActionBar mActionBar;

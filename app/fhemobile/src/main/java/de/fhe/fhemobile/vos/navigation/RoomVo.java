@@ -24,7 +24,7 @@ import de.fhe.fhemobile.models.navigation.Cell;
 public class RoomVo extends Cell {
 
     //Constants
-    private static final String TAG = "RoomVo"; //$NON-NLS
+    private static final String TAG = RoomVo.class.getSimpleName();
 
     //Variables
     private String roomNumber;

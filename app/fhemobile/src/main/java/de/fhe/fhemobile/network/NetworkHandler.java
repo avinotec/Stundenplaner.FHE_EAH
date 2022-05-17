@@ -63,7 +63,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 //RetroFitClient
 public class NetworkHandler {
 
-	private static final String TAG = "NetworkHandler";
+	private static final String TAG = NetworkHandler.class.getSimpleName();
 
 	private static final NetworkHandler ourInstance = new NetworkHandler();
 

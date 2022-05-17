@@ -65,7 +65,7 @@ import retrofit2.Response;
  */
 public class MyTimeTableOverviewFragment extends FeatureFragment {
 
-	public static final String TAG = "MyTimeTableOverviewFrag";
+	public static final String TAG = MyTimeTableOverviewFragment.class.getSimpleName();
 
 
 	private static final int CHANGEREASON_EDIT = 1;

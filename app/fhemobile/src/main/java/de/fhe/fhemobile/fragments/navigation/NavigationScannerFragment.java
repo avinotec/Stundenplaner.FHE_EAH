@@ -25,7 +25,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
  */
 public class NavigationScannerFragment extends FeatureFragment implements ZXingScannerView.ResultHandler{
 
-    public static final String TAG = "NavigationScannerFragment"; //$NON-NLS
+    public static final String TAG = NavigationScannerFragment.class.getSimpleName();
 
     private ZXingScannerView mScannerView;
     private boolean mAutoFocus = true;

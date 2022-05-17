@@ -30,7 +30,7 @@ import de.fhe.fhemobile.vos.navigation.RoomVo;
  */
 public abstract class SearchFragment extends FeatureFragment {
 
-    public static final String TAG = "SearchFragment"; //$NON-NLS
+    public static final String TAG = SearchFragment.class.getSimpleName();
 
     private final String PREFS_NAVIGATION;
 

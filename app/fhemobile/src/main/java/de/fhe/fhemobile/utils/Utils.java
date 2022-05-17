@@ -34,7 +34,7 @@ import de.fhe.fhemobile.Main;
  */
 public final class Utils {
 
-    public static final String TAG = "utils.Utils";
+    public static final String TAG = Utils.class.getSimpleName();
 
     //correctUmlauts--------------------------------------------------------------------------------
 

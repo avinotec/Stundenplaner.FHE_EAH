@@ -22,6 +22,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import java.util.Map;
+
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.maps.MapsFragment;
 import de.fhe.fhemobile.models.maps.MapsModel;
@@ -32,7 +34,8 @@ import de.fhe.fhemobile.models.maps.MapsModel;
  * Edit by Nadja 02.12.2021: rename from MapsSingleActivity to MapsActivity
  */
 public class MapsActivity extends BaseActivity {
-    private static final String TAG = "MapsActivity";
+
+    private static final String TAG = MapsActivity.class.getSimpleName();
     public static final String STATE_MAPS_ID = "stateMapsId";
 
     @Override

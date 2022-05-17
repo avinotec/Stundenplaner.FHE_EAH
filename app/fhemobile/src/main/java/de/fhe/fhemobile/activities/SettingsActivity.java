@@ -29,7 +29,7 @@ import de.fhe.fhemobile.utils.feature.Features;
 
 public class SettingsActivity extends BaseActivity {
 
-    private static final String TAG = "SettingsActivity";
+    private static final String TAG = SettingsActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {

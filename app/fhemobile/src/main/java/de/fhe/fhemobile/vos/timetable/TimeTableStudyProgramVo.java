@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class TimeTableStudyProgramVo implements Parcelable {
 
-    private static final String TAG = "TimeTableStudyProgramVo";
+    private static final String TAG = TimeTableStudyProgramVo.class.getSimpleName();
 
     public TimeTableStudyProgramVo() {
     }

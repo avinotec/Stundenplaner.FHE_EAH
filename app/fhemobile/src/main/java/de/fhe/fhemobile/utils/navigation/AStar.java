@@ -43,7 +43,7 @@ import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
  */
 public class AStar {
 
-    private static final String TAG = "AStar"; //$NON-NLS
+    private static final String TAG = AStar.class.getSimpleName();
 
     //Variables
     /**

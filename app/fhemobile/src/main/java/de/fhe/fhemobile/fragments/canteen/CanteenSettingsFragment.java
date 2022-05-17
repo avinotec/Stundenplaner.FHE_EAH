@@ -34,7 +34,7 @@ import de.fhe.fhemobile.views.canteen.CanteenSettingsView;
 
 public class CanteenSettingsFragment extends FeatureFragment {
 
-    public static final String TAG = "CanteenSettingsFragment"; //$NON-NLS
+    public static final String TAG = CanteenSettingsFragment.class.getSimpleName();
 
     public CanteenSettingsFragment() {
         // Required empty public constructor

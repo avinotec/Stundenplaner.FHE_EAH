@@ -31,7 +31,7 @@ import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
 public class FloorConnectionVo {
 
     //Constants
-    private static final String TAG = "FloorConnectionVo"; //$NON-NLS
+    private static final String TAG = FloorConnectionVo.class.getSimpleName();
 
     //Variables
     private final String typeOfFloorConnection; //stairs, elevator, bridge

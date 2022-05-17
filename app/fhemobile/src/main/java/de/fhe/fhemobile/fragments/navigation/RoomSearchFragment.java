@@ -45,7 +45,7 @@ import de.fhe.fhemobile.views.navigation.RoomSearchView;
  */
 public class RoomSearchFragment extends SearchFragment {
 
-    public static final String TAG = "RoomSearchFragment"; //$NON-NLS
+    public static final String TAG = RoomSearchFragment.class.getSimpleName();
 
     @NonNls
     public static final String PREFS_NAVIGATION_ROOM_CHOICE = "navigation room";

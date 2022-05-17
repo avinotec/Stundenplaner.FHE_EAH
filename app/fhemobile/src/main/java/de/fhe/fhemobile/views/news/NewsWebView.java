@@ -23,7 +23,7 @@ import android.widget.FrameLayout;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.network.Endpoints;
-import de.fhe.fhemobile.views.SSLTolerentWebViewClient;
+import de.fhe.fhemobile.views.SSLTolerantWebViewClient;
 
 /**
  * Created by Nadja on 06.09.21
@@ -46,7 +46,7 @@ public class NewsWebView extends FrameLayout {
 
         mWebView = (WebView) findViewById(R.id.webview_news);
         //wird der WebViewClient nicht geaendert, kann die Seite nicht geladen werden, da die Webview
-        mWebView.setWebViewClient(new SSLTolerentWebViewClient(mContext));
+        mWebView.setWebViewClient(new SSLTolerantWebViewClient(mContext));
         //JavaScripted needs to be enabled
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.loadUrl(Endpoints.NEWS_ENDPOINT);

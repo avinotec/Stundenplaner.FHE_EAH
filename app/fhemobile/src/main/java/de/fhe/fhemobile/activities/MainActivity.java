@@ -77,7 +77,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements DrawerFragment.NavigationDrawerCallbacks {
-    private static final String TAG = "MainActivity";
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private static final int CHANGEREASON_EDIT = 1;
     private static final int CHANGEREASON_NEW = 3;

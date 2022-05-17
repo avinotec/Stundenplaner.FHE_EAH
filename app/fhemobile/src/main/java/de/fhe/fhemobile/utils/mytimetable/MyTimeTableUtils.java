@@ -19,7 +19,7 @@ import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventVo;
 
 public final class MyTimeTableUtils {
 
-    private static final String TAG = "MyTimeTableUtils";
+    private static final String TAG = MyTimeTableUtils.class.getSimpleName();
 
     /**
      * Returns the event title without the number of the time table entry.

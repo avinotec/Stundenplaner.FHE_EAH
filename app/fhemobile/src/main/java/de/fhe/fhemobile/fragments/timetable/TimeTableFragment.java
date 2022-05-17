@@ -55,7 +55,7 @@ import retrofit2.Response;
  */
 public class TimeTableFragment extends FeatureFragment {
 
-	public static final String TAG = "TimeTableFragment"; //$NON-NLS
+	public static final String TAG = TimeTableFragment.class.getSimpleName();
 
 	/**
 	 * Use this factory method to create a new instance of

@@ -30,7 +30,7 @@ import de.fhe.fhemobile.activities.MainActivity;
 
 public class MyTimeTableCalendarView extends LinearLayout {
 
-    private static final String TAG = "MyTimeTableCalendarView";
+    private static final String TAG = MyTimeTableCalendarView.class.getSimpleName();
 
 
     public MyTimeTableCalendarView(final Context context, final AttributeSet attrs) { super(context, attrs);  }

@@ -36,7 +36,7 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.utils.Define;
 
 public class PushNotificationService extends FirebaseMessagingService {
-	private static final String TAG = "PushNotificationService";
+	private static final String TAG = PushNotificationService.class.getSimpleName();
 	private static String firebaseToken;
 
 	public PushNotificationService() {

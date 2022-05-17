@@ -32,7 +32,7 @@ import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.views.canteen.CanteenMenuView;
 
 /**
- * Edited by Nadja - 05.2022
+ * Edited by Nadja - 05/2022
  */
 public class CanteenMenuFragment extends FeatureFragment {
 

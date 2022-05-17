@@ -46,7 +46,7 @@ import de.fhe.fhemobile.widgets.headerList.TimeTableEventItem;
  */
 public class TimeTableWeekView extends LinearLayout {
 
-    private static final String TAG = "TimeTableWeekView"; //$NON-NLS
+    private static final String TAG = TimeTableWeekView.class.getSimpleName();
 
     public TimeTableWeekView(final Context context, final AttributeSet attrs) {
         super(context, attrs);

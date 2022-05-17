@@ -45,7 +45,7 @@ import de.fhe.fhemobile.vos.navigation.RoomVo;
 public final class JSONHandler {
 
     //Constants
-    private static final String TAG = "JSONHandler";            //$NON-NLS
+    private static final String TAG = JSONHandler.class.getSimpleName();    //$NON-NLS
     public static final String BUILDING = "building";           //$NON-NLS
     public static final String FLOOR = "floor";                 //$NON-NLS
     public static final String X_COORDINATE = "xCoordinate";    //$NON-NLS

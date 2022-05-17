@@ -46,7 +46,7 @@ import de.fhe.fhemobile.vos.navigation.RoomVo;
  */
 public class RouteCalculator {
 
-    private static final String TAG = "RouteCalculator"; //$NON-NLS
+    private static final String TAG = RouteCalculator.class.getSimpleName();
 
 
     private final ArrayList<FloorConnectionVo> floorConnections;

@@ -28,7 +28,7 @@ import de.fhe.fhemobile.views.navigation.PersonSearchView;
  */
 public class PersonSearchFragment extends SearchFragment {
 
-    public static final String TAG = "PersonSearchFragment"; //$NON-NLS
+    public static final String TAG = PersonSearchFragment.class.getSimpleName();
 
     @NonNls
     public static final String PREFS_NAVIGATION_PERSON_CHOICE = "navigation person";

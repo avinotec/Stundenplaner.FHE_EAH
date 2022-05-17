@@ -29,12 +29,15 @@ import androidx.appcompat.app.AlertDialog;
 
 import de.fhe.fhemobile.R;
 
-public class SSLTolerentWebViewClient extends WebViewClient {
-	private static final String TAG = "SSLTolerentWebViewClien";
+public class SSLTolerantWebViewClient extends WebViewClient {
+
+	private static final String TAG = SSLTolerantWebViewClient.class.getSimpleName();
 	private Context context;
-	public SSLTolerentWebViewClient(final Context context){
+
+	public SSLTolerantWebViewClient(final Context context){
 
 	}
+
 	@Override
 	public void onReceivedSslError(final WebView view, final SslErrorHandler handler, final SslError error) {
 
@@ -55,7 +58,8 @@ public class SSLTolerentWebViewClient extends WebViewClient {
 			});
 			final AlertDialog dialog = builder.create();
 			dialog.show();
-		}catch (final Exception e){
+
+		} catch (final Exception e){
 			Log.d(TAG, "onReceivedSslError: ",e);
 			handler.proceed();
 		}

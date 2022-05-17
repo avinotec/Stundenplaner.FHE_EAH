@@ -27,7 +27,7 @@ import android.widget.TextView;
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.network.Endpoints;
-import de.fhe.fhemobile.views.SSLTolerentWebViewClient;
+import de.fhe.fhemobile.views.SSLTolerantWebViewClient;
 
 /**
  * Created by paul on 22.01.14.
@@ -50,7 +50,7 @@ public class ImprintView extends FrameLayout {
 
         mWebView = (WebView) findViewById(R.id.webview_imprint);
         //wird der WebViewClient nicht geaendert, kann die Seite nicht geladen werden, da die Webview
-        mWebView.setWebViewClient(new SSLTolerentWebViewClient(mContext));
+        mWebView.setWebViewClient(new SSLTolerantWebViewClient(mContext));
         //Ohne JavascriptEnabled laesst sich das WebView nicht scrollen.
 	    mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.loadUrl(Endpoints.IMPRINT_ENDPOINT);
