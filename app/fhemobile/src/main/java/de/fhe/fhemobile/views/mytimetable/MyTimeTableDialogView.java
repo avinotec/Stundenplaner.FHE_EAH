@@ -63,7 +63,7 @@ public class MyTimeTableDialogView extends LinearLayout {
         mSemesterPicker.toggleEnabled(false);
         mSemesterPicker.setOnItemChosenListener(mSemesterListener);
 
-        setCourseListEmptyView();
+        setEventListEmptyView();
 
     }
 
@@ -96,7 +96,7 @@ public class MyTimeTableDialogView extends LinearLayout {
         mSemesterPicker.setVisibility(_Visible ? VISIBLE : GONE);
     }
 
-    public void toggleCourseListVisibility(final boolean _Visible){
+    public void toggleEventListVisibility(final boolean _Visible){
         mCourseListView.setVisibility(_Visible ? VISIBLE : GONE);
     }
 
@@ -104,7 +104,7 @@ public class MyTimeTableDialogView extends LinearLayout {
         mProgressIndicator.setVisibility(_Visible ? VISIBLE : GONE);
     }
 
-    public void setCourseListAdapter(final MyTimeTableDialogAdapter adapter){
+    public void setEventListAdapter(final MyTimeTableDialogAdapter adapter){
         mCourseListView.setAdapter(adapter);
     }
 
@@ -148,7 +148,7 @@ public class MyTimeTableDialogView extends LinearLayout {
     /**
      * Sets view to show if the course list is empty
      */
-    private void setCourseListEmptyView(){
+    private void setEventListEmptyView(){
         final TextView emptyView = new TextView( getContext() );
         emptyView.setText(getResources().getString(R.string.my_time_table_empty_text_select));
         mCourseListView.setEmptyView(emptyView);

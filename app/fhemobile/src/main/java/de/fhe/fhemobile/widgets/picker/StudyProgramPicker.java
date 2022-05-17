@@ -40,7 +40,7 @@ public class StudyProgramPicker extends IdPicker {
         Collections.sort(_Items, new StudyProgramComparator());
         mItems = _Items;
         if (mItems == null) {
-            throw new AssertionError("StudyCourse items cannot be null!");
+            throw new AssertionError("Study Program items cannot be null!");
         }
     }
 
@@ -51,7 +51,7 @@ public class StudyProgramPicker extends IdPicker {
 
     @Override
     protected String getName(int _Position) {
-        return mItems.get(_Position).getTitleAndDegree();
+        return mItems.get(_Position).getGuiName();
     }
 
     @Override

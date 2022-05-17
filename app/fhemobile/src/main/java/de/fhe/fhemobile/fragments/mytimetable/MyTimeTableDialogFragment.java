@@ -116,9 +116,9 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         mView.initializeView(getChildFragmentManager());
         mView.setViewListener(mViewListener);
 
-        mView.setCourseListAdapter(mListAdapter);
+        mView.setEventListAdapter(mListAdapter);
 
-        //todo: loading course list from shared preferences risks to display an outdated version,
+        //todo: loading eventseries list from shared preferences risks to display an outdated version,
         // the user has to re-select his study course and semester to update it.
         // This is not intuitive and not how the user predicts MyTimeTableDialog to work.
         // Thus this function should be commented out or replaced by a less risky method.
@@ -141,7 +141,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         public void onStudyProgramChosen(final String _StudyProgramId) {
             //reset needed because a new study course had been chosen
             mView.resetSemesterPicker();
-            mView.toggleCourseListVisibility(false);
+            mView.toggleEventListVisibility(false);
 
             mListAdapter.setItems(new ArrayList<>());
             mListAdapter.notifyDataSetChanged();
@@ -193,8 +193,8 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
         @Override
         public void onSemesterChosen(String _SemesterId) {
-            mView.toggleProgressIndicatorVisibility(true);
-            mView.toggleCourseListVisibility(false);
+            mView.toggleProgressIndicatorVisibility(false);
+            mView.toggleEventListVisibility(false);
             mListAdapter.setItems(new ArrayList<>());
             mListAdapter.notifyDataSetChanged();
 
@@ -257,10 +257,10 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
                 Collections.sort(eventSeriesVos, new EventSeriesTitleComparator());
 
-                mView.toggleCourseListVisibility(true);
+                mView.toggleEventListVisibility(true);
                 mListAdapter.setItems(eventSeriesVos);
                 mListAdapter.notifyDataSetChanged();
-                mView.setCourseListAdapter(mListAdapter);
+                mView.setEventListAdapter(mListAdapter);
             }
 
         }

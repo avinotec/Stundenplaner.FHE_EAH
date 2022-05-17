@@ -77,9 +77,12 @@ public class TimeTableStudyProgramVo implements Parcelable {
         return mSemesters;
     }
 
-
-    public String getTitleAndDegree(){
-        return mLongTitle + " (" + mDegree + ")";
+    /**
+     * Get title plus abbreviation ("B" or "M") in brackets behind.
+     * @return The name of the study program for display in GUI
+     */
+    public String getGuiName(){
+        return mLongTitle + " (" + mDegree.charAt(0) + ")";
     }
 
     public String getDegree() {
