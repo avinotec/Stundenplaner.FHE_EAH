@@ -148,7 +148,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_top_navigation_dialog_activity"
                     android:background="@drawable/buttonshape_rectangle_orange"
-                    android:drawableStart="@drawable/ic_back"
+                    android:drawableStart="@drawable/ic_arrow_back"
                     android:text="@string/navigation_button_back"
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF"
