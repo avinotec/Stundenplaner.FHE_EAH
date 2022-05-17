@@ -175,6 +175,7 @@
     <string name="navigation_building">building</string>
     <string name="navigation_floor">floor</string>
     <string name="navigation_dialog_person">Person</string>
+    <string name="my_time_table_settings_studygroups">Study Groups</string>
 
 
 </resources>

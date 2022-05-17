@@ -178,6 +178,7 @@
     <string name="navigation_floor">Etage</string>
     <string name="navigation_dialog_person">Person</string>
     <string name="canteen_no_canteens_selected">Wähle bitte erst eine oder mehrere Mensen in den Einstellungen aus.</string>
+    <string name="my_time_table_settings_studygroups">Sets</string>
 
 
 </resources>

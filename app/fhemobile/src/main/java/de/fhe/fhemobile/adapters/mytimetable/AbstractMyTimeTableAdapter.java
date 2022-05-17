@@ -126,7 +126,7 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).
-                    inflate(R.layout.item_my_time_table, parent, false);
+                    inflate(R.layout.item_my_time_table_settings, parent, false);
         }
 
         final MyTimeTableEventSeriesVo currentItem = mItems.get(position);
