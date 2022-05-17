@@ -136,9 +136,16 @@ public class MyTimeTableEventVo implements Parcelable{
         if(mLocationList.isEmpty()) return "";
 
         for(TimeTableLocationVo room : mLocationList){
-            stringBuilder.append(room.getName() + ", ");
+            if(room.getName() != null) {
+                stringBuilder.append(room.getName() + ", ");
+            }
         }
-        return stringBuilder.substring(0, stringBuilder.length() - 2);
+
+        if(stringBuilder.toString().isEmpty() || stringBuilder.length() <= 2){
+            return "";
+        } else {
+            return stringBuilder.substring(0, stringBuilder.length() - 2);
+        }
     }
 
     public String getWeekDayName(){

@@ -130,18 +130,22 @@ public class TimeTableEventVo implements Parcelable {
         return sdf.format(new Date((mEndDateTime * 1000)));
     }
 
-    public String getRoom(){
-        StringBuilder stringBuilder = null;
-        for(TimeTableLocationVo room : mLocationList.values()){
+    public String getLocationListAsString(){
+        StringBuilder stringBuilder = new StringBuilder();
 
-            if(stringBuilder == null){
-                stringBuilder = new StringBuilder();
-            }else{
-                stringBuilder.append(", ");
+        if(mLocationList.isEmpty()) return "";
+
+        for(TimeTableLocationVo room : mLocationList.values()){
+            if(room.getName() != null) {
+                stringBuilder.append(room.getName() + ", ");
             }
-            stringBuilder.append(room.getName());
         }
-        return stringBuilder != null ? stringBuilder.toString() : "";
+
+        if(stringBuilder.toString().isEmpty() || stringBuilder.length() <= 2){
+            return "";
+        } else {
+            return stringBuilder.substring(0, stringBuilder.length() - 2);
+        }
     }
 
     public String getWeekDayName(){
@@ -150,18 +154,22 @@ public class TimeTableEventVo implements Parcelable {
         return TimeTableUtils.getWeekDayName(cal.get(Calendar.DAY_OF_WEEK));
     }
 
-    public String getLecturer(){
-        StringBuilder stringBuilder = null;
-        for(LecturerVo lecturer: mLecturerList.values()){
+    public String getLecturerListAsString(){
+        StringBuilder stringBuilder = new StringBuilder();
 
-            if(stringBuilder == null){
-                stringBuilder = new StringBuilder();
-            }else{
-                stringBuilder.append(", ");
+        if(mLecturerList.isEmpty()) return "";
+
+        for(LecturerVo lecturer : mLecturerList.values()){
+            if(lecturer.getName() != null){
+                stringBuilder.append(lecturer.getName() + ", ");
             }
-            stringBuilder.append(lecturer.getName());
         }
-        return stringBuilder != null ? stringBuilder.toString() : "";
+
+        if(stringBuilder.toString().isEmpty() || stringBuilder.length() <= 2){
+            return "";
+        } else {
+            return stringBuilder.substring(0, stringBuilder.length() - 2);
+        }
     }
 
     @SerializedName("activityId")
