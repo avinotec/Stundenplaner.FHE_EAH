@@ -42,29 +42,6 @@ public class TimeTableWeekVo implements Parcelable {
         in.readMap(mDays, TimeTableDayVo.class.getClassLoader());
     }
 
-    @Override
-    public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeLong(mWeekStart);
-        dest.writeLong(mWeekEnd);
-        dest.writeInt(mSemesterWeek);
-        dest.writeMap(mDays);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Parcelable.Creator<TimeTableWeekVo> CREATOR = new Parcelable.Creator<TimeTableWeekVo>() {
-        public TimeTableWeekVo createFromParcel(final Parcel source) {
-            return new TimeTableWeekVo(source);
-        }
-
-        public TimeTableWeekVo[] newArray(final int size) {
-            return new TimeTableWeekVo[size];
-        }
-    };
-
     public Date getWeekStart() {
         //multiply by 1000 to convert from seconds to milliseconds
         Date date = new Date(mWeekStart * 1000);
@@ -82,11 +59,38 @@ public class TimeTableWeekVo implements Parcelable {
      * That's why one need to be added when the semester week number is displayed
      * @return
      */
-    public int getSemesterWeekForDisplay(){ return mSemesterWeek+1;}
+    public int getGuiSemesterWeek(){ return mSemesterWeek+1;}
 
     public Collection<TimeTableDayVo> getDays() {
         return mDays.values();
     }
+
+
+    // PARCELABLE --------------------------------------------------------------------------------
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(final Parcel dest, final int flags) {
+        dest.writeLong(mWeekStart);
+        dest.writeLong(mWeekEnd);
+        dest.writeInt(mSemesterWeek);
+        dest.writeMap(mDays);
+    }
+
+    public static final Parcelable.Creator<TimeTableWeekVo> CREATOR = new Parcelable.Creator<TimeTableWeekVo>() {
+        public TimeTableWeekVo createFromParcel(final Parcel source) {
+            return new TimeTableWeekVo(source);
+        }
+
+        public TimeTableWeekVo[] newArray(final int size) {
+            return new TimeTableWeekVo[size];
+        }
+    };
+
+    // End PARCELABLE ---------------------------------------------------------------------------------
 
     @SerializedName("weekStart")
     private long mWeekStart;

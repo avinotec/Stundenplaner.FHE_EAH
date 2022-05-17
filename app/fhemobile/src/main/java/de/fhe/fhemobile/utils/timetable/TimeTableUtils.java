@@ -39,10 +39,7 @@ public final class TimeTableUtils {
     }
 
 
-    private static Map<String, Integer> weekDayNames = null;
-
     public static String getWeekDayName(final int dayNumber){
-
         if(weekDayNames == null){
             Calendar cal = Calendar.getInstance();
             cal.setFirstDayOfWeek(Calendar.MONDAY);
@@ -57,9 +54,12 @@ public final class TimeTableUtils {
         return null;
     }
 
+
     public static String cutStudyProgramPrefix(String eventTitle){
         return eventTitle.replaceFirst("^[A-Z]+(/[A-Z]+)?\\(((BA)|(MA))\\)","");
     }
 
 
+
+    private static Map<String, Integer> weekDayNames = null;
 }

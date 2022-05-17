@@ -38,6 +38,8 @@ public final class TimeTableDayVo implements Parcelable {
         in.readMap(mEvents, TimeTableEventVo.class.getClassLoader());
     }
 
+    // PARCELABLE --------------------------------------------------------------------------------
+
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeInt(mDayNumber);
@@ -59,6 +61,7 @@ public final class TimeTableDayVo implements Parcelable {
         }
     };
 
+    // End PARCELABLE --------------------------------------------------------------------------------
 
 
     public String getDayName() {

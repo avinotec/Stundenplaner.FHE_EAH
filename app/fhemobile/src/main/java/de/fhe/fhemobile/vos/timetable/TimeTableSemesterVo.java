@@ -26,7 +26,7 @@ import java.util.ArrayList;
 /**
  * Value Object for a semester of a study program
  *
- * Created by paul on 12.03.15.
+ * Created by paul on 12.03.15
  * Edited by Nadja - 04/2022
  */
 public class TimeTableSemesterVo implements Parcelable {
@@ -43,18 +43,6 @@ public class TimeTableSemesterVo implements Parcelable {
         mStudyGroups = in.createTypedArrayList(TimeTableStudyGroupVo.CREATOR);
     }
 
-    public static final Creator<TimeTableSemesterVo> CREATOR = new Creator<TimeTableSemesterVo>() {
-        @Override
-        public TimeTableSemesterVo createFromParcel(final Parcel in) {
-            return new TimeTableSemesterVo(in);
-        }
-
-        @Override
-        public TimeTableSemesterVo[] newArray(final int size) {
-            return new TimeTableSemesterVo[size];
-        }
-    };
-
     public String getId() { return mId;  }
 
     public String getNumber() {
@@ -69,6 +57,7 @@ public class TimeTableSemesterVo implements Parcelable {
         return mStudyGroups;
     }
 
+    // PARCELABLE --------------------------------------------------------------------------------
     @Override
     public int describeContents() {
         return 0;
@@ -81,6 +70,20 @@ public class TimeTableSemesterVo implements Parcelable {
         dest.writeString(mTitle);
         dest.writeTypedList(mStudyGroups);
     }
+
+    public static final Creator<TimeTableSemesterVo> CREATOR = new Creator<TimeTableSemesterVo>() {
+        @Override
+        public TimeTableSemesterVo createFromParcel(final Parcel in) {
+            return new TimeTableSemesterVo(in);
+        }
+
+        @Override
+        public TimeTableSemesterVo[] newArray(final int size) {
+            return new TimeTableSemesterVo[size];
+        }
+    };
+
+    // End PARCELABLE --------------------------------------------------------------------------------
 
     @SerializedName("posId")
     private String mId;

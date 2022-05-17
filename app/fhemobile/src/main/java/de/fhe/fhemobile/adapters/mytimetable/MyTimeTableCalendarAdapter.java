@@ -139,7 +139,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 		//set texts: title, time, room, lecturer
 		final TextView eventTitle = (TextView) convertView.findViewById(R.id.tv_mytimetable_calendar_eventtitle);
-		eventTitle.setText(currentItem.getTitle());
+		eventTitle.setText(currentItem.getGuiTitle());
 
 		final TextView eventTime = (TextView) convertView.findViewById(R.id.tv_mytimetable_calendar_eventtime);
 		eventTime.setText(currentItem.getStartTimeString() + " – " + currentItem.getEndTimeString()); // $NON-NLS

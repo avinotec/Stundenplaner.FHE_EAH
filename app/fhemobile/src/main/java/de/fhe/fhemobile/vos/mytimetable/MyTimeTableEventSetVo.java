@@ -69,38 +69,6 @@ public class MyTimeTableEventSetVo implements Parcelable {
 
 	public List<TimeTableLocationVo> getLocationList() { return new ArrayList<>(mLocationMap.values()); }
 
-	public Map<String, TimeTableLocationVo> getLocationMap() {
-		return mLocationMap;
-	}
-
-	public MyTimeTableEventDateVo getFirstEvent() {
-		List<MyTimeTableEventDateVo> eventTimes = new ArrayList<>(mEventDates.values());
-		Collections.sort(eventTimes, new MyTimeTableEventTimeComparator());
-		return !mEventDates.isEmpty() ? eventTimes.get(0) : null;
-	}
-
-
-	/**
-	 * Adds all names of the study groups list to one long string
-	 * @return study group list as string
-	 */
-	public String getStudyGroupListString(){
-
-		List<TimeTableStudyGroupVo> studyGroups = new ArrayList<>(mStudyGroups.values());
-		Collections.sort(studyGroups, new StudyGroupComparator());
-		StringBuilder combinedStudyGroups = new StringBuilder();
-
-		if(!mStudyGroups.isEmpty()) {
-			for (TimeTableStudyGroupVo studyGroup : studyGroups) {
-				combinedStudyGroups.append(studyGroup.getNumber()).append(", ");
-			}
-			return combinedStudyGroups.substring(0, combinedStudyGroups.length() - 2);
-
-		} else {
-			return "";
-		}
-	}
-
 	// PARCELABLE --------------------------------------------------------------------------------
 
 	private MyTimeTableEventSetVo(final Parcel in) {
@@ -133,6 +101,8 @@ public class MyTimeTableEventSetVo implements Parcelable {
 			return new MyTimeTableEventSetVo[size];
 		}
 	};
+
+	// End PARCELABLE --------------------------------------------------------------------------------
 
 
 	@SerializedName("activityId")

@@ -169,7 +169,6 @@ public class MyTimeTableEventSeriesVo implements Parcelable{
 		dest.writeList(mStudyGroups);
 		dest.writeList(mEvents);
 		dest.writeByte((byte) (subscribed ? 1 : 0));
-
 	}
 
 	public static final Creator<MyTimeTableEventSeriesVo> CREATOR = new Creator<MyTimeTableEventSeriesVo>() {
@@ -183,6 +182,9 @@ public class MyTimeTableEventSeriesVo implements Parcelable{
 			return new MyTimeTableEventSeriesVo[size];
 		}
 	};
+
+	// End PARCELABLE --------------------------------------------------------------------------------
+
 
 	@SerializedName("title")
 	private String mTitle;

@@ -75,7 +75,7 @@ public class MyTimeTableDialogView extends LinearLayout {
         mSemesterPicker     = (SemesterPicker)      findViewById(R.id.semesterpicker_mytimetable_dialog);
         mProgressIndicator  = (ProgressBar)         findViewById(R.id.progressbar_mytimetable_dialog);
 
-        mCourseListView = (ListView) findViewById(R.id.listview_mytimetable_dialog_courses);
+        mCourseListView = (ListView) findViewById(R.id.listview_mytimetable_dialog_events);
     }
 
 

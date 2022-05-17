@@ -42,61 +42,7 @@ public class TimeTableEventVo implements Parcelable {
     public TimeTableEventVo() {
     }
 
-    public TimeTableEventVo(String title,
-                            long startDateTime,
-                            long endDateTime,
-                            Map<String, LecturerVo> lecturerList,
-                            Map<String, TimeTableLocationVo> locationList){
-        mTitle = title;
-        mStartDate = startDateTime;
-        mEndDate = endDateTime;
-        mStartDateTime = startDateTime;
-        mEndDateTime = endDateTime;
-        mLecturerList = lecturerList;
-        mLocationList = locationList;
-
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeString(mId);
-        dest.writeString(mTitle);
-        dest.writeLong(mStartDate);
-        dest.writeLong(mEndDate);
-        dest.writeLong(mStartDateTime);
-        dest.writeLong(mEndDateTime);
-        dest.writeMap(mLecturerList);
-        dest.writeMap(mLocationList);
-    }
-
-    private TimeTableEventVo(final Parcel in) {
-        mId = in.readString();
-        this.mTitle = in.readString();
-        mStartDate = in.readLong();
-        mEndDate = in.readLong();
-        this.mStartDateTime = in.readLong();
-        this.mEndDateTime = in.readLong();
-        in.readMap(mLecturerList , LecturerVo.class.getClassLoader());
-        in.readMap(mLocationList, TimeTableLocationVo.class.getClassLoader());
-    }
-
-
-    public static final Parcelable.Creator<TimeTableEventVo> CREATOR = new Parcelable.Creator<TimeTableEventVo>() {
-        public TimeTableEventVo createFromParcel(final Parcel source) {
-            return new TimeTableEventVo(source);
-        }
-
-        public TimeTableEventVo[] newArray(final int size) {
-            return new TimeTableEventVo[size];
-        }
-    };
-
-    public String getTitle() {
+    public String getGuiTitle() {
         return cutStudyProgramPrefix(mTitle);
     }
 
@@ -105,21 +51,15 @@ public class TimeTableEventVo implements Parcelable {
     }
 
     public long getStartDateTime() {
+        //multiply by 1000 to convert from seconds to milliseconds
         return mStartDateTime * 1000;
     }
 
     public long getEndDateTime() {
+        //multiply by 1000 to convert from seconds to milliseconds
         return mEndDateTime * 1000;
     }
 
-    /**
-     * Returns only date (Date object with time 00:00:00)
-     * @return
-     */
-    public Date getStartDate() {
-        //multiply by 1000 to convert from seconds to milliseconds
-        return new Date(mStartDate * 1000);
-    }
 
     public String getStartTime(){
         //multiply by 1000 to convert from seconds to milliseconds
@@ -148,12 +88,6 @@ public class TimeTableEventVo implements Parcelable {
         }
     }
 
-    public String getWeekDayName(){
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date(mStartDate * 1000));
-        return TimeTableUtils.getWeekDayName(cal.get(Calendar.DAY_OF_WEEK));
-    }
-
     public String getLecturerListAsString(){
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -172,17 +106,51 @@ public class TimeTableEventVo implements Parcelable {
         }
     }
 
+    // PARCELABLE --------------------------------------------------------------------------------
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(final Parcel dest, final int flags) {
+        dest.writeString(mId);
+        dest.writeString(mTitle);
+        dest.writeLong(mStartDateTime);
+        dest.writeLong(mEndDateTime);
+        dest.writeMap(mLecturerList);
+        dest.writeMap(mLocationList);
+    }
+
+    private TimeTableEventVo(final Parcel in) {
+        mId = in.readString();
+        this.mTitle = in.readString();
+        this.mStartDateTime = in.readLong();
+        this.mEndDateTime = in.readLong();
+        in.readMap(mLecturerList , LecturerVo.class.getClassLoader());
+        in.readMap(mLocationList, TimeTableLocationVo.class.getClassLoader());
+    }
+
+
+    public static final Parcelable.Creator<TimeTableEventVo> CREATOR = new Parcelable.Creator<TimeTableEventVo>() {
+        public TimeTableEventVo createFromParcel(final Parcel source) {
+            return new TimeTableEventVo(source);
+        }
+
+        public TimeTableEventVo[] newArray(final int size) {
+            return new TimeTableEventVo[size];
+        }
+    };
+
+    // End PARCELABLE --------------------------------------------------------------------------------
+
+
     @SerializedName("activityId")
     private String mId;
 
     @SerializedName("activityName")
     private String mTitle;
-
-    @SerializedName("activityStartDate")
-    private long mStartDate;
-
-    @SerializedName("activityEndDate")
-    private long mEndDate;
 
     @SerializedName("activitydatetimeStartDateTime")
     private long mStartDateTime;

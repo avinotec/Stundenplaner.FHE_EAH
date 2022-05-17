@@ -40,22 +40,8 @@ public class TimeTableStudyProgramVo implements Parcelable {
         mShortTitle = in.readString();
         mLongTitle = in.readString();
         mDegree = in.readString();
-        //note: readHashMap reads data from a Parcel into an EXISTING map
-        mSemesters = new HashMap<>();
-        mSemesters = in.readHashMap(TimeTableSemesterVo.class.getClassLoader());
+        in.readMap(mSemesters, TimeTableSemesterVo.class.getClassLoader());
     }
-
-    public static final Creator<TimeTableStudyProgramVo> CREATOR = new Creator<TimeTableStudyProgramVo>() {
-        @Override
-        public TimeTableStudyProgramVo createFromParcel(final Parcel in) {
-            return new TimeTableStudyProgramVo(in);
-        }
-
-        @Override
-        public TimeTableStudyProgramVo[] newArray(final int size) {
-            return new TimeTableStudyProgramVo[size];
-        }
-    };
 
     public String getId() {
         return mShortTitle;
@@ -89,6 +75,8 @@ public class TimeTableStudyProgramVo implements Parcelable {
         return mDegree;
     }
 
+    // PARCELABLE --------------------------------------------------------------------------------
+
     @Override
     public int describeContents() {
         return 0;
@@ -102,6 +90,20 @@ public class TimeTableStudyProgramVo implements Parcelable {
         dest.writeMap(mSemesters);
     }
 
+    public static final Creator<TimeTableStudyProgramVo> CREATOR = new Creator<TimeTableStudyProgramVo>() {
+        @Override
+        public TimeTableStudyProgramVo createFromParcel(final Parcel in) {
+            return new TimeTableStudyProgramVo(in);
+        }
+
+        @Override
+        public TimeTableStudyProgramVo[] newArray(final int size) {
+            return new TimeTableStudyProgramVo[size];
+        }
+    };
+
+    // End PARCELABLE --------------------------------------------------------------------------------
+
 
     @SerializedName("stgNameshort")
     private String              mShortTitle;
@@ -113,5 +115,5 @@ public class TimeTableStudyProgramVo implements Parcelable {
     private String              mDegree;
 
     @SerializedName("semesterData")
-    private Map<String, TimeTableSemesterVo> mSemesters;
+    private Map<String, TimeTableSemesterVo> mSemesters = new HashMap<>();
 }

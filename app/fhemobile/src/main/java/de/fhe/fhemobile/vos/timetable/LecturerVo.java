@@ -17,6 +17,12 @@ public class LecturerVo implements Parcelable {
         mName = in.readString();
     }
 
+    public String getName() {
+        return mName;
+    }
+
+    // PARCELABLE --------------------------------------------------------------------------------
+
     public static final Parcelable.Creator<LecturerVo> CREATOR = new Parcelable.Creator<LecturerVo>(){
         @Override
         public LecturerVo createFromParcel(Parcel parcel) {
@@ -40,9 +46,7 @@ public class LecturerVo implements Parcelable {
         dest.writeString(mName);
     }
 
-    public String getName() {
-        return mName;
-    }
+    // End PARCELABLE --------------------------------------------------------------------------------
 
     @SerializedName("staffId")
     private String mId;

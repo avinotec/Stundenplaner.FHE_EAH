@@ -43,8 +43,9 @@ public class SemesterPicker extends IdPicker {
 
     @Override
     protected String getId(final int _Position) {
-        //use number not id because for the StudyGroupPicker we want the number of the chosen object,
-        // not the id (the number is used as key in the map containing all semesterVos)
+        //Use number not id because it is used as key in the map of all SemesterVos.
+        // By getting the number we can find the SemesterVo
+        // and can get the list of study groups for the StudyGroupPicker from it
         return mItems.get(_Position).getNumber();
     }
 

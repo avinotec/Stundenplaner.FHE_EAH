@@ -100,9 +100,9 @@ public class MyTimeTableEventVo implements Parcelable{
         }
     };
 
-    //end PARCELABLE ---------------------------------------------------------------------------------
+    // End PARCELABLE ---------------------------------------------------------------------------------
 
-    public String getTitle() {
+    public String getGuiTitle() {
         return cutStudyProgramPrefix(mTitle);
     }
 

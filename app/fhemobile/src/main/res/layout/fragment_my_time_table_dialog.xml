@@ -65,7 +65,7 @@
 
 
             <ListView
-                android:id="@+id/listview_mytimetable_dialog_courses"
+                android:id="@+id/listview_mytimetable_dialog_events"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="gone"

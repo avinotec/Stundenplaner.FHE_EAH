@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                         final ResponseModel.Change change = iterator.next();
                         boolean isInNegativeList = false;
                         for(final String[] negativeEvent : negativeList){
-                            if ( change.getNewEventJson().getTitle().contains(negativeEvent[0])
+                            if ( change.getNewEventJson().getGuiTitle().contains(negativeEvent[0])
                                     && change.getSetSplusKey().equals( negativeEvent[1] ) ) {
                                 isInNegativeList = true;
                                 break;

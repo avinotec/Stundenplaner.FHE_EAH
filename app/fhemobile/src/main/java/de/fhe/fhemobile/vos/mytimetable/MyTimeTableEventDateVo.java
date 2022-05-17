@@ -41,6 +41,7 @@ public class MyTimeTableEventDateVo implements Parcelable{
 
     /**
      * Get start date time in seconds
+     * (attention: needs to be multiplied by 1000 when used to create a {@link Date})
      * @return
      */
     public long getStartDateTimeInSec() {
@@ -49,6 +50,7 @@ public class MyTimeTableEventDateVo implements Parcelable{
 
     /**
      * Get end date time in seconds
+     * (attention: needs to be multiplied by 1000 when used to create a {@link Date})
      * @return
      */
     public long getEndDateTimeInSec() {

@@ -36,24 +36,8 @@ public class TimeTableStudyGroupVo implements Parcelable {
         mNumber = in.readString();
     }
 
-    public static final Creator<TimeTableStudyGroupVo> CREATOR = new Creator<TimeTableStudyGroupVo>() {
-        @Override
-        public TimeTableStudyGroupVo createFromParcel(final Parcel in) {
-            return new TimeTableStudyGroupVo(in);
-        }
-
-        @Override
-        public TimeTableStudyGroupVo[] newArray(final int size) {
-            return new TimeTableStudyGroupVo[size];
-        }
-    };
-
     public String getTitle() {
         return mTitle;
-    }
-
-    public void setTitle(final String _title) {
-        mTitle = _title;
     }
 
     public String getStudyGroupId() {
@@ -69,6 +53,8 @@ public class TimeTableStudyGroupVo implements Parcelable {
         return mNumber;
     }
 
+
+    // PARCELABLE --------------------------------------------------------------------------------
     @Override
     public int describeContents() {
         return 0;
@@ -80,6 +66,20 @@ public class TimeTableStudyGroupVo implements Parcelable {
         dest.writeString(mTitle);
         dest.writeString(mNumber);
     }
+
+    public static final Creator<TimeTableStudyGroupVo> CREATOR = new Creator<TimeTableStudyGroupVo>() {
+        @Override
+        public TimeTableStudyGroupVo createFromParcel(final Parcel in) {
+            return new TimeTableStudyGroupVo(in);
+        }
+
+        @Override
+        public TimeTableStudyGroupVo[] newArray(final int size) {
+            return new TimeTableStudyGroupVo[size];
+        }
+    };
+
+    // End PARCELABLE --------------------------------------------------------------------------------
 
     //not SPLUS-Id
     @SerializedName("studentsetId")

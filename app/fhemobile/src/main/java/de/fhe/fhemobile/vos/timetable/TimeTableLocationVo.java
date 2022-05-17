@@ -17,6 +17,12 @@ public class TimeTableLocationVo implements Parcelable {
         mName = in.readString();
     }
 
+    public String getName() {
+        return mName;
+    }
+
+    // PARCELABLE ---------------------------------------------------------------------------------
+
     @Override
     public int describeContents() {
         return 0;
@@ -40,9 +46,7 @@ public class TimeTableLocationVo implements Parcelable {
         }
     };
 
-    public String getName() {
-        return mName;
-    }
+    // End PARCELABLE ---------------------------------------------------------------------------------
 
     @SerializedName("locationId")
     private String mId;

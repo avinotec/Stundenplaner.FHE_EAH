@@ -199,7 +199,7 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 						//TODO: Negativ Liste von der gespeicherten Liste erstellen
 						boolean isInNegativeList = false;
 						for (String[] negativeEvent : negativeList) {
-							if (change.getNewEventJson().getTitle().contains(negativeEvent[0])
+							if (change.getNewEventJson().getGuiTitle().contains(negativeEvent[0])
 									&& change.getSetSplusKey().equals(negativeEvent[1])) {
 								isInNegativeList = true;
 								break;
