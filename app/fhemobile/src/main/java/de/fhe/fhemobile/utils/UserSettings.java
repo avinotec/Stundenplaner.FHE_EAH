@@ -33,6 +33,7 @@ import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.settings.UserDefaults;
+import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.vos.canteen.CanteenVo;
 
 /**
@@ -64,14 +65,18 @@ public class UserSettings {
         mSP = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext());
 
         //Canteen
-        final String json = mSP.getString(Define.Canteen.PREF_SELECTED_CANTEENS, "");
-        //skip if json is empty
-        if ( !json.isEmpty() && !"null".equals(json)) {
-            final Gson gson = new Gson();
-            final Type listType = new TypeToken<ArrayList<CanteenVo>>(){}.getType();
-            mSelectedCanteens = gson.fromJson(json, listType);
-            Log.d(TAG, "Loaded selected canteens " + mSelectedCanteens);
+        String json = mSP.getString(Define.Canteen.PREF_SELECTED_CANTEENS, "");
+        Log.d(TAG, "json loaded: " + json);
+
+        //if json is empty, set default
+        if (json.isEmpty() || "null".equals(json) || "[]".equals(json)) {
+            json = UserDefaults.DEFAULT_CANTEEN_SELECTION;
         }
+        //set canteen selection
+        final Gson gson = new Gson();
+        final Type listType = new TypeToken<ArrayList<CanteenVo>>(){}.getType();
+        mSelectedCanteens = gson.fromJson(json, listType);
+        Log.d(TAG, "Loaded selected canteens " + mSelectedCanteens);
 
 
         //News

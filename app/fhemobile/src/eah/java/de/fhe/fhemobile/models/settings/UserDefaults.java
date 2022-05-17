@@ -20,10 +20,12 @@ package de.fhe.fhemobile.models.settings;
 /**
  * Created by kern on 18.09.14.
  */
-public final class UserDefaults
-{
-    public static final String DEFAULT_CANTEEN_ID = "3391";
-    public static final String DEFAULT_CANTEEN_NAME = "Canteen Carl-Zeiss-Promenade";
+public final class UserDefaults {
 
+    public static final String DEFAULT_CANTEEN_SELECTION =
+            "[{\"id\":\"58\",\"name\":\"Mensa Carl-Zeiss-Promenade\"}," +    //$NON-NLS
+            "{\"id\":\"61\",\"name\":\"Cafeteria EAH\"}]";                   //$NON-NLS
+
+    
     public static final String DEFAULT_NEWS_ID = "1";
 }
