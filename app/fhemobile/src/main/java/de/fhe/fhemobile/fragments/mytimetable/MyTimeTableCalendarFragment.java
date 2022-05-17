@@ -86,9 +86,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 
 		askForTimeTableDeletionAfterTurnOfSemester();
 
-		//todo: check if this comment is up to date
-		//unterhalb der Liste wird immer "Kein Kurs gewählt" angezeigt. Dieser Text ist aber nicht immer sichtbar.
-		// Daher ist das Feld in den Fragment Ressourcen vorhanden
+		//Set text view to show if list is empty
 		mView.setEmptyCalenderView();
 
 		return mView;

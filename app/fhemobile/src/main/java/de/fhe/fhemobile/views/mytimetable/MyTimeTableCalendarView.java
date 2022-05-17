@@ -43,7 +43,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
 
     public void initializeView(final OnClickListener onClickListener) {
         // button "modify schedule"
-        final Button mBtnModifySchedule = (Button) findViewById(R.id.btn_mytimetable_calendar_modify_Schedule);
+        final Button mBtnModifySchedule = (Button) findViewById(R.id.btn_mytimetable_calendar_my_courses);
         mBtnModifySchedule.setOnClickListener(onClickListener);
 
     }
@@ -53,7 +53,6 @@ public class MyTimeTableCalendarView extends LinearLayout {
         super.onFinishInflate();
         mCalendarListView = (ListView) findViewById(R.id.lv_mytimetable_calendar_courses);
 
-        //TODO Behelf, soll automatisch auf den aktuellen Eintrag vorgesprungen werden
         final Button mJumpCurrentLesson = (Button) findViewById(R.id.btn_mytimetable_calendar_jump_to_today);
         mJumpCurrentLesson.setOnClickListener(new OnClickListener() {
             @Override
@@ -80,8 +79,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
      * Sets view to show if the event list is empty
      */
     public void setEmptyCalenderView(){
-        final TextView emptyView = new TextView( getContext() );
-        emptyView.setText(getResources().getString(R.string.my_time_table_empty_text_select));
+        final TextView emptyView = findViewById(R.id.tv_mytimetable_calendar_empty);
         mCalendarListView.setEmptyView(emptyView);
     }
 

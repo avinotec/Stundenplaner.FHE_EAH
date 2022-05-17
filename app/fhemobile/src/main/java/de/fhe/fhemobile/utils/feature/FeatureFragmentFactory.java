@@ -36,7 +36,6 @@ public final class FeatureFragmentFactory {
     public static FeatureFragment getFeaturedFragment(final int _FeatureId) {
         final FeatureFragment fragment;
 
-        //TODO Features
         switch (_FeatureId) {
             case Features.FeatureId.MYTIMETABLE:     fragment = MyTimeTableCalendarFragment.newInstance();  break;
             case Features.FeatureId.CANTEEN:         fragment = CanteenFragment.newInstance();            break;

@@ -126,7 +126,7 @@ public class MyTimeTableOverviewView extends LinearLayout {
      */
     public void setCourseListEmptyView(){
         final TextView emptyView = new TextView( getContext() );
-        emptyView.setText(getResources().getString(R.string.my_time_table_empty_text_select));
+        emptyView.setText(getResources().getString(R.string.my_time_table_empty));
         mCourseListView.setEmptyView(emptyView);
     }
 

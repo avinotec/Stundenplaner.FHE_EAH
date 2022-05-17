@@ -47,7 +47,6 @@ import retrofit2.http.Query;
  */
 public interface ApiDeclaration {
 
-    //TODO Features
     @GET(Endpoints.PHONEBOOK)
     Call<ArrayList<EmployeeVo>> fetchEmployees(@Query(Endpoints.PARAM_FNAME) String _FirstName, @Query(Endpoints.PARAM_LNAME) String _LastName);
     

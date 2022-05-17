@@ -36,7 +36,5 @@ public class CanteenPagerAdapter extends FragmentStateAdapter {
         return fragments.size();
     }
 
-    //todo: reconstruction canteen - delete or add fragment on user settings changed
-
     private final ArrayList<CanteenMenuFragment> fragments = new ArrayList<>();
 }

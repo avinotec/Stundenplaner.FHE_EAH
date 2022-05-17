@@ -40,9 +40,6 @@ public abstract class SearchView extends LinearLayout {
         mQrButton.setOnClickListener(mQrClickListener);
         mGoButton.setOnClickListener(mGoClickListener);
         toggleGoButtonEnabled(false);
-
-        //todo: delete when QR codes ready
-        //findViewById(R.id.navigationButtonQR).setVisibility(GONE);
     }
 
     @Override

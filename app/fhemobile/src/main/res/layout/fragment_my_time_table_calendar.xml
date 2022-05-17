@@ -38,7 +38,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btn_mytimetable_calendar_modify_Schedule"
+                android:id="@+id/btn_mytimetable_calendar_my_courses"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -70,12 +70,21 @@
 
         <View style="@style/Divider"/>
 
+
         <ListView
             android:id="@+id/lv_mytimetable_calendar_courses"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
-
         </ListView>
+
+        <TextView
+            android:id="@+id/tv_mytimetable_calendar_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="@string/my_time_table_empty_text_calendar"/>
 
         <View style="@style/Divider"/>
 

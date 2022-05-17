@@ -55,7 +55,6 @@ public final class FeatureProvider {
     public static List<DrawerItem> getFeaturedItems() {
         final ArrayList<DrawerItem> list = new ArrayList<>();
 
-        //TODO Features
         if (Features.TIMETABLE) {
             list.add(new DrawerItem(Features.FeatureId.TIMETABLE, getFeatureTitle(Features.FeatureId.TIMETABLE)));
         }
@@ -112,7 +111,6 @@ public final class FeatureProvider {
         String result = "";
         int stringRes = -1;
 
-        //TODO Features
         switch (_FeatureId) {
             case Features.FeatureId.TIMETABLE:       stringRes = R.string.drawer_timetable; break;
             case Features.FeatureId.MYTIMETABLE:     stringRes = R.string.drawer_mytimetable; break;
