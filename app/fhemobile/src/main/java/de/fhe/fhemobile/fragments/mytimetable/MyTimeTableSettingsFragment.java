@@ -50,7 +50,7 @@ import de.fhe.fhemobile.models.timeTableChanges.RequestModel;
 import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.services.PushNotificationService;
-import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
+import de.fhe.fhemobile.views.mytimetable.MyTimeTableSettingsView;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -58,14 +58,14 @@ import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MyTimeTableOverviewFragment#newInstance} factory method to
+ * Use the {@link MyTimeTableSettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  *
  * Fragment of view showing overview of all subscribed courses
  */
-public class MyTimeTableOverviewFragment extends FeatureFragment {
+public class MyTimeTableSettingsFragment extends FeatureFragment {
 
-	public static final String TAG = MyTimeTableOverviewFragment.class.getSimpleName();
+	public static final String TAG = MyTimeTableSettingsFragment.class.getSimpleName();
 
 
 	private static final int CHANGEREASON_EDIT = 1;
@@ -79,14 +79,14 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 	 *
 	 * @return A new instance of fragment TimeTableDialogFragment.
 	 */
-	public static MyTimeTableOverviewFragment newInstance() {
-		final MyTimeTableOverviewFragment fragment = new MyTimeTableOverviewFragment();
+	public static MyTimeTableSettingsFragment newInstance() {
+		final MyTimeTableSettingsFragment fragment = new MyTimeTableSettingsFragment();
 		final Bundle args = new Bundle();
 		fragment.setArguments(args);
 		return fragment;
 	}
 
-	public MyTimeTableOverviewFragment() {
+	public MyTimeTableSettingsFragment() {
 		// Required empty public constructor
 	}
 
@@ -100,8 +100,8 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
 							 final Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		final MyTimeTableOverviewView mView = (MyTimeTableOverviewView) inflater.inflate(
-				R.layout.fragment_my_time_table_overview, container, false);
+		final MyTimeTableSettingsView mView = (MyTimeTableSettingsView) inflater.inflate(
+				R.layout.fragment_my_time_table_settings, container, false);
 		mView.initializeView(getChildFragmentManager());
 
 		mView.setCourseListEmptyView();
@@ -170,7 +170,7 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 							}
 							Log.d(TAG, "Error in Schedule Change Server: " + sErrorText);
 
-//							AlertDialog.Builder builder1 = new AlertDialog.Builder(MyTimeTableOverviewFragment.this.getContext().getApplicationContext());
+//							AlertDialog.Builder builder1 = new AlertDialog.Builder(MyTimeTableSettingsFragment.this.getContext().getApplicationContext());
 //							builder1.setMessage("Push Notifications: Error in Schedule Change Server: " + sErrorText);
 //							AlertDialog alert11 = builder1.create();
 //							alert11.show();
@@ -190,7 +190,7 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 
 					final List<ResponseModel.Change> changes = response.body().getChanges();
 
-					final List<String[]> negativeList = MyTimeTableOverviewView.generateNegativeLessons();
+					final List<String[]> negativeList = MyTimeTableSettingsView.generateNegativeLessons();
 					final Iterator<ResponseModel.Change> iterator = changes.iterator();
 
 					while (iterator.hasNext()) {
@@ -217,7 +217,7 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 //					changesAsString+=(change.getChangesReasonText()+"/n/n");
 //				}
 
-//                new AlertDialog.Builder(MyTimeTableOverviewFragment.this.getActivity())
+//                new AlertDialog.Builder(MyTimeTableSettingsFragment.this.getActivity())
 //                        .setTitle("Änderungen")
 //                       // .setMessage(changesAsString)
 //                        .setMessage("test")
@@ -282,3 +282,4 @@ public class MyTimeTableOverviewFragment extends FeatureFragment {
 	}
 
 }
+

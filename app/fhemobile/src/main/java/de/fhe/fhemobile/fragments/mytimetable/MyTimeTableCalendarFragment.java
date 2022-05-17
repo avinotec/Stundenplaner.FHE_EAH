@@ -23,6 +23,7 @@ import static de.fhe.fhemobile.utils.Define.MyTimeTable.SP_MYTIMETABLE;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -41,8 +42,11 @@ import java.util.Locale;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
+import de.fhe.fhemobile.activities.SettingsActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.fragments.canteen.CanteenSettingsFragment;
 import de.fhe.fhemobile.utils.Define;
+import de.fhe.fhemobile.utils.feature.Features;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableCalendarView;
 
 public class MyTimeTableCalendarFragment extends FeatureFragment {
@@ -113,8 +117,9 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 			return true;
 		}
 		if (_Item.getItemId() == R.id.action_edit_my_courses) {
-			((MainActivity) getActivity()).changeFragment(MyTimeTableOverviewFragment.newInstance(),
-					true, MyTimeTableOverviewFragment.TAG);
+			final Intent intent = new Intent(getActivity(), SettingsActivity.class);
+			intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.MYTIMETABLE);
+			startActivity(intent);
 			return true;
 		}
 		return super.onOptionsItemSelected(_Item);

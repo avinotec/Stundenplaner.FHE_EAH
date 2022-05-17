@@ -54,7 +54,7 @@ import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableCalendarAdapter;
-import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableOverviewAdapter;
+import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableSettingsAdapter;
 import de.fhe.fhemobile.fragments.DrawerFragment;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
@@ -70,7 +70,7 @@ import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.feature.FeatureFragmentFactory;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
-import de.fhe.fhemobile.views.mytimetable.MyTimeTableOverviewView;
+import de.fhe.fhemobile.views.mytimetable.MyTimeTableSettingsView;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     private static final int CHANGEREASON_DELETE = 2;
 
     public static MyTimeTableCalendarAdapter myTimeTableCalendarAdapter;
-    public static MyTimeTableOverviewAdapter myTimeTableOverviewAdapter;
+    public static MyTimeTableSettingsAdapter myTimeTableSettingsAdapter;
 
 
     @Override
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         mTitle = getTitle();
 
 
-        myTimeTableOverviewAdapter = new MyTimeTableOverviewAdapter(
+        myTimeTableSettingsAdapter = new MyTimeTableSettingsAdapter(
                 Main.getAppContext(), subscribedEventSeries);
 
         myTimeTableCalendarAdapter = new MyTimeTableCalendarAdapter();
@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
                     final List<ResponseModel.Change> changes = response.body().getChanges();
 
-                    final List<String[]> negativeList = MyTimeTableOverviewView.generateNegativeLessons();
+                    final List<String[]> negativeList = MyTimeTableSettingsView.generateNegativeLessons();
                     final Iterator<ResponseModel.Change> iterator = changes.iterator();
 
                     while(iterator.hasNext()){
@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 //					changesAsString+=(change.getChangesReasonText()+"/n/n");
 //				}
 
-//                new AlertDialog.Builder(MyTimeTableOverviewFragment.this.getActivity())
+//                new AlertDialog.Builder(MyTimeTableSettingsFragment.this.getActivity())
 //                        .setTitle("Änderungen")
 //                       // .setMessage(changesAsString)
 //                        .setMessage("test")
@@ -442,7 +442,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
         myTimeTableCalendarAdapter.setItems(getAllSubscribedTimeTableEvents());
         myTimeTableCalendarAdapter.notifyDataSetChanged();
-        myTimeTableOverviewAdapter.notifyDataSetChanged();
+        myTimeTableSettingsAdapter.notifyDataSetChanged();
     }
 
 
@@ -454,7 +454,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
         myTimeTableCalendarAdapter.setItems(getAllSubscribedTimeTableEvents());
         myTimeTableCalendarAdapter.notifyDataSetChanged();
-        myTimeTableOverviewAdapter.notifyDataSetChanged();
+        myTimeTableSettingsAdapter.notifyDataSetChanged();
     }
 
 
@@ -465,7 +465,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
         myTimeTableCalendarAdapter.setItems(getAllSubscribedTimeTableEvents());
         myTimeTableCalendarAdapter.notifyDataSetChanged();
-        myTimeTableOverviewAdapter.notifyDataSetChanged();
+        myTimeTableSettingsAdapter.notifyDataSetChanged();
     }
 
     private static void saveSubscribedEventSeriesToSharedPreferences() {

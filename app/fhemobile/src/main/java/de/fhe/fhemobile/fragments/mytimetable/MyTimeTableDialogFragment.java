@@ -69,7 +69,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment MyTimeTableOverviewFragment.
+     * @return A new instance of fragment MyTimeTableSettingsFragment.
      */
     public static MyTimeTableDialogFragment newInstance() {
         final MyTimeTableDialogFragment fragment = new MyTimeTableDialogFragment();

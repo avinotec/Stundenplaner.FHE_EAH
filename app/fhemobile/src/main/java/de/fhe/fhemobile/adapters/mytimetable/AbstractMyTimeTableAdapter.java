@@ -44,7 +44,7 @@ import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventVo;
 
 /**
- * Abstract class for {@link MyTimeTableDialogAdapter} and {@link MyTimeTableOverviewAdapter}
+ * Abstract class for {@link MyTimeTableDialogAdapter} and {@link MyTimeTableSettingsAdapter}
  * Created by Nadja - 02/2022
  */
 public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {

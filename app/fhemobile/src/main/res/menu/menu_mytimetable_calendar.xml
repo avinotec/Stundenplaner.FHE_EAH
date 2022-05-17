@@ -27,7 +27,7 @@
           app:showAsAction="always" />
 
     <item android:id="@+id/action_edit_my_courses"
-        android:icon="@drawable/ic_tune"
+        android:icon="@drawable/ic_more_vert"
         android:title="@string/action_settings"
         android:orderInCategory="100"
         app:showAsAction="always" />

@@ -35,17 +35,17 @@ import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableDialogFragment;
 
 
-public class MyTimeTableOverviewView extends LinearLayout {
+public class MyTimeTableSettingsView extends LinearLayout {
 
     private FragmentManager mFragmentManager;
     private ListView mCourseListView;
 
 
-    public MyTimeTableOverviewView(final Context context, final AttributeSet attrs) {
+    public MyTimeTableSettingsView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public MyTimeTableOverviewView(final Context context) {
+    public MyTimeTableSettingsView(final Context context) {
         super(context);
     }
 
@@ -58,7 +58,7 @@ public class MyTimeTableOverviewView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        final FloatingActionButton mAddButton = (FloatingActionButton) findViewById(R.id.btn_mytimetable_overview_add_eventseries);
+        final FloatingActionButton mAddButton = (FloatingActionButton) findViewById(R.id.btn_mytimetable_settings_add_eventseries);
         mAddButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -67,8 +67,8 @@ public class MyTimeTableOverviewView extends LinearLayout {
         });
 
 
-        mCourseListView = (ListView) findViewById(R.id.listview_mytimetable_overview_courses);
-        mCourseListView.setAdapter(MainActivity.myTimeTableOverviewAdapter);
+        mCourseListView = (ListView) findViewById(R.id.listview_mytimetable_settings);
+        mCourseListView.setAdapter(MainActivity.myTimeTableSettingsAdapter);
     }
 
     /**

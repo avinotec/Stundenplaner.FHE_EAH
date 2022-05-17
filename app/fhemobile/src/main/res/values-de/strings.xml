@@ -94,7 +94,7 @@
     <string name="loading">Lädt…</string>
 
     <!-- My Time Table -->
-    <string name="my_time_table_overview_headline">Meine Kurse</string>
+    <string name="my_time_table_settings_headline">Meine Kurse</string>
     <string name="my_time_table_calendar_headline">Mein Stundenplan</string>
 	<string name="my_time_table_add_course">Kurs hinzufügen</string>
     <string name="my_time_table_dialog_headline" >Wähle bitte Studiengang und Semester.</string>

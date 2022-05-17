@@ -99,7 +99,7 @@
     <string name="my_time_table_empty">Choose study program and semester.</string>
     <string name="jump_to_current_lesson">>> Today</string>
     <string name="today">Today</string>
-    <string name="my_time_table_overview_headline">My Courses</string>
+    <string name="my_time_table_settings_headline">My Courses</string>
     <string name="my_time_table_calendar_headline">My Timetable</string>
 
     <string name="deleteTimetableTitle">Semester Change</string>

@@ -31,27 +31,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/activity_vertical_margin">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="12dp"
-            android:layout_marginTop="6dp"
-            android:gravity="center_horizontal"
-            android:text="@string/my_time_table_calendar_headline"
-            android:textColor="@color/primary_color"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <View style="@style/Divider" />
+        android:orientation="vertical">
 
         <ListView
             android:id="@+id/lv_mytimetable_calendar_courses"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/tv_mytimetable_calendar_empty"
@@ -61,8 +46,6 @@
             android:gravity="center"
             android:text="@string/my_time_table_empty_text_calendar"
             android:visibility="gone" />
-
-        <View style="@style/Divider" />
 
     </LinearLayout>
 

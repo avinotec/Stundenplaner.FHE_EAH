@@ -7,13 +7,12 @@ import java.util.List;
 
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
 
-public class MyTimeTableOverviewAdapter extends AbstractMyTimeTableAdapter {
+public class MyTimeTableSettingsAdapter extends AbstractMyTimeTableAdapter {
 
-    private static final String TAG = MyTimeTableOverviewAdapter.class.getSimpleName();
+    private static final String TAG = MyTimeTableSettingsAdapter.class.getSimpleName();
 
-    public MyTimeTableOverviewAdapter(Context context, List<MyTimeTableEventSeriesVo> _items) {
+    public MyTimeTableSettingsAdapter(Context context, List<MyTimeTableEventSeriesVo> _items) {
         super(context);
         setItems(_items);
         setRoomVisible(true);
