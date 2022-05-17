@@ -95,7 +95,7 @@
     <string name="my_time_table_overview_headline">Meine Kurse</string>
 	<string name="my_time_table_add_course">Kurs hinzufügen</string>
     <string name="my_time_table_dialog_headline" >Wähle bitte Studiengang und Semester.</string>
-    <string name="my_timetable_modify_schedule">Stundenplan ändern</string>
+    <string name="my_timetable_modify_schedule">Meine Kurse</string>
     <string name="my_time_table_empty_text_calendar">Du hast noch keinen Stundenplan zusammengestellt.</string>
 	<string name="my_time_table_empty_text_select">Wähle Studiengang und Semester aus.</string>
     <string name="jump_to_current_lesson">>> Heute</string>
