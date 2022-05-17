@@ -193,7 +193,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
         @Override
         public void onSemesterChosen(String _SemesterId) {
-            mView.toggleProgressIndicatorVisibility(false);
+            mView.toggleProgressIndicatorVisibility(true);
             mView.toggleEventListVisibility(false);
             mListAdapter.setItems(new ArrayList<>());
             mListAdapter.notifyDataSetChanged();
@@ -257,6 +257,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
                 Collections.sort(eventSeriesVos, new EventSeriesTitleComparator());
 
+                mView.toggleProgressIndicatorVisibility(false);
                 mView.toggleEventListVisibility(true);
                 mListAdapter.setItems(eventSeriesVos);
                 mListAdapter.notifyDataSetChanged();
