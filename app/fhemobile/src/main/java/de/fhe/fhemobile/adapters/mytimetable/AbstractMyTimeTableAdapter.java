@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -136,8 +137,8 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
         convertView.setOnClickListener(new EventSeriesOnClickListener(convertView, currentItem, roomVisible));
 
 
-        final RelativeLayout headerLayout = convertView.findViewById(R.id.layout_mytimetable_course_header);
-        final TextView eventSeriesBaseTitle = (TextView) convertView.findViewById(R.id.tv_mytimetable_coursetitle);
+        final RelativeLayout headerLayout = convertView.findViewById(R.id.layout_mytimetable_eventseries_header);
+        final TextView eventSeriesBaseTitle = (TextView) convertView.findViewById(R.id.tv_mytimetable_eventseries_title);
 
         //Add a header displaying the event series title
         // if such a header has already been added because of processing another event series with the same base title
@@ -153,7 +154,7 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
         }
 
 
-        final Button btnAddCourse = (Button) convertView.findViewById(R.id.btn_mytimetable_add_or_remove_course);
+        final Button btnAddCourse = (Button) convertView.findViewById(R.id.btn_mytimetable_add_or_remove_eventseries);
         btnAddCourse.setActivated(currentItem.isSubscribed());
         btnAddCourse.setOnClickListener(getAddEventSeriesBtnOnClickListener(currentItem, btnAddCourse));
 
@@ -163,10 +164,14 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
 
         //if view is not populated for the first time (convertView != null at the beginning of the method)
         // then remove previously added event data views
-        final LinearLayout layoutAllEvents = (LinearLayout) convertView.findViewById(R.id.layout_my_time_table_course_events);
+        final LinearLayout layoutAllEvents = (LinearLayout) convertView.findViewById(R.id.layout_mytimetable_eventseries_events);
         if(layoutAllEvents.getChildCount() >= 0){
            layoutAllEvents.removeAllViews();
         }
+
+        final ToggleButton toggleBtn = convertView.findViewById(R.id.btn_mytimetable_toggle_eventlist_expanded);
+        toggleBtn.setOnClickListener(new EventSeriesOnClickListener(convertView, currentItem, roomVisible));
+        if(currentItem.getEvents().size() <= 1) toggleBtn.setVisibility(View.INVISIBLE);
         setAndAddEventDataTextViews(currentItem.getFirstEvent(), layoutAllEvents);
 
         //otherwise it will sometimes be invisible
@@ -207,15 +212,21 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
 
         @Override
         public void onClick(View view) {
-            //remove all previously added textviews of course events to avoid duplicates
-            final LinearLayout layoutAllEvents = convertView.findViewById(R.id.layout_my_time_table_course_events);
+            //remove all previously added textviews of event series to avoid duplicates
+            final LinearLayout layoutAllEvents = convertView.findViewById(R.id.layout_mytimetable_eventseries_events);
             final int layoutAllEventsSize = layoutAllEvents.getChildCount();
             layoutAllEvents.removeAllViews();
 
             List<MyTimeTableEventVo> eventList = new ArrayList<>();
-            //if list is expanded then reduce
-            if(layoutAllEventsSize > 1) eventList.add(currentEventSeries.getFirstEvent());
-            else eventList = currentEventSeries.getEvents();
+            final ToggleButton toggleBtn = convertView.findViewById(R.id.btn_mytimetable_toggle_eventlist_expanded);
+            //if list is expanded then collapse
+            if(layoutAllEventsSize > 1 ) {
+                eventList.add(currentEventSeries.getFirstEvent());
+                toggleBtn.setActivated(false);
+            } else {
+                eventList = currentEventSeries.getEvents();
+                toggleBtn.setActivated(true);
+            }
 
             for (final MyTimeTableEventVo event : eventList){
                 setAndAddEventDataTextViews(event, layoutAllEvents);

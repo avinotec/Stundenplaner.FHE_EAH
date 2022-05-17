@@ -26,7 +26,7 @@
 	android:focusable="true">
 
 	<RelativeLayout
-		android:id="@+id/layout_mytimetable_course_header"
+		android:id="@+id/layout_mytimetable_eventseries_header"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:background="@color/list_header_background"
@@ -36,7 +36,7 @@
 		android:paddingBottom="@dimen/list_item_vertical_padding">
 
 		<TextView
-			android:id="@+id/tv_mytimetable_coursetitle"
+			android:id="@+id/tv_mytimetable_eventseries_title"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignParentTop="true"
@@ -52,13 +52,13 @@
 		android:id="@+id/textview_mytimetable_dialog_label_sets"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_below="@+id/layout_mytimetable_course_header"
+		android:layout_below="@+id/layout_mytimetable_eventseries_header"
 		android:layout_alignParentStart="true"
 		android:layout_alignParentLeft="true"
 		android:layout_marginStart="16dp"
 		android:layout_marginLeft="16dp"
 		android:layout_marginTop="5dp"
-		android:text="Sets:"
+		android:text="Study Groups:"
 		android:textAppearance="@style/TextAppearance.AppCompat.Medium"
 		android:visibility="visible" />
 
@@ -66,12 +66,12 @@
 		android:id="@+id/tv_mytimetable_studygroups"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_below="@+id/layout_mytimetable_course_header"
+		android:layout_below="@+id/layout_mytimetable_eventseries_header"
 		android:layout_marginStart="16dp"
 		android:layout_marginLeft="16dp"
 		android:layout_marginTop="5dp"
-		android:layout_toStartOf="@+id/btn_mytimetable_add_or_remove_course"
-		android:layout_toLeftOf="@+id/btn_mytimetable_add_or_remove_course"
+		android:layout_toStartOf="@+id/btn_mytimetable_add_or_remove_eventseries"
+		android:layout_toLeftOf="@+id/btn_mytimetable_add_or_remove_eventseries"
 		android:layout_toEndOf="@id/textview_mytimetable_dialog_label_sets"
 		android:layout_toRightOf="@id/textview_mytimetable_dialog_label_sets"
 		android:text="TextView"
@@ -80,29 +80,41 @@
 
 
 	<ToggleButton
-		android:id="@+id/btn_mytimetable_add_or_remove_course"
+		android:id="@+id/btn_mytimetable_add_or_remove_eventseries"
 		android:layout_width="40dp"
 		android:layout_height="30dp"
-		android:layout_below="@+id/layout_mytimetable_course_header"
+		android:layout_below="@+id/layout_mytimetable_eventseries_header"
 		android:layout_alignTop="@id/textview_mytimetable_dialog_label_sets"
-		android:layout_alignBottom="@id/layout_my_time_table_course_events"
+		android:layout_alignBottom="@id/layout_mytimetable_eventseries_events"
 		android:layout_alignParentEnd="true"
 		android:layout_centerVertical="true"
 		android:layout_marginTop="0dp"
 		android:layout_marginEnd="3dp"
 		android:layout_marginRight="3dp"
 		android:background="@android:color/transparent"
-		android:button="@drawable/selector_toggle"
-		android:contentDescription="Button to add a course"
+		android:button="@drawable/selector_toggle_add_remove"
+		android:contentDescription="Button to add or remove an eventseries"
 		android:textOff=""
 		android:textOn="" />
 
+	<ToggleButton
+		android:id="@+id/btn_mytimetable_toggle_eventlist_expanded"
+		android:layout_width="24dp"
+		android:layout_height="24dp"
+		android:layout_marginTop="5dp"
+		android:layout_alignStart="@id/textview_mytimetable_dialog_label_sets"
+		android:layout_below="@+id/tv_mytimetable_studygroups"
+		android:background="@android:color/transparent"
+		android:button="@drawable/selector_toggle_expand_collaps"
+		android:textOff=""
+		android:textOn=""/>
+
 	<LinearLayout
-		android:id="@+id/layout_my_time_table_course_events"
+		android:id="@+id/layout_mytimetable_eventseries_events"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_alignStart="@id/textview_mytimetable_dialog_label_sets"
-		android:layout_toLeftOf="@id/btn_mytimetable_add_or_remove_course"
+		android:layout_toRightOf="@id/btn_mytimetable_toggle_eventlist_expanded"
+		android:layout_toLeftOf="@id/btn_mytimetable_add_or_remove_eventseries"
 		android:layout_below="@+id/tv_mytimetable_studygroups"
 		android:layout_marginTop="5dp"
 		android:layout_marginBottom="5dp"
