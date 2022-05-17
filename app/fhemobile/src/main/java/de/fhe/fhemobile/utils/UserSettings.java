@@ -64,14 +64,15 @@ public class UserSettings {
         mSP = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext());
 
         //Canteen
-        final String json = mSP.getString(Define.Canteen.PREF_SELECTED_CANTEENS,"");
+        final String json = mSP.getString(Define.Canteen.PREF_SELECTED_CANTEENS, "");
         //skip if json is empty
-        if ( (json == null || !json.isEmpty()) && !"null".equals(json)) {
+        if ( !json.isEmpty() && !"null".equals(json)) {
             final Gson gson = new Gson();
             final Type listType = new TypeToken<ArrayList<CanteenVo>>(){}.getType();
             mSelectedCanteens = gson.fromJson(json, listType);
-            Log.d(TAG, "Loaded selected canteens "+mSelectedCanteens);
+            Log.d(TAG, "Loaded selected canteens " + mSelectedCanteens);
         }
+
 
         //News
         mChosenNewsCategory = mSP.getString(Define.News.PREF_CHOSEN_NEWS_CATEGORY, UserDefaults.DEFAULT_NEWS_ID);

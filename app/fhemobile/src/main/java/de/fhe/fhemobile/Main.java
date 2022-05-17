@@ -79,10 +79,10 @@ public class Main extends Application {
 
         // load subscribed courses for My Time Table from Shared Preferences
         SharedPreferences sharedPreferences = getSharedPreferences(SP_MYTIMETABLE, Context.MODE_PRIVATE);
-        final String json = sharedPreferences.getString(Define.MyTimeTable.PREF_SUBSCRIBED_COURSES,"");
+        final String json = sharedPreferences.getString(Define.MyTimeTable.PREF_SUBSCRIBED_COURSES, "");
 
         // falls die Liste leer sein sollte, überspringen
-        if ( (json == null || !json.isEmpty()) && !"null".equals(json)) {
+        if ( !json.isEmpty() && !"null".equals(json)) {
             final Gson gson = new Gson();
             final Type listType = new TypeToken<ArrayList<MyTimeTableEventSeriesVo>>(){}.getType();
             subscribedEventSeries = gson.fromJson(json, listType);
