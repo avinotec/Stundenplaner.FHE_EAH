@@ -62,7 +62,7 @@
     <string name="timetable_button">Apply</string>
     <string name="timetable_input">Please select</string>
     <string name="timetable_error">This program is empty.</string>
-    <string name="timetable_switch">Save choice</string>
+    <string name="timetable_set_favorit">Save as favourite</string>
     <string name="timetable_reset">Delete choice</string>
     <string name="timetable_week">Semester Week</string>
     <string name="timetable_error_incomplete">Please set all fields.</string>
