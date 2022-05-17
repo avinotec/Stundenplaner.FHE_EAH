@@ -18,7 +18,7 @@
 
 <TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/itemHeader"
+    android:id="@+id/tv_item_header_default_day"
     android:layout_width="match_parent"
     android:layout_height="@dimen/list_header_height"
     android:paddingBottom="@dimen/list_header_vertical_padding"

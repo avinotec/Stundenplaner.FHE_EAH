@@ -65,10 +65,10 @@ public class TimeTableEventItem implements IBaseItem {
             holder = new ViewHolder();
             _convertView = _inflater.inflate(R.layout.item_timetable_event, _parent, false);
             
-            holder.mTime    = (TextView) _convertView.findViewById(R.id.itemEventTime);
-            holder.mTitle   = (TextView) _convertView.findViewById(R.id.itemEventTitle);
-            holder.mRoom    = (TextView) _convertView.findViewById(R.id.itemEventRoom);
-            holder.mPerson  = (TextView) _convertView.findViewById(R.id.itemEventPerson);
+            holder.mTime    = (TextView) _convertView.findViewById(R.id.tv_item_event_time);
+            holder.mTitle   = (TextView) _convertView.findViewById(R.id.tv_item_event_title);
+            holder.mRoom    = (TextView) _convertView.findViewById(R.id.tv_item_event_location);
+            holder.mPerson  = (TextView) _convertView.findViewById(R.id.tv_item_event_lecturer);
 
             _convertView.setTag(holder);
         }

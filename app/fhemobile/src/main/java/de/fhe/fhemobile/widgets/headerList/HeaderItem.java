@@ -44,7 +44,7 @@ public class HeaderItem implements IBaseItem {
             holder = new ViewHolder();
             _convertView = _inflater.inflate(R.layout.item_header_text_default, _parent, false);
 
-            holder.mHeaderText = (TextView) _convertView.findViewById(R.id.itemHeader);
+            holder.mHeaderText = (TextView) _convertView.findViewById(R.id.tv_item_header_default_day);
             
             _convertView.setTag(holder);
         }

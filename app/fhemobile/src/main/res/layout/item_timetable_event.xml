@@ -15,7 +15,8 @@
   ~
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="@dimen/list_double_item_height"
@@ -30,7 +31,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/itemEventTime"
+            android:id="@+id/tv_item_event_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
@@ -48,7 +49,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/itemEventTitle"
+                android:id="@+id/tv_item_event_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -59,7 +60,7 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/itemEventPerson"
+                android:id="@+id/tv_item_event_lecturer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -70,7 +71,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/itemEventRoom"
+            android:id="@+id/tv_item_event_location"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.25"

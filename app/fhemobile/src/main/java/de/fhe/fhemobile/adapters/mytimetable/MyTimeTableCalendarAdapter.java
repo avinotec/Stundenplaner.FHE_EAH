@@ -116,7 +116,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 		//Add a header displaying WeekDay and Date
 		// if such a header has already been added with another event at that date,
 		// then do not add header again (set invisible)
-		final TextView weekdayHeader = (TextView) convertView.findViewById(R.id.itemHeader);
+		final TextView weekdayHeader = (TextView) convertView.findViewById(R.id.tv_item_header_default_day);
 		if(position == 0 || new TimeIgnoringDateComparator()
 				.compare(new Date(currentItem.getStartDateTime()),
 						new Date(mItems.get(position - 1).getStartDateTime())) != 0){

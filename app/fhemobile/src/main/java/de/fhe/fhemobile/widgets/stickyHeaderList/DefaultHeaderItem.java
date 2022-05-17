@@ -58,7 +58,7 @@ public class DefaultHeaderItem extends IHeaderItem {
             //       and not as intented to "_parent, false".
             _convertView = _inflater.inflate(R.layout.item_header_text_default, null);
 
-            viewHolder.mHeadline = (TextView) _convertView.findViewById(R.id.itemHeader);
+            viewHolder.mHeadline = (TextView) _convertView.findViewById(R.id.tv_item_header_default_day);
 
             _convertView.setTag(viewHolder);
         }

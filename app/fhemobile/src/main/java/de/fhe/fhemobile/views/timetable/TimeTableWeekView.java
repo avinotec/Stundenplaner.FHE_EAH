@@ -54,7 +54,7 @@ public class TimeTableWeekView extends LinearLayout {
     }
 
     public void initializeView(final TimeTableWeekVo weekVo) {
-        mHeading.setText(Main.getSafeString(R.string.timetable_week) + " " + weekVo.getGuiSemesterWeek()); // $NON-NLS
+        mWeekHeader.setText(Main.getSafeString(R.string.timetable_week) + " " + weekVo.getGuiSemesterWeek()); // $NON-NLS
         buildListEntries(weekVo);
 
         final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.", Locale.getDefault()); // PST`
@@ -92,7 +92,7 @@ public class TimeTableWeekView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mHeading   = (TextView) findViewById(R.id.tv_timetable_week_heading);
+        mWeekHeader = (TextView) findViewById(R.id.tv_timetable_week_header);
         mWeekRange = (TextView) findViewById(R.id.tv_timetable_week_range);
         mEventList = (ListView) findViewById(R.id.lv_timetable_week_list);
     }
@@ -101,7 +101,7 @@ public class TimeTableWeekView extends LinearLayout {
 
     private List<IBaseItem> mData;
 
-    private TextView mHeading;
+    private TextView mWeekHeader;
     private TextView mWeekRange;
     private ListView mEventList;
 

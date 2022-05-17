@@ -40,26 +40,14 @@ public final class TimeTableUtils {
 
 
     public static String getWeekDayName(final int dayNumber){
-        if(weekDayNames == null){
-            Calendar cal = Calendar.getInstance();
-            cal.setFirstDayOfWeek(Calendar.MONDAY);
-            weekDayNames = cal.getDisplayNames(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
-        }
-
-        for(Map.Entry<String, Integer> day : weekDayNames.entrySet()){
-            if(day.getValue() == dayNumber){
-                return day.getKey();
-            }
-        }
-        return null;
+        Calendar cal = Calendar.getInstance();
+        //+2 because in calender first day is sunday and days in calendar are counted 1-based
+        cal.set(Calendar.DAY_OF_WEEK, dayNumber+2);
+        return cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
     }
 
 
     public static String cutStudyProgramPrefix(String eventTitle){
         return eventTitle.replaceFirst("^[A-Z]+(/[A-Z]+)?\\(((BA)|(MA))\\)","");
     }
-
-
-
-    private static Map<String, Integer> weekDayNames = null;
 }
