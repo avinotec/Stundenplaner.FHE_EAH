@@ -18,6 +18,7 @@
 package de.fhe.fhemobile.utils.timetable;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
@@ -43,6 +44,12 @@ public final class TimeTableUtils {
         Calendar cal = Calendar.getInstance();
         //+2 because in calender first day is sunday and days in calendar are counted 1-based
         cal.set(Calendar.DAY_OF_WEEK, dayNumber+2);
+        return cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+    }
+
+    public static String getWeekDayName(final Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
         return cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
     }
 

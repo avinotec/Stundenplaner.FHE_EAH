@@ -150,9 +150,7 @@ public class MyTimeTableEventVo implements Parcelable{
     }
 
     public String getWeekDayName(){
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date(mStartDateTime * 1000));
-        return TimeTableUtils.getWeekDayName(cal.get(Calendar.DAY_OF_WEEK));
+        return TimeTableUtils.getWeekDayName(new Date(mStartDateTime * 1000));
     }
 
     public String getLecturerListAsString(){
