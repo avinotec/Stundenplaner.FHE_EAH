@@ -24,12 +24,9 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import de.fhe.fhemobile.utils.timetable.TimeTableUtils;
 
 /**
  * Created by paul on 16.03.15

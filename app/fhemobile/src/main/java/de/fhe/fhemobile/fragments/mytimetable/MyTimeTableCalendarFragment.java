@@ -44,7 +44,6 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.activities.SettingsActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.fragments.canteen.CanteenSettingsFragment;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.Features;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableCalendarView;

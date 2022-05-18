@@ -22,8 +22,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import java.util.Map;
-
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.maps.MapsFragment;
 import de.fhe.fhemobile.models.maps.MapsModel;

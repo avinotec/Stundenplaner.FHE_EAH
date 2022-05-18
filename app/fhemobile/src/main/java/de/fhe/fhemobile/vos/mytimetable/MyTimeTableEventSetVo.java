@@ -22,13 +22,10 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.fhe.fhemobile.comparator.MyTimeTableEventTimeComparator;
-import de.fhe.fhemobile.comparator.StudyGroupComparator;
 import de.fhe.fhemobile.vos.timetable.LecturerVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableLocationVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;

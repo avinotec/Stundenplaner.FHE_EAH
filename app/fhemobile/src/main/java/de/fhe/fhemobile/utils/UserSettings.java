@@ -33,7 +33,6 @@ import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.settings.UserDefaults;
-import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.vos.canteen.CanteenVo;
 
 /**

@@ -18,12 +18,9 @@ package de.fhe.fhemobile.views.mytimetable;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;

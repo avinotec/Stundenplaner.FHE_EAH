@@ -19,7 +19,6 @@ package de.fhe.fhemobile.comparator;
 import java.util.Comparator;
 
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
 
 /**
  * Edited by Nadja - 01/2022

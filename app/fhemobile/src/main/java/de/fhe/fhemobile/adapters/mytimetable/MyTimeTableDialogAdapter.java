@@ -6,7 +6,6 @@ import android.widget.Button;
 
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
 
 public class MyTimeTableDialogAdapter extends AbstractMyTimeTableAdapter {
 
