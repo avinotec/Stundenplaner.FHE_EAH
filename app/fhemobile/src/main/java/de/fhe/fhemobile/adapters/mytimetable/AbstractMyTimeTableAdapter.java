@@ -171,7 +171,12 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
 
         final ToggleButton toggleBtn = convertView.findViewById(R.id.btn_mytimetable_toggle_eventlist_expanded);
         toggleBtn.setOnClickListener(new EventSeriesOnClickListener(convertView, currentItem, roomVisible));
-        if(currentItem.getEvents().size() <= 1) toggleBtn.setVisibility(View.INVISIBLE);
+        if(currentItem.getEvents().size() <= 1) {
+            toggleBtn.setVisibility(View.INVISIBLE);
+        } else {
+            toggleBtn.setVisibility(View.VISIBLE);
+            toggleBtn.setActivated(false);
+        }
         setAndAddEventDataTextViews(currentItem.getFirstEvent(), layoutAllEvents);
 
         //otherwise it will sometimes be invisible

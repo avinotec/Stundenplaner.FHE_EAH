@@ -40,7 +40,7 @@ public final class MyTimeTableUtils {
      * @return
      */
     public static String getEventSeriesBaseTitle(String title){
-        return title.replaceAll("\\d\\d$","");
+        return title.replaceAll("/\\d\\d$","");
     }
 
     /**

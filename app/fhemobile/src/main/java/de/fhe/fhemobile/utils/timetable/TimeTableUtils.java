@@ -55,6 +55,6 @@ public final class TimeTableUtils {
 
 
     public static String cutStudyProgramPrefix(String eventTitle){
-        return eventTitle.replaceFirst("^[A-Z]+(/[A-Z]+)?\\(((BA)|(MA))\\)","");
+        return eventTitle.replaceFirst("^[A-Za-z]+(/[A-Za-z]+)*\\(((BA)|(MA)|(BA/MA))\\)/?","");
     }
 }
