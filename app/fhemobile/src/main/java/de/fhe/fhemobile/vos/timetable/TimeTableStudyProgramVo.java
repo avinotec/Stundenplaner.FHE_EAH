@@ -22,8 +22,11 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import de.fhe.fhemobile.comparator.SemesterComparator;
 
 /**
  * Created by paul on 12.03.15
@@ -55,9 +58,16 @@ public class TimeTableStudyProgramVo implements Parcelable {
         return mLongTitle;
     }
 
-    public ArrayList<TimeTableSemesterVo> getSemestersAsList() {
-        return new ArrayList(mSemesters.values());
+    /**
+     * Get semesters as Arraylist, sorted by semester number
+     * @return
+     */
+    public ArrayList<TimeTableSemesterVo> getSemestersAsSortedList() {
+        ArrayList<TimeTableSemesterVo>  semesterList = new ArrayList<>(mSemesters.values());
+        Collections.sort(semesterList, new SemesterComparator());
+        return semesterList;
     }
+
 
     public Map<String, TimeTableSemesterVo> getSemesters() {
         return mSemesters;

@@ -22,6 +22,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Value Object for a semester of a study program
@@ -40,7 +42,7 @@ public class TimeTableSemesterVo implements Parcelable {
         mId = in.readString();
         mNumber = in.readString();
         mTitle = in.readString();
-        mStudyGroups = in.createTypedArrayList(TimeTableStudyGroupVo.CREATOR);
+        in.readMap(mStudyGroups, TimeTableStudyGroupVo.class.getClassLoader());
     }
 
     public String getId() { return mId;  }
@@ -53,8 +55,8 @@ public class TimeTableSemesterVo implements Parcelable {
         return mTitle;
     }
 
-    public ArrayList<TimeTableStudyGroupVo> getStudyGroups() {
-        return mStudyGroups;
+    public ArrayList<TimeTableStudyGroupVo> getStudyGroupList() {
+        return new ArrayList<>(mStudyGroups.values());
     }
 
     // PARCELABLE --------------------------------------------------------------------------------
@@ -68,7 +70,7 @@ public class TimeTableSemesterVo implements Parcelable {
         dest.writeString(mId);
         dest.writeString(mNumber);
         dest.writeString(mTitle);
-        dest.writeTypedList(mStudyGroups);
+        dest.writeMap(mStudyGroups);
     }
 
     public static final Creator<TimeTableSemesterVo> CREATOR = new Creator<TimeTableSemesterVo>() {
@@ -95,5 +97,5 @@ public class TimeTableSemesterVo implements Parcelable {
     private String mTitle;
 
     @SerializedName("studentsetData")
-    private ArrayList<TimeTableStudyGroupVo> mStudyGroups;
+    private Map<String, TimeTableStudyGroupVo> mStudyGroups = new HashMap<>();
 }

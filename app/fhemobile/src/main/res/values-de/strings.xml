@@ -95,14 +95,11 @@
 
     <!-- My Time Table -->
     <string name="my_time_table_settings_headline">Meine Kurse</string>
-    <string name="my_time_table_calendar_headline">Mein Stundenplan</string>
-	<string name="my_time_table_add_course">Kurs hinzufügen</string>
     <string name="my_time_table_dialog_headline" >Wähle bitte Studiengang und Semester.</string>
-    <string name="my_timetable_modify_schedule">Meine Kurse</string>
     <string name="my_time_table_empty_text_calendar">Du hast noch keinen Stundenplan zusammengestellt.</string>
 	<string name="my_time_table_empty">Wähle Studiengang und Semester aus.</string>
-    <string name="jump_to_current_lesson">>> Heute</string>
     <string name="today">Heute</string>
+    <string name="my_time_table_settings_studygroups">Sets: </string>
 
     <string name="deleteTimetableTitle">Semesterwechsel</string>
     <string name="deleteTimetableMessage">Das Semester ist zu Ende. Soll dein Stundenplan geleert werden?</string>
@@ -116,6 +113,7 @@
 
 
     <string name="canteen_food_no_data_available">Keine Daten verfügbar</string>
+    <string name="canteen_no_canteens_selected">Wähle bitte erst eine oder mehrere Mensen in den Einstellungen aus.</string>
 
     <!--    Campus Navigation-->
     <string name="title_scanner_activity">Scanner</string>
@@ -154,12 +152,6 @@
     <string name="error_message_room_input">Raum nicht gefunden!</string>
     <string name="text_view_button_destination_location">Dein Ziel:</string>
     <string name="btn_location_qr_code">QR-Code</string>
-    <string name="text_view_search_or_qr">oder</string>
-    <string name="text_view_explanation_location_title">Meine Position bestimmmen:</string>
-    <string name="text_view_explanation_location_description">Scanne den QR-Code über den Button oder gib eine Raumnummer ein und drücke "Suchen".</string>
-    <string name="text_view_explanation_navigation_title">Navigation starten:</string>
-    <string name="text_view_explanation_navigation_description">Wähle eine Raumnummer oder eine Person aus oder gib die Raumnummer direkt ein, zu der du navigiert werden möchtest. Dann bestimme deine aktuelle Position wie oben beschrieben.</string>
-    <string name="text_view_oder">oder</string>
     <string name="tablayout_tabtext_roomsearch">Raumsuche</string>
     <string name="tablayout_tabtext_personsearch">Personensuche</string>
     <string name="navigation_dialog_building">Haus</string>
@@ -177,8 +169,6 @@
     <string name="navigation_building">Haus</string>
     <string name="navigation_floor">Etage</string>
     <string name="navigation_dialog_person">Person</string>
-    <string name="canteen_no_canteens_selected">Wähle bitte erst eine oder mehrere Mensen in den Einstellungen aus.</string>
-    <string name="my_time_table_settings_studygroups">Sets</string>
 
 
 </resources>

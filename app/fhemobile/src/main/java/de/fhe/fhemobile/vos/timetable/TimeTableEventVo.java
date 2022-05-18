@@ -153,10 +153,10 @@ public class TimeTableEventVo implements Parcelable {
     @SerializedName("activityName")
     private String mTitle;
 
-    @SerializedName("activitydatetimeStartDateTime")
+    @SerializedName("startDateTime")
     private long mStartDateTime;
 
-    @SerializedName("activitydatetimeEndDateTime")
+    @SerializedName("endDateTime")
     private long mEndDateTime;
 
     @SerializedName("dataStaff")

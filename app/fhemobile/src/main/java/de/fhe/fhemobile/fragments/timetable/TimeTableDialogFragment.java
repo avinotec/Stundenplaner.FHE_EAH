@@ -121,9 +121,9 @@ public class TimeTableDialogFragment extends FeatureFragment {
                 mChosenStudyProgram = studyPrograms.get(_StudyProgramId);
 
                 // Check if study program has any semesters
-                if (mChosenStudyProgram.getSemestersAsList() != null) {
+                if (mChosenStudyProgram.getSemestersAsSortedList() != null) {
                     errorOccurred = false;
-                    mView.setSemesterItems(mChosenStudyProgram.getSemestersAsList());
+                    mView.setSemesterItems(mChosenStudyProgram.getSemestersAsSortedList());
                 }
                 else {
                     // No semesters in this study program
@@ -151,7 +151,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
             Map<String, TimeTableSemesterVo> semesters = mChosenStudyProgram.getSemesters();
             if(semesters.containsKey(_SemesterId)) {
                 mChosenSemester = semesters.get(_SemesterId);
-                mView.setStudyGroupItems(mChosenSemester.getStudyGroups());
+                mView.setStudyGroupItems(mChosenSemester.getStudyGroupList());
             }
         }
 

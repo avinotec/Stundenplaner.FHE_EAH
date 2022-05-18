@@ -55,7 +55,7 @@
     <string name="employee_mail">Email</string>
     <string name="employee_room">Room</string>
 
-    <string name="timetable_headline">Please select your study program.</string>
+    <string name="timetable_headline">Please select your study program and semester.</string>
     <string name="timetable_study_program">Study program</string>
     <string name="timetable_study_group">Group</string>
     <string name="timetable_term">Semester</string>
@@ -93,14 +93,11 @@
 
     <!-- My Time Table -->
     <string name="my_time_table_dialog_headline">Please select study program and semester.</string>
-    <string name="my_time_table_add_course">Add course</string>
-    <string name="my_timetable_modify_schedule">My Courses</string>
     <string name="my_time_table_empty_text_calendar">You did not compose a schedule.</string>
     <string name="my_time_table_empty">Choose study program and semester.</string>
-    <string name="jump_to_current_lesson">>> Today</string>
     <string name="today">Today</string>
     <string name="my_time_table_settings_headline">My Courses</string>
-    <string name="my_time_table_calendar_headline">My Timetable</string>
+    <string name="my_time_table_settings_studygroups">Study Groups: </string>
 
     <string name="deleteTimetableTitle">Semester Change</string>
     <string name="deleteTimetableMessage">The semester is over. Do you want to clear your timetable?</string>
@@ -156,12 +153,6 @@
     <string name="error_message_room_input">Room not found!</string>
     <string name="text_view_button_destination_location">Your destination:</string>
     <string name="btn_location_qr_code">QR-Code</string>
-    <string name="text_view_search_or_qr">or</string>
-    <string name="text_view_explanation_location_title">Determine my position:</string>
-    <string name="text_view_explanation_location_description">Directly press the QR-Code button to scan the QR-Code or manually enter your position and search.</string>
-    <string name="text_view_explanation_navigation_title">Perform navigation:</string>
-    <string name="text_view_explanation_navigation_description">Select a room or a person or enter a room number you want to be navigated to. Then determine your position like described above.</string>
-    <string name="text_view_oder">or</string>
     <string name="navigation_button_prev_plan">Previous Map</string>
     <string name="navigation_button_next_plan">Next Map</string>
     <string name="navigation_button_back">Back to input</string>
@@ -175,7 +166,7 @@
     <string name="navigation_building">building</string>
     <string name="navigation_floor">floor</string>
     <string name="navigation_dialog_person">Person</string>
-    <string name="my_time_table_settings_studygroups">Study Groups</string>
+
 
 
 </resources>

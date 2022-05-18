@@ -31,7 +31,7 @@ public final class TimeTableUtils {
      * @return name string
      */
     public static String prettifyName(String person){
-        //method added by Nadja - 05.01.2021
+        //method added by Nadja - 05.10.2021
 
         if (person.matches("[a-zA-Z- ,._]+[^ ][(][a-zA-Z-]+[)]")){
             person = person.replaceFirst("[(]", " (");

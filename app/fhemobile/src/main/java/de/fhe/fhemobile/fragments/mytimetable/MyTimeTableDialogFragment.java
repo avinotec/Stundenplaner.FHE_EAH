@@ -164,7 +164,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
                         studyProgramEmpty = false;
 
                         //set items of semester picker
-                        mView.setSemesterItems(studyProgram.getSemestersAsList());
+                        mView.setSemesterItems(studyProgram.getSemestersAsSortedList());
                     }
                     // No terms are available
                     else {
