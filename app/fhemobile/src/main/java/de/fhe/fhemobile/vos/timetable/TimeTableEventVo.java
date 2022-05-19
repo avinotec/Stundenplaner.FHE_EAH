@@ -24,9 +24,12 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Created by paul on 16.03.15
@@ -34,7 +37,8 @@ import java.util.Map;
  */
 public class TimeTableEventVo implements Parcelable {
 
-    static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+    static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+    int offset = TimeZone.getTimeZone("Europe/Berlin").getOffset(new Date().getTime());
 
     public TimeTableEventVo() {
     }
@@ -47,24 +51,18 @@ public class TimeTableEventVo implements Parcelable {
         return mId;
     }
 
-    public long getStartDateTime() {
-        //multiply by 1000 to convert from seconds to milliseconds
-        return mStartDateTime * 1000;
-    }
-
-    public long getEndDateTime() {
-        //multiply by 1000 to convert from seconds to milliseconds
-        return mEndDateTime * 1000;
-    }
-
-
     public String getStartTime(){
-        //multiply by 1000 to convert from seconds to milliseconds
-        return sdf.format(new Date(mStartDateTime * 1000));
+        //multiply by 1000 to convert from seconds to milliseconds,
+        // subtract time zone offset because mStartDateTime is in time zone "Berlin"
+        // but Date needs long in UTC
+        return sdf.format(new Date(mStartDateTime * 1000 - offset));
     }
 
     public String getEndTime() {
-        return sdf.format(new Date((mEndDateTime * 1000)));
+        //multiply by 1000 to convert from seconds to milliseconds,
+        // subtract time zone offset because mStartDateTime is in time zone "Berlin"
+        // but Date needs long in UTC
+        return sdf.format(new Date((mEndDateTime * 1000 - offset)));
     }
 
     public String getLocationListAsString(){

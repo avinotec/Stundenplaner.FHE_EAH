@@ -24,10 +24,14 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import de.fhe.fhemobile.utils.timetable.TimeTableUtils;
 import de.fhe.fhemobile.vos.timetable.LecturerVo;
@@ -40,7 +44,8 @@ import de.fhe.fhemobile.vos.timetable.TimeTableLocationVo;
  */
 public class MyTimeTableEventVo implements Parcelable{
 
-    static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", new Locale("de", "DE"));
+    static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+    int offset = TimeZone.getTimeZone("Europe/Berlin").getOffset(new Date().getTime());
 
     public MyTimeTableEventVo() {
     }
@@ -105,24 +110,46 @@ public class MyTimeTableEventVo implements Parcelable{
         return cutStudyProgramPrefix(mTitle);
     }
 
+    /**
+     * Get start date time in seconds, time zone offset included.
+     * (attention: Do not use this long to create a {@link Date} instance, use getStartDate instead)
+     * @return The start date time as long
+     */
     public long getStartDateTime() {
         //multiply by 1000 to convert from seconds to milliseconds
         return mStartDateTime * 1000;
     }
 
+    /**
+     * Get end date time in seconds, time zone offset included.
+     * (attention: Do not use this long to create a {@link Date} instance, use getStartDate instead)
+     * @return The end date time as long
+     */
     public long getEndDateTime() {
         //multiply by 1000 to convert from seconds to milliseconds
         return mEndDateTime * 1000;
     }
 
+    public Date getStartDate(){
+        //multiply by 1000 to convert from seconds to milliseconds,
+        // subtract time zone offset because mStartDateTime is in time zone "Berlin"
+        // but Date needs long in UTC
+        return new Date(mStartDateTime * 1000 - offset);
+    }
+
+    public Date getEndDate(){
+        //multiply by 1000 to convert from seconds to milliseconds,
+        // subtract time zone offset because mEndDateTime is in time zone "Berlin"
+        // but Date needs long in UTC
+        return new Date((mEndDateTime * 1000 - offset));
+    }
+
     public String getStartTimeString(){
-        //multiply by 1000 to convert from seconds to milliseconds
-        return sdf.format(new Date(mStartDateTime * 1000));
+        return sdf.format(getStartDate());
     }
 
     public String getEndTimeString() {
-        //multiply by 1000 to convert from seconds to milliseconds
-        return sdf.format(new Date((mEndDateTime * 1000)));
+        return sdf.format(getEndDate());
     }
 
     public List<TimeTableLocationVo> getLocationList() {

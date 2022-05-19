@@ -248,8 +248,8 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
         params.setMargins(0,5,5,10);
         dateAndRoomTextView.setLayoutParams(params);
 
-        Date startDateTime = new Date(_Event.getStartDateTime());
-        Date endDateTime =  new Date(_Event.getEndDateTime());
+        Date startDateTime = _Event.getStartDate();
+        Date endDateTime =  _Event.getEndDate();
         final String date = sdf.format(startDateTime);
         final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(startDateTime);
         final String startTime = new SimpleDateFormat("HH:mm", new Locale("de", "DE")).format(startDateTime);
