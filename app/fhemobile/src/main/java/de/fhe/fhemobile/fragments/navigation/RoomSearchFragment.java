@@ -239,6 +239,8 @@ public class RoomSearchFragment extends SearchFragment {
                     break;
                 }
             }
+
+            if(mDestRoom == null) showErrorToast();
         }
 
 

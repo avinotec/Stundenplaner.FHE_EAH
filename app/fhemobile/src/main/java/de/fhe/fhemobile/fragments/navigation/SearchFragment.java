@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentResultListener;
@@ -188,6 +189,7 @@ public abstract class SearchFragment extends FeatureFragment {
             //reminder: there is an exception from room format xx.xx.xx -> 05.3Z.xxx
 
             //if room number has been entered without separating dots
+            //xxxxxx (e.g. 030333) or xxxxxxx (e.g. 05.3Z.203) or xx-xxx (e.g. 04.-1.10)
             if (inputRoom.matches("\\d{6,7}|(\\d{2}-\\d{3})")) {
                 inputRoom = inputRoom.substring(0, 2) + "." + inputRoom.substring(2, 4) + "."
                         + inputRoom.substring(4);
@@ -252,6 +254,11 @@ public abstract class SearchFragment extends FeatureFragment {
         }
 
         return roomFound;
+    }
+
+    protected static void showErrorToast() {
+        Toast.makeText(Main.getAppContext(), "Room not found!",
+                Toast.LENGTH_LONG).show();
     }
 
 }
