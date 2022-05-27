@@ -46,36 +46,10 @@ public class PushNotificationService extends FirebaseMessagingService {
 	@Override
 	public void onMessageReceived(final RemoteMessage remoteMessage) {
 		// ...
-		showNotification(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
+		showNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
 		// TODO(developer): Handle FCM messages here.
 		// Not getting messages here? See why this may be: https://goo.gl/39bRNJ
 		Log.d(TAG, "From: " + remoteMessage.getFrom());
-
-
-	}
-
-	private void showNotification(final String title, final String body) {
-		final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-		//TODO was bedeutet das?
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-			final NotificationChannel notificationChannel = new NotificationChannel(Define.PUSH_NOTIFICATION_CHANNEL_ID, Define.PUSH_NOTIFICATION_CHANNEL_NAME,NotificationManager.IMPORTANCE_DEFAULT);
-			notificationChannel.setDescription(Define.PUSH_NOTIFICATION_STUNDENPLANAENDERUNG_TITLE_NOTIFICATION);
-			notificationChannel.enableLights(true);
-			notificationChannel.setLightColor(Color.RED);
-			notificationChannel.setVibrationPattern(Define.PUSH_NOTIFICATION_VIBRATION_PATTERN);
-			notificationManager.createNotificationChannel(notificationChannel);
-		}
-
-		final NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, Define.PUSH_NOTIFICATION_CHANNEL_ID);
-		notificationBuilder.setAutoCancel(true)
-				.setDefaults(Notification.DEFAULT_ALL)
-				.setWhen(System.currentTimeMillis())
-				.setSmallIcon(R.drawable.ic_launcher)
-				.setContentTitle(title)
-				.setContentText(body)
-				.setContentInfo("Info");
-		notificationManager.notify(new SecureRandom().nextInt(),notificationBuilder.build());
 
 
 	}
@@ -90,6 +64,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 		//sendRegistrationToServer(token);
 		setFirebaseToken(token);
 	}
+
 	public static String getFirebaseToken() {
 		return firebaseToken;
 	}
@@ -98,4 +73,34 @@ public class PushNotificationService extends FirebaseMessagingService {
 		PushNotificationService.firebaseToken = firebaseToken;
 	}
 
+
+	private void showNotification(final String title, final String body) {
+		final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+		//See Android Developer: Starting in Android 8.0 (API level 26), all notifications must be
+		// assigned to a channel. For each channel, you can set the visual and auditory behavior
+		// that is applied to all notifications in that channel. Then, users can change these
+		// settings and decide which notification channels from your app should be intrusive or
+		// visible at all.
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+			final NotificationChannel notificationChannel = new NotificationChannel(Define.PushNotifications.CHANNEL_ID, Define.PushNotifications.CHANNEL_NAME,NotificationManager.IMPORTANCE_DEFAULT);
+			notificationChannel.setDescription(getResources().getString(R.string.push_notification_title));
+			notificationChannel.enableLights(true);
+			notificationChannel.setLightColor(Color.RED);
+			notificationChannel.setVibrationPattern(Define.PushNotifications.VIBRATION_PATTERN);
+			notificationManager.createNotificationChannel(notificationChannel);
+		}
+
+		final NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, Define.PushNotifications.CHANNEL_ID);
+		notificationBuilder.setAutoCancel(true)
+				.setDefaults(Notification.DEFAULT_ALL)
+				.setWhen(System.currentTimeMillis())
+				.setSmallIcon(R.drawable.ic_launcher)
+				.setContentTitle(title)
+				.setContentText(body)
+				.setContentInfo("Info");
+		notificationManager.notify(new SecureRandom().nextInt(),notificationBuilder.build());
+
+
+	}
 }
