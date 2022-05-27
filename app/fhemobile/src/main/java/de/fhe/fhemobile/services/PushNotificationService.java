@@ -83,11 +83,15 @@ public class PushNotificationService extends FirebaseMessagingService {
 		// settings and decide which notification channels from your app should be intrusive or
 		// visible at all.
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-			final NotificationChannel notificationChannel = new NotificationChannel(Define.PushNotifications.CHANNEL_ID, Define.PushNotifications.CHANNEL_NAME,NotificationManager.IMPORTANCE_DEFAULT);
-			notificationChannel.setDescription(getResources().getString(R.string.push_notification_title));
+			final NotificationChannel notificationChannel = new NotificationChannel(
+					Define.PushNotifications.CHANNEL_ID,
+					getResources().getString(R.string.push_notification_channel_name),
+					NotificationManager.IMPORTANCE_HIGH);
+			notificationChannel.setDescription(getResources().getString(R.string.push_notification_channel_description));
 			notificationChannel.enableLights(true);
 			notificationChannel.setLightColor(Color.RED);
 			notificationChannel.setVibrationPattern(Define.PushNotifications.VIBRATION_PATTERN);
+
 			notificationManager.createNotificationChannel(notificationChannel);
 		}
 
@@ -99,8 +103,8 @@ public class PushNotificationService extends FirebaseMessagingService {
 				.setContentTitle(title)
 				.setContentText(body)
 				.setContentInfo("Info");
-		notificationManager.notify(new SecureRandom().nextInt(),notificationBuilder.build());
 
+		notificationManager.notify(new SecureRandom().nextInt(), notificationBuilder.build());
 
 	}
 }

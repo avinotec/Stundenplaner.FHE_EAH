@@ -115,8 +115,6 @@ public final class Define {
 
 		@NonNls
 		public static final String CHANNEL_ID = "de.fhe.fhemobile.push";  //$NON-NLS
-		@NonNls
-		public static final String CHANNEL_NAME = "Notification"; //$NON-NLS
 
 		public static final long[] VIBRATION_PATTERN = {1000, 500, 1000, 0};
 	}
