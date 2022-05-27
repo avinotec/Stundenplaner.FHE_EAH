@@ -167,6 +167,9 @@
     <string name="navigation_floor">floor</string>
     <string name="navigation_dialog_person">Person</string>
 
+    <string name="push_notification_channel_name">Timetable Changes</string>
+    <string name="push_notification_channel_description">Channel for sending Push Notifications on timetable changes</string>
+
 
 
 </resources>

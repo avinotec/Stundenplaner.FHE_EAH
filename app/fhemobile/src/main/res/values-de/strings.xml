@@ -170,5 +170,8 @@
     <string name="navigation_floor">Etage</string>
     <string name="navigation_dialog_person">Person</string>
 
+    <string name="push_notification_channel_name">Stundenplanänderungen</string>
+    <string name="push_notification_channel_description">Kanal zum Senden von Push Benachrichtungen bei Stundenplanänderungen</string>
+
 
 </resources>

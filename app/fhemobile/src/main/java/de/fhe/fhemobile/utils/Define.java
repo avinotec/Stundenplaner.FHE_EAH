@@ -19,6 +19,8 @@ package de.fhe.fhemobile.utils;
 
 import org.jetbrains.annotations.NonNls;
 
+import de.fhe.fhemobile.R;
+
 /**
  * we define all static defines centrally here.
  * constants etc.
@@ -106,15 +108,16 @@ public final class Define {
 		public static final String KEY_SCANNED_ROOM = "scannedRoom";    //$NON-NLS
 	}
 
+	/**
+	 * Define Class for Push notifications from Google Firebase to the App
+	 */
+	public static class PushNotifications{
 
-	/** Push notifications from Google Firebase to the App */
-	@NonNls
-	public static final String PUSH_NOTIFICATION_CHANNEL_ID = "de.fhe.fhemobile.push";  //$NON-NLS
-	@NonNls
-	public static final String PUSH_NOTIFICATION_CHANNEL_NAME = "Notification"; //$NON-NLS
-	@NonNls
-	public static final String PUSH_NOTIFICATION_STUNDENPLANAENDERUNG_TITLE_NOTIFICATION = "Stundenplanänderung";   //$NON-NLS
-	public static final long[] PUSH_NOTIFICATION_VIBRATION_PATTERN = {1000, 500, 1000, 0};
+		@NonNls
+		public static final String CHANNEL_ID = "de.fhe.fhemobile.push";  //$NON-NLS
+
+		public static final long[] VIBRATION_PATTERN = {1000, 500, 1000, 0};
+	}
 
 
 	/**
