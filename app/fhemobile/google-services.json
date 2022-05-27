@@ -63,64 +63,6 @@
           ]
         }
       }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:359992021944:android:b571c207a0841f77af354d",
-        "android_client_info": {
-          "package_name": "de.fhe.eahmobile"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "359992021944-02e6kgeslfv70ff2me15n7qkr67cv70e.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBbj4F2CSRs0gzJUHu-6KgUfMAzeNOy0TQ"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "359992021944-02e6kgeslfv70ff2me15n7qkr67cv70e.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:359992021944:android:f844679e50f922f7af354d",
-        "android_client_info": {
-          "package_name": "de.fhe.fhemobile"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "359992021944-02e6kgeslfv70ff2me15n7qkr67cv70e.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBbj4F2CSRs0gzJUHu-6KgUfMAzeNOy0TQ"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "359992021944-02e6kgeslfv70ff2me15n7qkr67cv70e.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
     }
   ],
   "configuration_version": "1"

@@ -303,7 +303,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.4.2'
     implementation 'androidx.navigation:navigation-ui:2.4.2'
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
-	implementation 'com.google.firebase:firebase-inappmessaging-display:19.0.3'
+	implementation 'com.google.firebase:firebase-inappmessaging-display:20.1.2'
 	
 	
 	//implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.10'
