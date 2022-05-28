@@ -128,6 +128,7 @@ public class AStar {
                 //Antwort Nadja: cellsToWalk wird im Aufruf performAStarAlgorithm weiter oben gefüllt, das erkennt der vermutlich nicht
 
                 // if cellsToWalk already contains cells at this floor
+// TODO result is always false ????
                 if(cellsToWalk.containsKey(bfKeyCurrentCell)){
                     cellsToWalk.get(bfKeyCurrentCell).add(currentCell);
                 } else {
@@ -157,6 +158,7 @@ public class AStar {
                 currentCell = currentCell.getParentCell();
             }
             // if start is exit then add it as cell to walk
+// TODO getParentCell() == null is always true... ????
             if(currentCell.getParentCell() == null && currentCell instanceof BuildingExitVo){
 
                 final BuildingFloorKey bfKeyCurrentCell2 = new BuildingFloorKey(currentCell);

@@ -160,6 +160,7 @@ public class HeaderListView extends RelativeLayout {
                 final boolean needNoHeaderUpToHeader = currIsLast && currHasHeader && !nextHasHeader && realFirstVisibleItem == firstVisibleItem && Math.abs(mListView.getChildAt(0).getTop()) >= mListView.getChildAt(0).getHeight() / 2;
                 
                 noHeaderUpToHeader = false;
+//TODO firstVisibleItem >= 0 is always true ???
                 if (currIsHeader && !prevHasHeader && firstVisibleItem >= 0) {
                     resetHeader(direction < 0 ? actualSection - 1 : actualSection);
                 } else if ((currIsHeader && firstVisibleItem > 0) || needScrolling) {

@@ -162,11 +162,11 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                     //Assert.assertTrue( response.body() != null );
 
                     //DEBUG
-                    if ( response == null || response.body() == null )
+                    if ( /*response == null || "always false" */ response.body() == null )
                     {
                         // Da ist ein Fehler in der Kommunikation
                         // 400: Bad request
-                        if ( response != null && response.code() == 400 )
+                        if ( /* response != null && "always true" */ response.code() == 400 )
                         {
                             final String sErrorText = response.errorBody().toString();
                             Log.d( TAG, "Error in Schedule Change Server: " + sErrorText );
