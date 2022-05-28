@@ -32,7 +32,7 @@ public final class TimeTableFactory {
      */
     public static FeatureFragment getTimeTableFragment() {
         final String chosenTimeTable = TimeTableSettings.getTimeTableSelection();
-        FeatureFragment fragment = null;
+        final FeatureFragment fragment;
 
         if (chosenTimeTable != null) {
             fragment = TimeTableFragment.newInstance(chosenTimeTable);

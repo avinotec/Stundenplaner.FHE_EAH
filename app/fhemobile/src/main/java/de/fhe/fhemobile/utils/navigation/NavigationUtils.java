@@ -116,7 +116,7 @@ public final class NavigationUtils {
      */
     public static int floorStringToInt(final String floor) {
 
-        int floorAsInteger = 0;
+        final int floorAsInteger;
 
         switch (floor) {
             case "-2":
@@ -144,6 +144,7 @@ public final class NavigationUtils {
                 floorAsInteger = 4;
                 break;
             default:
+	            floorAsInteger = 0; // nehmen wir einfach mal so
                 break;
         }
         return floorAsInteger;
