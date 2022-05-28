@@ -131,7 +131,7 @@ public class MyTimeTableSettingsView extends LinearLayout {
     }
 
 
-    private void createAddDialog(){
+    void createAddDialog(){
         final FragmentManager fm = mFragmentManager;
         final MyTimeTableDialogFragment myTimeTableDialogFragment = MyTimeTableDialogFragment.newInstance();
         myTimeTableDialogFragment.show(fm, "fragment_edit_name");

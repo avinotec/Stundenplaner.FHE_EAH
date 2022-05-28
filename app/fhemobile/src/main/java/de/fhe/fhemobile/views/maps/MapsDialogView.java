@@ -73,7 +73,7 @@ public class MapsDialogView extends FrameLayout {
     private static final String LOG_TAG = MapsDialogView.class.getSimpleName();
 
     private final Context mContext;
-    private ViewListener mViewListener;
+    ViewListener mViewListener;
 
     private final MapsModel mModel;
 

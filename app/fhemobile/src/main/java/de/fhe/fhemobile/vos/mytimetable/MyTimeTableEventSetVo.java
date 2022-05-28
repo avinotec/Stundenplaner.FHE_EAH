@@ -68,7 +68,7 @@ public class MyTimeTableEventSetVo implements Parcelable {
 
 	// PARCELABLE --------------------------------------------------------------------------------
 
-	private MyTimeTableEventSetVo(final Parcel in) {
+	MyTimeTableEventSetVo(final Parcel in) {
 		mTitle = in.readString();
 		in.readMap(mStudyGroups, TimeTableStudyGroupVo.class.getClassLoader());
 		in.readMap(mEventDates, MyTimeTableEventDateVo.class.getClassLoader());

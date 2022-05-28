@@ -83,7 +83,7 @@ public class NewsListWidgetConfigureActivity extends Activity {
      * This method right now displays the widget and starts a Service to fetch
      * remote data from Server
      */
-    private void startWidget() {
+    void startWidget() {
 
         // this intent is essential to show the widget
         // if this intent is not included,you can't show
@@ -155,8 +155,8 @@ public class NewsListWidgetConfigureActivity extends Activity {
 
     };
 
-    private int                 mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
-    private ListView            mAvailableCategories;
-    private NewsCategoryAdapter mCategoryAdapter;
+    int                 mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+    ListView            mAvailableCategories;
+    NewsCategoryAdapter mCategoryAdapter;
 }
 

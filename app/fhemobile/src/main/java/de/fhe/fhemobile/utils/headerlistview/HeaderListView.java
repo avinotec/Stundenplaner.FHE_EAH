@@ -25,12 +25,12 @@ public class HeaderListView extends RelativeLayout {
     private static final int FADE_DELAY    = 1000;
     private static final int FADE_DURATION = 2000;
 
-    private InternalListView mListView;
-    private SectionAdapter   mAdapter;
-    private RelativeLayout   mHeader;
-    private View             mHeaderConvertView;
-    private FrameLayout      mScrollView;
-    private AbsListView.OnScrollListener mExternalOnScrollListener;
+    InternalListView mListView;
+    SectionAdapter   mAdapter;
+    RelativeLayout   mHeader;
+    View             mHeaderConvertView;
+    FrameLayout      mScrollView;
+    AbsListView.OnScrollListener mExternalOnScrollListener;
 
     public HeaderListView(final Context context) {
         super(context);
@@ -108,6 +108,9 @@ public class HeaderListView extends RelativeLayout {
         private final AlphaAnimation fadeOut                  = new AlphaAnimation(1.0f, 0.0f);
         private boolean        noHeaderUpToHeader       = false;
         private boolean        didScroll = false;
+
+        HeaderListViewOnScrollListener() {
+        }
 
         @Override
         public void onScrollStateChanged(final AbsListView view, final int scrollState) {

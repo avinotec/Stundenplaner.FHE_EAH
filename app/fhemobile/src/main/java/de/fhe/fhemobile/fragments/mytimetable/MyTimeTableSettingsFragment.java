@@ -276,7 +276,7 @@ public class MyTimeTableSettingsFragment extends FeatureFragment {
 		}
 	}
 
-	private static void showErrorToast() {
+	static void showErrorToast() {
 		Toast.makeText(Main.getAppContext(), "Cannot establish connection!",
 				Toast.LENGTH_LONG).show();
 	}

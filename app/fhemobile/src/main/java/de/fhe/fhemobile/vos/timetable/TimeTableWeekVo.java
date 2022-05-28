@@ -35,7 +35,7 @@ public class TimeTableWeekVo implements Parcelable {
     public TimeTableWeekVo() {
     }
 
-    private TimeTableWeekVo(final Parcel in) {
+    TimeTableWeekVo(final Parcel in) {
         mWeekStart = in.readLong();
         mWeekEnd = in.readLong();
         mSemesterWeek = in.readInt();

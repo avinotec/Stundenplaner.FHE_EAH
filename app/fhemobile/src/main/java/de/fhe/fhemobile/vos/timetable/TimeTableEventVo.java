@@ -118,7 +118,7 @@ public class TimeTableEventVo implements Parcelable {
         dest.writeMap(mLocationList);
     }
 
-    private TimeTableEventVo(final Parcel in) {
+    TimeTableEventVo(final Parcel in) {
         mId = in.readString();
         this.mTitle = in.readString();
         this.mStartDateTime = in.readLong();

@@ -83,7 +83,7 @@ public class SemesterDataView extends LinearLayout {
         mListView.getListView().setId( yourListView.getId() );
     }
 
-    private void initializeList() {
+    void initializeList() {
         final SemesterVo chosenSemester = mModel.getSemesterData()[mModel.getChosenSemester()];
 
         final ArrayList<IHeaderItem> sectionList = new ArrayList<>();

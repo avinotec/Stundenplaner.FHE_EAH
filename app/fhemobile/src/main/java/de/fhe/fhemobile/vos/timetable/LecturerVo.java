@@ -12,7 +12,7 @@ public class LecturerVo implements Parcelable {
 
     public LecturerVo(){}
 
-    private LecturerVo(final Parcel in){
+    LecturerVo(final Parcel in){
         mId = in.readString();
         mName = in.readString();
     }

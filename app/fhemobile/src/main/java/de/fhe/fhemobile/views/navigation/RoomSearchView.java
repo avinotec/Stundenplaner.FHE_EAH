@@ -191,7 +191,7 @@ public class RoomSearchView extends SearchView {
         void onRoomChosen(String _room);
     }
 
-    private IViewListener   mViewListener;
+    IViewListener   mViewListener;
     private BuildingPicker  mBuildingPicker;
     private FloorPicker     mFloorPicker;
     private RoomPicker      mRoomPicker;

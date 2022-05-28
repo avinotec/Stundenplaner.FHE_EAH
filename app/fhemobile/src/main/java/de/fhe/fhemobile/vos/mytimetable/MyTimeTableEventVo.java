@@ -74,7 +74,7 @@ public class MyTimeTableEventVo implements Parcelable{
         dest.writeList(mLocationList);
     }
 
-    private MyTimeTableEventVo(final Parcel in) {
+    MyTimeTableEventVo(final Parcel in) {
         this.mTitle = in.readString();
         this.mStartDateTime = in.readLong();
         this.mEndDateTime = in.readLong();

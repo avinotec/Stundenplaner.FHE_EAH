@@ -97,7 +97,7 @@ public class PersonSearchView extends SearchView {
         void onPersonChosen(String _person);
     }
 
-    private IViewListener mViewListener;
+    IViewListener mViewListener;
     private PersonPicker mPersonPicker;
 
 }

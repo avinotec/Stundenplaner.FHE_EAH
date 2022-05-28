@@ -101,14 +101,14 @@ public class PhonebookSearchView extends FrameLayout {
 
     private static final String LOG_TAG = PhonebookSearchView.class.getSimpleName();
 
-	private EditText mFirstName;
-    private EditText mLastName;
+	EditText mFirstName;
+    EditText mLastName;
     private Button   mSearchButton;
-    private ProgressBar mProgressIndicator;
+    ProgressBar mProgressIndicator;
 
-    private TextView mErrorText;
+    TextView mErrorText;
 
     private final PhonebookModel mModel;
 
-    private ViewListener mViewListener;
+    ViewListener mViewListener;
 }

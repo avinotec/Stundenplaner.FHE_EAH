@@ -127,7 +127,7 @@ public abstract class IdPicker extends LinearLayout{
         mHeadlineView.setText(mHeadline);
     }
 
-    private void openStringPicker() {
+    void openStringPicker() {
 
         final IdStringDialog dialog = new IdStringDialog();
         dialog.setOnItemChosenListener(mItemChosenListener);
@@ -173,11 +173,11 @@ public abstract class IdPicker extends LinearLayout{
 
     private final Context              mContext;
     private FragmentManager      mFragmentManager;
-    private OnItemChosenListener mListener;
+    OnItemChosenListener mListener;
 
     private String               mHeadline;
-    private boolean              mEnabled = true;
+    boolean              mEnabled = true;
 
     private TextView             mHeadlineView;
-    private TextView             mContentView;
+    TextView             mContentView;
 }

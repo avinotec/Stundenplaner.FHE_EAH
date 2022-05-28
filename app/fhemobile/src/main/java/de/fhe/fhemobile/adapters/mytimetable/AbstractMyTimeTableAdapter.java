@@ -241,8 +241,8 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
         }
     }
 
-    private void setAndAddEventDataTextViews(MyTimeTableEventVo _Event,
-                                             LinearLayout _LayoutAllEvents){
+    void setAndAddEventDataTextViews(MyTimeTableEventVo _Event,
+                                     LinearLayout _LayoutAllEvents){
         final TextView dateAndRoomTextView = new TextView(mContext);
         final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         params.setMargins(0,5,5,10);

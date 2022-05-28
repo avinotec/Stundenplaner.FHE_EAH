@@ -161,7 +161,7 @@ public class MyTimeTableDialogView extends LinearLayout {
     }
 
 
-    private IViewListener     mViewListener;
+    IViewListener     mViewListener;
 
     private StudyProgramPicker  mStudyProgramPicker;
     private SemesterPicker      mSemesterPicker;

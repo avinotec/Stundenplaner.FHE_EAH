@@ -148,7 +148,7 @@ public class NavigationFragment extends FeatureFragment {
     /**
      * Set currentFloorPlan to the next one, display floorplan image and navigation route
      */
-    private void drawNextNavigation(){
+    void drawNextNavigation(){
         if(floorPlanIterator.hasNext()){
             currentFloorPlan = floorPlanIterator.next();
             drawNavigation();
@@ -160,7 +160,7 @@ public class NavigationFragment extends FeatureFragment {
     /**
      * Set currentFloorPlan to the previous one, display floorplan image and navigationroute
      */
-    private void drawPrevNavigation(){
+    void drawPrevNavigation(){
         if(floorPlanIterator.hasPrevious()){
             currentFloorPlan = floorPlanIterator.previous();
             drawNavigation();

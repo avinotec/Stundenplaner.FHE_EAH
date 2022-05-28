@@ -151,7 +151,7 @@ public class MyTimeTableEventSeriesVo implements Parcelable{
 
 	// PARCELABLE --------------------------------------------------------------------------------
 
-	private MyTimeTableEventSeriesVo(final Parcel in) {
+	MyTimeTableEventSeriesVo(final Parcel in) {
 		mTitle = in.readString();
 		in.readList(mStudyGroups, TimeTableStudyGroupVo.class.getClassLoader());
 		in.readList(mEvents, MyTimeTableEventDateVo.class.getClassLoader());

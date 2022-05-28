@@ -80,7 +80,7 @@ public class NewsListView extends LinearLayout {
         mModel.removeListener(NewsModel.ChangeEvent.RECEIVED_EMPTY_NEWS, mReceivedEmptyNewsListener);
     }
 
-    private void initializeAdapter() {
+    void initializeAdapter() {
 
         final ArrayList<IHeaderItem> sectionList = new ArrayList<>();
 
@@ -147,10 +147,10 @@ public class NewsListView extends LinearLayout {
     private final NewsModel     mModel;
     private StickyHeaderAdapter mAdapter;
 
-    private ProgressBar         mNewsProgressBar;
+    ProgressBar         mNewsProgressBar;
 
     private HeaderListView      mNewsList;
 
-    private ViewListener        mViewListener;
+    ViewListener        mViewListener;
 
 }

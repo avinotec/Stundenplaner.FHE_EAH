@@ -248,7 +248,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
 
 
-    private final Callback<Map<String, MyTimeTableEventSetVo>> mFetchSemesterTimeTableCallback = new Callback<Map<String, MyTimeTableEventSetVo>>() {
+    final Callback<Map<String, MyTimeTableEventSetVo>> mFetchSemesterTimeTableCallback = new Callback<Map<String, MyTimeTableEventSetVo>>() {
         @Override
         public void onResponse(Call<Map<String, MyTimeTableEventSetVo>> call, Response<Map<String, MyTimeTableEventSetVo>> response) {
             if(response.body() != null){
@@ -273,19 +273,19 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         }
     };
 
-    private void showErrorToast() {
+    void showErrorToast() {
         Toast.makeText(Main.getAppContext(), "Cannot establish connection!",
                 Toast.LENGTH_LONG).show();
     }
 
 
-    private MyTimeTableDialogView       mView;
-    private TimeTableDialogResponse     mStudyProgramDataResponse;
+    MyTimeTableDialogView       mView;
+    TimeTableDialogResponse     mStudyProgramDataResponse;
 
-    private TimeTableStudyProgramVo     mChosenStudyProgram;
-    private TimeTableSemesterVo         mChosenSemester;
+    TimeTableStudyProgramVo     mChosenStudyProgram;
+    TimeTableSemesterVo         mChosenSemester;
 
-    private MyTimeTableDialogAdapter    mListAdapter;
+    MyTimeTableDialogAdapter    mListAdapter;
 
 
 }

@@ -112,9 +112,9 @@ public class AquaWidget extends RelativeLayout {
 
     private final Context     mContext;
 
-    private ImageView   mStatusLabel;
+    ImageView   mStatusLabel;
 
-    private long        mLastTimeUpdated;
-    private boolean     mStartedFetching;
+    long        mLastTimeUpdated;
+    boolean     mStartedFetching;
 
 }

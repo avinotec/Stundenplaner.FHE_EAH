@@ -179,7 +179,7 @@ public class TimeTableDialogView extends LinearLayout {
         void onSearchClicked();
     }
 
-    private IViewListener       mViewListener;
+    IViewListener       mViewListener;
 
     private StudyProgramPicker mStudyProgramPicker2;
     private SemesterPicker      mSemesterPicker;

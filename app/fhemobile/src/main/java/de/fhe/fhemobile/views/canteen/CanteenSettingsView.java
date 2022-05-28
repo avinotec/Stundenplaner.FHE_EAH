@@ -113,9 +113,9 @@ public class CanteenSettingsView extends FrameLayout {
     private final Context           mContext;
     private final CanteenModel      mCanteenModel;
 
-    private ViewListener            mCanteenViewListener;
+    ViewListener            mCanteenViewListener;
 
-    private ListView                mCanteenListView;
+    ListView                mCanteenListView;
     private CanteenSettingsAdapter  mCanteenListAdapter;
 
 

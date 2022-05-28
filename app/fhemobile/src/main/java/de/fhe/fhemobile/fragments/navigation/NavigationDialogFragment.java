@@ -41,7 +41,7 @@ import de.fhe.fhemobile.views.navigation.NavigationDialogView;
 public class NavigationDialogFragment extends FeatureFragment {
 
     //Constants
-    private static final String TAG = NavigationDialogFragment.class.getSimpleName();
+    static final String TAG = NavigationDialogFragment.class.getSimpleName();
 
     public NavigationDialogFragment(){
         // Required empty public constructor

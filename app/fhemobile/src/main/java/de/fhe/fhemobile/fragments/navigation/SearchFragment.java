@@ -180,7 +180,7 @@ public abstract class SearchFragment extends FeatureFragment {
         }
     }
 
-    private static RoomVo validateAndGetRoom(String inputRoom) {
+    static RoomVo validateAndGetRoom(String inputRoom) {
         RoomVo roomFound = null;
 
         //a room number has been entered

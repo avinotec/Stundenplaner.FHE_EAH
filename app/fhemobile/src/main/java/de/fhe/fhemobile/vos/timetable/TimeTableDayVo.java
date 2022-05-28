@@ -33,7 +33,7 @@ import de.fhe.fhemobile.utils.timetable.TimeTableUtils;
  */
 public final class TimeTableDayVo implements Parcelable {
 
-    private TimeTableDayVo(final Parcel in) {
+    TimeTableDayVo(final Parcel in) {
         mDayNumber = in.readInt();
         in.readMap(mEvents, TimeTableEventVo.class.getClassLoader());
     }

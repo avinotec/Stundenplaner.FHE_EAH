@@ -72,7 +72,7 @@ public class WeatherHeader extends RelativeLayout {
         NetworkHandler.getInstance().fetchWeather(mWeatherResponseCallback);
     }
     
-    private void update(final String _Temperature, final int _BackgroundId, final int _IconId) {
+    void update(final String _Temperature, final int _BackgroundId, final int _IconId) {
         mTemperature.setText(_Temperature);
         mBackground.setImageResource(Utils.getResourceId("wetter_bg" + _BackgroundId, "drawable"));
         mIcon.setImageResource(Utils.getResourceId("wetter_icon" + _BackgroundId, "drawable"));

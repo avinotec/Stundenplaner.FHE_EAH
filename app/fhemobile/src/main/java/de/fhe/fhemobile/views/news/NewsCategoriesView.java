@@ -90,8 +90,8 @@ public class NewsCategoriesView extends FrameLayout {
 
     private final NewsModel           mModel;
 
-    private ViewListener        mViewListener;
-    private NewsCategoryAdapter mAdapter;
+    ViewListener        mViewListener;
+    NewsCategoryAdapter mAdapter;
 
     private ListView            mCategoryListView;
 }

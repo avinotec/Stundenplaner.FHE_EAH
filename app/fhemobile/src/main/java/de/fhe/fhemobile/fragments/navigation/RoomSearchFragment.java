@@ -50,11 +50,11 @@ public class RoomSearchFragment extends SearchFragment {
     @NonNls
     public static final String PREFS_NAVIGATION_ROOM_CHOICE = "navigation room";
 
-    private RoomSearchView mView;
+    RoomSearchView mView;
 
     //building and floor chosen as destination
-    private String mDestBuilding;
-    private String mDestFloor;
+    String mDestBuilding;
+    String mDestFloor;
 
     //set items of building picker
     static final List<BuildingVo> buildings = new ArrayList<>();

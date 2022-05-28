@@ -78,7 +78,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements DrawerFragment.NavigationDrawerCallbacks {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+    static final String TAG = MainActivity.class.getSimpleName();
 
     private static final int CHANGEREASON_EDIT = 1;
     private static final int CHANGEREASON_NEW = 3;
@@ -406,7 +406,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     wieder zurückgesetzt. Nur wenn "backPressedTwice" gesetzt ist, und der Back-Button ein zweites Mal betätigt wird, wird die App beendet.
     APP_CLOSING_DOUBLECLICK_DELAY_TIME (Standard 2000 ms)
     */
-    private boolean backPressedTwice = false;
+    boolean backPressedTwice = false;
     private final Handler mHandler = new Handler();
 
     private final Runnable mRunnable = new Runnable() {

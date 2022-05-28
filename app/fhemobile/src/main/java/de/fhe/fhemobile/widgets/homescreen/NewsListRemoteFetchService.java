@@ -112,7 +112,7 @@ public class NewsListRemoteFetchService extends Service {
      * so that widget is notified to do necessary action
      * and here action == WidgetProvider.DATA_FETCHED
      */
-    private void populateWidget(final int _AppWidgetId) {
+    void populateWidget(final int _AppWidgetId) {
 
         final Intent widgetUpdateIntent = new Intent();
         widgetUpdateIntent.setAction(NewsListWidget.DATA_FETCHED);
@@ -124,7 +124,7 @@ public class NewsListRemoteFetchService extends Service {
 
     private static final String LOG_TAG = NewsListRemoteFetchService.class.getSimpleName();
 
-    private static SparseArray<NewsItemVo[]> mNewsData         = new SparseArray<>();
-    private static SparseArray<String>       mNewsChannelNames = new SparseArray<>();
+    static SparseArray<NewsItemVo[]> mNewsData         = new SparseArray<>();
+    static SparseArray<String>       mNewsChannelNames = new SparseArray<>();
 
 }

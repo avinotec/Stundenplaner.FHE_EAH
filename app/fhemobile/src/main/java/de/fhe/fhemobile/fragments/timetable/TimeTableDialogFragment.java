@@ -98,7 +98,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
         NetworkHandler.getInstance().fetchStudyProgramData(mFetchStudyProgramDataCallback);
     }
 
-    private void proceedToTimetable(final String _TimeTableId) {
+    void proceedToTimetable(final String _TimeTableId) {
         ((MainActivity) getActivity()).changeFragment(TimeTableFragment.newInstance(_TimeTableId),
                 true, TimeTableFragment.TAG);
     }
@@ -211,15 +211,15 @@ public class TimeTableDialogFragment extends FeatureFragment {
         }
     };
 
-    private static void showErrorToast() {
+    static void showErrorToast() {
         Toast.makeText(Main.getAppContext(), "Cannot establish connection!",
                 Toast.LENGTH_LONG).show();
     }
 
-    private TimeTableDialogView     mView;
+    TimeTableDialogView     mView;
 
-    private TimeTableDialogResponse mResponse;
-    private TimeTableStudyProgramVo mChosenStudyProgram;
-    private TimeTableSemesterVo     mChosenSemester;
-    private String                  mChosenStudyGroup;
+    TimeTableDialogResponse mResponse;
+    TimeTableStudyProgramVo mChosenStudyProgram;
+    TimeTableSemesterVo     mChosenSemester;
+    String                  mChosenStudyGroup;
 }

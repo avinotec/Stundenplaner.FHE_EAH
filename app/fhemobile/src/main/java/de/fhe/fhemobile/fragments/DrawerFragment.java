@@ -299,7 +299,7 @@ public class DrawerFragment extends Fragment {
     /**
      * Helper component that ties the action bar to the navigation drawer.
      */
-    private ActionBarDrawerToggle mDrawerToggle;
+    ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerListView;
@@ -308,6 +308,6 @@ public class DrawerFragment extends Fragment {
     private int mCurrentSelectedPosition;
     private int mCurrentSelectedId = Features.FeatureId.NEWS;
     private boolean mFromSavedInstanceState;
-    private boolean mUserLearnedDrawer;
+    boolean mUserLearnedDrawer;
     private SharedPreferences mSP;
 }

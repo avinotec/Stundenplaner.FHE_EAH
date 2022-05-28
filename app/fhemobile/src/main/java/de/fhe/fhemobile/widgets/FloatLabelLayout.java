@@ -68,10 +68,10 @@ public class FloatLabelLayout extends LinearLayout {
     private static final float DEFAULT_LABEL_PADDING_RIGHT = 3.0f;
     private static final float DEFAULT_LABEL_PADDING_BOTTOM = 4.0f;
 
-    private EditText mEditText;
-    private final TextView mLabel;
+    EditText mEditText;
+    final TextView mLabel;
 
-    private CharSequence mHint;
+    CharSequence mHint;
     private final Interpolator mInterpolator;
 
     public FloatLabelLayout(final Context context) {
@@ -167,7 +167,7 @@ public class FloatLabelLayout extends LinearLayout {
         }
     }
 
-    private void updateLabelVisibility(final boolean animate) {
+    void updateLabelVisibility(final boolean animate) {
         final boolean hasText = !TextUtils.isEmpty(mEditText.getText());
         final boolean isFocused = mEditText.isFocused();
 

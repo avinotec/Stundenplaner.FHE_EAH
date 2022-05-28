@@ -12,7 +12,7 @@ public class TimeTableLocationVo implements Parcelable {
 
     public TimeTableLocationVo(){ }
 
-    private TimeTableLocationVo(final Parcel in){
+    TimeTableLocationVo(final Parcel in){
         mId = in.readString();
         mName = in.readString();
     }

@@ -83,6 +83,6 @@ public class EmployeeInformationFragment extends Fragment {
     };
 
     private EmployeeInformationView mView;
-    private EmployeeVo mEmployee;
+    EmployeeVo mEmployee;
 
 }

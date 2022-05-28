@@ -97,8 +97,8 @@ public class IdStringDialog extends DialogFragment {
 
 
     private Context              mContext;
-    private List<IDItem>         mItems;
+    List<IDItem>         mItems;
     private String               mTitle;
     private ArrayAdapter<String> mItemAdapter;
-    private OnItemChosenListener mListener;
+    OnItemChosenListener mListener;
 }

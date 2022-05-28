@@ -371,7 +371,7 @@ public class NavigationView extends LinearLayout {
     }
 
 
-    private IViewListener mViewListener;
+    IViewListener mViewListener;
 
     private Button mButtonPrevPlan;
     private Button mButtonNextPlan;
@@ -384,8 +384,8 @@ public class NavigationView extends LinearLayout {
     private TextView mTextDest;
     private TextView mTextCurrentFloorPlan;
 
-    private double cellWidth;
-    private double cellHeight;
+    double cellWidth;
+    double cellHeight;
 
     private static final String TAG = NavigationView.class.getSimpleName();
 }

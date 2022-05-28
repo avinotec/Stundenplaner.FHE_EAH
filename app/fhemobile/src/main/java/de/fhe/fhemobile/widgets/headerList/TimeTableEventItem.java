@@ -89,5 +89,8 @@ public class TimeTableEventItem implements IBaseItem {
         TextView mTitle;
         TextView mRoom;
         TextView mPerson;
+
+	    ViewHolder() {
+	    }
     }
 }

@@ -89,7 +89,7 @@ public class EmployeeListView extends FrameLayout {
     };
 
     private Context         mContext;
-    private ViewListener    mViewListener;
+    ViewListener    mViewListener;
 
     private PhonebookModel  mModel;
 

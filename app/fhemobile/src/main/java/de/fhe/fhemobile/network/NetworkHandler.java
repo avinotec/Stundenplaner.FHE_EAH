@@ -63,7 +63,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 //RetroFitClient
 public final class NetworkHandler {
 
-	private static final String TAG = NetworkHandler.class.getSimpleName();
+	static final String TAG = NetworkHandler.class.getSimpleName();
 
 	private static final NetworkHandler ourInstance = new NetworkHandler();
 
@@ -467,7 +467,7 @@ public final class NetworkHandler {
 	/**
 	 *
 	 */
-	private static void showErrorToast() {
+	static void showErrorToast() {
 		Toast.makeText(Main.getAppContext(), "Cannot establish connection!",
 				Toast.LENGTH_LONG).show();
 	}

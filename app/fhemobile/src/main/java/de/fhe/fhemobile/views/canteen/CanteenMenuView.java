@@ -107,7 +107,7 @@ public class CanteenMenuView extends LinearLayout {
      * Load menu from {@link CanteenModel}
      * and use list of {@link CanteenMenuDayVo}s to populate listview
      */
-    private void populateMenuDaysList() {
+    void populateMenuDaysList() {
         final ArrayList<IHeaderItem> sectionList = new ArrayList<>();
 
         final DefaultHeaderItem headerSection = new DefaultHeaderItem("", false);
@@ -158,8 +158,8 @@ public class CanteenMenuView extends LinearLayout {
     private HeaderListView mMenuDaysListView;
     private TextView mCanteenNameText;
 
-    private ProgressBar mCanteenProgressBar;
-    private TextView mErrorText;
+    ProgressBar mCanteenProgressBar;
+    TextView mErrorText;
 
 
 

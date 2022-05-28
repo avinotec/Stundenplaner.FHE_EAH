@@ -153,6 +153,6 @@ public class SemesterDataFragment extends FeatureFragment {
     };
 
     private SemesterDataView mView;
-    private SemesterDataModel mModel;
+    SemesterDataModel mModel;
 
 }

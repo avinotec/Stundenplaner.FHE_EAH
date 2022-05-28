@@ -103,7 +103,7 @@ public class EmployeeListFragment extends Fragment {
         }
     };
 
-    private EmployeeListCallbacks mCallbacks;
+    EmployeeListCallbacks mCallbacks;
 
     private EmployeeListView mView;
 

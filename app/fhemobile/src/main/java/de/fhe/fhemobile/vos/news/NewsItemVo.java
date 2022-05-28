@@ -136,7 +136,7 @@ public class NewsItemVo implements Parcelable {
         dest.writeString(this.mPubDate);
     }
 
-    private NewsItemVo(final Parcel in) {
+    NewsItemVo(final Parcel in) {
         this.mTitle = in.readString();
         this.mLink = in.readString();
         this.mDescription = in.readString();

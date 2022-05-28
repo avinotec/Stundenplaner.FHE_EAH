@@ -33,9 +33,9 @@ public class PersonSearchFragment extends SearchFragment {
     @NonNls
     public static final String PREFS_NAVIGATION_PERSON_CHOICE = "navigation person";
 
-    private PersonSearchView mView;
+    PersonSearchView mView;
 
-    private HashMap<String, PersonVo> persons;
+    HashMap<String, PersonVo> persons;
 
     /**
      * Use this factory method to create a new instance of

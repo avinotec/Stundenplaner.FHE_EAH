@@ -23,7 +23,7 @@ public class MyTimeTableEventDateVo implements Parcelable{
         dest.writeLong(mEndDateTime);
     }
 
-    private MyTimeTableEventDateVo(final Parcel in) {
+    MyTimeTableEventDateVo(final Parcel in) {
         this.mStartDateTime = in.readLong();
         this.mEndDateTime = in.readLong();
     }
