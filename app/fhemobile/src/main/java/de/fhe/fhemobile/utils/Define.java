@@ -19,8 +19,6 @@ package de.fhe.fhemobile.utils;
 
 import org.jetbrains.annotations.NonNls;
 
-import de.fhe.fhemobile.R;
-
 /**
  * we define all static defines centrally here.
  * constants etc.
@@ -31,16 +29,16 @@ public final class Define {
 	public static final String PARAM_TIMETABLE_ID = "paramTimeTableId";			// $NON-NLS
 
 	//created by Nadja 11.03.2022
-	public static class Canteen {
+	public static final class Canteen {
 		static final String PREF_SELECTED_CANTEENS = "selectedCanteens";      // $NON-NLS
 	}
 
-	public static class News {
+	public static final class News {
 		static final String PREF_CHOSEN_NEWS_CATEGORY = "chosenNewsCategory"; // $NON-NLS
 	}
 
 	//created by Nadja 11.03.2022
-	public static class TimeTable{
+	public static final class TimeTable{
 		public static final String SP_TIMETABLE_SETTINGS = "spTimeTable";				// $NON-NLS
 		public static final String PREF_CHOSEN_TIMETABLE_ID = "prefChosenTimeTableId";	// $NON-NLS
 
@@ -48,7 +46,7 @@ public final class Define {
     }
 
 	//created by Nadja 11.03.2022
-	public static class MyTimeTable{
+	public static final class MyTimeTable{
 		public static final String SP_MYTIMETABLE = "my_time_table"; 					// $NON-NLS
 		public static final String PREF_SUBSCRIBED_COURSES = "my_time_table_courses";	// $NON-NLS
 
@@ -56,7 +54,7 @@ public final class Define {
 	}
 
     //created by Nadja 17.11.2021
-	public static class Maps{
+	public static final class Maps{
 		public static final String BUILDING_03_02_01_FLOOR_UG1 = "building_03_02_01_floor_ug1";   //$NON-NLS
 		public static final String BUILDING_03_02_01_FLOOR_00 = "building_03_02_01_floor_00";   //$NON-NLS
 		public static final String BUILDING_03_02_01_FLOOR_01 = "building_03_02_01_floor_01";   //$NON-NLS
@@ -81,7 +79,7 @@ public final class Define {
 	}
 
 
-	public static class Navigation {
+	public static final class Navigation {
 
 		public static final String FLOORCONNECTION_TYPE_STAIR = "staircase";    //$NON-NLS
 		public static final String FLOORCONNECTION_TYPE_ELEVATOR = "elevator";  //$NON-NLS
@@ -111,7 +109,7 @@ public final class Define {
 	/**
 	 * Define Class for Push notifications from Google Firebase to the App
 	 */
-	public static class PushNotifications{
+	public static final class PushNotifications{
 
 		@NonNls
 		public static final String CHANNEL_ID = "de.fhe.fhemobile.push";  //$NON-NLS

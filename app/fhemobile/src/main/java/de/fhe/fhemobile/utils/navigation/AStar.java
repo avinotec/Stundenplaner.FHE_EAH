@@ -106,13 +106,7 @@ public class AStar {
         final LinkedHashMap<BuildingFloorKey, ArrayList<Cell>> cellsToWalk = new LinkedHashMap<>();
 
         //Set priority queue with comparator (prioritize cells based on their costsPathToCell)
-        openCells = new PriorityQueue<>(16, new Comparator<Cell>() {
-
-            @Override
-            public int compare(final Cell cellOne, final Cell cellTwo) {
-                return Integer.compare(cellOne.getCostsPathToCell(), cellTwo.getCostsPathToCell());
-            }
-        });
+        openCells = new PriorityQueue<>(16, new CellComparator());
 
         try {
 
@@ -177,7 +171,7 @@ public class AStar {
                 }
             }
 
-        } catch (final Exception e) {
+        } catch (final RuntimeException e) {
             Log.e(TAG, "error calculating route ", e);
         }
 
@@ -336,5 +330,13 @@ public class AStar {
             }
         }
         return null;
+    }
+
+    private static class CellComparator implements Comparator<Cell> {
+
+        @Override
+        public int compare(final Cell cellOne, final Cell cellTwo) {
+            return Integer.compare(cellOne.getCostsPathToCell(), cellTwo.getCostsPathToCell());
+        }
     }
 }

@@ -19,6 +19,7 @@ package de.fhe.fhemobile.services;
 
 class PushNotifications {
 
+	// TODO enable push notifications, Klasse ist leer? Löschen?
 
 
 }

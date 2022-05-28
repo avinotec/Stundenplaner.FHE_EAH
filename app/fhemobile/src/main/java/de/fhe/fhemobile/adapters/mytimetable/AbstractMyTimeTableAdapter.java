@@ -53,7 +53,7 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
 
     protected final Context mContext;
     protected List<MyTimeTableEventSeriesVo> mItems;
-    private boolean roomVisible = false;
+    boolean roomVisible = false;
 
 
     public AbstractMyTimeTableAdapter(final Context context) {
@@ -205,7 +205,7 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
     private class EventSeriesOnClickListener implements View.OnClickListener{
 
         private final View convertView;
-        final boolean roomVisible;
+        // --Commented out by Inspection (28.05.2022 16:41):final boolean roomVisible;
 
         private final MyTimeTableEventSeriesVo currentEventSeries;
 

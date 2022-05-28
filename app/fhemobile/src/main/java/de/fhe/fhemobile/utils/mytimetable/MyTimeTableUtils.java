@@ -4,7 +4,6 @@ import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
 import android.util.Log;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,107 +16,114 @@ import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventVo;
 
+/**
+ * Utility class
+ */
 public final class MyTimeTableUtils {
 
-    private static final String TAG = MyTimeTableUtils.class.getSimpleName();
+	private static final String TAG = MyTimeTableUtils.class.getSimpleName();
 
-    /**
-     * Returns the event title without the number of the time table entry.
-     * (note: event titles have no such number if entered for the first time,
-     * but later added events belonging to the same event series get one)
-     *
-     * @param title the title of an event that belongs to the {@link MyTimeTableEventSetVo}
-     * @return string corresponding to the title that identifies a {@link MyTimeTableEventSeriesVo}
-     */
-    public static String getEventSeriesName(final String title){
-        //cut away all ".d" (where d stands for any digit)
-        return title.replaceAll("\\.\\d+$","");
-    }
+	/**
+	 * Utility class, no constructor
+	 */
+	private MyTimeTableUtils() {
+	}
 
-    /**
-     * Get the title of an {@link MyTimeTableEventSeriesVo} without the group number
-     * @param title
-     * @return
-     */
-    public static String getEventSeriesBaseTitle(String title){
-        return title.replaceAll("/\\d\\d$","");
-    }
+	/**
+	 * Returns the event title without the number of the time table entry.
+	 * (note: event titles have no such number if entered for the first time,
+	 * but later added events belonging to the same event series get one)
+	 *
+	 * @param title the title of an event that belongs to the {@link MyTimeTableEventSetVo}
+	 * @return string corresponding to the title that identifies a {@link MyTimeTableEventSeriesVo}
+	 */
+	public static String getEventSeriesName(final String title) {
+		//cut away all ".d" (where d stands for any digit)
+		return title.replaceAll("\\.\\d+$", "");
+	}
 
-    /**
-     * Returns the name of the course which equals the event's name without numbers at the end
-     * @param title the title of an event in the course
-     * @return course name
-     */
-    public static String getCourseName(final String title){
-        //cut away all "/dd.dd" (where d stands for any digit)
-        return title.replaceAll("/\\d\\d(\\.\\d*)?$","");
-    }
+	/**
+	 * Get the title of an {@link MyTimeTableEventSeriesVo} without the group number
+	 *
+	 * @param title
+	 * @return
+	 */
+	public static String getEventSeriesBaseTitle(String title) {
+		return title.replaceAll("/\\d\\d$", "");
+	}
 
+	/**
+	 * Returns the name of the course which equals the event's name without numbers at the end
+	 *
+	 * @param title the title of an event in the course
+	 * @return course name
+	 */
+	public static String getCourseName(final String title) {
+		//cut away all "/dd.dd" (where d stands for any digit)
+		return title.replaceAll("/\\d\\d(\\.\\d*)?$", "");
+	}
 
+	public static String getEventTitleWithoutEndingNumbers(final String title) {
 
-    public static String getEventTitleWithoutEndingNumbers(final String title) {
+		//cuts away everything after the last letter (a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß), which means that "/01.2" is cut
+		final Pattern p = Pattern.compile("^(.*[a-zA-ZäÄüÜöÖß])"); //$NON-NLS
 
-        //cuts away everything after the last letter (a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß), which means that "/01.2" is cut
-        final Pattern p = Pattern.compile("^(.*[a-zA-ZäÄüÜöÖß])"); //$NON-NLS
+		String changeEventTitle = correctUmlauts(title);
+		try {
+			final Matcher m = p.matcher(title);
+			if (m.find()) {
+				changeEventTitle = m.group(1);
+			} else {
+				changeEventTitle = title;
+			}
 
-        String changeEventTitle = correctUmlauts(title);
-        try {
-            final Matcher m = p.matcher(title);
-            if (m.find() ) {
-                changeEventTitle = m.group(1);
-            }
-            else {
-                changeEventTitle = title;
-            }
+		} catch (final RuntimeException e) {
+			Log.e(TAG, "onResponse: ", e);
+		}
 
-        }
-        catch (final Exception e){
-            Log.e(TAG, "onResponse: ", e);
-        }
+		changeEventTitle = changeEventTitle.replaceAll("^[|)/]", "");
+		return changeEventTitle;
+	}
 
-        changeEventTitle = changeEventTitle.replaceAll("^[|)/]","");
-        return changeEventTitle;
-    }
+	public static List<MyTimeTableEventSeriesVo> groupByEventTitle(Map<String, MyTimeTableEventSetVo> _EventSets) {
+		final Map<String, MyTimeTableEventSeriesVo> eventSeriesMap = new HashMap<>();
 
-    public static List<MyTimeTableEventSeriesVo> groupByEventTitle(Map<String, MyTimeTableEventSetVo> _EventSets){
-        Map<String, MyTimeTableEventSeriesVo> eventSeriesMap = new HashMap<>();
+		for (final MyTimeTableEventSetVo eventSet : _EventSets.values()) {
 
-        for(MyTimeTableEventSetVo eventSet : _EventSets.values()){
+			//construct a MyTimeTableEventVo from each event date
+			// and add it to the corresponding EventSeries
+			for (final MyTimeTableEventDateVo eventDate : eventSet.getEventDates()) {
 
-            //construct a MyTimeTableEventVo from each event date
-            // and add it to the corresponding EventSeries
-            for(MyTimeTableEventDateVo eventDate : eventSet.getEventDates()){
+				//new EventVo
+				final MyTimeTableEventVo eventToAdd = new MyTimeTableEventVo(
+						eventSet.getTitle(),
+						eventDate.getStartDateTimeInSec(),
+						eventDate.getEndDateTimeInSec(),
+						eventSet.getLecturerList(),
+						eventSet.getLocationList());
 
-                //new EventVo
-                MyTimeTableEventVo eventToAdd = new MyTimeTableEventVo(
-                        eventSet.getTitle(),
-                        eventDate.getStartDateTimeInSec(),
-                        eventDate.getEndDateTimeInSec(),
-                        eventSet.getLecturerList(),
-                        eventSet.getLocationList());
+				final String seriesTitleOfEventSet = getEventSeriesName(eventSet.getTitle());
+				//create new EventSeriesVo if necessary and add eventVo
+				if (!eventSeriesMap.containsKey(seriesTitleOfEventSet)) {
 
-                String seriesTitleOfEventSet = getEventSeriesName(eventSet.getTitle());
-                //create new EventSeriesVo if necessary and add eventVo
-                if(!eventSeriesMap.containsKey(seriesTitleOfEventSet)){
+					//new EventSeriesVo
+					final MyTimeTableEventSeriesVo eventSeriesToAdd = new MyTimeTableEventSeriesVo(
+							seriesTitleOfEventSet,
+							eventSet.getStudyGroups(),
+							new ArrayList<>()
+					);
 
-                    //new EventSeriesVo
-                    MyTimeTableEventSeriesVo eventSeriesToAdd = new MyTimeTableEventSeriesVo(
-                            seriesTitleOfEventSet,
-                            eventSet.getStudyGroups(),
-                            new ArrayList<>()
-                    );
+					eventSeriesMap.put(seriesTitleOfEventSet, eventSeriesToAdd);
+				}
+				//add event
+				eventSeriesMap.get(seriesTitleOfEventSet).addEvent(eventToAdd);
+			}
 
-                    eventSeriesMap.put(seriesTitleOfEventSet, eventSeriesToAdd);
-                }
-                //add event
-                eventSeriesMap.get(seriesTitleOfEventSet).addEvent(eventToAdd);
-            }
+		}
+		return new ArrayList<>(eventSeriesMap.values());
+	}
 
-        }
-        return new ArrayList<>(eventSeriesMap.values());
-    }
-
-    //todo: auskommentiert wegen Umbau von MyTimeTable
+	//todo: auskommentiert wegen Umbau von MyTimeTable
 //    public static List<MyTimeTableEventSetVo> queryfutureEvents(final List<MyTimeTableEventSetVo>list){
 //
 //        final List<MyTimeTableEventSetVo> filteredEvents = new ArrayList<>();
@@ -136,7 +142,7 @@ public final class MyTimeTableUtils {
 //        return filteredEvents;
 //    }
 
-    //todo: auskommentiert im Zuge der Umbauarbeiten für MyTimeTable
+	//todo: auskommentiert im Zuge der Umbauarbeiten für MyTimeTable
     /*public static final MyTimeTableEventSetVo getEventByID(final List<MyTimeTableEventSetVo> list, final String ID){
         for ( final MyTimeTableEventSetVo event:list ) {
             if(ID.equals(event.getFirstEvent().getId())){
@@ -146,14 +152,14 @@ public final class MyTimeTableUtils {
         return null;
     }*/
 
-    /**
-     *
-     * @param list
-     * @param data
-     * @return
-     */
-    public static final boolean listContainsEvent(final List<MyTimeTableEventSeriesVo> list, final MyTimeTableEventSeriesVo data){
-        for(final MyTimeTableEventSeriesVo event : list){
+	/**
+	 *
+	 * @param list
+	 * @param data
+	 * @return
+	 */
+//    public static final boolean listContainsEvent(final List<MyTimeTableEventSeriesVo> list, final MyTimeTableEventSeriesVo data){
+//        for(final MyTimeTableEventSeriesVo event : list){
 //			Log.d(TAG, "Eventvergleich1: "+event);
 //			Log.d(TAG, "Eventvergleich2: "+data);
 //			Log.d(TAG, "listContainsEvent: "+event.getEvent().getTitle()+" "+data.getEvent().getTitle());
@@ -162,7 +168,7 @@ public final class MyTimeTableUtils {
 //			Log.d(TAG, "listContainsEvent: "+event.getStudyGroup().getTimeTableId()+" "+data.getStudyGroup().getTimeTableId());
 //			Log.d(TAG, "listContainsEvent: "+event.getSemester().getId()+" "+data.getSemester().getId());
 //			Log.d(TAG, "listContainsEvent: "+event.getStudyProgram().getId()+" "+data.getStudyProgram().getId());
-            //todo: auskommentiert im Zuge von Umbauarbeiten
+	//todo: auskommentiert im Zuge von Umbauarbeiten
            /* if(event.getFirstEvent().getTitle().equals(data.getFirstEvent().getTitle())){
 //				Log.d(TAG, "EventTitle: true");
                 if(event.getFirstEventDay().getDayInWeek().equals(data.getEventDay().getDayInWeek())){
@@ -183,11 +189,12 @@ public final class MyTimeTableUtils {
                 }
 
             }*/
-        }
-//		Log.d(TAG, "listContainsEvent: Contains not!");
-        return false;
-    }
 
-    //don't use SimpleDateFormat.getDateTimeInstance() because it includes seconds
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
+//		Log.d(TAG, "listContainsEvent: Contains not!");
+//        return false;
+//    }
+
+//don't use SimpleDateFormat.getDateTimeInstance() because it includes seconds
+//    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy H:mm");
 }
+

@@ -49,7 +49,7 @@ import de.fhe.fhemobile.vos.maps.MapVo;
 /**
  * Created by paul on 23.02.14.
  */
-public class MapsModel {
+public final class MapsModel {
 
 
     private static MapsModel ourInstance = null;

@@ -220,7 +220,7 @@ public class RouteCalculator {
                     floorGrids.get(Complex.COMPLEX_5).put(i, buildFloorGrid(Complex.COMPLEX_5, i));
                 }
             }
-        } catch (final Exception e) {
+        } catch (final RuntimeException e) {
             Log.e(TAG, "error building floor grids", e);
         }
 
@@ -282,7 +282,7 @@ public class RouteCalculator {
                     }
                 }
             }
-        } catch (final Exception e) {
+        } catch (final RuntimeException e) {
             Log.e(TAG, "error building the floorGrid (" + complex.toString() + "," + floorInt+")", e);
         }
         return floorGrid;

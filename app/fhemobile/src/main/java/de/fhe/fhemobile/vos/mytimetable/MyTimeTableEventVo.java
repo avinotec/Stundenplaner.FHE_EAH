@@ -24,10 +24,6 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -45,7 +41,7 @@ import de.fhe.fhemobile.vos.timetable.TimeTableLocationVo;
 public class MyTimeTableEventVo implements Parcelable{
 
     static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
-    int offset = TimeZone.getTimeZone("Europe/Berlin").getOffset(new Date().getTime());
+    final int offset = TimeZone.getTimeZone("Europe/Berlin").getOffset(new Date().getTime());
 
     public MyTimeTableEventVo() {
     }

@@ -122,7 +122,7 @@ public class MyTimeTableSettingsFragment extends FeatureFragment {
 		super.onDetach();
 
 		//TODO enable Push Notifications
-		//PushNotificationsRegisterAndUpdateCourses();
+		PushNotificationsRegisterAndUpdateCourses();
 	}
 
 	private void PushNotificationsRegisterAndUpdateCourses() {

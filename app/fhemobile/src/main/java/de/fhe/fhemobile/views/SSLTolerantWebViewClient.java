@@ -59,7 +59,7 @@ public class SSLTolerantWebViewClient extends WebViewClient {
 			final AlertDialog dialog = builder.create();
 			dialog.show();
 
-		} catch (final Exception e){
+		} catch (final RuntimeException e){
 			Log.d(TAG, "onReceivedSslError: ",e);
 			handler.proceed();
 		}

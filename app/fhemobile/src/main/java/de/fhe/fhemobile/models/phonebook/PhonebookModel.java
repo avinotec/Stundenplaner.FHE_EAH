@@ -25,7 +25,7 @@ import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
 /**
  * Created by paul on 22.01.14.
  */
-public class PhonebookModel extends EventDispatcher {
+public final class PhonebookModel extends EventDispatcher {
 
     public static final String PHONE_NUMBER_PREFIX = "";
 

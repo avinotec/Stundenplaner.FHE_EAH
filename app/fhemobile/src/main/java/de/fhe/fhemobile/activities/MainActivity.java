@@ -172,8 +172,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                             Log.d( TAG, "Error in Schedule Change Server: " + sErrorText );
 
                             final AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
-                            builder1.setMessage(
-                                    "Push Notifications: Error in Schedule Change Server: " + sErrorText);
+                            builder1.setMessage( "Push Notifications: Error in Schedule Change Server: " + sErrorText);
                             final AlertDialog alert11 = builder1.create();
                             alert11.show();
                         }
@@ -378,7 +377,6 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                 return;
             }
 
-
             final FragmentManager fragmentManager = getSupportFragmentManager();
 
             //if there is no previous page, close app
@@ -397,7 +395,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             Toast.makeText(this, getString(R.string.reallyClose), Toast.LENGTH_SHORT).show();
 
             mHandler.postDelayed(mRunnable, Define.APP_CLOSING_DOUBLECLICK_DELAY_TIME);
-        } else super.onBackPressed();
+        } else
+            super.onBackPressed();
 
     }
 
@@ -493,6 +492,4 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     private CharSequence    mTitle;
     private int             mCurrentFragmentId = -1;
     private FeatureFragment mCurrentFragment;
-
-
 }

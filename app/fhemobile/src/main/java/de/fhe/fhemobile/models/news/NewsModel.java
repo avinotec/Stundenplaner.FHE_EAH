@@ -25,7 +25,7 @@ import de.fhe.fhemobile.vos.news.NewsItemVo;
 /**
  * Created by paul on 01.02.14.
  */
-public class NewsModel extends EventDispatcher {
+public final class NewsModel extends EventDispatcher {
 
     public static class ChangeEvent extends SimpleEvent {
         public static final String RECEIVED_NEWS = "receivedNews";

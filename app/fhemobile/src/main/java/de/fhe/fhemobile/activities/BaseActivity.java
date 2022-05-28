@@ -29,7 +29,6 @@ import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -60,7 +59,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             setSupportActionBar(mToolbar);
         }
 
-        mActionBar = getSupportActionBar();
+        //mActionBar = getSupportActionBar();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -179,7 +178,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 // --Commented out by Inspection STOP (01.11.2019 00:18)
 
     protected Toolbar   mToolbar;
-    protected ActionBar mActionBar;
+    // --Commented out by Inspection (28.05.2022 16:42):protected ActionBar mActionBar;
 
     private FrameLayout mContainer;
     private TabHost     mTabHost;

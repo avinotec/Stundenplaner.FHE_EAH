@@ -196,7 +196,7 @@ public class NavigationFragment extends FeatureFragment {
             cellsToWalk = routeCalculator.getWholeRoute();
             floorPlanIterator = new FloorPlanIterator(new ArrayList<>(cellsToWalk.keySet()));
 
-        } catch (final Exception e) {
+        } catch (final RuntimeException e) {
             Log.e(TAG,"error calculating route:", e);
         }
     }

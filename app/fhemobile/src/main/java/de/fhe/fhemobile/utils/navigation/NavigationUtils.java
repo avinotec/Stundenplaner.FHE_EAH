@@ -175,7 +175,7 @@ public final class NavigationUtils {
 	            json = JSONHandler.readFromAssets("exits");
 	            NavigationFragment.buildingExits = JSONHandler.parseJsonExits(json);
 	        }
-	    } catch (final Exception e) {
+	    } catch (final RuntimeException e) {
 	        Log.e(NavigationFragment.TAG, "error reading or parsing JSON files:", e);
 	    }
 	}
@@ -192,7 +192,7 @@ public final class NavigationUtils {
 	            json = JSONHandler.readFromAssets("floorconnections");
 	            NavigationFragment.floorConnections = JSONHandler.parseJsonFloorConnection(json);
 	        }
-	    } catch (final Exception e) {
+	    } catch (final RuntimeException e) {
 	        Log.e(NavigationFragment.TAG, "error reading or parsing JSON files:", e);
 	    }
 	}

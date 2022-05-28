@@ -23,7 +23,7 @@ import de.fhe.fhemobile.vos.semesterdata.SemesterVo;
 /**
  * Created by paul on 23.01.14.
  */
-public class SemesterDataModel extends EventDispatcher {
+public final class SemesterDataModel extends EventDispatcher {
 
     public static class ChangeEvent extends SimpleEvent {
         public static final String RECEIVED_SEMESTER_DATA       = "receivedSemesterData";

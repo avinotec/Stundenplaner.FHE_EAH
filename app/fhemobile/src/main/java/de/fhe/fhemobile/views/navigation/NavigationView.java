@@ -225,7 +225,7 @@ public class NavigationView extends LinearLayout {
                     drawPathCell(cell);
                 }
             }
-        } catch (final Exception e) {
+        } catch (final RuntimeException e) {
             Log.e(TAG, "error drawing path cells:",e);
         }
     }
@@ -244,7 +244,7 @@ public class NavigationView extends LinearLayout {
             fitOneCell(startIcon);
             startIcon.setX(convertCellCoordX(startRoom.getXCoordinate()));
             startIcon.setY(convertCellCoordY(startRoom.getYCoordinate()));
-        } catch (final Exception e) {
+        } catch (final RuntimeException e) {
             Log.e(TAG, "error drawing start room:", e);
         }
     }
@@ -262,7 +262,7 @@ public class NavigationView extends LinearLayout {
             fitOneCell(destinationIcon);
             destinationIcon.setX(convertCellCoordX(destRoom.getXCoordinate()));
             destinationIcon.setY(convertCellCoordY(destRoom.getYCoordinate()));
-        } catch (final Exception e) {
+        } catch (final RuntimeException e) {
             Log.e(TAG,"error drawing destination room:", e);
         }
     }

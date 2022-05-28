@@ -34,7 +34,7 @@ import de.fhe.fhemobile.vos.canteen.CanteenVo;
  * Created by paul on 23.01.14
  * Edited by Nadja - 04/2022
  */
-public class CanteenModel extends EventDispatcher {
+public final class CanteenModel extends EventDispatcher {
 
     private static final String TAG = CanteenModel.class.getSimpleName();
 
@@ -109,7 +109,7 @@ public class CanteenModel extends EventDispatcher {
 
     private static CanteenModel ourInstance;
 
-    private Map<String, List<CanteenMenuDayVo>> mMenus = new HashMap();
+    private final Map<String, List<CanteenMenuDayVo>> mMenus = new HashMap();
 
     private CanteenVo[] mCanteens;
 }

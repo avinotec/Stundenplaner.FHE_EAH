@@ -39,7 +39,7 @@ import de.fhe.fhemobile.vos.canteen.CanteenVo;
  * Created by paul on 22.01.14
  * Edited by Nadja - 04/2022
  */
-public class UserSettings {
+public final class UserSettings {
     private static final UserSettings ourInstance = new UserSettings();
 
     private static final String TAG = UserSettings.class.getSimpleName();

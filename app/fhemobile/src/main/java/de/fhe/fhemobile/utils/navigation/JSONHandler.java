@@ -27,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -91,7 +92,7 @@ public final class JSONHandler {
             for (String line; (line = br.readLine()) != null; ) {
                 text.append(line).append("\n");
             }
-        } catch (final Exception e){
+        } catch (final IOException e){
             Log.e(TAG, "reading floorplan from json failed", e);
         }
 
@@ -123,7 +124,7 @@ public final class JSONHandler {
             for (String line; (line = br.readLine()) != null; ) {
                 text.append(line).append("\n");
             }
-        } catch (final Exception e){
+        } catch (final IOException e){
             Log.e(TAG, "reading" +filenameToRead+ "from json failed", e);
         }
 
@@ -232,7 +233,7 @@ public final class JSONHandler {
 
                 rooms.add(newRoom);
             }
-        } catch (final Exception e) {
+        } catch (final JSONException e) {
             Log.e(TAG, "error parsing JSON rooms", e);
         }
         return rooms;
@@ -275,7 +276,7 @@ public final class JSONHandler {
                 final FloorConnectionVo newConnection = new FloorConnectionVo(floorConnectionType, connectedCells);
                 floorConnections.add(newConnection);
             }
-        } catch (final Exception e) {
+        } catch (final JSONException e) {
             Log.e(TAG, "error parsing JSON floorConnections array", e);
         }
         return floorConnections;
@@ -307,7 +308,7 @@ public final class JSONHandler {
                 walkableCells.put("" + x + '_' + y, entry);
 
             }
-        } catch (final Exception e) {
+        } catch (final JSONException e) {
             Log.e(TAG, "error parsing JSON walkableCells", e); //$NON-NLS
         }
         return walkableCells;
@@ -322,7 +323,7 @@ public final class JSONHandler {
             try {
                 final String roomsJson = JSONHandler.readFromAssets(JSON_SECTION_ROOMS);
                 NavigationFragment.rooms = JSONHandler.parseJsonRooms(roomsJson);
-            } catch (final Exception e) {
+            } catch (final RuntimeException e) {
                 Log.e(TAG, "error reading or parsing rooms from JSON files:", e);
             }
         }
@@ -336,7 +337,7 @@ public final class JSONHandler {
         try {
             final String roomsJson = JSONHandler.readFromAssets(JSON_SECTION_ROOMS);
             return JSONHandler.parseJsonRooms(roomsJson);
-        } catch (final Exception e) {
+        } catch (final RuntimeException e) {
             Log.e(TAG, "error reading or parsing rooms from JSON files:", e);
         }
 
@@ -352,7 +353,7 @@ public final class JSONHandler {
         try{
             final String personsJson = JSONHandler.readFromAssets(JSON_SECTION_PERSONS);
             persons = JSONHandler.parseJsonPersons(personsJson);
-        } catch (final Exception e){
+        } catch (final RuntimeException e){
             Log.e(TAG, "error reading or parsing persons from JSON files:", e);
         }
         return persons;

@@ -26,7 +26,7 @@ import de.fhe.fhemobile.R;
 /**
  * Created by Paul Cech on 13.05.15.
  */
-public class HeaderImageItem implements IBaseItem {
+public final class HeaderImageItem implements IBaseItem {
 
     private HeaderImageItem(final int _imageRes) {
         mImageRes = _imageRes;

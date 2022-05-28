@@ -79,7 +79,7 @@ public final class Utils {
 
         try {
             return Main.getAppContext().getString(getResourceId(_variableName, "string"));
-        } catch (final Exception e) {
+        } catch (final RuntimeException e) {
             Log.e( TAG, "Error in fetching ressource", e);
 
             //fallback if not found
@@ -99,7 +99,7 @@ public final class Utils {
     public static int getResourceId(final String _variableName, final String _resourcename) {
         try {
             return Main.getAppContext().getResources().getIdentifier(_variableName, _resourcename, Main.getAppContext().getPackageName());
-        } catch (final Exception e) {
+        } catch (final RuntimeException e) {
             Log.e(TAG, "Fehler bei der Ressourcensuche",e);
             return -1;
         }

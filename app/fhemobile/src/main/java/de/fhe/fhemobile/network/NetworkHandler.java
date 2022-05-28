@@ -61,14 +61,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by paul on 22.01.14
  */
 //RetroFitClient
-public class NetworkHandler {
+public final class NetworkHandler {
 
 	private static final String TAG = NetworkHandler.class.getSimpleName();
 
 	private static final NetworkHandler ourInstance = new NetworkHandler();
 
-	private Retrofit mRestAdapter = null;
-	private Retrofit mRestAdapterEah = null;
 	private ApiDeclaration mApiErfurt = null;
 	private ApiDeclaration mApiEah = null;
 
@@ -77,21 +75,19 @@ public class NetworkHandler {
 	 */
 	private NetworkHandler() {
 		Assert.assertTrue( mApiErfurt == null );
-		Assert.assertTrue( mRestAdapter == null );
 		Assert.assertTrue( mApiEah == null );
-		Assert.assertTrue( mRestAdapterEah == null );
 
 		final Gson gson = new GsonBuilder()
 				.setDateFormat("HH:mm:ss'T'yyyy-MM-dd")
 				.create();
 
-		mRestAdapter = new Retrofit.Builder()
+		Retrofit mRestAdapter = new Retrofit.Builder()
 				.baseUrl(Endpoints.BASE_URL + Endpoints.APP_NAME)
 				.addConverterFactory(GsonConverterFactory.create(gson))
 				//.setConverter(new GsonConverter(gson))
 //                .setLogLevel(RestAdapter.LogLevel.FULL)
 				.build();
-		mRestAdapterEah = new Retrofit.Builder()
+		Retrofit mRestAdapterEah = new Retrofit.Builder()
 				.baseUrl(Endpoints.BASE_URL_EAH)
 				.addConverterFactory(GsonConverterFactory.create(gson))
 				//.setConverter(new GsonConverter(gson))
