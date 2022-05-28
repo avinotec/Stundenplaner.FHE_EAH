@@ -273,7 +273,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         }
     };
 
-    void showErrorToast() {
+    static void showErrorToast() {
         Toast.makeText(Main.getAppContext(), "Cannot establish connection!",
                 Toast.LENGTH_LONG).show();
     }

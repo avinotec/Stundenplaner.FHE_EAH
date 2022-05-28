@@ -128,7 +128,7 @@ public class EmployeeVo implements Parcelable {
         mRoom = checkForEmpty(room);
     }
 
-    private String checkForEmpty(final String _Source) {
+    private static String checkForEmpty(final String _Source) {
         final String temp;
         if(_Source.contentEquals("-;")) {
             temp = "";
