@@ -31,8 +31,6 @@ import de.fhe.fhemobile.views.imprint.ImprintView;
 
 public class ImprintFragment extends FeatureFragment {
 
-    private ImprintView mView;
-
     public ImprintFragment() {
         // Required empty public constructor
     }
@@ -43,31 +41,6 @@ public class ImprintFragment extends FeatureFragment {
         fragment.setArguments(args);
         return fragment;
     }
-
-/*
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
-    }
-*/
-
-/*
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-    }
-*/
-
-/*
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-*/
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
@@ -85,4 +58,7 @@ public class ImprintFragment extends FeatureFragment {
     public WebView getWebView(){
         return getView().findViewById(R.id.webview_imprint);
     }
+
+
+    private ImprintView mView;
 }

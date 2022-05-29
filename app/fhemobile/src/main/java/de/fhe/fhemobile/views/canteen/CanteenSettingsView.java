@@ -69,7 +69,7 @@ public class CanteenSettingsView extends FrameLayout {
      * and set selected canteens as checked
      */
     public void initCanteenSelectionListView() {
-        mCanteenListAdapter = new CanteenSettingsAdapter(mContext, mCanteenModel.getCanteens());
+        CanteenSettingsAdapter mCanteenListAdapter = new CanteenSettingsAdapter(mContext, mCanteenModel.getCanteens());
         mCanteenListView.setAdapter(mCanteenListAdapter);
         mCanteenListView.setOnItemClickListener(mCanteenSelectListener);
 
@@ -116,7 +116,6 @@ public class CanteenSettingsView extends FrameLayout {
     ViewListener            mCanteenViewListener;
 
     ListView                mCanteenListView;
-    private CanteenSettingsAdapter  mCanteenListAdapter;
 
 
 }

@@ -127,7 +127,7 @@ public class CanteenMenuView extends LinearLayout {
             sectionList.add(new DefaultHeaderItem(collection.getHeadline(), true, rowItems));
         }
 
-        mAdapter = new StickyHeaderAdapter(getContext(), sectionList);
+        StickyHeaderAdapter mAdapter = new StickyHeaderAdapter(getContext(), sectionList);
         mMenuDaysListView.setAdapter(mAdapter);
 
         Log.d(TAG, mCanteenId + " List populated");
@@ -154,7 +154,6 @@ public class CanteenMenuView extends LinearLayout {
 
     private String mCanteenId;
 
-    private StickyHeaderAdapter mAdapter;
     private HeaderListView mMenuDaysListView;
     private TextView mCanteenNameText;
 

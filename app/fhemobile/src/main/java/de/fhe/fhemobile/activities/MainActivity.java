@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if (mToolbar != null) setSupportActionBar(mToolbar);
         
         mDrawerFragment = (DrawerFragment) getSupportFragmentManager()
@@ -478,8 +478,6 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private DrawerFragment mDrawerFragment;
-    
-    private Toolbar         mToolbar;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.

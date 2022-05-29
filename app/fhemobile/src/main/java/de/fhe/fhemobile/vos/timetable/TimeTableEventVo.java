@@ -154,8 +154,8 @@ public class TimeTableEventVo implements Parcelable {
     private long mEndDateTime;
 
     @SerializedName("dataStaff")
-    private Map<String, LecturerVo> mLecturerList = new HashMap<>();
+    private final Map<String, LecturerVo> mLecturerList = new HashMap<>();
 
     @SerializedName("dataLocation")
-    private Map<String, TimeTableLocationVo> mLocationList = new HashMap<>();
+    private final Map<String, TimeTableLocationVo> mLocationList = new HashMap<>();
 }

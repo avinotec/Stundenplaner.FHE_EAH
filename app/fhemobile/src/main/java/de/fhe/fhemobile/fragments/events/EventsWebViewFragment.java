@@ -33,8 +33,6 @@ import de.fhe.fhemobile.views.events.EventsWebView;
  */
 public class EventsWebViewFragment extends FeatureFragment {
 
-    private EventsWebView mView;
-
     public EventsWebViewFragment() {
         // Required empty public constructor
     }
@@ -45,25 +43,6 @@ public class EventsWebViewFragment extends FeatureFragment {
         fragment.setArguments(args);
         return fragment;
     }
-
-/*
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-*/
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
@@ -81,4 +60,7 @@ public class EventsWebViewFragment extends FeatureFragment {
     public WebView getWebView(){
         return getView().findViewById(R.id.eventsWebView);
     }
+
+
+    private EventsWebView mView;
 }

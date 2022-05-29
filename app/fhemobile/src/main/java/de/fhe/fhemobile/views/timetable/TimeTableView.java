@@ -56,7 +56,7 @@ public class TimeTableView extends LinearLayout {
 
     public void setPagerItems(final ArrayList<TimeTableWeekVo> _Items) {
 
-        mAdapter = new TimeTablePagerAdapter(mFragmentManager, mLifecycle, _Items);
+        TimeTablePagerAdapter mAdapter = new TimeTablePagerAdapter(mFragmentManager, mLifecycle, _Items);
         if (BuildConfig.DEBUG) Assert.assertNotNull(mAdapter);
         mPager.setAdapter(mAdapter);
         if (BuildConfig.DEBUG) Assert.assertNotNull(mPager);
@@ -84,5 +84,4 @@ public class TimeTableView extends LinearLayout {
 
     private ViewPager2                   mPager;
 
-    private TimeTablePagerAdapter mAdapter;
 }

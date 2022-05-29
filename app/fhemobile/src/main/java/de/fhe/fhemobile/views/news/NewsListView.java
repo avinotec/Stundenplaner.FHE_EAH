@@ -93,7 +93,7 @@ public class NewsListView extends LinearLayout {
 
         sectionList.add(headerItem);
 
-        mAdapter = new StickyHeaderAdapter(mContext, sectionList);
+        StickyHeaderAdapter mAdapter = new StickyHeaderAdapter(mContext, sectionList);
         mAdapter.setOnItemClickListener(mListItemClickListener);
         mNewsList.setAdapter(mAdapter);
     }
@@ -145,7 +145,6 @@ public class NewsListView extends LinearLayout {
     private final Context       mContext;
 
     private final NewsModel     mModel;
-    private StickyHeaderAdapter mAdapter;
 
     ProgressBar         mNewsProgressBar;
 
