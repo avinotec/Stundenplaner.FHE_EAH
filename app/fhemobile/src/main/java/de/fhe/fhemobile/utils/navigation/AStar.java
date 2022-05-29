@@ -128,7 +128,8 @@ public class AStar {
                 //Antwort Nadja: cellsToWalk wird im Aufruf performAStarAlgorithm weiter oben gefüllt, das erkennt der vermutlich nicht
 
                 // if cellsToWalk already contains cells at this floor
-// TODO result is always false ????
+                // Analyzer says that this is always false, but that's not correct
+                // because cellsToWalk is filled with keys when performAStarAlgorithm() is called in line 114
                 if(cellsToWalk.containsKey(bfKeyCurrentCell)){
                     cellsToWalk.get(bfKeyCurrentCell).add(currentCell);
                 } else {
