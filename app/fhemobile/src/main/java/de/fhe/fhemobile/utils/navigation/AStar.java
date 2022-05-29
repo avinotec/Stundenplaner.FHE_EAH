@@ -124,12 +124,9 @@ public class AStar {
             final BuildingFloorKey bfKeyCurrentCell = new BuildingFloorKey(currentCell);
             // if destination is exit then add it as cellToWalk
             if(currentCell instanceof BuildingExitVo){
-                //Note: Analyzer sagt, die Bedingung wäre IMMER false
-                //Antwort Nadja: cellsToWalk wird im Aufruf performAStarAlgorithm weiter oben gefüllt, das erkennt der vermutlich nicht
 
-                // if cellsToWalk already contains cells at this floor
-                // Analyzer says that this is always false, but that's not correct
-                // because cellsToWalk is filled with keys when performAStarAlgorithm() is called in line 114
+                //Note: Analyzer sagt, die Bedingung wäre IMMER false. Das ist nicht korrekt, weil
+                //cellsToWalk wird im Aufruf performAStarAlgorithm (Zeile 114) weiter oben gefüllt, das erkennt der vermutlich nicht
                 if(cellsToWalk.containsKey(bfKeyCurrentCell)){
                     cellsToWalk.get(bfKeyCurrentCell).add(currentCell);
                 } else {
