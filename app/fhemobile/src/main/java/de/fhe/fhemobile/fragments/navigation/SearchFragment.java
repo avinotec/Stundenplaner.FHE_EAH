@@ -213,12 +213,7 @@ public abstract class SearchFragment extends FeatureFragment {
                 inputRoom = inputArray[0] + ".3Z." + inputArray[2];
             }
 
-            // ab hier ist der inputRoom im Format
-            // 03.03.41
-            // 05.3Z.205
-
-//TODO für die folgende Prüfung dürfen keine Buchstaben in den Räumen sein, daher wird mit dem nicht-korrigierten "3Z" als "3" weiter gearbeitet.
-//TODO, stimmt das?
+            // ab hier ist der inputRoom im Format xx.xx.xx bzw. 05.3Z.xxx
 
             //check room list for matching names
             for (final RoomVo room : NavigationFragment.rooms) {

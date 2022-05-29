@@ -21,7 +21,6 @@ package de.fhe.fhemobile.utils.feature;
  */
 public final class Features {
 
-    //TODO Features
     public static boolean NEWS            = false;
     public static boolean PHONEBOOK       = false;
     public static boolean CANTEEN         = false;

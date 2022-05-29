@@ -131,16 +131,16 @@ public class MyTimeTableSettingsFragment extends FeatureFragment {
 			String title = "";
 			String setID = "";
 
-			for (MyTimeTableEventSeriesVo course : getSubscribedEventSeries()) {
-				final String eventTitleShort = course.getTitle();
+			for (MyTimeTableEventSeriesVo eventSeries : getSubscribedEventSeries()) {
+				final String eventTitle = eventSeries.getTitle();
 
-				//todo: all setIds in the course's studyGroupList has to be searched
-				/*final String sSetID = course.getStudyGroup().getTimeTableId();
+				//TODO: reconstruct to enable push notifications
+				/*final String sSetID = eventSeries.getStudyGroup().getTimeTableId();
 
-				if ((title.equals(eventTitleShort) && setID.equals(sSetID))) {
+				if ((title.equals(eventTitle) && setID.equals(sSetID))) {
 
-					request.addCourse(course.getStudyGroup().getTimeTableId(), course.getEvent().getTitle());
-					title = eventTitleShort;
+					request.addCourse(eventSeries.getStudyGroup().getTimeTableId(), eventSeries.getEvent().getTitle());
+					title = eventTitle;
 					setID = sSetID;
 				}*/
 			}
@@ -246,8 +246,7 @@ public class MyTimeTableSettingsFragment extends FeatureFragment {
 						if (change.getChangesReason() == CHANGEREASON_EDIT) {
 							final MyTimeTableEventSetVo event = MyTimeTableUtils.getEventByID(myTimetableList, change.getNewEventJson().getId());
 							if (event != null) {
-								//todo: auskommentiert im Zuge von Umbauarbeiten
-								//event.setEvent(change.getNewEventJson());
+								event.setEvent(change.getNewEventJson());
 							}
 						}
 						//Hinzufuegen eines neuen Events: Erstelle ein neues Element vom Typ MyTimeTableEventSetVo, schreibe alle Set-, Semester- und Studiengangdaten in dieses

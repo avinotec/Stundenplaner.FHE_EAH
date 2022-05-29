@@ -30,7 +30,6 @@ public final class Endpoints {
     public static final String BASE_URL_EAH         = "https://stundenplanung.eah-jena.de/";
     public static final String APP_NAME             = "/fheapp/";
 
-    //TODO
     public static final String IMPRINT_ENDPOINT = "https://www.eah-jena.de/impressum"; //URL fixed - Nadja 3.9.21
     //Links for displaying as WebViews - Nadja 6.9.21
     public static final String NEWS_ENDPOINT = "https://www.eah-jena.de/hochschule/nachrichten";

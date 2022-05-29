@@ -156,8 +156,7 @@ public class AStar {
                 currentCell = currentCell.getParentCell();
             }
             // if start is exit then add it as cell to walk
-// TODO getParentCell() == null is always true... ????
-            if(currentCell.getParentCell() == null && currentCell instanceof BuildingExitVo){
+            if(currentCell instanceof BuildingExitVo){
 
                 final BuildingFloorKey bfKeyCurrentCell2 = new BuildingFloorKey(currentCell);
 

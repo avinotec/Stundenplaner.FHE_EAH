@@ -71,12 +71,6 @@ public class TimeTableView extends LinearLayout {
                 }
             }
         }
-
-
-        //if (BuildConfig.DEBUG) Assert.assertTrue( mPageIndicator != null );
-
-        //TODO Simon, warum ist das null?
-        //mPageIndicator.setViewPager(mPager);
     }
 
     @Override
@@ -89,7 +83,6 @@ public class TimeTableView extends LinearLayout {
     private Lifecycle           mLifecycle;
 
     private ViewPager2                   mPager;
-    //private CirclePageIndicator         mPageIndicator;
 
     private TimeTablePagerAdapter mAdapter;
 }

@@ -118,12 +118,6 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
         mView.setEventListAdapter(mListAdapter);
 
-        //todo: loading eventseries list from shared preferences risks to display an outdated version,
-        // the user has to re-select his study course and semester to update it.
-        // This is not intuitive and not how the user predicts MyTimeTableDialog to work.
-        // Thus this function should be commented out or replaced by a less risky method.
-        //loadSelectionFromSharedPreferences();
-
         return mView;
     }
 

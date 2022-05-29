@@ -258,8 +258,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 //                            final MyTimeTableEventSetVo event =
 //                                    MyTimeTableUtils.getCoursesByStudyGroupTitle(
 //                                            myTimetableList, change.getSetSplusKey()).get(0).copy();
-//                            //todo: auskommentiert im Zuge von Umbauarbeiten
-//                            //event.setEvent(change.getNewEventJson());
+//
+//                            event.setEvent(change.getNewEventJson());
 //
 //                            //todo: bad static use to update MyTimeTableCalendar
 //                            //MyTimeTableCalendarAdapter.addCourseAndUpdateSharedPreferences(event);
@@ -345,11 +345,6 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         if (_AddToBackStack) {
             transaction.addToBackStack(_Tag);
         }
-        //Todo: Wenn ein eintrag im Backstack ist, dann eine andere Rubrik ausgewählt wird (z.B. news) und dann back-taste gedrueckt wird, überlagern sich die layouts.
-        //An dieser Stelle muss dann der BackStack geleert werden, wenn man wechselt.
-        // else{
-        //            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        //        }
 
         transaction.commit();
     }
