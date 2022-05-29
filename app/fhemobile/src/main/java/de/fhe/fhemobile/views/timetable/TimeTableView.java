@@ -49,10 +49,6 @@ public class TimeTableView extends LinearLayout {
         super(context, attrs);
     }
 
-//    public void setViewListener(final IViewListener _Listener) {
-        // --Commented out by Inspection (02.11.2021 17:33):private final Context                     mContext;
-//    }
-
     public void initializeView(final FragmentManager _Manager, final Lifecycle _Lifecycle) {
         mFragmentManager = _Manager;
         mLifecycle = _Lifecycle;

@@ -89,8 +89,6 @@ public class TimeTableFragment extends FeatureFragment {
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
 	                         final Bundle savedInstanceState) {
 		mView = (TimeTableView) inflater.inflate(R.layout.fragment_time_table, container, false);
-		//note from Nadja: the mViewListener is empty
-		mView.setViewListener(mViewListener);
 
 		mView.initializeView(getChildFragmentManager(), getLifecycle());
 
@@ -155,10 +153,6 @@ public class TimeTableFragment extends FeatureFragment {
 		Toast.makeText(Main.getAppContext(), "Cannot establish connection!",
 				Toast.LENGTH_LONG).show();
 	}
-
-	private final TimeTableView.IViewListener mViewListener = new TimeTableView.IViewListener() {
-	};
-
 
 
 	TimeTableView mView;

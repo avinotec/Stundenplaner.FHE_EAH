@@ -37,7 +37,7 @@ import java.util.TimeZone;
 public class TimeTableEventVo implements Parcelable {
 
     static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
-    int offset = TimeZone.getTimeZone("Europe/Berlin").getOffset(new Date().getTime());
+    final int offset = TimeZone.getTimeZone("Europe/Berlin").getOffset(new Date().getTime());
 
     public TimeTableEventVo() {
     }
