@@ -135,13 +135,13 @@ public abstract class IdPicker extends LinearLayout{
         dialog.show(mFragmentManager, "idStringDialog");
     }
 
-    private List<IDItem> buildItemList() {
-        final ArrayList<IDItem> items = new ArrayList<>();
+    private List<IdItem> buildItemList() {
+        final ArrayList<IdItem> items = new ArrayList<>();
 
         final int amountOfItems = getCount();
 
         for (int i = 0; i < amountOfItems; i++) {
-            items.add(new IDItem(getName(i), getId(i)));
+            items.add(new IdItem(getName(i), getId(i)));
         }
 
         return items;

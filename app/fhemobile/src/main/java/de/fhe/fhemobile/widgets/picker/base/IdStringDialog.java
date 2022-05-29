@@ -62,13 +62,13 @@ public class IdStringDialog extends DialogFragment {
 */
 
     //initDialog------------------------------------------------------------------------------------
-    public void initDialog(final Context _Context, final List<IDItem> _Items, final String _Title) {
+    public void initDialog(final Context _Context, final List<IdItem> _Items, final String _Title) {
         mContext     = _Context;
         mItems       = _Items;
         mItemAdapter = new ArrayAdapter<>(mContext, android.R.layout.select_dialog_item);
 
         //fill the adapter
-        for (final IDItem item : mItems) {
+        for (final IdItem item : mItems) {
             mItemAdapter.add(item.getName());
         }
 
@@ -97,7 +97,7 @@ public class IdStringDialog extends DialogFragment {
 
 
     private Context              mContext;
-    List<IDItem>         mItems;
+    List<IdItem>         mItems;
     private String               mTitle;
     private ArrayAdapter<String> mItemAdapter;
     OnItemChosenListener mListener;
