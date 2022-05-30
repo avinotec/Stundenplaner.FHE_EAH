@@ -14,42 +14,27 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.models.timeTableChanges;
+package de.fhe.fhemobile.models.timetablechanges;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class RequestModel {
+public class TimeTableChangesRequestModel {
 
 	public static final int ANDROID_DEVICE = 1 ;
 
 
-	public RequestModel(final int os_id, final String device_id, final long refresh_timestamp){
-		this.os_id=os_id;
-		this.device_id=device_id;
-		this.refresh_timestamp=refresh_timestamp;
-		this.module_list=new ArrayList<>();
+	public TimeTableChangesRequestModel(final int osId, final String deviceId, final long refreshTimestamp){
+		this.os_id = osId;
+		this.device_id = deviceId;
+		this.refresh_timestamp = refreshTimestamp;
+		this.module_list = new ArrayList<>();
 	}
 
-	@SerializedName("os_id")
-	final
-	int os_id;
-
-	@SerializedName("device_id")
-	final
-	String device_id;
-
-	@SerializedName("refresh_timestamp")
-	final
-	long  refresh_timestamp;
-
-	@SerializedName("module_list")
-	ArrayList<Module> module_list;
-
 	public void addCourse(final String setID, final String moduleTitle){
-		this.module_list.add(new Module(setID,moduleTitle));
+		this.module_list.add(new Module(setID, moduleTitle));
 	}
 
 	public String toJson(){
@@ -61,13 +46,29 @@ public class RequestModel {
 		return json;
 	}
 
+	@SerializedName("os_id")
+	final int os_id;
+
+	@SerializedName("device_id")
+	final String device_id;
+
+	@SerializedName("refresh_timestamp")
+	final long refresh_timestamp;
+
+	@SerializedName("module_list")
+	ArrayList<Module> module_list;
+
+
 	class Module {
+
 		Module(final String setID, final String moduleTitle){
-			this.setID=setID;
-			this.moduleTitle=moduleTitle;
+			this.setID = setID;
+			this.moduleTitle = moduleTitle;
 		}
+
 		@SerializedName("set_title")
 		final String setID;
+
 		@SerializedName("module_title")
 		final String moduleTitle;
 	}

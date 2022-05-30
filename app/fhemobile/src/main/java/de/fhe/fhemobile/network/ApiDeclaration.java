@@ -19,7 +19,7 @@ package de.fhe.fhemobile.network;
 import java.util.ArrayList;
 import java.util.Map;
 
-import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
+import de.fhe.fhemobile.vos.timetablechanges.TimetableChangesResponse;
 import de.fhe.fhemobile.vos.CafeAquaResponse;
 import de.fhe.fhemobile.vos.WeatherResponse;
 import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
@@ -84,8 +84,8 @@ public interface ApiDeclaration {
             "Content-Type:application/json"
     })
     @POST(Endpoints.SCHEDULE_CHANGE_SERVER)
-    Call<ResponseModel> registerTimeTableChanges(@Body RequestBody _json);
+    Call<TimetableChangesResponse> registerTimeTableChanges(@Body RequestBody _json);
 
     @HTTP(method="GET", path = Endpoints.SCHEDULE_CHANGE_SERVER, hasBody = true)
-    Call<ResponseModel> getTimeTableChanges(@Body RequestBody _json);
+    Call<TimetableChangesResponse> getTimeTableChanges(@Body RequestBody _json);
 }

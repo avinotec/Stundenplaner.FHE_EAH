@@ -24,12 +24,10 @@ import static de.fhe.fhemobile.utils.Define.MyTimeTable.PREF_SUBSCRIBED_COURSES;
 import static de.fhe.fhemobile.utils.Define.MyTimeTable.SP_MYTIMETABLE;
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.webkit.WebView;
 import android.widget.Toast;
@@ -43,14 +41,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.gson.Gson;
 
-import org.junit.Assert;
-
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
 
-import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableCalendarAdapter;
@@ -62,19 +55,15 @@ import de.fhe.fhemobile.fragments.imprint.ImprintFragment;
 import de.fhe.fhemobile.fragments.joboffers.JobOffersFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdata.SemesterDataWebViewFragment;
-import de.fhe.fhemobile.models.timeTableChanges.RequestModel;
-import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
+import de.fhe.fhemobile.models.timetablechanges.TimeTableChangesRequestModel;
+import de.fhe.fhemobile.network.TimetableChangeCallback;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.feature.FeatureFragmentFactory;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
-import de.fhe.fhemobile.views.mytimetable.MyTimeTableSettingsView;
 import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements DrawerFragment.NavigationDrawerCallbacks {
 
@@ -140,151 +129,14 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         final Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             //Push-Notification
-            final RequestModel request = new RequestModel(RequestModel.ANDROID_DEVICE,
+            final TimeTableChangesRequestModel request = new TimeTableChangesRequestModel(TimeTableChangesRequestModel.ANDROID_DEVICE,
                     PushNotificationService.getFirebaseToken(),
                     new Date().getTime() - 86400000);
 
             final String json = request.toJson();
 
-            NetworkHandler.getInstance().getTimeTableChanges(json, new Callback<ResponseModel>() {
-                /**
-                 *
-                 * @param call
-                 * @param response
-                 */
-                @Override
-                public void onResponse(final Call<ResponseModel> call,
-                                       final Response<ResponseModel> response) {
-
-                    //wieso assert und damit einen Absturz produzieren, wenn das einfach auftreten kann, wenn der Server nicht verfügbar ist?
-                    //vorallem wenn darunter eh ein if das gleiche abfragt.
-                    //Assert.assertTrue( response != null );
-                    //Assert.assertTrue( response.body() != null );
-
-                    //DEBUG
-                    if ( /*response == null || "always false" */ response.body() == null )
-                    {
-                        // Da ist ein Fehler in der Kommunikation
-                        // 400: Bad request
-                        if ( /* response != null && "always true" */ response.code() == 400 )
-                        {
-                            final String sErrorText = response.errorBody().toString();
-                            Log.d( TAG, "Error in Schedule Change Server: " + sErrorText );
-
-                            final AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
-                            builder1.setMessage( "Push Notifications: Error in Schedule Change Server: " + sErrorText);
-                            final AlertDialog alert11 = builder1.create();
-                            alert11.show();
-                        }
-
-                        // nothing to do now....
-                        return;
-                    }
-
-
-                    final Gson gson = new Gson();
-                    final String json = gson.toJson(response.body());
-                    if (BuildConfig.DEBUG) Assert.assertFalse(json.isEmpty());
-
-                    Log.d(TAG, "onResponse: " + response.raw().request().url());
-                    Log.d(TAG, "onResponse code: " + response.code() + " geparsed: " + json );
-
-                    final List<ResponseModel.Change> changes = response.body().getChanges();
-
-                    final List<String[]> negativeList = MyTimeTableSettingsView.generateNegativeLessons();
-                    final Iterator<ResponseModel.Change> iterator = changes.iterator();
-
-                    while(iterator.hasNext()){
-
-                        final ResponseModel.Change change = iterator.next();
-                        boolean isInNegativeList = false;
-                        for(final String[] negativeEvent : negativeList){
-                            if ( change.getNewEventJson().getGuiTitle().contains(negativeEvent[0])
-                                    && change.getSetSplusKey().equals( negativeEvent[1] ) ) {
-                                isInNegativeList = true;
-                                break;
-                            }
-                        }
-
-                        if(isInNegativeList){
-                            iterator.remove();
-                        }
-                    }
-
-//				String changesAsString="";
-//				for(ResponseModel.Change change: changes){
-//					changesAsString+=(change.getChangesReasonText()+"/n/n");
-//				}
-
-//                new AlertDialog.Builder(MyTimeTableSettingsFragment.this.getActivity())
-//                        .setTitle("Änderungen")
-//                       // .setMessage(changesAsString)
-//                        .setMessage("test")
-//
-//                        // Specifying a listener allows you to take an action before dismissing the dialog.
-//                        // The dialog is automatically dismissed when a dialog button is clicked.
-//                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                // Continue with delete operation
-//                            }
-//                        })
-//                        .create()
-//
-//                        // A null listener allows the button to dismiss the dialog and take no further action.
-//                        .show();
-
-                    //folgender Code basiert auf generateNegativeList welche wie es Änderungen der Veranstaltungen in subscribedEventSeries berücksichtigt
-
-                    //todo: auskommentiert im Zuge von Umbauarbeiten
-                    //TODO PushNotifications
-//                    for(final ResponseModel.Change change : changes){
-//
-//                        // Shortcut to the list
-//                        final List<MyTimeTableEventSetVo> myTimetableList = subscribedEventSeries;
-//
-//                        //Aenderung einer Veranstaltung: suche das Event (= einzelne Veranstaltung) und ueberschreibe ihre Daten
-//                        if(change.getChangesReason() == CHANGEREASON_EDIT) {
-//                            final MyTimeTableEventSetVo event = MyTimeTableUtils.getEventByID(
-//                                    myTimetableList, change.getNewEventJson().getId());
-//                            if(event != null){
-//
-//                               event.setEvent(change.getNewEventJson());
-//                            }
-//                        }
-//                        //Hinzufuegen einer neuen veranstaltung:
-//                        // Erstelle ein neues Element vom Typ MyTimeTableEventSetVo, schreibe alle Set-, Semester- und Studiengangdaten in diesen
-//                        //und fuege dann die Eventdaten des neuen Events hinzu. Anschliessend in die Liste hinzufuegen.
-//                        if(change.getChangesReason() == CHANGEREASON_NEW) {
-//                            final MyTimeTableEventSetVo event =
-//                                    MyTimeTableUtils.getCoursesByStudyGroupTitle(
-//                                            myTimetableList, change.getSetSplusKey()).get(0).copy();
-//
-//                            event.setEvent(change.getNewEventJson());
-//
-//                            //todo: bad static use to update MyTimeTableCalendar
-//                            //MyTimeTableCalendarAdapter.addCourseAndUpdateSharedPreferences(event);
-//
-//                        }
-//                        //Loeschen einer Veranstaltung: Suche die Veranstaltung mit der SplusID und lösche sie aus der Liste.
-//                        if(change.getChangesReason() == CHANGEREASON_DELETE){
-//                            final MyTimeTableEventSetVo event = MyTimeTableUtils.getEventByID(
-//                                    myTimetableList, change.getNewEventJson().getId());
-//
-//                            //todo: bad static use to update MyTimeTableCalendar
-//                            //MyTimeTableCalendarAdapter.removeCourseAndUpdateSharedPreferences(event);
-//                        }
-//                    }
-
-                }
-
-                @Override
-                public void onFailure(final Call<ResponseModel> call, final Throwable t) {
-                    Log.d(TAG, "onFailure: "+ t);
-                }
-            });
-
+            NetworkHandler.getInstance().getTimeTableChanges(json, new TimetableChangeCallback());
         }
-
     }
 
     @Override
@@ -318,7 +170,6 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
     private void restoreActionBar() {
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
 
@@ -390,8 +241,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             Toast.makeText(this, getString(R.string.reallyClose), Toast.LENGTH_SHORT).show();
 
             mHandler.postDelayed(mRunnable, Define.APP_CLOSING_DOUBLECLICK_DELAY_TIME);
-        } else
-            super.onBackPressed();
+
+        } else super.onBackPressed();
 
     }
 

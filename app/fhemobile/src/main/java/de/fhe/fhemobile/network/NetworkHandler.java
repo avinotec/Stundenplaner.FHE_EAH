@@ -33,7 +33,7 @@ import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.phonebook.PhonebookModel;
 import de.fhe.fhemobile.models.semesterdata.SemesterDataModel;
-import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
+import de.fhe.fhemobile.vos.timetablechanges.TimetableChangesResponse;
 import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.utils.canteen.CanteenUtils;
 import de.fhe.fhemobile.vos.CafeAquaResponse;
@@ -434,7 +434,7 @@ public final class NetworkHandler {
 	 * @param json
 	 * @param _Callback
 	 */
-	public void registerTimeTableChanges(final String json, final Callback<ResponseModel> _Callback){
+	public void registerTimeTableChanges(final String json, final Callback<TimetableChangesResponse> _Callback){
 		Assert.assertTrue( mApiErfurt != null );
 		//okhttp 4.x final RequestBody body =RequestBody.create( json, MediaType.parse("application/json"));
 		//okhttp 3.12 flip parameters
@@ -447,7 +447,7 @@ public final class NetworkHandler {
 	 * @param json
 	 * @param _Callback
 	 */
-	public void getTimeTableChanges(final String json, final Callback<ResponseModel>_Callback){
+	public void getTimeTableChanges(final String json, final Callback<TimetableChangesResponse>_Callback){
 		Assert.assertTrue( mApiErfurt != null );
 		//okhttp 4.x final RequestBody body =RequestBody.create( json, MediaType.parse("application/json"));
 		//okhttp 3.12 flip parameters

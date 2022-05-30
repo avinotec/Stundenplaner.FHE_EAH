@@ -46,8 +46,9 @@ import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.models.timeTableChanges.RequestModel;
-import de.fhe.fhemobile.models.timeTableChanges.ResponseModel;
+import de.fhe.fhemobile.models.timetablechanges.TimeTableChangesRequestModel;
+import de.fhe.fhemobile.vos.timetablechanges.TimetableChange;
+import de.fhe.fhemobile.vos.timetablechanges.TimetableChangesResponse;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.views.mytimetable.MyTimeTableSettingsView;
@@ -127,7 +128,7 @@ public class MyTimeTableSettingsFragment extends FeatureFragment {
 
 	private void PushNotificationsRegisterAndUpdateCourses() {
 		if (!getSubscribedEventSeries().isEmpty()) {
-			final RequestModel request = new RequestModel(RequestModel.ANDROID_DEVICE, PushNotificationService.getFirebaseToken(), new Date().getTime() - 86400000);
+			final TimeTableChangesRequestModel request = new TimeTableChangesRequestModel(TimeTableChangesRequestModel.ANDROID_DEVICE, PushNotificationService.getFirebaseToken(), new Date().getTime() - 86400000);
 			String title = "";
 			String setID = "";
 
@@ -148,9 +149,9 @@ public class MyTimeTableSettingsFragment extends FeatureFragment {
 			final String json = request.toJson();
 			Log.d(TAG, "onDetach: " + json);
 //TODO Pushnotification Das hier müsste zu den Push-Notifications gehören. Die aufgerufene URL müsste der Push-Server sein?
-			NetworkHandler.getInstance().registerTimeTableChanges(json, new Callback<ResponseModel>() {
+			NetworkHandler.getInstance().registerTimeTableChanges(json, new Callback<TimetableChangesResponse>() {
 				@Override
-				public void onResponse(final Call<ResponseModel> call, final Response<ResponseModel> response) {
+				public void onResponse(final Call<TimetableChangesResponse> call, final Response<TimetableChangesResponse> response) {
 
 					if (BuildConfig.DEBUG) Assert.assertNotNull(response);
 					//wieso assert und damit einen Absturz produzieren, wenn das einfach auftreten kann, wenn der Server nicht verfügbar ist?
@@ -188,14 +189,14 @@ public class MyTimeTableSettingsFragment extends FeatureFragment {
 					Log.d(TAG, "onResponse: " + response.raw().request().url());
 					Log.d(TAG, "onResponse code: " + response.code() + " geparsed: " + json);
 
-					final List<ResponseModel.Change> changes = response.body().getChanges();
+					final List<TimetableChange> changes = response.body().getChanges();
 
 					final List<String[]> negativeList = MyTimeTableSettingsView.generateNegativeLessons();
-					final Iterator<ResponseModel.Change> iterator = changes.iterator();
+					final Iterator<TimetableChange> iterator = changes.iterator();
 
 					while (iterator.hasNext()) {
 
-						final ResponseModel.Change change = iterator.next();
+						final TimetableChange change = iterator.next();
 						//TODO: Negativ Liste von der gespeicherten Liste erstellen
 						boolean isInNegativeList = false;
 						for (String[] negativeEvent : negativeList) {
@@ -213,7 +214,7 @@ public class MyTimeTableSettingsFragment extends FeatureFragment {
 					}
 
 //				String changesAsString="";
-//				for(ResponseModel.Change change: changes){
+//				for(TimetableChangesResponse.Change change: changes){
 //					changesAsString+=(change.getChangesReasonText()+"/n/n");
 //				}
 
@@ -237,7 +238,7 @@ public class MyTimeTableSettingsFragment extends FeatureFragment {
 					//todo: auskommentiert im Zuge von Umbauarbeiten
 					//TODO PushNotifications
 					/*
-					for (final ResponseModel.Change change : changes) {
+					for (final TimetableChangesResponse.Change change : changes) {
 
 						// Shortcut to the list
 						final List<MyTimeTableEventSetVo> myTimetableList = getSubscribedEventSeries();
@@ -267,7 +268,7 @@ public class MyTimeTableSettingsFragment extends FeatureFragment {
 				}
 
 				@Override
-				public void onFailure(final Call<ResponseModel> call, Throwable t) {
+				public void onFailure(final Call<TimetableChangesResponse> call, Throwable t) {
 					showErrorToast();
 					Log.d(TAG, "onFailure: " + t.toString());
 				}

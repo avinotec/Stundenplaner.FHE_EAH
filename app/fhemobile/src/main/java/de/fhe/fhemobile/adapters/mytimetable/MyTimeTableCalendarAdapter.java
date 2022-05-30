@@ -192,7 +192,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 
 
-	//private final static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+	//private static final  SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 	private static final DateFormat sdf = SimpleDateFormat.getDateInstance();
 
 	private List<MyTimeTableEventVo> mItems;
