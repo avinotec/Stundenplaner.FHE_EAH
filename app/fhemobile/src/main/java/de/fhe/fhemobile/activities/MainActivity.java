@@ -28,10 +28,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -39,6 +41,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -102,28 +107,23 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        /*
-        @Override
-        FirebaseInstallations.getInstance().getToken(true).addOnCompleteListener() {
 
-//old
-                String token;
-                try {
-                    token = task.getResult().getToken();
-                } catch (final NullPointerException npe )
-                {
-                    Log.d(TAG, "onComplete: instance missing");
-                    return;
-                } catch (final RuntimeExecutionException ree )
-                {
-                    Log.e(TAG, "Error bei der Registrierung am FirebaseServer: ",ree);
-                    return;
-                }
-                Log.d(TAG, "onComplete: Token: "+token);
-                firebaseToken=token;
-            }
-        });
-*/
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+                        PushNotificationService.setFirebaseToken(token);
+
+                        Log.d(TAG, "Firebase Token: " + token);
+                    }
+                });
 
 
         final Bundle bundle = getIntent().getExtras();
