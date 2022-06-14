@@ -62,6 +62,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 		// manage this apps subscriptions on the server side, send the
 		// Instance ID token to your app server.
 		//sendRegistrationToServer(token);
+
 		setFirebaseToken(token);
 	}
 
@@ -101,9 +102,9 @@ public class PushNotificationService extends FirebaseMessagingService {
 				.setWhen(System.currentTimeMillis())
 				.setSmallIcon(R.drawable.ic_launcher)
 				.setContentTitle(title)
-				.setContentText(body)
-				.setContentInfo("Info");
-
+				.setContentText(body);
+		//todo: Set the intent that will fire when the user taps the notification
+		//notificationBuilder.setContentIntent(pendingIntent);
 		notificationManager.notify(new SecureRandom().nextInt(), notificationBuilder.build());
 
 	}
