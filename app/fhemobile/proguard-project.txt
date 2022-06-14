@@ -56,15 +56,6 @@
 #-keepattributes SourceFile,LineNumberTable
 #-keep class com.parse.*{ *; }
 
-## Smack, Retrofit
-#Java 8 or higher
--keepattributes Signature
-#Java 5 or higher
--keepattributes InnerClasses
--keepattributes EnclosingMethod
-# Retrofit does reflection on generic parameters. InnerClasses is required to use Signature and
-# EnclosingMethod is required to use InnerClasses.
-#-keepattributes Signature, InnerClasses, EnclosingMethod
 
 #Picasso ----------------------------------------------------------------------------------
 # do not warn on Picasso, async loading image library
@@ -173,6 +164,16 @@
 
 # Retrofit does reflection on method and parameter annotations.
 -keepattributes RuntimeVisibleAnnotations, RuntimeVisibleParameterAnnotations
+## Smack, Retrofit
+#Java 8 or higher
+-keepattributes Signature
+#Java 5 or higher
+-keepattributes InnerClasses
+-keepattributes EnclosingMethod
+# Retrofit does reflection on generic parameters. InnerClasses is required to use Signature and
+# EnclosingMethod is required to use InnerClasses.
+#-keepattributes Signature, InnerClasses, EnclosingMethod
+
 
 # Retain service method parameters when optimizing.
 -keepclassmembers,allowshrinking,allowobfuscation interface * {
