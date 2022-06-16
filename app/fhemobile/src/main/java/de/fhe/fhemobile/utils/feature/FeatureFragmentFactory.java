@@ -22,7 +22,7 @@ import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
 import de.fhe.fhemobile.fragments.imprint.ImprintFragment;
 import de.fhe.fhemobile.fragments.joboffers.JobOffersFragment;
 import de.fhe.fhemobile.fragments.maps.MapsDialogFragment;
-import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableCalendarFragment;
+import de.fhe.fhemobile.fragments.myschedule.MyScheduleCalendarFragment;
 import de.fhe.fhemobile.fragments.navigation.NavigationDialogFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdata.SemesterDataFragment;
@@ -37,7 +37,7 @@ public final class FeatureFragmentFactory {
         final FeatureFragment fragment;
 
         switch (_FeatureId) {
-            case Features.FeatureId.MYTIMETABLE:     fragment = MyTimeTableCalendarFragment.newInstance();  break;
+            case Features.FeatureId.MYSCHEDULE:     fragment = MyScheduleCalendarFragment.newInstance();  break;
             case Features.FeatureId.CANTEEN:         fragment = CanteenFragment.newInstance();            break;
             case Features.FeatureId.MAPS:            fragment = MapsDialogFragment.newInstance();           break;
             //case FeatureId.NAVIGATION:                fragment = ComingSoonFragment.newInstance(); break;

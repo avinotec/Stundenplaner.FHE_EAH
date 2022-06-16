@@ -14,7 +14,7 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ~
   -->
-<de.fhe.fhemobile.views.mytimetable.MyTimeTableSettingsView
+<de.fhe.fhemobile.views.myschedule.MyScheduleSettingsView
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
@@ -41,7 +41,7 @@
 				android:layout_marginBottom="12dp"
 				android:layout_marginTop="6dp"
 				android:gravity="center_horizontal"
-				android:text="@string/my_time_table_settings_headline"
+				android:text="@string/myschedule_settings_headline"
 				android:textColor="@color/primary_color"
 				android:textSize="16sp"
 				android:textStyle="bold" />
@@ -49,7 +49,7 @@
 			<View style="@style/Divider" />
 
 			<ListView
-				android:id="@+id/listview_mytimetable_settings"
+				android:id="@+id/lv_myschedule_settings"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:divider="@null"
@@ -59,7 +59,7 @@
 		</LinearLayout>
 
 		<com.google.android.material.floatingactionbutton.FloatingActionButton
-			android:id="@+id/btn_mytimetable_settings_add_eventseries"
+			android:id="@+id/btn_myschedule_settings_add_eventseries"
 			android:layout_marginRight="16dp"
 			android:layout_marginBottom="16dp"
 			android:layout_marginTop="16dp"
@@ -75,4 +75,4 @@
 
 
 
-</de.fhe.fhemobile.views.mytimetable.MyTimeTableSettingsView>
+</de.fhe.fhemobile.views.myschedule.MyScheduleSettingsView>

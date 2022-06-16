@@ -41,7 +41,7 @@ public final class FeatureProvider {
         Features.MAPS           = _Context.getResources().getBoolean(R.bool.feature_maps);
         Features.SEMESTER_DATA  = _Context.getResources().getBoolean(R.bool.feature_semester_data);
         Features.TIMETABLE      = _Context.getResources().getBoolean(R.bool.feature_timetable);
-        Features.MYTIMETABLE    = _Context.getResources().getBoolean(R.bool.feature_mytimetable);
+        Features.MYSCHEDULE = _Context.getResources().getBoolean(R.bool.feature_myschedule);
         Features.IMPRINT        = _Context.getResources().getBoolean(R.bool.feature_imprint);
         Features.EVENTS         = _Context.getResources().getBoolean(R.bool.feature_events);
         Features.NAVIGATION     = _Context.getResources().getBoolean(R.bool.feature_navigation);
@@ -59,8 +59,8 @@ public final class FeatureProvider {
             list.add(new DrawerItem(Features.FeatureId.TIMETABLE, getFeatureTitle(Features.FeatureId.TIMETABLE)));
         }
 
-        if (Features.MYTIMETABLE) {
-            list.add(new DrawerItem(Features.FeatureId.MYTIMETABLE, getFeatureTitle(Features.FeatureId.MYTIMETABLE)));
+        if (Features.MYSCHEDULE) {
+            list.add(new DrawerItem(Features.FeatureId.MYSCHEDULE, getFeatureTitle(Features.FeatureId.MYSCHEDULE)));
         }
 
         if (Features.CANTEEN) {
@@ -113,7 +113,7 @@ public final class FeatureProvider {
 
         switch (_FeatureId) {
             case Features.FeatureId.TIMETABLE:       stringRes = R.string.drawer_timetable; break;
-            case Features.FeatureId.MYTIMETABLE:     stringRes = R.string.drawer_mytimetable; break;
+            case Features.FeatureId.MYSCHEDULE:     stringRes = R.string.drawer_myschedule; break;
             case Features.FeatureId.CANTEEN:         stringRes = R.string.drawer_canteen;     break;
             case Features.FeatureId.MAPS:            stringRes = R.string.drawer_campus;    break;
             case Features.FeatureId.NAVIGATION:      stringRes = R.string.drawer_navigation; break;

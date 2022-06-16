@@ -26,7 +26,7 @@
 	android:focusable="true">
 
 	<RelativeLayout
-		android:id="@+id/layout_mytimetable_eventseries_header"
+		android:id="@+id/layout_myschedule_eventseries_header"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:background="@color/list_header_background"
@@ -36,7 +36,7 @@
 		android:paddingBottom="@dimen/list_item_vertical_padding">
 
 		<TextView
-			android:id="@+id/tv_mytimetable_eventseries_title"
+			android:id="@+id/tv_myschedule_eventseries_title"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignParentTop="true"
@@ -49,43 +49,43 @@
 	</RelativeLayout>
 
 	<TextView
-		android:id="@+id/textview_mytimetable_dialog_label_sets"
+		android:id="@+id/tv_myschedule_dialog_label_studygroups"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_below="@+id/layout_mytimetable_eventseries_header"
+		android:layout_below="@+id/layout_myschedule_eventseries_header"
 		android:layout_alignParentStart="true"
 		android:layout_alignParentLeft="true"
 		android:layout_marginStart="16dp"
 		android:layout_marginLeft="16dp"
 		android:layout_marginTop="5dp"
-		android:text="@string/my_time_table_settings_studygroups"
+		android:text="@string/myschedule_settings_studygroups"
 		android:textAppearance="@style/TextAppearance.AppCompat.Medium"
 		android:visibility="visible" />
 
 	<TextView
-		android:id="@+id/tv_mytimetable_studygroups"
+		android:id="@+id/tv_myschedule_studygroups"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_below="@+id/layout_mytimetable_eventseries_header"
+		android:layout_below="@+id/layout_myschedule_eventseries_header"
 		android:layout_marginStart="16dp"
 		android:layout_marginLeft="16dp"
 		android:layout_marginTop="5dp"
-		android:layout_toStartOf="@+id/btn_mytimetable_add_or_remove_eventseries"
-		android:layout_toLeftOf="@+id/btn_mytimetable_add_or_remove_eventseries"
-		android:layout_toEndOf="@id/textview_mytimetable_dialog_label_sets"
-		android:layout_toRightOf="@id/textview_mytimetable_dialog_label_sets"
+		android:layout_toStartOf="@+id/btn_myschedule_add_or_remove_eventseries"
+		android:layout_toLeftOf="@+id/btn_myschedule_add_or_remove_eventseries"
+		android:layout_toEndOf="@id/tv_myschedule_dialog_label_studygroups"
+		android:layout_toRightOf="@id/tv_myschedule_dialog_label_studygroups"
 		android:text="TextView"
 		android:textAppearance="@style/TextAppearance.AppCompat.Medium"
 		android:visibility="visible" />
 
 
 	<ToggleButton
-		android:id="@+id/btn_mytimetable_add_or_remove_eventseries"
+		android:id="@+id/btn_myschedule_add_or_remove_eventseries"
 		android:layout_width="40dp"
 		android:layout_height="30dp"
-		android:layout_below="@+id/layout_mytimetable_eventseries_header"
-		android:layout_alignTop="@id/textview_mytimetable_dialog_label_sets"
-		android:layout_alignBottom="@id/layout_mytimetable_eventseries_events"
+		android:layout_below="@+id/layout_myschedule_eventseries_header"
+		android:layout_alignTop="@id/tv_myschedule_dialog_label_studygroups"
+		android:layout_alignBottom="@id/layout_myschedule_eventseries_events"
 		android:layout_alignParentEnd="true"
 		android:layout_centerVertical="true"
 		android:layout_marginTop="0dp"
@@ -98,24 +98,24 @@
 		android:textOn="" />
 
 	<ToggleButton
-		android:id="@+id/btn_mytimetable_toggle_eventlist_expanded"
+		android:id="@+id/btn_myschedule_toggle_eventlist_expanded"
 		android:layout_width="24dp"
 		android:layout_height="24dp"
 		android:layout_marginTop="5dp"
-		android:layout_alignStart="@id/textview_mytimetable_dialog_label_sets"
-		android:layout_below="@+id/tv_mytimetable_studygroups"
+		android:layout_alignStart="@id/tv_myschedule_dialog_label_studygroups"
+		android:layout_below="@+id/tv_myschedule_studygroups"
 		android:background="@android:color/transparent"
 		android:button="@drawable/selector_toggle_expand_collaps"
 		android:textOff=""
 		android:textOn=""/>
 
 	<LinearLayout
-		android:id="@+id/layout_mytimetable_eventseries_events"
+		android:id="@+id/layout_myschedule_eventseries_events"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_toRightOf="@id/btn_mytimetable_toggle_eventlist_expanded"
-		android:layout_toLeftOf="@id/btn_mytimetable_add_or_remove_eventseries"
-		android:layout_below="@+id/tv_mytimetable_studygroups"
+		android:layout_toRightOf="@id/btn_myschedule_toggle_eventlist_expanded"
+		android:layout_toLeftOf="@id/btn_myschedule_add_or_remove_eventseries"
+		android:layout_below="@+id/tv_myschedule_studygroups"
 		android:layout_marginTop="5dp"
 		android:layout_marginBottom="5dp"
 		android:orientation="vertical" />

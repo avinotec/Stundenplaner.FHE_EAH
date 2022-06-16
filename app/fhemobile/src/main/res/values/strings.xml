@@ -29,7 +29,7 @@
     <string name="drawer_campus">Campus Maps</string>
     <string name="drawer_imprint">Imprint</string>
     <string name="drawer_timetable">Schedule</string>
-    <string name="drawer_mytimetable">My Schedule</string>
+    <string name="drawer_myschedule">My Schedule</string>
     <string name="drawer_events">Event Calendar</string>
     <string name="drawer_navigation">Campus Navigation</string>
     <string name="drawer_joboffers">Job Offers</string>
@@ -91,13 +91,13 @@
     <string name="loading">Loading…</string>
     <string name="canteen_no_canteens_selected">Please select one or more canteens under settings first.</string>
 
-    <!-- My Time Table -->
-    <string name="my_time_table_dialog_headline">Please select study program and semester.</string>
-    <string name="my_time_table_empty_text_calendar">You did not compose a schedule.</string>
-    <string name="my_time_table_empty">Choose study program and semester.</string>
+    <!-- My Schedule -->
+    <string name="myschedule_dialog_headline">Please select study program and semester.</string>
+    <string name="myschedule_empty_text_calendar">You did not compose a schedule.</string>
+    <string name="myschedule_empty">Choose study program and semester.</string>
     <string name="today">Today</string>
-    <string name="my_time_table_settings_headline">My Courses</string>
-    <string name="my_time_table_settings_studygroups">Study Groups: </string>
+    <string name="myschedule_settings_headline">My Courses</string>
+    <string name="myschedule_settings_studygroups">Study Groups: </string>
 
     <string name="deleteTimetableTitle">Semester Change</string>
     <string name="deleteTimetableMessage">The semester is over. Do you want to clear your timetable?</string>

@@ -1,4 +1,4 @@
-package de.fhe.fhemobile.utils.mytimetable;
+package de.fhe.fhemobile.utils.myschedule;
 
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
@@ -11,22 +11,22 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventDateVo;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventVo;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSetVo;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventDateVo;
 
 /**
  * Utility class
  */
-public final class MyTimeTableUtils {
+public final class MyScheduleUtils {
 
-	private static final String TAG = MyTimeTableUtils.class.getSimpleName();
+	private static final String TAG = MyScheduleUtils.class.getSimpleName();
 
 	/**
 	 * Utility class, no constructor
 	 */
-	private MyTimeTableUtils() {
+	private MyScheduleUtils() {
 	}
 
 	/**
@@ -34,8 +34,8 @@ public final class MyTimeTableUtils {
 	 * (note: event titles have no such number if entered for the first time,
 	 * but later added events belonging to the same event series get one)
 	 *
-	 * @param title the title of an event that belongs to the {@link MyTimeTableEventSetVo}
-	 * @return string corresponding to the title that identifies a {@link MyTimeTableEventSeriesVo}
+	 * @param title the title of an event that belongs to the {@link MyScheduleEventSetVo}
+	 * @return string corresponding to the title that identifies a {@link MyScheduleEventSeriesVo}
 	 */
 	public static String getEventSeriesName(final String title) {
 		//cut away all ".d" (where d stands for any digit)
@@ -43,7 +43,7 @@ public final class MyTimeTableUtils {
 	}
 
 	/**
-	 * Get the title of an {@link MyTimeTableEventSeriesVo} without the group number
+	 * Get the title of an {@link MyScheduleEventSeriesVo} without the group number
 	 *
 	 * @param title
 	 * @return
@@ -85,17 +85,17 @@ public final class MyTimeTableUtils {
 		return changeEventTitle;
 	}
 
-	public static List<MyTimeTableEventSeriesVo> groupByEventTitle(Map<String, MyTimeTableEventSetVo> _EventSets) {
-		final Map<String, MyTimeTableEventSeriesVo> eventSeriesMap = new HashMap<>();
+	public static List<MyScheduleEventSeriesVo> groupByEventTitle(Map<String, MyScheduleEventSetVo> _EventSets) {
+		final Map<String, MyScheduleEventSeriesVo> eventSeriesMap = new HashMap<>();
 
-		for (final MyTimeTableEventSetVo eventSet : _EventSets.values()) {
+		for (final MyScheduleEventSetVo eventSet : _EventSets.values()) {
 
-			//construct a MyTimeTableEventVo from each event date
+			//construct a MyScheduleEventVo from each event date
 			// and add it to the corresponding EventSeries
-			for (final MyTimeTableEventDateVo eventDate : eventSet.getEventDates()) {
+			for (final MyScheduleEventDateVo eventDate : eventSet.getEventDates()) {
 
 				//new EventVo
-				final MyTimeTableEventVo eventToAdd = new MyTimeTableEventVo(
+				final MyScheduleEventVo eventToAdd = new MyScheduleEventVo(
 						eventSet.getTitle(),
 						eventDate.getStartDateTimeInSec(),
 						eventDate.getEndDateTimeInSec(),
@@ -107,7 +107,7 @@ public final class MyTimeTableUtils {
 				if (!eventSeriesMap.containsKey(seriesTitleOfEventSet)) {
 
 					//new EventSeriesVo
-					final MyTimeTableEventSeriesVo eventSeriesToAdd = new MyTimeTableEventSeriesVo(
+					final MyScheduleEventSeriesVo eventSeriesToAdd = new MyScheduleEventSeriesVo(
 							seriesTitleOfEventSet,
 							eventSet.getStudyGroups(),
 							new ArrayList<>()
@@ -123,11 +123,11 @@ public final class MyTimeTableUtils {
 		return new ArrayList<>(eventSeriesMap.values());
 	}
 
-	//todo: auskommentiert wegen Umbau von MyTimeTable
-//    public static List<MyTimeTableEventSetVo> queryfutureEvents(final List<MyTimeTableEventSetVo>list){
+	//todo: auskommentiert wegen Umbau von MySchedule
+//    public static List<MyScheduleEventSetVo> queryfutureEvents(final List<MyScheduleEventSetVo>list){
 //
-//        final List<MyTimeTableEventSetVo> filteredEvents = new ArrayList<>();
-//        for(final MyTimeTableEventSetVo event : list){
+//        final List<MyScheduleEventSetVo> filteredEvents = new ArrayList<>();
+//        for(final MyScheduleEventSetVo event : list){
 //
 //            Date eventDate = null;
 //            try {
@@ -142,9 +142,9 @@ public final class MyTimeTableUtils {
 //        return filteredEvents;
 //    }
 
-	//todo: auskommentiert im Zuge der Umbauarbeiten für MyTimeTable
-    /*public static final MyTimeTableEventSetVo getEventByID(final List<MyTimeTableEventSetVo> list, final String ID){
-        for ( final MyTimeTableEventSetVo event:list ) {
+	//todo: auskommentiert im Zuge der Umbauarbeiten für MySchedule
+    /*public static final MyScheduleEventSetVo getEventByID(final List<MyScheduleEventSetVo> list, final String ID){
+        for ( final MyScheduleEventSetVo event:list ) {
             if(ID.equals(event.getFirstEvent().getId())){
                 return event;
             }
@@ -158,8 +158,8 @@ public final class MyTimeTableUtils {
 	 * @param data
 	 * @return
 	 */
-//    public static final boolean listContainsEvent(final List<MyTimeTableEventSeriesVo> list, final MyTimeTableEventSeriesVo data){
-//        for(final MyTimeTableEventSeriesVo event : list){
+//    public static final boolean listContainsEvent(final List<MyScheduleEventSeriesVo> list, final MyScheduleEventSeriesVo data){
+//        for(final MyScheduleEventSeriesVo event : list){
 //			Log.d(TAG, "Eventvergleich1: "+event);
 //			Log.d(TAG, "Eventvergleich2: "+data);
 //			Log.d(TAG, "listContainsEvent: "+event.getEvent().getTitle()+" "+data.getEvent().getTitle());

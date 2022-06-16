@@ -14,7 +14,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.views.mytimetable;
+package de.fhe.fhemobile.views.myschedule;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -26,14 +26,14 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 
 
-public class MyTimeTableCalendarView extends LinearLayout {
+public class MyScheduleCalendarView extends LinearLayout {
 
-    private static final String TAG = MyTimeTableCalendarView.class.getSimpleName();
+    private static final String TAG = MyScheduleCalendarView.class.getSimpleName();
 
 
-    public MyTimeTableCalendarView(final Context context, final AttributeSet attrs) { super(context, attrs);  }
+    public MyScheduleCalendarView(final Context context, final AttributeSet attrs) { super(context, attrs);  }
 
-    public MyTimeTableCalendarView(final Context context) {
+    public MyScheduleCalendarView(final Context context) {
         super(context);
     }
 
@@ -42,15 +42,15 @@ public class MyTimeTableCalendarView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mCalendarListView = (ListView) findViewById(R.id.lv_mytimetable_calendar_courses);
-        mCalendarListView.setAdapter(MainActivity.myTimeTableCalendarAdapter);
+        mCalendarListView = (ListView) findViewById(R.id.lv_myschedule_calendar_courses);
+        mCalendarListView.setAdapter(MainActivity.myScheduleCalendarAdapter);
     }
 
     /**
      * View scrolls to today
      */
     public void jumpToToday(){
-        final int currentDayIndex = MainActivity.myTimeTableCalendarAdapter.getPositionOfFirstEventToday();
+        final int currentDayIndex = MainActivity.myScheduleCalendarAdapter.getPositionOfFirstEventToday();
         if(currentDayIndex >= 0){
             mCalendarListView.setSelection(currentDayIndex);
         }
@@ -61,7 +61,7 @@ public class MyTimeTableCalendarView extends LinearLayout {
      * Sets view to show if the event list is empty
      */
     public void setEmptyCalenderView(){
-        final TextView emptyView = findViewById(R.id.tv_mytimetable_calendar_empty);
+        final TextView emptyView = findViewById(R.id.tv_myschedule_calendar_empty);
         mCalendarListView.setEmptyView(emptyView);
     }
 

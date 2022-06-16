@@ -19,12 +19,12 @@ package de.fhe.fhemobile.network;
 import java.util.ArrayList;
 import java.util.Map;
 
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSetVo;
 import de.fhe.fhemobile.vos.timetablechanges.TimetableChangesResponse;
 import de.fhe.fhemobile.vos.CafeAquaResponse;
 import de.fhe.fhemobile.vos.WeatherResponse;
 import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
 import de.fhe.fhemobile.vos.canteen.CanteenVo;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
 import de.fhe.fhemobile.vos.news.NewsCategoryResponse;
 import de.fhe.fhemobile.vos.news.NewsItemResponse;
 import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
@@ -77,8 +77,8 @@ public interface ApiDeclaration {
     @GET(Endpoints.TIMETABLE_EVENTS + "/{" + Endpoints.PARAM_STUDYGROUP_ID + "}/detail")
     Call<Map<String,TimeTableWeekVo>> fetchTimeTableEvents(@Path(Endpoints.PARAM_STUDYGROUP_ID) String _StudyGroupId);
 
-    @GET(Endpoints.MYTIMETABLE + "/{" + Endpoints.PARAM_SEMESTER_ID + "}")
-    Call<Map<String, MyTimeTableEventSetVo>> fetchSemesterTimeTable(@Path(Endpoints.PARAM_SEMESTER_ID) String _SemesterId);
+    @GET(Endpoints.MYSCHEDULE + "/{" + Endpoints.PARAM_SEMESTER_ID + "}")
+    Call<Map<String, MyScheduleEventSetVo>> fetchSemesterTimeTable(@Path(Endpoints.PARAM_SEMESTER_ID) String _SemesterId);
 
     @Headers({
             "Content-Type:application/json"

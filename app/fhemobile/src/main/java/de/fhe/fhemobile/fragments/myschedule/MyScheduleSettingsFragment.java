@@ -15,7 +15,7 @@
  *
  */
 
-package de.fhe.fhemobile.fragments.mytimetable;
+package de.fhe.fhemobile.fragments.myschedule;
 
 
 import static de.fhe.fhemobile.Main.getSubscribedEventSeries;
@@ -47,26 +47,26 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.models.timetablechanges.TimeTableChangesRequestModel;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 import de.fhe.fhemobile.vos.timetablechanges.TimetableChange;
 import de.fhe.fhemobile.vos.timetablechanges.TimetableChangesResponse;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.services.PushNotificationService;
-import de.fhe.fhemobile.views.mytimetable.MyTimeTableSettingsView;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
+import de.fhe.fhemobile.views.myschedule.MyScheduleSettingsView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MyTimeTableSettingsFragment#newInstance} factory method to
+ * Use the {@link MyScheduleSettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  *
  * Fragment of view showing overview of all subscribed courses
  */
-public class MyTimeTableSettingsFragment extends FeatureFragment {
+public class MyScheduleSettingsFragment extends FeatureFragment {
 
-	public static final String TAG = MyTimeTableSettingsFragment.class.getSimpleName();
+	public static final String TAG = MyScheduleSettingsFragment.class.getSimpleName();
 
 
 	private static final int CHANGEREASON_EDIT = 1;
@@ -80,14 +80,14 @@ public class MyTimeTableSettingsFragment extends FeatureFragment {
 	 *
 	 * @return A new instance of fragment TimeTableDialogFragment.
 	 */
-	public static MyTimeTableSettingsFragment newInstance() {
-		final MyTimeTableSettingsFragment fragment = new MyTimeTableSettingsFragment();
+	public static MyScheduleSettingsFragment newInstance() {
+		final MyScheduleSettingsFragment fragment = new MyScheduleSettingsFragment();
 		final Bundle args = new Bundle();
 		fragment.setArguments(args);
 		return fragment;
 	}
 
-	public MyTimeTableSettingsFragment() {
+	public MyScheduleSettingsFragment() {
 		// Required empty public constructor
 	}
 
@@ -101,8 +101,8 @@ public class MyTimeTableSettingsFragment extends FeatureFragment {
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
 							 final Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		final MyTimeTableSettingsView mView = (MyTimeTableSettingsView) inflater.inflate(
-				R.layout.fragment_my_time_table_settings, container, false);
+		final MyScheduleSettingsView mView = (MyScheduleSettingsView) inflater.inflate(
+				R.layout.fragment_myschedule_settings, container, false);
 		mView.initializeView(getChildFragmentManager());
 
 		mView.setCourseListEmptyView();
@@ -132,7 +132,7 @@ public class MyTimeTableSettingsFragment extends FeatureFragment {
 			String title = "";
 			String setID = "";
 
-			for (MyTimeTableEventSeriesVo eventSeries : getSubscribedEventSeries()) {
+			for (MyScheduleEventSeriesVo eventSeries : getSubscribedEventSeries()) {
 				final String eventTitle = eventSeries.getTitle();
 
 				//TODO: reconstruct to enable push notifications
@@ -171,7 +171,7 @@ public class MyTimeTableSettingsFragment extends FeatureFragment {
 							}
 							Log.d(TAG, "Error in Schedule Change Server: " + sErrorText);
 
-//							AlertDialog.Builder builder1 = new AlertDialog.Builder(MyTimeTableSettingsFragment.this.getContext().getApplicationContext());
+//							AlertDialog.Builder builder1 = new AlertDialog.Builder(MyScheduleSettingsFragment.this.getContext().getApplicationContext());
 //							builder1.setMessage("Push Notifications: Error in Schedule Change Server: " + sErrorText);
 //							AlertDialog alert11 = builder1.create();
 //							alert11.show();
@@ -191,7 +191,7 @@ public class MyTimeTableSettingsFragment extends FeatureFragment {
 
 					final List<TimetableChange> changes = response.body().getChanges();
 
-					final List<String[]> negativeList = MyTimeTableSettingsView.generateNegativeLessons();
+					final List<String[]> negativeList = MyScheduleSettingsView.generateNegativeLessons();
 					final Iterator<TimetableChange> iterator = changes.iterator();
 
 					while (iterator.hasNext()) {
@@ -218,7 +218,7 @@ public class MyTimeTableSettingsFragment extends FeatureFragment {
 //					changesAsString+=(change.getChangesReasonText()+"/n/n");
 //				}
 
-//                new AlertDialog.Builder(MyTimeTableSettingsFragment.this.getActivity())
+//                new AlertDialog.Builder(MyScheduleSettingsFragment.this.getActivity())
 //                        .setTitle("Änderungen")
 //                       // .setMessage(changesAsString)
 //                        .setMessage("test")
@@ -241,26 +241,26 @@ public class MyTimeTableSettingsFragment extends FeatureFragment {
 					for (final TimetableChangesResponse.Change change : changes) {
 
 						// Shortcut to the list
-						final List<MyTimeTableEventSetVo> myTimetableList = getSubscribedEventSeries();
+						final List<MyScheduleEventSetVo> myTimetableList = getSubscribedEventSeries();
 
 						//Aenderung eines Events: suche das Event und ueberschreibe es
 						if (change.getChangesReason() == CHANGEREASON_EDIT) {
-							final MyTimeTableEventSetVo event = MyTimeTableUtils.getEventByID(myTimetableList, change.getNewEventJson().getId());
+							final MyScheduleEventSetVo event = MyScheduleUtils.getEventByID(myTimetableList, change.getNewEventJson().getId());
 							if (event != null) {
 								event.setEvent(change.getNewEventJson());
 							}
 						}
-						//Hinzufuegen eines neuen Events: Erstelle ein neues Element vom Typ MyTimeTableEventSetVo, schreibe alle Set-, Semester- und Studiengangdaten in dieses
+						//Hinzufuegen eines neuen Events: Erstelle ein neues Element vom Typ MyScheduleEventSetVo, schreibe alle Set-, Semester- und Studiengangdaten in dieses
 						//und fuege dann die Eventdaten des neuen Events hinzu. Anschliessend in die Liste hinzufuegen.
 						if (change.getChangesReason() == CHANGEREASON_NEW) {
-							final MyTimeTableEventSetVo event = MyTimeTableUtils.getCoursesByStudyGroupTitle(myTimetableList, change.getSetSplusKey()).get(0).copy();
+							final MyScheduleEventSetVo event = MyScheduleUtils.getCoursesByStudyGroupTitle(myTimetableList, change.getSetSplusKey()).get(0).copy();
 							event.setEvent(change.getNewEventJson());
 							((MainActivity) getActivity()).addToSubscribedEventSeriesAndUpdateAdapters(event);
 
 						}
 						//Loeschen eines Events: Suche den Event mit der SplusID und lösche ihn aus der Liste.
 						if (change.getChangesReason() == CHANGEREASON_DELETE) {
-							final MyTimeTableEventSetVo event = MyTimeTableUtils.getEventByID(myTimetableList, change.getNewEventJson().getId());
+							final MyScheduleEventSetVo event = MyScheduleUtils.getEventByID(myTimetableList, change.getNewEventJson().getId());
 							((MainActivity) getActivity()).removeFromSubscribedEventSeriesAndUpdateAdapters(event);
 						}
 					}*/

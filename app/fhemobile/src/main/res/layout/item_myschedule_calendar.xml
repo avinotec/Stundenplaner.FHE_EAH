@@ -35,7 +35,7 @@
         android:paddingRight="@dimen/list_header_horizontal_padding">
 
         <TextView
-            android:id="@+id/tv_mytimetable_calendar_eventtime"
+            android:id="@+id/tv_myschedule_calendar_eventtime"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
@@ -53,7 +53,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_mytimetable_calendar_eventtitle"
+                android:id="@+id/tv_myschedule_calendar_eventtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -64,7 +64,7 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/tv_mytimetable_calendar_lecturer"
+                android:id="@+id/tv_myschedule_calendar_lecturer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -76,7 +76,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_mytimetable_calendar_room"
+            android:id="@+id/tv_myschedule_calendar_room"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.25"

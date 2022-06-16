@@ -24,7 +24,7 @@ import androidx.annotation.NonNull;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.canteen.CanteenSettingsFragment;
-import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableSettingsFragment;
+import de.fhe.fhemobile.fragments.myschedule.MyScheduleSettingsFragment;
 import de.fhe.fhemobile.fragments.news.NewsCategoriesFragment;
 import de.fhe.fhemobile.utils.feature.Features;
 
@@ -59,9 +59,9 @@ public class SettingsActivity extends BaseActivity {
                         .replace(R.id.container, CanteenSettingsFragment.newInstance())
                         .commit();
                 break;
-            case Features.FeatureId.MYTIMETABLE:
+            case Features.FeatureId.MYSCHEDULE:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, MyTimeTableSettingsFragment.newInstance())
+                        .replace(R.id.container, MyScheduleSettingsFragment.newInstance())
                         .commit();
                 break;
 

@@ -41,7 +41,7 @@ import de.fhe.fhemobile.vos.WeatherResponse;
 import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
 import de.fhe.fhemobile.vos.canteen.CanteenMenuDayVo;
 import de.fhe.fhemobile.vos.canteen.CanteenVo;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSetVo;
 import de.fhe.fhemobile.vos.news.NewsCategoryResponse;
 import de.fhe.fhemobile.vos.news.NewsItemResponse;
 import de.fhe.fhemobile.vos.news.NewsItemVo;
@@ -390,19 +390,19 @@ public final class NetworkHandler {
 	 * @param _Callback
 	 */
 	public void fetchSemesterTimeTable(final String _SemesterId,
-									   final Callback<Map<String, MyTimeTableEventSetVo>> _Callback){
+									   final Callback<Map<String, MyScheduleEventSetVo>> _Callback){
 
 		Assert.assertTrue(mApiEah != null);
 
 		mApiEah.fetchSemesterTimeTable(_SemesterId).enqueue(_Callback);
 	}
 		//todo: auskommentiert im Zuge von Umbauarbeiten
-	/*public List<MyTimeTableEventSeriesVo> reloadEvents(final MyTimeTableEventSeriesVo event) {
+	/*public List<MyScheduleEventSeriesVo> reloadEvents(final MyScheduleEventSeriesVo event) {
 		Assert.assertTrue( mApiErfurt != null );
 		Assert.assertTrue( event != null );
 
 
-		final List<MyTimeTableEventSetVo> eventList = new ArrayList<>();
+		final List<MyScheduleEventSetVo> eventList = new ArrayList<>();
 
 		try {
 
@@ -414,7 +414,7 @@ public final class NetworkHandler {
 				for(final TimeTableDayVo dayEntry : weekEntry.getDays() ){
 					for(final TimeTableEventVo eventEntry : dayEntry.getmEventTimes() ){
 						if(eventEntry.getTitle().equals(event.getEvent().getTitle())){
-							final MyTimeTableEventSetVo item = event.copy();
+							final MyScheduleEventSetVo item = event.copy();
 							item.setEventWeek(weekEntry);
 							item.setEventDay(dayEntry);
 							item.setEvent(eventEntry);

@@ -46,9 +46,9 @@ public final class Define {
     }
 
 	//created by Nadja 11.03.2022
-	public static final class MyTimeTable{
-		public static final String SP_MYTIMETABLE = "my_time_table"; 					// $NON-NLS
-		public static final String PREF_SUBSCRIBED_COURSES = "my_time_table_courses";	// $NON-NLS
+	public static final class MySchedule {
+		public static final String SP_MYSCHEDULE = "my_schedule"; 					// $NON-NLS
+		public static final String PREF_SUBSCRIBED_EVENTSERIES = "my_schdeule_courses";	// $NON-NLS
 
 		public static final String PREFS_LAST_OPENED = "lastAppOpened";					// $NON-NLS
 	}

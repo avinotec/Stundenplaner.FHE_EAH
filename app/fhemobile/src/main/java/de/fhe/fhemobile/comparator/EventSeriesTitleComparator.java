@@ -18,12 +18,12 @@ package de.fhe.fhemobile.comparator;
 
 import java.util.Comparator;
 
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 
 /**
  * Edited by Nadja - 01/2022
  */
-public class EventSeriesTitleComparator implements Comparator<MyTimeTableEventSeriesVo> {
+public class EventSeriesTitleComparator implements Comparator<MyScheduleEventSeriesVo> {
 
 	private static final String TAG = EventSeriesTitleComparator.class.getSimpleName();
 
@@ -38,7 +38,7 @@ public class EventSeriesTitleComparator implements Comparator<MyTimeTableEventSe
 	 * first argument is less than, equal to, or greater than the second.
 	 */
 	@Override
-	public int compare(final MyTimeTableEventSeriesVo o1, final MyTimeTableEventSeriesVo o2) {
+	public int compare(final MyScheduleEventSeriesVo o1, final MyScheduleEventSeriesVo o2) {
 		return o1.getTitle().compareTo(o2.getTitle());
 	}
 }

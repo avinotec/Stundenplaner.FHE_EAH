@@ -1,17 +1,17 @@
-package de.fhe.fhemobile.adapters.mytimetable;
+package de.fhe.fhemobile.adapters.myschedule;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 
 import de.fhe.fhemobile.activities.MainActivity;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 
-public class MyTimeTableDialogAdapter extends AbstractMyTimeTableAdapter {
+public class MyScheduleDialogAdapter extends AbstractMyScheduleAdapter {
 
-    private static final String TAG = MyTimeTableDialogAdapter.class.getSimpleName();
+    private static final String TAG = MyScheduleDialogAdapter.class.getSimpleName();
 
-    public MyTimeTableDialogAdapter(Context context) {
+    public MyScheduleDialogAdapter(Context context) {
         super(context);
         setRoomVisible(false);
     }
@@ -19,7 +19,7 @@ public class MyTimeTableDialogAdapter extends AbstractMyTimeTableAdapter {
 
     @Override
     protected View.OnClickListener getAddEventSeriesBtnOnClickListener(
-            final MyTimeTableEventSeriesVo currentItem, final Button btnAddCourse) {
+            final MyScheduleEventSeriesVo currentItem, final Button btnAddCourse) {
 
         return new View.OnClickListener() {
             @Override

@@ -14,7 +14,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.vos.mytimetable;
+package de.fhe.fhemobile.vos.myschedule;
 
 import static de.fhe.fhemobile.utils.timetable.TimeTableUtils.cutStudyProgramPrefix;
 
@@ -35,23 +35,23 @@ import de.fhe.fhemobile.vos.timetable.LecturerVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableLocationVo;
 
 /**
- * Value object for a time table event in MyTimeTable
+ * Value object for a time table event in MySchedule
  *
  * Created by Nadja - 05/2022
  */
-public class MyTimeTableEventVo implements Parcelable{
+public class MyScheduleEventVo implements Parcelable{
 
     static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
     final int offset = TimeZone.getTimeZone("Europe/Berlin").getOffset(new Date().getTime());
 
-    public MyTimeTableEventVo() {
+    public MyScheduleEventVo() {
     }
 
-    public MyTimeTableEventVo(String title,
-                            long startDateTime,
-                            long endDateTime,
-                            List<LecturerVo> lecturerList,
-                            List<TimeTableLocationVo> locationList){
+    public MyScheduleEventVo(String title,
+                             long startDateTime,
+                             long endDateTime,
+                             List<LecturerVo> lecturerList,
+                             List<TimeTableLocationVo> locationList){
         mTitle = title;
         mStartDateTime = startDateTime;
         mEndDateTime = endDateTime;
@@ -75,7 +75,7 @@ public class MyTimeTableEventVo implements Parcelable{
         dest.writeList(mLocationList);
     }
 
-    MyTimeTableEventVo(final Parcel in) {
+    MyScheduleEventVo(final Parcel in) {
         this.mTitle = in.readString();
         this.mStartDateTime = in.readLong();
         this.mEndDateTime = in.readLong();
@@ -91,13 +91,13 @@ public class MyTimeTableEventVo implements Parcelable{
     }
 
 
-    public static final Parcelable.Creator<MyTimeTableEventVo> CREATOR = new Parcelable.Creator<MyTimeTableEventVo>() {
-        public MyTimeTableEventVo createFromParcel(final Parcel source) {
-            return new MyTimeTableEventVo(source);
+    public static final Parcelable.Creator<MyScheduleEventVo> CREATOR = new Parcelable.Creator<MyScheduleEventVo>() {
+        public MyScheduleEventVo createFromParcel(final Parcel source) {
+            return new MyScheduleEventVo(source);
         }
 
-        public MyTimeTableEventVo[] newArray(final int size) {
-            return new MyTimeTableEventVo[size];
+        public MyScheduleEventVo[] newArray(final int size) {
+            return new MyScheduleEventVo[size];
         }
     };
 

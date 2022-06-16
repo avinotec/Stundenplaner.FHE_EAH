@@ -14,9 +14,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.adapters.mytimetable;
+package de.fhe.fhemobile.adapters.myschedule;
 
-import static de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils.getEventSeriesBaseTitle;
+import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.getEventSeriesBaseTitle;
 import static de.fhe.fhemobile.utils.timetable.TimeTableUtils.cutStudyProgramPrefix;
 
 import android.content.Context;
@@ -39,28 +39,28 @@ import java.util.List;
 import java.util.Locale;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventVo;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSetVo;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
 
 /**
- * Abstract class for {@link MyTimeTableDialogAdapter} and {@link MyTimeTableSettingsAdapter}
+ * Abstract class for {@link MyScheduleDialogAdapter} and {@link MyScheduleSettingsAdapter}
  * Created by Nadja - 02/2022
  */
-public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
+public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
 
-    private static final String TAG = AbstractMyTimeTableAdapter.class.getSimpleName();
+    private static final String TAG = AbstractMyScheduleAdapter.class.getSimpleName();
 
     protected final Context mContext;
-    protected List<MyTimeTableEventSeriesVo> mItems;
+    protected List<MyScheduleEventSeriesVo> mItems;
     boolean roomVisible = false;
 
 
-    public AbstractMyTimeTableAdapter(final Context context) {
+    public AbstractMyScheduleAdapter(final Context context) {
         this.mContext = context;
     }
 
-    public void setItems(final List<MyTimeTableEventSeriesVo> mItems) {
+    public void setItems(final List<MyScheduleEventSeriesVo> mItems) {
         this.mItems = mItems;
         this.notifyDataSetChanged();
     }
@@ -126,10 +126,10 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).
-                    inflate(R.layout.item_my_time_table_settings, parent, false);
+                    inflate(R.layout.item_myschedule_settings, parent, false);
         }
 
-        final MyTimeTableEventSeriesVo currentItem = mItems.get(position);
+        final MyScheduleEventSeriesVo currentItem = mItems.get(position);
 
 
         //click on row of the course (at header, study groups, ...) expands the row of next date and room
@@ -137,8 +137,8 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
         convertView.setOnClickListener(new EventSeriesOnClickListener(convertView, currentItem, roomVisible));
 
 
-        final RelativeLayout headerLayout = convertView.findViewById(R.id.layout_mytimetable_eventseries_header);
-        final TextView eventSeriesBaseTitle = (TextView) convertView.findViewById(R.id.tv_mytimetable_eventseries_title);
+        final RelativeLayout headerLayout = convertView.findViewById(R.id.layout_myschedule_eventseries_header);
+        final TextView eventSeriesBaseTitle = (TextView) convertView.findViewById(R.id.tv_myschedule_eventseries_title);
 
         //Add a header displaying the event series title
         // if such a header has already been added because of processing another event series with the same base title
@@ -154,22 +154,22 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
         }
 
 
-        final Button btnAddCourse = (Button) convertView.findViewById(R.id.btn_mytimetable_add_or_remove_eventseries);
+        final Button btnAddCourse = (Button) convertView.findViewById(R.id.btn_myschedule_add_or_remove_eventseries);
         btnAddCourse.setActivated(currentItem.isSubscribed());
         btnAddCourse.setOnClickListener(getAddEventSeriesBtnOnClickListener(currentItem, btnAddCourse));
 
         //set study group list text view
-        final TextView textStudyGroupList = (TextView) convertView.findViewById(R.id.tv_mytimetable_studygroups);
+        final TextView textStudyGroupList = (TextView) convertView.findViewById(R.id.tv_myschedule_studygroups);
         textStudyGroupList.setText(currentItem.getStudyGroupListString());
 
         //if view is not populated for the first time (convertView != null at the beginning of the method)
         // then remove previously added event data views
-        final LinearLayout layoutAllEvents = (LinearLayout) convertView.findViewById(R.id.layout_mytimetable_eventseries_events);
+        final LinearLayout layoutAllEvents = (LinearLayout) convertView.findViewById(R.id.layout_myschedule_eventseries_events);
         if(layoutAllEvents.getChildCount() >= 0){
            layoutAllEvents.removeAllViews();
         }
 
-        final ToggleButton toggleBtn = convertView.findViewById(R.id.btn_mytimetable_toggle_eventlist_expanded);
+        final ToggleButton toggleBtn = convertView.findViewById(R.id.btn_myschedule_toggle_eventlist_expanded);
         toggleBtn.setOnClickListener(new EventSeriesOnClickListener(convertView, currentItem, roomVisible));
         if(currentItem.getEvents().size() <= 1) {
             toggleBtn.setVisibility(View.INVISIBLE);
@@ -188,12 +188,12 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
 
     /**
      * Create OnClickListener for the button to add a course by overriding onClick()
-     * @param currentItem {@link MyTimeTableEventSetVo} the button belongs to
+     * @param currentItem {@link MyScheduleEventSetVo} the button belongs to
      * @param btnAddCourse the button to add a course that is clicked
      * @return an onClickListener for the button to add a course
      */
     protected abstract View.OnClickListener getAddEventSeriesBtnOnClickListener(
-            MyTimeTableEventSeriesVo currentItem, Button btnAddCourse);
+            MyScheduleEventSeriesVo currentItem, Button btnAddCourse);
 
 
 
@@ -207,9 +207,9 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
         private final View convertView;
         // --Commented out by Inspection (28.05.2022 16:41):final boolean roomVisible;
 
-        private final MyTimeTableEventSeriesVo currentEventSeries;
+        private final MyScheduleEventSeriesVo currentEventSeries;
 
-        EventSeriesOnClickListener(final View view, final MyTimeTableEventSeriesVo currentItem, boolean showRoom){
+        EventSeriesOnClickListener(final View view, final MyScheduleEventSeriesVo currentItem, boolean showRoom){
             convertView = view;
             currentEventSeries = currentItem;
             roomVisible = showRoom;
@@ -218,12 +218,12 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
         @Override
         public void onClick(View view) {
             //remove all previously added textviews of event series to avoid duplicates
-            final LinearLayout layoutAllEvents = convertView.findViewById(R.id.layout_mytimetable_eventseries_events);
+            final LinearLayout layoutAllEvents = convertView.findViewById(R.id.layout_myschedule_eventseries_events);
             final int layoutAllEventsSize = layoutAllEvents.getChildCount();
             layoutAllEvents.removeAllViews();
 
-            List<MyTimeTableEventVo> eventList = new ArrayList<>();
-            final ToggleButton toggleBtn = convertView.findViewById(R.id.btn_mytimetable_toggle_eventlist_expanded);
+            List<MyScheduleEventVo> eventList = new ArrayList<>();
+            final ToggleButton toggleBtn = convertView.findViewById(R.id.btn_myschedule_toggle_eventlist_expanded);
             //if list is expanded then collapse
             if(layoutAllEventsSize > 1 ) {
                 eventList.add(currentEventSeries.getFirstEvent());
@@ -233,7 +233,7 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
                 toggleBtn.setActivated(true);
             }
 
-            for (final MyTimeTableEventVo event : eventList){
+            for (final MyScheduleEventVo event : eventList){
                 setAndAddEventDataTextViews(event, layoutAllEvents);
             }
             convertView.invalidate();
@@ -241,7 +241,7 @@ public abstract class AbstractMyTimeTableAdapter extends BaseAdapter {
         }
     }
 
-    void setAndAddEventDataTextViews(MyTimeTableEventVo _Event,
+    void setAndAddEventDataTextViews(MyScheduleEventVo _Event,
                                      LinearLayout _LayoutAllEvents){
         final TextView dateAndRoomTextView = new TextView(mContext);
         final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);

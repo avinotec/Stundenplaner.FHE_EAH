@@ -15,12 +15,12 @@
  *
  */
 
-package de.fhe.fhemobile.fragments.mytimetable;
+package de.fhe.fhemobile.fragments.myschedule;
 
 
 import static android.content.ContentValues.TAG;
 
-import static de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils.groupByEventTitle;
+import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.groupByEventTitle;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -42,13 +42,13 @@ import java.util.Map;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableDialogAdapter;
+import de.fhe.fhemobile.adapters.myschedule.MyScheduleDialogAdapter;
 import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.Utils;
-import de.fhe.fhemobile.views.mytimetable.MyTimeTableDialogView;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSetVo;
+import de.fhe.fhemobile.views.myschedule.MyScheduleDialogView;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSetVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableDialogResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
@@ -58,27 +58,27 @@ import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MyTimeTableDialogFragment#newInstance} factory method to
+ * Use the {@link MyScheduleDialogFragment#newInstance} factory method to
  * create an instance of this fragment.
  *
- * Display a modal dialog in front of the fragment of MyTimeTable
+ * Display a modal dialog in front of the fragment of MySchedule
  */
-public class MyTimeTableDialogFragment extends DialogFragment {
+public class MyScheduleDialogFragment extends DialogFragment {
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment MyTimeTableSettingsFragment.
+     * @return A new instance of fragment MyScheduleSettingsFragment.
      */
-    public static MyTimeTableDialogFragment newInstance() {
-        final MyTimeTableDialogFragment fragment = new MyTimeTableDialogFragment();
+    public static MyScheduleDialogFragment newInstance() {
+        final MyScheduleDialogFragment fragment = new MyScheduleDialogFragment();
         final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public MyTimeTableDialogFragment() {
+    public MyScheduleDialogFragment() {
         // Required empty public constructor
     }
 
@@ -89,7 +89,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         mChosenStudyProgram = null;
         mChosenSemester = null;
 
-        mListAdapter = new MyTimeTableDialogAdapter(getContext());
+        mListAdapter = new MyScheduleDialogAdapter(getContext());
     }
 
     // resize the dialog to fit to the full display
@@ -110,7 +110,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (MyTimeTableDialogView) inflater.inflate(R.layout.fragment_my_time_table_dialog,
+        mView = (MyScheduleDialogView) inflater.inflate(R.layout.fragment_myschedule_dialog,
                 container, false);
 
         mView.initializeView(getChildFragmentManager());
@@ -129,7 +129,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
 
 
-    private final MyTimeTableDialogView.IViewListener mViewListener = new MyTimeTableDialogView.IViewListener() {
+    private final MyScheduleDialogView.IViewListener mViewListener = new MyScheduleDialogView.IViewListener() {
 
         @Override
         public void onStudyProgramChosen(final String _StudyProgramId) {
@@ -242,12 +242,12 @@ public class MyTimeTableDialogFragment extends DialogFragment {
 
 
 
-    final Callback<Map<String, MyTimeTableEventSetVo>> mFetchSemesterTimeTableCallback = new Callback<Map<String, MyTimeTableEventSetVo>>() {
+    final Callback<Map<String, MyScheduleEventSetVo>> mFetchSemesterTimeTableCallback = new Callback<Map<String, MyScheduleEventSetVo>>() {
         @Override
-        public void onResponse(Call<Map<String, MyTimeTableEventSetVo>> call, Response<Map<String, MyTimeTableEventSetVo>> response) {
+        public void onResponse(Call<Map<String, MyScheduleEventSetVo>> call, Response<Map<String, MyScheduleEventSetVo>> response) {
             if(response.body() != null){
 
-                List<MyTimeTableEventSeriesVo> eventSeriesVos = groupByEventTitle(response.body());
+                List<MyScheduleEventSeriesVo> eventSeriesVos = groupByEventTitle(response.body());
 
                 Collections.sort(eventSeriesVos, new EventSeriesTitleComparator());
 
@@ -261,7 +261,7 @@ public class MyTimeTableDialogFragment extends DialogFragment {
         }
 
         @Override
-        public void onFailure(Call<Map<String, MyTimeTableEventSetVo>> call, Throwable t) {
+        public void onFailure(Call<Map<String, MyScheduleEventSetVo>> call, Throwable t) {
             showErrorToast();
             Log.d(TAG, "failure: request " + call.request().url());
         }
@@ -273,13 +273,13 @@ public class MyTimeTableDialogFragment extends DialogFragment {
     }
 
 
-    MyTimeTableDialogView       mView;
+    MyScheduleDialogView mView;
     TimeTableDialogResponse     mStudyProgramDataResponse;
 
     TimeTableStudyProgramVo     mChosenStudyProgram;
     TimeTableSemesterVo         mChosenSemester;
 
-    MyTimeTableDialogAdapter    mListAdapter;
+    MyScheduleDialogAdapter mListAdapter;
 
 
 }
