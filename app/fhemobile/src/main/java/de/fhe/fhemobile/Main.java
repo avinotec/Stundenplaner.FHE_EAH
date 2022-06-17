@@ -17,7 +17,7 @@
 
 package de.fhe.fhemobile;
 
-import static de.fhe.fhemobile.utils.Define.MyTimeTable.SP_MYTIMETABLE;
+import static de.fhe.fhemobile.utils.Define.MySchedule.SP_MYSCHEDULE;
 
 import android.app.Application;
 import android.content.Context;
@@ -35,11 +35,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
-import de.fhe.fhemobile.comparator.MyTimeTableEventComparator;
+import de.fhe.fhemobile.comparator.MyScheduleEventComparator;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventSeriesVo;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventVo;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
 
 
 /**
@@ -51,12 +51,12 @@ public class Main extends Application {
     private static Application mAppContext;
 
 
-    //My Time Table
+    //My Schedule
     //note: always keep subscribedEventSeries sorted for display in the view
-    public static ArrayList<MyTimeTableEventSeriesVo> subscribedEventSeries = new ArrayList<MyTimeTableEventSeriesVo>(){
+    public static ArrayList<MyScheduleEventSeriesVo> subscribedEventSeries = new ArrayList<MyScheduleEventSeriesVo>(){
         @Override
-        public boolean add(MyTimeTableEventSeriesVo myTimeTableEventSeriesVo) {
-            super.add(myTimeTableEventSeriesVo);
+        public boolean add(MyScheduleEventSeriesVo myScheduleEventSeriesVo) {
+            super.add(myScheduleEventSeriesVo);
             Collections.sort(subscribedEventSeries, new EventSeriesTitleComparator());
             return true;
         }
@@ -77,14 +77,14 @@ public class Main extends Application {
         // load active features from xml
         FeatureProvider.loadFeatures(this);
 
-        // load subscribed courses for My Time Table from Shared Preferences
-        SharedPreferences sharedPreferences = getSharedPreferences(SP_MYTIMETABLE, Context.MODE_PRIVATE);
-        final String json = sharedPreferences.getString(Define.MyTimeTable.PREF_SUBSCRIBED_COURSES, "");
+        // load subscribed courses for My Schedule from Shared Preferences
+        SharedPreferences sharedPreferences = getSharedPreferences(SP_MYSCHEDULE, Context.MODE_PRIVATE);
+        final String json = sharedPreferences.getString(Define.MySchedule.PREF_SUBSCRIBED_EVENTSERIES, "");
 
         // falls die Liste leer sein sollte, überspringen
         if ( !json.isEmpty() && !"null".equals(json)) { //NON-NLS
             final Gson gson = new Gson();
-            final Type listType = new TypeToken<ArrayList<MyTimeTableEventSeriesVo>>(){}.getType();
+            final Type listType = new TypeToken<ArrayList<MyScheduleEventSeriesVo>>(){}.getType();
             subscribedEventSeries = gson.fromJson(json, listType);
         }
 
@@ -105,17 +105,17 @@ public class Main extends Application {
         return mAppContext;
     }
 
-    public static ArrayList<MyTimeTableEventSeriesVo> getSubscribedEventSeries(){
+    public static ArrayList<MyScheduleEventSeriesVo> getSubscribedEventSeries(){
         return subscribedEventSeries;
     }
 
-    public static ArrayList<MyTimeTableEventVo> getAllSubscribedTimeTableEvents(){
-        ArrayList<MyTimeTableEventVo> eventList = new ArrayList<>();
+    public static ArrayList<MyScheduleEventVo> getAllSubscribedTimeTableEvents(){
+        ArrayList<MyScheduleEventVo> eventList = new ArrayList<>();
 
-        for(MyTimeTableEventSeriesVo eventSeries : subscribedEventSeries) {
+        for(MyScheduleEventSeriesVo eventSeries : subscribedEventSeries) {
             eventList.addAll(eventSeries.getEvents());
         }
-        Collections.sort(eventList, new MyTimeTableEventComparator());
+        Collections.sort(eventList, new MyScheduleEventComparator());
         return eventList;
     }
 

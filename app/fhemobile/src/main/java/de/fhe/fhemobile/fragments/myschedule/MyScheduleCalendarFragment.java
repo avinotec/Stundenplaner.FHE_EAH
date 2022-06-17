@@ -15,9 +15,9 @@
  *
  */
 
-package de.fhe.fhemobile.fragments.mytimetable;
+package de.fhe.fhemobile.fragments.myschedule;
 
-import static de.fhe.fhemobile.utils.Define.MyTimeTable.SP_MYTIMETABLE;
+import static de.fhe.fhemobile.utils.Define.MySchedule.SP_MYSCHEDULE;
 
 
 import android.app.AlertDialog;
@@ -46,26 +46,26 @@ import de.fhe.fhemobile.activities.SettingsActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.Features;
-import de.fhe.fhemobile.views.mytimetable.MyTimeTableCalendarView;
+import de.fhe.fhemobile.views.myschedule.MyScheduleCalendarView;
 
-public class MyTimeTableCalendarFragment extends FeatureFragment {
+public class MyScheduleCalendarFragment extends FeatureFragment {
 
-	public static final String TAG = MyTimeTableCalendarFragment.class.getSimpleName();
+	public static final String TAG = MyScheduleCalendarFragment.class.getSimpleName();
 
 	/**
 	 * Use this factory method to create a new instance of
 	 * this fragment using the provided parameters.
 	 *
-	 * @return A new instance of fragment MyTimeTableCalendarFragment.
+	 * @return A new instance of fragment MyScheduleCalendarFragment.
 	 */
-	public static MyTimeTableCalendarFragment newInstance() {
-		final MyTimeTableCalendarFragment fragment = new MyTimeTableCalendarFragment();
+	public static MyScheduleCalendarFragment newInstance() {
+		final MyScheduleCalendarFragment fragment = new MyScheduleCalendarFragment();
 		final Bundle args = new Bundle();
 		fragment.setArguments(args);
 		return fragment;
 	}
 
-	public MyTimeTableCalendarFragment() {
+	public MyScheduleCalendarFragment() {
 		// Required empty public constructor
 	}
 
@@ -81,7 +81,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
 	                         final Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		mView = (MyTimeTableCalendarView) inflater.inflate(R.layout.fragment_my_time_table_calendar, container, false);
+		mView = (MyScheduleCalendarView) inflater.inflate(R.layout.fragment_myschedule_calendar, container, false);
 
 		askForTimeTableDeletionAfterTurnOfSemester();
 
@@ -104,7 +104,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 	@Override
 	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
 		menu.clear();
-		inflater.inflate(R.menu.menu_mytimetable_calendar, menu);
+		inflater.inflate(R.menu.menu_myschedule_calendar, menu);
 
 		super.onCreateOptionsMenu(menu, inflater);
 	}
@@ -117,7 +117,7 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 		}
 		if (_Item.getItemId() == R.id.action_edit_my_courses) {
 			final Intent intent = new Intent(getActivity(), SettingsActivity.class);
-			intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.MYTIMETABLE);
+			intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.MYSCHEDULE);
 			startActivity(intent);
 			return true;
 		}
@@ -130,8 +130,8 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 	 */
 	private void askForTimeTableDeletionAfterTurnOfSemester() {
 
-		final SharedPreferences sharedPreferences = getContext().getSharedPreferences(SP_MYTIMETABLE, Context.MODE_PRIVATE);
-		final long lastOpened = sharedPreferences.getLong(Define.MyTimeTable.PREFS_LAST_OPENED, 0);
+		final SharedPreferences sharedPreferences = getContext().getSharedPreferences(SP_MYSCHEDULE, Context.MODE_PRIVATE);
+		final long lastOpened = sharedPreferences.getLong(Define.MySchedule.PREFS_LAST_OPENED, 0);
 
 		//if app has been opened last before
 		if(lastOpened != 0){
@@ -173,13 +173,13 @@ public class MyTimeTableCalendarFragment extends FeatureFragment {
 
 		//save date of last opening to shared preferences
 		SharedPreferences.Editor editor = sharedPreferences.edit();
-		editor.putLong(Define.MyTimeTable.PREFS_LAST_OPENED, new Date().getTime());
+		editor.putLong(Define.MySchedule.PREFS_LAST_OPENED, new Date().getTime());
 		editor.apply();
 	}
 
 
 	private static final Locale LOCALE_GERMAN = new Locale("de", "DE");
 
-	private MyTimeTableCalendarView mView;
+	private MyScheduleCalendarView mView;
 }
 

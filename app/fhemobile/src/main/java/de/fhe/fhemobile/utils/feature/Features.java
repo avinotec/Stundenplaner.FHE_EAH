@@ -28,7 +28,7 @@ public final class Features {
     public static boolean SEMESTER_DATA   = false;
     public static boolean TIMETABLE       = false;
     public static boolean IMPRINT         = false;
-    public static boolean MYTIMETABLE     = false;
+    public static boolean MYSCHEDULE = false;
     public static boolean EVENTS          = false;
     public static boolean NAVIGATION      = false;
     public static boolean JOBOFFERS       = false;
@@ -44,7 +44,7 @@ public final class Features {
         int SEMESTER_DATA   = 4;
         int TIMETABLE       = 5;
         int IMPRINT         = 6;
-        int MYTIMETABLE     = 7;
+        int MYSCHEDULE = 7;
         int EVENTS          = 8;
         int NAVIGATION      = 9;
         int JOBOFFERS       = 10;

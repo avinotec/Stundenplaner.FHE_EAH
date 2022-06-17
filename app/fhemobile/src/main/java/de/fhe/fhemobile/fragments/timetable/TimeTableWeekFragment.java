@@ -65,7 +65,7 @@ public class TimeTableWeekFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (TimeTableWeekView) inflater.inflate(R.layout.fragment_time_table_week, container, false);
+        mView = (TimeTableWeekView) inflater.inflate(R.layout.fragment_timetable_week, container, false);
         mView.initializeView(mWeek);
         return mView;
     }

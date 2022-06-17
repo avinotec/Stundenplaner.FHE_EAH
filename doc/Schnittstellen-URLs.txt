@@ -1,9 +1,0 @@
-http://app.fh-erfurt.de:8080/fheapp/api/eah/timetable
-
-Daten von Jena direkt
-https://stundenplanung.eah-jena.de/eahapp.opml
-
-EAH API
-https://stundenplanung.eah-jena.de/api/mobileapp/v1/studentset/list
-https://stundenplanung.eah-jena.de/api/mobileapp/v1/studentset/{id}/detail
-

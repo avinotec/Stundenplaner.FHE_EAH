@@ -18,6 +18,11 @@
 package de.fhe.fhemobile.fragments.timetable;
 
 
+import static de.fhe.fhemobile.utils.Define.MySchedule.SP_MYSCHEDULE;
+import static de.fhe.fhemobile.utils.Define.TimeTable.SP_TIMETABLE;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,7 +36,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import de.fhe.fhemobile.Main;
@@ -39,6 +50,7 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.network.NetworkHandler;
+import de.fhe.fhemobile.services.RefreshTimetable;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.timetable.TimeTableSettings;
 import de.fhe.fhemobile.views.timetable.TimeTableView;
@@ -79,7 +91,7 @@ public class TimeTableFragment extends FeatureFragment {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments() != null) {
-			mChosenStudyGroupId = getArguments().getString(Define.PARAM_TIMETABLE_ID);
+			mChosenTimeTableId = getArguments().getString(Define.PARAM_TIMETABLE_ID);
 		}
 
 		setHasOptionsMenu(true);
@@ -88,7 +100,7 @@ public class TimeTableFragment extends FeatureFragment {
 	@Override
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
 	                         final Bundle savedInstanceState) {
-		mView = (TimeTableView) inflater.inflate(R.layout.fragment_time_table, container, false);
+		mView = (TimeTableView) inflater.inflate(R.layout.fragment_timetable, container, false);
 
 		mView.initializeView(getChildFragmentManager(), getLifecycle());
 
@@ -98,7 +110,7 @@ public class TimeTableFragment extends FeatureFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		NetworkHandler.getInstance().fetchTimeTableEvents(mChosenStudyGroupId, mCallback);
+		NetworkHandler.getInstance().fetchTimeTableEvents(mChosenTimeTableId, mCallback);
 	}
 
 	@Override
@@ -138,7 +150,14 @@ public class TimeTableFragment extends FeatureFragment {
 		@Override
 		public void onResponse(final Call<Map<String, TimeTableWeekVo>> call, final Response<Map<String, TimeTableWeekVo>> response) {
 			if (response.body() != null) {
-				mView.setPagerItems(new ArrayList(response.body().values()));
+				ArrayList<TimeTableWeekVo> weekVos = new ArrayList(response.body().values());
+				mView.setPagerItems(weekVos);
+
+				//save timetable for offline usage
+				final SharedPreferences sharedPreferences = getContext().getSharedPreferences(SP_TIMETABLE, Context.MODE_PRIVATE);
+				SharedPreferences.Editor editor = sharedPreferences.edit();
+				editor.putString(SP_TIMETABLE, new Gson().toJson(weekVos));
+				editor.apply();
 			}
 		}
 
@@ -146,16 +165,30 @@ public class TimeTableFragment extends FeatureFragment {
 		public void onFailure(final Call<Map<String, TimeTableWeekVo>> call, final Throwable t) {
 			showErrorToast();
 			Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
+
+			//load timetable from shared preferences
+			final SharedPreferences sharedPreferences = getContext().getSharedPreferences(SP_TIMETABLE, Context.MODE_PRIVATE);
+			String json = sharedPreferences.getString(SP_TIMETABLE, "");
+			if(!json.isEmpty()){
+				ArrayList<TimeTableWeekVo> loadedTimeTableWeeks = new Gson()
+						.fromJson(json, new TypeToken<List<TimeTableWeekVo>>(){}.getType());
+				mView.setPagerItems(loadedTimeTableWeeks);
+
+			}
 		}
 	};
 
 	static void showErrorToast() {
-		Toast.makeText(Main.getAppContext(), "Cannot establish connection!",
+		Toast.makeText(Main.getAppContext(), "Cannot establish connection \n to load the latest timetable!",
 				Toast.LENGTH_LONG).show();
 	}
 
 
 	TimeTableView mView;
-	private String mChosenStudyGroupId;
+
+
+	//note: the timetable is determined by the study group
+	// that is why the timetable id is a study group id
+	private String mChosenTimeTableId;
 
 }

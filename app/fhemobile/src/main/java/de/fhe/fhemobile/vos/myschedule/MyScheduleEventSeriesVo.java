@@ -14,10 +14,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.vos.mytimetable;
+package de.fhe.fhemobile.vos.myschedule;
 
 import static de.fhe.fhemobile.Main.getSubscribedEventSeries;
-import static de.fhe.fhemobile.utils.mytimetable.MyTimeTableUtils.getEventSeriesBaseTitle;
+import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.getEventSeriesBaseTitle;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -29,7 +29,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import de.fhe.fhemobile.comparator.MyTimeTableEventComparator;
+import de.fhe.fhemobile.comparator.MyScheduleEventComparator;
 import de.fhe.fhemobile.comparator.StudyGroupComparator;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
 
@@ -42,24 +42,24 @@ import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
  *
  * by Nadja - 01/2022
  */
-public class MyTimeTableEventSeriesVo implements Parcelable{
+public class MyScheduleEventSeriesVo implements Parcelable{
 
-	private static final String TAG = MyTimeTableEventSeriesVo.class.getSimpleName();
+	private static final String TAG = MyScheduleEventSeriesVo.class.getSimpleName();
 
-	public MyTimeTableEventSeriesVo(){
+	public MyScheduleEventSeriesVo(){
 		//empty constructor needed
 	}
 
 	/**
-	 * Create a new instance of {@link MyTimeTableEventSeriesVo}
+	 * Create a new instance of {@link MyScheduleEventSeriesVo}
 	 * and automatically set the subscribed status
 	 * @param title The title of the event series
-	 * @param studyGroups The studyGroups the events in this {@link MyTimeTableEventSetVo} are registered for
+	 * @param studyGroups The studyGroups the events in this {@link MyScheduleEventSetVo} are registered for
 	 * @param events The events of this event series
 	 */
-	public MyTimeTableEventSeriesVo(final String title,
-									final List<TimeTableStudyGroupVo> studyGroups,
-									final List<MyTimeTableEventVo> events) {
+	public MyScheduleEventSeriesVo(final String title,
+								   final List<TimeTableStudyGroupVo> studyGroups,
+								   final List<MyScheduleEventVo> events) {
 		this.mTitle = title;
 		this.mStudyGroups = studyGroups;
 		this.mEvents = events;
@@ -71,16 +71,16 @@ public class MyTimeTableEventSeriesVo implements Parcelable{
 
 	public void setTitle(String title) { this.mTitle = title; }
 
-	public List<MyTimeTableEventVo> getEvents() { return mEvents; }
+	public List<MyScheduleEventVo> getEvents() { return mEvents; }
 
 	public List<TimeTableStudyGroupVo> getStudyGroups() { return mStudyGroups; }
 
-	public void addEvent(MyTimeTableEventVo event) {
+	public void addEvent(MyScheduleEventVo event) {
 		this.mEvents.add(event);
 	}
 
-	public MyTimeTableEventVo getFirstEvent() {
-		Collections.sort(mEvents, new MyTimeTableEventComparator());
+	public MyScheduleEventVo getFirstEvent() {
+		Collections.sort(mEvents, new MyScheduleEventComparator());
 		return !mEvents.isEmpty() ? mEvents.get(0) : null;
 	}
 
@@ -94,12 +94,12 @@ public class MyTimeTableEventSeriesVo implements Parcelable{
 	}
 
 	/**
-	 * Check if two {@link MyTimeTableEventSeriesVo} have the same base title,
+	 * Check if two {@link MyScheduleEventSeriesVo} have the same base title,
 	 * i. e. they only differ in group number
-	 * @param other the {@link MyTimeTableEventSeriesVo} to compare to
+	 * @param other the {@link MyScheduleEventSeriesVo} to compare to
 	 * @return true if components belong to the same course
 	 */
-	public boolean canBeGroupedForDisplay(final MyTimeTableEventSeriesVo other){
+	public boolean canBeGroupedForDisplay(final MyScheduleEventSeriesVo other){
 		String baseTitle = getEventSeriesBaseTitle(mTitle);
 		String otherBaseTitle = getEventSeriesBaseTitle(other.getTitle());
 		return baseTitle.equals(otherBaseTitle);
@@ -129,8 +129,8 @@ public class MyTimeTableEventSeriesVo implements Parcelable{
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (!(o instanceof MyTimeTableEventSeriesVo)) return false;
-		MyTimeTableEventSeriesVo that = (MyTimeTableEventSeriesVo) o;
+		if (!(o instanceof MyScheduleEventSeriesVo)) return false;
+		MyScheduleEventSeriesVo that = (MyScheduleEventSeriesVo) o;
 		return mTitle.equals(that.mTitle);
 	}
 
@@ -141,7 +141,7 @@ public class MyTimeTableEventSeriesVo implements Parcelable{
 
 	public void checkAndSetSubscribed(){
 		//check if this event series belongs to a subscribed event series
-		for(MyTimeTableEventSeriesVo subscribedEventSeries : getSubscribedEventSeries()){
+		for(MyScheduleEventSeriesVo subscribedEventSeries : getSubscribedEventSeries()){
 			if (this.equals(subscribedEventSeries)){
 
 				this.setSubscribed(true);
@@ -151,10 +151,10 @@ public class MyTimeTableEventSeriesVo implements Parcelable{
 
 	// PARCELABLE --------------------------------------------------------------------------------
 
-	MyTimeTableEventSeriesVo(final Parcel in) {
+	MyScheduleEventSeriesVo(final Parcel in) {
 		mTitle = in.readString();
 		in.readList(mStudyGroups, TimeTableStudyGroupVo.class.getClassLoader());
-		in.readList(mEvents, MyTimeTableEventDateVo.class.getClassLoader());
+		in.readList(mEvents, MyScheduleEventDateVo.class.getClassLoader());
 		subscribed = in.readByte() != 0;
 	}
 
@@ -171,15 +171,15 @@ public class MyTimeTableEventSeriesVo implements Parcelable{
 		dest.writeByte((byte) (subscribed ? 1 : 0));
 	}
 
-	public static final Creator<MyTimeTableEventSeriesVo> CREATOR = new Creator<MyTimeTableEventSeriesVo>() {
+	public static final Creator<MyScheduleEventSeriesVo> CREATOR = new Creator<MyScheduleEventSeriesVo>() {
 		@Override
-		public MyTimeTableEventSeriesVo createFromParcel(Parcel in) {
-			return new MyTimeTableEventSeriesVo(in);
+		public MyScheduleEventSeriesVo createFromParcel(Parcel in) {
+			return new MyScheduleEventSeriesVo(in);
 		}
 
 		@Override
-		public MyTimeTableEventSeriesVo[] newArray(int size) {
-			return new MyTimeTableEventSeriesVo[size];
+		public MyScheduleEventSeriesVo[] newArray(int size) {
+			return new MyScheduleEventSeriesVo[size];
 		}
 	};
 
@@ -193,7 +193,7 @@ public class MyTimeTableEventSeriesVo implements Parcelable{
 	private List<TimeTableStudyGroupVo> mStudyGroups = new ArrayList<>();
 
 	@SerializedName("events")
-	private List<MyTimeTableEventVo> mEvents = new ArrayList<>();
+	private List<MyScheduleEventVo> mEvents = new ArrayList<>();
 
 	@SerializedName("subscribed")
 	private boolean subscribed = false;

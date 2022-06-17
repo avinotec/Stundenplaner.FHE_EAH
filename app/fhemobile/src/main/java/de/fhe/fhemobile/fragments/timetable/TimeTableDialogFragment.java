@@ -85,7 +85,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (TimeTableDialogView) inflater.inflate(R.layout.fragment_time_table_dialog, container, false);
+        mView = (TimeTableDialogView) inflater.inflate(R.layout.fragment_timetable_dialog, container, false);
         mView.setViewListener(mViewListener);
         mView.initializeView(getChildFragmentManager());
 

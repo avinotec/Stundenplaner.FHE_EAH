@@ -14,7 +14,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.vos.mytimetable;
+package de.fhe.fhemobile.vos.myschedule;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -35,15 +35,15 @@ import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
  * Class stores information of a set of grouped events.
  *
  * Use this class to parse the API response
- * and construct {@link MyTimeTableEventSetVo}s from grouped {@link MyTimeTableEventSetVo}s.
+ * and construct {@link MyScheduleEventSetVo}s from grouped {@link MyScheduleEventSetVo}s.
  *
  * by Nadja - 05/2022
  */
-public class MyTimeTableEventSetVo implements Parcelable {
+public class MyScheduleEventSetVo implements Parcelable {
 
-	private static final String TAG = MyTimeTableEventSetVo.class.getSimpleName();
+	private static final String TAG = MyScheduleEventSetVo.class.getSimpleName();
 
-	public MyTimeTableEventSetVo(){
+	public MyScheduleEventSetVo(){
 		//empty constructor needed
 	}
 
@@ -56,9 +56,9 @@ public class MyTimeTableEventSetVo implements Parcelable {
 
 	public void setTitle(String title) { this.mTitle = title; }
 
-	public List<MyTimeTableEventDateVo> getEventDates() { return new ArrayList<>(mEventDates.values()); }
+	public List<MyScheduleEventDateVo> getEventDates() { return new ArrayList<>(mEventDates.values()); }
 
-	public void setEvents(Map<String, MyTimeTableEventDateVo> events) { this.mEventDates = events; }
+	public void setEvents(Map<String, MyScheduleEventDateVo> events) { this.mEventDates = events; }
 
 	public List<TimeTableStudyGroupVo> getStudyGroups() { return new ArrayList<>(mStudyGroups.values()); }
 
@@ -68,10 +68,10 @@ public class MyTimeTableEventSetVo implements Parcelable {
 
 	// PARCELABLE --------------------------------------------------------------------------------
 
-	MyTimeTableEventSetVo(final Parcel in) {
+	MyScheduleEventSetVo(final Parcel in) {
 		mTitle = in.readString();
 		in.readMap(mStudyGroups, TimeTableStudyGroupVo.class.getClassLoader());
-		in.readMap(mEventDates, MyTimeTableEventDateVo.class.getClassLoader());
+		in.readMap(mEventDates, MyScheduleEventDateVo.class.getClassLoader());
 	}
 
 	@Override
@@ -87,15 +87,15 @@ public class MyTimeTableEventSetVo implements Parcelable {
 
 	}
 
-	public static final Creator<MyTimeTableEventSetVo> CREATOR = new Creator<MyTimeTableEventSetVo>() {
+	public static final Creator<MyScheduleEventSetVo> CREATOR = new Creator<MyScheduleEventSetVo>() {
 		@Override
-		public MyTimeTableEventSetVo createFromParcel(Parcel in) {
-			return new MyTimeTableEventSetVo(in);
+		public MyScheduleEventSetVo createFromParcel(Parcel in) {
+			return new MyScheduleEventSetVo(in);
 		}
 
 		@Override
-		public MyTimeTableEventSetVo[] newArray(int size) {
-			return new MyTimeTableEventSetVo[size];
+		public MyScheduleEventSetVo[] newArray(int size) {
+			return new MyScheduleEventSetVo[size];
 		}
 	};
 
@@ -118,7 +118,7 @@ public class MyTimeTableEventSetVo implements Parcelable {
 	private Map<String, TimeTableLocationVo> mLocationMap;
 
 	@SerializedName("dataDatetime")
-	private Map<String, MyTimeTableEventDateVo> mEventDates = new HashMap<>();
+	private Map<String, MyScheduleEventDateVo> mEventDates = new HashMap<>();
 
 
 }

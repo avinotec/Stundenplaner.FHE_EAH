@@ -1,4 +1,4 @@
-package de.fhe.fhemobile.vos.mytimetable;
+package de.fhe.fhemobile.vos.myschedule;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,9 +7,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-public class MyTimeTableEventDateVo implements Parcelable{
+public class MyScheduleEventDateVo implements Parcelable{
 
-    public MyTimeTableEventDateVo() {
+    public MyScheduleEventDateVo() {
     }
 
     @Override
@@ -23,19 +23,19 @@ public class MyTimeTableEventDateVo implements Parcelable{
         dest.writeLong(mEndDateTime);
     }
 
-    MyTimeTableEventDateVo(final Parcel in) {
+    MyScheduleEventDateVo(final Parcel in) {
         this.mStartDateTime = in.readLong();
         this.mEndDateTime = in.readLong();
     }
 
 
-    public static final Parcelable.Creator<MyTimeTableEventDateVo> CREATOR = new Parcelable.Creator<MyTimeTableEventDateVo>() {
-        public MyTimeTableEventDateVo createFromParcel(final Parcel source) {
-            return new MyTimeTableEventDateVo(source);
+    public static final Parcelable.Creator<MyScheduleEventDateVo> CREATOR = new Parcelable.Creator<MyScheduleEventDateVo>() {
+        public MyScheduleEventDateVo createFromParcel(final Parcel source) {
+            return new MyScheduleEventDateVo(source);
         }
 
-        public MyTimeTableEventDateVo[] newArray(final int size) {
-            return new MyTimeTableEventDateVo[size];
+        public MyScheduleEventDateVo[] newArray(final int size) {
+            return new MyScheduleEventDateVo[size];
         }
     };
 

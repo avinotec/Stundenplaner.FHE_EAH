@@ -14,7 +14,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.views.mytimetable;
+package de.fhe.fhemobile.views.myschedule;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -29,7 +29,7 @@ import java.util.Collections;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.adapters.mytimetable.MyTimeTableDialogAdapter;
+import de.fhe.fhemobile.adapters.myschedule.MyScheduleDialogAdapter;
 import de.fhe.fhemobile.comparator.StudyProgramComparator;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
@@ -38,13 +38,13 @@ import de.fhe.fhemobile.widgets.picker.SemesterPicker;
 import de.fhe.fhemobile.widgets.picker.base.OnItemChosenListener;
 
 
-public class MyTimeTableDialogView extends LinearLayout {
+public class MyScheduleDialogView extends LinearLayout {
 
-    public MyTimeTableDialogView(final Context context, final AttributeSet attrs) {
+    public MyScheduleDialogView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public MyTimeTableDialogView(final Context context) {
+    public MyScheduleDialogView(final Context context) {
         super(context);
     }
 
@@ -71,11 +71,11 @@ public class MyTimeTableDialogView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mStudyProgramPicker = (StudyProgramPicker)  findViewById(R.id.studyprogrampicker_mytimetable_dialog);
-        mSemesterPicker     = (SemesterPicker)      findViewById(R.id.semesterpicker_mytimetable_dialog);
-        mProgressIndicator  = (ProgressBar)         findViewById(R.id.progressbar_mytimetable_dialog);
+        mStudyProgramPicker = (StudyProgramPicker)  findViewById(R.id.studyprogrampicker_myschedule_dialog);
+        mSemesterPicker     = (SemesterPicker)      findViewById(R.id.semesterpicker_myschedule_dialog);
+        mProgressIndicator  = (ProgressBar)         findViewById(R.id.progressbar_myschedule_dialog);
 
-        mCourseListView = (ListView) findViewById(R.id.listview_mytimetable_dialog_events);
+        mCourseListView = (ListView) findViewById(R.id.lv_myschedule_dialog_events);
     }
 
 
@@ -104,7 +104,7 @@ public class MyTimeTableDialogView extends LinearLayout {
         mProgressIndicator.setVisibility(_Visible ? VISIBLE : GONE);
     }
 
-    public void setEventListAdapter(final MyTimeTableDialogAdapter adapter){
+    public void setEventListAdapter(final MyScheduleDialogAdapter adapter){
         mCourseListView.setAdapter(adapter);
     }
 
@@ -150,7 +150,7 @@ public class MyTimeTableDialogView extends LinearLayout {
      */
     private void setEventListEmptyView(){
         final TextView emptyView = new TextView( getContext() );
-        emptyView.setText(getResources().getString(R.string.my_time_table_empty));
+        emptyView.setText(getResources().getString(R.string.myschedule_empty));
         mCourseListView.setEmptyView(emptyView);
     }
 

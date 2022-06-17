@@ -14,7 +14,7 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ~
   -->
-<de.fhe.fhemobile.views.mytimetable.MyTimeTableCalendarView
+<de.fhe.fhemobile.views.myschedule.MyScheduleCalendarView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -34,21 +34,21 @@
         android:orientation="vertical">
 
         <ListView
-            android:id="@+id/lv_mytimetable_calendar_courses"
+            android:id="@+id/lv_myschedule_calendar_courses"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <TextView
-            android:id="@+id/tv_mytimetable_calendar_empty"
+            android:id="@+id/tv_myschedule_calendar_empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/my_time_table_empty_text_calendar"
+            android:text="@string/myschedule_empty_text_calendar"
             android:visibility="gone" />
 
     </LinearLayout>
 
 </RelativeLayout>
 
-</de.fhe.fhemobile.views.mytimetable.MyTimeTableCalendarView>
+</de.fhe.fhemobile.views.myschedule.MyScheduleCalendarView>

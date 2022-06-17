@@ -14,7 +14,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.adapters.mytimetable;
+package de.fhe.fhemobile.adapters.myschedule;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,21 +32,21 @@ import java.util.Locale;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.comparator.TimeIgnoringDateComparator;
-import de.fhe.fhemobile.fragments.mytimetable.MyTimeTableCalendarFragment;
-import de.fhe.fhemobile.vos.mytimetable.MyTimeTableEventVo;
+import de.fhe.fhemobile.fragments.myschedule.MyScheduleCalendarFragment;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
 
 /**
  * Edited by Nadja - 02/2022
  */
-public class MyTimeTableCalendarAdapter extends BaseAdapter {
+public class MyScheduleCalendarAdapter extends BaseAdapter {
 
-	private static final String TAG = MyTimeTableCalendarFragment.class.getSimpleName();
+	private static final String TAG = MyScheduleCalendarFragment.class.getSimpleName();
 
 
-	public MyTimeTableCalendarAdapter() {
+	public MyScheduleCalendarAdapter() {
 	}
 
-	public void setItems(List<MyTimeTableEventVo> items){
+	public void setItems(List<MyScheduleEventVo> items){
 		mItems = items;
 	}
 
@@ -67,7 +67,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	 * @return The data at the specified position.
 	 */
 	@Override
-	public MyTimeTableEventVo getItem(int position) {
+	public MyScheduleEventVo getItem(int position) {
 		return mItems.get(position);
 	}
 
@@ -79,7 +79,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	 */
 	@Override
 	public long getItemId(int position) {
-		//note: returning position is intended because MyTimeTableEventVo has no id
+		//note: returning position is intended because MyScheduleEventVo has no id
 		return position;
 	}
 
@@ -107,10 +107,10 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 		if (convertView == null) {
 			convertView = LayoutInflater.from(Main.getAppContext()).
-					inflate(R.layout.item_my_time_table_calendar, parent, false);
+					inflate(R.layout.item_myschedule_calendar, parent, false);
 		}
 
-		final MyTimeTableEventVo currentItem = mItems.get(position);
+		final MyScheduleEventVo currentItem = mItems.get(position);
 
 
 		//Add a header displaying WeekDay and Date
@@ -137,16 +137,16 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 
 
 		//set texts: title, time, room, lecturer
-		final TextView eventTitle = (TextView) convertView.findViewById(R.id.tv_mytimetable_calendar_eventtitle);
+		final TextView eventTitle = (TextView) convertView.findViewById(R.id.tv_myschedule_calendar_eventtitle);
 		eventTitle.setText(currentItem.getGuiTitle());
 
-		final TextView eventTime = (TextView) convertView.findViewById(R.id.tv_mytimetable_calendar_eventtime);
+		final TextView eventTime = (TextView) convertView.findViewById(R.id.tv_myschedule_calendar_eventtime);
 		eventTime.setText(currentItem.getStartTimeString() + " – " + currentItem.getEndTimeString()); // $NON-NLS
 
-		final TextView eventLocation = (TextView) convertView.findViewById(R.id.tv_mytimetable_calendar_room);
+		final TextView eventLocation = (TextView) convertView.findViewById(R.id.tv_myschedule_calendar_room);
 		eventLocation.setText(currentItem.getLocationListAsString());
 
-		final TextView eventLecturer = (TextView) convertView.findViewById(R.id.tv_mytimetable_calendar_lecturer);
+		final TextView eventLecturer = (TextView) convertView.findViewById(R.id.tv_myschedule_calendar_lecturer);
 		eventLecturer.setText(currentItem.getLecturerListAsString());
 
 
@@ -164,7 +164,7 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 		int posToday = -1;
 		Long k = null;
 
-		for(MyTimeTableEventVo eventVo : mItems){
+		for(MyScheduleEventVo eventVo : mItems){
 
 			final Date now = new Date();
 
@@ -195,5 +195,5 @@ public class MyTimeTableCalendarAdapter extends BaseAdapter {
 	//private static final  SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 	private static final DateFormat sdf = SimpleDateFormat.getDateInstance();
 
-	private List<MyTimeTableEventVo> mItems;
+	private List<MyScheduleEventVo> mItems;
 }

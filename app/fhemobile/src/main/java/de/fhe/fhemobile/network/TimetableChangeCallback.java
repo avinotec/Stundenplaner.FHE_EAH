@@ -11,7 +11,7 @@ import java.util.List;
 
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
-import de.fhe.fhemobile.views.mytimetable.MyTimeTableSettingsView;
+import de.fhe.fhemobile.views.myschedule.MyScheduleSettingsView;
 import de.fhe.fhemobile.vos.timetablechanges.TimetableChange;
 import de.fhe.fhemobile.vos.timetablechanges.TimetableChangesResponse;
 import retrofit2.Call;
@@ -54,7 +54,7 @@ public class TimetableChangeCallback implements Callback<TimetableChangesRespons
 
         final List<TimetableChange> changes = response.body().getChanges();
 
-        final List<String[]> negativeList = MyTimeTableSettingsView.generateNegativeLessons();
+        final List<String[]> negativeList = MyScheduleSettingsView.generateNegativeLessons();
         final Iterator<TimetableChange> iterator = changes.iterator();
 
 //        while(iterator.hasNext()){
@@ -79,7 +79,7 @@ public class TimetableChangeCallback implements Callback<TimetableChangesRespons
 //					changesAsString+=(change.getChangesReasonText()+"/n/n");
 //				}
 
-//                new AlertDialog.Builder(MyTimeTableSettingsFragment.this.getActivity())
+//                new AlertDialog.Builder(MyScheduleSettingsFragment.this.getActivity())
 //                        .setTitle("Änderungen")
 //                       // .setMessage(changesAsString)
 //                        .setMessage("test")
@@ -103,11 +103,11 @@ public class TimetableChangeCallback implements Callback<TimetableChangesRespons
 //                    for(final TimetableChangesResponse.Change change : changes){
 //
 //                        // Shortcut to the list
-//                        final List<MyTimeTableEventSetVo> myTimetableList = subscribedEventSeries;
+//                        final List<MyScheduleEventSetVo> myTimetableList = subscribedEventSeries;
 //
 //                        //Aenderung einer Veranstaltung: suche das Event (= einzelne Veranstaltung) und ueberschreibe ihre Daten
 //                        if(change.getChangesReason() == CHANGEREASON_EDIT) {
-//                            final MyTimeTableEventSetVo event = MyTimeTableUtils.getEventByID(
+//                            final MyScheduleEventSetVo event = MyScheduleUtils.getEventByID(
 //                                    myTimetableList, change.getNewEventJson().getId());
 //                            if(event != null){
 //
@@ -115,26 +115,26 @@ public class TimetableChangeCallback implements Callback<TimetableChangesRespons
 //                            }
 //                        }
 //                        //Hinzufuegen einer neuen veranstaltung:
-//                        // Erstelle ein neues Element vom Typ MyTimeTableEventSetVo, schreibe alle Set-, Semester- und Studiengangdaten in diesen
+//                        // Erstelle ein neues Element vom Typ MyScheduleEventSetVo, schreibe alle Set-, Semester- und Studiengangdaten in diesen
 //                        //und fuege dann die Eventdaten des neuen Events hinzu. Anschliessend in die Liste hinzufuegen.
 //                        if(change.getChangesReason() == CHANGEREASON_NEW) {
-//                            final MyTimeTableEventSetVo event =
-//                                    MyTimeTableUtils.getCoursesByStudyGroupTitle(
+//                            final MyScheduleEventSetVo event =
+//                                    MyScheduleUtils.getCoursesByStudyGroupTitle(
 //                                            myTimetableList, change.getSetSplusKey()).get(0).copy();
 //                            //todo: auskommentiert im Zuge von Umbauarbeiten
 //                            //event.setEvent(change.getNewEventJson());
 //
 //                            //todo: bad static use to update MyTimeTableCalendar
-//                            //MyTimeTableCalendarAdapter.addCourseAndUpdateSharedPreferences(event);
+//                            //MyScheduleCalendarAdapter.addCourseAndUpdateSharedPreferences(event);
 //
 //                        }
 //                        //Loeschen einer Veranstaltung: Suche die Veranstaltung mit der SplusID und lösche sie aus der Liste.
 //                        if(change.getChangesReason() == CHANGEREASON_DELETE){
-//                            final MyTimeTableEventSetVo event = MyTimeTableUtils.getEventByID(
+//                            final MyScheduleEventSetVo event = MyScheduleUtils.getEventByID(
 //                                    myTimetableList, change.getNewEventJson().getId());
 //
 //                            //todo: bad static use to update MyTimeTableCalendar
-//                            //MyTimeTableCalendarAdapter.removeCourseAndUpdateSharedPreferences(event);
+//                            //MyScheduleCalendarAdapter.removeCourseAndUpdateSharedPreferences(event);
 //                        }
 //                    }
 
