@@ -1,11 +1,7 @@
 Features für die Hochschulapp
 
-- Mensa Essenspläne per Swipe wechseln
-- Auswahl beim Stundenplan cachen
 - Layoutanpassungen für kleine Displays (Bilder entfernen) 
 - Hinterlegung einer Vorlesung mit einem Link direkt nach Moodle
 - Diskussionsräume je Vorlesung anlegen - analog zu Jodel (anonymes Diskutieren)
 - Stundenplanänderungen und deren Mitteilungen weiter überarbeiten. Änderungen am Backend in der Hochschule müssen vorgenommen werden. Ein Host-Server muss bereitgestellt werden.
 - Weitere Nachrichtenquellen einbinden
-- Auswahl der Mensen/Cafeterien überarbeiten. Gerade in Jena kann zwischen Cafeterie und Mensa gewählt werden. Bessere Benutzerführung
-- Überarbeitung Layout - zeitgemäßere Gestaltung
