@@ -46,23 +46,21 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 
 	private static final String TAG = MyScheduleEventSeriesVo.class.getSimpleName();
 
+
 	public MyScheduleEventSeriesVo(){
 		//empty constructor needed
 	}
 
 	/**
-	 * Create a new instance of {@link MyScheduleEventSeriesVo}
+	 * Create a new instance of {@link MyScheduleEventSeriesVo} from an {@link MyScheduleEventSetVo}
 	 * and automatically set the subscribed status
-	 * @param title The title of the event series
-	 * @param studyGroups The studyGroups the events in this {@link MyScheduleEventSetVo} are registered for
-	 * @param events The events of this event series
+	 * @param eventSet The {@link MyScheduleEventSetVo} to use for initializing
 	 */
-	public MyScheduleEventSeriesVo(final String title,
-								   final List<TimeTableStudyGroupVo> studyGroups,
-								   final List<MyScheduleEventVo> events) {
-		this.mTitle = title;
-		this.mStudyGroups = studyGroups;
-		this.mEvents = events;
+	public MyScheduleEventSeriesVo(final MyScheduleEventSetVo eventSet) {
+		this.mTitle = getEventSeriesBaseTitle(eventSet.getTitle());
+		this.mStudyGroups = eventSet.getStudyGroups();
+		this.mEventSetIds.add(eventSet.getId());
+		this.mEvents = new ArrayList<>();
 		checkAndSetSubscribed();
 	}
 
@@ -71,12 +69,14 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 
 	public void setTitle(String title) { this.mTitle = title; }
 
-	public List<MyScheduleEventVo> getEvents() { return mEvents; }
-
 	public List<TimeTableStudyGroupVo> getStudyGroups() { return mStudyGroups; }
 
-	public void addEvent(MyScheduleEventVo event) {
-		this.mEvents.add(event);
+	public void addEventSetId(String eventSetId){ mEventSetIds.add(eventSetId);}
+
+	public List<MyScheduleEventVo> getEvents() { return mEvents; }
+
+	public void addEvents(List<MyScheduleEventVo> event) {
+		this.mEvents.addAll(event);
 	}
 
 	public MyScheduleEventVo getFirstEvent() {
@@ -154,6 +154,7 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 	MyScheduleEventSeriesVo(final Parcel in) {
 		mTitle = in.readString();
 		in.readList(mStudyGroups, TimeTableStudyGroupVo.class.getClassLoader());
+		in.readList(mEventSetIds, String.class.getClassLoader());
 		in.readList(mEvents, MyScheduleEventDateVo.class.getClassLoader());
 		subscribed = in.readByte() != 0;
 	}
@@ -167,6 +168,7 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 	public void writeToParcel(final Parcel dest, final int flags) {
 		dest.writeString(mTitle);
 		dest.writeList(mStudyGroups);
+		dest.writeList(mEventSetIds);
 		dest.writeList(mEvents);
 		dest.writeByte((byte) (subscribed ? 1 : 0));
 	}
@@ -191,6 +193,9 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 
 	@SerializedName("studyGroups")
 	private List<TimeTableStudyGroupVo> mStudyGroups = new ArrayList<>();
+
+	@SerializedName("eventSetIds")
+	private List<String> mEventSetIds = new ArrayList<>();
 
 	@SerializedName("events")
 	private List<MyScheduleEventVo> mEvents = new ArrayList<>();

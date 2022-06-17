@@ -90,34 +90,39 @@ public final class MyScheduleUtils {
 
 		for (final MyScheduleEventSetVo eventSet : _EventSets.values()) {
 
-			//construct a MyScheduleEventVo from each event date
-			// and add it to the corresponding EventSeries
+			List<MyScheduleEventVo> eventsToAdd = new ArrayList<>();
+
+			//construct a MyScheduleEventVo from each event date, collect it in eventsToAdd
 			for (final MyScheduleEventDateVo eventDate : eventSet.getEventDates()) {
 
 				//new EventVo
-				final MyScheduleEventVo eventToAdd = new MyScheduleEventVo(
+				final MyScheduleEventVo event = new MyScheduleEventVo(
 						eventSet.getTitle(),
+						eventSet.getId(),
 						eventDate.getStartDateTimeInSec(),
 						eventDate.getEndDateTimeInSec(),
 						eventSet.getLecturerList(),
 						eventSet.getLocationList());
-
-				final String seriesTitleOfEventSet = getEventSeriesName(eventSet.getTitle());
-				//create new EventSeriesVo if necessary and add eventVo
-				if (!eventSeriesMap.containsKey(seriesTitleOfEventSet)) {
-
-					//new EventSeriesVo
-					final MyScheduleEventSeriesVo eventSeriesToAdd = new MyScheduleEventSeriesVo(
-							seriesTitleOfEventSet,
-							eventSet.getStudyGroups(),
-							new ArrayList<>()
-					);
-
-					eventSeriesMap.put(seriesTitleOfEventSet, eventSeriesToAdd);
-				}
-				//add event
-				eventSeriesMap.get(seriesTitleOfEventSet).addEvent(eventToAdd);
+				eventsToAdd.add(event);
 			}
+
+			//create new EventSeriesVo if necessary
+			final String seriesTitleOfEventSet = getEventSeriesName(eventSet.getTitle());
+			MyScheduleEventSeriesVo eventSeries = eventSeriesMap.get(seriesTitleOfEventSet);
+			if(eventSeries == null){
+				eventSeries = new MyScheduleEventSeriesVo(eventSet);
+				//add eventVos constructed from eventSet
+				eventSeries.addEvents(eventsToAdd);
+				//add new eventSeries
+				eventSeriesMap.put(seriesTitleOfEventSet, eventSeries);
+			} else {
+				//add event set id because events of the EventSet are added to events of another EventSet
+				eventSeries.addEventSetId(eventSet.getId());
+				//add eventVos constructed from eventSet
+				eventSeries.addEvents(eventsToAdd);
+			}
+
+
 
 		}
 		return new ArrayList<>(eventSeriesMap.values());

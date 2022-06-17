@@ -48,11 +48,13 @@ public class MyScheduleEventVo implements Parcelable{
     }
 
     public MyScheduleEventVo(String title,
+                             String eventSetId,
                              long startDateTime,
                              long endDateTime,
                              List<LecturerVo> lecturerList,
                              List<TimeTableLocationVo> locationList){
         mTitle = title;
+        mEventSetId = eventSetId;
         mStartDateTime = startDateTime;
         mEndDateTime = endDateTime;
         mLecturerList = lecturerList;
@@ -69,6 +71,7 @@ public class MyScheduleEventVo implements Parcelable{
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(mTitle);
+        dest.writeString(mEventSetId);
         dest.writeLong(mStartDateTime);
         dest.writeLong(mEndDateTime);
         dest.writeList(mLecturerList);
@@ -77,6 +80,7 @@ public class MyScheduleEventVo implements Parcelable{
 
     MyScheduleEventVo(final Parcel in) {
         this.mTitle = in.readString();
+        this.mEventSetId = in.readString();
         this.mStartDateTime = in.readLong();
         this.mEndDateTime = in.readLong();
         in.readList(mLecturerList , LecturerVo.class.getClassLoader());
@@ -190,8 +194,12 @@ public class MyScheduleEventVo implements Parcelable{
         return stringBuilder != null ? stringBuilder.toString() : "";
     }
 
+
     @SerializedName("title")
     private String mTitle;
+
+    @SerializedName("activityId")
+    private String mEventSetId;
 
     @SerializedName("startDateTime")
     private long mStartDateTime;

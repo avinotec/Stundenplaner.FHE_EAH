@@ -18,7 +18,6 @@
 package de.fhe.fhemobile.fragments.timetable;
 
 
-import static de.fhe.fhemobile.utils.Define.MySchedule.SP_MYSCHEDULE;
 import static de.fhe.fhemobile.utils.Define.TimeTable.SP_TIMETABLE;
 
 import android.content.Context;
@@ -40,8 +39,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -50,7 +47,6 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.network.NetworkHandler;
-import de.fhe.fhemobile.services.RefreshTimetable;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.timetable.TimeTableSettings;
 import de.fhe.fhemobile.views.timetable.TimeTableView;
