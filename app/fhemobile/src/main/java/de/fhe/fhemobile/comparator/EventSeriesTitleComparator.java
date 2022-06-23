@@ -39,6 +39,15 @@ public class EventSeriesTitleComparator implements Comparator<MyScheduleEventSer
 	 */
 	@Override
 	public int compare(final MyScheduleEventSeriesVo o1, final MyScheduleEventSeriesVo o2) {
-		return o1.getTitle().compareTo(o2.getTitle());
+		String title1 = o1.getTitle();
+		String title2 = o2.getTitle();
+
+		//special case for eventseries like "XX/P/01_04/PFLICHT" or "XX/P/01_04 Einweisung_Pflicht!"
+		// that otherwise would get sorted between "XX/P/01" and "XX/P/02"
+		// distorting them beeing listed together under "XX/P" in the MyScheduleDialogAdapter
+		if(title1.startsWith(title2)) return -1;
+		else if(title2.startsWith(title1)) return +1;
+
+		else return o1.getTitle().compareTo(o2.getTitle());
 	}
 }

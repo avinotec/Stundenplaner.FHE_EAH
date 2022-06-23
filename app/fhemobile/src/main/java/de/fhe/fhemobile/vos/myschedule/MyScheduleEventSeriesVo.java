@@ -18,6 +18,7 @@ package de.fhe.fhemobile.vos.myschedule;
 
 import static de.fhe.fhemobile.Main.getSubscribedEventSeries;
 import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.getEventSeriesBaseTitle;
+import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.getEventSeriesName;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -57,7 +58,7 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 	 * @param eventSet The {@link MyScheduleEventSetVo} to use for initializing
 	 */
 	public MyScheduleEventSeriesVo(final MyScheduleEventSetVo eventSet) {
-		this.mTitle = getEventSeriesBaseTitle(eventSet.getTitle());
+		this.mTitle = getEventSeriesName(eventSet.getTitle());
 		this.mStudyGroups = eventSet.getStudyGroups();
 		this.mEventSetIds.add(eventSet.getId());
 		this.mEvents = new ArrayList<>();

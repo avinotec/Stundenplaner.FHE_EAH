@@ -39,7 +39,7 @@ import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
  *
  * by Nadja - 05/2022
  */
-public class MyScheduleEventSetVo implements Parcelable {
+public class MyScheduleEventSetVo {
 
 	private static final String TAG = MyScheduleEventSetVo.class.getSimpleName();
 
@@ -66,47 +66,15 @@ public class MyScheduleEventSetVo implements Parcelable {
 
 	public List<TimeTableLocationVo> getLocationList() { return new ArrayList<>(mLocationMap.values()); }
 
-	// PARCELABLE --------------------------------------------------------------------------------
-
-	MyScheduleEventSetVo(final Parcel in) {
-		mTitle = in.readString();
-		in.readMap(mStudyGroups, TimeTableStudyGroupVo.class.getClassLoader());
-		in.readMap(mEventDates, MyScheduleEventDateVo.class.getClassLoader());
-	}
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(final Parcel dest, final int flags) {
-		dest.writeString(mTitle);
-		dest.writeMap(mStudyGroups);
-		dest.writeMap(mEventDates);
-
-	}
-
-	public static final Creator<MyScheduleEventSetVo> CREATOR = new Creator<MyScheduleEventSetVo>() {
-		@Override
-		public MyScheduleEventSetVo createFromParcel(Parcel in) {
-			return new MyScheduleEventSetVo(in);
-		}
-
-		@Override
-		public MyScheduleEventSetVo[] newArray(int size) {
-			return new MyScheduleEventSetVo[size];
-		}
-	};
-
-	// End PARCELABLE --------------------------------------------------------------------------------
-
 
 	@SerializedName("activityId")
 	private String mId;
 
 	@SerializedName("activityName")
 	private String mTitle;
+
+	@SerializedName("moduleId")
+	private String mModuleId;
 
 	@SerializedName("dataStudentset")
 	private final Map<String, TimeTableStudyGroupVo> mStudyGroups = new HashMap<>();
