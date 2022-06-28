@@ -29,10 +29,12 @@ import java.util.List;
 import java.util.Map;
 
 import de.fhe.fhemobile.Main;
+import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.phonebook.PhonebookModel;
 import de.fhe.fhemobile.models.semesterdata.SemesterDataModel;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 import de.fhe.fhemobile.vos.timetablechanges.TimetableChangesResponse;
 import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.utils.canteen.CanteenUtils;
@@ -193,11 +195,6 @@ public final class NetworkHandler {
 		for(String canteenId : selectedCanteenIds){
 			mApiErfurt.fetchCanteenData(canteenId).enqueue(new Callback<CanteenDishVo[]>() {
 
-				/**
-				 *
-				 * @param call
-				 * @param response
-				 */
 				@Override
 				public void onResponse(final Call<CanteenDishVo[]> call, final Response<CanteenDishVo[]> response) {
 					Log.d(TAG, "Canteen: " + call.request().url());
@@ -385,49 +382,46 @@ public final class NetworkHandler {
 	}
 
 	/**
-	 *
-	 * @param _SemesterId
+	 * Fetch timetable (a set of {@link MyScheduleEventSetVo}s) of a given semester
+	 * @param _SemesterId The semester's ID
 	 * @param _Callback
 	 */
 	public void fetchSemesterTimeTable(final String _SemesterId,
 									   final Callback<Map<String, MyScheduleEventSetVo>> _Callback){
-
 		Assert.assertTrue(mApiEah != null);
 
 		mApiEah.fetchSemesterTimeTable(_SemesterId).enqueue(_Callback);
 	}
-		//todo: auskommentiert im Zuge von Umbauarbeiten
-	/*public List<MyScheduleEventSeriesVo> reloadEvents(final MyScheduleEventSeriesVo event) {
-		Assert.assertTrue( mApiErfurt != null );
-		Assert.assertTrue( event != null );
 
 
-		final List<MyScheduleEventSetVo> eventList = new ArrayList<>();
+	public void fetchMySchedule(){
+		Assert.assertTrue(mApiEah != null);
+		//todo: enable when APi request ready
+//		Map<String, Map<String, MyScheduleEventSeriesVo>> modules = groupByModuleId(Main.getSubscribedEventSeries());
+//		//iterate over modules
+//		for(Map.Entry<String, Map<String, MyScheduleEventSeriesVo>> module : modules.entrySet()){
+//
+//			//update all subscribed event series of this module
+//			mApiEah.fetchModule(module.getKey()).enqueue(new Callback<Map<String, MyScheduleEventSetVo>>() {
+//
+//				@Override
+//				public void onResponse(Call<Map<String, MyScheduleEventSetVo>> call, Response<Map<String, MyScheduleEventSetVo>> response) {
+//					if(response.body() != null){
+//						 updateSubscribedEventSeries(module.getValue(), response.body());
+//					}
+//				}
+//
+//				@Override
+//				public void onFailure(Call<Map<String, MyScheduleEventSetVo>> call, Throwable t) {
+//					Toast.makeText(Main.getAppContext(), Main.getAppContext().getString(R.string.myschedule_connection_failed),
+//							Toast.LENGTH_LONG).show();
+//					Log.d(TAG, "failure: request " + call.request().url());
+//				}
+//			});
+//		}
+	}
 
-		try {
 
-			final ArrayList<TimeTableWeekVo> timeTable = mApiErfurt.fetchTimeTableEvents(
-					event.getStudyGroup().getTimeTableId()).execute().body();
-			Assert.assertTrue( timeTable != null );
-
-			for (final TimeTableWeekVo weekEntry : timeTable){
-				for(final TimeTableDayVo dayEntry : weekEntry.getDays() ){
-					for(final TimeTableEventVo eventEntry : dayEntry.getmEventTimes() ){
-						if(eventEntry.getTitle().equals(event.getEvent().getTitle())){
-							final MyScheduleEventSetVo item = event.copy();
-							item.setEventWeek(weekEntry);
-							item.setEventDay(dayEntry);
-							item.setEvent(eventEntry);
-							eventList.add(item);
-						}
-					}
-				}
-			}
-		} catch (final IOException e) {
-			Log.e(TAG, "fetchTimeTableEventsSynchron: ",e );
-		}
-		return eventList;
-	} */
 
 	/**
 	 *
@@ -451,7 +445,7 @@ public final class NetworkHandler {
 		Assert.assertTrue( mApiErfurt != null );
 		//okhttp 4.x final RequestBody body =RequestBody.create( json, MediaType.parse("application/json"));
 		//okhttp 3.12 flip parameters
-		final RequestBody body =RequestBody.create( json, MediaType.parse("application/json"));
+		final RequestBody body = RequestBody.create( json, MediaType.parse("application/json"));
 		mApiErfurt.getTimeTableChanges(body).enqueue(_Callback);
 	}
 
@@ -468,10 +462,9 @@ public final class NetworkHandler {
 	 *
 	 */
 	static void showErrorToast() {
-		Toast.makeText(Main.getAppContext(), "Cannot establish connection!",
+		Toast.makeText(Main.getAppContext(), Main.getAppContext().getString(R.string.connection_failed),
 				Toast.LENGTH_LONG).show();
 	}
-
 
 
 }

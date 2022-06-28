@@ -248,8 +248,8 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
         params.setMargins(0,5,5,10);
         dateAndRoomTextView.setLayoutParams(params);
 
-        Date startDateTime = _Event.getStartDate();
-        Date endDateTime =  _Event.getEndDate();
+        Date startDateTime = _Event.getStartDateTime();
+        Date endDateTime =  _Event.getEndDateTime();
         final String date = sdf.format(startDateTime);
         final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(startDateTime);
         final String startTime = new SimpleDateFormat("HH:mm", new Locale("de", "DE")).format(startDateTime);

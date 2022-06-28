@@ -16,6 +16,8 @@
  */
 package de.fhe.fhemobile.adapters.myschedule;
 
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +27,7 @@ import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -33,6 +36,7 @@ import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.comparator.TimeIgnoringDateComparator;
 import de.fhe.fhemobile.fragments.myschedule.MyScheduleCalendarFragment;
+import de.fhe.fhemobile.utils.myschedule.TimetableChangeType;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
 
 /**
@@ -88,7 +92,7 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 	 * Get a View that displays the data at the specified position in the data set. You can either
 	 * create a View manually or inflate it from an XML layout file. When the View is inflated, the
 	 * parent View (GridView, ListView...) will apply default layout parameters unless you use
-	 * {@link android.view.LayoutInflater#inflate(int, android.view.ViewGroup, boolean)}
+	 * {@link LayoutInflater#inflate(int, ViewGroup, boolean)}
 	 * to specify a root view and to prevent attachment to the root.
 	 *
 	 * @param position    The position of the item within the adapter's data set of the item whose view
@@ -118,16 +122,16 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 		// then do not add header again (set invisible)
 		final TextView weekdayHeader = (TextView) convertView.findViewById(R.id.tv_item_header_default_day);
 		if(position == 0 || new TimeIgnoringDateComparator()
-				.compare(currentItem.getStartDate(), mItems.get(position - 1).getStartDate()) != 0){
+				.compare(currentItem.getStartDateTime(), mItems.get(position - 1).getStartDateTime()) != 0){
 
 			String weekDay = currentItem.getWeekDayName();
-			final Date df = currentItem.getStartDate();
+			final Date df = currentItem.getStartDateTime();
 			//if necessary, add "today" in brackets to mark today's day
 			if(new TimeIgnoringDateComparator().compare(df, new Date()) == 0){
 				weekDay = "(" + Main.getAppContext().getString(R.string.today) + ") "+currentItem.getWeekDayName(); //$NON-NLS
 			}
 			weekDay += ", " + new SimpleDateFormat("dd.MM.yy",
-					Locale.getDefault()).format(currentItem.getStartDate());
+					Locale.getDefault()).format(currentItem.getStartDateTime());
 			weekdayHeader.setText(weekDay);
 			weekdayHeader.setVisibility(View.VISIBLE);
 
@@ -137,18 +141,47 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 
 
 		//set texts: title, time, room, lecturer
+		ArrayList<TextView> eventViews = new ArrayList<>();
 		final TextView eventTitle = (TextView) convertView.findViewById(R.id.tv_myschedule_calendar_eventtitle);
 		eventTitle.setText(currentItem.getGuiTitle());
+		eventViews.add(eventTitle);
 
 		final TextView eventTime = (TextView) convertView.findViewById(R.id.tv_myschedule_calendar_eventtime);
 		eventTime.setText(currentItem.getStartTimeString() + " – " + currentItem.getEndTimeString()); // $NON-NLS
+		eventViews.add(eventTime);
 
 		final TextView eventLocation = (TextView) convertView.findViewById(R.id.tv_myschedule_calendar_room);
 		eventLocation.setText(currentItem.getLocationListAsString());
+		eventViews.add(eventLocation);
 
 		final TextView eventLecturer = (TextView) convertView.findViewById(R.id.tv_myschedule_calendar_lecturer);
 		eventLecturer.setText(currentItem.getLecturerListAsString());
+		eventViews.add(eventLecturer);
 
+		//highlight changes
+		for(TimetableChangeType change : currentItem.getTypesOfChanges()){
+			switch (change){
+				case ADDITION:
+					//set text bold
+					for (TextView v : eventViews) {
+						v.setTypeface(null, Typeface.BOLD);
+					}
+
+				case DELETION:
+					//set text striked through
+					for (TextView v : eventViews) {
+						v.setPaintFlags(v.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+					}
+
+				case EDIT_TIME:
+					eventTime.setTypeface(null, Typeface.BOLD);
+				case EDIT_LOCATION:
+					eventLocation.setTypeface(null, Typeface.BOLD);
+				case EDIT_LECTURER:
+					eventLecturer.setTypeface(null, Typeface.BOLD);
+
+			}
+		}
 
 		return convertView;
 	}
@@ -170,14 +203,14 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 
 			try {
 				//course starts now or in the future
-				if(eventVo.getStartDate().compareTo(now) >= 0) {
+				if(eventVo.getStartDateTime().compareTo(now) >= 0) {
 
 					//if event has not finished yet
-					if(eventVo.getEndDate().compareTo(now) >= 0) {
+					if(eventVo.getEndDateTime().compareTo(now) >= 0) {
 
 						//update, if event startTime is earlier the event found before
-						if(k == null || eventVo.getStartDateTime() <= k){
-							k = eventVo.getStartDateTime();
+						if(k == null || eventVo.getStartDateTimeInSec() <= k){
+							k = eventVo.getStartDateTimeInSec();
 							posToday = mItems.indexOf(eventVo);
 						}
 					}
@@ -190,10 +223,6 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 		return posToday;
 	}
 
-
-
-	//private static final  SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-	private static final DateFormat sdf = SimpleDateFormat.getDateInstance();
 
 	private List<MyScheduleEventVo> mItems;
 }

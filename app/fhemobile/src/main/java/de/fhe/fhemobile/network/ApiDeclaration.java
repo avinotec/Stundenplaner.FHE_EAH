@@ -74,11 +74,14 @@ public interface ApiDeclaration {
     @GET(Endpoints.TIMETABLE)
     Call<TimeTableDialogResponse> fetchStudyProgramData();
 
-    @GET(Endpoints.TIMETABLE_EVENTS + "/{" + Endpoints.PARAM_STUDYGROUP_ID + "}/detail")
+    @GET(Endpoints.TIMETABLE_EVENTS + "{" + Endpoints.PARAM_STUDYGROUP_ID + "}/detail")
     Call<Map<String,TimeTableWeekVo>> fetchTimeTableEvents(@Path(Endpoints.PARAM_STUDYGROUP_ID) String _StudyGroupId);
 
-    @GET(Endpoints.MYSCHEDULE + "/{" + Endpoints.PARAM_SEMESTER_ID + "}")
+    @GET(Endpoints.MYSCHEDULE + "{" + Endpoints.PARAM_SEMESTER_ID + "}")
     Call<Map<String, MyScheduleEventSetVo>> fetchSemesterTimeTable(@Path(Endpoints.PARAM_SEMESTER_ID) String _SemesterId);
+
+    @GET(Endpoints.MODULE + "{" + Endpoints.PARAM_MODULE_ID + "}/activity")
+    Call<Map<String, MyScheduleEventSetVo>> fetchModule(@Path(Endpoints.PARAM_MODULE_ID) String _ModuleId);
 
     @Headers({
             "Content-Type:application/json"

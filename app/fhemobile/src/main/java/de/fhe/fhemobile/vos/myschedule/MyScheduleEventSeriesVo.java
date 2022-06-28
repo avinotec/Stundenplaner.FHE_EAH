@@ -27,8 +27,11 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import de.fhe.fhemobile.comparator.MyScheduleEventComparator;
 import de.fhe.fhemobile.comparator.StudyGroupComparator;
@@ -38,8 +41,8 @@ import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
 /**
  * Class stores information of an time table event series,
  *
- * An event series is a set of mEvents that create a unit
- * and are shared by timetables of the study groups specified
+ * An event series is a set of events creating an (arbitrary) unit
+ * that is marked for a certain of study groups.
  *
  * by Nadja - 01/2022
  */
@@ -59,7 +62,8 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 	 */
 	public MyScheduleEventSeriesVo(final MyScheduleEventSetVo eventSet) {
 		this.mTitle = getEventSeriesName(eventSet.getTitle());
-		this.mStudyGroups = eventSet.getStudyGroups();
+		this.mStudyGroups.addAll(eventSet.getStudyGroups());
+		this.mModuleId = eventSet.getModuleId();
 		this.mEventSetIds.add(eventSet.getId());
 		this.mEvents = new ArrayList<>();
 		checkAndSetSubscribed();
@@ -74,17 +78,27 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 
 	public void addEventSetId(String eventSetId){ mEventSetIds.add(eventSetId);}
 
-	public List<MyScheduleEventVo> getEvents() { return mEvents; }
+	public String getModuleId() { return mModuleId;	}
 
-	public void addEvents(List<MyScheduleEventVo> event) {
-		this.mEvents.addAll(event);
-	}
+	public Set<String> getEventSetIds() { return mEventSetIds;	}
+
+	public List<MyScheduleEventVo> getEvents() { return mEvents; }
 
 	public MyScheduleEventVo getFirstEvent() {
 		Collections.sort(mEvents, new MyScheduleEventComparator());
 		return !mEvents.isEmpty() ? mEvents.get(0) : null;
 	}
 
+	public void addEvents(List<MyScheduleEventVo> events) { this.mEvents.addAll(events); }
+
+	public void setEvents(List<MyScheduleEventVo> mEvents, Set<String> evenSetIds) {
+		this.mEvents = mEvents;
+	}
+
+	public void removeEvent(MyScheduleEventVo event){ this.mEvents.remove(event); }
+
+	public void removeEventSetId(String eventSetId){
+		if(mEventSetIds.contains(eventSetId)) mEvents.remove(eventSetId); }
 
 	public boolean isSubscribed() {
 		return subscribed;
@@ -155,7 +169,8 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 	MyScheduleEventSeriesVo(final Parcel in) {
 		mTitle = in.readString();
 		in.readList(mStudyGroups, TimeTableStudyGroupVo.class.getClassLoader());
-		in.readList(mEventSetIds, String.class.getClassLoader());
+		mModuleId = in.readString();
+		mEventSetIds = new HashSet(Arrays.asList(in.readArray(String.class.getClassLoader())));
 		in.readList(mEvents, MyScheduleEventDateVo.class.getClassLoader());
 		subscribed = in.readByte() != 0;
 	}
@@ -169,7 +184,8 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 	public void writeToParcel(final Parcel dest, final int flags) {
 		dest.writeString(mTitle);
 		dest.writeList(mStudyGroups);
-		dest.writeList(mEventSetIds);
+		dest.writeString(mModuleId);
+		dest.writeArray(mEventSetIds.toArray());
 		dest.writeList(mEvents);
 		dest.writeByte((byte) (subscribed ? 1 : 0));
 	}
@@ -193,10 +209,13 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 	private String mTitle;
 
 	@SerializedName("studyGroups")
-	private List<TimeTableStudyGroupVo> mStudyGroups = new ArrayList<>();
+	private final List<TimeTableStudyGroupVo> mStudyGroups = new ArrayList<>();
+
+	@SerializedName("moduleId")
+	private String mModuleId;
 
 	@SerializedName("eventSetIds")
-	private List<String> mEventSetIds = new ArrayList<>();
+	private Set<String> mEventSetIds = new HashSet<>();
 
 	@SerializedName("events")
 	private List<MyScheduleEventVo> mEvents = new ArrayList<>();

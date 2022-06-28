@@ -16,9 +16,6 @@
  */
 package de.fhe.fhemobile.vos.myschedule;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -51,6 +48,8 @@ public class MyScheduleEventSetVo {
 	public final String getId() {
 		return mId;
 	}
+
+	public String getModuleId() { return mModuleId; }
 
 	public String getTitle() { return mTitle; }
 

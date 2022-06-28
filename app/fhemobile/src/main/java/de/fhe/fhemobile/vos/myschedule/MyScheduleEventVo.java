@@ -25,11 +25,15 @@ import com.google.gson.annotations.SerializedName;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.TimeZone;
 
+import de.fhe.fhemobile.utils.myschedule.TimetableChangeType;
 import de.fhe.fhemobile.utils.timetable.TimeTableUtils;
 import de.fhe.fhemobile.vos.timetable.LecturerVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableLocationVo;
@@ -76,6 +80,7 @@ public class MyScheduleEventVo implements Parcelable{
         dest.writeLong(mEndDateTime);
         dest.writeList(mLecturerList);
         dest.writeList(mLocationList);
+        dest.writeArray(typesOfChanges.toArray());
     }
 
     MyScheduleEventVo(final Parcel in) {
@@ -85,6 +90,7 @@ public class MyScheduleEventVo implements Parcelable{
         this.mEndDateTime = in.readLong();
         in.readList(mLecturerList , LecturerVo.class.getClassLoader());
         in.readList(mLocationList, TimeTableLocationVo.class.getClassLoader());
+        typesOfChanges = new HashSet(Arrays.asList(in.readArray(TimetableChangeType.class.getClassLoader())));
 
         //remove null objects
         for(TimeTableLocationVo location : mLocationList){
@@ -107,6 +113,8 @@ public class MyScheduleEventVo implements Parcelable{
 
     // End PARCELABLE ---------------------------------------------------------------------------------
 
+    public String getTitle(){ return mTitle; }
+
     public String getGuiTitle() {
         return cutStudyProgramPrefix(mTitle);
     }
@@ -116,9 +124,8 @@ public class MyScheduleEventVo implements Parcelable{
      * (attention: Do not use this long to create a {@link Date} instance, use getStartDate instead)
      * @return The start date time as long
      */
-    public long getStartDateTime() {
-        //multiply by 1000 to convert from seconds to milliseconds
-        return mStartDateTime * 1000;
+    public long getStartDateTimeInSec() {
+        return mStartDateTime;
     }
 
     /**
@@ -126,19 +133,18 @@ public class MyScheduleEventVo implements Parcelable{
      * (attention: Do not use this long to create a {@link Date} instance, use getStartDate instead)
      * @return The end date time as long
      */
-    public long getEndDateTime() {
-        //multiply by 1000 to convert from seconds to milliseconds
-        return mEndDateTime * 1000;
+    public long getEndDateTimeInSec() {
+        return mEndDateTime ;
     }
 
-    public Date getStartDate(){
+    public Date getStartDateTime(){
         //multiply by 1000 to convert from seconds to milliseconds,
         // subtract time zone offset because mStartDateTime is in time zone "Berlin"
         // but Date needs long in UTC
         return new Date(mStartDateTime * 1000 - offset);
     }
 
-    public Date getEndDate(){
+    public Date getEndDateTime(){
         //multiply by 1000 to convert from seconds to milliseconds,
         // subtract time zone offset because mEndDateTime is in time zone "Berlin"
         // but Date needs long in UTC
@@ -146,12 +152,14 @@ public class MyScheduleEventVo implements Parcelable{
     }
 
     public String getStartTimeString(){
-        return sdf.format(getStartDate());
+        return sdf.format(getStartDateTime());
     }
 
     public String getEndTimeString() {
-        return sdf.format(getEndDate());
+        return sdf.format(getEndDateTime());
     }
+
+    public String getEventSetId() { return mEventSetId; }
 
     public List<TimeTableLocationVo> getLocationList() {
         return mLocationList;
@@ -180,6 +188,10 @@ public class MyScheduleEventVo implements Parcelable{
         return TimeTableUtils.getWeekDayName(new Date(mStartDateTime * 1000));
     }
 
+    public List<LecturerVo> getLecturerList() {
+        return mLecturerList;
+    }
+
     public String getLecturerListAsString(){
         StringBuilder stringBuilder = null;
         for(LecturerVo lecturer: mLecturerList){
@@ -194,6 +206,33 @@ public class MyScheduleEventVo implements Parcelable{
         return stringBuilder != null ? stringBuilder.toString() : "";
     }
 
+    public Set<TimetableChangeType> getTypesOfChanges() {
+        return typesOfChanges;
+    }
+
+    public void addChange(TimetableChangeType type){
+        typesOfChanges.add(type);
+    }
+
+    public void setStartDateTimeInSec(long mStartDateTime) {
+        this.mStartDateTime = mStartDateTime;
+    }
+
+    public void setEndDateTimeInSec(long mEndDateTime) {
+        this.mEndDateTime = mEndDateTime;
+    }
+
+    public void setLecturerList(List<LecturerVo> lecturerList) {
+        this.mLecturerList = lecturerList;
+    }
+
+    public void setLocationList(List<TimeTableLocationVo> locationList) {
+        this.mLocationList = locationList;
+    }
+
+    public void setTitle(String title) {
+        this.mTitle = title;
+    }
 
     @SerializedName("title")
     private String mTitle;
@@ -212,5 +251,8 @@ public class MyScheduleEventVo implements Parcelable{
 
     @SerializedName("location")
     private List<TimeTableLocationVo> mLocationList = new ArrayList<>();
+
+    @SerializedName("typesOfChanges")
+    private Set<TimetableChangeType> typesOfChanges = new HashSet<>();
 
 }

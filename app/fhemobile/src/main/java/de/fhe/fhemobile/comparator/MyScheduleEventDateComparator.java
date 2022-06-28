@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventDateVo;
 
-public class MyScheduleEventTimeComparator implements Comparator<MyScheduleEventDateVo> {
+public class MyScheduleEventDateComparator implements Comparator<MyScheduleEventDateVo> {
 
     @Override
     public int compare(MyScheduleEventDateVo o1, MyScheduleEventDateVo o2) {

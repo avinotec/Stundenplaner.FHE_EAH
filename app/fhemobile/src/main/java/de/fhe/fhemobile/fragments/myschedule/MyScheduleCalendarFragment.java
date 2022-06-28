@@ -44,6 +44,7 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.activities.SettingsActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.Features;
 import de.fhe.fhemobile.views.myschedule.MyScheduleCalendarView;
@@ -83,7 +84,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 		// Inflate the layout for this fragment
 		mView = (MyScheduleCalendarView) inflater.inflate(R.layout.fragment_myschedule_calendar, container, false);
 
-		askForTimeTableDeletionAfterTurnOfSemester();
+		askForDeletingScheduleAfterTurnOfSemester();
 
 		//Set text view to show if list is empty
 		mView.setEmptyCalenderView();
@@ -99,6 +100,13 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 		super.onViewCreated(view, savedInstanceState);
 
 		mView.jumpToToday();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+
+		NetworkHandler.getInstance().fetchMySchedule();
 	}
 
 	@Override
@@ -128,24 +136,24 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 	 * When the app is opened for the first time after 1st of March and 1st of September,
 	 * the user is asked, if the timetable (subscribed courses) should be cleared due to semester change.
 	 */
-	private void askForTimeTableDeletionAfterTurnOfSemester() {
+	private void askForDeletingScheduleAfterTurnOfSemester() {
 
 		final SharedPreferences sharedPreferences = getContext().getSharedPreferences(SP_MYSCHEDULE, Context.MODE_PRIVATE);
-		final long lastOpened = sharedPreferences.getLong(Define.MySchedule.PREFS_LAST_OPENED, 0);
+		final long lastOpened = sharedPreferences.getLong(Define.MySchedule.PREFS_APP_LAST_OPENED, 0);
 
 		//if app has been opened last before
 		if(lastOpened != 0){
 
 
-			final Calendar calLastOpened = Calendar.getInstance(LOCALE_GERMAN);
+			final Calendar calLastOpened = Calendar.getInstance(Locale.GERMANY);
 			calLastOpened.setTimeInMillis(lastOpened);
 
 			// Semester change in app on 1st of March
-			final Calendar calSemester1HolidayStart = Calendar.getInstance(LOCALE_GERMAN);
+			final Calendar calSemester1HolidayStart = Calendar.getInstance(Locale.GERMANY);
 			calSemester1HolidayStart.set(Calendar.MONTH, Calendar.MARCH);
 			calSemester1HolidayStart.set(Calendar.DAY_OF_MONTH, 1);
 			// Semester change in app on 1st of September
-			Calendar calSemester2HolidayStart = Calendar.getInstance(LOCALE_GERMAN);
+			Calendar calSemester2HolidayStart = Calendar.getInstance(Locale.GERMANY);
 			calSemester2HolidayStart.set(Calendar.MONTH, Calendar.SEPTEMBER);
 			calSemester2HolidayStart.set(Calendar.DAY_OF_MONTH, 1);
 			// today
@@ -173,12 +181,9 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 
 		//save date of last opening to shared preferences
 		SharedPreferences.Editor editor = sharedPreferences.edit();
-		editor.putLong(Define.MySchedule.PREFS_LAST_OPENED, new Date().getTime());
+		editor.putLong(Define.MySchedule.PREFS_APP_LAST_OPENED, new Date().getTime());
 		editor.apply();
 	}
-
-
-	private static final Locale LOCALE_GERMAN = new Locale("de", "DE");
 
 	private MyScheduleCalendarView mView;
 }
