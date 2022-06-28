@@ -267,8 +267,8 @@ public class MyScheduleDialogFragment extends DialogFragment {
         }
     };
 
-    static void showErrorToast() {
-        Toast.makeText(Main.getAppContext(), "Cannot establish connection!",
+    void showErrorToast() {
+        Toast.makeText(Main.getAppContext(), Main.getAppContext().getString(R.string.connection_failed),
                 Toast.LENGTH_LONG).show();
     }
 

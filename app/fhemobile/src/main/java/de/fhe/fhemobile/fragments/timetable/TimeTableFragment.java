@@ -175,7 +175,7 @@ public class TimeTableFragment extends FeatureFragment {
 	};
 
 	static void showErrorToast() {
-		Toast.makeText(Main.getAppContext(), "Cannot establish connection \n to load the latest timetable!",
+		Toast.makeText(Main.getAppContext(), R.string.timetable_connection_failed,
 				Toast.LENGTH_LONG).show();
 	}
 

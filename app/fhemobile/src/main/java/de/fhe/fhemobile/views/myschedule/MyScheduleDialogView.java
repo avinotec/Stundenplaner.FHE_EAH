@@ -150,7 +150,7 @@ public class MyScheduleDialogView extends LinearLayout {
      */
     private void setEventListEmptyView(){
         final TextView emptyView = new TextView( getContext() );
-        emptyView.setText(getResources().getString(R.string.myschedule_empty));
+        emptyView.setText(getResources().getString(R.string.myschedule_dialog_empty));
         mCourseListView.setEmptyView(emptyView);
     }
 

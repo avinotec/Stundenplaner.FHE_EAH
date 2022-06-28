@@ -35,6 +35,7 @@
     <string name="drawer_joboffers">Job Offers</string>
 
     <string name="reallyClose">Please click back twice to exit</string>
+    <string name="connection_failed">Cannot establish connection!</string>
 
     <string name="phonebook_firstname">First name</string>
     <string name="phonebook_lastname">Last name</string>
@@ -66,6 +67,7 @@
     <string name="timetable_reset">Delete choice</string>
     <string name="timetable_week">Semester Week</string>
     <string name="timetable_error_incomplete">Please set all fields.</string>
+    <string name="timetable_connection_failed">Cannot establish connection \n to load the latest timetable!</string>
 
     <string name="aqua_open">Open</string>
     <string name="aqua_closed">Closed</string>
@@ -93,8 +95,10 @@
 
     <!-- My Schedule -->
     <string name="myschedule_dialog_headline">Please select study program and semester.</string>
-    <string name="myschedule_empty_text_calendar">You did not compose a schedule.</string>
-    <string name="myschedule_empty">Choose study program and semester.</string>
+    <string name="myschedule_empty">You did not compose a schedule.</string>
+    <string name="myschedule_dialog_empty">Choose study program and semester.</string>
+    <string name="myschedule_last_updated">Last updated: </string>
+    <string name="myschedule_connection_failed">Cannot establish a connection\nto update My Schedule!</string>
     <string name="today">Today</string>
     <string name="myschedule_settings_headline">My Courses</string>
     <string name="myschedule_settings_studygroups">Study Groups: </string>

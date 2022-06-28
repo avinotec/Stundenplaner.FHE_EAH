@@ -35,6 +35,7 @@
     <string name="drawer_joboffers">Stellenangebote</string>
 
     <string name="reallyClose">Zum Verlassen zweimal Zurück drücken</string>
+    <string name="connection_failed">Keine Verbindung möglich!</string>
 
     <string name="phonebook_firstname" >Vorname</string>
     <string name="phonebook_lastname" >Nachname</string>
@@ -71,6 +72,7 @@
     <string name="timetable_reset" >Auswahl löschen</string>
     <string name="timetable_week" >Semesterwoche</string>
     <string name="timetable_error_incomplete" >Bitte fülle alle benötigten Felder aus.</string>
+    <string name="timetable_connection_failed">Keine Verbindung möglich um den aktuellen Stundenplan zu laden!</string>
 
     <string name="aqua_open" >Geöffnet</string>
     <string name="aqua_closed" >Geschlossen</string>
@@ -94,12 +96,14 @@
     <string name="loading">Lädt…</string>
 
     <!-- My Schedule -->
-    <string name="myschedule_settings_headline">Meine Kurse</string>
     <string name="myschedule_dialog_headline" >Wähle bitte Studiengang und Semester.</string>
-    <string name="myschedule_empty_text_calendar">Du hast noch keinen Stundenplan zusammengestellt.</string>
-	<string name="myschedule_empty">Wähle Studiengang und Semester aus.</string>
+    <string name="myschedule_empty">Du hast noch keinen Stundenplan zusammengestellt.</string>
+    <string name="myschedule_dialog_empty">Wähle Studiengang und Semester aus.</string>
+    <string name="myschedule_last_updated">Zuletzt aktuelisiert: </string>
+    <string name="myschedule_connection_failed">"Keine Verbindung möglich\num Mein Stundenplan zu aktualisieren!"</string>
     <string name="today">Heute</string>
     <string name="myschedule_settings_studygroups">Sets: </string>
+    <string name="myschedule_settings_headline">Meine Kurse</string>
 
     <string name="deleteTimetableTitle">Semesterwechsel</string>
     <string name="deleteTimetableMessage">Das Semester ist zu Ende. Soll dein Stundenplan geleert werden?</string>
