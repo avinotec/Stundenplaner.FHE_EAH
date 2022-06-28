@@ -20,6 +20,8 @@ import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.getEventSeriesBa
 import static de.fhe.fhemobile.utils.timetable.TimeTableUtils.cutStudyProgramPrefix;
 
 import android.content.Context;
+import android.graphics.Paint;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +40,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.utils.myschedule.TimetableChangeType;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSetVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
@@ -250,16 +254,48 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
 
         Date startDateTime = _Event.getStartDateTime();
         Date endDateTime =  _Event.getEndDateTime();
-        final String date = sdf.format(startDateTime);
-        final String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(startDateTime);
-        final String startTime = new SimpleDateFormat("HH:mm", new Locale("de", "DE")).format(startDateTime);
-        final String endTime = new SimpleDateFormat("HH:mm", new Locale("de", "DE")).format(endDateTime);
-        String eventDateAndRoomText = dayOfWeek + ", " + date + "  " + startTime + " – " + endTime;
+        String date = sdf.format(startDateTime);
+        String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(startDateTime);
+        String startTime = new SimpleDateFormat("HH:mm", new Locale("de", "DE")).format(startDateTime);
+        String endTime = new SimpleDateFormat("HH:mm", new Locale("de", "DE")).format(endDateTime);
+        String room = _Event.getLocationListAsString();
 
-        if(roomVisible) {
-            eventDateAndRoomText += "\n"+ _Event.getLocationListAsString();
+        //highlight changes
+        for(TimetableChangeType change : _Event.getTypesOfChanges()){
+            switch (change){
+                case ADDITION:
+                    //set text bold
+                    dateAndRoomTextView.setTextColor(Main.getAppContext().getResources().getColor(R.color.timetable_change_highlight));
+                    dayOfWeek = "<font><b>" + dayOfWeek + "</b></font>";
+                    date = "<font><b>" + date + "</b></font>";
+                    startTime = "<font><b>" + startTime + "</b></font>";
+                    endTime = "<font><b>" + endTime + "</b></font>";
+                    room = "<font><b>" + room + "</b></font>";
+                    break;
+
+                case DELETION:
+                    //set text strikethrough
+                    dateAndRoomTextView.setPaintFlags(dateAndRoomTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    break;
+
+                case EDIT_TIME:
+                    dayOfWeek = "<font><b>" + dayOfWeek + "</b></font>";
+                    date = "<font><b>" + date + "</b></font>";
+                    startTime = "<font><b>" + startTime + "</b></font>";
+                    endTime = "<font><b>" + endTime + "</b></font>";
+                    break;
+                case EDIT_LOCATION:
+                    room = "<font><b>" + room + "</b></font>";
+                    break;
+            }
         }
-        dateAndRoomTextView.setText(eventDateAndRoomText);
+
+        String eventDateAndRoomText = dayOfWeek + ", " + date + "  " + startTime + " – " + endTime;
+        if(roomVisible) {
+            eventDateAndRoomText += "<br>"+ room;
+        }
+
+        dateAndRoomTextView.setText(Html.fromHtml(eventDateAndRoomText));
         _LayoutAllEvents.addView(dateAndRoomTextView);
     }
 

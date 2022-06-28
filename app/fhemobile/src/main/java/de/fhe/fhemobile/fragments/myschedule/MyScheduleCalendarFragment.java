@@ -87,7 +87,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 		askForDeletingScheduleAfterTurnOfSemester();
 
 		//Set text view to show if list is empty
-		mView.setEmptyCalenderView();
+		mView.setEmptyCalendarView();
 
 		return mView;
 	}

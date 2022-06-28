@@ -25,7 +25,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -162,23 +161,33 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 		for(TimetableChangeType change : currentItem.getTypesOfChanges()){
 			switch (change){
 				case ADDITION:
-					//set text bold
+					//set text bold and different color
 					for (TextView v : eventViews) {
-						v.setTypeface(null, Typeface.BOLD);
+						v.setTextColor(Main.getAppContext().getResources().getColor(R.color.timetable_change_highlight));
+						if(v.getTypeface().equals(Typeface.ITALIC)){
+							v.setTypeface(null, Typeface.BOLD_ITALIC);
+						} else {
+							v.setTypeface(null, Typeface.BOLD);
+						}
 					}
+					break;
 
 				case DELETION:
-					//set text striked through
+					//set text strikethrough
 					for (TextView v : eventViews) {
 						v.setPaintFlags(v.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 					}
+					break;
 
 				case EDIT_TIME:
 					eventTime.setTypeface(null, Typeface.BOLD);
+					break;
 				case EDIT_LOCATION:
 					eventLocation.setTypeface(null, Typeface.BOLD);
+					break;
 				case EDIT_LECTURER:
-					eventLecturer.setTypeface(null, Typeface.BOLD);
+					eventLecturer.setTypeface(null, Typeface.BOLD_ITALIC);
+					break;
 
 			}
 		}

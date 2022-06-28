@@ -74,7 +74,7 @@ public class MyScheduleCalendarView extends LinearLayout {
     /**
      * Sets view to show if the event list is empty
      */
-    public void setEmptyCalenderView(){
+    public void setEmptyCalendarView(){
         final TextView emptyView = findViewById(R.id.tv_myschedule_calendar_empty);
         mCalendarListView.setEmptyView(emptyView);
     }

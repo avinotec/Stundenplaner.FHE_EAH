@@ -14,6 +14,7 @@ import org.junit.Assert;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -198,16 +199,15 @@ public final class MyScheduleUtils {
 	/**
 	 * Compare local and fetched events to detect changes
 	 * and update the local {@link de.fhe.fhemobile.Main#subscribedEventSeries}
-	 *
-	 * @param localModuleList A subset of {@link de.fhe.fhemobile.Main#subscribedEventSeries}
+	 *  @param localModuleList A subset of {@link Main#subscribedEventSeries}
 	 *                           belonging to the same module,
 	 *                           by eventseries title
 	 * @param fetchedEventSetsMap The fetched {@link MyScheduleEventSetVo}s
 	 *                               corresponding to the given subset of eventseries,
-	 *                               by eventset ID
+	 * @return Collection of updated {@link de.fhe.fhemobile.Main#subscribedEventSeries}
 	 */
-	public static void updateSubscribedEventSeries(Map<String, MyScheduleEventSeriesVo> localModuleList,
-												   Map<String, MyScheduleEventSetVo> fetchedEventSetsMap) {
+	public static Collection<MyScheduleEventSeriesVo> updateSubscribedEventSeries(Map<String, MyScheduleEventSeriesVo> localModuleList,
+																				  Map<String, MyScheduleEventSetVo> fetchedEventSetsMap) {
 		//get fetchedEventSeries from fetched event sets
 		List<MyScheduleEventSeriesVo> fetchedEventSeriesVos = groupByEventTitle(fetchedEventSetsMap);
 
@@ -363,6 +363,8 @@ public final class MyScheduleUtils {
 			Main.setLastUpdateSubscribedEventSeries(new Date());
 
 		}
+
+		return localModuleList.values();
 	}
 
 }
