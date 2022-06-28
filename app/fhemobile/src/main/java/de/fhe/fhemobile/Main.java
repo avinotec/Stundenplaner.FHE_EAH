@@ -33,6 +33,7 @@ import org.junit.Assert;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
 import de.fhe.fhemobile.comparator.MyScheduleEventComparator;
@@ -52,6 +53,7 @@ public class Main extends Application {
 
 
     //My Schedule
+    public static Date lastUpdateSubscribedEventSeries;
     //note: always keep subscribedEventSeries sorted for display in the view
     public static ArrayList<MyScheduleEventSeriesVo> subscribedEventSeries = new ArrayList<MyScheduleEventSeriesVo>(){
         @Override
@@ -77,7 +79,7 @@ public class Main extends Application {
         // load active features from xml
         FeatureProvider.loadFeatures(this);
 
-        // load subscribed courses for My Schedule from Shared Preferences
+        // load subscribed eventseries for My Schedule from Shared Preferences
         SharedPreferences sharedPreferences = getSharedPreferences(SP_MYSCHEDULE, Context.MODE_PRIVATE);
         final String json = sharedPreferences.getString(Define.MySchedule.PREF_SUBSCRIBED_EVENTSERIES, "");
 
@@ -87,8 +89,12 @@ public class Main extends Application {
             final Type listType = new TypeToken<ArrayList<MyScheduleEventSeriesVo>>(){}.getType();
             subscribedEventSeries = gson.fromJson(json, listType);
         }
+        final long lastUpdated = sharedPreferences.getLong(Define.MySchedule.PREF_DATA_LAST_UPDATED,  -1);
+        if(lastUpdated != -1) lastUpdateSubscribedEventSeries = new Date(lastUpdated);
 
-        Assert.assertNotNull("onCreate(): subscribed courses is not initialized", subscribedEventSeries);
+        if (BuildConfig.DEBUG) {
+            Assert.assertNotNull("onCreate(): subscribed eventseries is not initialized", subscribedEventSeries);
+        }
     }
 
     /**
@@ -109,7 +115,7 @@ public class Main extends Application {
         return subscribedEventSeries;
     }
 
-    public static ArrayList<MyScheduleEventVo> getAllSubscribedTimeTableEvents(){
+    public static ArrayList<MyScheduleEventVo> getEventsOfAllSubscribedEventSeries(){
         ArrayList<MyScheduleEventVo> eventList = new ArrayList<>();
 
         for(MyScheduleEventSeriesVo eventSeries : subscribedEventSeries) {
@@ -117,6 +123,14 @@ public class Main extends Application {
         }
         Collections.sort(eventList, new MyScheduleEventComparator());
         return eventList;
+    }
+
+    public static void setLastUpdateSubscribedEventSeries(Date lastUpdateSubscribedEventSeries) {
+        Main.lastUpdateSubscribedEventSeries = lastUpdateSubscribedEventSeries;
+    }
+
+    public static Date getLastUpdateSubscribedEventSeries() {
+        return lastUpdateSubscribedEventSeries;
     }
 
     //MS 201908 Multidex apk introduced

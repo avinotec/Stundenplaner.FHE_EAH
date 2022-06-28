@@ -16,7 +16,7 @@
  */
 package de.fhe.fhemobile.activities;
 
-import static de.fhe.fhemobile.Main.getAllSubscribedTimeTableEvents;
+import static de.fhe.fhemobile.Main.getEventsOfAllSubscribedEventSeries;
 import static de.fhe.fhemobile.Main.getAppContext;
 import static de.fhe.fhemobile.Main.getSubscribedEventSeries;
 import static de.fhe.fhemobile.Main.subscribedEventSeries;
@@ -74,10 +74,6 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
     static final String TAG = MainActivity.class.getSimpleName();
 
-    private static final int CHANGEREASON_EDIT = 1;
-    private static final int CHANGEREASON_NEW = 3;
-    private static final int CHANGEREASON_DELETE = 2;
-
     public static MyScheduleCalendarAdapter myScheduleCalendarAdapter;
     public static MyScheduleSettingsAdapter myScheduleSettingsAdapter;
 
@@ -99,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                 Main.getAppContext(), subscribedEventSeries);
 
         myScheduleCalendarAdapter = new MyScheduleCalendarAdapter();
-        myScheduleCalendarAdapter.setItems(getAllSubscribedTimeTableEvents());
+        myScheduleCalendarAdapter.setItems(getEventsOfAllSubscribedEventSeries());
 
 
         // Set up the drawer.
@@ -277,27 +273,27 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
     /**
      *
-     * @param course
+     * @param eventSeries
      */
-    public static void addToSubscribedEventSeriesAndUpdateAdapters(final MyScheduleEventSeriesVo course){
-        course.setSubscribed(true);
-        subscribedEventSeries.add(course);
+    public static void addToSubscribedEventSeriesAndUpdateAdapters(final MyScheduleEventSeriesVo eventSeries){
+        eventSeries.setSubscribed(true);
+        subscribedEventSeries.add(eventSeries);
 
         saveSubscribedEventSeriesToSharedPreferences();
 
-        myScheduleCalendarAdapter.setItems(getAllSubscribedTimeTableEvents());
+        myScheduleCalendarAdapter.setItems(getEventsOfAllSubscribedEventSeries());
         myScheduleCalendarAdapter.notifyDataSetChanged();
         myScheduleSettingsAdapter.notifyDataSetChanged();
     }
 
 
-    public static void removeFromSubscribedEventSeriesAndUpdateAdapters(final MyScheduleEventSeriesVo course){
-        course.setSubscribed(false);
-        subscribedEventSeries.remove(course);
+    public static void removeFromSubscribedEventSeriesAndUpdateAdapters(final MyScheduleEventSeriesVo eventSeries){
+        eventSeries.setSubscribed(false);
+        subscribedEventSeries.remove(eventSeries);
 
         saveSubscribedEventSeriesToSharedPreferences();
 
-        myScheduleCalendarAdapter.setItems(getAllSubscribedTimeTableEvents());
+        myScheduleCalendarAdapter.setItems(getEventsOfAllSubscribedEventSeries());
         myScheduleCalendarAdapter.notifyDataSetChanged();
         myScheduleSettingsAdapter.notifyDataSetChanged();
     }
@@ -305,15 +301,16 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
     public static void clearSubscribedEventSeriesAndUpdateAdapters(){
         subscribedEventSeries.clear();
+        Main.setLastUpdateSubscribedEventSeries(null);
 
         saveSubscribedEventSeriesToSharedPreferences();
 
-        myScheduleCalendarAdapter.setItems(getAllSubscribedTimeTableEvents());
+        myScheduleCalendarAdapter.setItems(getEventsOfAllSubscribedEventSeries());
         myScheduleCalendarAdapter.notifyDataSetChanged();
         myScheduleSettingsAdapter.notifyDataSetChanged();
     }
 
-    private static void saveSubscribedEventSeriesToSharedPreferences() {
+    public static void saveSubscribedEventSeriesToSharedPreferences() {
         final Gson gson = new Gson();
         final String json = correctUmlauts(gson.toJson(getSubscribedEventSeries(), ArrayList.class));
         final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences(SP_MYSCHEDULE, Context.MODE_PRIVATE);
