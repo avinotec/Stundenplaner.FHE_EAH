@@ -16,6 +16,7 @@
  */
 package de.fhe.fhemobile.fragments.canteen;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,8 +26,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.SettingsActivity;
@@ -57,8 +61,30 @@ public class CanteenFragment extends FeatureFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //enable settings in app bar
-        setHasOptionsMenu(true);
+        //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
+        MenuHost menuHost = requireActivity();
+        Activity activity = getActivity();
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                // Add menu items here
+                menu.clear();
+                menuInflater.inflate(R.menu.main, menu);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                // Handle the menu selection
+                if (menuItem.getItemId() == R.id.action_settings) {
+                    final Intent intent = new Intent(activity, SettingsActivity.class);
+                    intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.CANTEEN);
+                    startActivity(intent);
+                    return true;
+                }
+
+                return false;
+            }
+        });
     }
 
     @Override
@@ -74,40 +100,6 @@ public class CanteenFragment extends FeatureFragment {
         return mView;
     }
 
-
-    @Override
-    public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-        // If the drawer is open, show the global app actions in the action bar. See also
-        // showGlobalContextActionBar, which controls the top-left area of the action bar.
-        menu.clear();
-        inflater.inflate(R.menu.main, menu);
-
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-
-    /**
-     * This method opens the {@link SettingsActivity} when the settings button at the actionbar is pressed
-     */
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem _item) {
-
-        /* Checks use of resource IDs in places requiring constants
-            Avoid the usage of resource IDs where constant expressions are required.
-            A future version of the Android Gradle Plugin will generate R classes with
-            non-constant IDs in order to improve the performance of incremental compilation.
-            Issue id: NonConstantResourceId
-         */
-        if (_item.getItemId() == R.id.action_settings) {
-            final Intent intent = new Intent(getActivity(), SettingsActivity.class);
-            intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.CANTEEN);
-            startActivity(intent);
-            return true;
-
-            //other item
-        }
-        return super.onOptionsItemSelected(_item);
-    }
 
     @Override
     public void onRestoreActionBar(final ActionBar _ActionBar) {

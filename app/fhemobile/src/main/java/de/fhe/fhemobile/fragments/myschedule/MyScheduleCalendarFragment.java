@@ -20,6 +20,7 @@ package de.fhe.fhemobile.fragments.myschedule;
 import static de.fhe.fhemobile.utils.Define.MySchedule.SP_MYSCHEDULE;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -35,6 +36,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -44,9 +47,11 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.activities.SettingsActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.fragments.timetable.TimeTableDialogFragment;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.Features;
+import de.fhe.fhemobile.utils.timetable.TimeTableSettings;
 import de.fhe.fhemobile.views.myschedule.MyScheduleCalendarView;
 
 public class MyScheduleCalendarFragment extends FeatureFragment {
@@ -74,7 +79,35 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setHasOptionsMenu(true);
+		//replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
+		MenuHost menuHost = requireActivity();
+		Activity activity = getActivity();
+		menuHost.addMenuProvider(new MenuProvider() {
+			@Override
+			public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+
+				menu.clear();
+				// Add menu items here
+				menuInflater.inflate(R.menu.menu_myschedule_calendar, menu);
+			}
+
+			@Override
+			public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+				// Handle the menu selection
+				if (menuItem.getItemId() == R.id.action_jump_to_today) {
+					mView.jumpToToday();
+					return true;
+				}
+				if (menuItem.getItemId() == R.id.action_edit_my_courses) {
+					final Intent intent = new Intent(activity, SettingsActivity.class);
+					intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.MYSCHEDULE);
+					startActivity(intent);
+					return true;
+				}
+
+				return false;
+			}
+		});
 	}
 
 
@@ -107,29 +140,6 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 		super.onResume();
 
 		NetworkHandler.getInstance().fetchMySchedule();
-	}
-
-	@Override
-	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-		menu.clear();
-		inflater.inflate(R.menu.menu_myschedule_calendar, menu);
-
-		super.onCreateOptionsMenu(menu, inflater);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(@NonNull MenuItem _Item) {
-		if (_Item.getItemId() == R.id.action_jump_to_today) {
-			mView.jumpToToday();
-			return true;
-		}
-		if (_Item.getItemId() == R.id.action_edit_my_courses) {
-			final Intent intent = new Intent(getActivity(), SettingsActivity.class);
-			intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.MYSCHEDULE);
-			startActivity(intent);
-			return true;
-		}
-		return super.onOptionsItemSelected(_Item);
 	}
 
 	/**

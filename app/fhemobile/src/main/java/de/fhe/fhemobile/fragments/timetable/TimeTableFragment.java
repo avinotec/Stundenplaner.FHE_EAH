@@ -20,6 +20,7 @@ package de.fhe.fhemobile.fragments.timetable;
 
 import static de.fhe.fhemobile.utils.Define.TimeTable.SP_TIMETABLE;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -33,6 +34,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
@@ -90,7 +93,33 @@ public class TimeTableFragment extends FeatureFragment {
 			mChosenTimeTableId = getArguments().getString(Define.PARAM_TIMETABLE_ID);
 		}
 
-		setHasOptionsMenu(true);
+		//replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
+		MenuHost menuHost = requireActivity();
+		Activity activity = getActivity();
+		menuHost.addMenuProvider(new MenuProvider() {
+			@Override
+			public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+				// Add menu items here
+				menu.clear();
+				if (TimeTableSettings.getTimeTableSelection() != null) {
+					menuInflater.inflate(R.menu.menu_timetable_events, menu);
+				}
+			}
+
+			@Override
+			public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+				// Handle the menu selection
+				if (menuItem.getItemId() == R.id.action_reset_selection) {
+
+					TimeTableSettings.saveTimeTableSelection(null);
+					((MainActivity) activity).changeFragment(TimeTableDialogFragment.newInstance(),
+							false, TimeTableDialogFragment.TAG);
+					return true;
+				}
+
+				return false;
+			}
+		});
 	}
 
 	@Override
@@ -107,40 +136,6 @@ public class TimeTableFragment extends FeatureFragment {
 	public void onResume() {
 		super.onResume();
 		NetworkHandler.getInstance().fetchTimeTableEvents(mChosenTimeTableId, mCallback);
-	}
-
-
-	@Override
-	public void onCreateOptionsMenu(final Menu menu, @NonNull final MenuInflater inflater) {
-		// If the drawer is open, show the global app actions in the action bar. See also
-		// showGlobalContextActionBar, which controls the top-left area of the action bar.
-		menu.clear();
-		if (TimeTableSettings.getTimeTableSelection() != null) {
-			inflater.inflate(R.menu.menu_timetable_events, menu);
-		}
-		super.onCreateOptionsMenu(menu, inflater);
-	}
-
-	//onOptionsItemSelected-------------------------------------------------------------------------
-	@Override
-	public boolean onOptionsItemSelected(final MenuItem _item) {
-        /* Checks use of resource IDs in places requiring constants
-            Avoid the usage of resource IDs where constant expressions are required.
-            A future version of the Android Gradle Plugin will generate R classes with
-            non-constant IDs in order to improve the performance of incremental compilation.
-            Issue id: NonConstantResourceId
-         */
-		if (_item.getItemId() == R.id.action_reset_selection) {
-			TimeTableSettings.saveTimeTableSelection(null);
-
-			((MainActivity) getActivity()).changeFragment(TimeTableDialogFragment.newInstance(),
-					false, TimeTableDialogFragment.TAG);
-
-			return true;
-
-			//other item
-		}
-		return super.onOptionsItemSelected(_item);
 	}
 
 	private final Callback<Map<String, TimeTableWeekVo>> mCallback = new Callback<Map<String, TimeTableWeekVo>>() {

@@ -17,6 +17,7 @@
 
 package de.fhe.fhemobile.fragments.maps;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -27,6 +28,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 
 import de.fhe.fhemobile.R;
@@ -43,13 +46,16 @@ import de.fhe.fhemobile.vos.maps.MapVo;
  */
 public class MapsFragment extends Fragment {
 
+    private static final String TAG = MapsFragment.class.getSimpleName();
+
+
     public MapsFragment() {
         // Required empty public constructor
     }
 
     public static MapsFragment newInstance(final int _MapId) {
         final MapsFragment fragment = new MapsFragment();
-        
+
         final Bundle args = new Bundle();
         args.putInt(ARGS_MAP_ID, _MapId );
 
@@ -60,9 +66,49 @@ public class MapsFragment extends Fragment {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        setHasOptionsMenu(true);
-        
+
+        //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
+        MenuHost menuHost = requireActivity();
+        Activity activity = getActivity();
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menu.clear();
+                // Add menu items here
+                if (mMap.getMaps().size() > 1) {
+                    menuInflater.inflate(R.menu.menu_maps, menu);
+                }
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                // Handle the menu selection
+                if(menuItem.getItemId() == R.id.action_up) {
+                    if (mCurrentMapIndex < mMap.getMaps().size() - 1) {
+                        mCurrentMapIndex++;
+                        final MapVo map = mMap.getMaps().get(mCurrentMapIndex);
+
+                        mView.initializeView(map);
+                        updateActionBarTitle(getContext().getResources().getString(map.getNameID()));
+                    }
+                    return true;
+                }
+
+                if (menuItem.getItemId() == R.id.action_down) {
+                    if (mCurrentMapIndex > 0) {
+                        mCurrentMapIndex--;
+                        final MapVo map = mMap.getMaps().get(mCurrentMapIndex);
+
+                        mView.initializeView(map);
+                        updateActionBarTitle(getContext().getResources().getString(map.getNameID()));
+                    }
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
         if (getArguments() != null) {
             final int mapId = getArguments().getInt(ARGS_MAP_ID);
             mMap = MapsModel.getInstance().getMaps().get(mapId);
@@ -76,8 +122,7 @@ public class MapsFragment extends Fragment {
         }
 
     }
-    
-    
+
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
@@ -96,7 +141,7 @@ public class MapsFragment extends Fragment {
             }
 
             updateActionBarTitle(getContext().getResources().getString(map.getNameID()));
-        }catch (final Exception e){
+        } catch (final Exception e){
             mView = new MapsView(getContext(), new AttributeSet() {
                 @Override
                 public int getAttributeCount() {
@@ -216,55 +261,6 @@ public class MapsFragment extends Fragment {
         return mView;
     }
 
-    //onCreateOptionsMenu---------------------------------------------------------------------------
-    @Override
-    public void onCreateOptionsMenu(final Menu _menu, @NonNull final MenuInflater _inflater) {
-
-        // Inflate the menu; this adds items to the action bar if it is present.
-        _menu.clear();
-        
-        if (mMap.getMaps().size() > 1) {
-            _inflater.inflate(R.menu.menu_maps, _menu);
-        }
-
-        super.onCreateOptionsMenu(_menu, _inflater);
-    }
-
-    //onOptionsItemSelected-------------------------------------------------------------------------
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem _item) {
-
-        /* Checks use of resource IDs in places requiring constants
-            Avoid the usage of resource IDs where constant expressions are required.
-            A future version of the Android Gradle Plugin will generate R classes with
-            non-constant IDs in order to improve the performance of incremental compilation.
-            Issue id: NonConstantResourceId
-         */
-        final int itemId = _item.getItemId();
-        if (itemId == R.id.action_up) {
-            if (mCurrentMapIndex < mMap.getMaps().size() - 1) {
-                mCurrentMapIndex++;
-                final MapVo map = mMap.getMaps().get(mCurrentMapIndex);
-
-                mView.initializeView(map);
-                updateActionBarTitle(getContext().getResources().getString(map.getNameID()));
-            }
-            return true;
-        } else if (itemId == R.id.action_down) {
-            if (mCurrentMapIndex > 0) {
-                mCurrentMapIndex--;
-                final MapVo map = mMap.getMaps().get(mCurrentMapIndex);
-
-                mView.initializeView(map);
-                updateActionBarTitle(getContext().getResources().getString(map.getNameID()));
-            }
-            return true;
-
-            //other item
-        }
-        return super.onOptionsItemSelected(_item);
-    }
-
     @Override
     public void onSaveInstanceState(@NonNull final Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -276,8 +272,6 @@ public class MapsFragment extends Fragment {
     private void updateActionBarTitle(final String _Title) {
         ((BaseActivity) getActivity()).getSupportActionBar().setTitle(_Title);
     }
-
-    private static final String LOG_TAG = MapsFragment.class.getSimpleName();
 
     private static final String ARGS_MAP_ID   = "argMapId";
 

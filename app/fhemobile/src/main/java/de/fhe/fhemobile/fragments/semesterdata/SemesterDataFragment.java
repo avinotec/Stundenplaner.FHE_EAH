@@ -17,6 +17,7 @@
 
 package de.fhe.fhemobile.fragments.semesterdata;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,7 +26,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.events.Event;
@@ -55,11 +59,36 @@ public class SemesterDataFragment extends FeatureFragment {
 
         mModel = SemesterDataModel.getInstance();
 
-//        if (getArguments() != null) {
-//
-//        }
+        //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
+        MenuHost menuHost = requireActivity();
+        Activity activity = getActivity();
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
 
-        setHasOptionsMenu(true);
+                menu.clear();
+                // Add menu items here
+                menuInflater.inflate(R.menu.menu_semester_data, menu);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                // Handle the menu selection
+                if(menuItem.getItemId() == R.id.action_next_semester){
+                    if (null != mModel && null != mModel.getSemesterData()) {
+                        if (mModel.getChosenSemester() < mModel.getSemesterData().length - 1) {
+                            mModel.setChosenSemester(mModel.getChosenSemester() + 1);
+                        } else {
+                            mModel.setChosenSemester(0);
+                        }
+                    }
+
+                    return true;
+                }
+
+                return false;
+            }
+        });
     }
 
     @Override
@@ -74,41 +103,6 @@ public class SemesterDataFragment extends FeatureFragment {
         }
 
         return mView;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-        // If the drawer is open, show the global app actions in the action bar. See also
-        // showGlobalContextActionBar, which controls the top-left area of the action bar.
-        menu.clear();
-        inflater.inflate(R.menu.menu_semester_data, menu);
-
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    //onOptionsItemSelected-------------------------------------------------------------------------
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem _item) {
-        /* Checks use of resource IDs in places requiring constants
-            Avoid the usage of resource IDs where constant expressions are required.
-            A future version of the Android Gradle Plugin will generate R classes with
-            non-constant IDs in order to improve the performance of incremental compilation.
-            Issue id: NonConstantResourceId
-         */
-        if (_item.getItemId() == R.id.action_next_semester) {
-            if (null != mModel && null != mModel.getSemesterData()) {
-                if (mModel.getChosenSemester() < mModel.getSemesterData().length - 1) {
-                    mModel.setChosenSemester(mModel.getChosenSemester() + 1);
-                } else {
-                    mModel.setChosenSemester(0);
-                }
-            }
-
-            return true;
-
-            //other item
-        }
-        return super.onOptionsItemSelected(_item);
     }
 
     @Override
