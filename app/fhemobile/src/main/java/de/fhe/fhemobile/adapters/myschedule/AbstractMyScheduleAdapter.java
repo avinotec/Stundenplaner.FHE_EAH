@@ -265,7 +265,6 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
             switch (change){
                 case ADDITION:
                     //set text bold
-                    dateAndRoomTextView.setTextColor(Main.getAppContext().getResources().getColor(R.color.timetable_change_highlight));
                     dayOfWeek = "<font><b>" + dayOfWeek + "</b></font>";
                     date = "<font><b>" + date + "</b></font>";
                     startTime = "<font><b>" + startTime + "</b></font>";
