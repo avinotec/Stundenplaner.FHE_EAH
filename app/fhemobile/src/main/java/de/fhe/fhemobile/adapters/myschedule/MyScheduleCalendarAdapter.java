@@ -161,9 +161,8 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 		for(TimetableChangeType change : currentItem.getTypesOfChanges()){
 			switch (change){
 				case ADDITION:
-					//set text bold and different color
+					//set text bold
 					for (TextView v : eventViews) {
-						v.setTextColor(Main.getAppContext().getResources().getColor(R.color.timetable_change_highlight));
 						if(v.getTypeface().equals(Typeface.ITALIC)){
 							v.setTypeface(null, Typeface.BOLD_ITALIC);
 						} else {
@@ -188,7 +187,6 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 				case EDIT_LECTURER:
 					eventLecturer.setTypeface(null, Typeface.BOLD_ITALIC);
 					break;
-
 			}
 		}
 
