@@ -1,6 +1,8 @@
 package de.fhe.fhemobile.utils.myschedule;
 
 import static de.fhe.fhemobile.Main.getEventsOfAllSubscribedEventSeries;
+import static de.fhe.fhemobile.Main.subscribedEventSeries;
+import static de.fhe.fhemobile.activities.MainActivity.addToSubscribedEventSeriesAndUpdateAdapters;
 import static de.fhe.fhemobile.activities.MainActivity.myScheduleCalendarAdapter;
 import static de.fhe.fhemobile.activities.MainActivity.myScheduleSettingsAdapter;
 import static de.fhe.fhemobile.activities.MainActivity.saveSubscribedEventSeriesToSharedPreferences;
@@ -206,15 +208,32 @@ public final class MyScheduleUtils {
 	 *                               corresponding to the given subset of eventseries,
 	 * @return Collection of updated {@link de.fhe.fhemobile.Main#subscribedEventSeries}
 	 */
-	public static Collection<MyScheduleEventSeriesVo> updateSubscribedEventSeries(Map<String, MyScheduleEventSeriesVo> localModuleList,
-																				  Map<String, MyScheduleEventSetVo> fetchedEventSetsMap) {
+	public static Collection<MyScheduleEventSeriesVo> updateSubscribedEventSeries(
+			Map<String, MyScheduleEventSeriesVo> localModuleList,
+			Map<String, MyScheduleEventSetVo> fetchedEventSetsMap) {
+
 		//get fetchedEventSeries from fetched event sets
 		List<MyScheduleEventSeriesVo> fetchedEventSeriesVos = groupByEventTitle(fetchedEventSetsMap);
 
 		//examine fetched EventSeriesVos for changes, deleted and added events
 		for (MyScheduleEventSeriesVo fetchedEventSeries : fetchedEventSeriesVos) {
+
 			MyScheduleEventSeriesVo localEventSeries = localModuleList.get(fetchedEventSeries.getTitle());
-			if (localEventSeries == null) continue;
+			if (localEventSeries == null){
+				//if event series corresponds to an new exam, than always add
+				if(getEventSeriesBaseTitle(fetchedEventSeries.getTitle()).matches(".*(PL)|(Prfg.)|(APL)")){
+					//set every event in the exam series as "added"
+					for(MyScheduleEventVo eventVo : fetchedEventSeries.getEvents()){
+						eventVo.addChange(TimetableChangeType.ADDITION);
+					}
+					//add exam as subscribed eventseries
+					fetchedEventSeries.setSubscribed(true);
+					subscribedEventSeries.add(fetchedEventSeries);
+				}
+
+				//skip non-subscribed eventseries and newly added exam eventseries
+				continue;
+			}
 
 			//detect added event sets
 			Set<String> eventSetsAdded = Sets.difference(
@@ -234,6 +253,7 @@ public final class MyScheduleUtils {
 						deletedEvent.addChange(TimetableChangeType.DELETION);
 					}
 				}
+
 				//compare local and fetched events to detect changes
 				else {
 					MyScheduleEventSetVo fetchedEventSet = fetchedEventSetsMap.get(localEventSetEntry.getKey());
