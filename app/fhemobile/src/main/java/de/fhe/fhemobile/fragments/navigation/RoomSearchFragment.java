@@ -240,7 +240,7 @@ public class RoomSearchFragment extends SearchFragment {
                 }
             }
 
-            if(mDestRoom == null) showErrorToast();
+            if(mDestRoom == null) showRoomNotFoundErrorToast();
         }
 
 

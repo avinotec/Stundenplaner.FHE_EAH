@@ -34,7 +34,6 @@ import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.phonebook.PhonebookModel;
 import de.fhe.fhemobile.models.semesterdata.SemesterDataModel;
-import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 import de.fhe.fhemobile.vos.timetablechanges.TimetableChangesResponse;
 import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.utils.canteen.CanteenUtils;
@@ -131,8 +130,10 @@ public final class NetworkHandler {
 			 */
 			@Override
 			public void onResponse(final Call<ArrayList<EmployeeVo>> call, final Response<ArrayList<EmployeeVo>> response) {
-				if ( response.body() != null ) {
+				if( response.body() != null ){
 					PhonebookModel.getInstance().setFoundEmployees(response.body());
+				} else {
+					showInternalProblemToast();
 				}
 			}
 
@@ -143,7 +144,7 @@ public final class NetworkHandler {
 			 */
 			@Override
 			public void onFailure(final Call<ArrayList<EmployeeVo>> call, final Throwable t) {
-				showErrorToast();
+				showConnectionErrorToast();
 				Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 			}
 
@@ -165,8 +166,10 @@ public final class NetworkHandler {
 			 */
 			@Override
 			public void onResponse( final Call<SemesterDataVo> call, final Response<SemesterDataVo> response) {
-				if ( response.body() != null ) {
+				if( response.body() != null ){
 					SemesterDataModel.getInstance().setData(response.body().getSemester());
+				} else {
+					showInternalProblemToast();
 				}
 			}
 
@@ -177,7 +180,7 @@ public final class NetworkHandler {
 			 */
 			@Override
 			public void onFailure(final Call<SemesterDataVo> call, final Throwable t) {
-				showErrorToast();
+				showConnectionErrorToast();
 				Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 			}
 		});
@@ -218,7 +221,7 @@ public final class NetworkHandler {
 				 */
 				@Override
 				public void onFailure(final Call<CanteenDishVo[]> call, final Throwable t) {
-					showErrorToast();
+					showConnectionErrorToast();
 				}
 			});
 		}
@@ -270,7 +273,7 @@ public final class NetworkHandler {
 			 */
 			@Override
 			public void onFailure(final Call<NewsItemResponse> call, final Throwable t) {
-				showErrorToast();
+				showConnectionErrorToast();
 				Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 			}
 		});
@@ -295,14 +298,16 @@ public final class NetworkHandler {
 
 			@Override
 			public void onResponse(final Call<CanteenVo[]> call, final Response<CanteenVo[]> response) {
-				if ( response.body() != null ) {
+				if( response.body() != null ){
 					CanteenModel.getInstance().setCanteens(response.body());
+				} else {
+					showInternalProblemToast();
 				}
 			}
 
 			@Override
 			public void onFailure(final Call<CanteenVo[]> call, final Throwable t) {
-				showErrorToast();
+				showConnectionErrorToast();
 				Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 			}
 		});
@@ -323,8 +328,10 @@ public final class NetworkHandler {
 			@Override
 			public void onResponse(final Call<NewsCategoryResponse> call, final Response<NewsCategoryResponse> response) {
 				// MS: Bei den News sind die news/0 kaputt
-				if ( response.body() != null ) {
+				if( response.body() != null ){
 					NewsModel.getInstance().setCategoryItems(response.body().getNewsCategories());
+				} else {
+					showInternalProblemToast();
 				}
 			}
 
@@ -335,7 +342,7 @@ public final class NetworkHandler {
 			 */
 			@Override
 			public void onFailure(final Call<NewsCategoryResponse> call, final Throwable t) {
-				showErrorToast();
+				showConnectionErrorToast();
 				Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 			}
 		});
@@ -408,7 +415,8 @@ public final class NetworkHandler {
 //				public void onResponse(Call<Map<String, MyScheduleEventSetVo>> call, Response<Map<String, MyScheduleEventSetVo>> response) {
 //					if(response.body() != null){
 //						 updateSubscribedEventSeries(module.getValue(), response.body());
-//					}
+//					} else {
+//						showInternalProblemToast();
 //				}
 //
 //				@Override
@@ -432,7 +440,7 @@ public final class NetworkHandler {
 		Assert.assertTrue( mApiErfurt != null );
 		//okhttp 4.x final RequestBody body =RequestBody.create( json, MediaType.parse("application/json"));
 		//okhttp 3.12 flip parameters
-		final RequestBody body =RequestBody.create(json, MediaType.parse("application/json"));
+		final RequestBody body = RequestBody.create(json, MediaType.parse("application/json"));
 		mApiErfurt.registerTimeTableChanges(body).enqueue(_Callback);
 	}
 
@@ -461,8 +469,14 @@ public final class NetworkHandler {
 	/**
 	 *
 	 */
-	static void showErrorToast() {
+	static void showConnectionErrorToast() {
 		Toast.makeText(Main.getAppContext(), Main.getAppContext().getString(R.string.connection_failed),
+				Toast.LENGTH_LONG).show();
+	}
+
+	void showInternalProblemToast(){
+		Toast.makeText(Main.getAppContext(),
+				Main.getAppContext().getString(R.string.internal_problems),
 				Toast.LENGTH_LONG).show();
 	}
 

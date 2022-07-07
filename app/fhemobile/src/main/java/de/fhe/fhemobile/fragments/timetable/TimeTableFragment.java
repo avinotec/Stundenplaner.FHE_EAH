@@ -109,6 +109,7 @@ public class TimeTableFragment extends FeatureFragment {
 		NetworkHandler.getInstance().fetchTimeTableEvents(mChosenTimeTableId, mCallback);
 	}
 
+
 	@Override
 	public void onCreateOptionsMenu(final Menu menu, @NonNull final MenuInflater inflater) {
 		// If the drawer is open, show the global app actions in the action bar. See also
@@ -145,7 +146,7 @@ public class TimeTableFragment extends FeatureFragment {
 	private final Callback<Map<String, TimeTableWeekVo>> mCallback = new Callback<Map<String, TimeTableWeekVo>>() {
 		@Override
 		public void onResponse(final Call<Map<String, TimeTableWeekVo>> call, final Response<Map<String, TimeTableWeekVo>> response) {
-			if (response.body() != null) {
+			if(response.body() != null){
 				ArrayList<TimeTableWeekVo> weekVos = new ArrayList(response.body().values());
 				mView.setPagerItems(weekVos);
 
@@ -154,12 +155,15 @@ public class TimeTableFragment extends FeatureFragment {
 				SharedPreferences.Editor editor = sharedPreferences.edit();
 				editor.putString(SP_TIMETABLE, new Gson().toJson(weekVos));
 				editor.apply();
+
+			} else {
+				showInternalProblemToast();
 			}
 		}
 
 		@Override
 		public void onFailure(final Call<Map<String, TimeTableWeekVo>> call, final Throwable t) {
-			showErrorToast();
+			showConnectionErrorToast();
 			Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 
 			//load timetable from shared preferences
@@ -169,13 +173,18 @@ public class TimeTableFragment extends FeatureFragment {
 				ArrayList<TimeTableWeekVo> loadedTimeTableWeeks = new Gson()
 						.fromJson(json, new TypeToken<List<TimeTableWeekVo>>(){}.getType());
 				mView.setPagerItems(loadedTimeTableWeeks);
-
 			}
 		}
 	};
 
-	static void showErrorToast() {
+	static void showConnectionErrorToast() {
 		Toast.makeText(Main.getAppContext(), R.string.timetable_connection_failed,
+				Toast.LENGTH_LONG).show();
+	}
+
+	void showInternalProblemToast(){
+		Toast.makeText(Main.getAppContext(),
+				Main.getAppContext().getString(R.string.internal_problems),
 				Toast.LENGTH_LONG).show();
 	}
 

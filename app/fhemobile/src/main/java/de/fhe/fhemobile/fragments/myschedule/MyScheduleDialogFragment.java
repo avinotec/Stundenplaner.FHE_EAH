@@ -214,7 +214,7 @@ public class MyScheduleDialogFragment extends DialogFragment {
     private final Callback<TimeTableDialogResponse> mFetchStudyProgramDataCallback = new Callback<TimeTableDialogResponse>() {
         @Override
         public void onResponse(Call<TimeTableDialogResponse> call, Response<TimeTableDialogResponse> response) {
-            if ( response.body() != null ) {
+            if(response.body() != null){
 
                 mStudyProgramDataResponse = response.body();
 
@@ -229,13 +229,15 @@ public class MyScheduleDialogFragment extends DialogFragment {
                 }
 
                 mView.setStudyProgramItems(studyPrograms);
-                mView.toggleProgressIndicatorVisibility(false);
+            } else {
+                showInternalProblemToast();
             }
+            mView.toggleProgressIndicatorVisibility(false);
         }
 
         @Override
         public void onFailure(Call<TimeTableDialogResponse> call, Throwable t) {
-            showErrorToast();
+            showConnectionErrorToast();
             Log.d(TAG, "failure: request " + call.request().url());
         }
     };
@@ -251,24 +253,31 @@ public class MyScheduleDialogFragment extends DialogFragment {
 
                 Collections.sort(eventSeriesVos, new EventSeriesTitleComparator());
 
-                mView.toggleProgressIndicatorVisibility(false);
                 mView.toggleEventListVisibility(true);
                 mListAdapter.setItems(eventSeriesVos);
-                mListAdapter.notifyDataSetChanged();
-                mView.setEventListAdapter(mListAdapter);
+
+            } else {
+                showInternalProblemToast();
             }
+            mView.toggleEventListVisibility(false);
 
         }
 
         @Override
         public void onFailure(Call<Map<String, MyScheduleEventSetVo>> call, Throwable t) {
-            showErrorToast();
+            showConnectionErrorToast();
             Log.d(TAG, "failure: request " + call.request().url());
         }
     };
 
-    void showErrorToast() {
+    void showConnectionErrorToast() {
         Toast.makeText(Main.getAppContext(), Main.getAppContext().getString(R.string.connection_failed),
+                Toast.LENGTH_LONG).show();
+    }
+
+    void showInternalProblemToast(){
+        Toast.makeText(Main.getAppContext(),
+                Main.getAppContext().getString(R.string.internal_problems),
                 Toast.LENGTH_LONG).show();
     }
 

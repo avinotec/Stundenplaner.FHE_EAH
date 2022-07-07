@@ -128,7 +128,7 @@ public class PersonSearchFragment extends SearchFragment {
                 }
             }
 
-            if(mDestRoom == null) showErrorToast();
+            if(mDestRoom == null) showRoomNotFoundErrorToast();
         }
 
 

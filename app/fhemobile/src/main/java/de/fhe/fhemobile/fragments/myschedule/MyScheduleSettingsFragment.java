@@ -69,11 +69,6 @@ public class MyScheduleSettingsFragment extends FeatureFragment {
 	public static final String TAG = MyScheduleSettingsFragment.class.getSimpleName();
 
 
-	private static final int CHANGEREASON_EDIT = 1;
-	private static final int CHANGEREASON_NEW = 3;
-	private static final int CHANGEREASON_DELETE = 2;
-
-
 	/**
 	 * Use this factory method to create a new instance of
 	 * this fragment using the provided parameters.
@@ -269,14 +264,14 @@ public class MyScheduleSettingsFragment extends FeatureFragment {
 
 				@Override
 				public void onFailure(final Call<TimetableChangesResponse> call, Throwable t) {
-					showErrorToast();
+					showConnectionErrorToast();
 					Log.d(TAG, "onFailure: " + t.toString());
 				}
 			});
 		}
 	}
 
-	void showErrorToast() {
+	void showConnectionErrorToast() {
 		Toast.makeText(Main.getAppContext(), Main.getAppContext().getString(R.string.connection_failed),
 				Toast.LENGTH_LONG).show();
 	}

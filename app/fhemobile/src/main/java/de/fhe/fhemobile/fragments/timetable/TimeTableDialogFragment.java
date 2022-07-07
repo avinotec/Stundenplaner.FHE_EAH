@@ -187,7 +187,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
     private final Callback<TimeTableDialogResponse> mFetchStudyProgramDataCallback = new Callback<TimeTableDialogResponse>() {
         @Override
         public void onResponse(final Call<TimeTableDialogResponse> call, final Response<TimeTableDialogResponse> response) {
-            if ( response.body() != null ) {
+            if( response.body() != null ){
                 mResponse = response.body();
 
                 ArrayList<TimeTableStudyProgramVo> studyPrograms = new ArrayList<>();
@@ -201,18 +201,26 @@ public class TimeTableDialogFragment extends FeatureFragment {
                 }
 
                 mView.setStudyCourseItems(studyPrograms);
+            } else {
+                showInternalProblemToast();
             }
         }
 
         @Override
         public void onFailure(final Call<TimeTableDialogResponse> call, Throwable t) {
-            showErrorToast();
+            showConnectionErrorToast();
             Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
         }
     };
 
-    void showErrorToast() {
+    void showConnectionErrorToast() {
         Toast.makeText(Main.getAppContext(), Main.getAppContext().getString(R.string.connection_failed),
+                Toast.LENGTH_LONG).show();
+    }
+
+    void showInternalProblemToast(){
+        Toast.makeText(Main.getAppContext(),
+                Main.getAppContext().getString(R.string.internal_problems),
                 Toast.LENGTH_LONG).show();
     }
 
