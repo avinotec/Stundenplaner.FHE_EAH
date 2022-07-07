@@ -220,8 +220,9 @@ public final class MyScheduleUtils {
 
 			MyScheduleEventSeriesVo localEventSeries = localModuleList.get(fetchedEventSeries.getTitle());
 			if (localEventSeries == null){
-				//if event series corresponds to an new exam, than always add
-				if(getEventSeriesBaseTitle(fetchedEventSeries.getTitle()).matches(".*(PL)|(Prfg.)|(APL)")){
+				//if event series corresponds to an new exam (no matter which group), than always add
+				//possible endings for exams: APL, PL, mdl. Prfg.,Wdh.-Prfg., Wdh.-APL
+				if(getEventSeriesBaseTitle(fetchedEventSeries.getTitle()).matches(".*(PL)|(Prfg.)")){
 					//set every event in the exam series as "added"
 					for(MyScheduleEventVo eventVo : fetchedEventSeries.getEvents()){
 						eventVo.addChange(TimetableChangeType.ADDITION);
