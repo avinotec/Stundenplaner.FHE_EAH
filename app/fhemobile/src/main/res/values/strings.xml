@@ -36,6 +36,7 @@
 
     <string name="reallyClose">Please click back twice to exit</string>
     <string name="connection_failed">Cannot establish connection!</string>
+    <string name="internal_problems">Error: internal problems</string>
 
     <string name="phonebook_firstname">First name</string>
     <string name="phonebook_lastname">Last name</string>

@@ -36,6 +36,7 @@
 
     <string name="reallyClose">Zum Verlassen zweimal Zurück drücken</string>
     <string name="connection_failed">Keine Verbindung möglich!</string>
+    <string name="internal_problems">Fehler: interne Probleme</string>
 
     <string name="phonebook_firstname" >Vorname</string>
     <string name="phonebook_lastname" >Nachname</string>
