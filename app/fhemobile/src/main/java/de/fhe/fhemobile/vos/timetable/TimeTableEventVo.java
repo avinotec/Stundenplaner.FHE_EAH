@@ -90,14 +90,21 @@ public class TimeTableEventVo implements Parcelable {
 
         for(LecturerVo lecturer : mLecturerList.values()){
             if(lecturer.getName() != null){
+                // append ", " in any case, for lists of lecturers
                 stringBuilder.append(lecturer.getName() + ", ");
             }
         }
 
         if(stringBuilder.toString().isEmpty() || stringBuilder.length() <= 2){
+            // no lecturer, interesting....
             return "";
         } else {
-            return stringBuilder.substring(0, stringBuilder.length() - 2);
+            final int length = stringBuilder.length();
+            // delete the ", " at the end, if only one lecturer
+            stringBuilder.delete(length - 2, length);
+            // add a little space at the end, looks better because of italic font
+            stringBuilder.append("  ");
+            return stringBuilder.toString();
         }
     }
 
@@ -110,6 +117,7 @@ public class TimeTableEventVo implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
+        // VERSION 1
         dest.writeString(mId);
         dest.writeString(mTitle);
         dest.writeLong(mStartDateTime);
@@ -119,6 +127,7 @@ public class TimeTableEventVo implements Parcelable {
     }
 
     TimeTableEventVo(final Parcel in) {
+        // VERSION 1
         mId = in.readString();
         this.mTitle = in.readString();
         this.mStartDateTime = in.readLong();
@@ -140,6 +149,9 @@ public class TimeTableEventVo implements Parcelable {
 
     // End PARCELABLE --------------------------------------------------------------------------------
 
+// TODO
+//    @SerializedName("version")
+//    private int version;
 
     @SerializedName("activityId")
     private String mId;
