@@ -259,7 +259,7 @@ public class MyScheduleDialogFragment extends DialogFragment {
             } else {
                 showInternalProblemToast();
             }
-            mView.toggleEventListVisibility(false);
+            mView.toggleProgressIndicatorVisibility(false);
 
         }
 

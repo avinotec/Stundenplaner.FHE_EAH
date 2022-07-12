@@ -63,7 +63,6 @@ public class MyScheduleEventVo implements Parcelable{
         mEndDateTime = endDateTime;
         mLecturerList = lecturerList;
         mLocationList = locationList;
-
     }
 
     // PARCELABLE ---------------------------------------------------------------------------------
