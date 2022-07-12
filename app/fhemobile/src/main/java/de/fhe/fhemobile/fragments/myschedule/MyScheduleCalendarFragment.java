@@ -19,8 +19,6 @@ package de.fhe.fhemobile.fragments.myschedule;
 
 import static de.fhe.fhemobile.utils.Define.MySchedule.SP_MYSCHEDULE;
 
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -38,6 +36,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
+import androidx.fragment.app.FragmentActivity;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -47,11 +46,9 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.activities.SettingsActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.fragments.timetable.TimeTableDialogFragment;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.Features;
-import de.fhe.fhemobile.utils.timetable.TimeTableSettings;
 import de.fhe.fhemobile.views.myschedule.MyScheduleCalendarView;
 
 public class MyScheduleCalendarFragment extends FeatureFragment {
@@ -81,7 +78,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 
 		//replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
 		MenuHost menuHost = requireActivity();
-		Activity activity = getActivity();
+		FragmentActivity activity = getActivity();
 		menuHost.addMenuProvider(new MenuProvider() {
 			@Override
 			public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
