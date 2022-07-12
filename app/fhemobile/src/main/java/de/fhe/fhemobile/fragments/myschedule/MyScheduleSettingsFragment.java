@@ -271,7 +271,7 @@ public class MyScheduleSettingsFragment extends FeatureFragment {
 		}
 	}
 
-	void showConnectionErrorToast() {
+	static void showConnectionErrorToast() {
 		Toast.makeText(Main.getAppContext(), Main.getAppContext().getString(R.string.connection_failed),
 				Toast.LENGTH_LONG).show();
 	}

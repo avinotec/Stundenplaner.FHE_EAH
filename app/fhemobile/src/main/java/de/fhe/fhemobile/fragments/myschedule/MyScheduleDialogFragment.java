@@ -194,7 +194,7 @@ public class MyScheduleDialogFragment extends DialogFragment {
 
             mChosenSemester = null;
 
-            Map<String, TimeTableSemesterVo> semesters = mChosenStudyProgram.getSemesters();
+            final Map<String, TimeTableSemesterVo> semesters = mChosenStudyProgram.getSemesters();
             if (semesters.containsKey(_SemesterId)) {
 
                 //set chosen semester
@@ -218,7 +218,7 @@ public class MyScheduleDialogFragment extends DialogFragment {
 
                 mStudyProgramDataResponse = response.body();
 
-                ArrayList<TimeTableStudyProgramVo> studyPrograms = new ArrayList<>();
+                final ArrayList<TimeTableStudyProgramVo> studyPrograms = new ArrayList<>();
                 //remove "Brückenkurse" and only keep bachelor and master study programs
                 for(TimeTableStudyProgramVo studyProgramVo : response.body().getStudyProgramsAsList()){
 
@@ -270,12 +270,12 @@ public class MyScheduleDialogFragment extends DialogFragment {
         }
     };
 
-    void showConnectionErrorToast() {
+    static void showConnectionErrorToast() {
         Toast.makeText(Main.getAppContext(), Main.getAppContext().getString(R.string.connection_failed),
                 Toast.LENGTH_LONG).show();
     }
 
-    void showInternalProblemToast(){
+    static void showInternalProblemToast(){
         Toast.makeText(Main.getAppContext(),
                 Main.getAppContext().getString(R.string.internal_problems),
                 Toast.LENGTH_LONG).show();

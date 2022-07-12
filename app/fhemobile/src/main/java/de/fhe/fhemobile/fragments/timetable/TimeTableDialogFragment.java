@@ -213,12 +213,12 @@ public class TimeTableDialogFragment extends FeatureFragment {
         }
     };
 
-    void showConnectionErrorToast() {
+    static void showConnectionErrorToast() {
         Toast.makeText(Main.getAppContext(), Main.getAppContext().getString(R.string.connection_failed),
                 Toast.LENGTH_LONG).show();
     }
 
-    void showInternalProblemToast(){
+    static void showInternalProblemToast(){
         Toast.makeText(Main.getAppContext(),
                 Main.getAppContext().getString(R.string.internal_problems),
                 Toast.LENGTH_LONG).show();
