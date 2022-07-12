@@ -474,7 +474,7 @@ public final class NetworkHandler {
 				Toast.LENGTH_LONG).show();
 	}
 
-	void showInternalProblemToast(){
+	static void showInternalProblemToast(){
 		Toast.makeText(Main.getAppContext(),
 				Main.getAppContext().getString(R.string.internal_problems),
 				Toast.LENGTH_LONG).show();
