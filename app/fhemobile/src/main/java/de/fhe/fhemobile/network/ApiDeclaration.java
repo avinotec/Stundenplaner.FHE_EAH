@@ -19,6 +19,7 @@ package de.fhe.fhemobile.network;
 import java.util.ArrayList;
 import java.util.Map;
 
+import de.fhe.fhemobile.vos.myschedule.ModuleVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSetVo;
 import de.fhe.fhemobile.vos.timetablechanges.TimetableChangesResponse;
 import de.fhe.fhemobile.vos.CafeAquaResponse;
@@ -77,11 +78,11 @@ public interface ApiDeclaration {
     @GET(Endpoints.TIMETABLE_EVENTS + "{" + Endpoints.PARAM_STUDYGROUP_ID + "}/detail")
     Call<Map<String,TimeTableWeekVo>> fetchTimeTableEvents(@Path(Endpoints.PARAM_STUDYGROUP_ID) String _StudyGroupId);
 
-    @GET(Endpoints.MYSCHEDULE + "{" + Endpoints.PARAM_SEMESTER_ID + "}")
+    @GET(Endpoints.MY_SCHEDULE + "{" + Endpoints.PARAM_SEMESTER_ID + "}")
     Call<Map<String, MyScheduleEventSetVo>> fetchSemesterTimeTable(@Path(Endpoints.PARAM_SEMESTER_ID) String _SemesterId);
 
-    @GET(Endpoints.MODULE + "{" + Endpoints.PARAM_MODULE_ID + "}/activity")
-    Call<Map<String, MyScheduleEventSetVo>> fetchModule(@Path(Endpoints.PARAM_MODULE_ID) String _ModuleId);
+    @GET(Endpoints.MODULE + "{" + Endpoints.PARAM_MODULE_ID + "}")
+    Call<ModuleVo> fetchModule(@Path(Endpoints.PARAM_MODULE_ID) String _ModuleId);
 
     @Headers({
             "Content-Type:application/json"

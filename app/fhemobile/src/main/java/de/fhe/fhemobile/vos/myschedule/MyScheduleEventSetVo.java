@@ -45,6 +45,7 @@ public class MyScheduleEventSetVo {
 	}
 
 
+
 	public final String getId() {
 		return mId;
 	}
@@ -74,6 +75,9 @@ public class MyScheduleEventSetVo {
 
 	@SerializedName("moduleId")
 	private String mModuleId;
+
+	@SerializedName("moduleName")
+	private String mModuleName;
 
 	@SerializedName("dataStudentset")
 	private final Map<String, TimeTableStudyGroupVo> mStudyGroups = new HashMap<>();

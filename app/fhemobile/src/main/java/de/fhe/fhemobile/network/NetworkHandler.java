@@ -16,6 +16,9 @@
  */
 package de.fhe.fhemobile.network;
 
+import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.groupByModuleId;
+import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.updateSubscribedEventSeries;
+
 import android.util.Log;
 import android.widget.Toast;
 
@@ -34,6 +37,9 @@ import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.phonebook.PhonebookModel;
 import de.fhe.fhemobile.models.semesterdata.SemesterDataModel;
+import de.fhe.fhemobile.utils.Utils;
+import de.fhe.fhemobile.vos.myschedule.ModuleVo;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 import de.fhe.fhemobile.vos.timetablechanges.TimetableChangesResponse;
 import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.utils.canteen.CanteenUtils;
@@ -403,30 +409,34 @@ public final class NetworkHandler {
 
 	public void fetchMySchedule(){
 		Assert.assertTrue(mApiEah != null);
-		//todo: enable when APi request ready
-//		Map<String, Map<String, MyScheduleEventSeriesVo>> modules = groupByModuleId(Main.getSubscribedEventSeries());
-//		//iterate over modules
-//		for(Map.Entry<String, Map<String, MyScheduleEventSeriesVo>> module : modules.entrySet()){
-//
-//			//update all subscribed event series of this module
-//			mApiEah.fetchModule(module.getKey()).enqueue(new Callback<Map<String, MyScheduleEventSetVo>>() {
-//
-//				@Override
-//				public void onResponse(Call<Map<String, MyScheduleEventSetVo>> call, Response<Map<String, MyScheduleEventSetVo>> response) {
-//					if(response.body() != null){
-//						 updateSubscribedEventSeries(module.getValue(), response.body());
-//					} else {
-//						showInternalProblemToast();
-//				}
-//
-//				@Override
-//				public void onFailure(Call<Map<String, MyScheduleEventSetVo>> call, Throwable t) {
-//					Toast.makeText(Main.getAppContext(), Main.getAppContext().getString(R.string.myschedule_connection_failed),
-//							Toast.LENGTH_LONG).show();
-//					Log.d(TAG, "failure: request " + call.request().url());
-//				}
-//			});
-//		}
+		//todo: enable when API request ready
+		Map<String, Map<String, MyScheduleEventSeriesVo>> modules = groupByModuleId(Main.getSubscribedEventSeries());
+		//iterate over modules
+		for(Map.Entry<String, Map<String, MyScheduleEventSeriesVo>> module : modules.entrySet()){
+			//skip if module id is null -> cause by eventseries added before module IDs were introduced
+			if(module.getKey() != null){
+
+				//update all subscribed event series of this module
+				mApiEah.fetchModule(module.getKey()).enqueue(new Callback<ModuleVo>() {
+
+					@Override
+					public void onResponse(Call<ModuleVo> call, Response<ModuleVo> response) {
+						if(response.body() != null){
+							updateSubscribedEventSeries(module.getValue(), response.body().getEventSets());
+						} else {
+							showInternalProblemToast();
+						}
+					}
+
+					@Override
+					public void onFailure(Call<ModuleVo> call, Throwable t) {
+						Utils.showToast(R.string.myschedule_connection_failed);
+						Log.d(TAG, "failure: request " + call.request().url());
+					}
+				});
+			}
+
+		}
 	}
 
 
