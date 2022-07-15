@@ -149,9 +149,6 @@ public class TimeTableEventVo implements Parcelable {
 
     // End PARCELABLE --------------------------------------------------------------------------------
 
-// TODO
-//    @SerializedName("version")
-//    private int version;
 
     @SerializedName("activityId")
     private String mId;

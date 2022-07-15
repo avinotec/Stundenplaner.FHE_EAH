@@ -52,19 +52,17 @@ public class MyScheduleDialogView extends LinearLayout {
         mViewListener = _Listener;
     }
 
-
     public void initializeView(final FragmentManager _Manager) {
 
         mStudyProgramPicker.setFragmentManager(_Manager);
         mStudyProgramPicker.toggleEnabled(false);
-        mStudyProgramPicker.setOnItemChosenListener(mCourseListener);
+        mStudyProgramPicker.setOnItemChosenListener(mStudyProgramListener);
 
         mSemesterPicker.setFragmentManager(_Manager);
         mSemesterPicker.toggleEnabled(false);
         mSemesterPicker.setOnItemChosenListener(mSemesterListener);
 
         setEventListEmptyView();
-
     }
 
     @Override
@@ -80,7 +78,6 @@ public class MyScheduleDialogView extends LinearLayout {
 
 
     public void setStudyProgramItems(final List<TimeTableStudyProgramVo> _Items) {
-        //TimeTableStudyProgramVo.alterTitle(_Items);
         Collections.sort(_Items, new StudyProgramComparator());
         mStudyProgramPicker.setItems(_Items);
         mStudyProgramPicker.toggleEnabled(true);
@@ -118,7 +115,7 @@ public class MyScheduleDialogView extends LinearLayout {
 
 
 
-    private final OnItemChosenListener mCourseListener = new OnItemChosenListener() {
+    private final OnItemChosenListener mStudyProgramListener = new OnItemChosenListener() {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
@@ -156,8 +153,8 @@ public class MyScheduleDialogView extends LinearLayout {
 
 
     public interface IViewListener {
-        void onStudyProgramChosen(String _TermId);
-        void onSemesterChosen(String _GroupId);
+        void onStudyProgramChosen(String _StudyProgramId);
+        void onSemesterChosen(String _SemesterId);
     }
 
 

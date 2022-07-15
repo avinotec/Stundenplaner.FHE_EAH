@@ -206,7 +206,6 @@ public class MyScheduleDialogFragment extends DialogFragment {
                 NetworkHandler.getInstance().fetchSemesterTimeTable(mChosenSemester.getId(), mFetchSemesterTimeTableCallback);
             }
 
-
         }
 
     };
