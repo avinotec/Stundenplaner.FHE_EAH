@@ -31,6 +31,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
+import androidx.fragment.app.Fragment;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.SettingsActivity;
@@ -64,6 +65,7 @@ public class CanteenFragment extends FeatureFragment {
         //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
         MenuHost menuHost = requireActivity();
         Activity activity = getActivity();
+        Fragment fragment = this;
         menuHost.addMenuProvider(new MenuProvider() {
             @Override
             public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
@@ -78,7 +80,7 @@ public class CanteenFragment extends FeatureFragment {
                 if (menuItem.getItemId() == R.id.action_settings) {
                     final Intent intent = new Intent(activity, SettingsActivity.class);
                     intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.CANTEEN);
-                    startActivity(intent);
+                    fragment.startActivity(intent);
                     return true;
                 }
 

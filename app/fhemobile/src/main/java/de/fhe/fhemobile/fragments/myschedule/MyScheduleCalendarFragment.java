@@ -36,6 +36,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import java.util.Calendar;
@@ -79,6 +80,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 		//replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
 		MenuHost menuHost = requireActivity();
 		FragmentActivity activity = getActivity();
+		Fragment fragment = this;
 		menuHost.addMenuProvider(new MenuProvider() {
 			@Override
 			public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
@@ -98,7 +100,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 				if (menuItem.getItemId() == R.id.action_edit_my_courses) {
 					final Intent intent = new Intent(activity, SettingsActivity.class);
 					intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.MYSCHEDULE);
-					startActivity(intent);
+					fragment.startActivity(intent);
 					return true;
 				}
 

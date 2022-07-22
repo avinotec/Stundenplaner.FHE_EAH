@@ -152,23 +152,23 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
 
             eventSeriesBaseTitle.setVisibility(View.VISIBLE);
             headerLayout.setVisibility(View.VISIBLE);
-        }
-        else{
+
+        } else {
             headerLayout.setVisibility(View.GONE);
         }
 
 
-        final Button btnAddCourse = (Button) convertView.findViewById(R.id.btn_myschedule_add_or_remove_eventseries);
+        final Button btnAddCourse = convertView.findViewById(R.id.btn_myschedule_add_or_remove_eventseries);
         btnAddCourse.setActivated(currentItem.isSubscribed());
         btnAddCourse.setOnClickListener(getAddEventSeriesBtnOnClickListener(currentItem, btnAddCourse));
 
         //set study group list text view
-        final TextView textStudyGroupList = (TextView) convertView.findViewById(R.id.tv_myschedule_studygroups);
+        final TextView textStudyGroupList = convertView.findViewById(R.id.tv_myschedule_studygroups);
         textStudyGroupList.setText(currentItem.getStudyGroupListString());
 
         //if view is not populated for the first time (convertView != null at the beginning of the method)
         // then remove previously added event data views
-        final LinearLayout layoutAllEvents = (LinearLayout) convertView.findViewById(R.id.layout_myschedule_eventseries_events);
+        final LinearLayout layoutAllEvents = convertView.findViewById(R.id.layout_myschedule_eventseries_events);
         if(layoutAllEvents.getChildCount() >= 0){
            layoutAllEvents.removeAllViews();
         }

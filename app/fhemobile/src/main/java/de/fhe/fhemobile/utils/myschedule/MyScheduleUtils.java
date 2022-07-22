@@ -57,6 +57,10 @@ public final class MyScheduleUtils {
 	 * @return string corresponding to the title that identifies a {@link MyScheduleEventSeriesVo}
 	 */
 	public static String getEventSeriesName(final String title) {
+		if(title == null){
+			Log.e(TAG, "Cannot determine eventseries name. Given title is null.");
+			return "";
+		}
 		//cut away all ".d" (where d stands for any digit)
 		return title.replaceAll("\\.\\d+$", "");
 	}
@@ -68,6 +72,11 @@ public final class MyScheduleUtils {
 	 * @return
 	 */
 	public static String getEventSeriesBaseTitle(String title) {
+		if(title == null){
+			Log.e(TAG, "Cannot determine eventseries base title. Given title is null.");
+			return "";
+		}
+
 		return title.replaceAll("/\\d\\d$", "");
 	}
 
