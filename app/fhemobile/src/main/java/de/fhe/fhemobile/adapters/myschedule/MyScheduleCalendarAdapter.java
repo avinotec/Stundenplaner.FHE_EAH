@@ -49,7 +49,7 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 	public MyScheduleCalendarAdapter() {
 	}
 
-	public void setItems(List<MyScheduleEventVo> items){
+	public void setItems(final List<MyScheduleEventVo> items){
 		mItems = items;
 	}
 
@@ -70,7 +70,7 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 	 * @return The data at the specified position.
 	 */
 	@Override
-	public MyScheduleEventVo getItem(int position) {
+	public MyScheduleEventVo getItem(final int position) {
 		return mItems.get(position);
 	}
 
@@ -78,10 +78,10 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 	 * Get the row id associated with the specified position in the list.
 	 *
 	 * @param position The position of the item within the adapter's data set whose row id we want.
-	 * @return
+	 * @return position
 	 */
 	@Override
-	public long getItemId(int position) {
+	public long getItemId(final int position) {
 		//note: returning position is intended because MyScheduleEventVo has no id
 		return position;
 	}
