@@ -91,7 +91,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 			}
 
 			@Override
-			public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+			public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
 				// Handle the menu selection
 				if (menuItem.getItemId() == R.id.action_jump_to_today) {
 					mView.jumpToToday();
@@ -162,7 +162,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 			calSemester1HolidayStart.set(Calendar.MONTH, Calendar.MARCH);
 			calSemester1HolidayStart.set(Calendar.DAY_OF_MONTH, 1);
 			// Semester change in app on 1st of September
-			Calendar calSemester2HolidayStart = Calendar.getInstance(Locale.GERMANY);
+			final Calendar calSemester2HolidayStart = Calendar.getInstance(Locale.GERMANY);
 			calSemester2HolidayStart.set(Calendar.MONTH, Calendar.SEPTEMBER);
 			calSemester2HolidayStart.set(Calendar.DAY_OF_MONTH, 1);
 			// today
@@ -189,11 +189,11 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 		}
 
 		//save date of last opening to shared preferences
-		SharedPreferences.Editor editor = sharedPreferences.edit();
+		final SharedPreferences.Editor editor = sharedPreferences.edit();
 		editor.putLong(Define.MySchedule.PREFS_APP_LAST_OPENED, new Date().getTime());
 		editor.apply();
 	}
 
-	private MyScheduleCalendarView mView;
+	MyScheduleCalendarView mView;
 }
 
