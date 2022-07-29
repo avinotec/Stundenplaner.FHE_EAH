@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 /**
  * Created by Nadja - 04/2022
  */
@@ -19,6 +21,19 @@ public class TimeTableLocationVo implements Parcelable {
 
     public String getName() {
         return mName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TimeTableLocationVo)) return false;
+        TimeTableLocationVo that = (TimeTableLocationVo) o;
+        return mId.equals(that.mId) && mName.equals(that.mName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mId, mName);
     }
 
     // PARCELABLE ---------------------------------------------------------------------------------

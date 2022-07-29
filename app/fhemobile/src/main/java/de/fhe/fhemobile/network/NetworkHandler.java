@@ -16,8 +16,11 @@
  */
 package de.fhe.fhemobile.network;
 
+import static de.fhe.fhemobile.activities.MainActivity.myScheduleCalendarAdapter;
+import static de.fhe.fhemobile.activities.MainActivity.saveSubscribedEventSeriesToSharedPreferences;
+import static de.fhe.fhemobile.activities.MainActivity.setSubscribedEventSeriesAndUpdateAdapters;
 import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.groupByModuleId;
-import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.updateSubscribedEventSeries;
+import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.getUpdateSubscribedEventSeries;
 
 import android.util.Log;
 import android.widget.Toast;
@@ -28,6 +31,7 @@ import com.google.gson.GsonBuilder;
 import org.junit.Assert;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +42,7 @@ import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.phonebook.PhonebookModel;
 import de.fhe.fhemobile.models.semesterdata.SemesterDataModel;
 import de.fhe.fhemobile.utils.Utils;
+import de.fhe.fhemobile.utils.headerlistview.SectionAdapter;
 import de.fhe.fhemobile.vos.myschedule.ModuleVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 import de.fhe.fhemobile.vos.timetablechanges.TimetableChangesResponse;
@@ -406,10 +411,12 @@ public final class NetworkHandler {
 		mApiEah.fetchSemesterTimeTable(_SemesterId).enqueue(_Callback);
 	}
 
-
+	/**
+	 * Fetch all subscribed event series to detect changes and update
+	 */
 	public void fetchMySchedule(){
 		Assert.assertTrue(mApiEah != null);
-		//todo: enable when API request ready
+
 		Map<String, Map<String, MyScheduleEventSeriesVo>> modules = groupByModuleId(Main.getSubscribedEventSeries());
 		//iterate over modules
 		for(Map.Entry<String, Map<String, MyScheduleEventSeriesVo>> module : modules.entrySet()){
@@ -422,7 +429,11 @@ public final class NetworkHandler {
 					@Override
 					public void onResponse(Call<ModuleVo> call, Response<ModuleVo> response) {
 						if(response.body() != null){
-							updateSubscribedEventSeries(module.getValue(), response.body().getEventSets());
+							List<MyScheduleEventSeriesVo> updatedEventSeries =
+									getUpdateSubscribedEventSeries(module.getValue(), response.body().getEventSets());
+
+							//update shared preferences and adapters
+							setSubscribedEventSeriesAndUpdateAdapters(updatedEventSeries);
 						} else {
 							showInternalProblemToast();
 						}

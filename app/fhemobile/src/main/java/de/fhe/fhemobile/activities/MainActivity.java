@@ -48,6 +48,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
@@ -290,6 +291,17 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     public static void removeFromSubscribedEventSeriesAndUpdateAdapters(final MyScheduleEventSeriesVo eventSeries){
         eventSeries.setSubscribed(false);
         subscribedEventSeries.remove(eventSeries);
+
+        saveSubscribedEventSeriesToSharedPreferences();
+
+        myScheduleCalendarAdapter.setItems(getEventsOfAllSubscribedEventSeries());
+        myScheduleCalendarAdapter.notifyDataSetChanged();
+        myScheduleSettingsAdapter.notifyDataSetChanged();
+    }
+
+    public static void setSubscribedEventSeriesAndUpdateAdapters(final List<MyScheduleEventSeriesVo> newSubscribedEventSeries){
+        subscribedEventSeries.clear();
+        subscribedEventSeries.addAll(newSubscribedEventSeries);
 
         saveSubscribedEventSeriesToSharedPreferences();
 

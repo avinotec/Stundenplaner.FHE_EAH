@@ -17,12 +17,6 @@
 
 package de.fhe.fhemobile.utils.myschedule;
 
-import static de.fhe.fhemobile.Main.getEventsOfAllSubscribedEventSeries;
-import static de.fhe.fhemobile.Main.subscribedEventSeries;
-import static de.fhe.fhemobile.activities.MainActivity.addToSubscribedEventSeriesAndUpdateAdapters;
-import static de.fhe.fhemobile.activities.MainActivity.myScheduleCalendarAdapter;
-import static de.fhe.fhemobile.activities.MainActivity.myScheduleSettingsAdapter;
-import static de.fhe.fhemobile.activities.MainActivity.saveSubscribedEventSeriesToSharedPreferences;
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
 import android.util.Log;
@@ -32,10 +26,7 @@ import com.google.common.collect.Sets;
 import org.junit.Assert;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,12 +36,14 @@ import java.util.regex.Pattern;
 
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
+import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
 import de.fhe.fhemobile.comparator.MyScheduleEventComparator;
 import de.fhe.fhemobile.comparator.MyScheduleEventDateComparator;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSetVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventDateVo;
+import de.fhe.fhemobile.vos.timetable.LecturerVo;
 
 /**
  * Utility class
@@ -212,7 +205,9 @@ public final class MyScheduleUtils {
 			if (eventVosMap.containsKey(eventVo.getEventSetId())) {
 				eventVosMap.get(eventVo.getEventSetId()).add(eventVo);
 			} else {
-				eventVosMap.put(eventVo.getEventSetId(), Arrays.asList(eventVo));
+				ArrayList toAdd = new ArrayList();
+				toAdd.add(eventVo);
+				eventVosMap.put(eventVo.getEventSetId(), toAdd);
 			}
 		}
 
@@ -226,17 +221,18 @@ public final class MyScheduleUtils {
 
 	/**
 	 * Compare local and fetched events to detect changes
-	 * and update the local {@link de.fhe.fhemobile.Main#subscribedEventSeries}
 	 *  @param localModuleList A subset of {@link Main#subscribedEventSeries}
 	 *                           belonging to the same module,
 	 *                           by eventseries title
 	 * @param fetchedEventSetsMap The fetched {@link MyScheduleEventSetVo}s
 	 *                               corresponding to the given subset of eventseries,
-	 * @return Collection of updated {@link de.fhe.fhemobile.Main#subscribedEventSeries}
+	 * @return List of updated {@link de.fhe.fhemobile.Main#subscribedEventSeries}
 	 */
-	public static Collection<MyScheduleEventSeriesVo> updateSubscribedEventSeries(
+	public static List<MyScheduleEventSeriesVo> getUpdateSubscribedEventSeries(
 			Map<String, MyScheduleEventSeriesVo> localModuleList,
 			Map<String, MyScheduleEventSetVo> fetchedEventSetsMap) {
+
+		ArrayList<MyScheduleEventSeriesVo> eventSeriesToAdd = new ArrayList<>();
 
 		//get fetchedEventSeries from fetched event sets
 		List<MyScheduleEventSeriesVo> fetchedEventSeriesVos = groupByEventTitle(fetchedEventSetsMap);
@@ -255,7 +251,7 @@ public final class MyScheduleUtils {
 					}
 					//add exam as subscribed eventseries
 					fetchedEventSeries.setSubscribed(true);
-					subscribedEventSeries.add(fetchedEventSeries);
+					eventSeriesToAdd.add(fetchedEventSeries);
 				}
 
 				//skip non-subscribed eventseries and newly added exam eventseries
@@ -284,37 +280,54 @@ public final class MyScheduleUtils {
 				//compare local and fetched events to detect changes
 				else {
 					MyScheduleEventSetVo fetchedEventSet = fetchedEventSetsMap.get(localEventSetEntry.getKey());
+					if(BuildConfig.DEBUG) Assert.assertNotNull(fetchedEventSet);
 					Collections.sort(fetchedEventSet.getEventDates(), new MyScheduleEventDateComparator());
 					List<MyScheduleEventVo> deletedEvents = new ArrayList<>();
 
-					//find deleted events
+					//FIND DELETED EVENTS
 					if (fetchedEventSet.getEventDates() != null
 							&& fetchedEventSet.getEventDates().size() < localEventSetEntry.getValue().size()) {
 
 						//detect deleted events in localEventSet
 						for (int i = 0; i < localEventSetEntry.getValue().size(); i++) {
-							MyScheduleEventDateVo fetchedEvent = fetchedEventSet.getEventDates().get(i);
 							MyScheduleEventVo localEvent = localEventSetEntry.getValue().get(i);
+							MyScheduleEventDateVo fetchedEvent = null;
 
-							if (fetchedEvent.getStartDateTimeInSec() != localEvent.getStartDateTimeInSec()
+							if(i < fetchedEventSet.getEventDates().size()){
+								fetchedEvent = fetchedEventSet.getEventDates().get(i);
+							}
+
+							if (fetchedEvent == null
+									|| fetchedEvent.getStartDateTimeInSec() != localEvent.getStartDateTimeInSec()
 									|| fetchedEvent.getEndDateTimeInSec() != localEvent.getEndDateTimeInSec()) {
 								//mark as deleted and temporarily save to deletedEvents
 								localEvent.addChange(TimetableChangeType.DELETION);
 								deletedEvents.add(localEvent);
 								localEventSetEntry.getValue().remove(localEvent);
+
+								//reset counter to make the current fetchedEvent being compared to the next localEvent
+								i--;
 							}
 						}
 					}
-					//find added events
+					//FIND ADDED EVENTS
 					else if (fetchedEventSet.getEventDates() != null
-							&& fetchedEventSet.getEventDates().size() < localEventSetEntry.getValue().size()) {
+							&& fetchedEventSet.getEventDates().size() > localEventSetEntry.getValue().size()) {
+
+						//note: the workflow fails if eventsets contain added and time-edited events.
+						// According to the Stundenplanung, this case is not supposed to occur.
 
 						//detect added events in fetchedEventSet
 						for (int i = 0; i < fetchedEventSet.getEventDates().size(); i++) {
 							MyScheduleEventDateVo fetchedEvent = fetchedEventSet.getEventDates().get(i);
-							MyScheduleEventVo localEvent = localEventSetEntry.getValue().get(i);
+							MyScheduleEventVo localEvent = null;
 
-							if (fetchedEvent.getStartDateTimeInSec() != localEvent.getStartDateTimeInSec()
+							if(i < localEventSetEntry.getValue().size()) {
+								localEvent = localEventSetEntry.getValue().get(i);
+							}
+
+							if (localEvent == null
+									|| fetchedEvent.getStartDateTimeInSec() != localEvent.getStartDateTimeInSec()
 									|| fetchedEvent.getEndDateTimeInSec() != localEvent.getEndDateTimeInSec()) {
 								//add new event
 								final MyScheduleEventVo newEvent = new MyScheduleEventVo(
@@ -333,6 +346,9 @@ public final class MyScheduleUtils {
 					//If fetchedEventSet size == localEventSet size (note: localEventSet is cleaned from deleted and increased by added events),
 					// we assume that we can compare events at the same positions to detect changed properties
 
+					if(BuildConfig.DEBUG){
+						Assert.assertEquals(localEventSetEntry.getValue().size(), fetchedEventSet.getEventDates().size());
+					}
 					//check for changed property values
 					for (int k = 0; k < localEventSetEntry.getValue().size(); k++) {
 						MyScheduleEventDateVo fetchedEvent = fetchedEventSet.getEventDates().get(k);
@@ -353,9 +369,11 @@ public final class MyScheduleUtils {
 							localEvent.setEndDateTimeInSec(fetchedEvent.getEndDateTimeInSec());
 						}
 						//location changed
+						;
+
 						if (!fetchedEventSet.getLocationList().equals(localEvent.getLocationList())) {
 							localEvent.addChange(TimetableChangeType.EDIT_LOCATION);
-							localEvent.setLecturerList(fetchedEventSet.getLecturerList());
+							localEvent.setLocationList(fetchedEventSet.getLocationList());
 						}
 						//lecturer changed
 						if (!fetchedEventSet.getLecturerList().equals(localEvent.getLecturerList())) {
@@ -388,6 +406,7 @@ public final class MyScheduleUtils {
 							addedEventDate.getEndDateTimeInSec(),
 							eventSet.getLecturerList(),
 							eventSet.getLocationList());
+					eventToAdd.addChange(TimetableChangeType.ADDITION);
 					eventListToAdd.add(eventToAdd);
 				}
 				localEventsByEventSet.put(eventSetId, eventListToAdd);
@@ -400,18 +419,15 @@ public final class MyScheduleUtils {
 			}
 			//set updated events
 			localEventSeries.setEvents(updatedEvents, localEventsByEventSet.keySet());
-			//todo: check if reference is sufficient or if subscribedEventSeries need to be updated
-
-			//update shared preferences and adapters
-			saveSubscribedEventSeriesToSharedPreferences();
-			myScheduleCalendarAdapter.setItems(getEventsOfAllSubscribedEventSeries());
-			myScheduleCalendarAdapter.notifyDataSetChanged();
-			myScheduleSettingsAdapter.notifyDataSetChanged();
-			Main.setLastUpdateSubscribedEventSeries(new Date());
-
 		}
 
-		return localModuleList.values();
+		List<MyScheduleEventSeriesVo> updatedEventSeriesList = new ArrayList<>(localModuleList.values());
+		Collections.sort(updatedEventSeriesList, new EventSeriesTitleComparator());
+		for(MyScheduleEventSeriesVo eventSeries : updatedEventSeriesList){
+			Collections.sort(eventSeries.getEvents(), new MyScheduleEventComparator());
+		}
+		updatedEventSeriesList.addAll(eventSeriesToAdd);
+		return updatedEventSeriesList;
 	}
 
 }

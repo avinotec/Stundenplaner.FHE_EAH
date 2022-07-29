@@ -1,0 +1,44 @@
+[
+  {
+    "title": "XX(BA)Testmodul/V/01",
+    "eventSetIds": [
+      "A00001"
+    ],
+    "moduleId": "12345",
+    "studyGroups": [
+      {
+        "studentsetId": "SET061",
+        "studentsetNumber": "01",
+        "studentsetName": "XX(BA)6.01"
+      },
+      {
+        "studentsetId": "SET062",
+        "studentsetNumber": "02",
+        "studentsetName": "XX(BA)6.02"
+      }
+    ],
+    "events": [
+      {
+        "title": "XX(BA)Testmodul/V/01",
+        "offset": 7200000,
+        "startDateTime": 1659016800,
+        "endDateTime": 1659022200,
+        "activityId": "A00001",
+        "lecturer": [
+          {
+            "staffId": "S0001",
+            "staffName": "Mustermann"
+          }
+        ],
+        "location": [
+          {
+            "locationId": "L03",
+            "locationName": "03.03.33"
+          }
+        ],
+        "typesOfChanges": []
+      }
+    ],
+    "subscribed": true
+  }
+]
