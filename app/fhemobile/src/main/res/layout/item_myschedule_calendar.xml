@@ -20,6 +20,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include layout="@layout/item_header_text_default" />
@@ -41,7 +42,7 @@
             android:layout_weight="0.25"
             android:gravity="left"
             android:padding="2dp"
-            android:text="Time"
+            tools:text="Time"
             android:textColor="@color/primary_light"
             android:textSize="@dimen/abc_text_size_body_1_material" />
 
@@ -57,10 +58,8 @@
                 android:id="@+id/tv_myschedule_calendar_eventtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
                 android:gravity="center"
-                android:text="Title"
+                tools:text="Title"
                 android:textColor="@color/primary_light"
                 android:textSize="16sp" />
 
@@ -71,7 +70,7 @@
                 android:gravity="center_horizontal"
                 android:padding="2dp"
                 android:paddingTop="7dp"
-                android:text="Lecturer"
+                tools:text="Lecturer"
                 android:textColor="@color/primary_light"
                 android:textStyle="italic" />
         </LinearLayout>
@@ -84,7 +83,7 @@
             android:gravity="right"
             android:padding="2dp"
             android:singleLine="false"
-            android:text="Room"
+            tools:text="Room"
             android:textColor="@color/primary_light"
             android:textSize="@dimen/abc_text_size_body_1_material" />
     </LinearLayout>

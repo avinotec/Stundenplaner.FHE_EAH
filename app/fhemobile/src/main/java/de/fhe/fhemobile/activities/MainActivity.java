@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
 
         myScheduleSettingsAdapter = new MyScheduleSettingsAdapter(
-                Main.getAppContext(), subscribedEventSeries);
+                this, subscribedEventSeries);
 
         myScheduleCalendarAdapter = new MyScheduleCalendarAdapter();
         myScheduleCalendarAdapter.setItems(getEventsOfAllSubscribedEventSeries());

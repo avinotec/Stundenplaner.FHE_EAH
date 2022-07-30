@@ -54,7 +54,7 @@ public class TimetableChangeCallback implements Callback<TimetableChangesRespons
 
         final List<TimetableChange> changes = response.body().getChanges();
 
-        final List<String[]> negativeList = MyScheduleSettingsView.generateNegativeLessons();
+//        final List<String[]> negativeList = MyScheduleSettingsView.generateNegativeLessons();
         final Iterator<TimetableChange> iterator = changes.iterator();
 
 //        while(iterator.hasNext()){

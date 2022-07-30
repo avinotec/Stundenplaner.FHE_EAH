@@ -18,10 +18,11 @@
 
 <RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:clickable="true"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:clickable="true"
 	android:focusable="true">
 
 	<RelativeLayout
@@ -39,10 +40,10 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignParentTop="true"
-			android:text="Event Series Title"
 			android:textAppearance="@style/TextAppearance.AppCompat.Large"
 			android:textColor="@color/list_header_text"
-			android:visibility="visible" />
+			android:visibility="visible"
+			tools:text="Event Series Title" />
 
 
 	</RelativeLayout>
@@ -73,7 +74,7 @@
 		android:layout_toLeftOf="@+id/btn_myschedule_add_or_remove_eventseries"
 		android:layout_toEndOf="@id/tv_myschedule_dialog_label_studygroups"
 		android:layout_toRightOf="@id/tv_myschedule_dialog_label_studygroups"
-		android:text="TextView"
+		tools:text="01, 02, 03, 04, 05"
 		android:textAppearance="@style/TextAppearance.AppCompat.Medium"
 		android:visibility="visible" />
 
