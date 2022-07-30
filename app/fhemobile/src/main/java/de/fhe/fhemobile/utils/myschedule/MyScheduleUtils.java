@@ -39,11 +39,10 @@ import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
 import de.fhe.fhemobile.comparator.MyScheduleEventComparator;
 import de.fhe.fhemobile.comparator.MyScheduleEventDateComparator;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventDateVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSetVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
-import de.fhe.fhemobile.vos.myschedule.MyScheduleEventDateVo;
-import de.fhe.fhemobile.vos.timetable.LecturerVo;
 
 /**
  * Utility class
@@ -96,11 +95,13 @@ public final class MyScheduleUtils {
 	 * @param title the title of an event in the course
 	 * @return course name
 	 */
+	//TODO nicht benutzt???
 	public static String getCourseName(final String title) {
 		//cut away all "/dd.dd" (where d stands for any digit)
 		return title.replaceAll("/\\d\\d(\\.\\d*)?$", "");
 	}
 
+	//TODO nicht benutzt?
 	public static String getEventTitleWithoutEndingNumbers(final String title) {
 
 		//cuts away everything after the last letter (a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß), which means that "/01.2" is cut
@@ -119,16 +120,17 @@ public final class MyScheduleUtils {
 			Log.e(TAG, "onResponse: ", e);
 		}
 
+		if (BuildConfig.DEBUG) assert changeEventTitle != null;
 		changeEventTitle = changeEventTitle.replaceAll("^[|)/]", "");
 		return changeEventTitle;
 	}
 
-	public static List<MyScheduleEventSeriesVo> groupByEventTitle(Map<String, MyScheduleEventSetVo> _EventSets) {
+	public static List<MyScheduleEventSeriesVo> groupByEventTitle(final Map<String, MyScheduleEventSetVo> _EventSets) {
 		final Map<String, MyScheduleEventSeriesVo> eventSeriesMap = new HashMap<>();
 
 		for (final MyScheduleEventSetVo eventSet : _EventSets.values()) {
 
-			List<MyScheduleEventVo> eventsToAdd = new ArrayList<>();
+			final List<MyScheduleEventVo> eventsToAdd = new ArrayList<>();
 
 			//construct a MyScheduleEventVo from each event date, collect it in eventsToAdd
 			for (final MyScheduleEventDateVo eventDate : eventSet.getEventDates()) {
@@ -179,11 +181,11 @@ public final class MyScheduleUtils {
 	 * for each module id
 	 */
 	public static Map<String, Map<String, MyScheduleEventSeriesVo>> groupByModuleId(
-			List<MyScheduleEventSeriesVo> eventSeriesVos) {
+			final List<MyScheduleEventSeriesVo> eventSeriesVos) {
 
-		Map<String, Map<String, MyScheduleEventSeriesVo>> modules = new HashMap<>();
+		final Map<String, Map<String, MyScheduleEventSeriesVo>> modules = new HashMap<>();
 
-		for (MyScheduleEventSeriesVo eventSeries : eventSeriesVos) {
+		for (final MyScheduleEventSeriesVo eventSeries : eventSeriesVos) {
 
 			Map<String, MyScheduleEventSeriesVo> module = modules.get(eventSeries.getModuleId());
 			if (module == null) {
@@ -198,21 +200,21 @@ public final class MyScheduleUtils {
 		return modules;
 	}
 
-	public static Map<String, List<MyScheduleEventVo>> groupByEventSet(List<MyScheduleEventVo> eventVos) {
-		Map<String, List<MyScheduleEventVo>> eventVosMap = new HashMap<>();
+	public static Map<String, List<MyScheduleEventVo>> groupByEventSet(final List<MyScheduleEventVo> eventVos) {
+		final Map<String, List<MyScheduleEventVo>> eventVosMap = new HashMap<>();
 
-		for (MyScheduleEventVo eventVo : eventVos) {
+		for (final MyScheduleEventVo eventVo : eventVos) {
 			if (eventVosMap.containsKey(eventVo.getEventSetId())) {
 				eventVosMap.get(eventVo.getEventSetId()).add(eventVo);
 			} else {
-				ArrayList toAdd = new ArrayList();
+				final ArrayList<MyScheduleEventVo> toAdd = new ArrayList<MyScheduleEventVo>();
 				toAdd.add(eventVo);
 				eventVosMap.put(eventVo.getEventSetId(), toAdd);
 			}
 		}
 
 		//sort
-		for (List<MyScheduleEventVo> events : eventVosMap.values()) {
+		for (final List<MyScheduleEventVo> events : eventVosMap.values()) {
 			Collections.sort(events, new MyScheduleEventComparator());
 		}
 
@@ -229,24 +231,24 @@ public final class MyScheduleUtils {
 	 * @return List of updated {@link de.fhe.fhemobile.Main#subscribedEventSeries}
 	 */
 	public static List<MyScheduleEventSeriesVo> getUpdateSubscribedEventSeries(
-			Map<String, MyScheduleEventSeriesVo> localModuleList,
-			Map<String, MyScheduleEventSetVo> fetchedEventSetsMap) {
+			final Map<String, MyScheduleEventSeriesVo> localModuleList,
+			final Map<String, MyScheduleEventSetVo> fetchedEventSetsMap) {
 
-		ArrayList<MyScheduleEventSeriesVo> eventSeriesToAdd = new ArrayList<>();
+		final ArrayList<MyScheduleEventSeriesVo> eventSeriesToAdd = new ArrayList<>();
 
 		//get fetchedEventSeries from fetched event sets
-		List<MyScheduleEventSeriesVo> fetchedEventSeriesVos = groupByEventTitle(fetchedEventSetsMap);
+		final List<MyScheduleEventSeriesVo> fetchedEventSeriesVos = groupByEventTitle(fetchedEventSetsMap);
 
 		//examine fetched EventSeriesVos for changes, deleted and added events
-		for (MyScheduleEventSeriesVo fetchedEventSeries : fetchedEventSeriesVos) {
+		for (final MyScheduleEventSeriesVo fetchedEventSeries : fetchedEventSeriesVos) {
 
-			MyScheduleEventSeriesVo localEventSeries = localModuleList.get(fetchedEventSeries.getTitle());
+			final MyScheduleEventSeriesVo localEventSeries = localModuleList.get(fetchedEventSeries.getTitle());
 			if (localEventSeries == null){
 				//if event series corresponds to an new exam (no matter which group), than always add
 				//possible endings for exams: APL, PL, mdl. Prfg.,Wdh.-Prfg., Wdh.-APL
 				if(getEventSeriesBaseTitle(fetchedEventSeries.getTitle()).matches(".*(PL)|(Prfg.)")){
 					//set every event in the exam series as "added"
-					for(MyScheduleEventVo eventVo : fetchedEventSeries.getEvents()){
+					for ( final MyScheduleEventVo eventVo : fetchedEventSeries.getEvents() ) {
 						eventVo.addChange(TimetableChangeType.ADDITION);
 					}
 					//add exam as subscribed eventseries
@@ -259,42 +261,46 @@ public final class MyScheduleUtils {
 			}
 
 			//detect added event sets
-			Set<String> eventSetsAdded = Sets.difference(
+			final Set<String> eventSetsAdded = Sets.difference(
 					fetchedEventSeries.getEventSetIds(), localEventSeries.getEventSetIds());
 
 			//detect deleted event sets
-			Set<String> eventSetsDeleted = Sets.difference(
+			final Set<String> eventSetsDeleted = Sets.difference(
 					localEventSeries.getEventSetIds(), fetchedEventSeries.getEventSetIds());
 
 			//detect changed events + update deleted and changed events
-			Map<String, List<MyScheduleEventVo>> localEventsByEventSet = groupByEventSet(localEventSeries.getEvents());
-			for (Map.Entry<String, List<MyScheduleEventVo>> localEventSetEntry : localEventsByEventSet.entrySet()) {
+			final Map<String, List<MyScheduleEventVo>> localEventsByEventSet = groupByEventSet(localEventSeries.getEvents());
+			for ( final Map.Entry<String, List<MyScheduleEventVo>> localEventSetEntry : localEventsByEventSet.entrySet()) {
 
 				//set events deleted
 				if (eventSetsDeleted.contains(localEventSetEntry.getKey())) {
-					for (MyScheduleEventVo deletedEvent : localEventSetEntry.getValue()) {
+					for ( final MyScheduleEventVo deletedEvent : localEventSetEntry.getValue()) {
 						deletedEvent.addChange(TimetableChangeType.DELETION);
 					}
 				}
 
 				//compare local and fetched events to detect changes
 				else {
-					MyScheduleEventSetVo fetchedEventSet = fetchedEventSetsMap.get(localEventSetEntry.getKey());
+					final MyScheduleEventSetVo fetchedEventSet = fetchedEventSetsMap.get(localEventSetEntry.getKey());
 					if(BuildConfig.DEBUG) Assert.assertNotNull(fetchedEventSet);
-					Collections.sort(fetchedEventSet.getEventDates(), new MyScheduleEventDateComparator());
-					List<MyScheduleEventVo> deletedEvents = new ArrayList<>();
+
+					final List<MyScheduleEventDateVo> eventDateVos = fetchedEventSet.getEventDates();
+					if(BuildConfig.DEBUG) Assert.assertNotNull(eventDateVos);
+
+					Collections.sort( eventDateVos, new MyScheduleEventDateComparator());
+					final List<MyScheduleEventVo> deletedEvents = new ArrayList<>();
 
 					//FIND DELETED EVENTS
-					if (fetchedEventSet.getEventDates() != null
-							&& fetchedEventSet.getEventDates().size() < localEventSetEntry.getValue().size()) {
+					if ( /* eventDateVos != null always true && */
+							eventDateVos.size() < localEventSetEntry.getValue().size()) {
 
 						//detect deleted events in localEventSet
 						for (int i = 0; i < localEventSetEntry.getValue().size(); i++) {
-							MyScheduleEventVo localEvent = localEventSetEntry.getValue().get(i);
+							final MyScheduleEventVo localEvent = localEventSetEntry.getValue().get(i);
 							MyScheduleEventDateVo fetchedEvent = null;
 
-							if(i < fetchedEventSet.getEventDates().size()){
-								fetchedEvent = fetchedEventSet.getEventDates().get(i);
+							if(i < eventDateVos.size()){
+								fetchedEvent = eventDateVos.get(i);
 							}
 
 							if (fetchedEvent == null
@@ -311,15 +317,15 @@ public final class MyScheduleUtils {
 						}
 					}
 					//FIND ADDED EVENTS
-					else if (fetchedEventSet.getEventDates() != null
-							&& fetchedEventSet.getEventDates().size() > localEventSetEntry.getValue().size()) {
+					else if ( /* eventDateVos != null && always true */
+							eventDateVos.size() > localEventSetEntry.getValue().size()) {
 
 						//note: the workflow fails if eventsets contain added and time-edited events.
 						// According to the Stundenplanung, this case is not supposed to occur.
 
 						//detect added events in fetchedEventSet
-						for (int i = 0; i < fetchedEventSet.getEventDates().size(); i++) {
-							MyScheduleEventDateVo fetchedEvent = fetchedEventSet.getEventDates().get(i);
+						for (int i = 0; i < eventDateVos.size(); i++) {
+							final MyScheduleEventDateVo fetchedEvent = eventDateVos.get(i);
 							MyScheduleEventVo localEvent = null;
 
 							if(i < localEventSetEntry.getValue().size()) {
@@ -351,8 +357,8 @@ public final class MyScheduleUtils {
 					}
 					//check for changed property values
 					for (int k = 0; k < localEventSetEntry.getValue().size(); k++) {
-						MyScheduleEventDateVo fetchedEvent = fetchedEventSet.getEventDates().get(k);
-						MyScheduleEventVo localEvent = localEventSetEntry.getValue().get(k);
+						final MyScheduleEventDateVo fetchedEvent = fetchedEventSet.getEventDates().get(k);
+						final MyScheduleEventVo localEvent = localEventSetEntry.getValue().get(k);
 
 						if (localEvent.getTypesOfChanges().contains(TimetableChangeType.ADDITION)) {
 							continue;
@@ -369,7 +375,6 @@ public final class MyScheduleUtils {
 							localEvent.setEndDateTimeInSec(fetchedEvent.getEndDateTimeInSec());
 						}
 						//location changed
-						;
 
 						if (!fetchedEventSet.getLocationList().equals(localEvent.getLocationList())) {
 							localEvent.addChange(TimetableChangeType.EDIT_LOCATION);
@@ -394,11 +399,11 @@ public final class MyScheduleUtils {
 			}
 
 			//add new eventsets
-			for (String eventSetId : eventSetsAdded) {
-				MyScheduleEventSetVo eventSet = fetchedEventSetsMap.get(eventSetId);
-				List<MyScheduleEventVo> eventListToAdd = new ArrayList<>();
+			for (final String eventSetId : eventSetsAdded) {
+				final MyScheduleEventSetVo eventSet = fetchedEventSetsMap.get(eventSetId);
+				final List<MyScheduleEventVo> eventListToAdd = new ArrayList<>();
 
-				for (MyScheduleEventDateVo addedEventDate : eventSet.getEventDates()) {
+				for ( final MyScheduleEventDateVo addedEventDate : eventSet.getEventDates()) {
 					final MyScheduleEventVo eventToAdd = new MyScheduleEventVo(
 							eventSet.getTitle(),
 							eventSet.getId(),
@@ -413,17 +418,17 @@ public final class MyScheduleUtils {
 			}
 
 			//flatten updated event list
-			List<MyScheduleEventVo> updatedEvents = new ArrayList<>();
-			for (List<MyScheduleEventVo> events : localEventsByEventSet.values()) {
+			final List<MyScheduleEventVo> updatedEvents = new ArrayList<>();
+			for (final List<MyScheduleEventVo> events : localEventsByEventSet.values()) {
 				updatedEvents.addAll(events);
 			}
 			//set updated events
 			localEventSeries.setEvents(updatedEvents, localEventsByEventSet.keySet());
 		}
 
-		List<MyScheduleEventSeriesVo> updatedEventSeriesList = new ArrayList<>(localModuleList.values());
+		final List<MyScheduleEventSeriesVo> updatedEventSeriesList = new ArrayList<>(localModuleList.values());
 		Collections.sort(updatedEventSeriesList, new EventSeriesTitleComparator());
-		for(MyScheduleEventSeriesVo eventSeries : updatedEventSeriesList){
+		for( final MyScheduleEventSeriesVo eventSeries : updatedEventSeriesList){
 			Collections.sort(eventSeries.getEvents(), new MyScheduleEventComparator());
 		}
 		updatedEventSeriesList.addAll(eventSeriesToAdd);
