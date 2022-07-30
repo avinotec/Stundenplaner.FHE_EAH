@@ -83,10 +83,10 @@ public class MyScheduleEventSetVo {
 	private final Map<String, TimeTableStudyGroupVo> mStudyGroups = new HashMap<>();
 
 	@SerializedName("dataStaff")
-	private Map<String, LecturerVo> mLecturerMap = new HashMap<>();
+	private final Map<String, LecturerVo> mLecturerMap = new HashMap<>();
 
 	@SerializedName("dataLocation")
-	private Map<String, TimeTableLocationVo> mLocationMap = new HashMap<>();
+	private final Map<String, TimeTableLocationVo> mLocationMap = new HashMap<>();
 
 	@SerializedName("dataDatetime")
 	private Map<String, MyScheduleEventDateVo> mEventDates = new HashMap<>();

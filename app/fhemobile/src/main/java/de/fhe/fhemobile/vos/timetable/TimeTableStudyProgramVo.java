@@ -125,5 +125,5 @@ public class TimeTableStudyProgramVo implements Parcelable {
     private String              mDegree;
 
     @SerializedName("semesterData")
-    private Map<String, TimeTableSemesterVo> mSemesters = new HashMap<>();
+    private final Map<String, TimeTableSemesterVo> mSemesters = new HashMap<>();
 }

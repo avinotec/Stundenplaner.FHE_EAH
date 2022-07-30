@@ -24,10 +24,10 @@ public class LecturerVo implements Parcelable {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (!(o instanceof LecturerVo)) return false;
-        LecturerVo that = (LecturerVo) o;
+        final LecturerVo that = (LecturerVo) o;
         return mId.equals(that.mId) && mName.equals(that.mName);
     }
 
@@ -40,12 +40,12 @@ public class LecturerVo implements Parcelable {
 
     public static final Parcelable.Creator<LecturerVo> CREATOR = new Parcelable.Creator<LecturerVo>(){
         @Override
-        public LecturerVo createFromParcel(Parcel parcel) {
+        public LecturerVo createFromParcel(final Parcel parcel) {
             return new LecturerVo(parcel);
         }
 
         @Override
-        public LecturerVo[] newArray(int i) {
+        public LecturerVo[] newArray(final int i) {
             return new LecturerVo[i];
         }
     };
@@ -56,7 +56,7 @@ public class LecturerVo implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int i) {
+    public void writeToParcel(final Parcel dest, final int i) {
         dest.writeString(mId);
         dest.writeString(mName);
     }

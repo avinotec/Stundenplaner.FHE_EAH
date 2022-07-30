@@ -69,7 +69,7 @@ public class CanteenMenuView extends LinearLayout {
         mCanteenNameText    = (TextView)        findViewById(R.id.tv_canteen_title);
     }
 
-    public void initializeView(String _CanteenId){
+    public void initializeView(final String _CanteenId){
         mCanteenId = _CanteenId;
         mCanteenNameText.setText(UserSettings.getInstance().getSelectedCanteen(mCanteenId).getCanteenName());
 
@@ -115,7 +115,7 @@ public class CanteenMenuView extends LinearLayout {
 
         sectionList.add(headerSection);
 
-        List<CanteenMenuDayVo> menuDaysList = CanteenModel.getInstance().getMenu(mCanteenId);
+        final List<CanteenMenuDayVo> menuDaysList = CanteenModel.getInstance().getMenu(mCanteenId);
 
         for (final CanteenMenuDayVo collection : menuDaysList) {
             final ArrayList<IRowItem> rowItems = new ArrayList<>();
@@ -127,7 +127,7 @@ public class CanteenMenuView extends LinearLayout {
             sectionList.add(new DefaultHeaderItem(collection.getHeadline(), true, rowItems));
         }
 
-        StickyHeaderAdapter mAdapter = new StickyHeaderAdapter(getContext(), sectionList);
+        final StickyHeaderAdapter mAdapter = new StickyHeaderAdapter(getContext(), sectionList);
         mMenuDaysListView.setAdapter(mAdapter);
 
         Log.d(TAG, mCanteenId + " List populated");

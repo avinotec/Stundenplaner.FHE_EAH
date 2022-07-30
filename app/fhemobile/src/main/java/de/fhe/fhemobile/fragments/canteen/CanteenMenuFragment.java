@@ -49,16 +49,16 @@ public class CanteenMenuFragment extends FeatureFragment {
      * Construct a new {@link CanteenMenuFragment} instance
      * @param _CanteenId The ID of the canteen that's menu is shown in this fragment
      */
-    public static CanteenMenuFragment newInstance(String _CanteenId) {
+    public static CanteenMenuFragment newInstance(final String _CanteenId) {
         final CanteenMenuFragment fragment = new CanteenMenuFragment();
-        Bundle args = new Bundle();
+        final Bundle args = new Bundle();
         args.putString(PARAM_CANTEEN_ID, _CanteenId);
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (BuildConfig.DEBUG) Assert.assertNotNull(getArguments());

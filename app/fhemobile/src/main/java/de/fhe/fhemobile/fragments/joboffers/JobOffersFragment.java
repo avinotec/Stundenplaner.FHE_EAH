@@ -48,7 +48,7 @@ public class JobOffersFragment extends FeatureFragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         //Inflate the layout for this fragment
         mView = (JobOffersWebView) inflater.inflate(R.layout.fragment_joboffers_webview, container, false);
         return mView;

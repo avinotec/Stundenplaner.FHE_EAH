@@ -59,23 +59,23 @@ public class CanteenFragment extends FeatureFragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
-        MenuHost menuHost = requireActivity();
-        Activity activity = getActivity();
-        Fragment fragment = this;
+        final MenuHost menuHost = requireActivity();
+        final Activity activity = getActivity();
+        final Fragment fragment = this;
         menuHost.addMenuProvider(new MenuProvider() {
             @Override
-            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+            public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
                 // Add menu items here
                 menu.clear();
                 menuInflater.inflate(R.menu.main, menu);
             }
 
             @Override
-            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+            public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
                 // Handle the menu selection
                 if (menuItem.getItemId() == R.id.action_settings) {
                     final Intent intent = new Intent(activity, SettingsActivity.class);
@@ -90,7 +90,7 @@ public class CanteenFragment extends FeatureFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 
         NetworkHandler.getInstance().fetchCanteenMenus();
 

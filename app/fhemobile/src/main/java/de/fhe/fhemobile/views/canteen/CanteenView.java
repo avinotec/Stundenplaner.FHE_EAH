@@ -35,7 +35,7 @@ import de.fhe.fhemobile.utils.UserSettings;
  */
 public class CanteenView extends LinearLayout {
 
-    public CanteenView(Context context, final AttributeSet attrs) {
+    public CanteenView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 

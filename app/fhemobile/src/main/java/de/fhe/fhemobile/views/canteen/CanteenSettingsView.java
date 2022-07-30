@@ -69,13 +69,13 @@ public class CanteenSettingsView extends FrameLayout {
      * and set selected canteens as checked
      */
     public void initCanteenSelectionListView() {
-        CanteenSettingsAdapter mCanteenListAdapter = new CanteenSettingsAdapter(mContext, mCanteenModel.getCanteens());
+        final CanteenSettingsAdapter mCanteenListAdapter = new CanteenSettingsAdapter(mContext, mCanteenModel.getCanteens());
         mCanteenListView.setAdapter(mCanteenListAdapter);
         mCanteenListView.setOnItemClickListener(mCanteenSelectListener);
 
-        ArrayList<String> selectedCanteens = UserSettings.getInstance().getSelectedCanteenIds();
+        final ArrayList<String> selectedCanteens = UserSettings.getInstance().getSelectedCanteenIds();
         for(int i = 0; i < mCanteenListView.getCount(); i++){
-            String canteenId = ((CanteenVo) mCanteenListView.getItemAtPosition(i)).getCanteenId();
+            final String canteenId = ((CanteenVo) mCanteenListView.getItemAtPosition(i)).getCanteenId();
 
             if(selectedCanteens.contains(canteenId)){
                 mCanteenListView.setItemChecked(i, true);

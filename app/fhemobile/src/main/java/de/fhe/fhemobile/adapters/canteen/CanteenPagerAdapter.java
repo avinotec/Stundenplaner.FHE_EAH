@@ -19,15 +19,15 @@ public class CanteenPagerAdapter extends FragmentStateAdapter {
                                final Lifecycle lifecycle){
         super(fragmentManager, lifecycle);
 
-        ArrayList<String> selectedCanteens = UserSettings.getInstance().getSelectedCanteenIds();
-        for(String canteenId : selectedCanteens){
+        final ArrayList<String> selectedCanteens = UserSettings.getInstance().getSelectedCanteenIds();
+        for(final String canteenId : selectedCanteens){
             fragments.add(CanteenMenuFragment.newInstance(canteenId));
         }
 
     }
 
     @Override
-    public Fragment createFragment(int position) {
+    public Fragment createFragment(final int position) {
         return fragments.get(position);
     }
 

@@ -42,7 +42,7 @@ public final class CanteenModel extends EventDispatcher {
         return mMenus;
     }
 
-    public List<CanteenMenuDayVo> getMenu(String canteenId){
+    public List<CanteenMenuDayVo> getMenu(final String canteenId){
         return mMenus.get(canteenId);
     }
 
@@ -74,13 +74,13 @@ public final class CanteenModel extends EventDispatcher {
      * @param canteenId The id of the canteen
      * @return The {@link CanteenVo} of the canteen with the given id
      */
-    public CanteenVo getCanteen(String canteenId){
+    public CanteenVo getCanteen(final String canteenId){
         if(mCanteens == null){
             Log.e(TAG, "mCanteens is null");
             return null;
         }
 
-        for(CanteenVo canteen : mCanteens){
+        for(final CanteenVo canteen : mCanteens){
             if(canteen.getCanteenId().equals(canteenId)){
                 return canteen;
             }

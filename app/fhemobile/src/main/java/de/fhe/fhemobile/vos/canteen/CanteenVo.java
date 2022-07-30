@@ -28,24 +28,24 @@ public class CanteenVo implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int i) {
+    public void writeToParcel(final Parcel dest, final int i) {
         dest.writeString(mCanteenId);
         dest.writeString(mCanteenName);
     }
 
-    public CanteenVo(Parcel in){
+    public CanteenVo(final Parcel in){
         mCanteenId = in.readString();
         mCanteenName = in.readString();
     }
 
     public static final Creator<CanteenVo> CREATOR = new Creator<CanteenVo>() {
         @Override
-        public CanteenVo createFromParcel(Parcel parcel) {
+        public CanteenVo createFromParcel(final Parcel parcel) {
             return new CanteenVo(parcel);
         }
 
         @Override
-        public CanteenVo[] newArray(int i) {
+        public CanteenVo[] newArray(final int i) {
             return new CanteenVo[i];
         }
     };

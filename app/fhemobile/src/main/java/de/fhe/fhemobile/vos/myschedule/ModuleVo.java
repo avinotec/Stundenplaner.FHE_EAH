@@ -19,5 +19,5 @@ public class ModuleVo {
     //not needed, that's why not implemented
 
     @SerializedName("dataActivity")
-    private Map<String, MyScheduleEventSetVo> mEventSets = new HashMap<>();
+    private final Map<String, MyScheduleEventSetVo> mEventSets = new HashMap<>();
 }

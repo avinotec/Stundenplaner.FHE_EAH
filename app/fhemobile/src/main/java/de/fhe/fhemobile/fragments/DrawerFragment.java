@@ -79,10 +79,10 @@ public class DrawerFragment extends Fragment {
 
 
         //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
-        MenuHost menuHost = requireActivity();
+        final MenuHost menuHost = requireActivity();
         menuHost.addMenuProvider(new MenuProvider() {
             @Override
-            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+            public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
                 // Add menu items here
                 if (mDrawerLayout != null && isDrawerOpen()) {
                     //inflater.inflate(R.menu.global, menu);
@@ -91,7 +91,7 @@ public class DrawerFragment extends Fragment {
             }
 
             @Override
-            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+            public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
                 // Handle the menu selection
                 if(mDrawerToggle.onOptionsItemSelected(menuItem)) {
                     return true;
@@ -220,7 +220,7 @@ public class DrawerFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(@NonNull Context context) {
+    public void onAttach(@NonNull final Context context) {
         super.onAttach(context);
 
         try {
