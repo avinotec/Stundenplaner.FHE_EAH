@@ -16,11 +16,9 @@
  */
 package de.fhe.fhemobile.network;
 
-import static de.fhe.fhemobile.activities.MainActivity.myScheduleCalendarAdapter;
-import static de.fhe.fhemobile.activities.MainActivity.saveSubscribedEventSeriesToSharedPreferences;
 import static de.fhe.fhemobile.activities.MainActivity.setSubscribedEventSeriesAndUpdateAdapters;
-import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.groupByModuleId;
 import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.getUpdateSubscribedEventSeries;
+import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.groupByModuleId;
 
 import android.util.Log;
 import android.widget.Toast;
@@ -31,7 +29,6 @@ import com.google.gson.GsonBuilder;
 import org.junit.Assert;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -41,18 +38,16 @@ import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.phonebook.PhonebookModel;
 import de.fhe.fhemobile.models.semesterdata.SemesterDataModel;
-import de.fhe.fhemobile.utils.Utils;
-import de.fhe.fhemobile.utils.headerlistview.SectionAdapter;
-import de.fhe.fhemobile.vos.myschedule.ModuleVo;
-import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
-import de.fhe.fhemobile.vos.timetablechanges.TimetableChangesResponse;
 import de.fhe.fhemobile.utils.UserSettings;
+import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.canteen.CanteenUtils;
 import de.fhe.fhemobile.vos.CafeAquaResponse;
 import de.fhe.fhemobile.vos.WeatherResponse;
 import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
 import de.fhe.fhemobile.vos.canteen.CanteenMenuDayVo;
 import de.fhe.fhemobile.vos.canteen.CanteenVo;
+import de.fhe.fhemobile.vos.myschedule.ModuleVo;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSetVo;
 import de.fhe.fhemobile.vos.news.NewsCategoryResponse;
 import de.fhe.fhemobile.vos.news.NewsItemResponse;
@@ -61,6 +56,7 @@ import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
 import de.fhe.fhemobile.vos.semesterdata.SemesterDataVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableDialogResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
+import de.fhe.fhemobile.vos.timetablechanges.TimetableChangesResponse;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -427,9 +423,9 @@ public final class NetworkHandler {
 				mApiEah.fetchModule(module.getKey()).enqueue(new Callback<ModuleVo>() {
 
 					@Override
-					public void onResponse(Call<ModuleVo> call, Response<ModuleVo> response) {
+					public void onResponse(final Call<ModuleVo> call, final Response<ModuleVo> response) {
 						if(response.body() != null){
-							List<MyScheduleEventSeriesVo> updatedEventSeries =
+							final List<MyScheduleEventSeriesVo> updatedEventSeries =
 									getUpdateSubscribedEventSeries(module.getValue(), response.body().getEventSets());
 
 							//update shared preferences and adapters
@@ -440,9 +436,9 @@ public final class NetworkHandler {
 					}
 
 					@Override
-					public void onFailure(Call<ModuleVo> call, Throwable t) {
-						Utils.showToast(R.string.myschedule_connection_failed);
-						Log.d(TAG, "failure: request " + call.request().url());
+					public void onFailure(Call<ModuleVo> call, final Throwable t) {
+						Utils.showToast(R.string.myschedule_connection_failed + "(internal: "+t.getCause()+")");
+						Log.d(TAG, "failure: request " + call.request().url() + " (internal: "+t.getCause()+")" );
 					}
 				});
 			}
