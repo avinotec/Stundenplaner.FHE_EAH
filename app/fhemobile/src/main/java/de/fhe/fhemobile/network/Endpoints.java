@@ -37,7 +37,11 @@ public final class Endpoints {
     public static final String EVENTS_ENDPOINT = "https://www.eah-jena.de/veranstaltungskalender";
     public static final String JOBOFFERS_ENDPOINT = "https://stellenticket.eah-jena.de/de/offers/fulltextsearch/EAH-Jena/#Inhalt";
 
-    public static final String SCHEDULE_CHANGE_SERVER = "https://lustigtestt.de/fhjena/rest_api/public/changes";
+    //TODO
+    //Testserver von Moritz
+    //public static final String SCHEDULE_CHANGE_SERVER = "https://lustigtestt.de/fhjena/rest_api/public/changes";
+    //TODO der Server muss noch richtig in Gang gebracht werden.
+    public static final String SCHEDULE_CHANGE_SERVER = "http://wi-srv7.wi.eah-jena.de/api/";
 
     /* Example
         http://193.174.232.89:8080/fheapp/api/eah/timetable
