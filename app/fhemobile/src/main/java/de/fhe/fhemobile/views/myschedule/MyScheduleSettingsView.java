@@ -72,56 +72,6 @@ public class MyScheduleSettingsView extends LinearLayout {
     }
 
     /**
-     * finde die Kurse heraus, die nicht mehr enthalten sind.
-     * @return
-     */
-    public static List<String[]> generateNegativeLessons(){
-
-    	final List<String[]> negativeList = new ArrayList<>();
-
-    	//todo: überarbeiten, coursesOfChosenSemester should not be needed here
-    	//Durchsuche alle Vorlesungen
-//    	for(MyScheduleEventSetVo eventInCompleteList : MyScheduleDialogFragment.coursesOfChosenSemester){
-//            boolean exists = false;
-//
-//            //überspringe einzelne Vorlesungsevents wenn der Vorlesungstitel schon zur negativeList hinzugefügt wurde
-//    		for(String[] eventdata : negativeList) {
-//    		    if(eventdata[0].equals( MyScheduleEventSetVo.cutEventTitle(eventInCompleteList.getEvent().getTitle()))
-//                && eventdata[1].equals( eventInCompleteList.getStudyGroup().getTimeTableId())){
-//                    exists = true;
-//                    break;
-//                }
-//            }
-//
-//    		//dieses eventInCompleteList gibt es noch nicht in der negativeList
-//    		if(!exists) {
-//    		    boolean isSelected = false;
-//    		    //durchsuche subscribedEventSeries nach dem eventInCompletedList
-//                for (MyScheduleEventSetVo eventInSelectedList : getSubscribedCourses()) {
-//
-//                    if (MyScheduleEventSetVo.cutEventTitle(eventInCompleteList.getEvent().getTitle())
-//                            .equals(MyScheduleEventSetVo.cutEventTitle(eventInSelectedList.getEvent().getTitle()))
-//                    && eventInCompleteList.getStudyGroup().getTimeTableId()
-//                            .equals(eventInSelectedList.getStudyGroup().getTimeTableId())){
-//                        isSelected = true;
-//                    }
-//
-//                }
-//                //add event to negative List if eventInCompletedList is in subscribedEventSeries
-//                if(!isSelected){
-//                    final String[] eventdata = new String[2];
-//                    //add an event (title + id) to negativeList
-//                    eventdata[0] = MyScheduleEventSetVo.cutEventTitle(eventInCompleteList.getEvent().getTitle());
-//                    eventdata[1] = eventInCompleteList.getStudyGroup().getTimeTableId();
-//                    negativeList.add(eventdata);
-//                }
-//            }
-//	    }
-
-       return negativeList;
-    }
-
-    /**
      * Sets view to show if the course list is empty
      */
     public void setCourseListEmptyView(){

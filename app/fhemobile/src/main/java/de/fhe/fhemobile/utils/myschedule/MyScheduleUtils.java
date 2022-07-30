@@ -31,8 +31,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
@@ -90,41 +88,10 @@ public final class MyScheduleUtils {
 	}
 
 	/**
-	 * Returns the name of the course which equals the event's name without numbers at the end
-	 *
-	 * @param title the title of an event in the course
-	 * @return course name
+	 * Group events of the given {@link MyScheduleEventSetVo}s into {@link MyScheduleEventSeriesVo}s
+	 * @param _EventSets A map of the {@link MyScheduleEventSetVo}s to group
+	 * @return The list of {@link MyScheduleEventSeriesVo}s
 	 */
-	//TODO nicht benutzt???
-	public static String getCourseName(final String title) {
-		//cut away all "/dd.dd" (where d stands for any digit)
-		return title.replaceAll("/\\d\\d(\\.\\d*)?$", "");
-	}
-
-	//TODO nicht benutzt?
-	public static String getEventTitleWithoutEndingNumbers(final String title) {
-
-		//cuts away everything after the last letter (a-z|A-Z|ä|Ä|ü|Ü|ö|Ö|ß), which means that "/01.2" is cut
-		final Pattern p = Pattern.compile("^(.*[a-zA-ZäÄüÜöÖß])"); //$NON-NLS
-
-		String changeEventTitle = correctUmlauts(title);
-		try {
-			final Matcher m = p.matcher(title);
-			if (m.find()) {
-				changeEventTitle = m.group(1);
-			} else {
-				changeEventTitle = title;
-			}
-
-		} catch (final RuntimeException e) {
-			Log.e(TAG, "onResponse: ", e);
-		}
-
-		if (BuildConfig.DEBUG) assert changeEventTitle != null;
-		changeEventTitle = changeEventTitle.replaceAll("^[|)/]", "");
-		return changeEventTitle;
-	}
-
 	public static List<MyScheduleEventSeriesVo> groupByEventTitle(final Map<String, MyScheduleEventSetVo> _EventSets) {
 		final Map<String, MyScheduleEventSeriesVo> eventSeriesMap = new HashMap<>();
 
@@ -174,11 +141,11 @@ public final class MyScheduleUtils {
 	}
 
 	/**
-	 * Group given list of {@link MyScheduleEventSeriesVo}s by module id
+	 * Group the given {@link MyScheduleEventSeriesVo}s by module ID
 	 *
-	 * @param eventSeriesVos
-	 * @return Map containing a list of all {@link MyScheduleEventSeriesVo}s with the same module id
-	 * for each module id
+	 * @param eventSeriesVos The list of {@link MyScheduleEventSeriesVo} to group
+	 * @return Map containing a list of the module's {@link MyScheduleEventSeriesVo}s
+	 * for each module ID found
 	 */
 	public static Map<String, Map<String, MyScheduleEventSeriesVo>> groupByModuleId(
 			final List<MyScheduleEventSeriesVo> eventSeriesVos) {
