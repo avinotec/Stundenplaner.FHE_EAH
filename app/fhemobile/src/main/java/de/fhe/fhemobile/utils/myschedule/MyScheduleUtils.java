@@ -279,28 +279,27 @@ public final class MyScheduleUtils {
 					}
 				}
 
-				//compare local and fetched events to detect changes
+				//DETECT CHANGED EVENTS PROPERTIES - compare local and fetched events
 				else {
 					final MyScheduleEventSetVo fetchedEventSet = fetchedEventSetsMap.get(localEventSetEntry.getKey());
 					if(BuildConfig.DEBUG) Assert.assertNotNull(fetchedEventSet);
 
-					final List<MyScheduleEventDateVo> eventDateVos = fetchedEventSet.getEventDates();
-					if(BuildConfig.DEBUG) Assert.assertNotNull(eventDateVos);
+					final List<MyScheduleEventDateVo> fetchedEventDates = fetchedEventSet.getEventDates();
+					if(BuildConfig.DEBUG) Assert.assertNotNull(fetchedEventDates);
 
-					Collections.sort( eventDateVos, new MyScheduleEventDateComparator());
+					Collections.sort(fetchedEventDates, new MyScheduleEventDateComparator());
 					final List<MyScheduleEventVo> deletedEvents = new ArrayList<>();
 
 					//FIND DELETED EVENTS
-					if ( /* eventDateVos != null always true && */
-							eventDateVos.size() < localEventSetEntry.getValue().size()) {
+					if (fetchedEventDates.size() < localEventSetEntry.getValue().size()) {
 
 						//detect deleted events in localEventSet
 						for (int i = 0; i < localEventSetEntry.getValue().size(); i++) {
 							final MyScheduleEventVo localEvent = localEventSetEntry.getValue().get(i);
 							MyScheduleEventDateVo fetchedEvent = null;
 
-							if(i < eventDateVos.size()){
-								fetchedEvent = eventDateVos.get(i);
+							if(i < fetchedEventDates.size()){
+								fetchedEvent = fetchedEventDates.get(i);
 							}
 
 							if (fetchedEvent == null
@@ -317,15 +316,14 @@ public final class MyScheduleUtils {
 						}
 					}
 					//FIND ADDED EVENTS
-					else if ( /* eventDateVos != null && always true */
-							eventDateVos.size() > localEventSetEntry.getValue().size()) {
+					else if (fetchedEventDates.size() > localEventSetEntry.getValue().size()) {
 
 						//note: the workflow fails if eventsets contain added and time-edited events.
 						// According to the Stundenplanung, this case is not supposed to occur.
 
 						//detect added events in fetchedEventSet
-						for (int i = 0; i < eventDateVos.size(); i++) {
-							final MyScheduleEventDateVo fetchedEvent = eventDateVos.get(i);
+						for (int i = 0; i < fetchedEventDates.size(); i++) {
+							final MyScheduleEventDateVo fetchedEvent = fetchedEventDates.get(i);
 							MyScheduleEventVo localEvent = null;
 
 							if(i < localEventSetEntry.getValue().size()) {
@@ -375,7 +373,6 @@ public final class MyScheduleUtils {
 							localEvent.setEndDateTimeInSec(fetchedEvent.getEndDateTimeInSec());
 						}
 						//location changed
-
 						if (!fetchedEventSet.getLocationList().equals(localEvent.getLocationList())) {
 							localEvent.addChange(TimetableChangeType.EDIT_LOCATION);
 							localEvent.setLocationList(fetchedEventSet.getLocationList());

@@ -100,7 +100,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 				if (menuItem.getItemId() == R.id.action_edit_my_courses) {
 					final Intent intent = new Intent(activity, SettingsActivity.class);
 					intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.MYSCHEDULE);
-					fragment.startActivity(intent);
+					activity.startActivity(intent);
 					return true;
 				}
 

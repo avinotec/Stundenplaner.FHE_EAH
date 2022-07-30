@@ -133,7 +133,7 @@ public class MyScheduleEventVo implements Parcelable{
      * @return The end date time as long
      */
     public long getEndDateTimeInSec() {
-        return mEndDateTime ;
+        return mEndDateTime;
     }
 
     public Date getStartDateTime(){

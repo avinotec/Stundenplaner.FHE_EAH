@@ -65,7 +65,6 @@ public class CanteenFragment extends FeatureFragment {
         //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
         final MenuHost menuHost = requireActivity();
         final Activity activity = getActivity();
-        final Fragment fragment = this;
         menuHost.addMenuProvider(new MenuProvider() {
             @Override
             public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
@@ -80,7 +79,7 @@ public class CanteenFragment extends FeatureFragment {
                 if (menuItem.getItemId() == R.id.action_settings) {
                     final Intent intent = new Intent(activity, SettingsActivity.class);
                     intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.CANTEEN);
-                    fragment.startActivity(intent);
+                    activity.startActivity(intent);
                     return true;
                 }
 

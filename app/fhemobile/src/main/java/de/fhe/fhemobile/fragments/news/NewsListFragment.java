@@ -66,7 +66,6 @@ public class NewsListFragment extends FeatureFragment {
 //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
         MenuHost menuHost = requireActivity();
         Activity activity = getActivity();
-        Fragment fragment = this;
         menuHost.addMenuProvider(new MenuProvider() {
             @Override
             public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
@@ -82,7 +81,7 @@ public class NewsListFragment extends FeatureFragment {
                 if (menuItem.getItemId() == R.id.action_settings) {
                     final Intent intent = new Intent(activity, SettingsActivity.class);
                     intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.NEWS);
-                    fragment.startActivity(intent);
+                    activity.startActivity(intent);
                     return true;
                 }
 
