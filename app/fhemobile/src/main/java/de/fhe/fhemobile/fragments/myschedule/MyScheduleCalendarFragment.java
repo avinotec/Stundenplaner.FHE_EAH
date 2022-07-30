@@ -138,7 +138,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 	public void onResume() {
 		super.onResume();
 
-		NetworkHandler.getInstance().fetchMySchedule();
+//		NetworkHandler.getInstance().fetchMySchedule();
 	}
 
 	/**
