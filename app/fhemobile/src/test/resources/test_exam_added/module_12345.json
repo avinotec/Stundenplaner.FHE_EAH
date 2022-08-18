@@ -1,0 +1,151 @@
+{
+  "dataModule": {
+    "Id": "12345",
+    "Name": "Testmodul",
+    "Description": "Testmodul"
+  },
+  "dataActivity": {
+    "A00001": {
+      "activityId": "A00001",
+      "activityName": "XX(BA)Testmodul/V/01.1",
+      "activitytypName": "V",
+      "activitytypDescription": "Vorlesung",
+      "dataLocation": {
+        "L01": {
+          "locationId": "L03",
+          "locationName": "03.03.33"
+        }
+      },
+      "dataStaff": {
+        "S0002": {
+          "staffId": "S0001",
+          "staffName": "Mustermann"
+        }
+      },
+      "dataStudentset": {
+        "SET061": {
+          "studentsetId": "SET061",
+          "studentsetName": "XX(BA)6.01"
+        },
+        "SET062": {
+          "studentsetId": "SET062",
+          "studentsetName": "XX(BA)6.02"
+        }
+      },
+      "dataDatetime": {
+        "key1": {
+          "StartDateTime": 1659016800,
+          "EndDateTime": 1659022200
+        },
+        "key2": {
+          "StartDateTime": 1659016999,
+          "EndDateTime": 1659022999
+        }
+      }
+    },
+    "A00002": {
+      "activityId": "A00002",
+      "activityName": "XX(BA)Testmodul/V/01.2",
+      "activitytypName": "V",
+      "activitytypDescription": "Vorlesung",
+      "dataLocation": {
+        "L01": {
+          "locationId": "L01",
+          "locationName": "01.02.11"
+        }
+      },
+      "dataStaff": {
+        "S0001": {
+          "staffId": "S0001",
+          "staffName": "Mustermann"
+        }
+      },
+      "dataStudentset": {
+        "SET061": {
+          "studentsetId": "SET061",
+          "studentsetName": "XX(BA)6.01"
+        },
+        "SET062": {
+          "studentsetId": "SET062",
+          "studentsetName": "XX(BA)6.02"
+        }
+      },
+      "dataDatetime": {
+        "key1": {
+          "StartDateTime": 1659019777,
+          "EndDateTime": 1659032777
+        }
+      }
+    },
+    "A0000P": {
+      "activityId": "A0000P",
+      "activityName": "XX(BA)Testmodul/APL/01",
+      "activitytypName": "APL",
+      "activitytypDescription": "Prüfung",
+      "dataLocation": {
+        "L01": {
+          "locationId": "L03",
+          "locationName": "03.03.33"
+        }
+      },
+      "dataStaff": {
+        "S0001": {
+          "staffId": "S0001",
+          "staffName": "Mustermann"
+        }
+      },
+      "dataStudentset": {
+        "SET061": {
+          "studentsetId": "SET061",
+          "studentsetName": "XX(BA)6.01"
+        },
+        "SET062": {
+          "studentsetId": "SET062",
+          "studentsetName": "XX(BA)6.02"
+        }
+      },
+      "dataDatetime": {
+        "key1": {
+          "StartDateTime": 1659016888,
+          "EndDateTime": 1659022888
+        }
+      }
+    },
+    "A000PP": {
+      "activityId": "A000PP",
+      "activityName": "XX(BA)Testmodul/Wdh.-Prfg./01",
+      "activitytypName": "Wdh.-Prfg.",
+      "activitytypDescription": "Wiederholungsprüfung",
+      "dataLocation": {
+        "L01": {
+          "locationId": "L03",
+          "locationName": "03.03.33"
+        }
+      },
+      "dataStaff": {
+        "S0001": {
+          "staffId": "S0001",
+          "staffName": "Mustermann"
+        }
+      },
+      "dataStudentset": {
+        "SET061": {
+          "studentsetId": "SET061",
+          "studentsetName": "XX(BA)6.01"
+        },
+        "SET062": {
+          "studentsetId": "SET062",
+          "studentsetName": "XX(BA)6.02"
+        }
+      },
+      "dataDatetime": {
+        "key1": {
+          "StartDateTime": 1659018999,
+          "EndDateTime": 1659032999
+        }
+      }
+    }
+  }
+
+
+}

@@ -80,9 +80,10 @@ public class TimeTableChangesTest{
     @Parameterized.Parameters
     public static List<Object[]> testCaseFolders(){
         return Arrays.asList(new Object[][]{
-                //{"test_addition"},
-                //{"test_deletion"},
-                {"test_edition"}
+                {"test_addition"},
+                {"test_deletion"},
+                {"test_edition"},
+                {"test_exam_added"}
         });
     }
 
