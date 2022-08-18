@@ -34,12 +34,12 @@
       },
       "dataDatetime": {
         "key1": {
-          "StartDateTime": 1659016800,
+          "StartDateTime": 1659016555,
           "EndDateTime": 1659022200
         },
         "key2": {
           "StartDateTime": 1659016999,
-          "EndDateTime": 1659022999
+          "EndDateTime": 1659022555
         }
       }
     },
@@ -50,14 +50,14 @@
       "activitytypDescription": "Vorlesung",
       "dataLocation": {
         "L01": {
-          "locationId": "L01",
-          "locationName": "01.02.11"
+          "locationId": "L99",
+          "locationName": "04.00.05"
         }
       },
       "dataStaff": {
         "S0001": {
-          "staffId": "S0001",
-          "staffName": "Mustermann"
+          "staffId": "S0009",
+          "staffName": "Müller"
         }
       },
       "dataStudentset": {
@@ -90,8 +90,8 @@
       },
       "dataStaff": {
         "S0001": {
-          "staffId": "S0001",
-          "staffName": "Mustermann"
+          "staffId": "S0009",
+          "staffName": "Müller"
         }
       },
       "dataStudentset": {

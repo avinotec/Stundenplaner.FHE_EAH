@@ -1,6 +1,6 @@
 [
   {
-    "title": "XX(BA)Testmodul/V/01.1",
+    "title": "XX(BA)Testmodul/V/01",
     "eventSetIds": [
       "A00001",
       "A00002"
@@ -22,7 +22,7 @@
       {
         "title": "XX(BA)Testmodul/V/01.1",
         "offset": 7200000,
-        "startDateTime": 1659016800,
+        "startDateTime": 1659016555,
         "endDateTime": 1659022200,
         "activityId": "A00001",
         "lecturer": [
@@ -37,13 +37,13 @@
             "locationName": "03.03.33"
           }
         ],
-        "typesOfChanges": []
+        "typesOfChanges": ["EDIT_TIME"]
       },
       {
         "title": "XX(BA)Testmodul/V/01.1",
         "offset": 7200000,
         "startDateTime": 1659016999,
-        "endDateTime": 1659022999,
+        "endDateTime": 1659022555,
         "activityId": "A00001",
         "lecturer": [
           {
@@ -57,7 +57,7 @@
             "locationName": "03.03.33"
           }
         ],
-        "typesOfChanges": ["ADDITION"]
+        "typesOfChanges": ["EDIT_TIME"]
       },
       {
         "title": "XX(BA)Testmodul/V/01.2",
@@ -67,17 +67,17 @@
         "activityId": "A00002",
         "lecturer": [
           {
-            "staffId": "S0001",
-            "staffName": "Mustermann"
+            "staffId": "S0009",
+            "staffName": "Müller"
           }
         ],
         "location": [
           {
-            "locationId": "L01",
-            "locationName": "01.02.11"
+            "locationId": "L99",
+            "locationName": "04.00.05"
           }
         ],
-        "typesOfChanges": ["ADDITION"]
+        "typesOfChanges": ["EDIT_LOCATION", "EDIT_LECTURER"]
       }
     ],
     "subscribed": true
@@ -109,8 +109,8 @@
         "activityId": "A00003",
         "lecturer": [
           {
-            "staffId": "S0001",
-            "staffName": "Mustermann"
+            "staffId": "S0009",
+            "staffName": "Müller"
           }
         ],
         "location": [
@@ -119,7 +119,7 @@
             "locationName": "03.03.33"
           }
         ],
-        "typesOfChanges": ["ADDITION"]
+        "typesOfChanges": ["EDIT_LECTURER"]
       },
       {
         "title": "XX(BA)Testmodul/V/02",
@@ -129,8 +129,8 @@
         "activityId": "A00003",
         "lecturer": [
           {
-            "staffId": "S0001",
-            "staffName": "Mustermann"
+            "staffId": "S0009",
+            "staffName": "Müller"
           }
         ],
         "location": [
@@ -139,7 +139,7 @@
             "locationName": "03.03.33"
           }
         ],
-        "typesOfChanges": []
+        "typesOfChanges": ["EDIT_LECTURER"]
       },
       {
         "title": "XX(BA)Testmodul/V/02",
@@ -149,8 +149,8 @@
         "activityId": "A00003",
         "lecturer": [
           {
-            "staffId": "S0001",
-            "staffName": "Mustermann"
+            "staffId": "S0009",
+            "staffName": "Müller"
           }
         ],
         "location": [
@@ -159,7 +159,7 @@
             "locationName": "03.03.33"
           }
         ],
-        "typesOfChanges": ["ADDITION"]
+        "typesOfChanges": ["EDIT_LECTURER"]
       }
     ],
     "subscribed": true

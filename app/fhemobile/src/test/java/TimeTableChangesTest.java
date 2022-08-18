@@ -53,6 +53,7 @@ public class TimeTableChangesTest{
 
 
     public TimeTableChangesTest(@NonNull String folder){
+        System.out.println("Testcase: " + folder);
         try {
             final Type listType = new TypeToken<List<MyScheduleEventSeriesVo>>(){}.getType();
 
@@ -79,7 +80,9 @@ public class TimeTableChangesTest{
     @Parameterized.Parameters
     public static List<Object[]> testCaseFolders(){
         return Arrays.asList(new Object[][]{
-                {"test_addition"}
+                //{"test_addition"},
+                //{"test_deletion"},
+                {"test_edition"}
         });
     }
 

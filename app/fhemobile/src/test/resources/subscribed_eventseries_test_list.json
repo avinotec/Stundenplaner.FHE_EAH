@@ -1,9 +1,8 @@
 [
   {
-    "title": "XX(BA)Testmodul/V/01.1",
+    "title": "XX(BA)Testmodul/V/01",
     "eventSetIds": [
-      "A00001",
-      "A00002"
+      "A00001"
     ],
     "moduleId": "12345",
     "studyGroups": [
@@ -38,54 +37,16 @@
           }
         ],
         "typesOfChanges": []
-      },
-      {
-        "title": "XX(BA)Testmodul/V/01.1",
-        "offset": 7200000,
-        "startDateTime": 1659016999,
-        "endDateTime": 1659022999,
-        "activityId": "A00001",
-        "lecturer": [
-          {
-            "staffId": "S0001",
-            "staffName": "Mustermann"
-          }
-        ],
-        "location": [
-          {
-            "locationId": "L03",
-            "locationName": "03.03.33"
-          }
-        ],
-        "typesOfChanges": ["ADDITION"]
-      },
-      {
-        "title": "XX(BA)Testmodul/V/01.2",
-        "offset": 7200000,
-        "startDateTime": 1659019777,
-        "endDateTime": 1659032777,
-        "activityId": "A00002",
-        "lecturer": [
-          {
-            "staffId": "S0001",
-            "staffName": "Mustermann"
-          }
-        ],
-        "location": [
-          {
-            "locationId": "L01",
-            "locationName": "01.02.11"
-          }
-        ],
-        "typesOfChanges": ["ADDITION"]
       }
     ],
     "subscribed": true
   },
   {
-    "title": "XX(BA)Testmodul/V/02",
+    "title": "XX(BA)Testmodul/Ü/01",
     "eventSetIds": [
-      "A00003"
+      "A00002",
+      "A00003",
+      "A00005"
     ],
     "moduleId": "12345",
     "studyGroups": [
@@ -102,11 +63,11 @@
     ],
     "events": [
       {
-        "title": "XX(BA)Testmodul/V/02",
+        "title": "XX(BA)Testmodul/Ü/01.1",
         "offset": 7200000,
-        "startDateTime": 1659016777,
-        "endDateTime": 1659022777,
-        "activityId": "A00003",
+        "startDateTime": 1649085300,
+        "endDateTime": 1649090700,
+        "activityId": "A00002",
         "lecturer": [
           {
             "staffId": "S0001",
@@ -115,37 +76,57 @@
         ],
         "location": [
           {
-            "locationId": "L03",
-            "locationName": "03.03.33"
-          }
-        ],
-        "typesOfChanges": ["ADDITION"]
-      },
-      {
-        "title": "XX(BA)Testmodul/V/02",
-        "offset": 7200000,
-        "startDateTime": 1659016888,
-        "endDateTime": 1659022888,
-        "activityId": "A00003",
-        "lecturer": [
-          {
-            "staffId": "S0001",
-            "staffName": "Mustermann"
-          }
-        ],
-        "location": [
-          {
-            "locationId": "L03",
-            "locationName": "03.03.33"
+            "locationId": "L01",
+            "locationName": "01.02.11"
           }
         ],
         "typesOfChanges": []
       },
       {
-        "title": "XX(BA)Testmodul/V/02",
+        "title": "XX(BA)Testmodul/Ü/01.1",
         "offset": 7200000,
-        "startDateTime": 1659016999,
-        "endDateTime": 1659022999,
+        "startDateTime": 1649144700,
+        "endDateTime": 1649150100,
+        "activityId": "A00002",
+        "lecturer": [
+          {
+            "staffId": "S0001",
+            "staffName": "Mustermann"
+          }
+        ],
+        "location": [
+          {
+            "locationId": "L01",
+            "locationName": "01.02.11"
+          }
+        ],
+        "typesOfChanges": []
+      },
+      {
+        "title": "XX(BA)Testmodul/Ü/01.1",
+        "offset": 7200000,
+        "startDateTime": 1654082100,
+        "endDateTime": 1654087500,
+        "activityId": "A00002",
+        "lecturer": [
+          {
+            "staffId": "S0001",
+            "staffName": "Mustermann"
+          }
+        ],
+        "location": [
+          {
+            "locationId": "L01",
+            "locationName": "01.02.11"
+          }
+        ],
+        "typesOfChanges": []
+      },
+      {
+        "title": "XX(BA)Testmodul/Ü/01.2",
+        "offset": 7200000,
+        "startDateTime": 1649079000,
+        "endDateTime": 1649084400,
         "activityId": "A00003",
         "lecturer": [
           {
@@ -155,11 +136,31 @@
         ],
         "location": [
           {
-            "locationId": "L03",
-            "locationName": "03.03.33"
+            "locationId": "L02",
+            "locationName": "04.01.02"
           }
         ],
-        "typesOfChanges": ["ADDITION"]
+        "typesOfChanges": []
+      },
+      {
+        "title": "XX(BA)Testmodul/Ü/01.4",
+        "offset": 7200000,
+        "startDateTime": 1654082100,
+        "endDateTime": 1654087500,
+        "activityId": "A00005",
+        "lecturer": [
+          {
+            "staffId": "S0001",
+            "staffName": "Mustermann"
+          }
+        ],
+        "location": [
+          {
+            "locationId": "L02",
+            "locationName": "04.01.02"
+          }
+        ],
+        "typesOfChanges": []
       }
     ],
     "subscribed": true

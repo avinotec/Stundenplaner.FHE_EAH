@@ -237,7 +237,7 @@ public final class MyScheduleUtils {
 
 			//detect changed events + update deleted and changed events
 			final Map<String, List<MyScheduleEventVo>> localEventsByEventSet = groupByEventSet(localEventSeries.getEvents());
-			for ( final Map.Entry<String, List<MyScheduleEventVo>> localEventSetEntry : localEventsByEventSet.entrySet()) {
+			for (final Map.Entry<String, List<MyScheduleEventVo>> localEventSetEntry : localEventsByEventSet.entrySet()) {
 
 				//set events deleted
 				if (eventSetsDeleted.contains(localEventSetEntry.getKey())) {
@@ -309,7 +309,7 @@ public final class MyScheduleUtils {
 										fetchedEventSet.getLecturerList(),
 										fetchedEventSet.getLocationList());
 								newEvent.addChange(TimetableChangeType.ADDITION);
-								localEventSetEntry.getValue().add(newEvent);
+								localEventSetEntry.getValue().add(i, newEvent);
 							}
 						}
 					}

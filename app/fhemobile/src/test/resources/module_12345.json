@@ -7,7 +7,7 @@
   "dataActivity": {
     "A00001": {
       "activityId": "A00001",
-      "activityName": "XX(BA)Testmodul/V/01.1",
+      "activityName": "XX(BA)Testmodul/V/01",
       "activitytypName": "V",
       "activitytypDescription": "Vorlesung",
       "dataLocation": {
@@ -18,8 +18,8 @@
       },
       "dataStaff": {
         "S0002": {
-          "staffId": "S0001",
-          "staffName": "Mustermann"
+          "staffId": "S0002",
+          "staffName": "Musterfrau"
         }
       },
       "dataStudentset": {
@@ -36,18 +36,14 @@
         "key1": {
           "StartDateTime": 1659016800,
           "EndDateTime": 1659022200
-        },
-        "key2": {
-          "StartDateTime": 1659016999,
-          "EndDateTime": 1659022999
         }
       }
     },
     "A00002": {
       "activityId": "A00002",
-      "activityName": "XX(BA)Testmodul/V/01.2",
-      "activitytypName": "V",
-      "activitytypDescription": "Vorlesung",
+      "activityName": "XX(BA)Testmodul/Ü/01.1",
+      "activitytypName": "Ü",
+      "activitytypDescription": "Übung",
       "dataLocation": {
         "L01": {
           "locationId": "L01",
@@ -72,20 +68,24 @@
       },
       "dataDatetime": {
         "key1": {
-          "StartDateTime": 1659019777,
-          "EndDateTime": 1659032777
+          "StartDateTime": 1649085300,
+          "EndDateTime": 1649090700
+        },
+        "key2": {
+          "StartDateTime": 1649144700,
+          "EndDateTime": 1649150100
         }
       }
     },
     "A00003": {
       "activityId": "A00003",
-      "activityName": "XX(BA)Testmodul/V/02",
-      "activitytypName": "V",
-      "activitytypDescription": "Vorlesung",
+      "activityName": "XX(BA)Testmodul/Ü/01.2",
+      "activitytypName": "Ü",
+      "activitytypDescription": "Übung",
       "dataLocation": {
         "L01": {
-          "locationId": "L03",
-          "locationName": "03.03.33"
+          "locationId": "L02",
+          "locationName": "04.01.02"
         }
       },
       "dataStaff": {
@@ -106,20 +106,48 @@
       },
       "dataDatetime": {
         "key1": {
-          "StartDateTime": 1659016777,
-          "EndDateTime": 1659022777
+          "StartDateTime": 1649079000,
+          "EndDateTime": 1649084400
         },
         "key2": {
-          "StartDateTime": 1659016888,
-          "EndDateTime": 1659022888
+          "StartDateTime": 1654082100,
+          "EndDateTime": 1654087500
+        }
+      }
+    },
+    "A00004": {
+      "activityId": "A00004",
+      "activityName": "XX(BA)Testmodul/Ü/01.3",
+      "activitytypName": "Ü",
+      "activitytypDescription": "Übung",
+      "dataLocation": {
+        "L01": {
+          "locationId": "L02",
+          "locationName": "04.01.02"
+        }
+      },
+      "dataStaff": {
+        "S0001": {
+          "staffId": "S0001",
+          "staffName": "Mustermann"
+        }
+      },
+      "dataStudentset": {
+        "SET061": {
+          "studentsetId": "SET061",
+          "studentsetName": "XX(BA)6.01"
         },
-        "key3": {
-          "StartDateTime": 1659016999,
-          "EndDateTime": 1659022999
+        "SET062": {
+          "studentsetId": "SET062",
+          "studentsetName": "XX(BA)6.02"
+        }
+      },
+      "dataDatetime": {
+        "key1": {
+          "StartDateTime": 1654082100,
+          "EndDateTime": 1654087500
         }
       }
     }
   }
-
-
 }
