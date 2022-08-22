@@ -1,0 +1,121 @@
+<?php
+/*
+ *  Copyright (c) 2014-2022 Ernst-Abbe-Hochschule Jena
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+declare(strict_types=1);
+
+/* we can request debug output to better find errors */
+$debug=0;
+if (isset( $_REQUEST['debug']))
+	$debug = htmlentities($_REQUEST['debug']);
+	
+if ($debug){
+	mysqli_report(MYSQLI_REPORT_ALL);
+
+	ini_set('mysql.trace_mode',  'On' );
+	ini_set('mysqli.trace_mode',  'On' );
+
+	//ini_set('error_reporting', E_ALL | E_STRICT | E_DEPRECATED | E_NOTICE | E_PARSE );
+	error_reporting(E_ALL);
+
+	ini_set('display_errors', 'On' );
+	ini_set('display_startup_errors', 'On' ) ;
+
+	//ini_set('allow_call_time_pass_reference', 'On' );
+	ini_set('html_errors', 'On' ) ;
+	
+	ini_set('mysql.log_queries_not_using_indexes','on');
+	ini_set('mysql.log_slow_admin_statements','on');
+	ini_set('mysql.slow_query_log','on');
+	ini_set('mysql.log_error_verbosity','3');
+
+	ini_set('mysqli.log_queries_not_using_indexes','on');
+	ini_set('mysqli.log_slow_admin_statements','on');
+	ini_set('mysqli.slow_query_log','on');
+	ini_set('mysqli.log_error_verbosity','3');
+
+	// E_NOTICE ist sinnvoll um uninitialisierte oder
+	// falsch geschriebene Variablen zu entdecken
+	error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE | E_STRICT );
+
+}
+
+
+require_once 'fcm_connect_db.php';
+print_r($_REQUEST);
+
+
+// ----------------- Get data from app ----------------------------------------------
+//BSP SQL-Injection
+//$login = $this->mysqli->real_escape_string( $login ) ;
+
+//Get token and subscriptions send from App
+// Alle übergebenen Parameter entwerten, um SQL-Injections zu unterbinden.
+$fcmToken = htmlentities( $_REQUEST["fcm_token"]??null);
+$subscribedEventSets = htmlentities( $_REQUEST["eventset_ids"]??null);
+
+if(!is_null($subscribedEventSets) && !is_null($fcmToken) ){
+	$subscribedEventSetsArray = json_decode($subscribedEventSets, true);	
+} else {
+	error_log(print_r("subscribedEventSetId or fcmToken is null!", TRUE));
+	echo "subscribedEventSetId or fcmToken is null!";
+	return "subscribedEventSetId or fcmToken is null!";
+}
+/*
+error_log("#---->");
+error_log(print_r('Token: '.$fcmToken, TRUE));
+error_log("<----#");
+*/
+
+
+// Check if a null value is given, to prevent null entries in the database.
+// Null values can happen if a user opens the scipt in a browser window.
+if(is_null($subscribedEventSetsArray) || is_null($fcmToken)){
+	echo "There is a null value!"; 
+	error_log(print_r("There is a null value!", TRUE));
+	return "There is a null value!"; 
+}
+
+
+// if ($debug) { echo "\nToken:". $fcmToken ."\n\n subscribedEventSets: ". $subscribedEventSets ."\n";}
+
+
+// ----------------- DB entry ----------------------------------------------
+
+//Clear database from the given token
+$sqldelete = "DELETE FROM fcm_user WHERE token = \"$fcmToken\"";
+$con->query($sqldelete);
+
+//Add token and subscribed eventset IDs to database to register user
+for ($i = 0; $i < count($subscribedEventSetsArray); $i++) {
+	$activity_id = htmlspecialchars($subscribedEventSetsArray[$i]['activity_id']);
+
+	//	if ($debug) { echo "\nactivity_id: $activity_id\n"; }
+
+	// this way you can add null values to cells w/o adding the letters "NULL" as a string. 
+	// Also you arn't getting crazy by concatenating strings like in the previous version :)
+	$stmt = $con->prepare("INSERT INTO fcm_user (token, eventset_id) VALUES (?, ?)");
+	// ss stands for the sequence of string and integer variables.
+	$stmt->bind_param('ss', $fcmToken, $activity_id);
+
+	$stmt->execute();
+}
+
+//Close sql-connection
+$con->close();
+// error_log(print_r("DONE!", TRUE));
+return("Funktioniert!");
