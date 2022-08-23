@@ -27,7 +27,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -72,11 +71,11 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 
 	public String getTitle() { return mTitle; }
 
-	public void setTitle(String title) { this.mTitle = title; }
+	public void setTitle(final String title) { this.mTitle = title; }
 
 	public List<TimeTableStudyGroupVo> getStudyGroups() { return mStudyGroups; }
 
-	public void addEventSetId(String eventSetId){ mEventSetIds.add(eventSetId);}
+	public void addEventSetId(final String eventSetId){ mEventSetIds.add(eventSetId);}
 
 	public String getModuleId() { return mModuleId;	}
 
@@ -89,15 +88,15 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 		return !mEvents.isEmpty() ? mEvents.get(0) : null;
 	}
 
-	public void addEvents(List<MyScheduleEventVo> events) { this.mEvents.addAll(events); }
+	public void addEvents(final List<MyScheduleEventVo> events) { this.mEvents.addAll(events); }
 
-	public void setEvents(List<MyScheduleEventVo> mEvents, Set<String> evenSetIds) {
+	public void setEvents(final List<MyScheduleEventVo> mEvents, final Set<String> evenSetIds) {
 		this.mEvents = mEvents;
 	}
 
-	public void removeEvent(MyScheduleEventVo event){ this.mEvents.remove(event); }
+	public void removeEvent(final MyScheduleEventVo event){ this.mEvents.remove(event); }
 
-	public void removeEventSetId(String eventSetId){
+	public void removeEventSetId(final String eventSetId){
 		if(mEventSetIds.contains(eventSetId)) mEvents.remove(eventSetId); }
 
 	public boolean isSubscribed() {
@@ -115,8 +114,8 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 	 * @return true if components belong to the same course
 	 */
 	public boolean canBeGroupedForDisplay(final MyScheduleEventSeriesVo other){
-		String baseTitle = getEventSeriesBaseTitle(mTitle);
-		String otherBaseTitle = getEventSeriesBaseTitle(other.getTitle());
+		final String baseTitle = getEventSeriesBaseTitle(mTitle);
+		final String otherBaseTitle = getEventSeriesBaseTitle(other.getTitle());
 		return baseTitle.equals(otherBaseTitle);
 	}
 
@@ -126,10 +125,10 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 	 */
 	public String getStudyGroupListString(){
 		Collections.sort(mStudyGroups, new StudyGroupComparator());
-		StringBuilder studyGroupsString = new StringBuilder();
+		final StringBuilder studyGroupsString = new StringBuilder();
 
 		if(!mStudyGroups.isEmpty()) {
-			for (TimeTableStudyGroupVo studyGroup : mStudyGroups) {
+			for (final TimeTableStudyGroupVo studyGroup : mStudyGroups) {
 				studyGroupsString.append(studyGroup.getNumber()).append(", ");
 			}
 			return studyGroupsString.substring(0, studyGroupsString.length() - 2);
@@ -142,10 +141,10 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 	// Comparable ------------------------------------------------------------------------------
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (!(o instanceof MyScheduleEventSeriesVo)) return false;
-		MyScheduleEventSeriesVo that = (MyScheduleEventSeriesVo) o;
+		final MyScheduleEventSeriesVo that = (MyScheduleEventSeriesVo) o;
 		return mTitle.equals(that.mTitle);
 	}
 
@@ -156,7 +155,7 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 
 	public void checkAndSetSubscribed(){
 		//check if this event series belongs to a subscribed event series
-		for(MyScheduleEventSeriesVo subscribedEventSeries : getSubscribedEventSeries()){
+		for(final MyScheduleEventSeriesVo subscribedEventSeries : getSubscribedEventSeries()){
 			if (this.equals(subscribedEventSeries)){
 
 				this.setSubscribed(true);
@@ -192,12 +191,12 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 
 	public static final Creator<MyScheduleEventSeriesVo> CREATOR = new Creator<MyScheduleEventSeriesVo>() {
 		@Override
-		public MyScheduleEventSeriesVo createFromParcel(Parcel in) {
+		public MyScheduleEventSeriesVo createFromParcel(final Parcel in) {
 			return new MyScheduleEventSeriesVo(in);
 		}
 
 		@Override
-		public MyScheduleEventSeriesVo[] newArray(int size) {
+		public MyScheduleEventSeriesVo[] newArray(final int size) {
 			return new MyScheduleEventSeriesVo[size];
 		}
 	};

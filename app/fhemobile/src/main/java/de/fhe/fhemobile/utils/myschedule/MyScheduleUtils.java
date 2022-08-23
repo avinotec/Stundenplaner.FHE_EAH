@@ -17,8 +17,6 @@
 
 package de.fhe.fhemobile.utils.myschedule;
 
-import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
-
 import android.util.Log;
 
 import com.google.common.collect.Sets;
@@ -79,7 +77,7 @@ public final class MyScheduleUtils {
 	 * @param title
 	 * @return
 	 */
-	public static String getEventSeriesBaseTitle(String title) {
+	public static String getEventSeriesBaseTitle(final String title) {
 		if(title == null){
 			Log.e(TAG, "Cannot determine eventseries base title. Given title is null.");
 			return "";

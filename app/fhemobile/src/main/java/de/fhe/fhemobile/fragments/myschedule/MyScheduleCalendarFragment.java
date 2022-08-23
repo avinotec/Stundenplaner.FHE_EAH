@@ -47,7 +47,6 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.activities.SettingsActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.Features;
 import de.fhe.fhemobile.views.myschedule.MyScheduleCalendarView;
@@ -78,12 +77,12 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 		super.onCreate(savedInstanceState);
 
 		//replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
-		MenuHost menuHost = requireActivity();
-		FragmentActivity activity = getActivity();
-		Fragment fragment = this;
+		final MenuHost menuHost = requireActivity();
+		final FragmentActivity activity = getActivity();
+		final Fragment fragment = this;
 		menuHost.addMenuProvider(new MenuProvider() {
 			@Override
-			public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+			public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
 
 				menu.clear();
 				// Add menu items here
@@ -184,7 +183,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 						.setMessage(R.string.deleteTimetableMessage)
 						.setPositiveButton(R.string.deleteTimeTableConfirm, new DialogInterface.OnClickListener() {
 
-							public void onClick(DialogInterface dialog, int which) {
+							public void onClick(final DialogInterface dialog, final int which) {
 								MainActivity.clearSubscribedEventSeriesAndUpdateAdapters();
 							}
 						})

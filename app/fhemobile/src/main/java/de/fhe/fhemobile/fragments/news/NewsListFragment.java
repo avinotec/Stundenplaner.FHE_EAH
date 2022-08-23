@@ -31,7 +31,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
-import androidx.fragment.app.Fragment;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.SettingsActivity;
@@ -64,11 +63,11 @@ public class NewsListFragment extends FeatureFragment {
         }
 
 //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
-        MenuHost menuHost = requireActivity();
-        Activity activity = getActivity();
+        final MenuHost menuHost = requireActivity();
+        final Activity activity = getActivity();
         menuHost.addMenuProvider(new MenuProvider() {
             @Override
-            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+            public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
 
                 menu.clear();
                 // Add menu items here
@@ -76,7 +75,7 @@ public class NewsListFragment extends FeatureFragment {
             }
 
             @Override
-            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+            public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
                 // Handle the menu selection
                 if (menuItem.getItemId() == R.id.action_settings) {
                     final Intent intent = new Intent(activity, SettingsActivity.class);

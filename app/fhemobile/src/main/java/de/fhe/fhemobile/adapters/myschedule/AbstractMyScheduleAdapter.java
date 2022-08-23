@@ -40,7 +40,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.utils.myschedule.TimetableChangeType;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
@@ -69,7 +68,7 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
         this.notifyDataSetChanged();
     }
 
-    public void setRoomVisible(boolean visible){
+    public void setRoomVisible(final boolean visible){
         roomVisible = visible;
     }
 
@@ -213,14 +212,14 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
 
         private final MyScheduleEventSeriesVo currentEventSeries;
 
-        EventSeriesOnClickListener(final View view, final MyScheduleEventSeriesVo currentItem, boolean showRoom){
+        EventSeriesOnClickListener(final View view, final MyScheduleEventSeriesVo currentItem, final boolean showRoom){
             convertView = view;
             currentEventSeries = currentItem;
             roomVisible = showRoom;
         }
 
         @Override
-        public void onClick(View view) {
+        public void onClick(final View view) {
             //remove all previously added textviews of event series to avoid duplicates
             final LinearLayout layoutAllEvents = convertView.findViewById(R.id.layout_myschedule_eventseries_events);
             final int layoutAllEventsSize = layoutAllEvents.getChildCount();
@@ -245,15 +244,15 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
         }
     }
 
-    void setAndAddEventDataTextViews(MyScheduleEventVo _Event,
-                                     LinearLayout _LayoutAllEvents){
+    void setAndAddEventDataTextViews(final MyScheduleEventVo _Event,
+                                     final LinearLayout _LayoutAllEvents){
         final TextView dateAndRoomTextView = new TextView(mContext);
         final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         params.setMargins(0,5,5,10);
         dateAndRoomTextView.setLayoutParams(params);
 
-        Date startDateTime = _Event.getStartDateTime();
-        Date endDateTime =  _Event.getEndDateTime();
+        final Date startDateTime = _Event.getStartDateTime();
+        final Date endDateTime =  _Event.getEndDateTime();
         String date = sdf.format(startDateTime);
         String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(startDateTime);
         String startTime = new SimpleDateFormat("HH:mm", new Locale("de", "DE")).format(startDateTime);
@@ -261,7 +260,7 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
         String room = _Event.getLocationListAsString();
 
         //highlight changes
-        for(TimetableChangeType change : _Event.getTypesOfChanges()){
+        for(final TimetableChangeType change : _Event.getTypesOfChanges()){
             switch (change){
                 case ADDITION:
                     //set text bold
