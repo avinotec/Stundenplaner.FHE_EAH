@@ -25,7 +25,12 @@ public final class SemesterDataUtils {
 
     private static final String LOG_TAG = SemesterDataUtils.class.getSimpleName();
 
-    /**
+    /* Utility classes have all fields and methods declared as static.
+    Creating private constructors in utility classes prevents them from being accidentally instantiated. */
+    private SemesterDataUtils() {
+	}
+
+	/**
      *
      * @param _time
      * @return

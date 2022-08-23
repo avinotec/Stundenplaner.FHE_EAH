@@ -26,7 +26,12 @@ import de.fhe.fhemobile.utils.timetable.TimeTableSettings;
  */
 public final class TimeTableFactory {
 
-    /**
+	/* Utility classes have all fields and methods declared as static.
+	Creating private constructors in utility classes prevents them from being accidentally instantiated. */
+	private TimeTableFactory() {
+	}
+
+	/**
      *
      * @return
      */

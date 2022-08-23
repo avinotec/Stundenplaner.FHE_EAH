@@ -27,6 +27,11 @@ import de.fhe.fhemobile.vos.canteen.CanteenMenuDayVo;
  */
 public final class CanteenUtils {
 
+    /* Utility classes have all fields and methods declared as static.
+    Creating private constructors in utility classes prevents them from being accidentally instantiated. */
+    private CanteenUtils() {
+    }
+
     /**
      *
      * @param _Items

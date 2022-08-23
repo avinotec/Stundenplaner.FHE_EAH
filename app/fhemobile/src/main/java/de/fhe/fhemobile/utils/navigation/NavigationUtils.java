@@ -25,7 +25,12 @@ import de.fhe.fhemobile.vos.navigation.Complex;
 
 public final class NavigationUtils {
 
-    /**
+	/* Utility classes have all fields and methods declared as static.
+	Creating private constructors in utility classes prevents them from being accidentally instantiated. */
+	private NavigationUtils() {
+	}
+
+	/**
      * All files concerning the floorplan of a certain complex and floor have the same name
      * (just different file extension e.g. json or png and different locations)
      * e.g. "building_05_floor_ug1" or "building_03_02_01_floor_02"

@@ -23,7 +23,12 @@ import java.util.Locale;
 
 public final class TimeTableUtils {
 
-    /**
+    /* Utility classes have all fields and methods declared as static.
+    Creating private constructors in utility classes prevents them from being accidentally instantiated. */
+	private TimeTableUtils() {
+	}
+
+	/**
      * if there are more than one lecturer with this name the department e.g. SciTec is added in brackets
      * this prettifies the person's name if a whitespace between name and bracket is missing
      * @param person string already corrected for umlauts

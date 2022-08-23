@@ -20,5 +20,13 @@ package de.fhe.fhemobile.network;
 public final class SiteEndpoints
 {
     public static final String SITE_PATH_PARAM = "eah";
-    //public static final String SITE_PATH_PARAM = "fhe";
+
+	//public static final String SITE_PATH_PARAM = "fhe";
+
+
+	/* Utility classes have all fields and methods declared as static.
+	Creating private constructors in utility classes prevents them from being accidentally instantiated. */
+	private SiteEndpoints() {
+	}
+
 }

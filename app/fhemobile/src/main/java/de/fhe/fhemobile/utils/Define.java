@@ -28,6 +28,11 @@ public final class Define {
 	@NonNls
 	public static final String PARAM_TIMETABLE_ID = "paramTimeTableId";			// $NON-NLS
 
+	/* Utility classes have all fields and methods declared as static.
+	Creating private constructors in utility classes prevents them from being accidentally instantiated. */
+	private Define() {
+	}
+
 	//created by Nadja 11.03.2022
 	public static final class Canteen {
 		static final String PREF_SELECTED_CANTEENS = "selectedCanteens";      // $NON-NLS

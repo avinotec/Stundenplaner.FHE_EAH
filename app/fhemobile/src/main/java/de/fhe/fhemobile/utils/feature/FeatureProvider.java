@@ -30,7 +30,12 @@ import de.fhe.fhemobile.adapters.drawer.DrawerItem;
  */
 public final class FeatureProvider {
 
-    /**
+    /* Utility classes have all fields and methods declared as static.
+    Creating private constructors in utility classes prevents them from being accidentally instantiated. */
+	private FeatureProvider() {
+	}
+
+	/**
      * Loads the feature settings from the corresponding XML-file into the Features class
      * @param _Context
      */
