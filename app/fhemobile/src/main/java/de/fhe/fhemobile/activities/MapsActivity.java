@@ -17,6 +17,7 @@
 package de.fhe.fhemobile.activities;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -58,8 +59,7 @@ public class MapsActivity extends BaseActivity {
 
             final String title = getResources().getString(MapsModel.getInstance().getMaps().get(mMapId).getNameID());
             getSupportActionBar().setTitle(title);
-        }
-        catch (final Exception e){
+        } catch (final Resources.NotFoundException e){
             Log.e(TAG, "Fehler beim Aufrufen des Fragments: ",e );
         }
     }

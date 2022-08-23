@@ -18,6 +18,7 @@
 package de.fhe.fhemobile.fragments.maps;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -68,11 +69,11 @@ public class MapsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
-        MenuHost menuHost = requireActivity();
-        Activity activity = getActivity();
+        final MenuHost menuHost = requireActivity();
+        final Activity activity = getActivity();
         menuHost.addMenuProvider(new MenuProvider() {
             @Override
-            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+            public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
                 menu.clear();
                 // Add menu items here
                 if (mMap.getMaps().size() > 1) {
@@ -81,7 +82,7 @@ public class MapsFragment extends Fragment {
             }
 
             @Override
-            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+            public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
                 // Handle the menu selection
                 if(menuItem.getItemId() == R.id.action_up) {
                     if (mCurrentMapIndex < mMap.getMaps().size() - 1) {
@@ -141,7 +142,7 @@ public class MapsFragment extends Fragment {
             }
 
             updateActionBarTitle(getContext().getResources().getString(map.getNameID()));
-        } catch (final Exception e){
+        } catch (final Resources.NotFoundException e) {
             mView = new MapsView(getContext(), new AttributeSet() {
                 @Override
                 public int getAttributeCount() {
