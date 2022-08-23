@@ -46,7 +46,7 @@ public class TimeTablePagerAdapter extends FragmentStateAdapter {
      */
     @NonNull
     @Override
-    public Fragment createFragment(int position) {
+    public Fragment createFragment(final int position) {
         return TimeTableWeekFragment.newInstance(mData.get(position));
     }
 

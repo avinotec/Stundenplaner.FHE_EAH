@@ -94,11 +94,11 @@ public class TimeTableFragment extends FeatureFragment {
 		}
 
 		//replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
-		MenuHost menuHost = requireActivity();
-		Activity activity = getActivity();
+		final MenuHost menuHost = requireActivity();
+		final Activity activity = getActivity();
 		menuHost.addMenuProvider(new MenuProvider() {
 			@Override
-			public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+			public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
 				// Add menu items here
 				menu.clear();
 				if (TimeTableSettings.getTimeTableSelection() != null) {
@@ -107,7 +107,7 @@ public class TimeTableFragment extends FeatureFragment {
 			}
 
 			@Override
-			public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+			public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
 				// Handle the menu selection
 				if (menuItem.getItemId() == R.id.action_reset_selection) {
 
@@ -142,12 +142,12 @@ public class TimeTableFragment extends FeatureFragment {
 		@Override
 		public void onResponse(final Call<Map<String, TimeTableWeekVo>> call, final Response<Map<String, TimeTableWeekVo>> response) {
 			if(response.body() != null){
-				ArrayList<TimeTableWeekVo> weekVos = new ArrayList(response.body().values());
+				final ArrayList<TimeTableWeekVo> weekVos = new ArrayList(response.body().values());
 				mView.setPagerItems(weekVos);
 
 				//save timetable for offline usage
 				final SharedPreferences sharedPreferences = getContext().getSharedPreferences(SP_TIMETABLE, Context.MODE_PRIVATE);
-				SharedPreferences.Editor editor = sharedPreferences.edit();
+				final SharedPreferences.Editor editor = sharedPreferences.edit();
 				editor.putString(SP_TIMETABLE, new Gson().toJson(weekVos));
 				editor.apply();
 
@@ -163,9 +163,9 @@ public class TimeTableFragment extends FeatureFragment {
 
 			//load timetable from shared preferences
 			final SharedPreferences sharedPreferences = getContext().getSharedPreferences(SP_TIMETABLE, Context.MODE_PRIVATE);
-			String json = sharedPreferences.getString(SP_TIMETABLE, "");
+			final String json = sharedPreferences.getString(SP_TIMETABLE, "");
 			if(!json.isEmpty()){
-				ArrayList<TimeTableWeekVo> loadedTimeTableWeeks = new Gson()
+				final ArrayList<TimeTableWeekVo> loadedTimeTableWeeks = new Gson()
 						.fromJson(json, new TypeToken<List<TimeTableWeekVo>>(){}.getType());
 				mView.setPagerItems(loadedTimeTableWeeks);
 			}

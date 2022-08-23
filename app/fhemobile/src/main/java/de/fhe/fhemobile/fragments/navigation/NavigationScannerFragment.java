@@ -36,14 +36,14 @@ public class NavigationScannerFragment extends FeatureFragment implements ZXingS
 
 
     public static NavigationScannerFragment newInstance() {
-        NavigationScannerFragment fragment = new NavigationScannerFragment();
-        Bundle args = new Bundle();
+        final NavigationScannerFragment fragment = new NavigationScannerFragment();
+        final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //Check necessary permissions
@@ -59,8 +59,8 @@ public class NavigationScannerFragment extends FeatureFragment implements ZXingS
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mScannerView = new ZXingScannerView(getContext());
         mScannerView.setAutoFocus(mAutoFocus);
@@ -100,19 +100,19 @@ public class NavigationScannerFragment extends FeatureFragment implements ZXingS
     }
 
     @Override
-    public void handleResult(Result result) {
-        String rawText = result.getText();
+    public void handleResult(final Result result) {
+        final String rawText = result.getText();
 
         //cut away number for different room entries (e.g. "/1")
         String room = rawText.split("/")[0];
         //if necessary, correct floor 03 to 3Z
         if(room.matches("05\\.03\\.\\d{3}(/\\d)?")){
-            String[] array = room.split("\\.");
+            final String[] array = room.split("\\.");
             room = array[0] +".3Z."+ array[2];
         }
 
 
-        Bundle bundle = new Bundle();
+        final Bundle bundle = new Bundle();
         bundle.putString(Define.Navigation.KEY_SCANNED_ROOM, room);
         getActivity().getSupportFragmentManager().setFragmentResult(Define.Navigation.REQUEST_SCANNED_START_ROOM, bundle);
 

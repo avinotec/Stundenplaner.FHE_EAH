@@ -56,12 +56,12 @@ public class TimeTableView extends LinearLayout {
 
     public void setPagerItems(final ArrayList<TimeTableWeekVo> _Items) {
 
-        TimeTablePagerAdapter mAdapter = new TimeTablePagerAdapter(mFragmentManager, mLifecycle, _Items);
+        final TimeTablePagerAdapter mAdapter = new TimeTablePagerAdapter(mFragmentManager, mLifecycle, _Items);
         if (BuildConfig.DEBUG) Assert.assertNotNull(mAdapter);
         mPager.setAdapter(mAdapter);
         if (BuildConfig.DEBUG) Assert.assertNotNull(mPager);
         //set current pager item to current semester week
-        for(TimeTableWeekVo item : _Items){
+        for(final TimeTableWeekVo item : _Items){
             //if the item's week end is after or equal now
             // and the item's week start is before or equal now
             if(!item.getWeekEnd().before(new Date())){

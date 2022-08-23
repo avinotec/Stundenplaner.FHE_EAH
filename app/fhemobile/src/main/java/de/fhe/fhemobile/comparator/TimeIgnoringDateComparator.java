@@ -25,7 +25,7 @@ public class TimeIgnoringDateComparator implements Comparator<Date> {
     @Override
     public int compare(Date d1, Date d2) {
         Calendar c1 = Calendar.getInstance();
-        Calendar c2 = Calendar.getInstance();
+        final Calendar c2 = Calendar.getInstance();
 
         // set time to midnight
         c1.setTime(d1);

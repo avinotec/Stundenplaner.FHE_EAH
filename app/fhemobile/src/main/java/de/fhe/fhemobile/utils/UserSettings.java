@@ -87,8 +87,8 @@ public final class UserSettings {
 
         if(BuildConfig.DEBUG) Assert.assertNotNull(mSelectedCanteens);
 
-        ArrayList<String> ids = new ArrayList<>();
-        for(CanteenVo canteen : mSelectedCanteens){
+        final ArrayList<String> ids = new ArrayList<>();
+        for(final CanteenVo canteen : mSelectedCanteens){
             if(canteen == null) {
                 if(BuildConfig.DEBUG) Assert.assertNotNull(canteen);
                 Log.e(TAG, "CanteenVo in selectedCanteens is null");
@@ -98,10 +98,10 @@ public final class UserSettings {
         return ids;
     }
 
-    public CanteenVo getSelectedCanteen(String canteenId){
+    public CanteenVo getSelectedCanteen(final String canteenId){
         if(BuildConfig.DEBUG) Assert.assertNotNull(mSelectedCanteens);
 
-        for(CanteenVo canteenVo : mSelectedCanteens){
+        for(final CanteenVo canteenVo : mSelectedCanteens){
             if(canteenVo.getCanteenId().equals(canteenId)){
                 return canteenVo;
             }
@@ -116,11 +116,11 @@ public final class UserSettings {
      * Remove it from selectedCanteen if its contained.
      * @param canteenId
      */
-    public void addOrRemoveFromSelectedCanteens(String canteenId){
+    public void addOrRemoveFromSelectedCanteens(final String canteenId){
 
         boolean canteenFound = false;
 
-        for(CanteenVo canteenVo : mSelectedCanteens){
+        for(final CanteenVo canteenVo : mSelectedCanteens){
             if(canteenVo.getCanteenId().equals(canteenId)){
                 mSelectedCanteens.remove(canteenVo);
                 canteenFound = true;
@@ -129,7 +129,7 @@ public final class UserSettings {
         }
 
         if(!canteenFound) {
-            CanteenVo canteenToAdd = CanteenModel.getInstance().getCanteen(canteenId);
+            final CanteenVo canteenToAdd = CanteenModel.getInstance().getCanteen(canteenId);
             if(canteenToAdd != null){
                 mSelectedCanteens.add(canteenToAdd);
             } else {

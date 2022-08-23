@@ -61,13 +61,13 @@ public class NavigationDialogFragment extends FeatureFragment {
         //listen for NavigationScannerFragment to send scanning result
         getParentFragmentManager().setFragmentResultListener(REQUEST_SCANNED_START_ROOM, this, new FragmentResultListener() {
             @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
+            public void onFragmentResult(@NonNull final String requestKey, @NonNull final Bundle bundle) {
                 // We use a String here, but any type that can be put in a Bundle is supported
-                String result = bundle.getString(KEY_SCANNED_ROOM);
+                final String result = bundle.getString(KEY_SCANNED_ROOM);
 
                 Log.d(TAG, "scanned QR code received in NavigationDialogFragment: "+result);
                 //send room to children
-                Bundle childBundle = new Bundle();
+                final Bundle childBundle = new Bundle();
                 childBundle.putString(Define.Navigation.KEY_SCANNED_ROOM, result);
                 getChildFragmentManager().setFragmentResult(Define.Navigation.REQUEST_SCANNED_START_ROOM, childBundle);
 

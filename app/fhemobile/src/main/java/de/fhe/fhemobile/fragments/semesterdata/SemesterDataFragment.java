@@ -60,11 +60,11 @@ public class SemesterDataFragment extends FeatureFragment {
         mModel = SemesterDataModel.getInstance();
 
         //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
-        MenuHost menuHost = requireActivity();
-        Activity activity = getActivity();
+        final MenuHost menuHost = requireActivity();
+        final Activity activity = getActivity();
         menuHost.addMenuProvider(new MenuProvider() {
             @Override
-            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+            public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
 
                 menu.clear();
                 // Add menu items here
@@ -72,7 +72,7 @@ public class SemesterDataFragment extends FeatureFragment {
             }
 
             @Override
-            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+            public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
                 // Handle the menu selection
                 if(menuItem.getItemId() == R.id.action_next_semester){
                     if (null != mModel && null != mModel.getSemesterData()) {

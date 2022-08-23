@@ -105,7 +105,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
     private final TimeTableDialogView.IViewListener mViewListener = new TimeTableDialogView.IViewListener() {
         @Override
-        public void onStudyProgramChosen(String _StudyProgramId) {
+        public void onStudyProgramChosen(final String _StudyProgramId) {
             mView.toggleGroupsPickerVisibility(false);
             mView.toggleButtonEnabled(false);
             mView.resetSemesterPicker();
@@ -115,7 +115,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
             mChosenSemester = null;
 
             boolean errorOccurred = false;
-            Map<String, TimeTableStudyProgramVo> studyPrograms = mResponse.getStudyPrograms();
+            final Map<String, TimeTableStudyProgramVo> studyPrograms = mResponse.getStudyPrograms();
 
             if (studyPrograms.containsKey(_StudyProgramId)) {
                 mChosenStudyProgram = studyPrograms.get(_StudyProgramId);
@@ -148,7 +148,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
             mChosenSemester = null;
 
-            Map<String, TimeTableSemesterVo> semesters = mChosenStudyProgram.getSemesters();
+            final Map<String, TimeTableSemesterVo> semesters = mChosenStudyProgram.getSemesters();
             if(semesters.containsKey(_SemesterId)) {
                 mChosenSemester = semesters.get(_SemesterId);
                 mView.setStudyGroupItems(mChosenSemester.getStudyGroupList());
@@ -160,7 +160,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
          * @param _TimeTableId
          */
         @Override
-        public void onStudyGroupChosen(String _TimeTableId) {
+        public void onStudyGroupChosen(final String _TimeTableId) {
             mView.toggleButtonEnabled(true);
             mChosenStudyGroup = _TimeTableId;
         }
@@ -190,9 +190,9 @@ public class TimeTableDialogFragment extends FeatureFragment {
             if( response.body() != null ){
                 mResponse = response.body();
 
-                ArrayList<TimeTableStudyProgramVo> studyPrograms = new ArrayList<>();
+                final ArrayList<TimeTableStudyProgramVo> studyPrograms = new ArrayList<>();
                 //remove "Brückenkurse" and only keep bachelor and master study programs
-                for(TimeTableStudyProgramVo studyProgramVo : response.body().getStudyProgramsAsList()){
+                for(final TimeTableStudyProgramVo studyProgramVo : response.body().getStudyProgramsAsList()){
 
                     if("Bachelor".equals(studyProgramVo.getDegree())
                             || "Master".equals(studyProgramVo.getDegree())){
@@ -207,7 +207,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
         }
 
         @Override
-        public void onFailure(final Call<TimeTableDialogResponse> call, Throwable t) {
+        public void onFailure(final Call<TimeTableDialogResponse> call, final Throwable t) {
             showConnectionErrorToast();
             Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
         }

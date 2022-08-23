@@ -39,8 +39,8 @@ public class EventSeriesTitleComparator implements Comparator<MyScheduleEventSer
 	 */
 	@Override
 	public int compare(final MyScheduleEventSeriesVo o1, final MyScheduleEventSeriesVo o2) {
-		String title1 = o1.getTitle();
-		String title2 = o2.getTitle();
+		final String title1 = o1.getTitle();
+		final String title2 = o2.getTitle();
 
 		//special case for eventseries like "XX/P/01_04/PFLICHT" or "XX/P/01_04 Einweisung_Pflicht!"
 		// that otherwise would get sorted between "XX/P/01" and "XX/P/02"

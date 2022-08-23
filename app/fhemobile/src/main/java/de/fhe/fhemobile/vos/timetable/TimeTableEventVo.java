@@ -65,13 +65,13 @@ public class TimeTableEventVo implements Parcelable {
     }
 
     public String getLocationListAsString(){
-        StringBuilder stringBuilder = new StringBuilder();
+        final StringBuilder stringBuilder = new StringBuilder();
 
         if(mLocationList.isEmpty()) return "";
 
-        for(TimeTableLocationVo room : mLocationList.values()){
+        for(final TimeTableLocationVo room : mLocationList.values()){
             if(room.getName() != null) {
-                String roomName = room.getName().replaceAll("\\(", " (");
+                final String roomName = room.getName().replaceAll("\\(", " (");
                 stringBuilder.append(roomName + ", ");
             }
         }
@@ -84,11 +84,11 @@ public class TimeTableEventVo implements Parcelable {
     }
 
     public String getLecturerListAsString(){
-        StringBuilder stringBuilder = new StringBuilder();
+        final StringBuilder stringBuilder = new StringBuilder();
 
         if(mLecturerList.isEmpty()) return "";
 
-        for(LecturerVo lecturer : mLecturerList.values()){
+        for(final LecturerVo lecturer : mLecturerList.values()){
             if(lecturer.getName() != null){
                 // append ", " in any case, for lists of lecturers
                 stringBuilder.append(lecturer.getName() + ", ");

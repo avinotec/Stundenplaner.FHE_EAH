@@ -106,7 +106,7 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 	 * @return A View corresponding to the data at the specified position.
 	 */
 	@Override
-	public View getView(final int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, final ViewGroup parent) {
 
 		if (convertView == null) {
 			convertView = LayoutInflater.from(Main.getAppContext()).
@@ -140,7 +140,7 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 
 
 		//set texts: title, time, room, lecturer
-		ArrayList<TextView> eventViews = new ArrayList<>();
+		final ArrayList<TextView> eventViews = new ArrayList<>();
 		final TextView eventTitle = (TextView) convertView.findViewById(R.id.tv_myschedule_calendar_eventtitle);
 		eventTitle.setText(currentItem.getGuiTitle());
 		eventViews.add(eventTitle);
@@ -158,11 +158,11 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 		eventViews.add(eventLecturer);
 
 		//highlight changes
-		for(TimetableChangeType change : currentItem.getTypesOfChanges()){
+		for(final TimetableChangeType change : currentItem.getTypesOfChanges()){
 			switch (change){
 				case ADDITION:
 					//set text bold
-					for (TextView v : eventViews) {
+					for (final TextView v : eventViews) {
 						if(v.getTypeface().equals(Typeface.ITALIC)){
 							v.setTypeface(null, Typeface.BOLD_ITALIC);
 						} else {
@@ -173,7 +173,7 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 
 				case DELETION:
 					//set text strikethrough
-					for (TextView v : eventViews) {
+					for (final TextView v : eventViews) {
 						v.setPaintFlags(v.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 					}
 					break;
@@ -204,7 +204,7 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 		int posToday = -1;
 		Long k = null;
 
-		for(MyScheduleEventVo eventVo : mItems){
+		for(final MyScheduleEventVo eventVo : mItems){
 
 			final Date now = new Date();
 
@@ -223,7 +223,7 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 					}
 
 				}
-			} catch (NullPointerException e) {
+			} catch (final NullPointerException e) {
 				Log.e(TAG, "Invalid Date format", e);
 			}
 		}

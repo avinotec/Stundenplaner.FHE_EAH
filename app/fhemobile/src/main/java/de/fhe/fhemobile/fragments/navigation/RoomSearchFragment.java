@@ -114,7 +114,7 @@ public class RoomSearchFragment extends SearchFragment {
      * @param previousChoice String loaded from shared preferences
      */
     @Override
-    protected void initializePickersFromSharedPreferences(String previousChoice) {
+    protected void initializePickersFromSharedPreferences(final String previousChoice) {
         //previousChoice is loaded from shared preferences before with default "" and thus never null
         if(!previousChoice.isEmpty()){
             for (final RoomVo room : NavigationFragment.rooms){

@@ -93,7 +93,7 @@ public class NewsListView extends LinearLayout {
 
         sectionList.add(headerItem);
 
-        StickyHeaderAdapter mAdapter = new StickyHeaderAdapter(mContext, sectionList);
+        final StickyHeaderAdapter mAdapter = new StickyHeaderAdapter(mContext, sectionList);
         mAdapter.setOnItemClickListener(mListItemClickListener);
         mNewsList.setAdapter(mAdapter);
     }

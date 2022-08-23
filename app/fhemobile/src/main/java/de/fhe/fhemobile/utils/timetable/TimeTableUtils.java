@@ -45,20 +45,20 @@ public final class TimeTableUtils {
 
 
     public static String getWeekDayName(final int dayNumber){
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
         //+2 because in calender first day is sunday and days in calendar are counted 1-based
         cal.set(Calendar.DAY_OF_WEEK, dayNumber+2);
         return cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
     }
 
     public static String getWeekDayName(final Date date){
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         return cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
     }
 
 
-    public static String cutStudyProgramPrefix(String eventTitle){
+    public static String cutStudyProgramPrefix(final String eventTitle){
         return eventTitle.replaceFirst("^[A-Za-z]+(/[A-Za-z]+)*\\(((BA)|(MA)|(BA/MA))\\)/?","");
     }
 }

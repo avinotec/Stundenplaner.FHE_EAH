@@ -99,7 +99,7 @@ public abstract class SearchView extends LinearLayout {
                 getResources().getString(R.string.error_message_no_room_input));
     }
 
-    public void setStartInputText(String room) {
+    public void setStartInputText(final String room) {
         mStartInputText.setText(room, TextView.BufferType.EDITABLE);
     }
 

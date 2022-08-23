@@ -83,7 +83,7 @@ public class MyScheduleDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mChosenStudyProgram = null;
@@ -186,7 +186,7 @@ public class MyScheduleDialogFragment extends DialogFragment {
 
 
         @Override
-        public void onSemesterChosen(String _SemesterId) {
+        public void onSemesterChosen(final String _SemesterId) {
             mView.toggleProgressIndicatorVisibility(true);
             mView.toggleEventListVisibility(false);
             mListAdapter.setItems(new ArrayList<>());
@@ -212,14 +212,14 @@ public class MyScheduleDialogFragment extends DialogFragment {
 
     private final Callback<TimeTableDialogResponse> mFetchStudyProgramDataCallback = new Callback<TimeTableDialogResponse>() {
         @Override
-        public void onResponse(Call<TimeTableDialogResponse> call, Response<TimeTableDialogResponse> response) {
+        public void onResponse(final Call<TimeTableDialogResponse> call, final Response<TimeTableDialogResponse> response) {
             if(response.body() != null){
 
                 mStudyProgramDataResponse = response.body();
 
                 final ArrayList<TimeTableStudyProgramVo> studyPrograms = new ArrayList<>();
                 //remove "Brückenkurse" and only keep bachelor and master study programs
-                for(TimeTableStudyProgramVo studyProgramVo : response.body().getStudyProgramsAsList()){
+                for(final TimeTableStudyProgramVo studyProgramVo : response.body().getStudyProgramsAsList()){
 
                     if("Bachelor".equals(studyProgramVo.getDegree())
                             || "Master".equals(studyProgramVo.getDegree())){
@@ -235,7 +235,7 @@ public class MyScheduleDialogFragment extends DialogFragment {
         }
 
         @Override
-        public void onFailure(Call<TimeTableDialogResponse> call, Throwable t) {
+        public void onFailure(final Call<TimeTableDialogResponse> call, final Throwable t) {
             showConnectionErrorToast();
             Log.d(TAG, "failure: request " + call.request().url());
         }
@@ -245,10 +245,10 @@ public class MyScheduleDialogFragment extends DialogFragment {
 
     final Callback<Map<String, MyScheduleEventSetVo>> mFetchSemesterTimeTableCallback = new Callback<Map<String, MyScheduleEventSetVo>>() {
         @Override
-        public void onResponse(Call<Map<String, MyScheduleEventSetVo>> call, Response<Map<String, MyScheduleEventSetVo>> response) {
+        public void onResponse(final Call<Map<String, MyScheduleEventSetVo>> call, final Response<Map<String, MyScheduleEventSetVo>> response) {
             if(response.body() != null){
 
-                List<MyScheduleEventSeriesVo> eventSeriesVos = groupByEventTitle(response.body());
+                final List<MyScheduleEventSeriesVo> eventSeriesVos = groupByEventTitle(response.body());
 
                 Collections.sort(eventSeriesVos, new EventSeriesTitleComparator());
 
@@ -263,7 +263,7 @@ public class MyScheduleDialogFragment extends DialogFragment {
         }
 
         @Override
-        public void onFailure(Call<Map<String, MyScheduleEventSetVo>> call, Throwable t) {
+        public void onFailure(final Call<Map<String, MyScheduleEventSetVo>> call, final Throwable t) {
             showConnectionErrorToast();
             Log.d(TAG, "failure: request " + call.request().url());
         }

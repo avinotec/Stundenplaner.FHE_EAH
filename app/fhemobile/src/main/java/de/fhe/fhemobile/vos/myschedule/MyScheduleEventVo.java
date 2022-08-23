@@ -51,12 +51,12 @@ public class MyScheduleEventVo implements Parcelable{
     public MyScheduleEventVo() {
     }
 
-    public MyScheduleEventVo(String title,
-                             String eventSetId,
-                             long startDateTime,
-                             long endDateTime,
-                             List<LecturerVo> lecturerList,
-                             List<TimeTableLocationVo> locationList){
+    public MyScheduleEventVo(final String title,
+                             final String eventSetId,
+                             final long startDateTime,
+                             final long endDateTime,
+                             final List<LecturerVo> lecturerList,
+                             final List<TimeTableLocationVo> locationList){
         mTitle = title;
         mEventSetId = eventSetId;
         mStartDateTime = startDateTime;
@@ -92,7 +92,7 @@ public class MyScheduleEventVo implements Parcelable{
         typesOfChanges = new HashSet(Arrays.asList(in.readArray(TimetableChangeType.class.getClassLoader())));
 
         //remove null objects
-        for(TimeTableLocationVo location : mLocationList){
+        for(final TimeTableLocationVo location : mLocationList){
             if(location.getName() == null){
                 mLocationList.remove(location);
             }
@@ -165,13 +165,13 @@ public class MyScheduleEventVo implements Parcelable{
     }
 
     public String getLocationListAsString(){
-        StringBuilder stringBuilder = new StringBuilder();
+        final StringBuilder stringBuilder = new StringBuilder();
 
         if(mLocationList.isEmpty()) return "";
 
-        for(TimeTableLocationVo room : mLocationList){
+        for(final TimeTableLocationVo room : mLocationList){
             if(room.getName() != null) {
-                String roomName = room.getName().replaceAll("\\(", " (");
+                final String roomName = room.getName().replaceAll("\\(", " (");
                 stringBuilder.append(roomName + ", ");
             }
         }
@@ -193,7 +193,7 @@ public class MyScheduleEventVo implements Parcelable{
 
     public String getLecturerListAsString(){
         StringBuilder stringBuilder = null;
-        for(LecturerVo lecturer: mLecturerList){
+        for(final LecturerVo lecturer: mLecturerList){
 
             if(stringBuilder == null){
                 stringBuilder = new StringBuilder();
@@ -209,27 +209,27 @@ public class MyScheduleEventVo implements Parcelable{
         return typesOfChanges;
     }
 
-    public void addChange(TimetableChangeType type){
+    public void addChange(final TimetableChangeType type){
         typesOfChanges.add(type);
     }
 
-    public void setStartDateTimeInSec(long mStartDateTime) {
+    public void setStartDateTimeInSec(final long mStartDateTime) {
         this.mStartDateTime = mStartDateTime;
     }
 
-    public void setEndDateTimeInSec(long mEndDateTime) {
+    public void setEndDateTimeInSec(final long mEndDateTime) {
         this.mEndDateTime = mEndDateTime;
     }
 
-    public void setLecturerList(List<LecturerVo> lecturerList) {
+    public void setLecturerList(final List<LecturerVo> lecturerList) {
         this.mLecturerList = lecturerList;
     }
 
-    public void setLocationList(List<TimeTableLocationVo> locationList) {
+    public void setLocationList(final List<TimeTableLocationVo> locationList) {
         this.mLocationList = locationList;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         this.mTitle = title;
     }
 

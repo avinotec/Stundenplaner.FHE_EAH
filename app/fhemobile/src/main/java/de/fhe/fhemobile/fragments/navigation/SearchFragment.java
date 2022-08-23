@@ -198,7 +198,7 @@ public abstract class SearchFragment extends FeatureFragment {
             else if (!inputRoom.matches("\\d{2}\\.(\\d{2}|(3Z)|-\\d)\\.\\d{2,3}")
                     && inputRoom.matches("\\d{1,2}\\.(\\d{1,2}|(3Z)|-\\d)\\.\\d{1,3}")) {
 
-                String[] inputArray = inputRoom.split("\\.");
+                final String[] inputArray = inputRoom.split("\\.");
                 //format input
                 inputRoom = (String.format("%2s", inputArray[0]) + "."
                         + String.format("%2s", inputArray[1]) + "."
@@ -206,7 +206,7 @@ public abstract class SearchFragment extends FeatureFragment {
             }
 
             //inputArray[0] = building, inputArray[1] = floor, inputArray[2] = room number
-            String[] inputArray = inputRoom.split("\\.");
+            final String[] inputArray = inputRoom.split("\\.");
 
             //correct floor from 03 to 3Z if necessary
             if(inputRoom.matches("05\\.03\\.\\d{3}")){
@@ -230,7 +230,7 @@ public abstract class SearchFragment extends FeatureFragment {
                     try {
                         inputRoomNumber = Integer.parseInt(inputArray[2]);
                         roomNumber = Integer.parseInt(room.getRoomNumber());
-                    }catch (NumberFormatException e) {
+                    }catch (final NumberFormatException e) {
                         /* do nothing, we use initialized values */
                         inputRoomNumber = 1;
                         roomNumber = 1;

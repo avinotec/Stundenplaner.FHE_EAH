@@ -86,13 +86,13 @@ public final class NetworkHandler {
 				.setDateFormat("HH:mm:ss'T'yyyy-MM-dd")
 				.create();
 
-		Retrofit mRestAdapter = new Retrofit.Builder()
+		final Retrofit mRestAdapter = new Retrofit.Builder()
 				.baseUrl(Endpoints.BASE_URL + Endpoints.APP_NAME)
 				.addConverterFactory(GsonConverterFactory.create(gson))
 				//.setConverter(new GsonConverter(gson))
 //                .setLogLevel(RestAdapter.LogLevel.FULL)
 				.build();
-		Retrofit mRestAdapterEah = new Retrofit.Builder()
+		final Retrofit mRestAdapterEah = new Retrofit.Builder()
 				.baseUrl(Endpoints.BASE_URL_EAH)
 				.addConverterFactory(GsonConverterFactory.create(gson))
 				//.setConverter(new GsonConverter(gson))
@@ -196,10 +196,10 @@ public final class NetworkHandler {
 	public void fetchCanteenMenus() {
 		Assert.assertTrue( mApiErfurt != null );
 
-		ArrayList<String> selectedCanteenIds = UserSettings.getInstance().getSelectedCanteenIds();
+		final ArrayList<String> selectedCanteenIds = UserSettings.getInstance().getSelectedCanteenIds();
 		Log.d(TAG, "Selected Canteens: " + selectedCanteenIds);
 
-		for(String canteenId : selectedCanteenIds){
+		for(final String canteenId : selectedCanteenIds){
 			mApiErfurt.fetchCanteenData(canteenId).enqueue(new Callback<CanteenDishVo[]>() {
 
 				@Override
@@ -410,9 +410,9 @@ public final class NetworkHandler {
 	public void fetchMySchedule(){
 		Assert.assertTrue(mApiEah != null);
 
-		Map<String, Map<String, MyScheduleEventSeriesVo>> modules = groupByModuleId(Main.getSubscribedEventSeries());
+		final Map<String, Map<String, MyScheduleEventSeriesVo>> modules = groupByModuleId(Main.getSubscribedEventSeries());
 		//iterate over modules
-		for(Map.Entry<String, Map<String, MyScheduleEventSeriesVo>> module : modules.entrySet()){
+		for(final Map.Entry<String, Map<String, MyScheduleEventSeriesVo>> module : modules.entrySet()){
 			//skip if module id is null -> cause by eventseries added before module IDs were introduced
 			if(module.getKey() != null){
 
@@ -433,7 +433,7 @@ public final class NetworkHandler {
 					}
 
 					@Override
-					public void onFailure(Call<ModuleVo> call, final Throwable t) {
+					public void onFailure(final Call<ModuleVo> call, final Throwable t) {
 						Utils.showToast(R.string.myschedule_connection_failed + "(internal: "+t.getCause()+")");
 						Log.d(TAG, "failure: request " + call.request().url() + " (internal: "+t.getCause()+")" );
 					}

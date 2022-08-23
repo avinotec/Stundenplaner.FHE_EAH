@@ -60,7 +60,7 @@ public class PersonSearchFragment extends SearchFragment {
      * @param container
      */
     @Override
-    protected void inflateAndInitializeView(LayoutInflater inflater, ViewGroup container) {
+    protected void inflateAndInitializeView(final LayoutInflater inflater, final ViewGroup container) {
 
         // Inflate the layout for this fragment
         mView = (PersonSearchView) inflater.inflate(R.layout.fragment_person_search, container, false);
@@ -78,7 +78,7 @@ public class PersonSearchFragment extends SearchFragment {
      * @param previousChoice String loaded from shared preferences
      */
     @Override
-    protected void initializePickersFromSharedPreferences(String previousChoice) {
+    protected void initializePickersFromSharedPreferences(final String previousChoice) {
         if(previousChoice == null || !previousChoice.isEmpty()){
             final PersonVo chosenPerson = persons.get(previousChoice);
             if(chosenPerson != null){
@@ -114,7 +114,7 @@ public class PersonSearchFragment extends SearchFragment {
 
             //search for room object
             if(NavigationFragment.rooms.isEmpty()) JSONHandler.loadRooms();
-            for(RoomVo room : NavigationFragment.rooms){
+            for(final RoomVo room : NavigationFragment.rooms){
                 final String roomOfPerson = persons.get(_person).getRoom();
                 if(room.getRoomName() != null && room.getRoomName().equals(roomOfPerson)){
 

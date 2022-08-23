@@ -49,7 +49,7 @@ public class MapsDialogView extends FrameLayout {
     public void initializeView(final ViewListener _Listener) {
         mViewListener = _Listener;
 
-        MapsAdapter mAdapter = new MapsAdapter(mContext, mModel.getMaps());
+        final MapsAdapter mAdapter = new MapsAdapter(mContext, mModel.getMaps());
 
         mMapsChoiceList.setAdapter(mAdapter);
         mMapsChoiceList.setOnItemClickListener(mMapsClickListener);

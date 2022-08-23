@@ -24,10 +24,10 @@ public class TimeTableLocationVo implements Parcelable {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (!(o instanceof TimeTableLocationVo)) return false;
-        TimeTableLocationVo that = (TimeTableLocationVo) o;
+        final TimeTableLocationVo that = (TimeTableLocationVo) o;
         return mId.equals(that.mId) && mName.equals(that.mName);
     }
 
@@ -51,12 +51,12 @@ public class TimeTableLocationVo implements Parcelable {
 
     public static final Parcelable.Creator<TimeTableLocationVo> CREATOR = new Parcelable.Creator<TimeTableLocationVo>(){
         @Override
-        public TimeTableLocationVo createFromParcel(Parcel parcel) {
+        public TimeTableLocationVo createFromParcel(final Parcel parcel) {
             return new TimeTableLocationVo(parcel);
         }
 
         @Override
-        public TimeTableLocationVo[] newArray(int i) {
+        public TimeTableLocationVo[] newArray(final int i) {
             return new TimeTableLocationVo[i];
         }
     };

@@ -32,11 +32,11 @@ import de.fhe.fhemobile.widgets.picker.base.IdPicker;
  */
 public class StudyProgramPicker extends IdPicker {
 
-    public StudyProgramPicker(Context context, AttributeSet attrs) {
+    public StudyProgramPicker(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public void setItems(List<TimeTableStudyProgramVo> _Items) {
+    public void setItems(final List<TimeTableStudyProgramVo> _Items) {
         Collections.sort(_Items, new StudyProgramComparator());
         mItems = _Items;
         if (mItems == null) {
@@ -45,12 +45,12 @@ public class StudyProgramPicker extends IdPicker {
     }
 
     @Override
-    protected String getId(int _Position) {
+    protected String getId(final int _Position) {
         return mItems.get(_Position).getId();
     }
 
     @Override
-    protected String getName(int _Position) {
+    protected String getName(final int _Position) {
         return mItems.get(_Position).getGuiName();
     }
 

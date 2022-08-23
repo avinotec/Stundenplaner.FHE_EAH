@@ -54,11 +54,11 @@ public class MyScheduleEventSetVo {
 
 	public String getTitle() { return mTitle; }
 
-	public void setTitle(String title) { this.mTitle = title; }
+	public void setTitle(final String title) { this.mTitle = title; }
 
 	public List<MyScheduleEventDateVo> getEventDates() { return new ArrayList<>(mEventDates.values()); }
 
-	public void setEvents(Map<String, MyScheduleEventDateVo> events) { this.mEventDates = events; }
+	public void setEvents(final Map<String, MyScheduleEventDateVo> events) { this.mEventDates = events; }
 
 	public List<TimeTableStudyGroupVo> getStudyGroups() { return new ArrayList<>(mStudyGroups.values()); }
 

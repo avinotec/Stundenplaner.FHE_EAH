@@ -28,7 +28,7 @@ public class MyScheduleSettingsAdapter extends AbstractMyScheduleAdapter {
 
     private static final String TAG = MyScheduleSettingsAdapter.class.getSimpleName();
 
-    public MyScheduleSettingsAdapter(Context context, List<MyScheduleEventSeriesVo> _items) {
+    public MyScheduleSettingsAdapter(final Context context, final List<MyScheduleEventSeriesVo> _items) {
         super(context);
         setItems(_items);
         setRoomVisible(true);

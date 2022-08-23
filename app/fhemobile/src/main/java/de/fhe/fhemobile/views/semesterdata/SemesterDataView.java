@@ -111,7 +111,7 @@ public class SemesterDataView extends LinearLayout {
         }
         sectionList.add(new DefaultHeaderItem(mContext.getString(R.string.semester_important_dates), true, datesRowItems));
 
-        StickyHeaderAdapter mAdapter = new StickyHeaderAdapter(mContext, sectionList);
+        final StickyHeaderAdapter mAdapter = new StickyHeaderAdapter(mContext, sectionList);
 
         mProgress.setVisibility(GONE);
         mListView.setAdapter(mAdapter);

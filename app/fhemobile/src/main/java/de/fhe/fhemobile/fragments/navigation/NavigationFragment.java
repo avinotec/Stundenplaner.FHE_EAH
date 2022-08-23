@@ -131,7 +131,7 @@ public class NavigationFragment extends FeatureFragment {
         mView.setViewListener(mViewListener);
         mView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 getActivity().onBackPressed();
             }
         });

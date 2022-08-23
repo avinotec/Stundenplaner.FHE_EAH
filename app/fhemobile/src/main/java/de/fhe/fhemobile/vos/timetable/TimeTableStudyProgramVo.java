@@ -63,7 +63,7 @@ public class TimeTableStudyProgramVo implements Parcelable {
      * @return
      */
     public ArrayList<TimeTableSemesterVo> getSemestersAsSortedList() {
-        ArrayList<TimeTableSemesterVo>  semesterList = new ArrayList<>(mSemesters.values());
+        final ArrayList<TimeTableSemesterVo>  semesterList = new ArrayList<>(mSemesters.values());
         Collections.sort(semesterList, new SemesterComparator());
         return semesterList;
     }

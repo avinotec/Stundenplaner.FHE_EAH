@@ -44,13 +44,13 @@ public class TimeTableWeekVo implements Parcelable {
 
     public Date getWeekStart() {
         //multiply by 1000 to convert from seconds to milliseconds
-        Date date = new Date(mWeekStart * 1000);
+        final Date date = new Date(mWeekStart * 1000);
         return date;
     }
 
     public Date getWeekEnd() {
         //multiply by 1000 to convert from seconds to milliseconds
-        Date date = new Date(mWeekEnd * 1000);
+        final Date date = new Date(mWeekEnd * 1000);
         return date;
     }
 
