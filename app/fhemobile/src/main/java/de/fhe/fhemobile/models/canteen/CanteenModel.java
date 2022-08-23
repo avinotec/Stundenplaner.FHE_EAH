@@ -100,6 +100,8 @@ public final class CanteenModel extends EventDispatcher {
         return ourInstance;
     }
 
+    /* Utility classes have all fields and methods declared as static.
+    Creating private constructors in utility classes prevents them from being accidentally instantiated. */
     private CanteenModel() {
     }
 
@@ -109,7 +111,7 @@ public final class CanteenModel extends EventDispatcher {
 
     private static CanteenModel ourInstance;
 
-    private final Map<String, List<CanteenMenuDayVo>> mMenus = new HashMap();
+    private final HashMap<String, List<CanteenMenuDayVo>> mMenus = new HashMap();
 
     private CanteenVo[] mCanteens;
 }

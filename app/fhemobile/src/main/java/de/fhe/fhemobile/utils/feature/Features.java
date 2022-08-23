@@ -33,6 +33,11 @@ public final class Features {
     public static boolean NAVIGATION      = false;
     public static boolean JOBOFFERS       = false;
 
+    /* Utility classes have all fields and methods declared as static.
+    Creating private constructors in utility classes prevents them from being accidentally instantiated. */
+    private Features() {
+    }
+
     /**
      *
      */

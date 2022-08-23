@@ -36,7 +36,12 @@ public final class Utils {
 
     public static final String TAG = Utils.class.getSimpleName();
 
-    //correctUmlauts--------------------------------------------------------------------------------
+    /* Utility classes have all fields and methods declared as static.
+    Creating private constructors in utility classes prevents them from being accidentally instantiated. */
+	private Utils() {
+	}
+
+	//correctUmlauts--------------------------------------------------------------------------------
 
     /**
      * Replaces incorrect german umlauts in the given string
@@ -153,7 +158,4 @@ public final class Utils {
         Toast.makeText(_Context, _Text, Toast.LENGTH_SHORT).show();
     }
 
-
-
-    
 }

@@ -33,7 +33,12 @@ import de.fhe.fhemobile.utils.TimeTableFactory;
  */
 public final class FeatureFragmentFactory {
 
-    public static FeatureFragment getFeaturedFragment(final int _FeatureId) {
+    /* Utility classes have all fields and methods declared as static.
+    Creating private constructors in utility classes prevents them from being accidentally instantiated. */
+	private FeatureFragmentFactory() {
+	}
+
+	public static FeatureFragment getFeaturedFragment(final int _FeatureId) {
         final FeatureFragment fragment;
 
         switch (_FeatureId) {

@@ -86,6 +86,8 @@ public final class Endpoints {
     public static final String PARAM_SUBSCRIBED_LESSONS = "subscribedLessons";
     public static final String PARAM_CHANGES_TIME_STAMP = "timeStamp";
 
-
-
+    /* Utility classes have all fields and methods declared as static.
+    Creating private constructors in utility classes prevents them from being accidentally instantiated. */
+	private Endpoints() {
+	}
 }

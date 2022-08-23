@@ -29,7 +29,12 @@ public final class TimeTableSettings {
 
     public static final String TAG = TimeTableSettings.class.getSimpleName();
 
-    /**
+    /* Utility classes have all fields and methods declared as static.
+    Creating private constructors in utility classes prevents them from being accidentally instantiated. */
+	private TimeTableSettings() {
+	}
+
+	/**
      * Saves timetable favourite to Shared Preferences
      * @param _TimeTableId
      */

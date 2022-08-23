@@ -65,8 +65,13 @@ public final class JSONHandler {
     @NonNls
     static final String JSON_SECTION_PERSONS = "persons";
 
+    /* Utility classes have all fields and methods declared as static.
+    Creating private constructors in utility classes prevents them from being accidentally instantiated. */
+	private JSONHandler() {
+	}
 
-    //reading --------------------------------------------------------------------------------------
+
+	//reading --------------------------------------------------------------------------------------
     /**
      * Read the floor plan as json from assets
      * @param jsonFile the file name in assets

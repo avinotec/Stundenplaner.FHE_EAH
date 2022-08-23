@@ -28,4 +28,9 @@ public final class UserDefaults {
 
     
     public static final String DEFAULT_NEWS_ID = "1";
+
+	/* Utility classes have all fields and methods declared as static.
+	Creating private constructors in utility classes prevents them from being accidentally instantiated. */
+	private UserDefaults() {
+	}
 }
