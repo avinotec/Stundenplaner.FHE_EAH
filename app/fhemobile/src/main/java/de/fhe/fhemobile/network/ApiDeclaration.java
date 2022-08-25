@@ -87,9 +87,9 @@ public interface ApiDeclaration {
     @Headers({
             "Content-Type:application/json"
     })
-    @POST(Endpoints.SCHEDULE_CHANGE_SERVER)
+    @POST(Endpoints.APP_SERVER_EAH)
     Call<TimetableChangesResponse> registerTimeTableChanges(@Body RequestBody _json);
 
-    @HTTP(method="GET", path = Endpoints.SCHEDULE_CHANGE_SERVER, hasBody = true)
+    @HTTP(method="GET", path = Endpoints.APP_SERVER_EAH, hasBody = true)
     Call<TimetableChangesResponse> getTimeTableChanges(@Body RequestBody _json);
 }

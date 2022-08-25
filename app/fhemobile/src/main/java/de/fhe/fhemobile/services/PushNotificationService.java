@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2014-2019 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
+ *  Copyright (c) 2014-2022 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -30,48 +30,76 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import java.security.SecureRandom;
+import org.junit.Assert;
 
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
+
+import de.fhe.fhemobile.BuildConfig;
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.utils.Define;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 
 public class PushNotificationService extends FirebaseMessagingService {
+
 	private static final String TAG = PushNotificationService.class.getSimpleName();
-	private static String firebaseToken;
 
-	public PushNotificationService() {
-	}
-
+	private static String fcmToken;
 
 	@Override
 	public void onMessageReceived(final RemoteMessage remoteMessage) {
 		// ...
-		showNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
+		showNotification(
+				remoteMessage.getNotification().getTitle(),
+				remoteMessage.getNotification().getBody());
 		// TODO(developer): Handle FCM messages here.
 		// Not getting messages here? See why this may be: https://goo.gl/39bRNJ
 		Log.d(TAG, "From: " + remoteMessage.getFrom());
-
-
+		Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
 	}
 
 	@Override
 	public void onNewToken(@NonNull final String token) {
 		Log.d(TAG, "Refreshed token: " + token);
 
-		// If you want to send messages to this application instance or
-		// manage this apps subscriptions on the server side, send the
-		// Instance ID token to your app server.
-		//sendRegistrationToServer(token);
-
-		setFirebaseToken(token);
+		//unregister old token
+		sendRegistrationToServer(fcmToken, new ArrayList<>());
+		//set and register new token
+		setFcmToken(token);
+		sendRegistrationToServer(fcmToken, Main.getSubscribedEventSeries());
 	}
 
-	public static String getFirebaseToken() {
-		return firebaseToken;
+	public static String getFcmToken() {
+		return fcmToken;
 	}
 
-	public static void setFirebaseToken(final String firebaseToken ) {
-		PushNotificationService.firebaseToken = firebaseToken;
+	public static void setFcmToken(final String fcmToken) {
+		PushNotificationService.fcmToken = fcmToken;
+	}
+
+	/**
+	 * Register the given event series' for the given firebase token
+	 * @param eventSeriesVos List of {@link MyScheduleEventSeriesVo}s to register for
+	 */
+	public static void sendRegistrationToServer(String token, List<MyScheduleEventSeriesVo> eventSeriesVos){
+		if(BuildConfig.DEBUG) Assert.assertNotNull(fcmToken);
+		if(fcmToken != null) {
+			Main.executorService.execute(new ServerRegistrationBackgroundTask(token, eventSeriesVos));
+		}
+	}
+
+	/**
+	 * Register the {@link Main#subscribedEventSeries} for the current {@link PushNotificationService#fcmToken}
+	 */
+	public static void registerSubscribedEventSeries(){
+		if(BuildConfig.DEBUG) Assert.assertNotNull(fcmToken);
+
+		if(fcmToken != null) {
+			Main.executorService.execute(new ServerRegistrationBackgroundTask(
+					fcmToken, Main.getSubscribedEventSeries()));
+		}
 	}
 
 
@@ -106,6 +134,5 @@ public class PushNotificationService extends FirebaseMessagingService {
 		//todo: Set the intent that will fire when the user taps the notification
 		//notificationBuilder.setContentIntent(pendingIntent);
 		notificationManager.notify(new SecureRandom().nextInt(), notificationBuilder.build());
-
 	}
 }

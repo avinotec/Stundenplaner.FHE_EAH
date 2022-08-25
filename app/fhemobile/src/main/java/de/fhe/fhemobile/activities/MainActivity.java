@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
                         // Get new FCM registration token
                         String token = task.getResult();
-                        PushNotificationService.setFirebaseToken(token);
+                        PushNotificationService.setFcmToken(token);
 
                         Log.d(TAG, "Firebase Token: " + token);
                     }
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         if (bundle != null) {
             //Push-Notification
             final TimeTableChangesRequestModel request = new TimeTableChangesRequestModel(TimeTableChangesRequestModel.ANDROID_DEVICE,
-                    PushNotificationService.getFirebaseToken(),
+                    PushNotificationService.getFcmToken(),
                     new Date().getTime() - 86400000);
 
             final String json = request.toJson();

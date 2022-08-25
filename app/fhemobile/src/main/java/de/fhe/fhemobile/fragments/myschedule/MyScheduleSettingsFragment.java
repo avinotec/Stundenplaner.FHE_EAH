@@ -105,35 +105,7 @@ public class MyScheduleSettingsFragment extends FeatureFragment {
 	public void onDetach() {
 		super.onDetach();
 
-		//TODO enable Push Notifications
-		PushNotificationsRegisterAndUpdateCourses();
-	}
-
-	private void PushNotificationsRegisterAndUpdateCourses() {
-		if (!getSubscribedEventSeries().isEmpty()) {
-			final TimeTableChangesRequestModel request = new TimeTableChangesRequestModel(TimeTableChangesRequestModel.ANDROID_DEVICE, PushNotificationService.getFirebaseToken(), new Date().getTime() - 86400000);
-			String title = "";
-			String setID = "";
-
-			for (MyScheduleEventSeriesVo eventSeries : getSubscribedEventSeries()) {
-				final String eventTitle = eventSeries.getTitle();
-
-				//TODO: reconstruct to enable push notifications
-				/*final String sSetID = eventSeries.getStudyGroup().getTimeTableId();
-
-				if ((title.equals(eventTitle) && setID.equals(sSetID))) {
-
-					request.addCourse(eventSeries.getStudyGroup().getTimeTableId(), eventSeries.getEvent().getTitle());
-					title = eventTitle;
-					setID = sSetID;
-				}*/
-			}
-
-			final String json = request.toJson();
-			Log.d(TAG, "onDetach: " + json);
-
-			NetworkHandler.getInstance().fetchMySchedule();
-		}
+		PushNotificationService.registerSubscribedEventSeries();
 	}
 
 	static void showConnectionErrorToast() {

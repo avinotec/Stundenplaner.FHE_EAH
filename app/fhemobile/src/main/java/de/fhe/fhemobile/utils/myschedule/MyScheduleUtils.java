@@ -28,6 +28,7 @@ import org.junit.Assert;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -397,6 +398,22 @@ public final class MyScheduleUtils {
 		}
 		updatedEventSeriesList.addAll(eventSeriesToAdd);
 		return updatedEventSeriesList;
+	}
+
+	/**
+	 * Get a list of all event set IDs contained in the given event series'
+	 * @return List of event set ID strings
+	 */
+	public static ArrayList<String> collectEventSetIds(List<MyScheduleEventSeriesVo> eventSeriesVos){
+		ArrayList<String> eventSetIds = new ArrayList<>();
+
+		for(final MyScheduleEventSeriesVo eventSeries : eventSeriesVos) {
+			eventSetIds.addAll(eventSeries.getEventSetIds());
+		}
+		//remove duplicates
+		eventSetIds = new ArrayList<>(new HashSet<>(eventSetIds));
+
+		return eventSetIds;
 	}
 
 }

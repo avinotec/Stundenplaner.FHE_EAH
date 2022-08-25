@@ -34,6 +34,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
 import de.fhe.fhemobile.comparator.MyScheduleEventComparator;
@@ -48,8 +50,12 @@ import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
  */
 public class Main extends Application {
 
-    private static final String LOG_TAG = Main.class.getSimpleName();
+    private static final String TAG = Main.class.getSimpleName();
     private static Application mAppContext;
+
+
+    //Threading
+    public static final ExecutorService executorService = Executors.newFixedThreadPool(2);
 
 
     //My Schedule
@@ -115,6 +121,10 @@ public class Main extends Application {
         return subscribedEventSeries;
     }
 
+    /**
+     * Get a sorted list of all events contained in the subscribed event series'
+     * @return List of {@link MyScheduleEventVo}, sorted by start datetime
+     */
     public static ArrayList<MyScheduleEventVo> getEventsOfAllSubscribedEventSeries(){
         final ArrayList<MyScheduleEventVo> eventList = new ArrayList<>();
 
