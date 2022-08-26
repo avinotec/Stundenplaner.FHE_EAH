@@ -19,12 +19,15 @@ package de.fhe.fhemobile.activities;
 import static de.fhe.fhemobile.Main.getEventsOfAllSubscribedEventSeries;
 import static de.fhe.fhemobile.Main.getAppContext;
 import static de.fhe.fhemobile.Main.getSubscribedEventSeries;
+import static de.fhe.fhemobile.Main.setLastUpdateSubscribedEventSeries;
 import static de.fhe.fhemobile.Main.subscribedEventSeries;
 import static de.fhe.fhemobile.utils.Define.MySchedule.PREF_SUBSCRIBED_EVENTSERIES;
 import static de.fhe.fhemobile.utils.Define.MySchedule.SP_MYSCHEDULE;
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,6 +44,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -61,9 +66,6 @@ import de.fhe.fhemobile.fragments.imprint.ImprintFragment;
 import de.fhe.fhemobile.fragments.joboffers.JobOffersFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdata.SemesterDataWebViewFragment;
-import de.fhe.fhemobile.models.timetablechanges.TimeTableChangesRequestModel;
-import de.fhe.fhemobile.network.TimetableChangeCallback;
-import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.Utils;
@@ -104,7 +106,36 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
+        //Google Play Services needed for Firebase Messaging
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        final int googlePlayServicesCheck =
+                googleApiAvailability.isGooglePlayServicesAvailable(this);
 
+        switch (googlePlayServicesCheck){
+            case ConnectionResult.SUCCESS:
+                break;
+            case ConnectionResult.SERVICE_MISSING:
+            case ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED:
+            case ConnectionResult.SERVICE_DISABLED:
+                if(googleApiAvailability.isUserResolvableError(googlePlayServicesCheck)){
+                    //display a dialog that allows users to download the APK from the
+                    // Google Play Store or enable it in the device's system settings.
+                    Dialog dialog = googleApiAvailability.getErrorDialog(this, googlePlayServicesCheck, 9000);
+                    dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialogInterface) {
+                            MainActivity.this.finish();
+                        }
+                    });
+                    dialog.show();
+                } else {
+                    Toast.makeText(this, "This device is not supported.",
+                            Toast.LENGTH_LONG).show();
+                    finish();
+                }
+        }
+
+        //code from Firebase Documentation
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override
@@ -121,19 +152,6 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                         Log.d(TAG, "Firebase Token: " + token);
                     }
                 });
-
-
-        final Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            //Push-Notification
-            final TimeTableChangesRequestModel request = new TimeTableChangesRequestModel(TimeTableChangesRequestModel.ANDROID_DEVICE,
-                    PushNotificationService.getFcmToken(),
-                    new Date().getTime() - 86400000);
-
-            final String json = request.toJson();
-
-            NetworkHandler.getInstance().getTimeTableChanges(json, new TimetableChangeCallback());
-        }
     }
 
     @Override
@@ -302,6 +320,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     public static void setSubscribedEventSeriesAndUpdateAdapters(final List<MyScheduleEventSeriesVo> newSubscribedEventSeries){
         subscribedEventSeries.clear();
         subscribedEventSeries.addAll(newSubscribedEventSeries);
+        setLastUpdateSubscribedEventSeries(new Date());
 
         saveSubscribedEventSeriesToSharedPreferences();
 
