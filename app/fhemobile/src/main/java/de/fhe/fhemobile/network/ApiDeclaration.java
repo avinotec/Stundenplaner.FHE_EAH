@@ -21,7 +21,6 @@ import java.util.Map;
 
 import de.fhe.fhemobile.vos.myschedule.ModuleVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSetVo;
-import de.fhe.fhemobile.vos.timetablechanges.TimetableChangesResponse;
 import de.fhe.fhemobile.vos.CafeAquaResponse;
 import de.fhe.fhemobile.vos.WeatherResponse;
 import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
@@ -32,13 +31,8 @@ import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
 import de.fhe.fhemobile.vos.semesterdata.SemesterDataVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableDialogResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
-import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.HTTP;
-import retrofit2.http.Headers;
-import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -83,13 +77,4 @@ public interface ApiDeclaration {
 
     @GET(Endpoints.MODULE + "{" + Endpoints.PARAM_MODULE_ID + "}")
     Call<ModuleVo> fetchModule(@Path(Endpoints.PARAM_MODULE_ID) String _ModuleId);
-
-    @Headers({
-            "Content-Type:application/json"
-    })
-    @POST(Endpoints.APP_SERVER_EAH)
-    Call<TimetableChangesResponse> registerTimeTableChanges(@Body RequestBody _json);
-
-    @HTTP(method="GET", path = Endpoints.APP_SERVER_EAH, hasBody = true)
-    Call<TimetableChangesResponse> getTimeTableChanges(@Body RequestBody _json);
 }
