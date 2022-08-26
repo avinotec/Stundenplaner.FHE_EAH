@@ -446,34 +446,6 @@ public final class NetworkHandler {
 		}
 	}
 
-
-
-	/**
-	 *
-	 * @param json
-	 * @param _Callback
-	 */
-	public void registerTimeTableChanges(final String json, final Callback<TimetableChangesResponse> _Callback){
-		Assert.assertTrue( mApiErfurt != null );
-		//okhttp 4.x final RequestBody body =RequestBody.create( json, MediaType.parse("application/json"));
-		//okhttp 3.12 flip parameters
-		final RequestBody body = RequestBody.create(json, MediaType.parse("application/json"));
-		mApiErfurt.registerTimeTableChanges(body).enqueue(_Callback);
-	}
-
-	/**
-	 *
-	 * @param json
-	 * @param _Callback
-	 */
-	public void getTimeTableChanges(final String json, final Callback<TimetableChangesResponse>_Callback){
-		Assert.assertTrue( mApiErfurt != null );
-		//okhttp 4.x final RequestBody body =RequestBody.create( json, MediaType.parse("application/json"));
-		//okhttp 3.12 flip parameters
-		final RequestBody body = RequestBody.create( json, MediaType.parse("application/json"));
-		mApiErfurt.getTimeTableChanges(body).enqueue(_Callback);
-	}
-
 	/**
 	 *
 	 * @param _Callback
