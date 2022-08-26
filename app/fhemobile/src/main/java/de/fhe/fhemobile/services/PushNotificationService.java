@@ -39,6 +39,7 @@ import java.util.List;
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 
@@ -50,11 +51,15 @@ public class PushNotificationService extends FirebaseMessagingService {
 
 	@Override
 	public void onMessageReceived(final RemoteMessage remoteMessage) {
-		// ...
+
 		showNotification(
 				remoteMessage.getNotification().getTitle(),
 				remoteMessage.getNotification().getBody());
-		// TODO(developer): Handle FCM messages here.
+
+		// todo: fetch My Schedule here? or wait for user to open app
+		//  and maybe also wait for pressing the update button?
+		//NetworkHandler.getInstance().fetchMySchedule();
+
 		// Not getting messages here? See why this may be: https://goo.gl/39bRNJ
 		Log.d(TAG, "From: " + remoteMessage.getFrom());
 		Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
@@ -69,10 +74,6 @@ public class PushNotificationService extends FirebaseMessagingService {
 		//set and register new token
 		setFcmToken(token);
 		sendRegistrationToServer(fcmToken, Main.getSubscribedEventSeries());
-	}
-
-	public static String getFcmToken() {
-		return fcmToken;
 	}
 
 	public static void setFcmToken(final String fcmToken) {

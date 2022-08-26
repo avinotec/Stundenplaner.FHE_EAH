@@ -103,6 +103,10 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 					activity.startActivity(intent);
 					return true;
 				}
+				if (menuItem.getItemId() == R.id.action_update){
+					NetworkHandler.getInstance().fetchMySchedule();
+					mView.setLastUpdatedTextView();
+				}
 
 				return false;
 			}
@@ -120,6 +124,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 
 		//Set text view to show if list is empty
 		mView.setEmptyCalendarView();
+		mView.setLastUpdatedTextView();
 
 		return mView;
 	}
@@ -139,6 +144,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 		super.onResume();
 
 		NetworkHandler.getInstance().fetchMySchedule();
+		mView.setLastUpdatedTextView();
 	}
 
 	/**

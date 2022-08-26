@@ -135,8 +135,23 @@ public class Main extends Application {
         return eventList;
     }
 
+    /**
+     * Set date {@link Main#subscribedEventSeries} had been last updated,
+     * and save it to shared preferences
+     * @param lastUpdateSubscribedEventSeries The {@link Date}
+     */
     public static void setLastUpdateSubscribedEventSeries(final Date lastUpdateSubscribedEventSeries) {
         Main.lastUpdateSubscribedEventSeries = lastUpdateSubscribedEventSeries;
+
+        final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences(SP_MYSCHEDULE, Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        if(Main.lastUpdateSubscribedEventSeries == null){
+            editor.putLong(Define.MySchedule.PREF_DATA_LAST_UPDATED, -1);
+        } else{
+            editor.putLong(Define.MySchedule.PREF_DATA_LAST_UPDATED,
+                    Main.lastUpdateSubscribedEventSeries.getTime());
+        }
+        editor.apply();
     }
 
     public static Date getLastUpdateSubscribedEventSeries() {
