@@ -18,46 +18,118 @@
 
 declare(strict_types=1);
 
+const API_BASE_URL = "https://stundenplanung.eah-jena.de/api/mobileapp/";
+const ENDPOINT_MODULE = "v1/module";
+const ENDPOINT_MODULE_DETAIL = "v1/module/"; //+{id}
+
 /* wird vom Cron-Job aus aufgerufen */
 
 require_once 'fcm_connect_db.php';
-require_once 'server.php';
+//require_once 'server.php';
+require_once 'utils.php';
 
 $debug = 0;
-
 error_log(print_r("Begin Script fcm_update_and_send.php", TRUE));
 
-// -------------- Get data from database ----------------------------------
-$queryEventSetIds = "SELECT evenset_id FROM fcm_user GROUP BY evenset_id";
-$sqlResult = $con->query($queryEventSetIds);
+
+// -------------- Detect changed event sets and update database ----------------------------------
+
+//fetch al available module ids
+$url = API_BASE_URL . ENDPOINT_MODULE;
+// second parameter must be true to enable key-value iteration
+$module_ids = json_decode(file_get_contents($url), true);
+
+//fetch data of each module
+echo "<p> Module Ids (" . count($module_ids) . "):</b><br>";
+$module_ids = array_slice($module_ids, 0, 5, true); //for debug: reduce array to size 5
+foreach($module_ids as $key=>$module_id){
+    echo $module_id . ", ";
+    fetchModuleAndUpdateDatabase($module_id, $con);
+}
+echo "</p>";
+
+// -------------- Get subscribed event set IDS from database ----------------------------------
+$resultEventSetIds = $con->query("SELECT DISTINCT eventset_id FROM fcm_user");
 // collect eventset IDs from database into array
 $evenset_ids = array();
-echo"\n\Eventset ids: \n\n";
-if($sqlResult->num_rows > 0) {
-	while($row = $sqlResult->fetch_assoc()) {
-		echo "id: ";
-		echo $row['evenset_id'];
-		echo "\n";
-		array_push($evenset_ids, $row['evenset_id']);
+echo "<p>EventSet ids:</b><br>";
+if($resultEventSetIds != null) {
+	while($row = $resultEventSetIds->fetch_assoc()) {
+		echo $row['eventset_id'] . "<br>";
+		array_push($evenset_ids, $row['eventset_id']);
 	}
+	$resultEventSetIds->close();
+
+} else {
+	echo "No Event Set Ids found in fcm_user";
 }
-$sqlResult->close();
-
-// -------------- Get changed eventsets from database ----------------------------------
-//todo: detect changes
-
-$queryModuleIds = "SELECT UNIQUE module_id FROM modules";
-$sqlResultModuleIds = $con->query($queryEventSetIds);
-$sqlResultModuleIds->close();
-
-//close sql connection
-$con->close();
-
+echo "</p>";
 
 
 // ---------------------------------------------------------------------------
 // ---------------- functions ------------------------------------------------
 // ---------------------------------------------------------------------------
+
+function fetchModuleAndUpdateDatabase(&$module_id, &$con){
+	$module_url = API_BASE_URL . ENDPOINT_MODULE_DETAIL . $module_id;
+	// second parameter must be true to enable key-value iteration
+	$module_data = json_decode(file_get_contents($module_url), true);
+
+    if(!array_key_exists("dataActivity", $module_data)){ return; }
+
+	$fetchedEventSetIds = array_keys($module_data["dataActivity"]);
+	$resultLocalEventSetIds = $con->query("SELECT eventset_id FROM timetable_data WHERE module_id = `$module_id`");
+
+	if($resultLocalEventSetIds != null){
+	    //DELTED EVENT SETS
+	    $deletedEventSetIds = array_diff($resultLocalEventSetIds, $fetchedEventSetIds);
+    	echo "Deleted Event Sets: " . $deletedEventSetIds;
+    	foreach($deletedEventSetIds as $deletedEventSetId){
+    	    $con->query("DELETE FROM timetable_data WHERE eventset_id = `$deletedEventSetId`");
+    	    //todo: delete subscribed event set in fcm_user and notify user
+    	}
+
+        //CHANGED and ADDED EVENT SETS
+    	// check each event set of the module for changes
+    	foreach ($module_data["dataActivity"] as $eventset_id=>$eventset){
+    		$fetched_checksum = hash("md5", json_encode($eventset));
+    		//get local event set
+    		$queryEventSet = "SELECT * FROM timetable_data WHERE eventset_id = `$eventset_id`";
+    		$resultEventSet = $con->query($queryEventSet);
+
+    		if ($resultEventSet != null && $resultEventSet -> num_rows > 0){
+    		    //compare local vs fetched event set checksum
+    			if ($resultEventSet[0]["md5_checksum"] !== $fetched_checksum){
+    				echo "Eventset " . $resultEventSet[0]["eventset_id"] . " has changed since " . $resultEventSet[0]["last_changed"];
+    				// update database
+    				$con->query("UPDATE timetable_data SET md5_checksum = `$fetched_checksum`
+    							WHERE eventset_id = `$eventset_id`");
+    			}
+    		}
+    		//no local event set with this eventsetID found --> event set is new and has to be added
+    		else {
+    		    $eventseries_name = getEventSeriesName($eventset["activityName"]);
+    			$con->query("INSERT INTO timetable_data(`eventset_id`, `eventseries_name`, `module_id`, `md5_checksum`, `last_changed`)
+    			    		VALUES ('$eventset_id', '$eventseries_name', '$module_id', '$fetched_checksum', SYSDATE())");
+    			//TODO: how to detect and notify users when an events set has been added to an subscribed event series
+    		}
+
+    		$resultEventSet->close();
+	    }
+	}
+	//new module -> needs to be added
+	else{
+	    foreach ($module_data["dataActivity"] as $eventset_id=>$eventset){
+	        $eventseries_name = getEventSeriesName($eventset["activityName"]);
+	        $fetched_checksum = hash("md5", json_encode($eventset));
+	        //note: use ' for the values not ` to avoid "unknown column in field list" error in MySQL
+            $con->query("INSERT INTO timetable_data(`eventset_id`, `eventseries_name`, `module_id`, `md5_checksum`, `last_changed`)
+                		VALUES ('$eventset_id', '$eventseries_name', '$module_id', '$fetched_checksum', SYSDATE())");
+	    }
+	}
+
+}
+
 function sendNotification( & $evenset_id, & $con, & $label) {
 	global $debug;
 	
@@ -65,17 +137,17 @@ function sendNotification( & $evenset_id, & $con, & $label) {
 
 	$sql3 = "SELECT token, os FROM fcm_nutzer WHERE evenset_id = '".$evenset_id."'";
 	
-	$sqlResult3 = $con->query($sql3);
+	$result3 = $con->query($sql3);
 	$tokenArray = array(array(), array());
 	
 	//Alle Tokens auslesen und in $tokens speichern
-	if ($sqlResult3->num_rows > 0) {
+	if ($result3->num_rows > 0) {
 		
 	    //output data of each row
 	    $count = 0;
 	    echo("count: ");
 	    echo(count($tokenArray));
-	    while ($row = $sqlResult3->fetch_assoc()) {
+	    while ($row = $result3->fetch_assoc()) {
 		    echo "Token hinzufügen: $row[os] \n";
 		    $tokenArray[$count][0] = $row["token"];
 		    $tokenArray[$count][1] = $row["os"];  
@@ -119,7 +191,7 @@ function sendNotification( & $evenset_id, & $con, & $label) {
 	} else{
 	    echo "Es sind keine Tokens für die vorlesungs_id <b>$evenset_id</b> vorhanden!<br>\n";
 	}
-	$sqlResult3->close();
+	$result3->close();
 }
 
 //SendGoogleCloudMessage
@@ -164,4 +236,3 @@ function sendGCM( & $registration_ids, & $label) {
     return $result;
 }
 error_log(print_r("Script fcm_update_and_send.php Ende", TRUE));
-?>

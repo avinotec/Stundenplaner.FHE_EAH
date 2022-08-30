@@ -18,22 +18,8 @@
 
 declare(strict_types=1);
 
-const DB_HOST = 'localhost';
-const DB_USER = 'stundenplanuser';
-const DB_PASSWORD = 'stundenplan2022';
-const DB_NAME = 'stundenplan';
 
-// Aufbau DB Connection
-$con = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
-/* check connection */
-if (mysqli_connect_errno()) {
-    printf("Connect failed: %s\n", mysqli_connect_error());
-    exit();
-}
-
-/* change character set to utf8 */
-if (!$con->set_charset("utf8")) {
-	printf("Error loading character set utf8: %s\n", $mysqli->error);
-	exit();
+function getEventSeriesName($event_title){
+    $eventseries_name = preg_replace("/\.\d+$/", "", $event_title);
+    return $eventseries_name;
 }

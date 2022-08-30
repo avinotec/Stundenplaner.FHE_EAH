@@ -63,23 +63,53 @@ print_r($_REQUEST);
 //BSP SQL-Injection
 //$login = $this->mysqli->real_escape_string( $login ) ;
 
-//Get token and subscriptions send from App
-// Alle übergebenen Parameter entwerten, um SQL-Injections zu unterbinden.
-$fcmToken = htmlentities( $_REQUEST["fcm_token"]??null);
-$subscribedEventSets = htmlentities( $_REQUEST["eventset_ids"]??null);
+//Get os
+const ANDROID = "android";
+const IOS = "ios";
 
-if(!is_null($subscribedEventSets) && !is_null($fcmToken) ){
-	$subscribedEventSetsArray = json_decode($subscribedEventSets, true);	
-} else {
-	error_log(print_r("subscribedEventSetId or fcmToken is null!", TRUE));
-	echo "subscribedEventSetId or fcmToken is null!";
-	return "subscribedEventSetId or fcmToken is null!";
+if (isset($_REQUEST['os']))
+	$os = htmlentities($_REQUEST['os']);
+
+// Plausibilisierung der Apps
+if ($os == ANDROID || $os == IOS)
+	; // ok
+else {
+	error_log(print_r("OS-Type: ".$os, TRUE));
+	exit;
 }
-/*
-error_log("#---->");
-error_log(print_r('Token: '.$fcmToken, TRUE));
-error_log("<----#");
-*/
+
+
+if ($os == ANDROID) { 
+	//Get token and subscriptions send from App
+	// Alle übergebenen Parameter entwerten, um SQL-Injections zu unterbinden.
+	$fcmToken = htmlentities( $_REQUEST["fcm_token"]??null);
+	$subscribedEventSets = htmlentities( $_REQUEST["eventset_ids"]??null);
+
+	if(!is_null($subscribedEventSets) && !is_null($fcmToken) ){
+		$subscribedEventSetsArray = json_decode($subscribedEventSets, true);	
+	} else {
+		error_log(print_r("subscribedEventSetId or fcmToken is null!", TRUE));
+		echo "subscribedEventSetId or fcmToken is null!";
+		return "subscribedEventSetId or fcmToken is null!";
+	}
+	/*
+	error_log("#---->");
+	error_log(print_r('Token: '.$fcmToken, TRUE));
+	error_log("<----#");
+	*/
+	
+} else if($os == IOS){
+	/* //Code aus Hochschule Hof
+	$entitybody = file_get_contents("php://input");
+	$fullJSON = json_decode($entitybody, true);
+	$lectureArray = $fullJSON["vorlesung_id"]??null;
+	$pushToken = $fullJSON["fcm_token"]??null;
+	$language = $fullJSON["language"]??null; */
+} else {
+	error_log(print_r("Keine OS Zuordnung!", TRUE));
+	echo "Keine OS Zuordnung!";
+	return("Keine OS Zuordnung!");
+}
 
 
 // Check if a null value is given, to prevent null entries in the database.
@@ -97,7 +127,7 @@ if(is_null($subscribedEventSetsArray) || is_null($fcmToken)){
 // ----------------- DB entry ----------------------------------------------
 
 //Clear database from the given token
-$sqldelete = "DELETE FROM fcm_user WHERE token = \"$fcmToken\"";
+$sqldelete = "DELETE FROM fcm_user WHERE token = \"$fcmToken\""; /* AND os = \"$os\"*/
 $con->query($sqldelete);
 
 //Add token and subscribed eventset IDs to database to register user
@@ -111,6 +141,11 @@ for ($i = 0; $i < count($subscribedEventSetsArray); $i++) {
 	$stmt = $con->prepare("INSERT INTO fcm_user (token, eventset_id) VALUES (?, ?)");
 	// ss stands for the sequence of string and integer variables.
 	$stmt->bind_param('ss', $fcmToken, $activity_id);
+	/* //Code der Hochschule Hof
+	$stmt = $con->prepare("INSERT INTO fcm_nutzer (token, vorlesung_id, os, language) VALUES (?, ?, ?, ?)");
+	// ssis stands for the sequence of string and integer variables.
+	$stmt->bind_param('ssis', $pushToken, $vorlesung_id, $os, $language);
+	*/
 
 	$stmt->execute();
 }

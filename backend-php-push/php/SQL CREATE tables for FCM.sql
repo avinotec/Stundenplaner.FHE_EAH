@@ -9,9 +9,10 @@ USE stundenplan;
 DROP TABLE IF EXISTS `fcm_user`;
 
 CREATE TABLE `fcm_user` (
-  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `token` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `eventset_id` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'zusammengehörige Menge von Veranstaltungen'
+  `id` int AUTO_INCREMENT PRIMARY KEY NOT NULL ,
+  `token` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Firebase Messaging Token',
+  `eventseries_name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Event series the event set belongs to',
+  `eventset_id` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -24,45 +25,15 @@ ALTER TABLE `fcm_user`
 
 
 --
--- Tabellenstruktur für Tabelle `timetable_events`
+-- Tabellenstruktur für Tabelle `timetable_data`
 --
-DROP TABLE IF EXISTS `timetable_events`;
+DROP TABLE IF EXISTS `timetable_data`;
 
-CREATE TABLE `timetable_events` (
-  `title` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `eventset_id` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `startdatetime` INT UNSIGNED NOT NULL,
-  `enddatetime` INT UNSIGNED NOT NULL,
-  `lecturer_id` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
-  `location_id` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
-  `changed` BOOLEAN
+CREATE TABLE `timetable_data` (
+  `eventset_id` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci PRIMARY KEY NOT NULL,
+  `eventseries_name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Event series the event set belongs to',
+  `module_id` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Module the event set belongs to',
+  `md5_checksum` VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci COMMENT 'Checksum of the event set\'s data',
+  `last_changed` TIMESTAMP
   
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Indizes für die Tabelle `timetable_events`
---
-ALTER TABLE `timetable_events`
-  ADD INDEX `title` (`title`),
-  ADD INDEX `eventset_id` (`eventset_id`),
-  ADD INDEX `startdatetime` (`startdatetime`),
-  ADD INDEX `enddatetime` (`enddatetime`);
-
-
-
---
--- Tabellenstruktur für Tabelle `modules`
---
-DROP TABLE IF EXISTS `modules`;
-
-CREATE TABLE `modules` (
-  `module_id` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `eventset_id` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci
-  
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Indizes für die Tabelle `modules`
---
-ALTER TABLE `modules`
-  ADD INDEX `module_id` (`module_id`);
