@@ -29,7 +29,7 @@ require_once 'fcm_connect_db.php';
 require_once 'utils.php';
 
 $debug = 0;
-error_log(print_r("Begin Script fcm_update_and_send.php", TRUE));
+error_log(print_r("Begin Script fcm_update_and_send.php", true));
 
 
 // -------------- Detect changed event sets and update database ----------------------------------
@@ -132,17 +132,17 @@ function fetchModuleAndUpdateDatabase(&$module_id, &$con){
 
 function sendNotification( & $evenset_id, & $con, & $label) {
 	global $debug;
-	
+
 	/* label: Beschreibung der Änderung, mehrsprachig, t.b.d. */
 
 	$sql3 = "SELECT token, os FROM fcm_nutzer WHERE evenset_id = '".$evenset_id."'";
-	
+
 	$result3 = $con->query($sql3);
 	$tokenArray = array(array(), array());
-	
+
 	//Alle Tokens auslesen und in $tokens speichern
 	if ($result3->num_rows > 0) {
-		
+
 	    //output data of each row
 	    $count = 0;
 	    echo("count: ");
@@ -150,39 +150,39 @@ function sendNotification( & $evenset_id, & $con, & $label) {
 	    while ($row = $result3->fetch_assoc()) {
 		    echo "Token hinzufügen: $row[os] \n";
 		    $tokenArray[$count][0] = $row["token"];
-		    $tokenArray[$count][1] = $row["os"];  
+		    $tokenArray[$count][1] = $row["os"];
 	    	$count++;
 	    }
 		echo("for wird ausgeführt: $count\n");
 		//Nachricht senden mit jedem Token aufrufen. Unterscheidung zwischen 0 = Android/GCM und 1 = iOS
 		for($i=0; $i < $count; $i++) {
-			
-			if ($debug) error_log(print_r("++++ PUSH for an os type ++++ <br>", TRUE));
-			echo("++++ PUSH as echo ++++<br>\n");                            
-			
+
+			if ($debug) error_log(print_r("++++ PUSH for an os type ++++ <br>", true));
+			echo("++++ PUSH as echo ++++<br>\n");
+
 			// Android
-			if ($tokenArray[$i][1] == 0){error_log(print_r("PUSH FCM: " . $evenset_id . " - ".$label." - for token: ".$tokenArray[$i][0], TRUE));
+			if ($tokenArray[$i][1] == 0){error_log(print_r("PUSH FCM: " . $evenset_id . " - ".$label." - for token: ".$tokenArray[$i][0], true));
 				try {
 					// Token, Label
 					sendGCM($tokenArray[$i][0], $label);
 				} catch (Exception $e) {
-					error_log(print_r("catch exception e: ".$e, TRUE));
+					error_log(print_r("catch exception e: ".$e, true));
 				}
 			}
 			// IOS
 			/*else if ($tokenArray[$i][1] == 1)
 			{
-				if ($debug) error_log(print_r("PUSH iOS: " . $evenset_id . " - ".$label." - for token: ".$tokenArray[$i][0], TRUE));     			
+				if ($debug) error_log(print_r("PUSH iOS: " . $evenset_id . " - ".$label." - for token: ".$tokenArray[$i][0], true));
 				try {
 					// Titel, Body, Token
 					sendIosPush("Neue Änderung für das Fach", $label, $tokenArray[$i][0]);
 				} catch (Exception $e) {
-					error_log(print_r("catch exception e: ".$e, TRUE));
+					error_log(print_r("catch exception e: ".$e, true));
 				}
 			}*/
 			else
 			{
-				error_log(print_r("++++ PUSH wrong OS!! ++++<br>\n", TRUE));	     			
+				error_log(print_r("++++ PUSH wrong OS!! ++++<br>\n", true));
 				exit;
 			}
 			echo("Token: " . $tokenArray[$i][0]."<br>");
@@ -212,7 +212,7 @@ function sendGCM( & $registration_ids, & $label) {
         'notification' => array('title' => $title, 'body' => $message, 'sound' => 'default')
     );
 
-    $fields = json_encode ( $fields ); 
+    $fields = json_encode ( $fields );
 
     //header data
     $headers = array ('Authorization: key='.$server_key, 'Content-Type: application/json');
@@ -235,4 +235,4 @@ function sendGCM( & $registration_ids, & $label) {
     //return output
     return $result;
 }
-error_log(print_r("Script fcm_update_and_send.php Ende", TRUE));
+error_log(print_r("Script fcm_update_and_send.php Ende", true));

@@ -18,8 +18,18 @@
 
 declare(strict_types=1);
 
+/**
+ * getEventSeriesName
+ *
+ * @param  string $event_title
+ * @return string
+ */
+function getEventSeriesName( string $event_title ) : string {
 
-function getEventSeriesName($event_title){
+	//TODO
+	// origingal string:
+	// we filter out ...
     $eventseries_name = preg_replace("/\.\d+$/", "", $event_title);
-    return $eventseries_name;
+
+	return $eventseries_name;
 }

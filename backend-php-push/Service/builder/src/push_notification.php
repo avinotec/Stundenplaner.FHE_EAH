@@ -1,9 +1,7 @@
 <?php
-
-
 /*
   ~ Copyright (c) 2019 EAH Jena
-  ~ This program is free software: you can redistribute it and/or modify
+  ~ This program is free software: you can redistribute it &&/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
@@ -28,25 +26,26 @@ Oberfunktion
 #####################
 */
 
-const PUSH_NOTIFICATION_ANDERUNG = 1 ;
+const PUSH_NOTIFICATION_ANDERUNG = 1;
 const PUSH_NOTIFICATION_DELETE = 2;
 const PUSH_NOTIFICATION_ADD = 3 ;
 const PUSH_NOTIFICATION_UNKNOWN = 4;
 
-function send_push_notifications($module_id, $event_id, $set_splus_key, $grund_aenderung, $neue_event_daten, $alte_event_daten) : void
+function send_push_notifications(string $module_id, string $event_id, string $set_splus_key, string $grund_aenderung, string $neue_event_daten,
+	string $alte_event_daten) : void
 {
     global $firebase_client;
     $DB = new Db(DBHost, DBPort, DBName, DBUser, DBPassword);
-    // Den Grund der Änderung ID bilden, um in der Datenbank und/oder App besser damit zu handieren.
+    // Den Grund der Änderung ID bilden, um in der Datenbank und/oder App besser damit zu h&&ieren.
     // ID :
     // 1 -> Änderung
     // 2 -> Entfernung
     // 3 -> Hinzufügen
     // 4 -> Unbekannt
-    // Prüfen ob $grund_aenderung ein Array ist und ein 0tes Element verfügbar ist. 
+    // Prüfen ob $grund_aenderung ein Array ist und ein 0tes Element verfügbar ist.
     if (is_array($grund_aenderung)) {
         // Date, startTime, endTime, room
-        if (in_array("Datum", $grund_aenderung) or in_array("Startzeit", $grund_aenderung) or in_array("Endzeit", $grund_aenderung) or in_array("Raum", $grund_aenderung)) {
+        if (in_array("Datum", $grund_aenderung) || in_array("Startzeit", $grund_aenderung) || in_array("Endzeit", $grund_aenderung) || in_array("Raum", $grund_aenderung)) {
             $grund_aenderung_id = PUSH_NOTIFICATION_ANDERUNG;
         } // Entfernt
         elseif (in_array("Event Entfernt", $grund_aenderung)) {
@@ -89,9 +88,9 @@ function send_push_notifications($module_id, $event_id, $set_splus_key, $grund_a
         json_encode($neue_event_daten),
         $set_splus_key
     ));
-    #####################
-    # Push Benachrichtigung Start
-    #####################   
+    // #####################
+    // # Push Benachrichtigung Start
+    // #####################
 
     // Alle Device Ids aus der DB holen, welche für diese Push B. relevant sind
 
@@ -109,12 +108,12 @@ function send_push_notifications($module_id, $event_id, $set_splus_key, $grund_a
             $log->write("Push an _ {$title} - : " . $deviceId_id_string , DBName . md5(DBPassword));
 
             // Nur ein Änderungsgrund - wenn $grund_aenderung Anzahl = 1
-            if (isset($grund_aenderung) AND is_array($grund_aenderung) AND count($grund_aenderung) == PUSH_NOTIFICATION_ANDERUNG) {
+            if (isset($grund_aenderung) && is_array($grund_aenderung) && count($grund_aenderung) == PUSH_NOTIFICATION_ANDERUNG) {
                 $msg_title = 'Änderung einer Veranstaltung';
                 $msg_body = "{$title} - {$date}. Grund: {$grund_aenderung[0]}";
             }
             // Mehre Änderungsgründe
-            elseif (isset($grund_aenderung) AND is_array($grund_aenderung) AND count($grund_aenderung) >= PUSH_NOTIFICATION_DELETE) {
+            elseif (isset($grund_aenderung) && is_array($grund_aenderung) && count($grund_aenderung) >= PUSH_NOTIFICATION_DELETE) {
                 // implode des Arrays
                 $send_string  = implode(", ", $grund_aenderung);
                 $msg_title = 'Änderung einer Veranstaltung';
@@ -136,7 +135,7 @@ function send_push_notifications($module_id, $event_id, $set_splus_key, $grund_a
             //Nachricht senden
             $response = $firebase_client->send($notification);
 
-            
+
             $log->write("Response: " . json_encode($response) , DBName . md5(DBPassword));
         }
 
@@ -151,12 +150,12 @@ Unterfunktionen
 */
 
 // Diese Funktion holt alle Device Ids, welche ein gewisses Modul abonniert hat.
-private function hol_alle_device_ids_fuer_modul(String $module_title, String $set_splus_key) : array {
+function hol_alle_device_ids_fuer_modul(String $module_title, String $set_splus_key) : array {
     // neue DB Con
     $DB               = new Db(DBHost, DBPort, DBName, DBUser, DBPassword);
     $encryption_class = new Encryption();
     // Hol alle Device IDs aus der DB, welche von der Änderung betroffen sind
-    $result           = $DB->query("SELECT device.device_id,device.os_id FROM device INNER JOIN device_module ON device.id = device_module.device_id WHERE device_module.set_splus_key = ? AND LOCATE(device_module.module_event_name,?)>0", array(
+    $result           = $DB->query("SELECT device.device_id,device.os_id FROM device INNER JOIN device_module ON device.id = device_module.device_id WHERE device_module.set_splus_key = ? && LOCATE(device_module.module_event_name,?)>0", array(
         $set_splus_key,
         $module_title
     ));
@@ -164,7 +163,7 @@ private function hol_alle_device_ids_fuer_modul(String $module_title, String $se
     // Check, ob es erfolgreiche Treffer gibt
     // Wenn ja wird das $return_array mit den Device Ids gefüllt
     $return_array = array();
-    if (isset($result) AND is_array($result) AND count($result) > 0) {
+    if (isset($result) && is_array($result) && count($result) > 0) {
 
         foreach ($result as $num => $data) {
             $return_array[] = $encryption_class->decryptString($data['device_id']);

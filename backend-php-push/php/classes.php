@@ -19,14 +19,17 @@
 declare(strict_types=1);
 
 
+/**
+ * Course
+ */
 class Course {
 
-    var $course;
-    var $year;
-    var $labels;
-    var $semester;
-    
-    function __construct($course, $year ,$de, $en) {
+    private string $course;
+    private int $year;
+    private string $labels;
+    private int $semester;
+
+    public function __construct(string $course, int $year, $de, $en) {
         $this->course=$course;
         $this->year=$year;
         if(trim($en)==false){
@@ -35,23 +38,44 @@ class Course {
         $this->labels=array("de"=>$de, "en"=>$en);
         $this->semester=array();
     }
-    
-    function addSemester($semester){
+
+    /**
+     * addSemester
+     *
+     * @param  mixed $semester
+     * @return void
+     */
+    public function addSemester(int $semester) : void {
         $this->semester=$semester;
     }
 }
 
+/**
+ * MyScheduleEvent
+ */
 class MyScheduleEvent {
     var $eventset_id;
     var $title;
-    var $studyGroups; 
-    var $startDateTime; 
-    var $endDateTime;  
-    var $lecturer;  
+    var $studyGroups;
+    var $startDateTime;
+    var $endDateTime;
+    var $lecturer;
     var $location;
     var $changes;
-    
-    function __construct($eventset_id, $title, $lecturer, $groups, $startDateTime, $endDateTime, $location) {        
+
+    /**
+     * __construct
+     *
+     * @param  mixed $eventset_id
+     * @param  mixed $title
+     * @param  mixed $lecturer
+     * @param  mixed $groups
+     * @param  mixed $startDateTime
+     * @param  mixed $endDateTime
+     * @param  mixed $location
+     * @return void
+     */
+    function __construct($eventset_id, $title, $lecturer, $groups, $startDateTime, $endDateTime, $location) {
         $this->activity_id = $eventset_id;
         $this->title = $title;
         $this->studyGroups = $groups;
@@ -60,7 +84,13 @@ class MyScheduleEvent {
         $this->lecturer = $lecturer;
         $this->location = $location;
     }
-    
+
+    /**
+     * setChanges
+     *
+     * @param  mixed $changes
+     * @return void
+     */
     function setChanges($changes) {
         $this->changes = $changes;
     }
