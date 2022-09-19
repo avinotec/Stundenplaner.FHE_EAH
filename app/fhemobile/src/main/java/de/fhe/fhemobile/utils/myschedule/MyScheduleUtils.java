@@ -68,6 +68,7 @@ public final class MyScheduleUtils {
 			return "";
 		}
 		//cut away all ".d" (where d stands for any digit)
+		//example: WI/WIEC(BA)Mathe/Ü/01.1 -> WI/WIEC(BA)Mathe/Ü/01
 		return title.replaceAll("\\.\\d+$", "");
 	}
 
@@ -361,12 +362,12 @@ public final class MyScheduleUtils {
 				}
 			}
 
-			//add new eventsets
+			//add new event sets
 			for (final String eventSetId : eventSetsAdded) {
 				final MyScheduleEventSetVo eventSet = fetchedEventSetsMap.get(eventSetId);
 				final List<MyScheduleEventVo> eventListToAdd = new ArrayList<>();
 
-				for ( final MyScheduleEventDateVo addedEventDate : eventSet.getEventDates()) {
+				for (final MyScheduleEventDateVo addedEventDate : eventSet.getEventDates()) {
 					final MyScheduleEventVo eventToAdd = new MyScheduleEventVo(
 							eventSet.getTitle(),
 							eventSet.getId(),

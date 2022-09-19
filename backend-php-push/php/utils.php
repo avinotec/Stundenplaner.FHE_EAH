@@ -29,6 +29,7 @@ declare(strict_types=1);
 function getEventSeriesName( string $event_title ) : string {
 
     //cut away all ending numbers after the dot
+    //example: WI/WIEC(BA)Mathe/Ü/01.1 -> WI/WIEC(BA)Mathe/Ü/01
     $eventseries_name = preg_replace("/\.\d+$/", "", $event_title);
 
 	return $eventseries_name;
