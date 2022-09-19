@@ -20,6 +20,7 @@ package de.fhe.fhemobile.utils.myschedule;
 import android.util.Log;
 
 import com.google.common.collect.Sets;
+import com.google.gson.Gson;
 
 import org.junit.Assert;
 
@@ -223,9 +224,13 @@ public final class MyScheduleUtils {
 					eventSeriesToAdd.add(fetchedEventSeries);
 				}
 
-				//skip non-subscribed eventseries and newly added exam eventseries
+				//Go on with the next subscribed eventseries or exam
 				continue;
 			}
+
+			//skip change detection if event series' are equal
+			Gson gson = new Gson();
+			if(gson.toJson(localEventSeries).equals(gson.toJson(fetchedEventSeries))) continue;
 
 			//detect added event sets
 			final Set<String> eventSetsAdded = Sets.difference(
