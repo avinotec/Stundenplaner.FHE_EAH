@@ -22,13 +22,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.junit.Assert;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
@@ -38,6 +35,23 @@ import de.fhe.fhemobile.utils.Define;
 public class MyScheduleCalendarView extends LinearLayout {
 
     private static final String TAG = MyScheduleCalendarView.class.getSimpleName();
+    private static final DateFormat sdf =  new SimpleDateFormat("dd.MM.yy HH:mm", Locale.GERMANY);
+    private static TextView mLastUpdatedTextView;
+
+    /**
+     * Set (or update) the text view displaying the date the schedule has been last updated
+     */
+    public static void setLastUpdatedTextView(){
+        if(mLastUpdatedTextView != null){
+            if(Main.getLastUpdateSubscribedEventSeries() != null){
+                mLastUpdatedTextView.setText(String.format("%s %s",
+                        Main.getAppContext().getString(R.string.myschedule_last_updated),
+                        sdf.format(Main.getLastUpdateSubscribedEventSeries())));
+            } else {
+                mLastUpdatedTextView.setText(String.format("%s --", Main.getAppContext().getString(R.string.myschedule_last_updated)));
+            }
+        }
+    }
 
 
     public MyScheduleCalendarView(final Context context, final AttributeSet attrs) { super(context, attrs);  }
@@ -71,22 +85,6 @@ public class MyScheduleCalendarView extends LinearLayout {
     }
 
     /**
-     * Set or updated the textview displaying the last updated date
-     */
-    public void setLastUpdatedTextView(){
-        if(BuildConfig.DEBUG) Assert.assertNotNull(mLastUpdatedTextView);
-
-        if(Main.getLastUpdateSubscribedEventSeries() != null){
-            mLastUpdatedTextView.setText(String.format("%s %s",
-                    getContext().getString(R.string.myschedule_last_updated),
-                    sdf.format(Main.getLastUpdateSubscribedEventSeries())));
-        } else {
-            mLastUpdatedTextView.setText(String.format("%s --", getContext().getString(R.string.myschedule_last_updated)));
-        }
-    }
-
-
-    /**
      * Sets view to show if the event list is empty
      */
     public void setEmptyCalendarView(){
@@ -96,8 +94,5 @@ public class MyScheduleCalendarView extends LinearLayout {
 
 
     private ListView mCalendarListView;
-    private TextView mLastUpdatedTextView;
-
-    static final DateFormat sdf =  new SimpleDateFormat("dd.MM.yy HH:mm", Locale.GERMANY);
 
 }

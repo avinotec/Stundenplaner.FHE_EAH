@@ -111,7 +111,6 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 				if (menuItem.getItemId() == R.id.action_update){
 					if(Define.ENABLE_MYSCHEDULE_UPDATING_AND_PUSHNOTIFICATIONS){
 						NetworkHandler.getInstance().fetchMySchedule();
-						mView.setLastUpdatedTextView();
 					}
 
 				}
@@ -132,7 +131,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 
 		//Set text view to show if list is empty
 		mView.setEmptyCalendarView();
-		mView.setLastUpdatedTextView();
+		MyScheduleCalendarView.setLastUpdatedTextView();
 
 		return mView;
 	}
@@ -153,7 +152,6 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 
 		if(Define.ENABLE_MYSCHEDULE_UPDATING_AND_PUSHNOTIFICATIONS){
 			NetworkHandler.getInstance().fetchMySchedule();
-			mView.setLastUpdatedTextView();
 		}
 	}
 
@@ -196,7 +194,6 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 
 							public void onClick(final DialogInterface dialog, final int which) {
 								MainActivity.clearSubscribedEventSeriesAndUpdateAdapters();
-								mView.setLastUpdatedTextView();
 							}
 						})
 						.setNegativeButton(R.string.deleteTimeTableCancel, null)

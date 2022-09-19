@@ -71,6 +71,7 @@ import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.feature.FeatureFragmentFactory;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
+import de.fhe.fhemobile.views.myschedule.MyScheduleCalendarView;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 
 public class MainActivity extends AppCompatActivity implements DrawerFragment.NavigationDrawerCallbacks {
@@ -324,6 +325,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         subscribedEventSeries.clear();
         subscribedEventSeries.addAll(newSubscribedEventSeries);
         setLastUpdateSubscribedEventSeries(new Date());
+        MyScheduleCalendarView.setLastUpdatedTextView();
 
         saveSubscribedEventSeriesToSharedPreferences();
 
@@ -335,7 +337,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
     public static void clearSubscribedEventSeriesAndUpdateAdapters(){
         subscribedEventSeries.clear();
-        Main.setLastUpdateSubscribedEventSeries(null);
+        setLastUpdateSubscribedEventSeries(null);
+        MyScheduleCalendarView.setLastUpdatedTextView();
 
         saveSubscribedEventSeriesToSharedPreferences();
 
