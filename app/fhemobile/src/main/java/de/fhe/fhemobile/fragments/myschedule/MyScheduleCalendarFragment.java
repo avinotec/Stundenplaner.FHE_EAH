@@ -47,6 +47,7 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.activities.SettingsActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.Features;
 import de.fhe.fhemobile.views.myschedule.MyScheduleCalendarView;
@@ -87,6 +88,11 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 				menu.clear();
 				// Add menu items here
 				menuInflater.inflate(R.menu.menu_myschedule_calendar, menu);
+				if(!Define.ENABLE_MYSCHEDULE_UPDATING_AND_PUSHNOTIFICATIONS){
+					MenuItem updateButton = menu.findItem(R.id.action_update);
+					updateButton.setEnabled(false);
+					updateButton.setVisible(false);
+				}
 			}
 
 			@Override
@@ -103,8 +109,11 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 					return true;
 				}
 				if (menuItem.getItemId() == R.id.action_update){
-					NetworkHandler.getInstance().fetchMySchedule();
-					mView.setLastUpdatedTextView();
+					if(Define.ENABLE_MYSCHEDULE_UPDATING_AND_PUSHNOTIFICATIONS){
+						NetworkHandler.getInstance().fetchMySchedule();
+						mView.setLastUpdatedTextView();
+					}
+
 				}
 
 				return false;
@@ -142,8 +151,10 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 	public void onResume() {
 		super.onResume();
 
-		NetworkHandler.getInstance().fetchMySchedule();
-		mView.setLastUpdatedTextView();
+		if(Define.ENABLE_MYSCHEDULE_UPDATING_AND_PUSHNOTIFICATIONS){
+			NetworkHandler.getInstance().fetchMySchedule();
+			mView.setLastUpdatedTextView();
+		}
 	}
 
 	/**

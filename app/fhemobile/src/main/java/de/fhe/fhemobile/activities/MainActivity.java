@@ -135,23 +135,26 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                 }
         }
 
-        //code from Firebase Documentation
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
-                            return;
+        if(Define.ENABLE_MYSCHEDULE_UPDATING_AND_PUSHNOTIFICATIONS){
+            //code from Firebase Documentation
+            FirebaseMessaging.getInstance().getToken()
+                    .addOnCompleteListener(new OnCompleteListener<String>() {
+                        @Override
+                        public void onComplete(@NonNull Task<String> task) {
+                            if (!task.isSuccessful()) {
+                                Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                                return;
+                            }
+
+                            // Get new FCM registration token
+                            String token = task.getResult();
+                            PushNotificationService.setFcmToken(token);
+
+                            Log.d(TAG, "Firebase Token: " + token);
                         }
+                    });
+        }
 
-                        // Get new FCM registration token
-                        String token = task.getResult();
-                        PushNotificationService.setFcmToken(token);
-
-                        Log.d(TAG, "Firebase Token: " + token);
-                    }
-                });
     }
 
     @Override

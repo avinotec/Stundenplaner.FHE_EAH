@@ -32,6 +32,7 @@ import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
+import de.fhe.fhemobile.utils.Define;
 
 
 public class MyScheduleCalendarView extends LinearLayout {
@@ -54,6 +55,9 @@ public class MyScheduleCalendarView extends LinearLayout {
         mCalendarListView.setAdapter(MainActivity.myScheduleCalendarAdapter);
 
         mLastUpdatedTextView = findViewById(R.id.tv_myschedule_calendar_last_updated);
+        if(!Define.ENABLE_MYSCHEDULE_UPDATING_AND_PUSHNOTIFICATIONS){
+            mLastUpdatedTextView.setVisibility(GONE);
+        }
     }
 
     /**

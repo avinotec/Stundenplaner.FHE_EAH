@@ -25,6 +25,8 @@ import org.jetbrains.annotations.NonNls;
  */
 public final class Define {
 
+	public static final boolean ENABLE_MYSCHEDULE_UPDATING_AND_PUSHNOTIFICATIONS = false;
+
 	@NonNls
 	public static final String PARAM_TIMETABLE_ID = "paramTimeTableId";			// $NON-NLS
 
