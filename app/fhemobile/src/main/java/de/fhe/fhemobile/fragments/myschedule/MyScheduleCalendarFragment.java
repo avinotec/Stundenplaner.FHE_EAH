@@ -196,6 +196,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 
 							public void onClick(final DialogInterface dialog, final int which) {
 								MainActivity.clearSubscribedEventSeriesAndUpdateAdapters();
+								mView.setLastUpdatedTextView();
 							}
 						})
 						.setNegativeButton(R.string.deleteTimeTableCancel, null)
