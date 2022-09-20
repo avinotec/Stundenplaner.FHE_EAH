@@ -18,6 +18,7 @@
 package de.fhe.fhemobile.utils.myschedule;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
@@ -34,6 +35,7 @@ import java.util.Set;
 
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
+import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
 import de.fhe.fhemobile.comparator.MyScheduleEventComparator;
 import de.fhe.fhemobile.comparator.MyScheduleEventDateComparator;
@@ -222,6 +224,8 @@ public final class MyScheduleUtils {
 					//add exam as subscribed eventseries
 					fetchedEventSeries.setSubscribed(true);
 					eventSeriesToAdd.add(fetchedEventSeries);
+					//inform user that exam has been added
+					showExamAddedToast(fetchedEventSeries.getTitle());
 				}
 
 				//Go on with the next subscribed eventseries or exam
@@ -230,7 +234,10 @@ public final class MyScheduleUtils {
 
 			//skip change detection if event series' are equal
 			Gson gson = new Gson();
-			if(gson.toJson(localEventSeries).equals(gson.toJson(fetchedEventSeries))) continue;
+			if(gson.toJson(localEventSeries).equals(gson.toJson(fetchedEventSeries))) {
+				Log.d(TAG, "Detection of my schedule changes skipped because event series json strings are equal");
+				continue;
+			}
 
 			//detect added event sets
 			final Set<String> eventSetsAdded = Sets.difference(
@@ -418,6 +425,13 @@ public final class MyScheduleUtils {
 		eventSetIds = new ArrayList<>(new HashSet<>(eventSetIds));
 
 		return eventSetIds;
+	}
+
+	private static void showExamAddedToast(String examTitle){
+		Toast.makeText(
+				Main.getAppContext(),
+				Main.getAppContext().getString(R.string.exam_added) + ":\n"+ examTitle,
+				Toast.LENGTH_LONG).show();
 	}
 
 }
