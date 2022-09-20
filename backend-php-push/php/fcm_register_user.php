@@ -63,38 +63,43 @@ if ($debug) print_r($_REQUEST);
 //BSP SQL-Injection
 //$login = $this->mysqli->real_escape_string( $login ) ;
 
-//Get os
 const ANDROID = "android";
 const IOS = "ios";
+// initialize to set data types
+$os = "";
+$language = "";
 
+//get os
 if (isset($_REQUEST['os']))
 	$os = htmlentities($_REQUEST['os']);
 
-// Plausibilisierung der Apps
-if ($os == ANDROID || $os == IOS)
-	; // ok
-else {
-	error_log(print_r("OS-Type: ".$os, true));
-	exit;
+//get language
+if(isset($_REQUEST['language']))
+    $language = htmlentities($_REQUEST['language']);
+if($language !== "DE" && $language !== "EN"){
+    error_log(print_r("Language: ".$language, true));
+    exit;
 }
 
-// intialisieren, damit haben wir den Typ festgelegt
+// initialize to set data types
 $fcmToken = "";
-$subscribedEventSets = "";
-$subscribedEventSetsArray = "";
+$jsonSubscribedEventSeries = "";
+$arraySubscribedEventSeries = array();
 
-if ($os == ANDROID) {
-	//Get token and subscriptions send from App
+if ($os === ANDROID) {
+	//Get token and subscriptions send from app
 	// Alle übergebenen Parameter entwerten, um SQL-Injections zu unterbinden.
 	$fcmToken = htmlentities( $_REQUEST["fcm_token"]??null);
-	$subscribedEventSets = htmlentities( $_REQUEST["eventset_ids"]??null);
+	$jsonSubscribedEventSeries = htmlentities( $_REQUEST["eventseries_names"]??null);
 
-	if(!is_null($subscribedEventSets) && !is_null($fcmToken) ){
-		$subscribedEventSetsArray = json_decode($subscribedEventSets, true);
+	if(!is_null($jsonSubscribedEventSeries) && !is_null($fcmToken) ){
+        //todo: check if double quotes are also needed for the request sent by the app
+		$arraySubscribedEventSeries = array(json_decode("\"".$jsonSubscribedEventSeries."\"", true));
+        if($debug) echo "<p>subscribed event series: " . $jsonSubscribedEventSeries . "</p>";
 	} else {
-		error_log(print_r("subscribedEventSetId or fcmToken is null!", true));
-		echo "subscribedEventSetId or fcmToken is null!";
-		return "subscribedEventSetId or fcmToken is null!";
+		error_log(print_r("jsonSubscribedEventSeries or fcmToken is null!", true));
+		echo "jsonSubscribedEventSeries or fcmToken is null!<br>";
+		return;
 	}
 	/*
 	error_log("#---->");
@@ -102,7 +107,7 @@ if ($os == ANDROID) {
 	error_log("<----#");
 	*/
 
-} else if ($os == IOS){
+} else if ($os === IOS){
 	/* //Code aus Hochschule Hof
 	$entitybody = file_get_contents("php://input");
 	$fullJSON = json_decode($entitybody, true);
@@ -110,56 +115,40 @@ if ($os == ANDROID) {
 	$pushToken = $fullJSON["fcm_token"]??null;
 	$language = $fullJSON["language"]??null; */
 } else {
-	error_log(print_r("Keine OS Zuordnung!", true));
-	echo "Keine OS Zuordnung!";
-	return("Keine OS Zuordnung!");
+    echo "Keine OS Zuordnung!";
+    error_log(print_r("Keine OS Zuordnung!", true));
+    error_log(print_r("OS-Type: ".$os, true));
+    exit;
 }
 
 
 // Check if a null value is given, to prevent null entries in the database.
-// Null values can happen if a user opens the scipt in a browser window.
-if(is_null($subscribedEventSetsArray) || is_null($fcmToken)){
-	echo "There is a null value!";
-	error_log(print_r("There is a null value!", true));
-	return "There is a null value!";
+// Null values can happen if a user opens the script in a browser window.
+if(is_null($arraySubscribedEventSeries) || is_null($fcmToken)){
+    echo "<br> SubScribed Event Series Json: " . $jsonSubscribedEventSeries . "<br>";
+	echo "arraySubscribedEventSeries or fcm token is null! <br>";
+	error_log(print_r("arraySubscribedEventSeries or fcm token is null!", true));
+	return;
 }
 
 
-// if ($debug) { echo "\nToken:". $fcmToken ."\n\n subscribedEventSets: ". $subscribedEventSets ."\n";}
+// ----------------- DB entry for user to register ----------------------------------------------
 
-// Ab hier sollten also das Token, die Vorlesungen valide sein.
-$os = 0 ; // Android
-$lang = "DE";
-
-
-// ----------------- DB entry ----------------------------------------------
-
-//Clear database from the given token
-// erst einmal alle Vorlesungen löschen, dann später entsprechend wieder hinzufügen.
-// Wenn eine Vorlesung abgewählt ist, bekommen wir das sonst nicht mit.
-$sqldelete = "DELETE FROM fcm_user WHERE token = \"$fcmToken\""; /* AND os = \"$os\"*/
+//Clear database from potential previous registrations with the given token
+$sqldelete = "DELETE FROM fcm_user WHERE token = '$fcmToken' AND os = '$os'";
 $con->query($sqldelete);
 
-//Add token and subscribed eventset IDs to database to register user
-for ($i = 0; $i < count($subscribedEventSetsArray); $i++) {
+//Add token and subscribed event series names to database to register user
+foreach ($arraySubscribedEventSeries as $subscribed_eventseries) {
 
-	$activity_id = htmlspecialchars($subscribedEventSetsArray[$i]['activity_id']);
-
-	//	if ($debug) { echo "\nactivity_id: $activity_id\n"; }
+	if($debug) echo "<br> event series: $subscribed_eventseries <br>";
 
 	// this way you can add null values to cells w/o adding the letters "NULL" as a string.
-	// Also you arn't getting crazy by concatenating strings like in the previous version :)
-	$stmt = $con->prepare("INSERT INTO fcm_user (token, eventset_id, os, lang) VALUES (?, ?, ?, ?)");
+	$stmt = $con->prepare("INSERT INTO fcm_user (token, eventseries_name, os, language) VALUES (?, ?, ?, ?)");
 
 //TODO
-	// ss stands for the sequence of string and integer variables.
-	$stmt->bind_param('ssss', $fcmToken, $activity_id, $os, $lang);
-	/* //Code der Hochschule Hof
-	$stmt = $con->prepare("INSERT INTO fcm_nutzer (token, vorlesung_id, os, language) VALUES (?, ?, ?, ?)");
-	// ssis stands for the sequence of string and integer variables.
-	$stmt->bind_param('ssis', $pushToken, $vorlesung_id, $os, $language);
-	*/
-
+	// ssss stands for the sequence of string and integer variables.
+	$stmt->bind_param('ssss', $fcmToken, $subscribed_eventseries, $os, $language);
 	$stmt->execute();
 }
 
