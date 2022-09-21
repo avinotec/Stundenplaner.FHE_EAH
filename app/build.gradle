@@ -26,7 +26,7 @@
  */
 //file:noinspection HardCodedStringLiteral
 buildscript {
-    
+
     /**
      * The repositories block configures the repositories Gradle uses to
      * search or download the dependencies. Gradle pre-configures support for remote
@@ -43,15 +43,15 @@ buildscript {
         maven { url "https://jitpack.io" }
         mavenCentral()
     }
-   
+
     /**
      * The dependencies block configures the dependencies Gradle needs to use
      * to build your project. The following line adds Android plugin for Gradle
      * version 3.5.0 as a classpath dependency.
      */
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.2'
-        classpath 'com.google.gms:google-services:4.3.10'
+        classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath 'com.google.gms:google-services:4.3.14'
     }
 }
 
