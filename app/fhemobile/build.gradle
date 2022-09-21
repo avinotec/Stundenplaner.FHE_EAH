@@ -247,7 +247,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
-	implementation 'androidx.appcompat:appcompat:1.5.0'
+	implementation 'androidx.appcompat:appcompat:1.5.1'
     //implementation "com.viewpagerindicator:library:2.4.1@aar.jar"
     //implementation 'com.darwinsys:hirondelle-date4j:1.5.1'            DateTime object, exchanged with deprecated Date class :-(
 
@@ -299,8 +299,8 @@ dependencies {
 
 
 
-    implementation 'androidx.navigation:navigation-fragment:2.5.1'
-    implementation 'androidx.navigation:navigation-ui:2.5.1'
+    implementation 'androidx.navigation:navigation-fragment:2.5.2'
+    implementation 'androidx.navigation:navigation-ui:2.5.2'
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
 	implementation 'com.google.firebase:firebase-inappmessaging-display:20.1.3'
 	
