@@ -82,20 +82,20 @@ if($language !== "DE" && $language !== "EN"){
 }
 
 // initialize to set data types
-$fcmToken = "";
-$jsonSubscribedEventSeries = "";
-$arraySubscribedEventSeries = array();
+$fcm_token = "";
+$json_subscribed_eventseries = "";
+$array_subscribed_eventseries = array();
 
 if ($os === ANDROID) {
 	//Get token and subscriptions send from app
 	// Alle übergebenen Parameter entwerten, um SQL-Injections zu unterbinden.
-	$fcmToken = htmlentities( $_REQUEST["fcm_token"]??null);
-	$jsonSubscribedEventSeries = htmlentities( $_REQUEST["eventseries_names"]??null);
+	$fcm_token = htmlentities( $_REQUEST["fcm_token"]??null);
+	$json_subscribed_eventseries = htmlentities( $_REQUEST["eventseries_names"]??null);
 
-	if(!is_null($jsonSubscribedEventSeries) && !is_null($fcmToken) ){
+	if(!is_null($json_subscribed_eventseries) && !is_null($fcm_token) ){
         //todo: check if double quotes are also needed for the request sent by the app
-		$arraySubscribedEventSeries = array(json_decode("\"".$jsonSubscribedEventSeries."\"", true));
-        if($debug) echo "<p>subscribed event series: " . $jsonSubscribedEventSeries . "</p>";
+		$array_subscribed_eventseries = array(json_decode("\"".$json_subscribed_eventseries."\"", true));
+        if($debug) echo "<p>subscribed event series: " . $json_subscribed_eventseries . "</p>";
 	} else {
 		error_log(print_r("jsonSubscribedEventSeries or fcmToken is null!", true));
 		echo "jsonSubscribedEventSeries or fcmToken is null!<br>";
@@ -124,8 +124,8 @@ if ($os === ANDROID) {
 
 // Check if a null value is given, to prevent null entries in the database.
 // Null values can happen if a user opens the script in a browser window.
-if(is_null($arraySubscribedEventSeries) || is_null($fcmToken)){
-    echo "<br> SubScribed Event Series Json: " . $jsonSubscribedEventSeries . "<br>";
+if(is_null($array_subscribed_eventseries) || is_null($fcm_token)){
+    echo "<br> SubScribed Event Series Json: " . $json_subscribed_eventseries . "<br>";
 	echo "arraySubscribedEventSeries or fcm token is null! <br>";
 	error_log(print_r("arraySubscribedEventSeries or fcm token is null!", true));
 	return;
@@ -135,11 +135,10 @@ if(is_null($arraySubscribedEventSeries) || is_null($fcmToken)){
 // ----------------- DB entry for user to register ----------------------------------------------
 
 //Clear database from potential previous registrations with the given token
-$sqldelete = "DELETE FROM fcm_user WHERE token = '$fcmToken' AND os = '$os'";
-$con->query($sqldelete);
+$con->query("DELETE FROM fcm_user WHERE token = '$fcm_token' AND os = '$os'");
 
 //Add token and subscribed event series names to database to register user
-foreach ($arraySubscribedEventSeries as $subscribed_eventseries) {
+foreach ($array_subscribed_eventseries as $subscribed_eventseries) {
 
 	if($debug) echo "<br> event series: $subscribed_eventseries <br>";
 
@@ -148,7 +147,7 @@ foreach ($arraySubscribedEventSeries as $subscribed_eventseries) {
 
 //TODO
 	// ssss stands for the sequence of string and integer variables.
-	$stmt->bind_param('ssss', $fcmToken, $subscribed_eventseries, $os, $language);
+	$stmt->bind_param('ssss', $fcm_token, $subscribed_eventseries, $os, $language);
 	$stmt->execute();
 }
 

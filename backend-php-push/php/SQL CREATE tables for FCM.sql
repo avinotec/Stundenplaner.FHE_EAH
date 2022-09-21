@@ -47,17 +47,20 @@ ALTER TABLE `fcm_user`
 
 
 --
--- Tabellenstruktur für Tabelle `timetable_data`
+-- Tabellenstruktur für Tabelle `event_sets`
+-- (beinhaltet die Event Sets aller Stundenpläne)
 --
-DROP TABLE IF EXISTS `timetable_data`;
+DROP TABLE IF EXISTS event_sets;
 
-CREATE TABLE `timetable_data`
+CREATE TABLE event_sets
 (
-    `eventset_id`      VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci PRIMARY KEY NOT NULL,
-    `eventseries_name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci             NOT NULL COMMENT 'Event series the event set belongs to',
-    `module_id`        VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci             NOT NULL COMMENT 'Module the event set belongs to',
-    `md5_checksum`     VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci COMMENT 'Checksum of the event set\'s data',
-    `last_changed`     TIMESTAMP
+
+    `eventset_id`   VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci PRIMARY KEY COMMENT 'in EAH API called activity_id',
+    `eventseries`   VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+        COMMENT 'Name of the event series the event set belongs to, e.g. BT(BA)Mathe I/V/01',
+    `module_id`     VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci  NOT NULL COMMENT 'Module the event set belongs to',
+    `eventset_data` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci COMMENT 'Data of the event series as json string',
+    `last_changed`  TIMESTAMP
 
 ) ENGINE = InnoDB
   DEFAULT CHARSET = latin1;
