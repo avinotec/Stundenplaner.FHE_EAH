@@ -70,7 +70,7 @@ android {
 
         multiDexEnabled = true
         resConfigs 'de', 'en'
-    
+
         // For Testing
         //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         

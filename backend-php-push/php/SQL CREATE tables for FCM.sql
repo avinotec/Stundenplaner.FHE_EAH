@@ -26,35 +26,41 @@ USE stundenplan;
 --
 DROP TABLE IF EXISTS `fcm_user`;
 
-CREATE TABLE `fcm_user` (
-  `id` int AUTO_INCREMENT PRIMARY KEY NOT NULL ,
-  `token` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Firebase Messaging Token',
-  `eventseries_name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Event series the event set belongs to',
-  `eventset_id` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+CREATE TABLE `fcm_user`
+(
+    `id`               int AUTO_INCREMENT PRIMARY KEY                          NOT NULL,
+    `token`            VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Firebase Messaging Token',
+    `eventseries_name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Subscribed event series',
 
-  `os` int COMMENT 'Android=0, iOS=1',
-  `lang` VARCHAR(2) COMMENT 'Language DE, EN'
+    `os`               VARCHAR(7) COMMENT 'android or ios',
+    `language`         VARCHAR(2) COMMENT 'DE or EN'
 
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
 
 --
 -- Indizes für die Tabelle `fcm_user`
 --
 ALTER TABLE `fcm_user`
-  ADD INDEX `token` (`token`),
-  ADD INDEX `eventset_id` (`eventset_id`);
+    ADD INDEX `token` (`token`),
+    ADD INDEX `eventseries_name` (`eventseries_name`);
 
 
 --
--- Tabellenstruktur für Tabelle `timetable_data`
+-- Tabellenstruktur für Tabelle `event_sets`
+-- (beinhaltet die Event Sets aller Stundenpläne)
 --
-DROP TABLE IF EXISTS `timetable_data`;
+DROP TABLE IF EXISTS event_sets;
 
-CREATE TABLE `timetable_data` (
-  `eventset_id` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci PRIMARY KEY NOT NULL,
-  `eventseries_name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Event series the event set belongs to',
-  `module_id` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Module the event set belongs to',
-  `md5_checksum` VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci COMMENT 'Checksum of the event set\'s data',
-  `last_changed` TIMESTAMP
+CREATE TABLE event_sets
+(
 
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+    `eventset_id`   VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci PRIMARY KEY COMMENT 'in EAH API called activity_id',
+    `eventseries`   VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+        COMMENT 'Name of the event series the event set belongs to, e.g. BT(BA)Mathe I/V/01',
+    `module_id`     VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci  NOT NULL COMMENT 'Module the event set belongs to',
+    `eventset_data` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci COMMENT 'Data of the event series as json string',
+    `last_changed`  TIMESTAMP
+
+) ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
