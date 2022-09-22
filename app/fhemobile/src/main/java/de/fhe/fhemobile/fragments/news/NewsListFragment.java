@@ -71,7 +71,7 @@ public class NewsListFragment extends FeatureFragment {
 
                 menu.clear();
                 // Add menu items here
-                menuInflater.inflate(R.menu.main, menu);
+                menuInflater.inflate(R.menu.menu_main, menu);
             }
 
             @Override

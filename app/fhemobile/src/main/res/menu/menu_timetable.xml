@@ -19,8 +19,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_settings"
-        android:icon="@drawable/ic_action_settings"
-        app:showAsAction="always"
-        android:title="Button Settings" />
+        android:id="@+id/action_reset_selection"
+        android:icon="@drawable/ic_delete_white"
+        android:orderInCategory="100"
+        android:title="@string/timetable_reset"
+        app:showAsAction="ifRoom" />
 </menu>

@@ -23,10 +23,15 @@ import static de.fhe.fhemobile.utils.Define.Navigation.REQUEST_SCANNED_START_ROO
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.FragmentResultListener;
 
 import de.fhe.fhemobile.R;
@@ -71,6 +76,24 @@ public class NavigationDialogFragment extends FeatureFragment {
                 childBundle.putString(Define.Navigation.KEY_SCANNED_ROOM, result);
                 getChildFragmentManager().setFragmentResult(Define.Navigation.REQUEST_SCANNED_START_ROOM, childBundle);
 
+            }
+        });
+
+        //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
+        final MenuHost menuHost = requireActivity();
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
+                // Add menu items here
+                menu.clear();
+                menuInflater.inflate(R.menu.menu_main, menu);
+                menu.findItem(R.id.action_settings).setVisible(false);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
+                // Handle the menu selection
+                return false;
             }
         });
     }

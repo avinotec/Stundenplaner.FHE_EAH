@@ -17,14 +17,26 @@
 
 package de.fhe.fhemobile.fragments.events;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
+
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.activities.SettingsActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.utils.feature.Features;
 import de.fhe.fhemobile.views.events.EventsWebView;
 
 /**
@@ -42,6 +54,29 @@ public class EventsWebViewFragment extends FeatureFragment {
         final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
+        final MenuHost menuHost = requireActivity();
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
+                // Add menu items here
+                menu.clear();
+                menuInflater.inflate(R.menu.menu_main, menu);
+                menu.findItem(R.id.action_settings).setVisible(false);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
+                // Handle the menu selection
+                return false;
+            }
+        });
     }
 
     @Override

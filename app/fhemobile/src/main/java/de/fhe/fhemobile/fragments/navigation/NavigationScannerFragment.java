@@ -5,15 +5,22 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 
 import com.google.zxing.Result;
 
+import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.utils.Define;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -55,6 +62,24 @@ public class NavigationScannerFragment extends FeatureFragment implements ZXingS
                 requestPermissionLauncher.launch(Manifest.permission.CAMERA);
             }
         }
+
+        //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
+        final MenuHost menuHost = requireActivity();
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
+                // Add menu items here
+                menu.clear();
+                menuInflater.inflate(R.menu.menu_main, menu);
+                menu.findItem(R.id.action_settings).setVisible(false);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
+                // Handle the menu selection
+                return false;
+            }
+        });
 
     }
 

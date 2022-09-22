@@ -69,7 +69,7 @@ public class CanteenFragment extends FeatureFragment {
             public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
                 // Add menu items here
                 menu.clear();
-                menuInflater.inflate(R.menu.main, menu);
+                menuInflater.inflate(R.menu.menu_main, menu);
             }
 
             @Override

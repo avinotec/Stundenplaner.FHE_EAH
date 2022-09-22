@@ -102,7 +102,7 @@ public class TimeTableFragment extends FeatureFragment {
 				// Add menu items here
 				menu.clear();
 				if (TimeTableSettings.getTimeTableSelection() != null) {
-					menuInflater.inflate(R.menu.menu_timetable_events, menu);
+					menuInflater.inflate(R.menu.menu_timetable, menu);
 				}
 			}
 

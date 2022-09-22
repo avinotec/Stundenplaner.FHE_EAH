@@ -21,10 +21,16 @@ package de.fhe.fhemobile.fragments.timetable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
@@ -78,7 +84,25 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
         mChosenStudyProgram = null;
         mChosenSemester     = null;
-        mChosenStudyGroup = null;
+        mChosenStudyGroup   = null;
+
+        //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
+        final MenuHost menuHost = requireActivity();
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
+                // Add menu items here
+                menu.clear();
+                menuInflater.inflate(R.menu.menu_main, menu);
+                menu.findItem(R.id.action_settings).setVisible(false);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
+                // Handle the menu selection
+                return false;
+            }
+        });
     }
 
     @Override
