@@ -138,25 +138,10 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 		}
 	}
 
-	// Comparable ------------------------------------------------------------------------------
-
-	@Override
-	public boolean equals(final Object o) {
-		if (this == o) return true;
-		if (!(o instanceof MyScheduleEventSeriesVo)) return false;
-		final MyScheduleEventSeriesVo that = (MyScheduleEventSeriesVo) o;
-		return mTitle.equals(that.mTitle);
-	}
-
-	@Override
-	public int hashCode() {
-		return Arrays.hashCode(new Object[]{mTitle});
-	}
-
 	public void checkAndSetSubscribed(){
 		//check if this event series belongs to a subscribed event series
 		for(final MyScheduleEventSeriesVo subscribedEventSeries : getSubscribedEventSeries()){
-			if (this.equals(subscribedEventSeries)){
+			if (this.getTitle().equals(subscribedEventSeries.getTitle())){
 
 				this.setSubscribed(true);
 			}

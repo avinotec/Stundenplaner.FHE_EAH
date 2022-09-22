@@ -232,10 +232,13 @@ public final class MyScheduleUtils {
 				continue;
 			}
 
-			//skip change detection if event series' are equal
+			//skip change detection if events of the event series' are equal
 			Gson gson = new Gson();
-			if(gson.toJson(localEventSeries).equals(gson.toJson(fetchedEventSeries))) {
-				Log.d(TAG, "Detection of my schedule changes skipped because event series json strings are equal");
+			String localEventsJson = gson.toJson(localEventSeries.getEvents());
+			String fetchedEventsJson = gson.toJson(fetchedEventSeries.getEvents());
+			localEventsJson = localEventsJson.replaceAll("\"typesOfChanges\":\\[(\"[A-Z]+,?\")+\\]","\"typesOfChanges\":[]");
+			if(localEventsJson.equals(fetchedEventsJson)) {
+				Log.d(TAG, "Detection of my schedule changes skipped because events are equal");
 				continue;
 			}
 
