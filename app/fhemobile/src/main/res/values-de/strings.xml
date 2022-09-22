@@ -23,7 +23,7 @@
     <string name="action_jump_to_today">Heute</string>
     <string name="action_update">Aktualisiere Meinen Stundenplan</string>
     <string name="action_edit_my_courses">Meine Kurse bearbeiten</string>
-    <string name="drawer_news" >News</string>
+    <string name="drawer_news">News und Wetter</string>
     <string name="drawer_canteen" >Mensa</string>
     <string name="drawer_persons" >Personen</string>
     <string name="drawer_semesterdates" >Semestertermine</string>
