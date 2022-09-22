@@ -134,27 +134,27 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.fhe.fhemobile.activities.MainActivity" />
         </activity>
-        <activity android:name=".widgets.homescreen.NewsListWidgetConfigureActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-            </intent-filter>
-        </activity>
+<!--        <activity android:name=".widgets.homescreen.NewsListWidgetConfigureActivity"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
 
-        <receiver
-            android:name=".widgets.homescreen.NewsListWidget"
-            android:enabled="@bool/newsWidgetEnabled"
-            android:label="@string/appwidget_news"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="de.fhe.fhemobile.DATA_FETCHED" />
-            </intent-filter>
+<!--        <receiver-->
+<!--            android:name=".widgets.homescreen.NewsListWidget"-->
+<!--            android:enabled="@bool/newsWidgetEnabled"-->
+<!--            android:label="@string/appwidget_news"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />-->
+<!--                <action android:name="de.fhe.fhemobile.DATA_FETCHED" />-->
+<!--            </intent-filter>-->
 
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/news_list_widget_info" />
-        </receiver>
+<!--            <meta-data-->
+<!--                android:name="android.appwidget.provider"-->
+<!--                android:resource="@xml/news_list_widget_info" />-->
+<!--        </receiver>-->
 
         <service
             android:name=".services.PushNotificationService"
@@ -166,14 +166,14 @@
             </intent-filter>
         </service>
 
-        <service
-            android:name=".widgets.homescreen.NewsListRemoteService"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
+<!--        <service-->
+<!--            android:name=".widgets.homescreen.NewsListRemoteService"-->
+<!--            android:permission="android.permission.BIND_REMOTEVIEWS" />-->
 
-        <service
-            android:name=".widgets.homescreen.NewsListRemoteFetchService"
-            android:enabled="true"
-            android:exported="true" />
+<!--        <service-->
+<!--            android:name=".widgets.homescreen.NewsListRemoteFetchService"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="true" />-->
         <!-- android:permission="TODO" -->
 
     </application>
