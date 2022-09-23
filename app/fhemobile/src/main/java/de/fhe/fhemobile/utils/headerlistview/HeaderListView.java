@@ -309,7 +309,7 @@ public class HeaderListView extends RelativeLayout {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getContext().getResources().getDisplayMetrics());
     }
 
-    protected class InternalListView extends ListView {
+    protected static class InternalListView extends ListView {
 
         public InternalListView(final Context context, final AttributeSet attrs) {
             super(context, attrs);
