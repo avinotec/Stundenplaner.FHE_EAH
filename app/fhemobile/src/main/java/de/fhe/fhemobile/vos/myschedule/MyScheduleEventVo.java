@@ -172,7 +172,7 @@ public class MyScheduleEventVo implements Parcelable{
         for(final TimeTableLocationVo room : mLocationList){
             if(room.getName() != null) {
                 final String roomName = room.getName().replaceAll("\\(", " (");
-                stringBuilder.append(roomName + ", ");
+                stringBuilder.append(roomName).append(", ");
             }
         }
 
