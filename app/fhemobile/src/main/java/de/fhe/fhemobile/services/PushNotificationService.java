@@ -39,7 +39,6 @@ import java.util.List;
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 
@@ -84,7 +83,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 	 * Register the given event series' for the given firebase token
 	 * @param eventSeriesVos List of {@link MyScheduleEventSeriesVo}s to register for
 	 */
-	public static void sendRegistrationToServer(String token, List<MyScheduleEventSeriesVo> eventSeriesVos){
+	public static void sendRegistrationToServer(final String token, final List<MyScheduleEventSeriesVo> eventSeriesVos){
 		if(BuildConfig.DEBUG) Assert.assertNotNull(fcmToken);
 		if(fcmToken != null) {
 			Main.executorService.execute(new ServerRegistrationBackgroundTask(token, eventSeriesVos));

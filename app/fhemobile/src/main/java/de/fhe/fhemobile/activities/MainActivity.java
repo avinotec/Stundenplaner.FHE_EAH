@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         //Google Play Services needed for Firebase Messaging
-        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        final GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
         final int googlePlayServicesCheck =
                 googleApiAvailability.isGooglePlayServicesAvailable(this);
 
@@ -121,10 +121,10 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                 if(googleApiAvailability.isUserResolvableError(googlePlayServicesCheck)){
                     //display a dialog that allows users to download the APK from the
                     // Google Play Store or enable it in the device's system settings.
-                    Dialog dialog = googleApiAvailability.getErrorDialog(this, googlePlayServicesCheck, 9000);
+                    final Dialog dialog = googleApiAvailability.getErrorDialog(this, googlePlayServicesCheck, 9000);
                     dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                         @Override
-                        public void onCancel(DialogInterface dialogInterface) {
+                        public void onCancel(final DialogInterface dialogInterface) {
                             MainActivity.this.finish();
                         }
                     });
@@ -141,14 +141,14 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             FirebaseMessaging.getInstance().getToken()
                     .addOnCompleteListener(new OnCompleteListener<String>() {
                         @Override
-                        public void onComplete(@NonNull Task<String> task) {
+                        public void onComplete(@NonNull final Task<String> task) {
                             if (!task.isSuccessful()) {
                                 Log.w(TAG, "Fetching FCM registration token failed", task.getException());
                                 return;
                             }
 
                             // Get new FCM registration token
-                            String token = task.getResult();
+                            final String token = task.getResult();
                             PushNotificationService.setFcmToken(token);
 
                             Log.d(TAG, "Firebase Token: " + token);

@@ -17,8 +17,6 @@
 
 package de.fhe.fhemobile.fragments.events;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,9 +32,7 @@ import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.activities.SettingsActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.utils.feature.Features;
 import de.fhe.fhemobile.views.events.EventsWebView;
 
 /**
@@ -57,7 +53,7 @@ public class EventsWebViewFragment extends FeatureFragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
