@@ -16,7 +16,6 @@
  */
 package de.fhe.fhemobile.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -253,7 +252,7 @@ public class DrawerFragment extends Fragment {
      * Per the navigation drawer design guidelines, updates the action bar to show the global app
      * 'context', rather than just what's in the current screen.
      */
-    private void showGlobalContextActionBar() {
+    void showGlobalContextActionBar() {
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
@@ -299,7 +298,7 @@ public class DrawerFragment extends Fragment {
      */
     ActionBarDrawerToggle mDrawerToggle;
 
-    private DrawerLayout mDrawerLayout;
+    DrawerLayout mDrawerLayout;
     private ListView mDrawerListView;
     private View mFragmentContainerView;
 
