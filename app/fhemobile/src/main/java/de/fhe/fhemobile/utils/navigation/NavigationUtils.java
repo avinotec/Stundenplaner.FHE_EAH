@@ -132,6 +132,7 @@ public final class NavigationUtils {
             case "ug1":
                 floorAsInteger = -1;
                 break;
+	        default:                // nehmen wir einfach mal so
             case "00":
                 floorAsInteger = 0;
                 break;
@@ -147,9 +148,6 @@ public final class NavigationUtils {
             case "3Z":
             case "04":
                 floorAsInteger = 4;
-                break;
-            default:
-	            floorAsInteger = 0; // nehmen wir einfach mal so
                 break;
         }
         return floorAsInteger;
