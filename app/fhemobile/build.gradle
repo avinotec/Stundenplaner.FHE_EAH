@@ -65,8 +65,8 @@ android {
     defaultConfig {
         minSdk 21
         targetSdkVersion 32
-        versionCode = 26
-        versionName = '3.0.1'
+        versionCode = 27
+        versionName = '3.0.2'
 
         multiDexEnabled = true
         resConfigs "de", "en", "notnight"

@@ -233,7 +233,7 @@ public final class MyScheduleUtils {
 			}
 
 			//skip change detection if events of the event series' are equal
-			Gson gson = new Gson();
+			final Gson gson = new Gson();
 			String localEventsJson = gson.toJson(localEventSeries.getEvents());
 			String fetchedEventsJson = gson.toJson(fetchedEventSeries.getEvents());
 			localEventsJson = localEventsJson.replaceAll("\"typesOfChanges\":\\[(\"[A-Z]+,?\")+\\]","\"typesOfChanges\":[]");
@@ -418,7 +418,7 @@ public final class MyScheduleUtils {
 	 * Get a list of all event set IDs contained in the given event series'
 	 * @return List of event set ID strings
 	 */
-	public static ArrayList<String> collectEventSetIds(List<MyScheduleEventSeriesVo> eventSeriesVos){
+	public static ArrayList<String> collectEventSetIds(final List<MyScheduleEventSeriesVo> eventSeriesVos){
 		ArrayList<String> eventSetIds = new ArrayList<>();
 
 		for(final MyScheduleEventSeriesVo eventSeries : eventSeriesVos) {
@@ -430,7 +430,7 @@ public final class MyScheduleUtils {
 		return eventSetIds;
 	}
 
-	private static void showExamAddedToast(String examTitle){
+	private static void showExamAddedToast(final String examTitle){
 		Toast.makeText(
 				Main.getAppContext(),
 				Main.getAppContext().getString(R.string.exam_added) + ":\n"+ examTitle,

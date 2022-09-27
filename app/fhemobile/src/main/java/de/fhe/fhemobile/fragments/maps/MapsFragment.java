@@ -270,7 +270,7 @@ public class MapsFragment extends Fragment {
 //        Log.d(LOG_TAG, "onSaveInstanceState ");
     }
 
-    private void updateActionBarTitle(final String _Title) {
+    void updateActionBarTitle(final String _Title) {
         ((BaseActivity) getActivity()).getSupportActionBar().setTitle(_Title);
     }
 
@@ -278,9 +278,9 @@ public class MapsFragment extends Fragment {
 
     private static final String SAV_MAP_INDEX = "savMapIndex";
 
-    private MapsView mView;
+    MapsView mView;
 
-    private MapCollectionVo mMap;
-    private int             mCurrentMapIndex;
+    MapCollectionVo mMap;
+    int             mCurrentMapIndex;
 
 }

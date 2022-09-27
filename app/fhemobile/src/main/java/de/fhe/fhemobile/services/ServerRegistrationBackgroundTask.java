@@ -16,11 +16,10 @@ package de.fhe.fhemobile.services;
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
 import static de.fhe.fhemobile.network.Endpoints.URL_REGISTER_PUSH_NOTIFICATIONS_EAH;
 
 import android.util.Log;
-
-import com.google.gson.Gson;
 
 import org.junit.Assert;
 
@@ -30,6 +29,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -49,7 +49,7 @@ public class ServerRegistrationBackgroundTask implements Runnable {
     final String fcmToken;
     final List<MyScheduleEventSeriesVo> subscribedEventSeriesVos = new ArrayList<>();
 
-    public ServerRegistrationBackgroundTask(String token, List<MyScheduleEventSeriesVo> eventSeriesVos) {
+    public ServerRegistrationBackgroundTask(final String token, final List<MyScheduleEventSeriesVo> eventSeriesVos) {
         fcmToken = token;
         subscribedEventSeriesVos.addAll(eventSeriesVos);
     }
@@ -59,7 +59,7 @@ public class ServerRegistrationBackgroundTask implements Runnable {
         URL url = null;
         try {
             url = new URL(URL_REGISTER_PUSH_NOTIFICATIONS_EAH); // Debug: ( + "?debug=1")
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             Log.e(TAG, "URL ist nicht URL-konform: " + URL_REGISTER_PUSH_NOTIFICATIONS_EAH, e);
         }
         HttpsURLConnection client;
@@ -87,14 +87,14 @@ public class ServerRegistrationBackgroundTask implements Runnable {
             client.setRequestMethod("POST");
             client.setDoOutput(true);
 
-            OutputStreamWriter wr = new OutputStreamWriter(client.getOutputStream());
+            final OutputStreamWriter wr = new OutputStreamWriter(client.getOutputStream());
             wr.write(data);
             wr.flush();
             wr.close();
 
             if (client.getResponseCode() == 200) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
-                StringBuilder sb = new StringBuilder();
+                final BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                final StringBuilder sb = new StringBuilder();
                 String line;
 
                 // Read Server Response
@@ -109,8 +109,8 @@ public class ServerRegistrationBackgroundTask implements Runnable {
             } else {
                 Log.d(TAG, "Der ResponseCode war: " + client.getResponseCode());
 
-                BufferedReader reader = new BufferedReader(new InputStreamReader(client.getErrorStream()));
-                StringBuilder sb = new StringBuilder();
+                final BufferedReader reader = new BufferedReader(new InputStreamReader(client.getErrorStream()));
+                final StringBuilder sb = new StringBuilder();
                 String line;
 
                 // Read Server Response
@@ -129,6 +129,10 @@ public class ServerRegistrationBackgroundTask implements Runnable {
         } catch (final SocketTimeoutException error) {
             Log.d(TAG, "SocketTimeoutException: " + error.toString());
             //Handles URL access timeout.
+        } catch (final UnsupportedEncodingException e) {
+            Log.d(TAG, "UnsupportedEncodingException: " + e.toString());
+        } catch (final ProtocolException e) {
+            Log.d(TAG, "ProtocolException: " + e.toString());
         } catch (final IOException error) {
             Log.d(TAG, "IOException: " + error.toString());
             //Handles input and output errors

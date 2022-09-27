@@ -23,8 +23,8 @@ import java.util.Date;
 public class TimeIgnoringDateComparator implements Comparator<Date> {
 
     @Override
-    public int compare(Date d1, Date d2) {
-        Calendar c1 = Calendar.getInstance();
+    public int compare(final Date d1, final Date d2) {
+        final Calendar c1 = Calendar.getInstance();
         final Calendar c2 = Calendar.getInstance();
 
         // set time to midnight

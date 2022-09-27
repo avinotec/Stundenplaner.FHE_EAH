@@ -72,7 +72,7 @@ public class TimeTableEventVo implements Parcelable {
         for(final TimeTableLocationVo room : mLocationList.values()){
             if(room.getName() != null) {
                 final String roomName = room.getName().replaceAll("\\(", " (");
-                stringBuilder.append(roomName + ", ");
+                stringBuilder.append(roomName).append(", ");
             }
         }
 
@@ -91,7 +91,7 @@ public class TimeTableEventVo implements Parcelable {
         for(final LecturerVo lecturer : mLecturerList.values()){
             if(lecturer.getName() != null){
                 // append ", " in any case, for lists of lecturers
-                stringBuilder.append(lecturer.getName() + ", ");
+                stringBuilder.append(lecturer.getName()).append(", ");
             }
         }
 
