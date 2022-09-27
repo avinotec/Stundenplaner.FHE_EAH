@@ -1,12 +1,75 @@
-Willkommen auf dem Stundenplan Push Server!
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8"/>
+    <title>FCM Check</title>
+</head>
+
+<body>
+<h1>Willkommen auf dem Stundenplan Push Server!</h1>
 
 <p>
     <a href="fcm_register_user.php">
         fcm_register_user.php w/o params</a> <br>
     <a href="fcm_register_user.php?&os=android&language=DE&fcm_token=token0815&eventseries_names=[]&debug=1&nonsense=nonsense">
         fcm_register_user.php with token, language DE and empty eventseries list</a> <br>
-    <a href="fcm_register_user.php?&os=android&language=DE&fcm_token=token0815&eventseries_names[]=BT%2FMT%28BA%29Info+I%2BII%2FPL%2F01&eventseries_names[]=MB%28BA%29Tech.Eng+II%2F%C3%9C%2F01&debug=1&nonsense=nonsense">
-        fcm_register_user.php with token, language DE and non-empty eventseries list</a> <br>
-    <a href="fcm_update_and_send.php">
-        fcm_update_and_send.php</a>
 </p>
+
+<br>
+<h2>Inputparameter für Beispielaufruf von fcm_register_user.php:</h2>
+<form action="fcm_register_user.php" method="post">
+
+    <p>
+        <label for="os">OS:</label>
+        <input type="text" name="os" id="os" value="android">
+
+        <label for="language">Language:</label>
+        <input type="text" name="language" id="language" value="DE">
+    </p>
+
+    <p>
+        <label for="fcm_token">FCM Token:</label>
+        <input type="text" name="fcm_token" id="fcm_token" value="token0815">
+    </p>
+
+    <p>
+    <label for="debug">Debug Logs?</label>
+    <select name="debug" id="debug">
+        <option value="1">An</option>
+        <option value="2">Aus</option>
+    </select>
+    </p>
+
+    <br>
+    <b>Subscribed Event Series:</b> <input type="text" id="eventseriesToAdd" placeholder="name of an Event Series">
+    <button type="button" name="addBtn" id="addBtn" onclick="addEventSeries()">Hinzufügen</button>
+    <ul id="eventseries_names">
+        <li><input type="text" name="eventseries_names[]" value="BT/MT(BA)Info I+II/01"></li>
+        <li><input type="text" name="eventseries_names[]" value="MB(BA)Tech.Eng II/F01"></li>
+    </ul>
+
+    <br><br>
+    <button type="submit" name="sendbutton" id="sendbutton">Absenden</button>
+
+
+</form>
+</body>
+</html>
+
+<script>
+    // Create a new list item when clicking on the "Hinzufügen" button
+    function addEventSeries() {
+        var li = document.createElement("li");
+        var inputValue = document.getElementById("eventseriesToAdd").value;
+        var i = document.createElement("input");
+        i.setAttribute("type", "text");
+        i.setAttribute("value", inputValue);
+        if (inputValue === '') {
+            alert("You must write something!");
+        } else {
+            document.getElementById("eventseries_names").appendChild(li);
+        }
+        document.getElementById("eventseriesToAdd").value = "";
+
+    }
+</script>

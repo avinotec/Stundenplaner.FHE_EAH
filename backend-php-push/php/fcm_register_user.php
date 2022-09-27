@@ -83,24 +83,14 @@ if($language !== "DE" && $language !== "EN"){
 
 // initialize to set data types
 $fcm_token = "";
-$json_subscribed_eventseries = "";
 $array_subscribed_eventseries = array();
 
 if ($os === ANDROID) {
 	//Get token and subscriptions send from app
 	// Alle übergebenen Parameter entwerten, um SQL-Injections zu unterbinden.
 	$fcm_token = htmlentities( $_REQUEST["fcm_token"]??null);
-	$json_subscribed_eventseries = htmlentities( $_REQUEST["eventseries_names"]??null);
+    $array_subscribed_eventseries =  $_REQUEST["eventseries_names"]??null;
 
-	if(!is_null($json_subscribed_eventseries) && !is_null($fcm_token) ){
-        //todo: check if double quotes are also needed for the request sent by the app
-		$array_subscribed_eventseries = array(json_decode("\"".$json_subscribed_eventseries."\"", true));
-        if($debug) echo "<p>subscribed event series: " . $json_subscribed_eventseries . "</p>";
-	} else {
-		error_log(print_r("jsonSubscribedEventSeries or fcmToken is null!", true));
-		echo "jsonSubscribedEventSeries or fcmToken is null!<br>";
-		return;
-	}
 	/*
 	error_log("#---->");
 	error_log(print_r('Token: '.$fcmToken, true));
@@ -125,8 +115,7 @@ if ($os === ANDROID) {
 // Check if a null value is given, to prevent null entries in the database.
 // Null values can happen if a user opens the script in a browser window.
 if(is_null($array_subscribed_eventseries) || is_null($fcm_token)){
-    echo "<br> SubScribed Event Series Json: " . $json_subscribed_eventseries . "<br>";
-	echo "arraySubscribedEventSeries or fcm token is null! <br>";
+	echo "<br> arraySubscribedEventSeries or fcm token is null! <br>";
 	error_log(print_r("arraySubscribedEventSeries or fcm token is null!", true));
 	return;
 }
@@ -139,6 +128,7 @@ $con->query("DELETE FROM fcm_user WHERE token = '$fcm_token' AND os = '$os'");
 
 //Add token and subscribed event series names to database to register user
 foreach ($array_subscribed_eventseries as $subscribed_eventseries) {
+    $subscribed_eventseries = htmlentities($subscribed_eventseries);
 
 	if($debug) echo "<br> event series: $subscribed_eventseries <br>";
 

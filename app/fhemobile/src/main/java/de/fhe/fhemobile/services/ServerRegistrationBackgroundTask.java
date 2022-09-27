@@ -28,16 +28,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import de.fhe.fhemobile.BuildConfig;
-import de.fhe.fhemobile.utils.myschedule.MyScheduleUtils;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 
 public class ServerRegistrationBackgroundTask implements Runnable {
@@ -45,11 +47,11 @@ public class ServerRegistrationBackgroundTask implements Runnable {
     private static final String TAG = ServerRegistrationBackgroundTask.class.getSimpleName();
 
     final String fcmToken;
-    final List<String> subscriptions = new ArrayList<>();
+    final List<MyScheduleEventSeriesVo> subscribedEventSeriesVos = new ArrayList<>();
 
     public ServerRegistrationBackgroundTask(String token, List<MyScheduleEventSeriesVo> eventSeriesVos) {
         fcmToken = token;
-        subscriptions.addAll(MyScheduleUtils.collectEventSetIds(eventSeriesVos));
+        subscribedEventSeriesVos.addAll(eventSeriesVos);
     }
 
     @Override
@@ -60,16 +62,22 @@ public class ServerRegistrationBackgroundTask implements Runnable {
         } catch (MalformedURLException e) {
             Log.e(TAG, "URL ist nicht URL-konform: " + URL_REGISTER_PUSH_NOTIFICATIONS_EAH, e);
         }
-        HttpURLConnection client = null;
+        HttpsURLConnection client;
         try {
             if (BuildConfig.DEBUG) Assert.assertNotNull(url);
-            client = (HttpURLConnection) url.openConnection();
+            client = (HttpsURLConnection) url.openConnection();
 
-            String data = URLEncoder.encode("fcm_token", "UTF-8")
-                    + "=" + URLEncoder.encode(fcmToken, "UTF-8");
-
-            data += "&" + URLEncoder.encode("eventset_ids", "UTF-8") + "="
-                    + URLEncoder.encode((new Gson()).toJson(subscriptions), "UTF-8");
+            //add params
+            String data = encodeAsParam("os", "android")
+                    + encodeAsParam("fcm_token", fcmToken);
+            if(Locale.getDefault().getLanguage().equals("de")){
+                data += encodeAsParam("language", "DE");
+            } else {
+                data += encodeAsParam("language", "EN");
+            }
+            for(MyScheduleEventSeriesVo eventSeriesVo : subscribedEventSeriesVos){
+                data += encodeAsParam("eventseries_names[]", eventSeriesVo.getTitle());
+            }
 
             //Anmerkung Stepping: In Jena wird keine basic Authentifizierung benötigt
 				/* final String userPassword = Define.sAuthSoapUserName + ':' + Define.sAuthSoapPassword;
@@ -127,5 +135,10 @@ public class ServerRegistrationBackgroundTask implements Runnable {
         } catch (final NullPointerException error) {
             Log.d(TAG, "NullPointerException: " + error.toString());
         }
+    }
+
+    private String encodeAsParam(String name, String value) throws UnsupportedEncodingException {
+        return "&" + URLEncoder.encode(name, "UTF-8")
+                + "=" + URLEncoder.encode(value, "UTF-8");
     }
 }
