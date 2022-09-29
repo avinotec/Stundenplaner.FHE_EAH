@@ -45,7 +45,7 @@
     <button type="button" name="addBtn" id="addBtn" onclick="addEventSeries()">Hinzufügen</button>
     <ul id="eventseries_names">
         <li><input type="text" name="eventseries_names[]" value="BT/MT(BA)Info I+II/01"></li>
-        <li><input type="text" name="eventseries_names[]" value="MB(BA)Tech.Eng II/F01"></li>
+        <li><input type="text" name="eventseries_names[]" value="MB(BA)Tech.Eng II/01"></li>
     </ul>
 
     <br><br>
@@ -63,10 +63,12 @@
         var inputValue = document.getElementById("eventseriesToAdd").value;
         var i = document.createElement("input");
         i.setAttribute("type", "text");
-        i.setAttribute("value", inputValue);
         if (inputValue === '') {
             alert("You must write something!");
         } else {
+            i.setAttribute("value", inputValue);
+            i.setAttribute("name", "eventseries_names[]");
+            li.appendChild(i);
             document.getElementById("eventseries_names").appendChild(li);
         }
         document.getElementById("eventseriesToAdd").value = "";
