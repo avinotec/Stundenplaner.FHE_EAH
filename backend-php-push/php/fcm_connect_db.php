@@ -1,5 +1,5 @@
 <?php
-/*
+/****************************************************************************
  *  Copyright (c) 2014-2022 Ernst-Abbe-Hochschule Jena
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,26 +14,17 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- */
+ *****************************************************************************/
 
 declare(strict_types=1);
 
-const DB_HOST = 'localhost';
-const DB_USER = 'stundenplanuser';
-const DB_PASSWORD = 'stundenplan2022';
-const DB_NAME = 'stundenplan';
+require_once 'TimetableDb.php';
 
-// Aufbau DB Connection
-$con = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
-/* check connection */
-if (mysqli_connect_errno()) {
-    printf("Connect failed: %s\n", mysqli_connect_error());
+//Get or create database connection
+try {
+    initDbConnection();
+} catch (Exception $e) {
+    echo "Database is not available: " .  $e->getMessage() . "<br>";
     exit();
 }
 
-/* change character set to utf8 */
-if (!$con->set_charset("utf8")) {
-	printf("Error loading character set utf8: %s\n", $mysqli->error);
-	exit();
-}

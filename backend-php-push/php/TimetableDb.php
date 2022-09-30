@@ -1,0 +1,260 @@
+<?php
+/****************************************************************************
+ *  Copyright (c) 2014-2022 Ernst-Abbe-Hochschule Jena
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+*****************************************************************************/
+declare(strict_types=1);
+
+
+const HTML_BR = '<br />';
+
+require_once 'config.php';
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//global variables
+
+$db_timetable = null;
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// debug functionality
+
+if (!isset($GLOBALS['debug'])) {
+	$GLOBALS['debug'] = false;
+}
+if (!isset($debug)) {
+	$debug = false;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * DB-Connection
+ * MS 20090612, if database not available, an exception is thrown in the constructor.
+ * @throws Exception
+ */
+function initDbConnection(): void {
+	global $debug;
+	/** @var object $db_timetable Datenbankinstanz */
+	global $db_timetable;
+	global $_config;
+
+    /** @var TimetableDb|null $db_timetable gets initialized or, if already initialized, this calls the destructor implicitly. */
+	$db_timetable = null;
+
+	// Wenn die Datenbank noch nicht weggeflogen ist, dann nicht erneut instanziieren
+	try {
+		$db_timetable = new TimetableDb($_config['dbhost'], $_config['dbuser'], $_config['dbpassword'], $_config['dbname']);
+	} catch(Exception $e) {
+		echo '<h1>Wartungsarbeiten</h1>
+				<p>
+					Sehr geehrte Anwender.
+					Wir fuehren momentan wichtige Wartungsarbeiten durch.
+				</p>
+				<p>
+					Ihre<br />
+					Administratoren
+				</p> <!-- Database in maintenance mode. -->' . PHP_EOL;
+		if ($debug) {
+			echo 'DEBUG: DBInitConnection: Exception abgefangen: ' . $e->getMessage() . HTML_BR . PHP_EOL;
+			echo 'DEBUG: DBInitConnection: Stack trace:' . $e->getTraceAsString() . HTML_BR . PHP_EOL;
+		}
+
+		if ($debug ) {
+			//Entwickler informieren
+			throw $e;
+		} else {
+			//Keine internen Informationen preisgeben
+			die();
+		}
+	}
+}
+
+/**
+ * @return void
+ */
+function closeDbConnection(): void {
+	/** @var TimetableDb $db_timetable Datenbankinstanz */
+	global $db_timetable;
+
+	$db_timetable = null;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+final class TimetableDb
+{
+    /** @var object mysqli */
+    private ?mysqli $mysqli = null;
+
+    /**
+     * @param string $dbhost
+     * @param string $dbuser
+     * @param string $dbpassword
+     * @param string $dbname
+     * @throws Exception
+     */
+    public function __construct(string $dbhost, string $dbuser, string $dbpassword, string $dbname){
+        global $debug;
+
+        /* xampp 1.7.2: PHP 5.3:
+            MySQLi Now supports persistent connections, by prepending the hostname with 'p:'
+
+            The hostname "localhost" has a special meaning. It is bound to the use of Unix domain sockets.
+            It is not possible to open a TCP/IP connection using the hostname localhost you must use 127.0.0.1 instead.
+
+        */
+        if ($debug) echo 'DEBUG: MySQLi: constructor called: dbHost=' . $dbhost . '; dbUser=' . $dbuser . '; dbPass=' . /* $dbpass */ '***' . '; dbName=' . $dbname . HTML_BR . PHP_EOL;
+
+        try {
+            $this->mysqli = new mysqli($dbhost, $dbuser, $dbpassword, $dbname);
+            if (mysqli_connect_errno()) {
+                throw new Exception();
+            }
+        } catch (Exception $e) {
+            if ($debug) {
+                echo 'DEBUG: MySQLi: error database "' . $dbhost . '": ' . mysqli_connect_error() . HTML_BR . PHP_EOL;
+                echo 'DEBUG: MySQLi: Exception abgefangen: ' . $e->getMessage() . HTML_BR . PHP_EOL;
+                echo 'DEBUG: MySQLi: Stack trace:' . $e->getTraceAsString() . HTML_BR . PHP_EOL;
+            }
+
+            throw $e;
+            // die();
+        }
+
+        //Am Ende der Verarbeitung muss die Klasse geloescht werden.
+        //$this->mysqli->close();
+        // -> Siehe __destruct()
+        //$this->mysqli->dump_debug_info();
+
+        /* ****************************************************************************************************** */
+        /* Tracing SQL */
+        /*
+            "No index used in query/prepared statement"
+
+            Description:
+            ------------
+            Mysqli extension throws too many warnings. For example, "SELECT * FROM table" results in a warning:
+            "Warning: mysqli::query(): No index used in query/prepared statement SELECT * FROM table ..." There's no way to
+            have MySQL use an index when selecting all records, so this warning appears every time one wants to select all records
+            from any table. Sometimes Mysqli gives this warning even when MySQL is apparently using an index (i.e. the same query,
+            executed with EXPLAIN, says it's using an index).
+
+            Mysqli should give warnings only on real problems. Not using an index is at most worthy of a notice, not a warning,
+            especially when there's no way to use an index with a particular query!
+
+            https://bugs.php.net/bug.php?id=35450&edit=1
+        */
+
+        /* alternativ anstelle mysqli_report():
+            activate reporting
+            $driver = new mysqli_driver();
+            $driver->report_mode = MYSQLI_REPORT_ALL;
+        */
+
+        // turn on tracing for SQL
+        if ($debug) {
+            ini_set('mysql.trace_mode', 'true');
+            ini_set('mysqli.trace_mode', 'true');
+            /* activate reporting */
+            /* throws an exception */
+            mysqli_report(MYSQLI_REPORT_ALL);
+
+            // mysqli_report(MYSQLI_REPORT_ALL ^ MYSQLI_REPORT_STRICT ); /* prints a warning, funktioniert hier aber nicht */
+        } else {
+            mysqli_report(MYSQLI_REPORT_OFF);
+        }
+    }
+
+    /**
+     *
+     */
+    public function __destruct()
+    {
+        /** @var bool */
+        global $debug;
+        if ($debug) echo 'DEBUG: MySQLi: destructor called.<br />' . PHP_EOL;
+
+        if ($this->mysqli)
+            $this->mysqli->close();
+        $this->mysqli = null;
+    }
+
+
+    /**
+     * Insert a user into fcm_user with the given values
+     * @param string $fcm_token
+     * @param string $subscribed_eventseries
+     * @param string $os
+     * @param string $language
+     * @return int 1 success, -1 failure
+     */
+    final public function insertUser(string $fcm_token, string $subscribed_eventseries, string $os, string $language): int{
+        global $debug;
+
+        $fcm_token = $this->mysqli->real_escape_string($fcm_token);
+        $subscribed_eventseries = $this->mysqli->real_escape_string($subscribed_eventseries);
+
+        $sql = "INSERT INTO fcm_user (token, eventseries_name, os, language)" .
+            "VALUES ('$fcm_token', '$subscribed_eventseries', '$os', '$language')";
+
+        if ($debug) echo 'DEBUG: insertUser: ' . $sql . HTML_BR . PHP_EOL;
+
+        try {
+            $this->mysqli->query($sql);
+            return 1; //success
+
+        } catch (Exception $e) {
+            if ($debug) {
+                echo 'DEBUG: insertUser: Exception abgefangen: ' . $e->getMessage() . HTML_BR . PHP_EOL;
+                echo 'DEBUG: insertUser: Stack trace:' . $e->getTraceAsString() . HTML_BR . PHP_EOL;
+            }
+        }
+
+        return -1; //error
+    }
+
+    /**
+     * Delete user with the given fcm_token and os
+     * @param string $fcm_token
+     * @param string $os
+     * @return int 1 success, -1 failure
+     */
+    final public function deleteUser(string $fcm_token, string $os): int{
+        global $debug;
+        $sql = "DELETE FROM fcm_user WHERE token = '$fcm_token' AND os = '$os'";
+
+        if ($debug) echo 'DEBUG: deleteUser: ' . $sql . HTML_BR . PHP_EOL;
+
+        try {
+            $this->mysqli->query($sql);
+            return 1; //success
+
+        } catch (Exception $e) {
+            if ($debug) {
+                echo 'DEBUG: insertUser: Exception abgefangen: ' . $e->getMessage() . HTML_BR . PHP_EOL;
+                echo 'DEBUG: insertUser: Stack trace:' . $e->getTraceAsString() . HTML_BR . PHP_EOL;
+            }
+        }
+
+        return -1; //error
+    }
+
+}
+// end class
+// do it, finally
+try {
+    initDbConnection();
+} catch (Exception $e) {
+}

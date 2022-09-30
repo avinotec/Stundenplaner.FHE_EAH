@@ -18,13 +18,14 @@
 
 declare(strict_types=1);
 
-///////////////////////////////global variables/////////////////////////////////////////////////////////////////////
-$dbpep = null;
+require_once 'define.php';
+
+require_once 'fcm_connect_db.php';
+/** @var TimetableDb $db_timetable database connection */
+global $db_timetable;
 
 /* we can request debug output to better find errors */
 $debug = false;
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 if (isset( $_REQUEST['debug']))
 	$debug = htmlentities($_REQUEST['debug']);
@@ -61,16 +62,22 @@ if ($debug){
 }
 
 
-require_once 'fcm_connect_db.php';
-if ($debug) print_r($_REQUEST);
+//Get or create database connection
+try {
+    initDbConnection();
+} catch (Exception $e) {
+    echo "Database is not available: " .  $e->getMessage() . "<br>";
+    exit();
+}
+if ($debug) {
+    echo "<p>";
+    print_r($_REQUEST);
+    echo "</p>";
+}
 
 
 // ----------------- Get data from app ----------------------------------------------
-//BSP SQL-Injection
-//$login = $this->mysqli->real_escape_string( $login ) ;
 
-const ANDROID = "android";
-const IOS = "ios";
 // initialize to set data types
 $os = "";
 $language = "";
@@ -97,19 +104,8 @@ if ($os === ANDROID) {
 	$fcm_token = htmlentities( $_REQUEST["fcm_token"]??null);
     $array_subscribed_eventseries =  $_REQUEST["eventseries_names"]??null;
 
-	/*
-	error_log("#---->");
-	error_log(print_r('Token: '.$fcmToken, true));
-	error_log("<----#");
-	*/
-
-} else if ($os === IOS){
-	/* //Code aus Hochschule Hof
-	$entitybody = file_get_contents("php://input");
-	$fullJSON = json_decode($entitybody, true);
-	$lectureArray = $fullJSON["vorlesung_id"]??null;
-	$pushToken = $fullJSON["fcm_token"]??null;
-	$language = $fullJSON["language"]??null; */
+} elseif ($os === IOS){
+	//
 } else {
     echo "Keine OS Zuordnung!";
     error_log(print_r("Keine OS Zuordnung!", true));
@@ -121,7 +117,7 @@ if ($os === ANDROID) {
 // Check if a null value is given, to prevent null entries in the database.
 // Null values can happen if a user opens the script in a browser window.
 if(is_null($array_subscribed_eventseries) || is_null($fcm_token)){
-	echo "<br> arraySubscribedEventSeries or fcm token is null! <br>";
+	echo "<br> array_subscribed_eventseries or fcm token is null! <br>";
 	error_log(print_r("arraySubscribedEventSeries or fcm token is null!", true));
 	return;
 }
@@ -130,24 +126,12 @@ if(is_null($array_subscribed_eventseries) || is_null($fcm_token)){
 // ----------------- DB entry for user to register ----------------------------------------------
 
 //Clear database from potential previous registrations with the given token
-$con->query("DELETE FROM fcm_user WHERE token = '$fcm_token' AND os = '$os'");
-
+$db_timetable->deleteUser($fcm_token, $os);
 //Add token and subscribed event series names to database to register user
 foreach ($array_subscribed_eventseries as $subscribed_eventseries) {
     $subscribed_eventseries = htmlentities($subscribed_eventseries);
 
-	if($debug) echo "<br> event series: $subscribed_eventseries <br>";
+	if($debug) echo "<br> Register user $fcm_token for event series: $subscribed_eventseries <br>";
 
-	// this way you can add null values to cells w/o adding the letters "NULL" as a string.
-	$stmt = $con->prepare("INSERT INTO fcm_user (token, eventseries_name, os, language) VALUES (?, ?, ?, ?)");
-
-//TODO
-	// ssss stands for the sequence of string and integer variables.
-	$stmt->bind_param('ssss', $fcm_token, $subscribed_eventseries, $os, $language);
-	$stmt->execute();
+	$db_timetable->insertUser($fcm_token, $subscribed_eventseries, $os, $language);
 }
-
-//Close sql-connection
-$con->close();
-// error_log(print_r("DONE!", true));
-return("Funktioniert!");

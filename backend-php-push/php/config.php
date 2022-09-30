@@ -16,21 +16,11 @@
  *
  *****************************************************************************/
 
-declare(strict_types=1);
+global $_config;
+/** @var $_config Array that collects all settings */
+$_config[] = array();
 
-/**
- * Returns the event title without the number of the time table entry.
- * (note: event titles have no such number if entered for the first time,
- * but later added events belonging to the same event series get one)
- *
- * @param  string $event_title The title of an event
- * @return string The title of the Event Series th event belongs to
- */
-function getEventSeriesName(string $event_title): string {
-
-    //cut away all ending numbers after the dot
-    //example: WI/WIEC(BA)Mathe/Ü/01.1 -> WI/WIEC(BA)Mathe/Ü/01
-    $eventseries_name = preg_replace("/\.\d+$/", "", $event_title);
-
-	return $eventseries_name;
-}
+$_config['dbhost']      = 'localhost';
+$_config['dbuser']      = 'stundenplanuser';
+$_config['dbpassword']  = 'stundenplan2022';
+$_config['dbname']      = 'stundenplan';

@@ -50,14 +50,9 @@ public class PushNotificationService extends FirebaseMessagingService {
 
 	@Override
 	public void onMessageReceived(final RemoteMessage remoteMessage) {
-
 		showNotification(
 				remoteMessage.getNotification().getTitle(),
 				remoteMessage.getNotification().getBody());
-
-		// todo: fetch My Schedule here? or wait for user to open app
-		//  and maybe also wait for pressing the update button?
-		//NetworkHandler.getInstance().fetchMySchedule();
 
 		// Not getting messages here? See why this may be: https://goo.gl/39bRNJ
 		Log.d(TAG, "From: " + remoteMessage.getFrom());
