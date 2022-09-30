@@ -1,5 +1,5 @@
 <?php
-/*
+/****************************************************************************
  *  Copyright (c) 2014-2022 Ernst-Abbe-Hochschule Jena
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,12 +14,18 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- */
+ *****************************************************************************/
 
 declare(strict_types=1);
 
+///////////////////////////////global variables/////////////////////////////////////////////////////////////////////
+$dbpep = null;
+
 /* we can request debug output to better find errors */
-$debug=0;
+$debug = false;
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 if (isset( $_REQUEST['debug']))
 	$debug = htmlentities($_REQUEST['debug']);
 

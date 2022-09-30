@@ -58,7 +58,7 @@ public class ServerRegistrationBackgroundTask implements Runnable {
     public void run() {
         URL url = null;
         try {
-            url = new URL(URL_REGISTER_PUSH_NOTIFICATIONS_EAH); // Debug: ( + "?debug=1")
+            url = new URL(URL_REGISTER_PUSH_NOTIFICATIONS_EAH); // Debug: ( + "&debug=true")
         } catch (final MalformedURLException e) {
             Log.e(TAG, "URL ist nicht URL-konform: " + URL_REGISTER_PUSH_NOTIFICATIONS_EAH, e);
         }
