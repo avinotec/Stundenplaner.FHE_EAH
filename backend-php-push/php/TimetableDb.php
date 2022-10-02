@@ -198,9 +198,9 @@ final class TimetableDb
      * @param string $subscribed_eventseries
      * @param string $os
      * @param string $language
-     * @return int 1 success, -1 failure
+     * @return bool true success, false failure
      */
-    final public function insertUser(string $fcm_token, string $subscribed_eventseries, string $os, string $language): int{
+    final public function insertUser(string $fcm_token, string $subscribed_eventseries, string $os, string $language): bool {
         global $debug;
 
         $fcm_token = $this->mysqli->real_escape_string($fcm_token);
@@ -213,47 +213,51 @@ final class TimetableDb
 
         try {
             $this->mysqli->query($sql);
-            return 1; //success
 
         } catch (Exception $e) {
             if ($debug) {
                 echo 'DEBUG: insertUser: Exception abgefangen: ' . $e->getMessage() . HTML_BR . PHP_EOL;
                 echo 'DEBUG: insertUser: Stack trace:' . $e->getTraceAsString() . HTML_BR . PHP_EOL;
+				return false; //error
             }
         }
 
-        return -1; //error
+		return true; //success
+
     }
 
     /**
      * Delete user with the given fcm_token and os
      * @param string $fcm_token
-     * @param string $os
-     * @return int 1 success, -1 failure
+     * @return bool true success, false failure
      */
-    final public function deleteUser(string $fcm_token, string $os): int{
+    final public function deleteUser(string $fcm_token) : bool{
         global $debug;
-        $sql = "DELETE FROM fcm_user WHERE token = '$fcm_token' AND os = '$os'";
+        $sql = "DELETE FROM fcm_user WHERE token = '$fcm_token'";
 
         if ($debug) echo 'DEBUG: deleteUser: ' . $sql . HTML_BR . PHP_EOL;
 
         try {
             $this->mysqli->query($sql);
-            return 1; //success
 
         } catch (Exception $e) {
             if ($debug) {
                 echo 'DEBUG: insertUser: Exception abgefangen: ' . $e->getMessage() . HTML_BR . PHP_EOL;
                 echo 'DEBUG: insertUser: Stack trace:' . $e->getTraceAsString() . HTML_BR . PHP_EOL;
+				return false; //error
             }
         }
 
-        return -1; //error
+
+		return true; //success
     }
 
 }
+
+
 // end class
-// do it, finally
+
+// do it, finally connect the database
 try {
     initDbConnection();
 } catch (Exception $e) {

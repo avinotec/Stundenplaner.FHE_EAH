@@ -79,8 +79,8 @@ if ($debug) {
 // ----------------- Get data from app ----------------------------------------------
 
 // initialize to set data types
-$os = "";
-$language = "";
+$os = ANDROID;
+$language = "DE";
 
 //get os
 if (isset($_REQUEST['os']))
@@ -90,7 +90,7 @@ if (isset($_REQUEST['os']))
 if(isset($_REQUEST['language']))
     $language = htmlentities($_REQUEST['language']);
 if($language !== "DE" && $language !== "EN"){
-    error_log(print_r("Language: ".$language, true));
+    error_log("Language: ".$language);
     exit;
 }
 
@@ -108,8 +108,7 @@ if ($os === ANDROID) {
 	//
 } else {
     echo "Keine OS Zuordnung!";
-    error_log(print_r("Keine OS Zuordnung!", true));
-    error_log(print_r("OS-Type: ".$os, true));
+    error_log("Keine OS Zuordnung! OS-Type: ".$os);
     exit;
 }
 
@@ -118,7 +117,7 @@ if ($os === ANDROID) {
 // Null values can happen if a user opens the script in a browser window.
 if(is_null($array_subscribed_eventseries) || is_null($fcm_token)){
 	echo "<br> array_subscribed_eventseries or fcm token is null! <br>";
-	error_log(print_r("arraySubscribedEventSeries or fcm token is null!", true));
+	error_log("arraySubscribedEventSeries or fcm token is null!");
 	return;
 }
 
@@ -126,7 +125,7 @@ if(is_null($array_subscribed_eventseries) || is_null($fcm_token)){
 // ----------------- DB entry for user to register ----------------------------------------------
 
 //Clear database from potential previous registrations with the given token
-$db_timetable->deleteUser($fcm_token, $os);
+$db_timetable->deleteUser($fcm_token);
 //Add token and subscribed event series names to database to register user
 foreach ($array_subscribed_eventseries as $subscribed_eventseries) {
     $subscribed_eventseries = htmlentities($subscribed_eventseries);
@@ -135,3 +134,6 @@ foreach ($array_subscribed_eventseries as $subscribed_eventseries) {
 
 	$db_timetable->insertUser($fcm_token, $subscribed_eventseries, $os, $language);
 }
+
+//TODO kannst Du das gebrauchen oder stört das?
+echo 'Done. EAH Jena';

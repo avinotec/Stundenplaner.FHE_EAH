@@ -26,24 +26,9 @@ require_once 'utils.php';
 require_once 'fcm_connect_db.php';
 
 $debug = true;
-error_log(print_r("Begin Script fcm_update_and_send.php", true));
+if ($debug) error_log(print_r("Begin Script fcm_update_and_send.php", true));
+$output = "";
 
-
-// -------------- Detect changed event sets and update database ----------------------------------
-
-//fetch all available module ids
-$url = API_BASE_URL . ENDPOINT_MODULE;
-//note: second parameter must be true to enable key-value iteration
-$module_ids = json_decode(file_get_contents($url), true);
-
-//fetch data of each module
-echo "<p> Module Ids (" . count($module_ids) . "):</b><br>";
-$module_ids = array_slice($module_ids, 0, 5, true); //for debug: reduce array to size 5
-foreach($module_ids as $key=>$module_id){
-    echo $module_id . ", ";
-    fetchModuleAndUpdateDatabase($module_id);
-}
-echo "</p>";
 
 
 // ---------------------------------------------------------------------------
@@ -190,4 +175,38 @@ function sendFCM(string $token, string $language, string $eventseries_name): voi
     curl_close($cRequest);
 
 }
-error_log(print_r("Script fcm_update_and_send.php Ende", true));
+
+
+// main
+
+// -------------- Detect changed event sets and update database ----------------------------------
+
+//fetch all available module ids from StundenplanServer
+$url = API_BASE_URL . ENDPOINT_MODULE;
+//note: second parameter must be true to enable key-value iteration
+$jsonStringFromStundenplanServer = file_get_contents($url);
+$module_ids = json_decode( $jsonStringFromStundenplanServer, true);
+
+//fetch data of each module
+$output .= "<p> Module Ids (" . count($module_ids) . "):</b><br>";
+
+if ( count($module_ids) <= 0 ) {
+	// no modules found
+
+	//TODO
+	// echo nothing found
+	// exit?
+}
+
+
+$module_ids = array_slice($module_ids, 0, 5, true); //for debug: reduce array to size 5
+foreach($module_ids as $key=>$module_id){
+    $output .=  $module_id . ", ";
+    fetchModuleAndUpdateDatabase($module_id);
+}
+$output .= "</p>";
+
+
+error_log(print_r("Script fcm_update_and_send.php Ende,".$output, true));
+
+echo $output;

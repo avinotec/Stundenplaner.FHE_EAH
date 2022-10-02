@@ -64,3 +64,9 @@ CREATE TABLE event_sets
 
 ) ENGINE = InnoDB
   DEFAULT CHARSET = latin1;
+
+
+ALTER TABLE `event_sets`
+    ADD INDEX `eventset_id` (`eventset_id`),
+    ADD INDEX `eventseries` (`eventseries`),
+    ADD INDEX `module_id` (`module_id`)	;
