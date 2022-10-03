@@ -16,20 +16,33 @@
  *
  *****************************************************************************/
 
-declare(strict_types=1);
-
-require_once 'define.php';
-require_once 'utils.php';
 
 /* wird vom Cron-Job aus aufgerufen */
 
-require_once 'fcm_connect_db.php';
+declare(strict_types=1);
 
-$debug = true;
-if ($debug) error_log(print_r("Begin Script fcm_update_and_send.php", true));
+require_once 'define.php';
+require_once 'config.php';
+require_once 'TimetableDb.php';
+
+require_once 'utils.php';
+
+
+/** @var TimetableDb $db_timetable database connection */
+global $db_timetable;
+
+//Get or create database connection
+initDbConnection();
+
+
+/* we can request debug output to better find errors */
+$debug = false;
+$debug = true;      // gegebenenfalls auskommentieren
+
+if ($debug) error_log("Begin Script fcm_update_and_send.php" ) ;
+
+// Ausgabe sammeln und nur ein einziges Mal ausgeben
 $output = "";
-
-
 
 // ---------------------------------------------------------------------------
 // ---------------- functions ------------------------------------------------
@@ -45,6 +58,7 @@ function fetchModuleAndUpdateDatabase(string $module_id): void {
 
     if(!array_key_exists("dataActivity", $module_data)){ return; }
 
+	$local_eventset_ids = array();
 	$fetched_eventset_ids = array_keys($module_data["dataActivity"]);
 	$local_eventset_ids = $db_timetable->query("SELECT eventset_id FROM event_sets WHERE module_id = '$module_id'");
 
@@ -125,7 +139,7 @@ function sendNotification(string $eventseries_name): void {
                 //send android push
                 sendFCM($subscribing_user["token"], $eventseries_name);
 
-            } else if($subscribing_user["os"] == IOS){
+            } elseif($subscribing_user["os"] == IOS){
                 //send Ios Push
             } else {
                 error_log(print_r("++++ PUSH wrong OS!! ++++<br>\n", true));

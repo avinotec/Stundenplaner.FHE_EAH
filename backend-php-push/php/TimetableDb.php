@@ -17,7 +17,6 @@
 *****************************************************************************/
 declare(strict_types=1);
 
-
 const HTML_BR = '<br />';
 
 require_once 'config.php';
@@ -31,6 +30,7 @@ $db_timetable = null;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // debug functionality
 
+global $debug;
 if (!isset($GLOBALS['debug'])) {
 	$GLOBALS['debug'] = false;
 }
@@ -108,12 +108,11 @@ final class TimetableDb
     public function __construct(string $dbhost, string $dbuser, string $dbpassword, string $dbname){
         global $debug;
 
-        /* xampp 1.7.2: PHP 5.3:
+        /*
             MySQLi Now supports persistent connections, by prepending the hostname with 'p:'
 
             The hostname "localhost" has a special meaning. It is bound to the use of Unix domain sockets.
             It is not possible to open a TCP/IP connection using the hostname localhost you must use 127.0.0.1 instead.
-
         */
         if ($debug) echo 'DEBUG: MySQLi: constructor called: dbHost=' . $dbhost . '; dbUser=' . $dbuser . '; dbPass=' . /* $dbpass */ '***' . '; dbName=' . $dbname . HTML_BR . PHP_EOL;
 
