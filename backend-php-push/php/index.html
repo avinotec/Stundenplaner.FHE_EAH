@@ -1,55 +1,55 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="utf-8"/>
-    <title>FCM Check</title>
+	<meta charset="utf-8"/>
+	<title>FCM Check</title>
 </head>
 
 <body>
 <h1>Willkommen auf dem Stundenplan Push Server!</h1>
 
 <p>
-    <a href="fcm_register_user.php">
-        fcm_register_user.php w/o params</a> <br>
-    <a href="fcm_register_user.php?&os=android&language=DE&fcm_token=token0815&eventseries_names=[]&debug=1&nonsense=nonsense">
-        fcm_register_user.php with token, language DE and empty eventseries list</a> <br>
+	<a href="fcm_register_user.php">
+		fcm_register_user.php w/o params</a> <br>
+	<a href="fcm_register_user.php?&os=android&language=DE&fcm_token=token0815&eventseries_names=[]&debug=1&nonsense=nonsense">
+		fcm_register_user.php with token, language DE and empty eventseries list</a> <br>
 </p>
 
 <br>
 <h2>Inputparameter für Beispielaufruf von fcm_register_user.php:</h2>
 <form action="fcm_register_user.php" method="post">
 
-    <p>
-        <label for="os">OS:</label>
-        <input type="text" name="os" id="os" value="android">
+	<p>
+		<label for="os">OS:</label>
+		<input type="text" name="os" id="os" value="android">
 
-        <label for="language">Language:</label>
-        <input type="text" name="language" id="language" value="DE">
-    </p>
+		<label for="language">Language:</label>
+		<input type="text" name="language" id="language" value="DE">
+	</p>
 
-    <p>
-        <label for="fcm_token">FCM Token:</label>
-        <input type="text" name="fcm_token" id="fcm_token" value="token0815">
-    </p>
+	<p>
+		<label for="fcm_token">FCM Token:</label>
+		<input type="text" name="fcm_token" id="fcm_token" value="token0815">
+	</p>
 
-    <p>
-    <label for="debug">Debug Logs?</label>
-    <select name="debug" id="debug">
-        <option value="true">An</option>
-        <option value="false">Aus</option>
-    </select>
-    </p>
+	<p>
+	<label for="debug">Debug Logs?</label>
+	<select name="debug" id="debug">
+		<option value="true">An</option>
+		<option value="false">Aus</option>
+	</select>
+	</p>
 
-    <br>
-    <b>Subscribed Event Series:</b> <input type="text" id="eventseriesToAdd" placeholder="name of an Event Series">
-    <button type="button" name="addBtn" id="addBtn" onclick="addEventSeries()">Hinzufügen</button>
-    <ul id="eventseries_names">
-        <li><input type="text" name="eventseries_names[]" value="BT/MT(BA)Info I+II/01"></li>
-        <li><input type="text" name="eventseries_names[]" value="MB(BA)Tech.Eng II/01"></li>
-    </ul>
+	<br>
+	<strong>Subscribed Event Series:</strong> <input type="text" id="eventseriesToAdd" placeholder="name of an Event Series">
+	<button type="button" name="addBtn" id="addBtn" onclick="addEventSeries()">Hinzufügen</button>
+	<ul id="eventseries_names">
+		<li><input type="text" name="eventseries_names[]" value="BT/MT(BA)Info I+II/01"></li>
+		<li><input type="text" name="eventseries_names[]" value="MB(BA)Tech.Eng II/01"></li>
+	</ul>
 
-    <br><br>
-    <button type="submit" name="sendbutton" id="sendbutton">Absenden</button>
+	<br><br>
+	<button type="submit" name="sendbutton" id="sendbutton">Absenden</button>
 
 
 </form>
@@ -57,21 +57,21 @@
 </html>
 
 <script>
-    // Create a new list item when clicking on the "Hinzufügen" button
-    function addEventSeries() {
-        var li = document.createElement("li");
-        var inputValue = document.getElementById("eventseriesToAdd").value;
-        var i = document.createElement("input");
-        i.setAttribute("type", "text");
-        if (inputValue === '') {
-            alert("You must write something!");
-        } else {
-            i.setAttribute("value", inputValue);
-            i.setAttribute("name", "eventseries_names[]");
-            li.appendChild(i);
-            document.getElementById("eventseries_names").appendChild(li);
-        }
-        document.getElementById("eventseriesToAdd").value = "";
+	// Create a new list item when clicking on the "Hinzufügen" button
+	function addEventSeries() {
+		var li = document.createElement("li");
+		var inputValue = document.getElementById("eventseriesToAdd").value;
+		var i = document.createElement("input");
+		i.setAttribute("type", "text");
+		if (inputValue === '') {
+			alert("You must write something!");
+		} else {
+			i.setAttribute("value", inputValue);
+			i.setAttribute("name", "eventseries_names[]");
+			li.appendChild(i);
+			document.getElementById("eventseries_names").appendChild(li);
+		}
+		document.getElementById("eventseriesToAdd").value = "";
 
-    }
+	}
 </script>
