@@ -86,7 +86,7 @@ if ($debug) {
 
 // initialize to set data types
 $os = ANDROID;
-$language = "DE";
+$language = LANG_DE;
 
 //get os
 if (isset($_REQUEST['os']))
@@ -95,7 +95,7 @@ if (isset($_REQUEST['os']))
 //get language
 if (isset($_REQUEST['language']))
 	$language = htmlentities($_REQUEST['language']);
-if ($language !== "DE" && $language !== "EN") {
+if ($language !== LANG_DE && $language !== LANG_EN) {
 	error_log("Language: " . $language);
 	exit;
 }

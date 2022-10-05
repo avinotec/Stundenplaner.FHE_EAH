@@ -58,9 +58,11 @@ function fetchModuleAndUpdateDatabase(string $module_id): void {
 
     if(!array_key_exists("dataActivity", $module_data)){ return; }
 
-	$local_eventset_ids = array();
-	$fetched_eventset_ids = array_keys($module_data["dataActivity"]);
-	$local_eventset_ids = $db_timetable->query("SELECT eventset_id FROM event_sets WHERE module_id = '$module_id'");
+    //initialize to set data types
+    $local_eventset_ids = array();
+    $fetched_eventset_ids = array();
+    $fetched_eventset_ids = array_keys($module_data["dataActivity"]);
+    $local_eventset_ids = $db_timetable->query("SELECT eventset_id FROM event_sets WHERE module_id = '$module_id'");
 
 	if($local_eventset_ids != null){
 	    //DELETED EVENT SETS
@@ -161,7 +163,7 @@ function sendFCM(string $token, string $language, string $eventseries_name): voi
     $headers = array('Authorization: key='.SERVER_KEY, 'Content-Type: application/json');
 
     //notification content
-    if($language === "DE"){
+    if($language === LANG_DE){
         $title = "Stundenplanänderung";
         $message = $eventseries_name . " hat sich geändert. Bitte aktualisiere deinen Stundenplan!";
     } else{
@@ -191,7 +193,9 @@ function sendFCM(string $token, string $language, string $eventseries_name): voi
 }
 
 
-// main
+// ---------------------------------------------------------------------------
+// ---------------- main ------------------------------------------------
+// ---------------------------------------------------------------------------
 
 // -------------- Detect changed event sets and update database ----------------------------------
 
