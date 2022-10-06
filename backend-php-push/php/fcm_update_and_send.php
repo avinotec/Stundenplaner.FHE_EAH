@@ -41,7 +41,7 @@ $debug = true;	  // gegebenenfalls auskommentieren
 
 if ($debug) error_log("Begin Script fcm_update_and_send.php") ;
 
-// Ausgabe sammeln und nur ein einziges Mal ausgeben
+// collect output and echo only once
 $output = "";
 
 // ---------------------------------------------------------------------------
@@ -50,10 +50,11 @@ $output = "";
 
 function fetchModuleAndUpdateDatabase(string $module_id): void
 {
-	/** @var mysqli $db_timetable database connection */
+	/** @var TimetableDb $db_timetable database connection */
 	global $db_timetable;
 
 	$module_url = API_BASE_URL . ENDPOINT_MODULE_DETAIL . $module_id;
+    $module_data = array();
 	// second parameter must be true to enable key-value iteration
 	$module_data = json_decode(file_get_contents($module_url), true);
 
@@ -63,16 +64,17 @@ function fetchModuleAndUpdateDatabase(string $module_id): void
     $local_eventset_ids = array();
     $fetched_eventset_ids = array();
     $fetched_eventset_ids = array_keys($module_data["dataActivity"]);
-    $local_eventset_ids = $db_timetable->query("SELECT eventset_id FROM event_sets WHERE module_id = '$module_id'");
-
-	if($local_eventset_ids != null){
+    $local_eventset_ids = $db_timetable->getEventSetIds($module_id);
+	if($local_eventset_ids != null && count($local_eventset_ids) > 0){
 		//DELETED EVENT SETS
 		//detect deleted event set ids
 		$deleted_eventsets = array_diff($local_eventset_ids, $fetched_eventset_ids);
-		echo "<p>Deleted Event Set Ids: " . $deleted_eventsets . "</p>";
+        echo "<p>Deleted Event Set Ids: ";
+		print_r($deleted_eventsets);
+        echo "</p>";
 		//delete those event sets in database
 		foreach($deleted_eventsets as $deletedEventSetId){
-			$db_timetable->query("DELETE FROM event_sets WHERE eventset_id = '$deletedEventSetId'");
+			$db_timetable->deleteEventSet($deletedEventSetId);
 			$eventseries_name = getEventSeriesName($module_data["dataActivity"][$deletedEventSetId]["activityName"]);
 			sendNotification($eventseries_name);
 		}
@@ -83,31 +85,27 @@ function fetchModuleAndUpdateDatabase(string $module_id): void
 			$fetched_eventset_json = json_encode($eventset_data);
 			$eventseries_name = getEventSeriesName($eventset_data["activityName"]);
 			//get local event set
-			$result_local_eventset = $db_timetable->query("SELECT * FROM event_sets WHERE eventset_id = '$eventset_id'");
+			$result_local_eventset = $db_timetable->getEventSet($eventset_id);
 
 			//EVENT SET probably CHANGED
-			if ($result_local_eventset != null && $result_local_eventset -> num_rows > 0){
+			if (!is_null($result_local_eventset) && count($result_local_eventset) > 0){
 				//compare local vs fetched event set checksum
-				$json_local_eventset = string($result_local_eventset[0]["eventset_data"]);
+				$json_local_eventset = $result_local_eventset[0]["eventset_data"];
 				if ($json_local_eventset !== $fetched_eventset_json){
-					echo "Eventset " . $result_local_eventset[0]["eventset_id"] . " has changed since " . $result_local_eventset[0]["last_changed"];
+					echo "<p>Event set " . $result_local_eventset[0]["eventset_id"]
+                        . " has changed since " . $result_local_eventset[0]["last_changed"] . "</p>>";
 					//update database
-					$db_timetable->query("UPDATE event_sets SET eventset_data = '$fetched_eventset_json'
-								WHERE eventset_id = '$eventset_id'");
-					sendNotification($eventseries_name, $db_timetable);
+					$db_timetable->updateEventSet($eventset_id, $fetched_eventset_json);
+					sendNotification($eventseries_name);
 				}
 			}
 			//EVENT SET ADDED
 			//no local event set with this id found --> event set is new and has to be added
 			else {
-				//note: use ' for the values not ` to avoid "unknown column in field list" error in MySQL
-				$db_timetable->query("INSERT INTO event_sets(`eventset_id`, `eventseries`, `module_id`, `eventset_data`, `last_changed`)
-							VALUES ('$eventset_id', '$eventseries_name', '$module_id', '$fetched_eventset_json', SYSDATE())");
-				sendNotification($eventseries_name, $db_timetable);
+				$db_timetable->insertEventSet($eventset_id, $eventseries_name, $module_id, $fetched_eventset_json);
+				sendNotification($eventseries_name);
 				//todo: if eventseries is an exam, notify users with eventseries names belonging to the same module
 			}
-
-			$result_local_eventset->close();
 		}
 	}
 	//new module -> needs to be added
@@ -115,10 +113,8 @@ function fetchModuleAndUpdateDatabase(string $module_id): void
 		foreach ($module_data["dataActivity"] as $eventset_id => $eventset_data) {
 			$eventseries_name = getEventSeriesName($eventset_data["activityName"]);
 			$fetched_eventset_json = json_encode($eventset_data);
-			//note: use ' for the values not ` to avoid "unknown column in field list" error in MySQL
-			$db_timetable->query("INSERT INTO event_sets(`eventset_id`, `eventseries`, `module_id`, `eventset_data`, `last_changed`)
-						VALUES ('$eventset_id', '$eventseries_name', '$module_id', '$fetched_eventset_json', SYSDATE())");
-		}
+			$db_timetable->insertEventSet($eventset_id, $eventseries_name, $module_id, $fetched_eventset_json);
+        }
 	}
 
 }
@@ -126,16 +122,15 @@ function fetchModuleAndUpdateDatabase(string $module_id): void
 function sendNotification(string $eventseries_name): void
 {
 	global $debug;
-	/** @var mysqli $db_timetable database connection */
+	/** @var TimetableDb $db_timetable database connection */
 	global $db_timetable;
 
 	//get tokens subscribing the given eventseries
-	$result_subscribing_user = $db_timetable->query("SELECT token, os FROM fcm_user WHERE eventseries_name = '$eventseries_name'");
-	$token_array = array(array(), array());
+	$result_subscribing_user = $db_timetable->getSubscribingUsers($eventseries_name);
 
 	//Collect tokens into $token_array
 	if ($debug) echo "<p><b>Tokens subscribing" . $eventseries_name . ": </b><br>";
-	if ($result_subscribing_user -> num_rows > 0) {
+	if ($result_subscribing_user->num_rows > 0) {
 		while ($subscribing_user = $result_subscribing_user->fetch_assoc()) {
 			echo $subscribing_user["token"] . ", ";
 
@@ -203,23 +198,22 @@ function sendFCM(string $token, string $language, string $eventseries_name): voi
 
 //fetch all available module ids from StundenplanServer
 $url = API_BASE_URL . ENDPOINT_MODULE;
-//note: second parameter must be true to enable key-value iteration
 $jsonStringFromStundenplanServer = file_get_contents($url);
-$module_ids = json_decode( $jsonStringFromStundenplanServer, true);
+//note: second parameter must be true to enable key-value iteration
+$module_ids = json_decode($jsonStringFromStundenplanServer, true);
 
-//fetch data of each module
-$output .= "<p> Module Ids (" . count($module_ids) . "):</b><br>";
-
-if ( count($module_ids) <= 0 ) {
-	// no modules found
-
-	//TODO
-	// echo nothing found
-	// exit?
+if (count($module_ids) <= 0) {
+    // no modules found
+    $output .= "<p>No modules found.";
+} else {
+    $output .= "<p> Module Ids (Anzahl: " . count($module_ids) . "):</b><br>";
 }
 
-
-$module_ids = array_slice($module_ids, 0, 5, true); //for debug: reduce array to size 5
+//fetch data of each module
+if($debug) {
+    //for debugging: reduce array to size 5
+    $module_ids = array_slice($module_ids, 0, 5, true);
+}
 foreach($module_ids as $key=>$module_id){
 	$output .=  $module_id . ", ";
 	fetchModuleAndUpdateDatabase($module_id);

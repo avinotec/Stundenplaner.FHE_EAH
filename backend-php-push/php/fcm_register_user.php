@@ -141,4 +141,4 @@ foreach ($array_subscribed_eventseries as $subscribed_eventseries) {
 }
 
 //TODO kannst Du das gebrauchen oder stört das?
-echo 'Done. EAH Jena';
+echo '<p><i><b>Done. EAH Jena</b></i></p>';
