@@ -83,15 +83,17 @@ function fetchModuleAndUpdateDatabase(string $module_id): void
 		// per module, check each event set for changes
 		foreach ($module_data["dataActivity"] as $eventset_id=>$eventset_data){
 			$fetched_eventset_json = json_encode($eventset_data);
-			$eventseries_name = getEventSeriesName($eventset_data["activityName"]);
-			//get local event set
-			$result_local_eventset = $db_timetable->getEventSet($eventset_id);
+            // change escaped slashes ("\/") to "/"
+            $fetched_eventset_json = stripslashes($fetched_eventset_json);
+            $eventseries_name = getEventSeriesName($eventset_data["activityName"]);
+            //get local event set
+            $result_local_eventset = $db_timetable->getEventSet($eventset_id);
 
-			//EVENT SET probably CHANGED
-			if (!is_null($result_local_eventset) && count($result_local_eventset) > 0){
+            //EVENT SET probably CHANGED
+            if (!is_null($result_local_eventset) && count($result_local_eventset) > 0){
                 $output .= "<p><b>Check for changes:</b><br>";
-				//compare local vs fetched event set checksum
-				$json_local_eventset = $result_local_eventset[0]["eventset_data"];
+                //compare local vs fetched event set checksum
+                $json_local_eventset = $result_local_eventset[0]["eventset_data"];
 				if ($json_local_eventset !== $fetched_eventset_json){
                     $output .= "Event set " . $result_local_eventset[0]["eventset_id"]
                         . " has changed since " . $result_local_eventset[0]["last_changed"] . "<br>";
@@ -205,10 +207,10 @@ $jsonStringFromStundenplanServer = file_get_contents($url);
 //note: second parameter must be true to enable key-value iteration
 $module_ids = json_decode($jsonStringFromStundenplanServer, true);
 
-$output .= "<p><b> Fetched module ids</b>(Anzahl: " . count($module_ids) . "):<br>";
+$output .= "<p><b> Fetched module ids</b> (Anzahl: " . count($module_ids) . "):<br>";
 
 //fetch data of each module
-if($debug) {
+if ($debug) {
     //for debugging: reduce array to size 5
     $module_ids = array_slice($module_ids, 0, 5, true);
 }
