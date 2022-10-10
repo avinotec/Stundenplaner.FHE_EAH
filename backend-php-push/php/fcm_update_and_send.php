@@ -52,6 +52,7 @@ function fetchModuleAndUpdateDatabase(string $module_id): void
 {
 	/** @var TimetableDb $db_timetable database connection */
 	global $db_timetable;
+    global $output;
 
 	$module_url = API_BASE_URL . ENDPOINT_MODULE_DETAIL . $module_id;
     $module_data = array();
@@ -69,9 +70,8 @@ function fetchModuleAndUpdateDatabase(string $module_id): void
 		//DELETED EVENT SETS
 		//detect deleted event set ids
 		$deleted_eventsets = array_diff($local_eventset_ids, $fetched_eventset_ids);
-        echo "<p>Deleted Event Set Ids: ";
-		print_r($deleted_eventsets);
-        echo "</p>";
+        $output .= "<p>Deleted Event Set Ids: ". implode(", ", $deleted_eventsets) . "</p>";
+
 		//delete those event sets in database
 		foreach($deleted_eventsets as $deletedEventSetId){
 			$db_timetable->deleteEventSet($deletedEventSetId);
@@ -89,15 +89,17 @@ function fetchModuleAndUpdateDatabase(string $module_id): void
 
 			//EVENT SET probably CHANGED
 			if (!is_null($result_local_eventset) && count($result_local_eventset) > 0){
+                $output .= "<p><b>Check for changes:</b><br>";
 				//compare local vs fetched event set checksum
 				$json_local_eventset = $result_local_eventset[0]["eventset_data"];
 				if ($json_local_eventset !== $fetched_eventset_json){
-					echo "<p>Event set " . $result_local_eventset[0]["eventset_id"]
-                        . " has changed since " . $result_local_eventset[0]["last_changed"] . "</p>>";
+                    $output .= "Event set " . $result_local_eventset[0]["eventset_id"]
+                        . " has changed since " . $result_local_eventset[0]["last_changed"] . "<br>";
 					//update database
 					$db_timetable->updateEventSet($eventset_id, $fetched_eventset_json);
 					sendNotification($eventseries_name);
 				}
+                $output .= "</p>";
 			}
 			//EVENT SET ADDED
 			//no local event set with this id found --> event set is new and has to be added
@@ -124,32 +126,33 @@ function sendNotification(string $eventseries_name): void
 	global $debug;
 	/** @var TimetableDb $db_timetable database connection */
 	global $db_timetable;
+    global $output;
 
-	//get tokens subscribing the given eventseries
+	//get tokens subscribing the given event series
 	$result_subscribing_user = $db_timetable->getSubscribingUsers($eventseries_name);
 
 	//Collect tokens into $token_array
-	if ($debug) echo "<p><b>Tokens subscribing" . $eventseries_name . ": </b><br>";
+	if ($debug) $output .= "<p><b>Tokens subscribing the series " . $eventseries_name . ": </b><br>";
 	if ($result_subscribing_user->num_rows > 0) {
 		while ($subscribing_user = $result_subscribing_user->fetch_assoc()) {
-			echo $subscribing_user["token"] . ", ";
+            $output .= $subscribing_user["token"] . "<br>";
 
 			if($subscribing_user["os"] === ANDROID){
 				//send android push
-				sendFCM($subscribing_user["token"], $eventseries_name);
+				sendFCM($subscribing_user["token"], $subscribing_user["language"],$eventseries_name);
 
 			} elseif($subscribing_user["os"] == IOS){
 				//send Ios Push
 			} else {
-				error_log(print_r("++++ PUSH wrong OS!! ++++<br>\n", true));
+				$output .= "<p>++++ PUSH wrong OS!! ++++</p>>";
 				exit;
 			}
 		}
 
-		echo "<br>Notifications for the Event Series $eventseries_name sent!</p>";
+        $output .= "<br>Notifications for the event series $eventseries_name sent!</p>";
 
 	} else {
-		echo "There are no tokens subscribing the Event Series <b>$eventseries_name</b>!</p>";
+        $output .= "There are no tokens subscribing $eventseries_name!</p>";
 	}
 	$result_subscribing_user->close();
 }
@@ -202,12 +205,7 @@ $jsonStringFromStundenplanServer = file_get_contents($url);
 //note: second parameter must be true to enable key-value iteration
 $module_ids = json_decode($jsonStringFromStundenplanServer, true);
 
-if (count($module_ids) <= 0) {
-    // no modules found
-    $output .= "<p>No modules found.";
-} else {
-    $output .= "<p> Module Ids (Anzahl: " . count($module_ids) . "):</b><br>";
-}
+$output .= "<p><b> Fetched module ids</b>(Anzahl: " . count($module_ids) . "):<br>";
 
 //fetch data of each module
 if($debug) {
@@ -221,6 +219,5 @@ foreach($module_ids as $key=>$module_id){
 $output .= "</p>";
 
 
-error_log(print_r("Script fcm_update_and_send.php Ende,".$output, true));
-
+$output .= "<p><i> Ende Script fcm_update_and_send.php</i></b></p>>";
 echo $output;

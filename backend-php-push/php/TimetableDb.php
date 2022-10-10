@@ -224,7 +224,7 @@ final class TimetableDb
      */
     final public function getSubscribingUsers(string $eventseries_name): ?mysqli_result
     {
-        $sql = "SELECT token, os FROM fcm_user WHERE eventseries_name = '$eventseries_name'";
+        $sql = "SELECT token, language, os FROM fcm_user WHERE eventseries_name = '$eventseries_name'";
         return $this->runQueryAndGetResult($sql, "getSubscribingUsers");
     }
 

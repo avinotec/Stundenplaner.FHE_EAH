@@ -30,6 +30,9 @@ global $db_timetable;
 /* we can request debug output to better find errors */
 $debug = false;
 
+// collect output and echo only once
+$output = "";
+
 //Get or create database connection
 initDbConnection();
 
@@ -72,13 +75,12 @@ if ($debug) {
 try {
 	initDbConnection();
 } catch (Exception $e) {
-	echo "Database is not available: " .  $e->getMessage() . "<br>";
+	$output .= "Database is not available: " .  $e->getMessage() . "<br>";
+    echo $output;
 	exit();
 }
 if ($debug) {
-	echo "<p>";
-	print_r($_REQUEST);
-	echo "</p>";
+    $output .= "<p> DEBUG: " . json_encode($_REQUEST) . "</p>";
 }
 
 
@@ -97,6 +99,7 @@ if (isset($_REQUEST['language']))
 	$language = htmlentities($_REQUEST['language']);
 if ($language !== LANG_DE && $language !== LANG_EN) {
 	error_log("Language: " . $language);
+    echo $output;
 	exit;
 }
 
@@ -107,13 +110,21 @@ $array_subscribed_eventseries = array();
 if ($os === ANDROID) {
 	//Get token and subscriptions send from app
 	// Alle übergebenen Parameter entwerten, um SQL-Injections zu unterbinden.
-	$fcm_token = htmlentities($_REQUEST["fcm_token"] ?? null);
-	$array_subscribed_eventseries =  $_REQUEST["eventseries_names"] ?? null;
+    if(isset($_REQUEST["fcm_token"])) {
+        $fcm_token = htmlentities($_REQUEST["fcm_token"]);
+    } else {
+        echo $output;
+        exit;
+    }
+	if(isset($_REQUEST["eventseries_names"])) {
+        $array_subscribed_eventseries =  $_REQUEST["eventseries_names"] ?? null;
+    }
 } elseif ($os === IOS) {
 	//
 } else {
-	echo "Keine OS Zuordnung!";
+	$output .= "Keine OS Zuordnung!";
 	error_log("Keine OS Zuordnung! OS-Type: " . $os);
+    echo $output;
 	exit;
 }
 
@@ -121,9 +132,10 @@ if ($os === ANDROID) {
 // Check if a null value is given, to prevent null entries in the database.
 // Null values can happen if a user opens the script in a browser window.
 if (is_null($array_subscribed_eventseries) || is_null($fcm_token)) {
-	echo "<br> array_subscribed_eventseries or fcm token is null! <br>";
+	$output .= "<br> array_subscribed_eventseries or fcm token is null! <br>";
 	error_log("arraySubscribedEventSeries or fcm token is null!");
-	return;
+	echo $output;
+    return;
 }
 
 
@@ -135,10 +147,12 @@ $db_timetable->deleteUser($fcm_token);
 foreach ($array_subscribed_eventseries as $subscribed_eventseries) {
 	$subscribed_eventseries = htmlentities($subscribed_eventseries);
 
-	if ($debug) echo "<br> Register user $fcm_token for event series: $subscribed_eventseries <br>";
+	if ($debug) {
+        $output .= "<br>Register user $fcm_token for event series $subscribed_eventseries.<br>";
+    }
 
 	$db_timetable->insertUser($fcm_token, $subscribed_eventseries, $os, $language);
 }
 
-//TODO kannst Du das gebrauchen oder stört das?
-echo '<p><i><b>Done. EAH Jena</b></i></p>';
+echo $output;
+echo "<p><i><b>Done. EAH Jena</b></i></p>";
