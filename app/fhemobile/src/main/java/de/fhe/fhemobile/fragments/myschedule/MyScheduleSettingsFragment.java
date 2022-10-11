@@ -22,7 +22,6 @@ import static de.fhe.fhemobile.Main.getSubscribedEventSeries;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 
 import java.util.Collections;
 
@@ -102,7 +100,7 @@ public class MyScheduleSettingsFragment extends FeatureFragment {
 	public void onDetach() {
 		super.onDetach();
 
-		if(Define.ENABLE_MYSCHEDULE_UPDATING_AND_PUSHNOTIFICATIONS){
+		if(Define.ENABLE_PUSHNOTIFICATIONS){
 			PushNotificationService.registerSubscribedEventSeries();
 		}
 	}
