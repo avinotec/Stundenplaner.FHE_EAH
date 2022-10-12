@@ -24,7 +24,7 @@ require_once 'define.php';
 require_once 'config.php';
 require_once 'TimetableDb.php';
 
-/** @var TimetableDb $db_timetable database connection */
+/** $db_timetable database connection */
 global $db_timetable;
 
 /* we can request debug output to better find errors */
@@ -100,20 +100,20 @@ if ($language !== LANG_DE && $language !== LANG_EN) {
 }
 
 // initialize to set data types
-$fcm_token = "";
-$array_subscribed_eventseries = array();
+$fcmToken = "";
+$arraySubscribedEventseries = array();
 
 if ($os === ANDROID) {
 	//Get token and subscriptions send from app
 	// Alle übergebenen Parameter entwerten, um SQL-Injections zu unterbinden.
-    if(isset($_REQUEST["fcm_token"])) {
-        $fcm_token = htmlentities($_REQUEST["fcm_token"]);
+    if(isset($_REQUEST["fcmToken"])) {
+        $fcmToken = htmlentities($_REQUEST["fcmToken"]);
     } else {
         echo $output;
         exit;
     }
 	if(isset($_REQUEST["eventseries_names"])) {
-        $array_subscribed_eventseries =  $_REQUEST["eventseries_names"] ?? null;
+        $arraySubscribedEventseries =  $_REQUEST["eventseries_names"] ?? null;
     }
 } elseif ($os === IOS) {
 	//
@@ -127,8 +127,8 @@ if ($os === ANDROID) {
 
 // Check if a null value is given, to prevent null entries in the database.
 // Null values can happen if a user opens the script in a browser window.
-if (is_null($array_subscribed_eventseries) || is_null($fcm_token)) {
-	$output .= "<br> array_subscribed_eventseries or fcm token is null! <br>";
+if (is_null($arraySubscribedEventseries) || is_null($fcmToken)) {
+	$output .= "<br> arraySubscribedEventseries or fcm token is null! <br>";
 	error_log("arraySubscribedEventSeries or fcm token is null!");
 	echo $output;
     return;
@@ -138,16 +138,16 @@ if (is_null($array_subscribed_eventseries) || is_null($fcm_token)) {
 // ----------------- DB entry for user to register ----------------------------------------------
 
 //Clear database from potential previous registrations with the given token
-$db_timetable->deleteUser($fcm_token);
+$db_timetable->deleteUser($fcmToken);
 //Add token and subscribed event series names to database to register user
-foreach ($array_subscribed_eventseries as $subscribed_eventseries) {
+foreach ($arraySubscribedEventseries as $subscribed_eventseries) {
 	$subscribed_eventseries = htmlentities($subscribed_eventseries);
 
 	if ($debug) {
-        $output .= "<br>Register user $fcm_token for event series $subscribed_eventseries.<br>";
+        $output .= "<br>Register user $fcmToken for event series $subscribed_eventseries.<br>";
     }
 
-	$db_timetable->insertUser($fcm_token, $subscribed_eventseries, $os, $language);
+	$db_timetable->insertUser($fcmToken, $subscribed_eventseries, $os, $language);
 }
 
 echo $output;

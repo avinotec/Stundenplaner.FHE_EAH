@@ -216,7 +216,7 @@ final class TimetableDb
     }
 
     /**
-     * Delete user with the given fcm_token and os
+     * Delete user with the given fcmToken and os
      * @param string $fcm_token
      * @return bool true success, false failure
      */
