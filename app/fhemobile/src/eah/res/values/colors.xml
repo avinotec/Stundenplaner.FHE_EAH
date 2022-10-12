@@ -26,6 +26,7 @@
 
     <color name="secondary_color">#e5f4f4</color>
     <color name="third_color">#9db3a9</color>
+    <color name="third_color_hint">#00796B</color>
 
     <color name="actionbar_text">#ffffff</color>
     <color name="background_color">#e5f4f4</color>
