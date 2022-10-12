@@ -59,7 +59,10 @@ function fetchModuleAndUpdateDatabase(string $module_id): void
 	// second parameter must be true to enable key-value iteration
 	$module_data = json_decode(file_get_contents($module_url), true);
 
-	if(!array_key_exists("dataActivity", $module_data)){ return; }
+	if(!array_key_exists("dataActivity", $module_data)){
+        $output .= "<br><i>Module " . $module_id . " is empty (this semester).</i><br>";
+        return;
+    }
 
     //initialize to set data types
     $local_eventset_ids = array();
@@ -100,7 +103,11 @@ function fetchModuleAndUpdateDatabase(string $module_id): void
 					//update database
 					$db_timetable->updateEventSet($eventset_id, $fetched_eventset_json);
 					sendNotification($eventseries_name);
-				}
+				} else {
+                    $output .= "Event set " . $result_local_eventset[0]["eventset_id"]
+                        . " not changed<br>";
+
+                }
                 $output .= "</p>";
 			}
 			//EVENT SET ADDED
@@ -212,7 +219,7 @@ $output .= "<p><b> Fetched module ids</b> (Anzahl: " . count($module_ids) . "):<
 //fetch data of each module
 if ($debug) {
     //for debugging: reduce array to size 5
-    $module_ids = array_slice($module_ids, 0, 5, true);
+    $module_ids = array_slice($module_ids, 3, 7, true);
 }
 foreach($module_ids as $key=>$module_id){
 	$output .=  $module_id . ", ";
