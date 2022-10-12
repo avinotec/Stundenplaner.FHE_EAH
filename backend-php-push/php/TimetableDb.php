@@ -24,6 +24,8 @@ require_once 'config.php';
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //global variables
 
+/** @var TimetableDb $db_timetable database connection */
+global $db_timetable;
 $db_timetable = null;
 
 
@@ -184,6 +186,10 @@ final class TimetableDb
         $this->mysqli = null;
     }
 
+    /* ******************************************************************************************** */
+
+
+    /* ******************************************************************************************** */
 
     /**
      * Insert a user into fcm_user with the given values
@@ -203,7 +209,9 @@ final class TimetableDb
         $sql = "INSERT INTO fcm_user (token, eventseries_name, os, language)" .
             "VALUES ('$fcm_token', '$subscribed_eventseries', '$os', '$language')";
 
-        return $this->runQuery($sql, "insertUser");
+        $result = $this->runQuery($sql, "insertUser");
+
+        return $result;
     }
 
     /**
@@ -214,7 +222,9 @@ final class TimetableDb
     final public function deleteUser(string $fcm_token): bool
     {
         $sql = "DELETE FROM fcm_user WHERE token = '$fcm_token'";
-        return $this->runQuery($sql, "deleteUser");
+
+        $result = $this->runQuery($sql, "deleteUser");
+        return $result;
     }
 
     /**
@@ -225,7 +235,8 @@ final class TimetableDb
     final public function getSubscribingUsers(string $eventseries_name): ?mysqli_result
     {
         $sql = "SELECT token, os FROM fcm_user WHERE eventseries_name = '$eventseries_name'";
-        return $this->runQueryAndGetResult($sql, "getSubscribingUsers");
+        $result = $this->runQueryAndGetResult($sql, "getSubscribingUsers") ;
+        return $result;
     }
 
     /**
@@ -238,7 +249,8 @@ final class TimetableDb
     {
         $sql = "UPDATE event_sets SET eventset_data = '$new_eventset_data'
 		        WHERE eventset_id = '$eventset_id'";
-        return $this->runQuery($sql, "updateEventSet");
+        $result = $this->runQuery($sql, "updateEventSet");
+        return $result;
     }
 
     /**
@@ -256,7 +268,8 @@ final class TimetableDb
     {
         $sql = "INSERT INTO event_sets (eventset_id, eventseries, module_id, eventset_data, last_changed)
 							VALUES ('$eventset_id', '$eventseries_name', '$module_id', '$eventset_json', SYSDATE())";
-        return $this->runQuery($sql, "insertEventSet");
+        $result = $this->runQuery($sql, "insertEventSet") ;
+        return $result;
     }
 
 
@@ -268,7 +281,8 @@ final class TimetableDb
     final public function deleteEventSet(string $eventset_id): bool
     {
         $sql = "DELETE FROM event_sets WHERE eventset_id = '$eventset_id'";
-        return $this->runQuery($sql, "deleteEventSet");
+        $result = $this->runQuery($sql, "deleteEventSet");
+        return $result ;
     }
 
 
@@ -311,7 +325,7 @@ final class TimetableDb
      * @param string $function_name The name of the function runQueryAndGetResult gets called within (for debugging output)
      * @return mysqli_result|null The sql result when succeeded, null if an error occurred
      */
-    final public function runQueryAndGetResult(string $sql, string $function_name): ?mysqli_result
+    private function runQueryAndGetResult(string $sql, string $function_name): ?mysqli_result
     {
         global $debug;
 
@@ -319,11 +333,16 @@ final class TimetableDb
         try {
             $result = $this->mysqli->query($sql);
 
+            // in case the query was not successfull
+            if ($result === false)
+                return null; //otherwise the false will be returned as result
+
         } catch (Exception $e) {
             if ($debug) {
                 echo 'DEBUG: ' . $function_name . ': Exception abgefangen: ' . $e->getMessage() . HTML_BR . PHP_EOL;
                 echo 'DEBUG: ' . $function_name . ': Stack trace:' . $e->getTraceAsString() . HTML_BR . PHP_EOL;
             }
+            //return null; //redundant
         }
 
         return $result;
@@ -335,7 +354,7 @@ final class TimetableDb
      * @param string $function_name The name of the function runQuery gets called within (for debugging output)
      * @return bool true success, false failure
      */
-    final public function runQuery(string $sql, string $function_name): bool
+    private function runQuery(string $sql, string $function_name): bool
     {
         global $debug;
 
