@@ -16,7 +16,7 @@
  */
 package de.fhe.fhemobile.network;
 
-import static de.fhe.fhemobile.activities.MainActivity.setSubscribedEventSeriesAndUpdateAdapters;
+import static de.fhe.fhemobile.activities.MainActivity.replaceSubscribedEventSeriesAndUpdateAdapters;
 import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.getUpdateSubscribedEventSeries;
 import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.groupByModuleId;
 
@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
@@ -134,7 +135,7 @@ public final class NetworkHandler {
 			 */
 			@Override
 			public void onResponse(final Call<ArrayList<EmployeeVo>> call, final Response<ArrayList<EmployeeVo>> response) {
-				if( response.body() != null ){
+				if (response.body() != null){
 					PhonebookModel.getInstance().setFoundEmployees(response.body());
 				} else {
 					showInternalProblemToast();
@@ -170,7 +171,7 @@ public final class NetworkHandler {
 			 */
 			@Override
 			public void onResponse( final Call<SemesterDataVo> call, final Response<SemesterDataVo> response) {
-				if( response.body() != null ){
+				if (response.body() != null){
 					SemesterDataModel.getInstance().setData(response.body().getSemester());
 				} else {
 					showInternalProblemToast();
@@ -302,7 +303,7 @@ public final class NetworkHandler {
 
 			@Override
 			public void onResponse(final Call<CanteenVo[]> call, final Response<CanteenVo[]> response) {
-				if( response.body() != null ){
+				if (response.body() != null){
 					CanteenModel.getInstance().setCanteens(response.body());
 				} else {
 					showInternalProblemToast();
@@ -332,7 +333,7 @@ public final class NetworkHandler {
 			@Override
 			public void onResponse(final Call<NewsCategoryResponse> call, final Response<NewsCategoryResponse> response) {
 				// MS: Bei den News sind die news/0 kaputt
-				if( response.body() != null ){
+				if (response.body() != null){
 					NewsModel.getInstance().setCategoryItems(response.body().getNewsCategories());
 				} else {
 					showInternalProblemToast();
@@ -410,23 +411,26 @@ public final class NetworkHandler {
 	public void fetchMySchedule(){
 		Assert.assertTrue(mApiEah != null);
 
-		final Map<String, Map<String, MyScheduleEventSeriesVo>> modules = groupByModuleId(Main.getSubscribedEventSeries());
+		final Map<String, Map<String, MyScheduleEventSeriesVo>> modules =
+				groupByModuleId(Main.getSubscribedEventSeries());
+
 		//iterate over modules
-		for(final Map.Entry<String, Map<String, MyScheduleEventSeriesVo>> module : modules.entrySet()){
-			//skip if module id is null -> cause by eventseries added before module IDs were introduced
+		for (final Map.Entry<String, Map<String, MyScheduleEventSeriesVo>> module : modules.entrySet()){
+			//skip if module id is null -> caused by eventseries added before module IDs were introduced
 			if(module.getKey() != null){
 
 				//update all subscribed event series of this module
 				mApiEah.fetchModule(module.getKey()).enqueue(new Callback<ModuleVo>() {
 
 					@Override
-					public void onResponse(final Call<ModuleVo> call, final Response<ModuleVo> response) {
-						if(response.body() != null){
+					public void onResponse(final Call<ModuleVo> call,
+										   final Response<ModuleVo> response) {
+						if (response.body() != null) {
 							final List<MyScheduleEventSeriesVo> updatedEventSeries =
 									getUpdateSubscribedEventSeries(module.getValue(), response.body().getEventSets());
 
 							//update shared preferences and adapters
-							setSubscribedEventSeriesAndUpdateAdapters(updatedEventSeries);
+							replaceSubscribedEventSeriesAndUpdateAdapters(module.getKey(), updatedEventSeries);
 						} else {
 							showInternalProblemToast();
 						}
@@ -461,8 +465,11 @@ public final class NetworkHandler {
 	}
 
 	static void showInternalProblemToast(){
+		String message = Main.getAppContext().getString(R.string.internal_problems);
+		if(BuildConfig.DEBUG) message += " (response.body() == null)";
+
 		Toast.makeText(Main.getAppContext(),
-				Main.getAppContext().getString(R.string.internal_problems),
+				message,
 				Toast.LENGTH_LONG).show();
 	}
 
