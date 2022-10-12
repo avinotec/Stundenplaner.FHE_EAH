@@ -136,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                 }
         }
 
-        if(Define.ENABLE_MYSCHEDULE_UPDATING)
         if (Define.ENABLE_PUSHNOTIFICATIONS){
             //code from Firebase Documentation
             FirebaseMessaging.getInstance().getToken()

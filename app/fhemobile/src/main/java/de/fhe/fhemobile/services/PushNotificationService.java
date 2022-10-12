@@ -63,11 +63,13 @@ public class PushNotificationService extends FirebaseMessagingService {
 	public void onNewToken(@NonNull final String token) {
 		Log.d(TAG, "Refreshed token: " + token);
 
-		//unregister old token
-		sendRegistrationToServer(fcmToken, new ArrayList<>());
-		//set and register new token
-		setFcmToken(token);
-		sendRegistrationToServer(fcmToken, Main.getSubscribedEventSeries());
+		if(Define.ENABLE_PUSHNOTIFICATIONS){
+			//unregister old token
+			sendRegistrationToServer(fcmToken, new ArrayList<>());
+			//set and register new token
+			setFcmToken(token);
+			sendRegistrationToServer(fcmToken, Main.getSubscribedEventSeries());
+		}
 	}
 
 	public static void setFcmToken(final String fcmToken) {
@@ -79,7 +81,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 	 * @param eventSeriesVos List of {@link MyScheduleEventSeriesVo}s to register for
 	 */
 	public static void sendRegistrationToServer(final String token, final List<MyScheduleEventSeriesVo> eventSeriesVos){
-		if(BuildConfig.DEBUG) Assert.assertNotNull(fcmToken);
+		if(BuildConfig.DEBUG && Define.ENABLE_PUSHNOTIFICATIONS) Assert.assertNotNull(fcmToken);
 		if(fcmToken != null) {
 			Main.executorService.execute(new ServerRegistrationBackgroundTask(token, eventSeriesVos));
 		}
