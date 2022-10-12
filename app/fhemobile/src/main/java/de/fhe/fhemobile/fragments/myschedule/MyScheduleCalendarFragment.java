@@ -88,7 +88,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 				menu.clear();
 				// Add menu items here
 				menuInflater.inflate(R.menu.menu_myschedule_calendar, menu);
-				if(!Define.ENABLE_MYSCHEDULE_UPDATING_AND_PUSHNOTIFICATIONS){
+				if(Define.ENABLE_MYSCHEDULE_UPDATING){
 					final MenuItem updateButton = menu.findItem(R.id.action_update);
 					updateButton.setEnabled(false);
 					updateButton.setVisible(false);
@@ -109,7 +109,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 					return true;
 				}
 				if (menuItem.getItemId() == R.id.action_update){
-					if(Define.ENABLE_MYSCHEDULE_UPDATING_AND_PUSHNOTIFICATIONS){
+					if(Define.ENABLE_MYSCHEDULE_UPDATING){
 						NetworkHandler.getInstance().fetchMySchedule();
 					}
 
@@ -150,7 +150,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 	public void onResume() {
 		super.onResume();
 
-		if(Define.ENABLE_MYSCHEDULE_UPDATING_AND_PUSHNOTIFICATIONS){
+		if(Define.ENABLE_MYSCHEDULE_UPDATING){
 			NetworkHandler.getInstance().fetchMySchedule();
 		}
 	}

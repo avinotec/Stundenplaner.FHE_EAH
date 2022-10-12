@@ -69,7 +69,7 @@ public class MyScheduleCalendarView extends LinearLayout {
         mCalendarListView.setAdapter(MainActivity.myScheduleCalendarAdapter);
 
         mLastUpdatedTextView = findViewById(R.id.tv_myschedule_calendar_last_updated);
-        if(!Define.ENABLE_MYSCHEDULE_UPDATING_AND_PUSHNOTIFICATIONS){
+        if(Define.ENABLE_MYSCHEDULE_UPDATING){
             mLastUpdatedTextView.setVisibility(GONE);
         }
     }
