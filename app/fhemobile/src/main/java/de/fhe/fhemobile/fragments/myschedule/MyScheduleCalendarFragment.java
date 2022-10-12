@@ -88,7 +88,8 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 				menu.clear();
 				// Add menu items here
 				menuInflater.inflate(R.menu.menu_myschedule_calendar, menu);
-				if(Define.ENABLE_MYSCHEDULE_UPDATING){
+				if(!Define.ENABLE_MYSCHEDULE_UPDATING){
+					//disable button for updating
 					final MenuItem updateButton = menu.findItem(R.id.action_update);
 					updateButton.setEnabled(false);
 					updateButton.setVisible(false);
