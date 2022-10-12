@@ -45,12 +45,14 @@
 
 	    <TextView
 		    android:id="@+id/data_protection_link"
-		    android:layout_above="@id/version_number"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
+		    android:layout_above="@id/version_number"
+		    android:contentDescription="@string/imprint"
+		    android:linksClickable="true"
 		    android:text="@string/imprint_data_protection_link"
-		    android:textSize="15sp"
-		    android:linksClickable="true" />
+		    android:textColor="#00796B"
+		    android:textSize="15sp" />
 
 	    <TextView
 		    android:id="@+id/version_number"
