@@ -300,7 +300,7 @@ final class TimetableDb
         $result = $this->runQueryAndGetResult($sql, "getEventSetIds");
 
         $eventset_ids = array();
-        if (!is_null($result)) {
+        if (!is_null($result) && $result->num_rows > 0) {
             $eventset_ids[] = $result->fetch_assoc()["eventset_id"];
         }
         return $eventset_ids;
