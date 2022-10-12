@@ -51,7 +51,8 @@ function initDbConnection(): void
     global $db_timetable;
     global $_config;
 
-    /** @var TimetableDb|null $db_timetable gets initialized or, if already initialized, this calls the destructor implicitly. */
+    /** @var TimetableDb|null $db_timetable gets initialized or, if already initialized,
+	 * this calls the destructor implicitly. */
     $db_timetable = null;
 
     // Wenn die Datenbank noch nicht weggeflogen ist, dann nicht erneut instanziieren

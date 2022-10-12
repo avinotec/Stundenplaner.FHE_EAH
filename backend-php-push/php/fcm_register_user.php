@@ -36,8 +36,8 @@ if (isset($_REQUEST['debug']))
 if ($debug) {
 	mysqli_report(MYSQLI_REPORT_ALL);
 
-	ini_set('mysql.trace_mode',  'On');
-	ini_set('mysqli.trace_mode',  'On');
+	ini_set('mysql.trace_mode', 'On');
+	ini_set('mysqli.trace_mode', 'On');
 
 	//ini_set('error_reporting', E_ALL | E_STRICT | E_DEPRECATED | E_NOTICE | E_PARSE );
 	error_reporting(E_ALL);

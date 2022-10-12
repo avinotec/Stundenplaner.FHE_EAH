@@ -26,7 +26,8 @@ declare(strict_types=1);
  * @param  string $event_title The title of an event
  * @return string The title of the Event Series th event belongs to
  */
-function getEventSeriesName(string $event_title): string {
+function getEventSeriesName(string $event_title): string
+{
 
 	//cut away all ending numbers after the dot
 	//example: WI/WIEC(BA)Mathe/Ü/01.1 -> WI/WIEC(BA)Mathe/Ü/01
