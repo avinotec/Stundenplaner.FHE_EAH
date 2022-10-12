@@ -30,10 +30,6 @@ global $db_timetable;
 /* we can request debug output to better find errors */
 $debug = false;
 
-//Get or create database connection
-initDbConnection();
-
-
 if (isset($_REQUEST['debug']))
 	$debug = htmlentities($_REQUEST['debug']);
 
