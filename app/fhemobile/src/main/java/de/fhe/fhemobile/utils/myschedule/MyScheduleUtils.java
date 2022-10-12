@@ -256,7 +256,7 @@ public final class MyScheduleUtils {
 
 				//set events deleted
 				if (eventSetsDeleted.contains(localEventSetEntry.getKey())) {
-					for ( final MyScheduleEventVo deletedEvent : localEventSetEntry.getValue()) {
+					for (final MyScheduleEventVo deletedEvent : localEventSetEntry.getValue()) {
 						deletedEvent.addChange(TimetableChangeType.DELETION);
 					}
 				}

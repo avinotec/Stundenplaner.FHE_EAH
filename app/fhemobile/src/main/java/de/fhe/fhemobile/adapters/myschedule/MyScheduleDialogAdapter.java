@@ -29,7 +29,7 @@ public class MyScheduleDialogAdapter extends AbstractMyScheduleAdapter {
 
                 if(btnAddCourse.isActivated()){
                     MainActivity.addToSubscribedEventSeriesAndUpdateAdapters(currentItem);
-                }else{
+                } else {
                     MainActivity.removeFromSubscribedEventSeriesAndUpdateAdapters(currentItem);
                 }
             }
