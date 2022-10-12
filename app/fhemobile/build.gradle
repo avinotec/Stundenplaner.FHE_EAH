@@ -51,10 +51,10 @@ android {
         // solution: Java 8
         // Attention: desktop adds '' arround the string. Remove them
         //Dieser bekackte String gegenüber 1.8 bewirkt, dass die seltsamen Kotlin Fehler (Ab AndroidStudio 3.5) bei Release/APK ausbleiben
-        //sourceCompatibility JavaVersion.VERSION_1_8
-        //targetCompatibility JavaVersion.VERSION_1_8
-        sourceCompatibility '16'
-        targetCompatibility '16'
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+        //sourceCompatibility '16'
+        //targetCompatibility '16'
     }
 
 
