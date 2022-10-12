@@ -28,13 +28,6 @@ require_once 'TimetableDb.php';
 require_once 'utils.php';
 
 
-/** @var TimetableDb $db_timetable database connection */
-global $db_timetable;
-
-//Get or create database connection
-initDbConnection();
-
-
 /* we can request debug output to better find errors */
 $debug = false;
 $debug = true;	  // gegebenenfalls auskommentieren
@@ -59,6 +52,7 @@ function fetchModuleAndUpdateDatabase(string $module_id): void
 	// second parameter must be true to enable key-value iteration
 	$module_data = json_decode(file_get_contents($module_url), true);
 
+    // validate answer, otherwise skip
 	if(!array_key_exists("dataActivity", $module_data)){
         $output .= "<br><i>Module " . $module_id . " is empty (this semester).</i><br>";
         return;
@@ -68,7 +62,9 @@ function fetchModuleAndUpdateDatabase(string $module_id): void
     $local_eventset_ids = array();
     $fetched_eventset_ids = array();
     $fetched_eventset_ids = array_keys($module_data["dataActivity"]);
+
     $local_eventset_ids = $db_timetable->getEventSetIds($module_id);
+
 	if($local_eventset_ids != null && count($local_eventset_ids) > 0){
 		//DELETED EVENT SETS
 		//detect deleted event set ids

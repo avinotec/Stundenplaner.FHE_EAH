@@ -24,6 +24,8 @@ require_once 'config.php';
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //global variables
 
+/** @var TimetableDb $db_timetable database connection */
+global $db_timetable;
 $db_timetable = null;
 
 
@@ -49,7 +51,8 @@ function initDbConnection(): void
     global $db_timetable;
     global $_config;
 
-    /** @var TimetableDb|null $db_timetable gets initialized or, if already initialized, this calls the destructor implicitly. */
+    /** @var TimetableDb|null $db_timetable gets initialized or, if already initialized,
+	 * this calls the destructor implicitly. */
     $db_timetable = null;
 
     // Wenn die Datenbank noch nicht weggeflogen ist, dann nicht erneut instanziieren
@@ -78,7 +81,6 @@ function initDbConnection(): void
  */
 function closeDbConnection(): void
 {
-    /** @var TimetableDb $db_timetable Datenbankinstanz */
     global $db_timetable;
 
     $db_timetable = null;
@@ -108,7 +110,7 @@ final class TimetableDb
             The hostname "localhost" has a special meaning. It is bound to the use of Unix domain sockets.
             It is not possible to open a TCP/IP connection using the hostname localhost you must use 127.0.0.1 instead.
         */
-        if ($debug) echo 'DEBUG: MySQLi: constructor called: dbHost=' . $dbhost . '; dbUser=' . $dbuser . '; dbPass=' . /* $dbpass */ '***' . '; dbName=' . $dbname . HTML_BR . PHP_EOL;
+        if ($debug) {echo 'DEBUG: MySQLi: constructor called: dbHost=' . $dbhost . '; dbUser=' . $dbuser . '; dbPass=' . /* $dbpass */ '***' . '; dbName=' . $dbname . HTML_BR . PHP_EOL;}
 
         try {
             $this->mysqli = new mysqli($dbhost, $dbuser, $dbpassword, $dbname);
@@ -177,13 +179,17 @@ final class TimetableDb
     {
         /** @var bool */
         global $debug;
-        if ($debug) echo 'DEBUG: MySQLi: destructor called.<br />' . PHP_EOL;
+        if ($debug) {echo 'DEBUG: MySQLi: destructor called.<br />' . PHP_EOL;}
 
         if ($this->mysqli)
             $this->mysqli->close();
         $this->mysqli = null;
     }
 
+    /* ******************************************************************************************** */
+
+
+    /* ******************************************************************************************** */
 
     /**
      * Insert a user into fcm_user with the given values
@@ -200,10 +206,13 @@ final class TimetableDb
     {
         $subscribed_eventseries = $this->mysqli->real_escape_string($subscribed_eventseries);
 
-        $sql = "INSERT INTO fcm_user (token, eventseries_name, os, language)" .
+        $sql = /** @lang MySQL */
+            "INSERT INTO fcm_user (token, eventseries_name, os, language)" .
             "VALUES ('$fcm_token', '$subscribed_eventseries', '$os', '$language')";
 
-        return $this->runQuery($sql, "insertUser");
+        $result = $this->runQuery($sql, "insertUser");
+
+        return $result;
     }
 
     /**
@@ -213,8 +222,10 @@ final class TimetableDb
      */
     final public function deleteUser(string $fcm_token): bool
     {
-        $sql = "DELETE FROM fcm_user WHERE token = '$fcm_token'";
-        return $this->runQuery($sql, "deleteUser");
+        $sql = /** @lang MySQL */ "DELETE FROM fcm_user WHERE token = '$fcm_token'";
+
+        $result = $this->runQuery($sql, "deleteUser");
+        return $result;
     }
 
     /**
@@ -224,8 +235,9 @@ final class TimetableDb
      */
     final public function getSubscribingUsers(string $eventseries_name): ?mysqli_result
     {
-        $sql = "SELECT token, language, os FROM fcm_user WHERE eventseries_name = '$eventseries_name'";
-        return $this->runQueryAndGetResult($sql, "getSubscribingUsers");
+        $sql = /** @lang MySQL */"SELECT token, language, os FROM fcm_user WHERE eventseries_name = '$eventseries_name'";
+        $result = $this->runQueryAndGetResult($sql, "getSubscribingUsers") ;
+        return $result;
     }
 
     /**
@@ -236,9 +248,11 @@ final class TimetableDb
      */
     final public function updateEventSet(string $eventset_id, string $new_eventset_data): bool
     {
-        $sql = "UPDATE event_sets SET eventset_data = '$new_eventset_data'
-		        WHERE eventset_id = '$eventset_id'";
-        return $this->runQuery($sql, "updateEventSet");
+        $sql = /** @lang MySQL */
+            "UPDATE event_sets SET eventset_data = '$new_eventset_data'".
+		    "WHERE eventset_id = '$eventset_id'";
+        $result = $this->runQuery($sql, "updateEventSet");
+        return $result;
     }
 
     /**
@@ -254,9 +268,11 @@ final class TimetableDb
                                          string $module_id,
                                          string $eventset_json): bool
     {
-        $sql = "INSERT INTO event_sets (eventset_id, eventseries, module_id, eventset_data, last_changed)
-							VALUES ('$eventset_id', '$eventseries_name', '$module_id', '$eventset_json', SYSDATE())";
-        return $this->runQuery($sql, "insertEventSet");
+        $sql = /** @lang MySQL */
+            'INSERT INTO event_sets (eventset_id, eventseries, module_id, eventset_data, last_changed)'.
+            "VALUES ('$eventset_id', '$eventseries_name', '$module_id', '$eventset_json', SYSDATE())";
+        $result = $this->runQuery($sql, "insertEventSet") ;
+        return $result;
     }
 
 
@@ -267,8 +283,9 @@ final class TimetableDb
      */
     final public function deleteEventSet(string $eventset_id): bool
     {
-        $sql = "DELETE FROM event_sets WHERE eventset_id = '$eventset_id'";
-        return $this->runQuery($sql, "deleteEventSet");
+        $sql = /** @lang MySQL */ "DELETE FROM event_sets WHERE eventset_id = '$eventset_id'";
+        $result = $this->runQuery($sql, "deleteEventSet");
+        return $result ;
     }
 
 
@@ -279,7 +296,7 @@ final class TimetableDb
      */
     final public function getEventSetIds(string $module_id): array
     {
-        $sql = "SELECT eventset_id FROM event_sets WHERE module_id = '$module_id'";
+        $sql = /** @lang MySQL */ "SELECT eventset_id FROM event_sets WHERE module_id = '$module_id'";
         $result = $this->runQueryAndGetResult($sql, "getEventSetIds");
 
         $eventset_ids = array();
@@ -290,13 +307,13 @@ final class TimetableDb
     }
 
     /**
-     * Get the event set of the corresponding eent set id
+     * Get the event set of the corresponding event set id
      * @param string $eventset_id
      * @return array The array containing the queried event set
      */
     final public function getEventSet(string $eventset_id): array
     {
-        $sql = "SELECT * FROM event_sets WHERE eventset_id = '$eventset_id'";
+        $sql = /** @lang MySQL */ "SELECT * FROM event_sets WHERE eventset_id = '$eventset_id'";
         $result = $this->runQueryAndGetResult($sql, "getEventSet");
         if (!is_null($result)) {
             return $result->fetch_all(MYSQLI_ASSOC);
@@ -311,7 +328,7 @@ final class TimetableDb
      * @param string $function_name The name of the function runQueryAndGetResult gets called within (for debugging output)
      * @return mysqli_result|null The sql result when succeeded, null if an error occurred
      */
-    final public function runQueryAndGetResult(string $sql, string $function_name): ?mysqli_result
+    private function runQueryAndGetResult(string $sql, string $function_name): ?mysqli_result
     {
         global $debug;
 
@@ -319,11 +336,16 @@ final class TimetableDb
         try {
             $result = $this->mysqli->query($sql);
 
+            // in case the query was not successful
+            if ($result === false)
+                return null; //otherwise the false will be returned as result
+
         } catch (Exception $e) {
             if ($debug) {
                 echo 'DEBUG: ' . $function_name . ': Exception abgefangen: ' . $e->getMessage() . HTML_BR . PHP_EOL;
                 echo 'DEBUG: ' . $function_name . ': Stack trace:' . $e->getTraceAsString() . HTML_BR . PHP_EOL;
             }
+            //return null; //redundant
         }
 
         return $result;
@@ -335,7 +357,7 @@ final class TimetableDb
      * @param string $function_name The name of the function runQuery gets called within (for debugging output)
      * @return bool true success, false failure
      */
-    final public function runQuery(string $sql, string $function_name): bool
+    private function runQuery(string $sql, string $function_name): bool
     {
         global $debug;
 
