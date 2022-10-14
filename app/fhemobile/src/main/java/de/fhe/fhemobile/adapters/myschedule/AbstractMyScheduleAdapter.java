@@ -38,7 +38,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.utils.myschedule.TimetableChangeType;
@@ -251,12 +250,10 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
         params.setMargins(0,5,5,10);
         dateAndRoomTextView.setLayoutParams(params);
 
-        final Date startDateTime = _Event.getStartDateTime();
-        final Date endDateTime =  _Event.getEndDateTime();
-        String date = sdf.format(startDateTime);
-        String dayOfWeek = new SimpleDateFormat("E", Locale.getDefault()).format(startDateTime);
-        String startTime = new SimpleDateFormat("HH:mm", new Locale("de", "DE")).format(startDateTime);
-        String endTime = new SimpleDateFormat("HH:mm", new Locale("de", "DE")).format(endDateTime);
+        String date = sdf.format(_Event.getStartDateTime());
+        String dayOfWeek = _Event.getWeekDayShort();
+        String startTime = _Event.getStartTimeString();
+        String endTime = _Event.getEndTimeString();
         String room = _Event.getLocationListAsString();
 
         //highlight changes
@@ -282,6 +279,7 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
                     startTime = "<font><b>" + startTime + "</b></font>";
                     endTime = "<font><b>" + endTime + "</b></font>";
                     break;
+
                 case EDIT_LOCATION:
                     room = "<font><b>" + room + "</b></font>";
                     break;
