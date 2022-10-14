@@ -43,13 +43,10 @@ import de.fhe.fhemobile.vos.timetable.TimeTableLocationVo;
  *
  * Created by Nadja - 05/2022
  */
-public class MyScheduleEventVo implements Parcelable{
+public class MyScheduleEventVo implements Parcelable {
 
     static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
     final int offset = TimeZone.getTimeZone("Europe/Berlin").getOffset(new Date().getTime());
-
-    public MyScheduleEventVo() {
-    }
 
     public MyScheduleEventVo(final String title,
                              final String eventSetId,
@@ -138,16 +135,31 @@ public class MyScheduleEventVo implements Parcelable{
 
     public Date getStartDateTime(){
         //multiply by 1000 to convert from seconds to milliseconds,
+        /*
+        // VERSION SS22
         // subtract time zone offset because mStartDateTime is in time zone "Berlin"
         // but Date needs long in UTC
         return new Date(mStartDateTime * 1000 - offset);
+        */
+        // VERSION WS22/23
+        // time is delivered in UTC
+        // --> TODO: investigate if correct version depends on semester (because of database change)
+        return new Date(mStartDateTime * 1000);
+
     }
 
     public Date getEndDateTime(){
         //multiply by 1000 to convert from seconds to milliseconds,
+        /*
+        // VERSION SS22
         // subtract time zone offset because mEndDateTime is in time zone "Berlin"
         // but Date needs long in UTC
-        return new Date((mEndDateTime * 1000 - offset));
+        return new Date(mStartDateTime * 1000 - offset);
+        */
+        // VERSION WS22/23
+        // time is delivered in UTC
+        // --> TODO: investigate if correct version depends on semester (because of database change)
+        return new Date((mEndDateTime * 1000));
     }
 
     public String getStartTimeString(){
@@ -184,7 +196,15 @@ public class MyScheduleEventVo implements Parcelable{
     }
 
     public String getWeekDayName(){
-        return TimeTableUtils.getWeekDayName(new Date(mStartDateTime * 1000));
+        return TimeTableUtils.getWeekDayName(getStartDateTime());
+    }
+
+    /**
+     * Get abbreviation of week day, e.g. "Mo"
+     * @return
+     */
+    public String getWeekDayShort(){
+        return new SimpleDateFormat("E", Locale.getDefault()).format(getStartDateTime());
     }
 
     public List<LecturerVo> getLecturerList() {
