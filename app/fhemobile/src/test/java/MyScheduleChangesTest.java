@@ -93,7 +93,7 @@ public class MyScheduleChangesTest {
 
         //ACT
         List<MyScheduleEventSeriesVo> updatedEventSeriesVos =
-                MyScheduleUtils.getUpdateSubscribedEventSeries(modules.get("12345"), mModule.getEventSets());
+                MyScheduleUtils.getUpdatedEventSeries(modules.get("12345"), mModule.getEventSets());
 
         //ASSERT
         Gson gson = new Gson();

@@ -320,23 +320,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         myScheduleSettingsAdapter.notifyDataSetChanged();
     }
 
-    /**
-     * Remove all subscribed event series belonging to the module specified by moduleId
-     * and add the given list of event series to {@link de.fhe.fhemobile.Main#subscribedEventSeries}
-     *
-     * @param moduleId The module id of the module to update
-     * @param newSubscribedEventSeries The new list of event series subscribed fromt he module
-     */
-    public static void replaceSubscribedEventSeriesAndUpdateAdapters(
-            final @NonNull String moduleId, final List<MyScheduleEventSeriesVo> newSubscribedEventSeries){
-
-        //remove all subscribed event series belonging to the module
-        for (MyScheduleEventSeriesVo eventSeries : subscribedEventSeries){
-            if (moduleId.equals(eventSeries.getModuleId())){
-                subscribedEventSeries.remove(eventSeries);
-            }
-        }
-        //add new/updated event series
+    public static void setSubscribedEventSeriesAndUpdateAdapters(final List<MyScheduleEventSeriesVo> newSubscribedEventSeries){
+        subscribedEventSeries.clear();
         subscribedEventSeries.addAll(newSubscribedEventSeries);
         setLastUpdateSubscribedEventSeries(new Date());
         MyScheduleCalendarView.setLastUpdatedTextView();
