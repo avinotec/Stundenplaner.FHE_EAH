@@ -110,7 +110,8 @@ public final class NetworkHandler {
     }
 
     /**
-     * @return
+     * Singelton
+     * @return the Singleton
      */
     public static NetworkHandler getInstance() {
         Assert.assertTrue(ourInstance != null);
@@ -414,7 +415,17 @@ public final class NetworkHandler {
         final Map<String, Map<String, MyScheduleEventSeriesVo>> modules =
                 groupByModuleId(Main.getSubscribedEventSeries());
 
+        /**
+         *  From java 5 after a change in Java memory model reads and writes are atomic for all
+         *  variables declared using the volatile keyword (including long and double variables) and
+         *  simple atomic variable access is more efficient instead of accessing these variables
+         *  via synchronized java code.
+         *
+         *  Wir feuern verschiedene Anfragen. Erst wenn alle Antworten zurückgekommen sind, dann
+         *  verarbeiten wir diese.
+         */
         requestCounterMySchedule = 0;
+        /* Das ist unser Halter für die Antworten */
         List<MyScheduleEventSeriesVo> updatedEventSeriesList = new ArrayList<>();
 
         //iterate over modules
@@ -423,6 +434,7 @@ public final class NetworkHandler {
             if (module.getKey() != null) {
 
                 //update all subscribed event series of this module
+                // we count the several requests
                 requestCounterMySchedule++;
                 mApiEah.fetchModule(module.getKey()).enqueue(new Callback<ModuleVo>() {
 
@@ -436,8 +448,10 @@ public final class NetworkHandler {
                         } else {
                             showInternalProblemToast();
                         }
+                        // we received an answer, anyhow, so we decrease the outstanding requests counter
                         requestCounterMySchedule--;
-						if(requestCounterMySchedule <= 0){
+                        if(requestCounterMySchedule <= 0){
+                            // last request received, so proceed, finally
 							setSubscribedEventSeriesAndUpdateAdapters(updatedEventSeriesList);
 						}
                     }
@@ -447,8 +461,10 @@ public final class NetworkHandler {
                         Utils.showToast(R.string.myschedule_connection_failed + "(internal: " + t.getCause() + ")");
                         Log.d(TAG, "failure: request " + call.request().url() + " (internal: " + t.getCause() + ")");
 
-						requestCounterMySchedule--;
+                        // we received an answer, anyhow, so we decrease the outstanding requests counter
+                        requestCounterMySchedule--;
 						if(requestCounterMySchedule <= 0){
+                            // even failed, this is the last request received, so proceed, finally
 							setSubscribedEventSeriesAndUpdateAdapters(updatedEventSeriesList);
 						}
                     }
@@ -487,6 +503,5 @@ public final class NetworkHandler {
                 message,
                 Toast.LENGTH_LONG).show();
     }
-
 
 }
