@@ -16,8 +16,8 @@
  */
 package de.fhe.fhemobile.activities;
 
-import static de.fhe.fhemobile.Main.getEventsOfAllSubscribedEventSeries;
 import static de.fhe.fhemobile.Main.getAppContext;
+import static de.fhe.fhemobile.Main.getEventsOfAllSubscribedEventSeries;
 import static de.fhe.fhemobile.Main.getSubscribedEventSeries;
 import static de.fhe.fhemobile.Main.setLastUpdateSubscribedEventSeries;
 import static de.fhe.fhemobile.Main.subscribedEventSeries;
@@ -55,6 +55,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.myschedule.MyScheduleCalendarAdapter;
 import de.fhe.fhemobile.adapters.myschedule.MyScheduleSettingsAdapter;
@@ -353,6 +354,9 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(PREF_SUBSCRIBED_EVENTSERIES, json);
         editor.apply();
+
+        // wir geben mal den erhaltenen JSON String aus. Dann können wir sehen, was Carsten uns sendet.
+        if (BuildConfig.DEBUG) Log.d("MainAcitivity", "saveSubscribedEventSeriesToSharedPreferences(): received JSON: " + json );
     }
 
 
