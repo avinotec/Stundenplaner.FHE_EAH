@@ -1,5 +1,5 @@
-# Stundenplan-App der EAH Jena
-Die Android-App der Hochschule in Jena
+# EAH Jena Stundenplan-App
+Stundenplan-App der EAH Jena für Android der Ernst-Abbe-Hochschule Jena. Entwickelt vom Fachbereich WI (Wirtschaftsingenieurwesen).
 
 
 ## Features
