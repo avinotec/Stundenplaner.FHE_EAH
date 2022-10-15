@@ -193,15 +193,15 @@ public final class MyScheduleUtils {
 
 	/**
 	 * Compare local and fetched events to detect changes
-	 *  @param localModuleList A subset of {@link Main#subscribedEventSeries}
-	 *                           belonging to the same module,
-	 *                           by eventseries title
+	 *  @param localEventSeriesSubList A subset of {@link Main#subscribedEventSeries}
+	 *                           containing event series that belong to the same module,
+	 *                           sorted by eventseries title
 	 * @param fetchedEventSetsMap The fetched {@link MyScheduleEventSetVo}s
 	 *                               corresponding to the given subset of eventseries,
 	 * @return List of updated {@link de.fhe.fhemobile.Main#subscribedEventSeries}
 	 */
-	public static List<MyScheduleEventSeriesVo> getUpdateSubscribedEventSeries(
-			final Map<String, MyScheduleEventSeriesVo> localModuleList,
+	public static List<MyScheduleEventSeriesVo> getUpdatedEventSeries(
+			final Map<String, MyScheduleEventSeriesVo> localEventSeriesSubList,
 			final Map<String, MyScheduleEventSetVo> fetchedEventSetsMap) {
 
 		final ArrayList<MyScheduleEventSeriesVo> eventSeriesToAdd = new ArrayList<>();
@@ -212,7 +212,7 @@ public final class MyScheduleUtils {
 		//examine fetched EventSeriesVos for changes, deleted and added events
 		for (final MyScheduleEventSeriesVo fetchedEventSeries : fetchedEventSeriesVos) {
 
-			final MyScheduleEventSeriesVo localEventSeries = localModuleList.get(fetchedEventSeries.getTitle());
+			final MyScheduleEventSeriesVo localEventSeries = localEventSeriesSubList.get(fetchedEventSeries.getTitle());
 			if (localEventSeries == null){
 				//if event series corresponds to an new exam (no matter which group), than always add
 				//possible endings for exams: APL, PL, mdl. Prfg.,Wdh.-Prfg., Wdh.-APL
@@ -405,9 +405,9 @@ public final class MyScheduleUtils {
 			localEventSeries.setEvents(updatedEvents, localEventsByEventSet.keySet());
 		}
 
-		final List<MyScheduleEventSeriesVo> updatedEventSeriesList = new ArrayList<>(localModuleList.values());
+		final List<MyScheduleEventSeriesVo> updatedEventSeriesList = new ArrayList<>(localEventSeriesSubList.values());
 		Collections.sort(updatedEventSeriesList, new EventSeriesTitleComparator());
-		for( final MyScheduleEventSeriesVo eventSeries : updatedEventSeriesList){
+		for (final MyScheduleEventSeriesVo eventSeries : updatedEventSeriesList){
 			Collections.sort(eventSeries.getEvents(), new MyScheduleEventComparator());
 		}
 		updatedEventSeriesList.addAll(eventSeriesToAdd);
