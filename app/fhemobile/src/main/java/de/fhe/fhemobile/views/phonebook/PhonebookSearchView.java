@@ -40,7 +40,7 @@ public class PhonebookSearchView extends FrameLayout {
     public PhonebookSearchView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
 
-	    mModel = PhonebookModel.getInstance();
+        mModel = PhonebookModel.getInstance();
     }
 
     public void initializeView(final ViewListener _Listener) {

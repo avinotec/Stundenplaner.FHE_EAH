@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Value object for a canteen
  */
-public class CanteenVo implements Parcelable {
+public final class CanteenVo implements Parcelable {
 
     public CanteenVo(){
     }
@@ -45,8 +45,8 @@ public class CanteenVo implements Parcelable {
         }
 
         @Override
-        public CanteenVo[] newArray(final int i) {
-            return new CanteenVo[i];
+        public CanteenVo[] newArray(final int size) {
+            return new CanteenVo[size];
         }
     };
 
@@ -60,5 +60,6 @@ public class CanteenVo implements Parcelable {
     /*
     attributes delivered but not needed/used:
     @SerializedName("city")
-    @SerializedName("urlPath") */
+    @SerializedName("urlPath")
+    */
 }

@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * Created by Nadja - 04/2022
  */
-public class LecturerVo implements Parcelable {
+public final class LecturerVo implements Parcelable {
 
     public LecturerVo(){}
 

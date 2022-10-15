@@ -52,7 +52,7 @@ public class ImprintView extends FrameLayout {
         //wird der WebViewClient nicht geaendert, kann die Seite nicht geladen werden, da die Webview
         mWebView.setWebViewClient(new SSLTolerantWebViewClient(mContext));
         //Ohne JavascriptEnabled laesst sich das WebView nicht scrollen.
-	    mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.loadUrl(Endpoints.IMPRINT_ENDPOINT);
         final TextView dataProtection = findViewById(R.id.data_protection_link);
         dataProtection.setMovementMethod(LinkMovementMethod.getInstance());

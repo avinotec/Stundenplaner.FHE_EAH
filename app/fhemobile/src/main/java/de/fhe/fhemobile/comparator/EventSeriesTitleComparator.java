@@ -48,6 +48,7 @@ public class EventSeriesTitleComparator implements Comparator<MyScheduleEventSer
 		if(title1.startsWith(title2)) return -1;
 		else if(title2.startsWith(title1)) return +1;
 
-		else return o1.getTitle().compareTo(o2.getTitle());
+		else //noinspection CallToSuspiciousStringMethod
+			return o1.getTitle().compareTo(o2.getTitle());
 	}
 }
