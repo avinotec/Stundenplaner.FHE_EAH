@@ -1,4 +1,5 @@
 # Stundenplan-App der EAH Jena
+EAH Jena Stundenplan-App
 Die Android-App der Hochschule in Jena
 
 
