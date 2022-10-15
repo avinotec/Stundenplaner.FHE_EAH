@@ -65,9 +65,10 @@ public class MyScheduleEventDateVo implements Parcelable{
         return new Date(mEndDateTime * 1000);
     }
 
+    /* not used
     public String getStartDateTimeAsString() {
         return new Date(mStartDateTime * 1000).toString();
-    }
+    } */
 
     @SerializedName("StartDateTime")
     private long mStartDateTime;
