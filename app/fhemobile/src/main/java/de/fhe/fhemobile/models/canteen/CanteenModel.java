@@ -81,6 +81,10 @@ public final class CanteenModel extends EventDispatcher {
         }
 
         for(final CanteenVo canteen : mCanteens){
+            if (canteen == null)
+                continue;
+            if (canteen.getCanteenId().isEmpty())
+                continue;
             if(canteen.getCanteenId().equals(canteenId)){
                 return canteen;
             }
