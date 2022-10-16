@@ -31,7 +31,7 @@ import org.junit.Assert;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.SimpleTimeZone;
+import java.util.TimeZone;
 
 import de.fhe.fhemobile.Main;
 
@@ -188,12 +188,6 @@ public final class Utils {
 	// werden.
 	// Danke Java, ich liebe Dich.
 
-	//TODO
-	//seconds
-	private static final long offsetTimeFromCarstensWebServerToRealTiem = -3600;
-	// seconds
-	private static final long daylightSavingOffset = -3600;
-
 	/**
 	 * Convert the time in seconds since 1970 from Carsten Hölbings Stundenplan Server
 	 * @param lStartOrEndDateTimeParam in seconds since 1970
@@ -201,21 +195,10 @@ public final class Utils {
 	 */
 	static public Date convertTimeFromStundenplanWebserverDate(long lStartOrEndDateTimeParam ) {
 
-		final long lStartOrEndDateTime = lStartOrEndDateTimeParam * 1000 + offsetTimeFromCarstensWebServerToRealTiem * 1000;
+		// convert to milliseconds
+		final long lStartOrEndDateTime = lStartOrEndDateTimeParam * 1000 ;
 
-		Date dateGetStartTime = new Date(lStartOrEndDateTime);
-
-		//nicht benötigt: final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ROOT);
-		//sdf.setTimeZone(TimeZone.setDefault(TimeZone.getTimeZone("UTC").getID()));
-
-		// wir wollen natürlich wissen, ob es in Deutschland gerade eine Sommerzeit gibt, deswegen müssen wir natürlich die
-		// Zeitzone befragen. UTC hat nie Sommerzeit.
-		SimpleTimeZone timeZone = new SimpleTimeZone(0, "Europe/Berlin");
-		boolean inDaylighTime = timeZone.inDaylightTime(dateGetStartTime);
-
-		// ich weiß mir nicht besser zu behelfen, als kurzerhand ein neues Objekt zu erstellen
-		if (inDaylighTime)
-			dateGetStartTime = new Date(lStartOrEndDateTime * 1000 + offsetTimeFromCarstensWebServerToRealTiem * 1000 + daylightSavingOffset * 1000 );
+		final Date dateGetStartTime = new Date(lStartOrEndDateTime);
 
 		return dateGetStartTime;
 	}
@@ -228,20 +211,14 @@ public final class Utils {
 	@NonNull
 	static public String convertTimeFromStundenplanWebserverStr(long lStartOrEndDateTimeParam ) {
 
-		final long lStartOrEndDateTime = lStartOrEndDateTimeParam * 1000 + offsetTimeFromCarstensWebServerToRealTiem * 1000;
+		// convert to milliseconds
+		final long lStartOrEndDateTime = lStartOrEndDateTimeParam * 1000 ;
 
-		Date dateGetStartTime = new Date(lStartOrEndDateTime);
+		final Date dateGetStartTime = new Date(lStartOrEndDateTime);
 
 		final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ROOT);
-		// from the SDK:     private static final TimeZone UTC = new SimpleTimeZone(0, "UTC");
-		//sdf.setTimeZone( TimeZone.getTimeZone("UTC") );
-
-		SimpleTimeZone timeZone = new SimpleTimeZone(0, "Europe/Berlin");
-		boolean inDaylighTime = timeZone.inDaylightTime(dateGetStartTime);
-
-		// ich weiß mir nicht besser zu behelfen, als kurzerhand ein neues Objekt zu erstellen
-		if (inDaylighTime)
-			dateGetStartTime = new Date(lStartOrEndDateTime * 1000 + offsetTimeFromCarstensWebServerToRealTiem * 1000 + daylightSavingOffset * 1000 );
+		// this is the magic thing to advise the SimpleDateFormat to do nothing with the Timezones
+		sdf.setTimeZone( TimeZone.getTimeZone("UTC") );
 
 		final String strGetStartTime = sdf.format( dateGetStartTime );
 		return strGetStartTime;
