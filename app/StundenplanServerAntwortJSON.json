@@ -1,0 +1,378 @@
+[
+	{
+		"eventSetIds": [
+			"F3A8DE723913B57FFA7308604DD3BB21"
+		],
+		"events": [
+			{
+
+				"Note1": "20:12 Samstag in Coordinated Universal Time ist 22:12 Samstag Siegen (MESZ)",
+
+				"Note_ToolForTimeConverter": "https://www.topster.de/kalender/unixzeit.php?unixzeit=1669972500",
+				"endDateTime": 1665738900,
+				"activityId": "F3A8DE723913B57FFA7308604DD3BB21",
+				"lecturer": [
+					{
+						"staffId": "546026878106C7C76C4205DA4971B3BB",
+						"staffName": "Stepping,Michael"
+					}
+				],
+				"location": [
+					{
+						"locationId": "D33590B4EA59CB23A68AF0FEA1B322EA",
+						"locationName": "05.03.40 (HS 3)"
+					}
+				],
+				"startDateTime": 1665733500,					"Note":"Dies entspricht in UTC: Freitag, 14. Oktober 2022, 07:45:00",
+				"title": "WI/WIEC(BA)Cloudtechno./V/01",
+				"typesOfChanges": []
+			},
+			{
+				"endDateTime": 1666343700,						"Note": "Dies entspricht in UTC: Freitag, 21. Oktober 2022, 09:15:00",
+				"activityId": "F3A8DE723913B57FFA7308604DD3BB21",
+				"lecturer": [
+					{
+						"staffId": "546026878106C7C76C4205DA4971B3BB",
+						"staffName": "Stepping"
+					}
+				],
+				"location": [
+					{
+						"locationId": "D33590B4EA59CB23A68AF0FEA1B322EA",
+						"locationName": "05.03.40 (HS 3)"
+					}
+				],
+				"startDateTime": 1666338300,
+				"title": "WI/WIEC(BA)Cloudtechno./V/01",
+				"typesOfChanges": []
+			},
+			{
+				"endDateTime": 1666948500,
+				"activityId": "F3A8DE723913B57FFA7308604DD3BB21",
+				"lecturer": [
+					{
+						"staffId": "546026878106C7C76C4205DA4971B3BB",
+						"staffName": "Stepping"
+					}
+				],
+				"location": [
+					{
+						"locationId": "D33590B4EA59CB23A68AF0FEA1B322EA",
+						"locationName": "05.03.40 (HS 3)"
+					}
+				],
+				"startDateTime": 1666943100,
+				"title": "WI/WIEC(BA)Cloudtechno./V/01",
+				"typesOfChanges": []
+			},
+			{
+				"endDateTime": 1667553300,
+				"activityId": "F3A8DE723913B57FFA7308604DD3BB21",
+				"lecturer": [
+					{
+						"staffId": "546026878106C7C76C4205DA4971B3BB",
+						"staffName": "Stepping"
+					}
+				],
+				"location": [
+					{
+						"locationId": "D33590B4EA59CB23A68AF0FEA1B322EA",
+						"locationName": "05.03.40 (HS 3)"
+					}
+				],
+				"startDateTime": 1667547900,
+				"title": "WI/WIEC(BA)Cloudtechno./V/01",
+				"typesOfChanges": []
+			},
+			{
+				"endDateTime": 1668158100,
+				"activityId": "F3A8DE723913B57FFA7308604DD3BB21",
+				"lecturer": [
+					{
+						"staffId": "546026878106C7C76C4205DA4971B3BB",
+						"staffName": "Stepping"
+					}
+				],
+				"location": [
+					{
+						"locationId": "D33590B4EA59CB23A68AF0FEA1B322EA",
+						"locationName": "05.03.40 (HS 3)"
+					}
+				],
+				"startDateTime": 1668152700,
+				"title": "WI/WIEC(BA)Cloudtechno./V/01",
+				"typesOfChanges": []
+			},
+			{
+				"endDateTime": 1668762900,
+				"activityId": "F3A8DE723913B57FFA7308604DD3BB21",
+				"lecturer": [
+					{
+						"staffId": "546026878106C7C76C4205DA4971B3BB",
+						"staffName": "Stepping"
+					}
+				],
+				"location": [
+					{
+						"locationId": "D33590B4EA59CB23A68AF0FEA1B322EA",
+						"locationName": "05.03.40 (HS 3)"
+					}
+				],
+				"startDateTime": 1668757500,
+				"title": "WI/WIEC(BA)Cloudtechno./V/01",
+				"typesOfChanges": []
+			},
+			{
+				"endDateTime": 1669367700,
+				"activityId": "F3A8DE723913B57FFA7308604DD3BB21",
+				"lecturer": [
+					{
+						"staffId": "546026878106C7C76C4205DA4971B3BB",
+						"staffName": "Stepping"
+					}
+				],
+				"location": [
+					{
+						"locationId": "D33590B4EA59CB23A68AF0FEA1B322EA",
+						"locationName": "05.03.40 (HS 3)"
+					}
+				],
+				"startDateTime": 1669362300,				"Note": "Dies entspricht in UTC: Freitag, 25. November 2022, 07:45:00",
+				"title": "WI/WIEC(BA)Cloudtechno./V/01",
+				"typesOfChanges": []
+			},
+			{
+				"endDateTime": 1669972500,					"Note": "Dies entspricht in UTC: Freitag, 02. Dezember 2022, 09:15:00",
+				"activityId": "F3A8DE723913B57FFA7308604DD3BB21",
+				"lecturer": [
+					{
+						"staffId": "546026878106C7C76C4205DA4971B3BB",
+						"staffName": "Stepping"
+					}
+				],
+				"location": [
+					{
+						"locationId": "D33590B4EA59CB23A68AF0FEA1B322EA",
+						"locationName": "05.03.40 (HS 3)"
+					}
+				],
+				"startDateTime": 1669967100,
+				"title": "WI/WIEC(BA)Cloudtechno./V/01",
+				"typesOfChanges": []
+			},
+			{
+				"endDateTime": 1670577300,
+				"activityId": "F3A8DE723913B57FFA7308604DD3BB21",
+				"lecturer": [
+					{
+						"staffId": "546026878106C7C76C4205DA4971B3BB",
+						"staffName": "Stepping"
+					}
+				],
+				"location": [
+					{
+						"locationId": "D33590B4EA59CB23A68AF0FEA1B322EA",
+						"locationName": "05.03.40 (HS 3)"
+					}
+				],
+				"startDateTime": 1670571900,
+				"title": "WI/WIEC(BA)Cloudtechno./V/01",
+				"typesOfChanges": []
+			},
+			{
+				"endDateTime": 1671182100,
+				"activityId": "F3A8DE723913B57FFA7308604DD3BB21",
+				"lecturer": [
+					{
+						"staffId": "546026878106C7C76C4205DA4971B3BB",
+						"staffName": "Stepping"
+					}
+				],
+				"location": [
+					{
+						"locationId": "D33590B4EA59CB23A68AF0FEA1B322EA",
+						"locationName": "05.03.40 (HS 3)"
+					}
+				],
+				"startDateTime": 1671176700,
+				"title": "WI/WIEC(BA)Cloudtechno./V/01",
+				"typesOfChanges": []
+			},
+			{
+				"endDateTime": 1672996500,
+				"activityId": "F3A8DE723913B57FFA7308604DD3BB21",
+				"lecturer": [
+					{
+						"staffId": "546026878106C7C76C4205DA4971B3BB",
+						"staffName": "Stepping"
+					}
+				],
+				"location": [
+					{
+						"locationId": "D33590B4EA59CB23A68AF0FEA1B322EA",
+						"locationName": "05.03.40 (HS 3)"
+					}
+				],
+				"startDateTime": 1672991100,
+				"title": "WI/WIEC(BA)Cloudtechno./V/01",
+				"typesOfChanges": []
+			},
+			{
+				"endDateTime": 1673601300,
+				"activityId": "F3A8DE723913B57FFA7308604DD3BB21",
+				"lecturer": [
+					{
+						"staffId": "546026878106C7C76C4205DA4971B3BB",
+						"staffName": "Stepping"
+					}
+				],
+				"location": [
+					{
+						"locationId": "D33590B4EA59CB23A68AF0FEA1B322EA",
+						"locationName": "05.03.40 (HS 3)"
+					}
+				],
+				"startDateTime": 1673595900,
+				"title": "WI/WIEC(BA)Cloudtechno./V/01",
+				"typesOfChanges": []
+			},
+			{
+				"endDateTime": 1674206100,
+				"activityId": "F3A8DE723913B57FFA7308604DD3BB21",
+				"lecturer": [
+					{
+						"staffId": "546026878106C7C76C4205DA4971B3BB",
+						"staffName": "Stepping"
+					}
+				],
+				"location": [
+					{
+						"locationId": "D33590B4EA59CB23A68AF0FEA1B322EA",
+						"locationName": "05.03.40 (HS 3)"
+					}
+				],
+				"startDateTime": 1674200700,
+				"title": "WI/WIEC(BA)Cloudtechno./V/01",
+				"typesOfChanges": []
+			},
+			{
+				"endDateTime": 1674810900,
+				"activityId": "F3A8DE723913B57FFA7308604DD3BB21",
+				"lecturer": [
+					{
+						"staffId": "546026878106C7C76C4205DA4971B3BB",
+						"staffName": "Stepping"
+					}
+				],
+				"location": [
+					{
+						"locationId": "D33590B4EA59CB23A68AF0FEA1B322EA",
+						"locationName": "05.03.40 (HS 3)"
+					}
+				],
+				"startDateTime": 1674805500,
+				"title": "WI/WIEC(BA)Cloudtechno./V/01",
+				"typesOfChanges": []
+			},
+			{
+				"endDateTime": 1675415700,
+				"activityId": "F3A8DE723913B57FFA7308604DD3BB21",
+				"lecturer": [
+					{
+						"staffId": "546026878106C7C76C4205DA4971B3BB",
+						"staffName": "Stepping"
+					}
+				],
+				"location": [
+					{
+						"locationId": "D33590B4EA59CB23A68AF0FEA1B322EA",
+						"locationName": "05.03.40 (HS 3)"
+					}
+				],
+				"startDateTime": 1675410300,
+				"title": "WI/WIEC(BA)Cloudtechno./V/01",
+				"typesOfChanges": []
+			}
+		],
+		"moduleId": "1C3A91921F135DD40715BB9E399B3F6C",
+		"studyGroups": [
+			{
+				"studentsetId": "4B05C2CE2C8A9B86E968DA7889B1F225",
+				"studentsetNumber": "01",
+				"studentsetName": "WIEC(BA)3.01"
+			},
+			{
+				"studentsetId": "4B05C2CE2C8A9B86E968DA7889B1F226",
+				"studentsetNumber": "02",
+				"studentsetName": "WIEC(BA)3.02"
+			},
+			{
+				"studentsetId": "4B05C2CE2C8A9B86E968DA7889B1F227",
+				"studentsetNumber": "03",
+				"studentsetName": "WIEC(BA)3.03"
+			},
+			{
+				"studentsetId": "4B05C2CE2C8A9B86E968DA7889B1F228",
+				"studentsetNumber": "04",
+				"studentsetName": "WIEC(BA)3.04"
+			},
+			{
+				"studentsetId": "4B05C2CE2C8A9B86E968DA7889B1F229",
+				"studentsetNumber": "05",
+				"studentsetName": "WIEC(BA)3.05"
+			},
+			{
+				"studentsetId": "4B05C2CE2C8A9B86E968DA7889B1F22A",
+				"studentsetNumber": "06",
+				"studentsetName": "WIEC(BA)3.06"
+			},
+			{
+				"studentsetId": "4B05C2CE2C8A9B86E968DA7889B1F22B",
+				"studentsetNumber": "07",
+				"studentsetName": "WIEC(BA)3.07"
+			},
+			{
+				"studentsetId": "4B05C2CE2C8A9B86E968DA7889B1F22C",
+				"studentsetNumber": "08",
+				"studentsetName": "WIEC(BA)3.08"
+			},
+			{
+				"studentsetId": "4B05C2CE2C8A9B86E968DA7889B1F22D",
+				"studentsetNumber": "09",
+				"studentsetName": "WIEC(BA)3.09"
+			},
+			{
+				"studentsetId": "4B05C2CE2C8A9B86E968DA7889B1F22E",
+				"studentsetNumber": "10",
+				"studentsetName": "WIEC(BA)3.10"
+			},
+			{
+				"studentsetId": "4B05C2CE2C8A9B86E968DA7889B1F22F",
+				"studentsetNumber": "11",
+				"studentsetName": "WIEC(BA)3.11"
+			},
+			{
+				"studentsetId": "4B05C2CE2C8A9B86E968DA7889B1F230",
+				"studentsetNumber": "12",
+				"studentsetName": "WIEC(BA)3.12"
+			},
+			{
+				"studentsetId": "4B05C2CE2C8A9B86E968DA7889B1F231",
+				"studentsetNumber": "13",
+				"studentsetName": "WIEC(BA)3.13"
+			},
+			{
+				"studentsetId": "4B05C2CE2C8A9B86E968DA7889B1F232",
+				"studentsetNumber": "14",
+				"studentsetName": "WIEC(BA)3.14"
+			},
+			{
+				"studentsetId": "4B05C2CE2C8A9B86E968DA7889B1F233",
+				"studentsetNumber": "15",
+				"studentsetName": "WIEC(BA)3.15"
+			}
+		],
+		"title": "WI/WIEC(BA)Cloudtechno./V/01",
+		"subscribed": true
+	}
+]
