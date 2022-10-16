@@ -233,9 +233,10 @@ public final class Utils {
 		Date dateGetStartTime = new Date(lStartOrEndDateTime);
 
 		final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ROOT);
-		//sdf.setTimeZone(TimeZone.setDefault(TimeZone.getTimeZone("UTC").getID()));
+		// from the SDK:     private static final TimeZone UTC = new SimpleTimeZone(0, "UTC");
+		//sdf.setTimeZone( TimeZone.getTimeZone("UTC") );
 
-		SimpleTimeZone timeZone = new SimpleTimeZone(0, "UTC");
+		SimpleTimeZone timeZone = new SimpleTimeZone(0, "Europe/Berlin");
 		boolean inDaylighTime = timeZone.inDaylightTime(dateGetStartTime);
 
 		// ich weiß mir nicht besser zu behelfen, als kurzerhand ein neues Objekt zu erstellen
