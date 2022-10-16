@@ -25,6 +25,7 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
@@ -35,13 +36,17 @@ import de.fhe.fhemobile.utils.Define;
 public class MyScheduleCalendarView extends LinearLayout {
 
     private static final String TAG = MyScheduleCalendarView.class.getSimpleName();
-    private static final DateFormat sdf =  new SimpleDateFormat("dd.MM.yy HH:mm", Locale.ROOT);
     private static TextView mLastUpdatedTextView;
 
     /**
      * Set (or update) the text view displaying the date the schedule has been last updated
      */
     public static void setLastUpdatedTextView(){
+
+        final DateFormat sdf =  new SimpleDateFormat("dd.MM.yy HH:mm", Locale.ROOT);
+        // this is the magic thing to advise the SimpleDateFormat to do nothing with the Timezones
+        sdf.setTimeZone( TimeZone.getTimeZone("UTC") );
+
         if(mLastUpdatedTextView != null){
             if(Main.getLastUpdateSubscribedEventSeries() != null){
                 mLastUpdatedTextView.setText(String.format("%s %s",

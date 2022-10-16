@@ -32,6 +32,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.TimeZone;
 
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.myschedule.TimetableChangeType;
@@ -164,13 +165,17 @@ public class MyScheduleEventVo implements Parcelable {
 
     /** in seconds */
     public String getStartTimeString(){
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ROOT);
+        final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ROOT);
+        // this is the magic thing to advise the SimpleDateFormat to do nothing with the Timezones
+        sdf.setTimeZone( TimeZone.getTimeZone("UTC") );
         return sdf.format(getStartDateTime());
     }
 
     /** in seconds */
     public String getEndTimeString() {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ROOT);
+        final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ROOT);
+        // this is the magic thing to advise the SimpleDateFormat to do nothing with the Timezones
+        sdf.setTimeZone( TimeZone.getTimeZone("UTC") );
         return sdf.format(getEndDateTime());
     }
 

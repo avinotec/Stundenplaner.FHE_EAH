@@ -37,6 +37,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.utils.myschedule.TimetableChangeType;
@@ -251,11 +252,13 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
 
         //TODO UTC --- setTimeZone(Locale.ROOT)
         final DateFormat sdf = SimpleDateFormat.getDateInstance();
+        sdf.setTimeZone( TimeZone.getTimeZone("UTC") );         // für die Berechnung der Zeiten
+
         String date = sdf.format(_Event.getStartDateTime());
 
         String dayOfWeek = _Event.getWeekDayShort();
-        String startTime = _Event.getStartTimeString();
-        String endTime = _Event.getEndTimeString();
+        String startTime = _Event.getStartTimeString();         // hier sind Zeiten
+        String endTime = _Event.getEndTimeString();             // hier sind Zeiten
         String room = _Event.getLocationListAsString();
 
         //highlight changes
