@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.network.NetworkHandler;
@@ -61,11 +62,11 @@ public class WeatherHeader extends RelativeLayout {
     
     private void postInitialize() {
         final Date now = new Date();
-        final SimpleDateFormat simpleDateformatDoW = new SimpleDateFormat("EEEE"); // the day of the week spelled out completely
+        final SimpleDateFormat simpleDateformatDoW = new SimpleDateFormat("EEEE", Locale.ROOT); // the day of the week spelled out completely
         final String sNowDoW = simpleDateformatDoW.format(now);
         mDayOfWeek.setText(sNowDoW);
 
-        final SimpleDateFormat simpleDateformat = new SimpleDateFormat("dd. MMM"); // the day of the week spelled out completely
+        final SimpleDateFormat simpleDateformat = new SimpleDateFormat("dd. MMM", Locale.ROOT); // the day of the week spelled out completely
         final String sNow = simpleDateformat.format(now);
         mDate.setText(sNow);
 

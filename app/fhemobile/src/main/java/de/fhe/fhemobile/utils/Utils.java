@@ -21,11 +21,17 @@ import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.multidex.BuildConfig;
 
 import org.junit.Assert;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.SimpleTimeZone;
 
 import de.fhe.fhemobile.Main;
 
@@ -36,8 +42,8 @@ public final class Utils {
 
     public static final String TAG = Utils.class.getSimpleName();
 
-    /* Utility classes have all fields and methods declared as static.
-    Creating private constructors in utility classes prevents them from being accidentally instantiated. */
+	/* Utility classes have all fields and methods declared as static.
+	Creating private constructors in utility classes prevents them from being accidentally instantiated. */
 	private Utils() {
 	}
 
@@ -157,5 +163,88 @@ public final class Utils {
     public static void showToast(final Context _Context, final String _Text) {
         Toast.makeText(_Context, _Text, Toast.LENGTH_SHORT).show();
     }
+
+
+	// Der Stundenplan liefert Zeitangaben in Sekunden seit 1970. Das wird auch "Epoch" genannt.
+	// Carsten Hölbing liefert den Zeitstempel für eine Vorlesung in diesen Sekunden aus.
+	// 1665487800 bspw. ist "Dies entspricht in UTC: Dienstag, 11. Oktober 2022, 11:30:00"
+	// 1665484200 "Dies entspricht in UTC: Dienstag, 11. Oktober 2022, 10:30:00"
+	//
+	// Die Uhrzeit an sich ist ja richtig, aber die Zeitzone ist UTC.
+	// Jetzt kommt Java ins Spiel.
+	// Java will immer korrekt mit Zeitzonen spielen.
+	// Das heißt, die Vorlesung beginnt in Deutschland um 11:30 Uhr.
+	// Wenn ich die Zeit in UTC (für Java) erstelle, dann muss die Zeit in England 10:30 Uhr sein,
+	// damit aus UTC10:30 dann in MEZ11:30 Uhr daraus wird.
+	// Daher ziehen wir dann mal eine Stunde ab, damit die anschließende Interpretation durch Java
+	// wieder die richtige "deutsche" Uhrzeit anzeigt.
+	// Sommerzeit/Winterzeit:
+	// Java ist so pfiffig und berücksichtigt auch noch die Sommerzeit/Winterzeit Umstellung
+	// Das heißt, selbst heute im Oktober wird in Java eine Zeitstempel im November korrekt mit einer
+	// anderen Zeitumstellung zurückgegeben.
+	// Das heißt, bei jedem Zeitstempel müssen wir wohl auch noch schauen, ob Java die Sommer/Winterzeit
+	// berücksichtigt.
+	// Dann muss aus dem ursprünglichen Zeitstempel 11:30 je nachdem 10:30 (Winterzeit) oder 9:30 (Sommerzeit)
+	// werden.
+	// Danke Java, ich liebe Dich.
+
+	//TODO
+	//seconds
+	private static final long offsetTimeFromCarstensWebServerToRealTiem = -3600;
+	// seconds
+	private static final long daylightSavingOffset = -3600;
+
+	/**
+	 * Convert the time in seconds since 1970 from Carsten Hölbings Stundenplan Server
+	 * @param lStartOrEndDateTimeParam in seconds since 1970
+	 * @return Date object corrected with Timezone, UTC, Daylightsavings
+	 */
+	static public Date convertTimeFromStundenplanWebserverDate(long lStartOrEndDateTimeParam ) {
+
+		final long lStartOrEndDateTime = lStartOrEndDateTimeParam * 1000 + offsetTimeFromCarstensWebServerToRealTiem * 1000;
+
+		Date dateGetStartTime = new Date(lStartOrEndDateTime);
+
+		//nicht benötigt: final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ROOT);
+		//sdf.setTimeZone(TimeZone.setDefault(TimeZone.getTimeZone("UTC").getID()));
+
+		// wir wollen natürlich wissen, ob es in Deutschland gerade eine Sommerzeit gibt, deswegen müssen wir natürlich die
+		// Zeitzone befragen. UTC hat nie Sommerzeit.
+		SimpleTimeZone timeZone = new SimpleTimeZone(0, "Europe/Berlin");
+		boolean inDaylighTime = timeZone.inDaylightTime(dateGetStartTime);
+
+		// ich weiß mir nicht besser zu behelfen, als kurzerhand ein neues Objekt zu erstellen
+		if (inDaylighTime)
+			dateGetStartTime = new Date(lStartOrEndDateTime * 1000 + offsetTimeFromCarstensWebServerToRealTiem * 1000 + daylightSavingOffset * 1000 );
+
+		return dateGetStartTime;
+	}
+
+	/**
+	 * Convert the time in seconds since 1970 from Carsten Hölbings Stundenplan Server
+	 * @param lStartOrEndDateTimeParam in seconds since 1970
+	 * @return String corrected with Timezone, UTC, Daylightsavings
+	 */
+	@NonNull
+	static public String convertTimeFromStundenplanWebserverStr(long lStartOrEndDateTimeParam ) {
+
+		final long lStartOrEndDateTime = lStartOrEndDateTimeParam * 1000 + offsetTimeFromCarstensWebServerToRealTiem * 1000;
+
+		Date dateGetStartTime = new Date(lStartOrEndDateTime);
+
+		final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ROOT);
+		//sdf.setTimeZone(TimeZone.setDefault(TimeZone.getTimeZone("UTC").getID()));
+
+		SimpleTimeZone timeZone = new SimpleTimeZone(0, "UTC");
+		boolean inDaylighTime = timeZone.inDaylightTime(dateGetStartTime);
+
+		// ich weiß mir nicht besser zu behelfen, als kurzerhand ein neues Objekt zu erstellen
+		if (inDaylighTime)
+			dateGetStartTime = new Date(lStartOrEndDateTime * 1000 + offsetTimeFromCarstensWebServerToRealTiem * 1000 + daylightSavingOffset * 1000 );
+
+		final String strGetStartTime = sdf.format( dateGetStartTime );
+		return strGetStartTime;
+	}
+
 
 }

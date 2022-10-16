@@ -35,7 +35,7 @@ import de.fhe.fhemobile.utils.Define;
 public class MyScheduleCalendarView extends LinearLayout {
 
     private static final String TAG = MyScheduleCalendarView.class.getSimpleName();
-    private static final DateFormat sdf =  new SimpleDateFormat("dd.MM.yy HH:mm", Locale.GERMANY);
+    private static final DateFormat sdf =  new SimpleDateFormat("dd.MM.yy HH:mm", Locale.ROOT);
     private static TextView mLastUpdatedTextView;
 
     /**

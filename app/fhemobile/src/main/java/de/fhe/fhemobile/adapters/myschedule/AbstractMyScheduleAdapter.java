@@ -36,7 +36,6 @@ import android.widget.ToggleButton;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
@@ -250,7 +249,10 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
         params.setMargins(0,5,5,10);
         dateAndRoomTextView.setLayoutParams(params);
 
+        //TODO UTC --- setTimeZone(Locale.ROOT)
+        final DateFormat sdf = SimpleDateFormat.getDateInstance();
         String date = sdf.format(_Event.getStartDateTime());
+
         String dayOfWeek = _Event.getWeekDayShort();
         String startTime = _Event.getStartTimeString();
         String endTime = _Event.getEndTimeString();
@@ -296,6 +298,5 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
     }
 
 
-    private static final DateFormat sdf = SimpleDateFormat.getDateInstance();
 }
 

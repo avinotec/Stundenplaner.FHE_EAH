@@ -16,6 +16,7 @@
  */
 package de.fhe.fhemobile.vos.myschedule;
 
+
 import static de.fhe.fhemobile.utils.timetable.TimeTableUtils.cutStudyProgramPrefix;
 
 import android.os.Parcel;
@@ -31,8 +32,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import java.util.TimeZone;
 
+import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.myschedule.TimetableChangeType;
 import de.fhe.fhemobile.utils.timetable.TimeTableUtils;
 import de.fhe.fhemobile.vos.timetable.LecturerVo;
@@ -44,9 +45,6 @@ import de.fhe.fhemobile.vos.timetable.TimeTableLocationVo;
  * Created by Nadja - 05/2022
  */
 public class MyScheduleEventVo implements Parcelable {
-
-    static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
-    final int offset = TimeZone.getTimeZone("Europe/Berlin").getOffset(new Date().getTime());
 
     public MyScheduleEventVo(final String title,
                              final String eventSetId,
@@ -144,7 +142,8 @@ public class MyScheduleEventVo implements Parcelable {
         // VERSION WS22/23
         // time is delivered in UTC
         // --> TODO: investigate if correct version depends on semester (because of database change)
-        return new Date(mStartDateTime * 1000);
+        Date startDateTime = Utils.convertTimeFromStundenplanWebserverDate( mStartDateTime );
+        return startDateTime;
 
     }
 
@@ -159,14 +158,19 @@ public class MyScheduleEventVo implements Parcelable {
         // VERSION WS22/23
         // time is delivered in UTC
         // --> TODO: investigate if correct version depends on semester (because of database change)
-        return new Date((mEndDateTime * 1000));
+        Date endDateTime = Utils.convertTimeFromStundenplanWebserverDate( mEndDateTime );
+        return endDateTime;
     }
 
+    /** in seconds */
     public String getStartTimeString(){
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ROOT);
         return sdf.format(getStartDateTime());
     }
 
+    /** in seconds */
     public String getEndTimeString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ROOT);
         return sdf.format(getEndDateTime());
     }
 
@@ -204,7 +208,7 @@ public class MyScheduleEventVo implements Parcelable {
      * @return
      */
     public String getWeekDayShort(){
-        return new SimpleDateFormat("E", Locale.getDefault()).format(getStartDateTime());
+        return new SimpleDateFormat("E" ).format(getStartDateTime());
     }
 
     public List<LecturerVo> getLecturerList() {

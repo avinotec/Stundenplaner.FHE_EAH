@@ -23,21 +23,16 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-import java.util.TimeZone;
+
+import de.fhe.fhemobile.utils.Utils;
 
 /**
  * Created by paul on 16.03.15
  * Edited by Nadja - 04/2022
  */
-public class TimeTableEventVo implements Parcelable {
-
-    static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
-    final int offset = TimeZone.getTimeZone("Europe/Berlin").getOffset(new Date().getTime());
+public final class TimeTableEventVo implements Parcelable {
 
     public TimeTableEventVo() {
     }
@@ -54,14 +49,22 @@ public class TimeTableEventVo implements Parcelable {
         //multiply by 1000 to convert from seconds to milliseconds,
         // subtract time zone offset because mStartDateTime is in time zone "Berlin"
         // but Date needs long in UTC
-        return sdf.format(new Date(mStartDateTime * 1000 - offset));
+        //return sdf.format(new Date(mStartDateTime * 1000 + offsetTimeFromCarstensWebServerToRealTiem * 1000));
+//TODO UTC
+        final String strGetStartTime = Utils.convertTimeFromStundenplanWebserverStr(mStartDateTime );
+
+        return strGetStartTime ;
     }
 
     public String getEndTime() {
         //multiply by 1000 to convert from seconds to milliseconds,
         // subtract time zone offset because mStartDateTime is in time zone "Berlin"
         // but Date needs long in UTC
-        return sdf.format(new Date((mEndDateTime * 1000 - offset)));
+        //String strGetEndTime =  sdf.format(new Date((mEndDateTime * 1000 + offsetTimeFromCarstensWebServerToRealTiem) * 1000), );
+//TODO UTC
+        final String strGetEndTime = Utils.convertTimeFromStundenplanWebserverStr(mEndDateTime );
+        return strGetEndTime ;
+
     }
 
     public String getLocationListAsString(){

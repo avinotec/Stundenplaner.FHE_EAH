@@ -127,10 +127,11 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 			final Date df = currentItem.getStartDateTime();
 			//if necessary, add "today" in brackets to mark today's day
 			if(new TimeIgnoringDateComparator().compare(df, new Date()) == 0){
-				weekDay = "(" + Main.getAppContext().getString(R.string.today) + ") "+currentItem.getWeekDayName(); //$NON-NLS
+				final String today = Main.getAppContext().getString(R.string.today);
+				final String weekDayName = currentItem.getWeekDayName();
+				weekDay = "(" + today + ") "+ weekDayName ;
 			}
-			weekDay += ", " + new SimpleDateFormat("dd.MM.yy",
-					Locale.getDefault()).format(currentItem.getStartDateTime());
+			weekDay += ", " + new SimpleDateFormat("dd.MM.yy", Locale.ROOT ).format(currentItem.getStartDateTime());
 			weekdayHeader.setText(weekDay);
 			weekdayHeader.setVisibility(View.VISIBLE);
 
