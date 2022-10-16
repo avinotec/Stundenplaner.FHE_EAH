@@ -63,7 +63,7 @@
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:windowSoftInputMode="adjustPan"
             android:exported="true">
             <intent-filter>
@@ -102,7 +102,7 @@
             android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".activities.MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="fullSensor">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.fhe.fhemobile.activities.MainActivity" />
@@ -111,7 +111,7 @@
             android:name=".activities.news.NewsSingleActivity"
             android:label="@string/title_activity_news_single"
             android:parentActivityName=".activities.MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="fullSensor">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.fhe.fhemobile.activities.MainActivity" />
@@ -120,7 +120,7 @@
             android:name=".activities.phonebook.EmployeeInformationActivity"
             android:label="@string/title_activity_employee_information"
             android:parentActivityName=".activities.MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="fullSensor">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.fhe.fhemobile.activities.MainActivity" />
