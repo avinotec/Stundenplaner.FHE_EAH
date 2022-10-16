@@ -113,7 +113,7 @@
                     android:background="@drawable/buttonshape_rectangle"
                     android:textAllCaps="false"
                     android:layout_margin="@dimen/margin_top_navigation_dialog_activity"
-                    />
+                    style="?android:attr/buttonBarButtonStyle" />
 
                 <Button
                     android:id="@+id/btn_navigation_nextplan"
@@ -127,7 +127,7 @@
                     android:background="@drawable/buttonshape_rectangle"
                     android:textAllCaps="false"
                     android:layout_margin="@dimen/margin_top_navigation_dialog_activity"
-                    />
+                    style="?android:attr/buttonBarButtonStyle" />
             </LinearLayout>
 
             <LinearLayout

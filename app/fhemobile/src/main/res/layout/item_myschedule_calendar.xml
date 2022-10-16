@@ -44,7 +44,8 @@
             android:padding="2dp"
             tools:text="Time"
             android:textColor="@color/primary_light"
-            android:textSize="@dimen/abc_text_size_body_1_material" />
+            android:textSize="@dimen/abc_text_size_body_1_material"
+            android:textIsSelectable="false" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -61,7 +62,8 @@
                 android:gravity="center"
                 tools:text="Title"
                 android:textColor="@color/primary_light"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textIsSelectable="false" />
 
             <TextView
                 android:id="@+id/tv_myschedule_calendar_lecturer"
@@ -72,7 +74,8 @@
                 android:paddingTop="7dp"
                 tools:text="Lecturer"
                 android:textColor="@color/primary_light"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                android:textIsSelectable="false" />
         </LinearLayout>
 
         <TextView
@@ -85,7 +88,8 @@
             android:singleLine="false"
             tools:text="Room"
             android:textColor="@color/primary_light"
-            android:textSize="@dimen/abc_text_size_body_1_material" />
+            android:textSize="@dimen/abc_text_size_body_1_material"
+            android:textIsSelectable="false" />
     </LinearLayout>
 
 

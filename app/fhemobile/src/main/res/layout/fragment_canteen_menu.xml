@@ -34,7 +34,7 @@
 	   android:textAllCaps="true"
 	   android:gravity="center"
 	   android:padding="3dp"
-	   />
+	   android:textIsSelectable="false" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
