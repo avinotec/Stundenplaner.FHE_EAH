@@ -47,7 +47,12 @@ public final class TimeTableEventVo implements Parcelable {
         return mId;
     }
 
-    public String getStartTime(){
+    /**
+     * Get time of day the event is starting
+     *
+     * @return String containing time formatted as HH:mm
+     */
+    public String getStartTimeString(){
         // convert to milliseconds
         final long lStartOrEndDateTime = mStartDateTime * 1000 ;
         final Date dateGetStartTime = new Date(lStartOrEndDateTime);
@@ -60,7 +65,12 @@ public final class TimeTableEventVo implements Parcelable {
         return strGetStartTime;
     }
 
-    public String getEndTime() {
+    /**
+     * Get time of day the event is ending
+     *
+     * @return String containing time formatted as HH:mm
+     */
+    public String getEndTimeString() {
         // convert to milliseconds
         final long lStartOrEndDateTime = mEndDateTime * 1000 ;
         final Date dateGetStartTime = new Date(lStartOrEndDateTime);

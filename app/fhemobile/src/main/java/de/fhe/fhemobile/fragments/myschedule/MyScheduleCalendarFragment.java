@@ -128,7 +128,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 		// Inflate the layout for this fragment
 		mView = (MyScheduleCalendarView) inflater.inflate(R.layout.fragment_myschedule_calendar, container, false);
 
-		askForDeletingScheduleAfterTurnOfSemester();
+		askForClearingScheduleAfterTurnOfSemester();
 
 		//Set text view to show if list is empty
 		mView.setEmptyCalendarView();
@@ -160,7 +160,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 	 * When the app is opened for the first time after 1st of March and 1st of September,
 	 * the user is asked, if the timetable (subscribed courses) should be cleared due to semester change.
 	 */
-	private void askForDeletingScheduleAfterTurnOfSemester() {
+	private void askForClearingScheduleAfterTurnOfSemester() {
 
 		final SharedPreferences sharedPreferences = getContext().getSharedPreferences(SP_MYSCHEDULE, Context.MODE_PRIVATE);
 		final long lastOpened = sharedPreferences.getLong(Define.MySchedule.PREFS_APP_LAST_OPENED, 0);
@@ -168,38 +168,57 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 		//if app has been opened last before
 		if(lastOpened != 0){
 
-
 			final Calendar calLastOpened = Calendar.getInstance(Locale.GERMANY);
 			calLastOpened.setTimeInMillis(lastOpened);
 
-			// Semester change in app on 1st of March
-			final Calendar calSemester1HolidayStart = Calendar.getInstance(Locale.GERMANY);
-			calSemester1HolidayStart.set(Calendar.MONTH, Calendar.MARCH);
-			calSemester1HolidayStart.set(Calendar.DAY_OF_MONTH, 1);
-			// Semester change in app on 1st of September
-			final Calendar calSemester2HolidayStart = Calendar.getInstance(Locale.GERMANY);
-			calSemester2HolidayStart.set(Calendar.MONTH, Calendar.SEPTEMBER);
-			calSemester2HolidayStart.set(Calendar.DAY_OF_MONTH, 1);
+			// Calendar instances for optional semester change in app on 1st of March
+			final Calendar calWsHolidayStart = Calendar.getInstance(Locale.GERMANY);
+			calWsHolidayStart.set(Calendar.MONTH, Calendar.MARCH);
+			calWsHolidayStart.set(Calendar.DAY_OF_MONTH, 1);
+			// Calendar instances for forced semester change in app on 1st of April
+			final Calendar calSsStart = Calendar.getInstance(Locale.GERMANY);
+			calSsStart.set(Calendar.MONTH, Calendar.APRIL);
+			calSsStart.set(Calendar.DAY_OF_MONTH, 1);
+			// Calendar instances for optional semester change in app on 1st of September
+			final Calendar calSsHolidayStart = Calendar.getInstance(Locale.GERMANY);
+			calSsHolidayStart.set(Calendar.MONTH, Calendar.SEPTEMBER);
+			calSsHolidayStart.set(Calendar.DAY_OF_MONTH, 1);
+			// Calendar instances for forced semester change in app on 1st of October
+			final Calendar calWsStart = Calendar.getInstance(Locale.GERMANY);
+			calWsStart.set(Calendar.MONTH, Calendar.OCTOBER);
+			calWsStart.set(Calendar.DAY_OF_MONTH, 1);
 			// today
 			final Calendar now = Calendar.getInstance();
 
+
 			//if lastOpened is before one of the semester change dates and today is after
-			if((calLastOpened.before(calSemester1HolidayStart) && now.after(calSemester1HolidayStart))
-					|| (calLastOpened.before(calSemester2HolidayStart) && now.after(calSemester2HolidayStart))){
+			if((calLastOpened.before(calWsHolidayStart) && now.after(calWsHolidayStart))
+					|| (calLastOpened.before(calSsHolidayStart) && now.after(calSsHolidayStart))){
+
+				boolean userCanRefuse = true;
+				// forced semester change
+				if((calLastOpened.before(calWsStart) && now.after(calWsStart))
+						|| (calLastOpened.before(calSsStart) && now.after(calSsStart))){
+					userCanRefuse = false;
+				}
 
 				// show dialog to ask if old timetable should be cleared
-				new AlertDialog.Builder(this.getContext())
+				AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getContext())
 						.setTitle(R.string.deleteTimetableTitle)
-						.setMessage(R.string.deleteTimetableMessage)
 						.setPositiveButton(R.string.deleteTimeTableConfirm, new DialogInterface.OnClickListener() {
 
 							public void onClick(final DialogInterface dialog, final int which) {
 								MainActivity.clearSubscribedEventSeriesAndUpdateAdapters();
 							}
 						})
-						.setNegativeButton(R.string.deleteTimeTableCancel, null)
-						.setIcon(android.R.drawable.ic_dialog_alert)
-						.show();
+						.setIcon(android.R.drawable.ic_dialog_alert);
+				if(userCanRefuse) {
+					dialogBuilder.setMessage(R.string.deleteTimetableMessageOptional);
+					dialogBuilder.setNegativeButton(R.string.deleteTimeTableCancel, null);
+				} else {
+					dialogBuilder.setMessage(R.string.deleteTimetableMessageForced);
+				}
+				dialogBuilder.show();
 			}
 		}
 

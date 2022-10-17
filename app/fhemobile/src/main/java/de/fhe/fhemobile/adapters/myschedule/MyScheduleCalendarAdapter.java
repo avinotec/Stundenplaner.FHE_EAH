@@ -121,17 +121,17 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 		// then do not add header again (set invisible)
 		final TextView weekdayHeader = (TextView) convertView.findViewById(R.id.tv_item_header_default_day);
 		if(position == 0 || new TimeIgnoringDateComparator()
-				.compare(currentItem.getStartDateTime(), mItems.get(position - 1).getStartDateTime()) != 0){
+				.compare(currentItem.getStartDateWithTime(), mItems.get(position - 1).getStartDateWithTime()) != 0){
 
 			String weekDay = currentItem.getWeekDayName();
-			final Date df = currentItem.getStartDateTime();
+			final Date df = currentItem.getStartDateWithTime();
 			//if necessary, add "today" in brackets to mark today's day
 			if(new TimeIgnoringDateComparator().compare(df, new Date()) == 0){
 				final String today = Main.getAppContext().getString(R.string.today);
 				final String weekDayName = currentItem.getWeekDayName();
 				weekDay = "(" + today + ") "+ weekDayName ;
 			}
-			weekDay += ", " + new SimpleDateFormat("dd.MM.yy", Locale.ROOT ).format(currentItem.getStartDateTime());
+			weekDay += ", " + new SimpleDateFormat("dd.MM.yy", Locale.ROOT ).format(currentItem.getStartDateWithTime());
 			weekdayHeader.setText(weekDay);
 			weekdayHeader.setVisibility(View.VISIBLE);
 
@@ -211,10 +211,10 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 
 			try {
 				//course starts now or in the future
-				if(eventVo.getStartDateTime().compareTo(now) >= 0) {
+				if(eventVo.getStartDateWithTime().compareTo(now) >= 0) {
 
 					//if event has not finished yet
-					if(eventVo.getEndDateTime().compareTo(now) >= 0) {
+					if(eventVo.getEndDateWithTime().compareTo(now) >= 0) {
 
 						//update, if event startTime is earlier the event found before
 						if(k == null || eventVo.getStartDateTimeInSec() <= k){

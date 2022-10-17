@@ -131,33 +131,41 @@ public class MyScheduleEventVo implements Parcelable {
         return mEndDateTime;
     }
 
-    public Date getStartDateTime(){
+    public Date getStartDateWithTime(){
         //convert to milliseconds
         final Date startDateTime = new Date( mStartDateTime * 1000 );
         return startDateTime;
 
     }
 
-    public Date getEndDateTime(){
+    public Date getEndDateWithTime(){
         //convert from seconds to milliseconds,
         Date endDateTime = new Date( mEndDateTime * 1000);
         return endDateTime;
     }
 
-    /** in seconds */
+    /**
+     * Get time of day the event is starting
+     *
+     * @return String containing time formatted as HH:mm
+     */
     public String getStartTimeString(){
         final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ROOT);
         // this is the magic thing to advise the SimpleDateFormat to do nothing with the Timezones
         sdf.setTimeZone( TimeZone.getTimeZone("UTC") );
-        return sdf.format(getStartDateTime());
+        return sdf.format(getStartDateWithTime());
     }
 
-    /** in seconds */
+    /**
+     * Get time of day the event is ending
+     *
+     * @return String containing time formatted as HH:mm
+     */
     public String getEndTimeString() {
         final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ROOT);
         // this is the magic thing to advise the SimpleDateFormat to do nothing with the Timezones
         sdf.setTimeZone( TimeZone.getTimeZone("UTC") );
-        return sdf.format(getEndDateTime());
+        return sdf.format(getEndDateWithTime());
     }
 
     public String getEventSetId() { return mEventSetId; }
@@ -186,7 +194,7 @@ public class MyScheduleEventVo implements Parcelable {
     }
 
     public String getWeekDayName(){
-        return TimeTableUtils.getWeekDayName(getStartDateTime());
+        return TimeTableUtils.getWeekDayName(getStartDateWithTime());
     }
 
     /**
@@ -194,7 +202,7 @@ public class MyScheduleEventVo implements Parcelable {
      * @return
      */
     public String getWeekDayShort(){
-        return new SimpleDateFormat("E" ).format(getStartDateTime());
+        return new SimpleDateFormat("E" ).format(getStartDateWithTime());
     }
 
     public List<LecturerVo> getLecturerList() {

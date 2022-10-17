@@ -464,7 +464,7 @@ public final class NetworkHandler {
                         // we received an answer, anyhow, so we decrease the outstanding requests counter
                         requestCounterMySchedule--;
 						if(requestCounterMySchedule <= 0){
-                            // even failed, this is the last request received, so proceed, finally
+                            // even when failed, this is the last request received, so proceed, finally
 							setSubscribedEventSeriesAndUpdateAdapters(updatedEventSeriesList);
 						}
                     }
