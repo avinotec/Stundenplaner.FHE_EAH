@@ -159,15 +159,14 @@ public final class Utils {
     }
 
 
-	// Der Stundenplan liefert Zeitangaben in Sekunden seit 1970. Das wird auch "Epoch" genannt.
-	// Carsten Hölbing liefert den Zeitstempel für eine Vorlesung in diesen Sekunden aus.
-	// ABER: es ist gar nicht die Zeit in UTC, sondern in lokaler Zeit.
-	// Er sendet zwar die Sekunden, die ausgerechnete Uhrzeit z.B. 11:30 Uhr, ist aber die deutsche,
-	// lokale Zeit und NICHT UTC. Das heißt, Carsten ignoriert die Zeitzone und sendet immer die
-	// lokale, örtliche Uhrzeit.
-	//
-	// 1665487800 bspw. ist "Dies entspricht in UTC: Dienstag, 11. Oktober 2022, 11:30:00"
-	// 1665484200 "Dies entspricht in UTC: Dienstag, 11. Oktober 2022, 10:30:00"
+	// Der Stundenplan liefert Zeitangaben in Sekunden seit 1970. Das wird auch "Epoch (Unix) Time" genannt.
+	// Die EAH API liefert den Zeitstempel für eine Vorlesung in dieser Sekundenzahl aus.
+    // ABER: es ist gar nicht die Zeit in UTC, sondern in lokaler Zeit.
+    // Er sendet zwar die Sekunden, die ausgerechnete Uhrzeit z.B. 11:30 Uhr, ist aber die deutsche,
+    // lokale Zeit und NICHT UTC. Das heißt, Carsten ignoriert die Zeitzone und sendet immer die
+    // lokale, örtliche Uhrzeit.
+	// 1665487800 bspw. entspricht in UTC: Dienstag, 11. Oktober 2022, 11:30:00
+	// 1665484200 entspricht in UTC: Dienstag, 11. Oktober 2022, 10:30:00
 	//
 	// Die Uhrzeit an sich ist ja richtig, aber die Zeitzone sollte UTC sein. Ist es aber doch nicht.
 	// Jetzt kommt Java ins Spiel.

@@ -250,11 +250,10 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
         params.setMargins(0,5,5,10);
         dateAndRoomTextView.setLayoutParams(params);
 
-        //TODO UTC --- setTimeZone(Locale.ROOT)
         final DateFormat sdf = SimpleDateFormat.getDateInstance();
         sdf.setTimeZone( TimeZone.getTimeZone("UTC") );         // für die Berechnung der Zeiten
 
-        String date = sdf.format(_Event.getStartDateTime());
+        String date = sdf.format(_Event.getStartDateWithTime());
 
         String dayOfWeek = _Event.getWeekDayShort();
         String startTime = _Event.getStartTimeString();         // hier sind Zeiten

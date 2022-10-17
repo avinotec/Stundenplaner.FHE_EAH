@@ -77,7 +77,7 @@ public class TimeTableWeekView extends LinearLayout {
                 if ( BuildConfig.DEBUG ) Assert.assertTrue( eventVo != null );
                 if ( eventVo != null ) {
                     mData.add(new TimeTableEventItem(
-                                    eventVo.getStartTime() + " – " + eventVo.getEndTime(),
+                                    eventVo.getStartTimeString() + " – " + eventVo.getEndTimeString(),
                                     eventVo.getGuiTitle(),
                                     eventVo.getLocationListAsString(),
                                     eventVo.getLecturerListAsString()
