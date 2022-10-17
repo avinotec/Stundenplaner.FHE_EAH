@@ -109,8 +109,9 @@
     <string name="myschedule_settings_headline">Meine Kurse</string>
 
     <string name="deleteTimetableTitle">Semesterwechsel</string>
-    <string name="deleteTimetableMessage">Das Semester ist zu Ende. Soll dein Stundenplan geleert werden?</string>
-    <string name="deleteTimeTableConfirm">Ja</string>
+    <string name="deleteTimetableMessageOptional">Das Semester ist zu Ende. Soll dein Stundenplan geleert werden?</string>
+    <string name="deleteTimetableMessageForced">Ein neues Semester hat begonnen. Dein Stundenplan muss geleert werden.</string>
+    <string name="deleteTimeTableConfirm">Leeren</string>
     <string name="deleteTimeTableCancel">Abbrechen</string>
 
 

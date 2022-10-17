@@ -107,8 +107,9 @@
     <string name="myschedule_settings_studygroups">Study Groups: </string>
 
     <string name="deleteTimetableTitle">Semester Change</string>
-    <string name="deleteTimetableMessage">The semester is over. Do you want to clear your timetable?</string>
-    <string name="deleteTimeTableConfirm">Yes</string>
+    <string name="deleteTimetableMessageOptional">The semester is over. Do you want to clear your schedule?</string>
+    <string name="deleteTimetableMessageForced">A new semester has started. You need to clear your schedule.</string>
+    <string name="deleteTimeTableConfirm">Clear Schedule</string>
     <string name="deleteTimeTableCancel">Cancel</string>
 
     <string name="imprint_data_protection_link" translatable="false"><a href="https://www.eah-jena.de/datenschutz">Data protection</a></string>
