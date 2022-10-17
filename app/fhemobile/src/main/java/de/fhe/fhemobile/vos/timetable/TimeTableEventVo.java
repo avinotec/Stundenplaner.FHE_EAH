@@ -23,10 +23,12 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
-
-import de.fhe.fhemobile.utils.Utils;
+import java.util.TimeZone;
 
 /**
  * Created by paul on 16.03.15
@@ -46,25 +48,29 @@ public final class TimeTableEventVo implements Parcelable {
     }
 
     public String getStartTime(){
-        //multiply by 1000 to convert from seconds to milliseconds,
-        // subtract time zone offset because mStartDateTime is in time zone "Berlin"
-        // but Date needs long in UTC
-        //return sdf.format(new Date(mStartDateTime * 1000 + offsetTimeFromCarstensWebServerToRealTiem * 1000));
-//TODO UTC
-        final String strGetStartTime = Utils.convertTimeFromStundenplanWebserverStr(mStartDateTime );
+        // convert to milliseconds
+        final long lStartOrEndDateTime = mStartDateTime * 1000 ;
+        final Date dateGetStartTime = new Date(lStartOrEndDateTime);
 
-        return strGetStartTime ;
+        final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ROOT);
+        // this is the magic thing to advise the SimpleDateFormat to do nothing with the Timezones
+        sdf.setTimeZone( TimeZone.getTimeZone("UTC") );
+
+        final String strGetStartTime = sdf.format( dateGetStartTime );
+        return strGetStartTime;
     }
 
     public String getEndTime() {
-        //multiply by 1000 to convert from seconds to milliseconds,
-        // subtract time zone offset because mStartDateTime is in time zone "Berlin"
-        // but Date needs long in UTC
-        //String strGetEndTime =  sdf.format(new Date((mEndDateTime * 1000 + offsetTimeFromCarstensWebServerToRealTiem) * 1000), );
-//TODO UTC
-        final String strGetEndTime = Utils.convertTimeFromStundenplanWebserverStr(mEndDateTime );
-        return strGetEndTime ;
+        // convert to milliseconds
+        final long lStartOrEndDateTime = mEndDateTime * 1000 ;
+        final Date dateGetStartTime = new Date(lStartOrEndDateTime);
 
+        final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ROOT);
+        // this is the magic thing to advise the SimpleDateFormat to do nothing with the Timezones
+        sdf.setTimeZone( TimeZone.getTimeZone("UTC") );
+
+        final String strGetStartTime = sdf.format( dateGetStartTime );
+        return strGetStartTime;
     }
 
     public String getLocationListAsString(){

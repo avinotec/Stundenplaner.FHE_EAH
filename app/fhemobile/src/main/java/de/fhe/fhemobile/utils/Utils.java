@@ -21,17 +21,11 @@ import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.multidex.BuildConfig;
 
 import org.junit.Assert;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import de.fhe.fhemobile.Main;
 
@@ -167,10 +161,15 @@ public final class Utils {
 
 	// Der Stundenplan liefert Zeitangaben in Sekunden seit 1970. Das wird auch "Epoch" genannt.
 	// Carsten Hölbing liefert den Zeitstempel für eine Vorlesung in diesen Sekunden aus.
+	// ABER: es ist gar nicht die Zeit in UTC, sondern in lokaler Zeit.
+	// Er sendet zwar die Sekunden, die ausgerechnete Uhrzeit z.B. 11:30 Uhr, ist aber die deutsche,
+	// lokale Zeit und NICHT UTC. Das heißt, Carsten ignoriert die Zeitzone und sendet immer die
+	// lokale, örtliche Uhrzeit.
+	//
 	// 1665487800 bspw. ist "Dies entspricht in UTC: Dienstag, 11. Oktober 2022, 11:30:00"
 	// 1665484200 "Dies entspricht in UTC: Dienstag, 11. Oktober 2022, 10:30:00"
 	//
-	// Die Uhrzeit an sich ist ja richtig, aber die Zeitzone ist UTC.
+	// Die Uhrzeit an sich ist ja richtig, aber die Zeitzone sollte UTC sein. Ist es aber doch nicht.
 	// Jetzt kommt Java ins Spiel.
 	// Java will immer korrekt mit Zeitzonen spielen.
 	// Das heißt, die Vorlesung beginnt in Deutschland um 11:30 Uhr.
@@ -186,43 +185,21 @@ public final class Utils {
 	// berücksichtigt.
 	// Dann muss aus dem ursprünglichen Zeitstempel 11:30 je nachdem 10:30 (Winterzeit) oder 9:30 (Sommerzeit)
 	// werden.
+	//
+	// Das alles hat nicht funktioniert.
+	// Erkenntnis 1:
+	// Das Date Objekt covert nur den Zeitstempel. Mehr nicht. Keine Interpretation, keine Zeitzone.
+	// Erkenntnis 2:
+    // Das Durcheinander fängt mit dem SimpleDateFormatter an. Hier kommen erst die Zeitzonen und
+    // Sommer- und Winterzeit ins Spiel.
+    // erst "sdf.setTimeZone( TimeZone.getTimeZone("UTC") );" das Festlegen der Zeitzone auf UTC
+    // überzeugt die Methode, die Zeit in UTC auszugeben.
+    // Das stimmt zwar dann immer noch nicht, aber damit haben wir Carstens Uhrzeit als UTC entgegen
+    // genommen und unverändert als UTC ausgegeben. Also falsch (da ja lokale Zeit),
+    // aber konsequent (als UTC behandelt), und damit dann doch wieder richtig.
+    //
 	// Danke Java, ich liebe Dich.
 
-	/**
-	 * Convert the time in seconds since 1970 from Carsten Hölbings Stundenplan Server
-	 * @param lStartOrEndDateTimeParam in seconds since 1970
-	 * @return Date object corrected with Timezone, UTC, Daylightsavings
-	 */
-	static public Date convertTimeFromStundenplanWebserverDate(long lStartOrEndDateTimeParam ) {
-
-		// convert to milliseconds
-		final long lStartOrEndDateTime = lStartOrEndDateTimeParam * 1000 ;
-
-		final Date dateGetStartTime = new Date(lStartOrEndDateTime);
-
-		return dateGetStartTime;
-	}
-
-	/**
-	 * Convert the time in seconds since 1970 from Carsten Hölbings Stundenplan Server
-	 * @param lStartOrEndDateTimeParam in seconds since 1970
-	 * @return String corrected with Timezone, UTC, Daylightsavings
-	 */
-	@NonNull
-	static public String convertTimeFromStundenplanWebserverStr(long lStartOrEndDateTimeParam ) {
-
-		// convert to milliseconds
-		final long lStartOrEndDateTime = lStartOrEndDateTimeParam * 1000 ;
-
-		final Date dateGetStartTime = new Date(lStartOrEndDateTime);
-
-		final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ROOT);
-		// this is the magic thing to advise the SimpleDateFormat to do nothing with the Timezones
-		sdf.setTimeZone( TimeZone.getTimeZone("UTC") );
-
-		final String strGetStartTime = sdf.format( dateGetStartTime );
-		return strGetStartTime;
-	}
 
 
 }
