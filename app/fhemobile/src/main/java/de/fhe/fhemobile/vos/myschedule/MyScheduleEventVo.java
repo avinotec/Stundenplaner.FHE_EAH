@@ -34,7 +34,6 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
 
-import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.myschedule.TimetableChangeType;
 import de.fhe.fhemobile.utils.timetable.TimeTableUtils;
 import de.fhe.fhemobile.vos.timetable.LecturerVo;
@@ -133,33 +132,15 @@ public class MyScheduleEventVo implements Parcelable {
     }
 
     public Date getStartDateTime(){
-        //multiply by 1000 to convert from seconds to milliseconds,
-        /*
-        // VERSION SS22
-        // subtract time zone offset because mStartDateTime is in time zone "Berlin"
-        // but Date needs long in UTC
-        return new Date(mStartDateTime * 1000 - offset);
-        */
-        // VERSION WS22/23
-        // time is delivered in UTC
-        // --> TODO: investigate if correct version depends on semester (because of database change)
-        Date startDateTime = Utils.convertTimeFromStundenplanWebserverDate( mStartDateTime );
+        //convert to milliseconds
+        final Date startDateTime = new Date( mStartDateTime * 1000 );
         return startDateTime;
 
     }
 
     public Date getEndDateTime(){
-        //multiply by 1000 to convert from seconds to milliseconds,
-        /*
-        // VERSION SS22
-        // subtract time zone offset because mEndDateTime is in time zone "Berlin"
-        // but Date needs long in UTC
-        return new Date(mStartDateTime * 1000 - offset);
-        */
-        // VERSION WS22/23
-        // time is delivered in UTC
-        // --> TODO: investigate if correct version depends on semester (because of database change)
-        Date endDateTime = Utils.convertTimeFromStundenplanWebserverDate( mEndDateTime );
+        //convert from seconds to milliseconds,
+        Date endDateTime = new Date( mEndDateTime * 1000);
         return endDateTime;
     }
 
