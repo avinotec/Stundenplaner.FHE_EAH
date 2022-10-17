@@ -19,6 +19,6 @@
 
 <resources>
 
-    <string name="app_name" translatable="false">EAH Jena</string>
+    <string name="app_name" translatable="false">EAH Jena Stundenplan</string>
 
 </resources>

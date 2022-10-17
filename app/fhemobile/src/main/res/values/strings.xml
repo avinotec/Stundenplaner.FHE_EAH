@@ -176,7 +176,7 @@
 
     <string name="push_notification_channel_name">My Schedule Changes</string>
     <string name="push_notification_channel_description">Channel for sending Push Notifications on timetable changes</string>
-	<string name="imprint">Impressum</string>
+	<string name="imprint">Imprint</string>
 
 
 </resources>
