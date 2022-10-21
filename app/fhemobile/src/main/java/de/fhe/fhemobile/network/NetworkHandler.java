@@ -447,6 +447,8 @@ public final class NetworkHandler {
 									getUpdatedEventSeries(module.getValue(), response.body().getEventSets()));
                         } else {
                             showInternalProblemToast();
+                            //add old event series' to prevent them from getting lost
+                            updatedEventSeriesList.addAll(module.getValue().values());
                         }
                         // we received an answer, anyhow, so we decrease the outstanding requests counter
                         requestCounterMySchedule--;
@@ -461,6 +463,8 @@ public final class NetworkHandler {
                         Utils.showToast(R.string.myschedule_connection_failed + "(internal: " + t.getCause() + ")");
                         Log.d(TAG, "failure: request " + call.request().url() + " (internal: " + t.getCause() + ")");
 
+                        //add old event series' to prevent them from getting lost
+                        updatedEventSeriesList.addAll(module.getValue().values());
                         // we received an answer, anyhow, so we decrease the outstanding requests counter
                         requestCounterMySchedule--;
 						if(requestCounterMySchedule <= 0){
@@ -472,7 +476,7 @@ public final class NetworkHandler {
             }
             //module id is null thus updates cannot be fetched
             else {
-                //add old event series with module id == null to prevent them from getting lost
+                //add old event series' with module id == null to prevent them from getting lost
                 updatedEventSeriesList.addAll(module.getValue().values());
             }
 
