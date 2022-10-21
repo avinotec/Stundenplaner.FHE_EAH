@@ -43,6 +43,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.activities.SettingsActivity;
@@ -80,7 +81,6 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 		//replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
 		final MenuHost menuHost = requireActivity();
 		final FragmentActivity activity = getActivity();
-		final Fragment fragment = this;
 		menuHost.addMenuProvider(new MenuProvider() {
 			@Override
 			public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
@@ -113,7 +113,6 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 					if(Define.ENABLE_MYSCHEDULE_UPDATING){
 						NetworkHandler.getInstance().fetchMySchedule();
 					}
-
 				}
 
 				return false;
@@ -162,7 +161,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 	 */
 	private void askForClearingScheduleAfterTurnOfSemester() {
 
-		final SharedPreferences sharedPreferences = getContext().getSharedPreferences(SP_MYSCHEDULE, Context.MODE_PRIVATE);
+		final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences(SP_MYSCHEDULE, Context.MODE_PRIVATE);
 		final long lastOpened = sharedPreferences.getLong(Define.MySchedule.PREFS_APP_LAST_OPENED, 0);
 
 		//if app has been opened last before

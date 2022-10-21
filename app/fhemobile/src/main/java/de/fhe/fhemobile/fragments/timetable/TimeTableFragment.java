@@ -146,7 +146,7 @@ public class TimeTableFragment extends FeatureFragment {
 				mView.setPagerItems(weekVos);
 
 				//save timetable for offline usage
-				final SharedPreferences sharedPreferences = getContext().getSharedPreferences(SP_TIMETABLE, Context.MODE_PRIVATE);
+				final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences(SP_TIMETABLE, Context.MODE_PRIVATE);
 				final SharedPreferences.Editor editor = sharedPreferences.edit();
 				editor.putString(SP_TIMETABLE, new Gson().toJson(weekVos));
 				editor.apply();
@@ -162,7 +162,7 @@ public class TimeTableFragment extends FeatureFragment {
 			Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 
 			//load timetable from shared preferences
-			final SharedPreferences sharedPreferences = getContext().getSharedPreferences(SP_TIMETABLE, Context.MODE_PRIVATE);
+			final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences(SP_TIMETABLE, Context.MODE_PRIVATE);
 			final String json = sharedPreferences.getString(SP_TIMETABLE, "");
 			if(!json.isEmpty()){
 				final ArrayList<TimeTableWeekVo> loadedTimeTableWeeks = new Gson()
