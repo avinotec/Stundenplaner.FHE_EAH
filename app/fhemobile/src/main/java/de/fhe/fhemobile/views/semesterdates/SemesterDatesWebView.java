@@ -14,7 +14,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.views.semesterdata;
+package de.fhe.fhemobile.views.semesterdates;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -30,13 +30,13 @@ import de.fhe.fhemobile.views.SSLTolerantWebViewClient;
  * Created by Nadja on 07.09.21
  * for displaying Semesterdata-Browser-Webpage using WebView
  */
-public class SemesterDataWebView extends FrameLayout {
+public class SemesterDatesWebView extends FrameLayout {
 
     private final Context mContext;
 
     private WebView mWebView;
 
-    public SemesterDataWebView(final Context context, final AttributeSet attrs) {
+    public SemesterDatesWebView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
     }
@@ -46,12 +46,12 @@ public class SemesterDataWebView extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mWebView = (WebView) findViewById(R.id.semesterDataWebView);
+        mWebView = (WebView) findViewById(R.id.semesterDatesWebView);
         //wird der WebViewClient nicht geaendert, kann die Seite nicht geladen werden, da die Webview
         mWebView.setWebViewClient(new SSLTolerantWebViewClient(mContext));
         //Ohne JavascriptEnabled laesst sich das WebView nicht scrollen.
         mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.loadUrl(Endpoints.SEMESTERDATA_ENDPOINT);
+        mWebView.loadUrl(Endpoints.SEMESTERDATES_ENDPOINT);
 
     }
 }

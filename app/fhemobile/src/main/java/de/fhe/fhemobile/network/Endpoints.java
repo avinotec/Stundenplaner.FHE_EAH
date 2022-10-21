@@ -33,7 +33,7 @@ public final class Endpoints {
     public static final String IMPRINT_ENDPOINT = "https://www.eah-jena.de/impressum"; //URL fixed - Nadja 3.9.21
     //Links for displaying as WebViews - Nadja 6.9.21
     public static final String NEWS_ENDPOINT = "https://www.eah-jena.de/hochschule/nachrichten";
-    public static final String SEMESTERDATA_ENDPOINT = "https://www.eah-jena.de/hochschule/semestertermine";
+    public static final String SEMESTERDATES_ENDPOINT = "https://www.eah-jena.de/hochschule/semestertermine";
     public static final String EVENTS_ENDPOINT = "https://www.eah-jena.de/veranstaltungskalender";
     public static final String JOBOFFERS_ENDPOINT = "https://stellenticket.eah-jena.de/de/offers/fulltextsearch/EAH-Jena/#Inhalt";
 

@@ -25,7 +25,7 @@ public final class Features {
     public static boolean PHONEBOOK       = false;
     public static boolean CANTEEN         = false;
     public static boolean MAPS            = false;
-    public static boolean SEMESTER_DATA   = false;
+    public static boolean SEMESTER_DATES = false;
     public static boolean TIMETABLE       = false;
     public static boolean IMPRINT         = false;
     public static boolean MYSCHEDULE = false;
@@ -46,7 +46,7 @@ public final class Features {
         int PHONEBOOK       = 1;
         int CANTEEN         = 2;
         int MAPS            = 3;
-        int SEMESTER_DATA   = 4;
+        int SEMESTER_DATES = 4;
         int TIMETABLE       = 5;
         int IMPRINT         = 6;
         int MYSCHEDULE = 7;

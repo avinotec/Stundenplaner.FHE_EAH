@@ -14,7 +14,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.vos.semesterdata;
+package de.fhe.fhemobile.vos.semesterdates;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -22,21 +22,21 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by paul on 27.01.14.
+ * Created by paul on 24.01.14.
  */
-public class SemesterTimesVo implements Parcelable {
+public class DateVo implements Parcelable {
 
-    public SemesterTimesVo() {
+    public DateVo() {
     }
 
-    public SemesterTimesVo(final DateVo mDate, final PeriodVo mPeriod) {
+    public DateVo(final String mDate, final String mName) {
         this.mDate = mDate;
-        this.mPeriod = mPeriod;
+        this.mName = mName;
     }
 
-    public SemesterTimesVo(final Parcel _In) {
-        mDate = _In.readParcelable(DateVo.class.getClassLoader());
-        mPeriod = _In.readParcelable(PeriodVo.class.getClassLoader());
+    public DateVo(final Parcel _In) {
+        mDate = _In.readString();
+        mName = _In.readString();
     }
 
     /**
@@ -60,44 +60,42 @@ public class SemesterTimesVo implements Parcelable {
      */
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeParcelable(mDate, 0);
-        dest.writeParcelable(mPeriod, 0);
+        dest.writeString(mDate);
+        dest.writeString(mName);
     }
 
-    public static final Parcelable.Creator<SemesterTimesVo> CREATOR
-            = new Parcelable.Creator<SemesterTimesVo>() {
-        public SemesterTimesVo createFromParcel(final Parcel in) {
-            return new SemesterTimesVo(in);
+    public static final Parcelable.Creator<DateVo> CREATOR
+            = new Parcelable.Creator<DateVo>() {
+        public DateVo createFromParcel(final Parcel in) {
+            return new DateVo(in);
         }
 
-        public SemesterTimesVo[] newArray(final int size) {
-            return new SemesterTimesVo[size];
+        public DateVo[] newArray(final int size) {
+            return new DateVo[size];
         }
     };
 
-
-    public DateVo getDate() {
+    public String getDate() {
         return mDate;
     }
 
-    public void setDate(final DateVo mDate) {
+    public void setDate(final String mDate) {
         this.mDate = mDate;
     }
 
-    public PeriodVo getPeriod() {
-        return mPeriod;
+    public String getName() {
+        return mName;
     }
 
-    public void setPeriod(final PeriodVo mPeriod) {
-        this.mPeriod = mPeriod;
+    public void setName(final String mName) {
+        this.mName = mName;
     }
-
 
     @SerializedName("date")
-    private DateVo mDate;
+    private String mDate;
 
-    @SerializedName("period")
-    private PeriodVo mPeriod;
+    @SerializedName("name")
+    private String mName;
 
 
 }

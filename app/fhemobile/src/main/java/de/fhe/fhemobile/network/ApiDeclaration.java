@@ -28,7 +28,7 @@ import de.fhe.fhemobile.vos.canteen.CanteenVo;
 import de.fhe.fhemobile.vos.news.NewsCategoryResponse;
 import de.fhe.fhemobile.vos.news.NewsItemResponse;
 import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
-import de.fhe.fhemobile.vos.semesterdata.SemesterDataVo;
+import de.fhe.fhemobile.vos.semesterdates.SemesterDatesVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableDialogResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
 import retrofit2.Call;
@@ -46,7 +46,7 @@ public interface ApiDeclaration {
     Call<ArrayList<EmployeeVo>> fetchEmployees(@Query(Endpoints.PARAM_FNAME) String _FirstName, @Query(Endpoints.PARAM_LNAME) String _LastName);
     
     @GET(Endpoints.SEMESTER)
-    Call<SemesterDataVo> fetchSemesterData();
+    Call<SemesterDatesVo> fetchSemesterDates();
     
     @GET(Endpoints.CANTEEN + "/{canteenId}")
     Call<CanteenDishVo[]> fetchCanteenData(@Path("canteenId") String _CanteenId);

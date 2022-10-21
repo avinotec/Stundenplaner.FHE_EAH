@@ -23,6 +23,8 @@
     <string name="action_jump_to_today">Today</string>
     <string name="action_update">Update My Schedule</string>
     <string name="action_edit_my_courses">Edit my courses</string>
+    <string name="action_before">Before</string>
+    <string name="action_next">Next</string>
     <string name="drawer_news">News and Weather</string>
     <string name="drawer_canteen">Canteen</string>
     <string name="drawer_persons">Persons</string>

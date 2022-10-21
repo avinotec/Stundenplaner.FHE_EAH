@@ -14,7 +14,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.vos.semesterdata;
+package de.fhe.fhemobile.vos.semesterdates;
 
 import android.os.Parcel;
 import android.os.Parcelable;

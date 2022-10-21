@@ -65,7 +65,7 @@ import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
 import de.fhe.fhemobile.fragments.imprint.ImprintFragment;
 import de.fhe.fhemobile.fragments.joboffers.JobOffersFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
-import de.fhe.fhemobile.fragments.semesterdata.SemesterDataWebViewFragment;
+import de.fhe.fhemobile.fragments.semesterdates.SemesterDatesWebViewFragment;
 import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.Utils;
@@ -227,8 +227,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             //check if currentFragment contains a webview
             if(mCurrentFragment instanceof NewsWebViewFragment){
                 webview = ((NewsWebViewFragment) mCurrentFragment).getWebView();
-            }else if( mCurrentFragment instanceof SemesterDataWebViewFragment){
-                webview = ((SemesterDataWebViewFragment) mCurrentFragment).getWebView();
+            }else if( mCurrentFragment instanceof SemesterDatesWebViewFragment){
+                webview = ((SemesterDatesWebViewFragment) mCurrentFragment).getWebView();
             }else if (mCurrentFragment instanceof ImprintFragment){
                 webview = ((ImprintFragment) mCurrentFragment).getWebView();
             }else if(mCurrentFragment instanceof EventsWebViewFragment){

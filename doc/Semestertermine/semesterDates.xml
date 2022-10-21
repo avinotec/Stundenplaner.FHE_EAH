@@ -3,6 +3,7 @@
 <!-- EAH Version -->
 
 <semesterList>
+<!-- note: name needs to be in format "SS 20XX" or "WS 20XX/20XY" because values are parsed in SemesterDatesModel -->
 
     <semester name="SS 2022"
               longName="Sommersemester 2022">

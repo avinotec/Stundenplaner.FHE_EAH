@@ -14,20 +14,20 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.utils.semesterdata;
+package de.fhe.fhemobile.utils.semesterdates;
 
-import de.fhe.fhemobile.vos.semesterdata.SemesterTimesVo;
+import de.fhe.fhemobile.vos.semesterdates.SemesterTimesVo;
 
 /**
  * Created by Paul Cech on 13.05.15.
  */
-public final class SemesterDataUtils {
+public final class SemesterDatesUtils {
 
-    private static final String LOG_TAG = SemesterDataUtils.class.getSimpleName();
+    private static final String LOG_TAG = SemesterDatesUtils.class.getSimpleName();
 
     /* Utility classes have all fields and methods declared as static.
     Creating private constructors in utility classes prevents them from being accidentally instantiated. */
-    private SemesterDataUtils() {
+    private SemesterDatesUtils() {
 	}
 
 	/**

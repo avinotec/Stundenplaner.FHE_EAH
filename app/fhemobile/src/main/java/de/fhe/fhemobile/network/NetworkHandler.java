@@ -38,7 +38,7 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.phonebook.PhonebookModel;
-import de.fhe.fhemobile.models.semesterdata.SemesterDataModel;
+import de.fhe.fhemobile.models.semesterdates.SemesterDatesModel;
 import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.canteen.CanteenUtils;
@@ -54,7 +54,7 @@ import de.fhe.fhemobile.vos.news.NewsCategoryResponse;
 import de.fhe.fhemobile.vos.news.NewsItemResponse;
 import de.fhe.fhemobile.vos.news.NewsItemVo;
 import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
-import de.fhe.fhemobile.vos.semesterdata.SemesterDataVo;
+import de.fhe.fhemobile.vos.semesterdates.SemesterDatesVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableDialogResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
 import retrofit2.Call;
@@ -160,10 +160,10 @@ public final class NetworkHandler {
     /**
      * *
      */
-    public void fetchSemesterData() {
+    public void fetchSemesterDates() {
         Assert.assertTrue(mApiErfurt != null);
 
-        mApiErfurt.fetchSemesterData().enqueue(new Callback<SemesterDataVo>() {
+        mApiErfurt.fetchSemesterDates().enqueue(new Callback<SemesterDatesVo>() {
 
             /**
              *
@@ -171,9 +171,9 @@ public final class NetworkHandler {
              * @param response
              */
             @Override
-            public void onResponse(final Call<SemesterDataVo> call, final Response<SemesterDataVo> response) {
+            public void onResponse(final Call<SemesterDatesVo> call, final Response<SemesterDatesVo> response) {
                 if (response.body() != null) {
-                    SemesterDataModel.getInstance().setData(response.body().getSemester());
+                    SemesterDatesModel.getInstance().setData(response.body().getSemester());
                 } else {
                     showInternalProblemToast();
                 }
@@ -185,7 +185,7 @@ public final class NetworkHandler {
              * @param t
              */
             @Override
-            public void onFailure(final Call<SemesterDataVo> call, final Throwable t) {
+            public void onFailure(final Call<SemesterDatesVo> call, final Throwable t) {
                 showConnectionErrorToast();
                 Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
             }

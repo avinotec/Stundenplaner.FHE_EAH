@@ -14,26 +14,16 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.vos.semesterdata;
+package de.fhe.fhemobile.events;
 
-import com.google.gson.annotations.SerializedName;
+public class SemesterDatesChangeEvent extends SimpleEvent {
+    public static final String RECEIVED_SEMESTER_DATES = "receivedSemesterDates";
+    public static final String RECEIVED_EMPTY_SEMESTER_DATES = "receivedEmptySemesterDates";
+    public static final String SEMESTER_SELECTION_CHANGED   = "semesterSelectionChanged";
 
-/**
- * Created by paul on 03.03.15.
- */
-public class SemesterDataVo {
 
-    public SemesterDataVo() {
+    public SemesterDatesChangeEvent(final String type) {
+        super(type);
     }
 
-    public SemesterVo[] getSemester() {
-        return mSemester;
-    }
-
-    public void setSemester(final SemesterVo[] _semester) {
-        mSemester = _semester;
-    }
-
-    @SerializedName("semester")
-    private SemesterVo[] mSemester;
 }

@@ -14,23 +14,26 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.events;
+package de.fhe.fhemobile.vos.semesterdates;
 
+import com.google.gson.annotations.SerializedName;
 
-public class CanteenChangeEvent extends SimpleEvent {
+/**
+ * Created by paul on 03.03.15.
+ */
+public class SemesterDatesVo {
 
-    public static final String RECEIVED_CANTEEN_MENU = "receivedCanteenMenu";
-    public static final String RECEIVED_EMPTY_MENU = "receivedEmptyMenu";
-    public static final String RECEIVED_CANTEENS = "receivedCanteens";
-
-    public CanteenChangeEvent(final String type) {
-        super(type);
+    public SemesterDatesVo() {
     }
 
-    public static String getReceivedCanteenMenuEventWithCanteenId(final String canteenId){
-        return RECEIVED_CANTEEN_MENU + canteenId;
+    public SemesterVo[] getSemester() {
+        return mSemester;
     }
-    public static String getReceivedEmptyMenuEventWithCanteenId(final String canteenId){
-        return RECEIVED_EMPTY_MENU + canteenId;
+
+    public void setSemester(final SemesterVo[] _semester) {
+        mSemester = _semester;
     }
+
+    @SerializedName("semester")
+    private SemesterVo[] mSemester;
 }

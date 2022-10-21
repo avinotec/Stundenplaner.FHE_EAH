@@ -15,7 +15,7 @@
  *
  */
 
-package de.fhe.fhemobile.fragments.semesterdata;
+package de.fhe.fhemobile.fragments.semesterdates;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -33,22 +33,22 @@ import androidx.core.view.MenuProvider;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.views.semesterdata.SemesterDataWebView;
+import de.fhe.fhemobile.views.semesterdates.SemesterDatesWebView;
 
 /**
  * Created by Nadja on 07.09.21
- * for displaying Semesterdata-Browser-Webpage using WebView
+ * for displaying Semesterdates-Browser-Webpage using WebView
  */
-public class SemesterDataWebViewFragment extends FeatureFragment {
+public class SemesterDatesWebViewFragment extends FeatureFragment {
 
-    private SemesterDataWebView mView;
+    private SemesterDatesWebView mView;
 
-    public SemesterDataWebViewFragment() {
+    public SemesterDatesWebViewFragment() {
         // Required empty public constructor
     }
 
-    public static SemesterDataWebViewFragment newInstance() {
-        final SemesterDataWebViewFragment fragment = new SemesterDataWebViewFragment();
+    public static SemesterDatesWebViewFragment newInstance() {
+        final SemesterDatesWebViewFragment fragment = new SemesterDatesWebViewFragment();
         final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -81,7 +81,7 @@ public class SemesterDataWebViewFragment extends FeatureFragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (SemesterDataWebView) inflater.inflate(R.layout.fragment_semesterdata_webview, container, false);
+        mView = (SemesterDatesWebView) inflater.inflate(R.layout.fragment_semesterdates_webview, container, false);
         return mView;
     }
 
@@ -91,6 +91,6 @@ public class SemesterDataWebViewFragment extends FeatureFragment {
      * @return webview displayed in the fragment
      */
     public WebView getWebView(){
-        return getView().findViewById(R.id.semesterDataWebView);
+        return getView().findViewById(R.id.semesterDatesWebView);
     }
 }

@@ -14,13 +14,13 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ~
   -->
-<de.fhe.fhemobile.views.semesterdata.SemesterDataView xmlns:android="http://schemas.android.com/apk/res/android"
+<de.fhe.fhemobile.views.semesterdates.SemesterDatesView xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical"
 	android:animateLayoutChanges="true"
-	tools:context="de.fhe.fhemobile.fragments.semesterdata.SemesterDataFragment">
+	tools:context="de.fhe.fhemobile.fragments.semesterdates.SemesterDatesFragment">
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
@@ -31,10 +31,23 @@
         android:indeterminate="false"
         />
 
+	<TextView
+		android:id="@+id/tv_semester_title"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:textColor="@color/canteen_text_color"
+		android:background="@color/canteen_text_background"
+		android:fontFamily="@font/roboto_condensed_bold"
+		android:textSize="18sp"
+		android:textAllCaps="true"
+		android:gravity="center"
+		android:padding="3dp"
+		android:textIsSelectable="false" />
+
     <de.fhe.fhemobile.utils.headerlistview.HeaderListView
 	    android:tag="HeaderListViewTag"
         android:id="@+id/semesterListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</de.fhe.fhemobile.views.semesterdata.SemesterDataView>
+</de.fhe.fhemobile.views.semesterdates.SemesterDatesView>

@@ -14,12 +14,13 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.views.semesterdata;
+package de.fhe.fhemobile.views.semesterdates;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -27,11 +28,12 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.StickyHeaderAdapter;
 import de.fhe.fhemobile.events.Event;
 import de.fhe.fhemobile.events.EventListener;
-import de.fhe.fhemobile.models.semesterdata.SemesterDataModel;
-import de.fhe.fhemobile.utils.semesterdata.SemesterDataUtils;
+import de.fhe.fhemobile.events.SemesterDatesChangeEvent;
+import de.fhe.fhemobile.models.semesterdates.SemesterDatesModel;
+import de.fhe.fhemobile.utils.semesterdates.SemesterDatesUtils;
 import de.fhe.fhemobile.utils.headerlistview.HeaderListView;
-import de.fhe.fhemobile.vos.semesterdata.SemesterTimesVo;
-import de.fhe.fhemobile.vos.semesterdata.SemesterVo;
+import de.fhe.fhemobile.vos.semesterdates.SemesterTimesVo;
+import de.fhe.fhemobile.vos.semesterdates.SemesterVo;
 import de.fhe.fhemobile.widgets.stickyHeaderList.DefaultHeaderItem;
 import de.fhe.fhemobile.widgets.stickyHeaderList.DoubleRowItem;
 import de.fhe.fhemobile.widgets.stickyHeaderList.IHeaderItem;
@@ -41,17 +43,20 @@ import de.fhe.fhemobile.widgets.stickyHeaderList.ImageRowItem;
 /**
  * Created by paul on 23.02.14.
  */
-public class SemesterDataView extends LinearLayout {
+public class SemesterDatesView extends LinearLayout {
 
-    public SemesterDataView(final Context context, final AttributeSet attrs) {
+    public SemesterDatesView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
-        mModel   = SemesterDataModel.getInstance();
+        mModel   = SemesterDatesModel.getInstance();
     }
 
     public void initializeView() {
-        if(mModel.getSemesterData() != null) {
+        if(mModel.getSemesterVos() != null) {
             initializeList();
+            TextView tvTitle = findViewById(R.id.tv_semester_title);
+            //decided for name instead of long name when introducing previous and next semester buttons
+            tvTitle.setText(mModel.getChosenSemesterVo().getLongName());
         }
         else {
             mProgress.setVisibility(VISIBLE);
@@ -59,13 +64,13 @@ public class SemesterDataView extends LinearLayout {
     }
 
     public void registerModelListener() {
-        mModel.addListener(SemesterDataModel.ChangeEvent.RECEIVED_SEMESTER_DATA,     mModelListener);
-        mModel.addListener(SemesterDataModel.ChangeEvent.SEMESTER_SELECTION_CHANGED, mModelListener);
+        mModel.addListener(SemesterDatesChangeEvent.RECEIVED_SEMESTER_DATES,     mModelListener);
+        mModel.addListener(SemesterDatesChangeEvent.SEMESTER_SELECTION_CHANGED, mModelListener);
     }
 
     public void deregisterModelListener() {
-        mModel.removeListener(SemesterDataModel.ChangeEvent.RECEIVED_SEMESTER_DATA,     mModelListener);
-        mModel.removeListener(SemesterDataModel.ChangeEvent.SEMESTER_SELECTION_CHANGED, mModelListener);
+        mModel.removeListener(SemesterDatesChangeEvent.RECEIVED_SEMESTER_DATES,     mModelListener);
+        mModel.removeListener(SemesterDatesChangeEvent.SEMESTER_SELECTION_CHANGED, mModelListener);
     }
 
     @Override
@@ -84,7 +89,7 @@ public class SemesterDataView extends LinearLayout {
     }
 
     void initializeList() {
-        final SemesterVo chosenSemester = mModel.getSemesterData()[mModel.getChosenSemester()];
+        final SemesterVo chosenSemester = mModel.getSemesterVos()[mModel.getChosenSemester()];
 
         final ArrayList<IHeaderItem> sectionList = new ArrayList<>();
 
@@ -95,19 +100,19 @@ public class SemesterDataView extends LinearLayout {
 
         final ArrayList<IRowItem> courseRowItems = new ArrayList<>();
         for (final SemesterTimesVo times : chosenSemester.getCourseTimes()) {
-            courseRowItems.add(new DoubleRowItem(SemesterDataUtils.getHeadline(times), SemesterDataUtils.getSubHeadline(times)));
+            courseRowItems.add(new DoubleRowItem(SemesterDatesUtils.getHeadline(times), SemesterDatesUtils.getSubHeadline(times)));
         }
         sectionList.add(new DefaultHeaderItem(mContext.getString(R.string.semester_periods), true, courseRowItems));
 
         final ArrayList<IRowItem> holidayRowItems = new ArrayList<>();
         for (final SemesterTimesVo times : chosenSemester.getHolidays()) {
-            holidayRowItems.add(new DoubleRowItem(SemesterDataUtils.getHeadline(times), SemesterDataUtils.getSubHeadline(times)));
+            holidayRowItems.add(new DoubleRowItem(SemesterDatesUtils.getHeadline(times), SemesterDatesUtils.getSubHeadline(times)));
         }
         sectionList.add(new DefaultHeaderItem(mContext.getString(R.string.semester_holidays), true, holidayRowItems));
 
         final ArrayList<IRowItem> datesRowItems = new ArrayList<>();
         for (final SemesterTimesVo times : chosenSemester.getImportantDates()) {
-            datesRowItems.add(new DoubleRowItem(SemesterDataUtils.getHeadline(times), SemesterDataUtils.getSubHeadline(times)));
+            datesRowItems.add(new DoubleRowItem(SemesterDatesUtils.getHeadline(times), SemesterDatesUtils.getSubHeadline(times)));
         }
         sectionList.add(new DefaultHeaderItem(mContext.getString(R.string.semester_important_dates), true, datesRowItems));
 
@@ -124,11 +129,11 @@ public class SemesterDataView extends LinearLayout {
         }
     };
 
-    private static final String LOG_TAG = SemesterDataView.class.getSimpleName();
+    private static final String LOG_TAG = SemesterDatesView.class.getSimpleName();
 
     private final Context                     mContext;
 
-    private final SemesterDataModel           mModel;
+    private final SemesterDatesModel    mModel;
 
     private ProgressBar                 mProgress;
     private HeaderListView              mListView;

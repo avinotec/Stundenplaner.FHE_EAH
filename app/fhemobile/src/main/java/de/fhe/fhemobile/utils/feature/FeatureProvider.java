@@ -44,7 +44,7 @@ public final class FeatureProvider {
         Features.PHONEBOOK      = _Context.getResources().getBoolean(R.bool.feature_phonebook);
         Features.CANTEEN        = _Context.getResources().getBoolean(R.bool.feature_canteen);
         Features.MAPS           = _Context.getResources().getBoolean(R.bool.feature_maps);
-        Features.SEMESTER_DATA  = _Context.getResources().getBoolean(R.bool.feature_semester_data);
+        Features.SEMESTER_DATES = _Context.getResources().getBoolean(R.bool.feature_semester_dates);
         Features.TIMETABLE      = _Context.getResources().getBoolean(R.bool.feature_timetable);
         Features.MYSCHEDULE = _Context.getResources().getBoolean(R.bool.feature_myschedule);
         Features.IMPRINT        = _Context.getResources().getBoolean(R.bool.feature_imprint);
@@ -88,8 +88,8 @@ public final class FeatureProvider {
             list.add(new DrawerItem(Features.FeatureId.EVENTS, getFeatureTitle(Features.FeatureId.EVENTS)));
         }
 
-        if (Features.SEMESTER_DATA) {
-            list.add(new DrawerItem(Features.FeatureId.SEMESTER_DATA, getFeatureTitle(Features.FeatureId.SEMESTER_DATA)));
+        if (Features.SEMESTER_DATES) {
+            list.add(new DrawerItem(Features.FeatureId.SEMESTER_DATES, getFeatureTitle(Features.FeatureId.SEMESTER_DATES)));
         }
 
 //        if (Features.PHONEBOOK) {
@@ -124,7 +124,7 @@ public final class FeatureProvider {
             case Features.FeatureId.NAVIGATION:      stringRes = R.string.drawer_navigation; break;
             case Features.FeatureId.NEWS:            stringRes = R.string.drawer_news;      break;
             case Features.FeatureId.EVENTS:          stringRes = R.string.drawer_events; break;
-            case Features.FeatureId.SEMESTER_DATA:   stringRes = R.string.drawer_semesterdates;     break;
+            case Features.FeatureId.SEMESTER_DATES:   stringRes = R.string.drawer_semesterdates;     break;
             case Features.FeatureId.PHONEBOOK:       stringRes = R.string.drawer_persons;   break;
             case Features.FeatureId.JOBOFFERS:       stringRes = R.string.drawer_joboffers; break;
             case Features.FeatureId.IMPRINT:         stringRes = R.string.drawer_imprint; break;
