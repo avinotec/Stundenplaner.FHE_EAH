@@ -69,6 +69,7 @@ public class SemesterDatesFragment extends FeatureFragment {
                 menu.clear();
                 // Add menu items here
                 menuInflater.inflate(R.menu.menu_semester_dates, menu);
+                menuHost.invalidateMenu();
             }
 
             @Override
@@ -76,22 +77,27 @@ public class SemesterDatesFragment extends FeatureFragment {
                 MenuProvider.super.onPrepareMenu(menu);
 
                 MenuItem itemPreviousSemester = menu.findItem(R.id.action_previous_semester);
-                if(mModel.getChosenSemester() == 0){
-                    itemPreviousSemester.setEnabled(false);
-                    itemPreviousSemester.getIcon().setAlpha(133);
-                } else {
-                    itemPreviousSemester.setEnabled(true);
-                    itemPreviousSemester.getIcon().setAlpha(255);
+                if(itemPreviousSemester != null){
+                    if(mModel.getChosenSemester() == 0){
+                        itemPreviousSemester.setEnabled(false);
+                        itemPreviousSemester.getIcon().setAlpha(133);
+                    } else {
+                        itemPreviousSemester.setEnabled(true);
+                        itemPreviousSemester.getIcon().setAlpha(255);
+                    }
                 }
 
                 MenuItem itemNextSemester = menu.findItem(R.id.action_next_semester);
-                if(mModel.getSemesterVos() != null &&
-                        mModel.getChosenSemester() == mModel.getSemesterVos().length - 1){
-                    itemNextSemester.setEnabled(false);
-                    itemNextSemester.getIcon().setAlpha(133);
-                } else {
-                    itemNextSemester.setEnabled(true);
-                    itemNextSemester.getIcon().setAlpha(255);
+                if(itemNextSemester != null){
+                    if(mModel.getSemesterVos() != null &&
+                            mModel.getChosenSemester() == mModel.getSemesterVos().length - 1){
+                        itemNextSemester.setEnabled(false);
+                        itemNextSemester.getIcon().setAlpha(133);
+                    } else {
+                        itemNextSemester.setEnabled(true);
+                        itemNextSemester.getIcon().setAlpha(255);
+                    }
+
                 }
             }
 
