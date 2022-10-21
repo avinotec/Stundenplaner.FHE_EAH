@@ -45,7 +45,7 @@ public class SettingsActivity extends BaseActivity {
         loadFragments(mSettingsId);
     }
 
-    public void loadFragments(final Integer _Id) {
+    public void loadFragments(final int _Id) {
         switch(_Id) {
 
             case Features.FeatureId.NEWS:
@@ -113,9 +113,8 @@ public class SettingsActivity extends BaseActivity {
     }
 
     public static final String  EXTRA_SETTINGS_ID  = "extraSettingsId";
-
     private static final String STATE_SETTINGS_ID  = "settingsId";
 
-    private Integer mSettingsId;
+    private int mSettingsId;
 
 }
