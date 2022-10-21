@@ -60,10 +60,12 @@
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute">
 
+        <!-- note: screenOrientation=unspecified means using the sensor but respecting rotation lock,
+                    screenOrientation=fullSensor uses the sensor ignoring the device's rotation lock status -->
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="unspecified"
             android:windowSoftInputMode="adjustPan"
             android:exported="true">
             <intent-filter>
