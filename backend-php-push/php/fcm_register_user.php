@@ -123,7 +123,7 @@ $arraySubscribedEventseries = array();
 if ($os === ANDROID) {
 	//Get token and subscriptions sent from app
 	// Alle übergebenen Parameter entwerten, um SQL-Injections zu unterbinden.
-    if(isset($_REQUEST["fcmToken"])) {
+    if(isset($_REQUEST["fcm_token"])) {
         $fcmToken = htmlentities($_REQUEST["fcm_token"]);
     } else {
         if ($debug) echo "DEBUG: Fatal, no FCM token given.";
