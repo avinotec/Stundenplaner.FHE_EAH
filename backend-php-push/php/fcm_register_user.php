@@ -68,6 +68,19 @@ if ($debug) {
 }
 
 
+/**
+ * API Parameter
+
+Array ( [os] => android [language] => DE [fcm_token] => token0815 [debug] => true [eventseries_names] => Array ( [0] => BT/MT(BA)Info I+II/01 [1] => MB(BA)Tech.Eng II/01 ) [sendbutton] => )
+
+os
+language
+fcm_token
+debug       optional
+eventseries_name
+
+ */
+
 //Get or create database connection
 try {
 	initDbConnection();
@@ -111,7 +124,7 @@ if ($os === ANDROID) {
 	//Get token and subscriptions sent from app
 	// Alle übergebenen Parameter entwerten, um SQL-Injections zu unterbinden.
     if(isset($_REQUEST["fcmToken"])) {
-        $fcmToken = htmlentities($_REQUEST["fcmToken"]);
+        $fcmToken = htmlentities($_REQUEST["fcm_token"]);
     } else {
         if ($debug) echo "DEBUG: Fatal, no FCM token given.";
         $output .= "(E2002) Internal Error";
