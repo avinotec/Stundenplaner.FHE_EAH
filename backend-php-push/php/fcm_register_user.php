@@ -31,6 +31,7 @@ global $db_timetable;
 $debug = false;
 
 // collect output and echo only once
+// aber nicht für debugging, nur für korrekte Antworten zurück an den Server
 $output = "";
 
 if (isset($_REQUEST['debug']))
@@ -75,10 +76,12 @@ try {
     echo $output;
 	exit();
 }
-if ($debug) {
-    $output .= "<p> DEBUG: " . json_encode($_REQUEST) . "</p>";
-}
 
+if ($debug) { $output .= "<p> DEBUG: " . json_encode($_REQUEST) . "</p>"; }
+
+
+if ($debug) echo "<p>DEBUG: fcm_register_user.php Datenbankverbindung steht</p>";
+if ($debug) print_r( $_REQUEST );
 
 // ----------------- Get data from app ----------------------------------------------
 
@@ -94,9 +97,10 @@ if (isset($_REQUEST['os']))
 if (isset($_REQUEST['language']))
 	$language = htmlentities($_REQUEST['language']);
 if ($language !== LANG_DE && $language !== LANG_EN) {
-	error_log("Language: " . $language);
-    echo $output;
-	exit;
+	//error_log("Language: " . $language);
+    //echo $output;
+	//exit;
+    $language = LANG_DE; //default
 }
 
 // initialize to set data types
@@ -104,11 +108,13 @@ $fcmToken = "";
 $arraySubscribedEventseries = array();
 
 if ($os === ANDROID) {
-	//Get token and subscriptions send from app
+	//Get token and subscriptions sent from app
 	// Alle übergebenen Parameter entwerten, um SQL-Injections zu unterbinden.
     if(isset($_REQUEST["fcmToken"])) {
         $fcmToken = htmlentities($_REQUEST["fcmToken"]);
     } else {
+        if ($debug) echo "DEBUG: Fatal, no FCM token given.";
+        $output .= "(E2002) Internal Error";
         echo $output;
         exit;
     }
@@ -117,9 +123,14 @@ if ($os === ANDROID) {
     }
 } elseif ($os === IOS) {
 	//
+    $output .= "(E2003) Keine IOS Unterstützung!";
+    error_log("(E2003) Keine IOS Unterstützung!");
+    echo $output;
+    exit;
+
 } else {
-	$output .= "Keine OS Zuordnung!";
-	error_log("Keine OS Zuordnung! OS-Type: " . $os);
+	$output .= "(E2004) Keine OS Zuordnung!";
+	error_log("(E2004) Keine OS Zuordnung! OS-Type: " . $os);
     echo $output;
 	exit;
 }
@@ -128,8 +139,8 @@ if ($os === ANDROID) {
 // Check if a null value is given, to prevent null entries in the database.
 // Null values can happen if a user opens the script in a browser window.
 if (is_null($arraySubscribedEventseries) || is_null($fcmToken)) {
-	$output .= "<br> arraySubscribedEventseries or fcm token is null! <br>";
-	error_log("arraySubscribedEventSeries or fcm token is null!");
+	$output .= "<br>(E2005) arraySubscribedEventseries or fcm token is null! <br>";
+	error_log("(E2005) arraySubscribedEventSeries or fcm token is null!");
 	echo $output;
     return;
 }
@@ -143,9 +154,7 @@ $db_timetable->deleteUser($fcmToken);
 foreach ($arraySubscribedEventseries as $subscribed_eventseries) {
 	$subscribed_eventseries = htmlentities($subscribed_eventseries);
 
-	if ($debug) {
-        $output .= "<br>Register user $fcmToken for event series $subscribed_eventseries.<br>";
-    }
+	if ($debug) { $output .= "<br>Register user $fcmToken for event series $subscribed_eventseries.<br>"; }
 
 	$db_timetable->insertUser($fcmToken, $subscribed_eventseries, $os, $language);
 }
