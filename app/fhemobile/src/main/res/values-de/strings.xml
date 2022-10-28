@@ -37,9 +37,10 @@
     <string name="drawer_navigation" >Campusnavigation</string>
     <string name="drawer_joboffers">Stellenangebote</string>
 
-    <string name="reallyClose">Zum Verlassen zweimal Zurück drücken</string>
+    <string name="reallyClose">Zum Verlassen erneut Zurück drücken</string>
     <string name="connection_failed">Keine Verbindung möglich!</string>
-    <string name="internal_problems">Fehler: interne Probleme</string>
+    <string name="internal_problems">interne Probleme</string>
+    <string name="error">Fehler</string>
     <string name="exam_added">Prüfung hinzugefügt</string>
 
     <string name="phonebook_firstname" >Vorname</string>

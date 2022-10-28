@@ -37,9 +37,10 @@
     <string name="drawer_navigation">Campus Navigation</string>
     <string name="drawer_joboffers">Job Offers</string>
 
-    <string name="reallyClose">Please click back twice to exit</string>
+    <string name="reallyClose">Please press back again to exit</string>
     <string name="connection_failed">Cannot establish connection!</string>
-    <string name="internal_problems">Error: internal problems</string>
+    <string name="internal_problems">internal problems</string>
+    <string name="error">Error</string>
     <string name="exam_added">Exam added</string>
 
     <string name="phonebook_firstname">First name</string>

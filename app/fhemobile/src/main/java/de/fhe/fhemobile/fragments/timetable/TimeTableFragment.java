@@ -41,6 +41,7 @@ import androidx.fragment.app.Fragment;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -136,12 +137,14 @@ public class TimeTableFragment extends FeatureFragment {
 	public void onResume() {
 		super.onResume();
 		NetworkHandler.getInstance().fetchTimeTableEvents(mChosenTimeTableId, mCallback);
+//		todo: for debugging response = null
+//		NetworkHandler.getInstance().fetchTimeTableEvents("53B3DB05F11C6EA417AA82B3DA33991B", mCallback);
 	}
 
 	private final Callback<Map<String, TimeTableWeekVo>> mCallback = new Callback<Map<String, TimeTableWeekVo>>() {
 		@Override
 		public void onResponse(final Call<Map<String, TimeTableWeekVo>> call, final Response<Map<String, TimeTableWeekVo>> response) {
-			if(response.body() != null){
+			if(response.isSuccessful()){
 				final ArrayList<TimeTableWeekVo> weekVos = new ArrayList(response.body().values());
 				mView.setPagerItems(weekVos);
 
@@ -152,23 +155,28 @@ public class TimeTableFragment extends FeatureFragment {
 				editor.apply();
 
 			} else {
-				showInternalProblemToast();
+				ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+				ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.TIMETABLE_FRAGMENT_CODE1);
+
+				//load timetable from shared preferences
+				restoreTimetableFromSharedPreferences();
 			}
 		}
 
 		@Override
+		/**
+		 * Is called on network failures and RetroFit conversion errors
+		 */
 		public void onFailure(final Call<Map<String, TimeTableWeekVo>> call, final Throwable t) {
-			showConnectionErrorToast();
-			Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
+			if(t instanceof IOException){
+				ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.TIMETABLE_FRAGMENT_CODE3);
+				Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
+			} else {
+				ApiErrorUtils.showErrorToast(ApiErrorUtils.ApiErrorCode.TIMETABLE_FRAGMENT_CODE2);
+			}
 
 			//load timetable from shared preferences
-			final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences(SP_TIMETABLE, Context.MODE_PRIVATE);
-			final String json = sharedPreferences.getString(SP_TIMETABLE, "");
-			if(!json.isEmpty()){
-				final ArrayList<TimeTableWeekVo> loadedTimeTableWeeks = new Gson()
-						.fromJson(json, new TypeToken<List<TimeTableWeekVo>>(){}.getType());
-				mView.setPagerItems(loadedTimeTableWeeks);
-			}
+			restoreTimetableFromSharedPreferences();
 		}
 	};
 
