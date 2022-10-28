@@ -49,11 +49,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_base);
 
-        mToolbar    = (Toolbar)     findViewById(R.id.toolbar);
-        mContainer  = (FrameLayout) findViewById(R.id.baseActivityContainer);
-        mTabHost    = (TabHost)     findViewById(R.id.baseActivityTabHost);
-        mShadow     = (ImageView)   findViewById(R.id.baseActivityShadow);
-        mSpinner    = (Spinner)     findViewById(R.id.toolbarSpinner);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_secondary_activity);
+        mContainer = (FrameLayout) findViewById(R.id.container_secondary_activity);
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -115,76 +112,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-// --Commented out by Inspection START (01.11.2019 00:18):
-//    protected void setActionBarIcon(int iconRes) {
-//        mToolbar.setNavigationIcon(iconRes);
-//    }
-// --Commented out by Inspection STOP (01.11.2019 00:18)
-
-    protected void setBaseContent(final int _layoutResource) {
+    protected void setContent(final int _layoutResource) {
         final View mContent = View.inflate(this, _layoutResource, null);
         mContainer.addView(mContent);
     }
 
-// --Commented out by Inspection START (01.11.2019 00:18):
-//    protected void setBaseContent(View _layoutView) {
-//        mContent = _layoutView;
-//        mContainer.addView(_layoutView);
-//    }
-// --Commented out by Inspection STOP (01.11.2019 00:18)
 
-    protected void showTabs(final boolean _show) {
-        mTabHost.setVisibility(_show ? View.VISIBLE : View.GONE);
-    }
-
-    protected void showShadow(final boolean _show) {
-        mShadow.setVisibility(_show ? View.VISIBLE : View.GONE);
-    }
-
-// --Commented out by Inspection START (01.11.2019 00:18):
-//    protected TabHost getTabHost() {
-//        return mTabHost;
-//    }
-// --Commented out by Inspection STOP (01.11.2019 00:18)
-
-// --Commented out by Inspection START (01.11.2019 00:17):
-//    protected void toggleToolbarSpinner(boolean _show) {
-//        mActionBar.setDisplayShowTitleEnabled(!_show);
-//        mSpinner.setVisibility(_show ? View.VISIBLE : View.GONE);
-//    }
-// --Commented out by Inspection STOP (01.11.2019 00:17)
-
-    protected void setSpinnerListener(final AdapterView.OnItemSelectedListener _listener) {
-        mSpinner.setOnItemSelectedListener(_listener);
-    }
-
-    protected void setSpinnerAdapter(final SpinnerAdapter _adapter) {
-        mSpinner.setAdapter(_adapter);
-    }
-
-    protected void setSelectedSpinnerItem(final int _index) {
-        mSpinner.setSelection(_index);
-    }
-
-    protected void setSelectedSpinnerItem(final int _index, final boolean _animate) {
-        mSpinner.setSelection(_index, _animate);
-    }
-
-// --Commented out by Inspection START (01.11.2019 00:18):
-//    protected int getSelectedSpinnerItem() {
-//        return mSpinner.getSelectedItemPosition();
-//    }
-// --Commented out by Inspection STOP (01.11.2019 00:18)
-
-    protected Toolbar   mToolbar;
-    // --Commented out by Inspection (28.05.2022 16:42):protected ActionBar mActionBar;
+    protected Toolbar mToolbar;
 
     private FrameLayout mContainer;
-    private TabHost     mTabHost;
-    private ImageView   mShadow;
-    private Spinner     mSpinner;
-
-    // --Commented out by Inspection (01.11.2019 00:18):private int         mTabUnselectedTextColor = 0xFFFFFF00;
-    // --Commented out by Inspection (01.11.2019 00:18):private boolean     mAdsEnabled             = false;
 }

@@ -18,7 +18,7 @@ package de.fhe.fhemobile.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 
@@ -35,7 +35,7 @@ public class SettingsActivity extends BaseActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setBaseContent(R.layout.activity_settings);
+        setContent(R.layout.activity_settings);
 
         if (savedInstanceState == null) {
             final Intent intent = getIntent();
@@ -49,20 +49,14 @@ public class SettingsActivity extends BaseActivity {
         switch(_Id) {
 
             case Features.FeatureId.NEWS:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, NewsCategoriesFragment.newInstance())
-                        .commit();
+                setFragment(NewsCategoriesFragment.newInstance());
                 break;
 
             case Features.FeatureId.CANTEEN:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, CanteenSettingsFragment.newInstance())
-                        .commit();
+                setFragment(CanteenSettingsFragment.newInstance());
                 break;
             case Features.FeatureId.MYSCHEDULE:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, MyScheduleSettingsFragment.newInstance())
-                        .commit();
+                setFragment(MyScheduleSettingsFragment.newInstance());
                 break;
 
         }
@@ -84,32 +78,6 @@ public class SettingsActivity extends BaseActivity {
 
         // Restore state members from saved instance
         mSettingsId = savedInstanceState.getInt(STATE_SETTINGS_ID);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(final Menu menu) {
-        
-        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.settings, menu);
-        return true;
-    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(final MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-
-//        return super.onOptionsItemSelected(item);
-//    }
-
-    @Override
-    public void onBackPressed() {
-        //disable back button
     }
 
     public static final String  EXTRA_SETTINGS_ID  = "extraSettingsId";

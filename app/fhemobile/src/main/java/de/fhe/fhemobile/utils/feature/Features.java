@@ -49,7 +49,7 @@ public final class Features {
         int SEMESTER_DATES = 4;
         int TIMETABLE       = 5;
         int IMPRINT         = 6;
-        int MYSCHEDULE = 7;
+        int MYSCHEDULE      = 7;
         int EVENTS          = 8;
         int NAVIGATION      = 9;
         int JOBOFFERS       = 10;
