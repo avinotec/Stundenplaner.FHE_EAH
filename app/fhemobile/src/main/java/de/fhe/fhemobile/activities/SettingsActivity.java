@@ -28,7 +28,7 @@ import de.fhe.fhemobile.fragments.myschedule.MyScheduleSettingsFragment;
 import de.fhe.fhemobile.fragments.news.NewsCategoriesFragment;
 import de.fhe.fhemobile.utils.feature.Features;
 
-public class SettingsActivity extends BaseActivity {
+public class SettingsActivity extends SecondaryActivity {
 
     private static final String TAG = SettingsActivity.class.getSimpleName();
 

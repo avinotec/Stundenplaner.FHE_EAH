@@ -30,37 +30,33 @@ import de.fhe.fhemobile.models.maps.MapsModel;
 /**
  * Activity for showing and navigating through maps/floorplans of a certain building
  *
- * Edit by Nadja 02.12.2021: rename from MapsSingleActivity to MapsActivity
+ * Edit by Nadja 02.12.2021: renamed from MapsSingleActivity to MapsActivity
  */
-public class MapsActivity extends BaseActivity {
+public class MapsActivity extends SecondaryActivity {
+    public static final String EXTRA_MAP_ID = "extraMapId";
 
     private static final String TAG = MapsActivity.class.getSimpleName();
     public static final String STATE_MAPS_ID = "stateMapsId";
 
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setBaseContent(R.layout.activity_maps);
-
-        //not used: mModel = MapsModel.getInstance();
+        setContent(R.layout.activity_maps);
 
         if (savedInstanceState != null) {
             mMapId = savedInstanceState.getInt(STATE_MAPS_ID);
-        }
-        else {
+        } else {
             final Intent intent = getIntent();
             mMapId = intent.getIntExtra(EXTRA_MAP_ID, -1);
         }
 
         try {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, MapsFragment.newInstance(mMapId))
-                    .commit();
-
+            setFragment(MapsFragment.newInstance(mMapId));
             final String title = getResources().getString(MapsModel.getInstance().getMaps().get(mMapId).getNameID());
             getSupportActionBar().setTitle(title);
         } catch (final Resources.NotFoundException e){
-            Log.e(TAG, "Fehler beim Aufrufen des Fragments: ",e );
+            Log.e(TAG, "Fehler beim Aufrufen des Fragments: ", e);
         }
     }
 
@@ -69,13 +65,6 @@ public class MapsActivity extends BaseActivity {
         super.onSaveInstanceState(outState);
         outState.putInt(STATE_MAPS_ID, mMapId);
     }
-
-    private static final String LOG_TAG = MapsActivity.class.getSimpleName();
-
-
-    public static final String EXTRA_MAP_ID = "extraMapId";
-
-    // --Commented out by Inspection (02.11.2021 17:02):private MapsModel           mModel;
 
     private Integer             mMapId;
 

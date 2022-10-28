@@ -34,7 +34,7 @@ import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.activities.BaseActivity;
+import de.fhe.fhemobile.activities.SecondaryActivity;
 import de.fhe.fhemobile.models.maps.MapsModel;
 import de.fhe.fhemobile.views.maps.MapsView;
 import de.fhe.fhemobile.vos.maps.MapCollectionVo;
@@ -271,7 +271,7 @@ public class MapsFragment extends Fragment {
     }
 
     void updateActionBarTitle(final String _Title) {
-        ((BaseActivity) getActivity()).getSupportActionBar().setTitle(_Title);
+        ((SecondaryActivity) getActivity()).getSupportActionBar().setTitle(_Title);
     }
 
     private static final String ARGS_MAP_ID   = "argMapId";

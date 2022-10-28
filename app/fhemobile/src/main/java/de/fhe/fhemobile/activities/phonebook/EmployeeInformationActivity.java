@@ -24,19 +24,19 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.activities.BaseActivity;
+import de.fhe.fhemobile.activities.SecondaryActivity;
 import de.fhe.fhemobile.fragments.phonebook.EmployeeInformationFragment;
 import de.fhe.fhemobile.fragments.phonebook.EmployeeListFragment;
 import de.fhe.fhemobile.models.phonebook.PhonebookModel;
 import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
 
-public class EmployeeInformationActivity extends BaseActivity
+public class EmployeeInformationActivity extends SecondaryActivity
     implements EmployeeListFragment.EmployeeListCallbacks {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setBaseContent(R.layout.activity_employee_information);
+        setContent(R.layout.activity_employee_information);
 
         mModel = PhonebookModel.getInstance();
 
@@ -51,10 +51,7 @@ public class EmployeeInformationActivity extends BaseActivity
         final EmployeeListFragment mListFragment = EmployeeListFragment.newInstance();
         mEmployeeFragment = EmployeeInformationFragment.newInstance();
 
-        getSupportFragmentManager().beginTransaction()
-                //.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.fragment_pop_enter, R.anim.fragment_pop_exit)
-                .add(R.id.container, mListFragment)
-                .commit();
+        setFragment(mListFragment);
     }
 
     /**
@@ -87,11 +84,7 @@ public class EmployeeInformationActivity extends BaseActivity
     private void loadEmployeeDetailView() {
         mEmployeeFragment.setEmployee(mEmployee);
 
-        getSupportFragmentManager().beginTransaction()
-                //.setCustomAnimations(R.anim.fragment_enter, R.anim.fragment_exit, R.anim.fragment_pop_enter, R.anim.fragment_pop_exit)
-                .replace(R.id.container, mEmployeeFragment)
-                .addToBackStack(null)
-                .commit();
+        setFragment(mEmployeeFragment);
     }
 
     private static final String STATE_EMPLOYEE_LIST = "stateEmployeeList";
