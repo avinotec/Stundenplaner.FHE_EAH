@@ -38,6 +38,7 @@ import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.utils.Define;
+import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.myschedule.MyScheduleSettingsView;
 
 /**
@@ -103,11 +104,6 @@ public class MyScheduleSettingsFragment extends FeatureFragment {
 		if(Define.ENABLE_PUSHNOTIFICATIONS){
 			PushNotificationService.registerSubscribedEventSeries();
 		}
-	}
-
-	static void showConnectionErrorToast() {
-		Toast.makeText(Main.getAppContext(), Main.getAppContext().getString(R.string.connection_failed),
-				Toast.LENGTH_LONG).show();
 	}
 
 }

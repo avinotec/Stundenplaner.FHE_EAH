@@ -39,6 +39,7 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
 import de.fhe.fhemobile.comparator.MyScheduleEventComparator;
 import de.fhe.fhemobile.comparator.MyScheduleEventDateComparator;
+import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventDateVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSetVo;
@@ -431,10 +432,7 @@ public final class MyScheduleUtils {
 	}
 
 	private static void showExamAddedToast(final String examTitle){
-		Toast.makeText(
-				Main.getAppContext(),
-				Main.getAppContext().getString(R.string.exam_added) + ":\n"+ examTitle,
-				Toast.LENGTH_LONG).show();
+		Utils.showToast(Main.getAppContext().getString(R.string.exam_added) + ":\n"+ examTitle);
 	}
 
 }

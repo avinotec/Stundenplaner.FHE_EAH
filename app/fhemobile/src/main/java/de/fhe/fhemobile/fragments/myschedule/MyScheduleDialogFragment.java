@@ -35,6 +35,7 @@ import androidx.fragment.app.Fragment;
 
 import org.junit.Assert;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -45,8 +46,10 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.myschedule.MyScheduleDialogAdapter;
 import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
 import de.fhe.fhemobile.network.NetworkHandler;
+import de.fhe.fhemobile.utils.ApiErrorUtils;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.myschedule.MyScheduleDialogView;
+import de.fhe.fhemobile.vos.ApiErrorResponse;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSetVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableDialogResponse;
@@ -229,15 +232,16 @@ public class MyScheduleDialogFragment extends DialogFragment {
 
                 mView.setStudyProgramItems(studyPrograms);
             } else {
-                showInternalProblemToast();
+                ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.MYSCHEDULE_DIALOG_FRAGMENT_CODE3);
             }
             mView.toggleProgressIndicatorVisibility(false);
         }
 
         @Override
         public void onFailure(final Call<TimeTableDialogResponse> call, final Throwable t) {
-            showConnectionErrorToast();
-            Log.d(TAG, "failure: request " + call.request().url());
+            ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.MYSCHEDULE_DIALOG_FRAGMENT_CODE1);
+            Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
         }
     };
 
@@ -256,7 +260,8 @@ public class MyScheduleDialogFragment extends DialogFragment {
                 mListAdapter.setItems(eventSeriesVos);
 
             } else {
-                showInternalProblemToast();
+                ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.MYSCHEDULE_DIALOG_FRAGMENT_CODE4);
             }
             mView.toggleProgressIndicatorVisibility(false);
 
@@ -264,21 +269,10 @@ public class MyScheduleDialogFragment extends DialogFragment {
 
         @Override
         public void onFailure(final Call<Map<String, MyScheduleEventSetVo>> call, final Throwable t) {
-            showConnectionErrorToast();
-            Log.d(TAG, "failure: request " + call.request().url());
+            ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.MYSCHEDULE_DIALOG_FRAGMENT_CODE2);
+            Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
         }
     };
-
-    static void showConnectionErrorToast() {
-        Toast.makeText(Main.getAppContext(), Main.getAppContext().getString(R.string.connection_failed),
-                Toast.LENGTH_LONG).show();
-    }
-
-    static void showInternalProblemToast(){
-        Toast.makeText(Main.getAppContext(),
-                Main.getAppContext().getString(R.string.internal_problems),
-                Toast.LENGTH_LONG).show();
-    }
 
 
     MyScheduleDialogView mView;

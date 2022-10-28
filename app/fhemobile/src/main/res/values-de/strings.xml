@@ -78,7 +78,7 @@
     <string name="timetable_reset" >Auswahl löschen</string>
     <string name="timetable_week" >Semesterwoche</string>
     <string name="timetable_error_incomplete" >Bitte fülle alle benötigten Felder aus.</string>
-    <string name="timetable_connection_failed">Keine Verbindung möglich um den aktuellen Stundenplan zu laden!</string>
+    <string name="timetable_restored"> Aktualisierung des Stundenplans fehlgeschlagen!\n Gespeicherter Stand wird geladen.</string>
 
     <string name="aqua_open" >Geöffnet</string>
     <string name="aqua_closed" >Geschlossen</string>
@@ -106,7 +106,7 @@
     <string name="myschedule_empty">Du hast noch keinen Stundenplan zusammengestellt.</string>
     <string name="myschedule_dialog_empty">Wähle Studiengang und Semester aus.</string>
     <string name="myschedule_last_updated">Zuletzt aktualisiert: </string>
-    <string name="myschedule_connection_failed">"Keine Verbindung möglich\num Mein Stundenplan zu aktualisieren!"</string>
+    <string name="myschedule_connection_failed">"Aktualisierung deines Stundenplans nicht möglich!\n Bisheriger Stand wird geladen."</string>
     <string name="today">Heute</string>
     <string name="myschedule_settings_studygroups">Sets: </string>
     <string name="myschedule_settings_headline">Meine Kurse</string>

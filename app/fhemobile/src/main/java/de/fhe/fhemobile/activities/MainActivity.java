@@ -130,8 +130,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                     });
                     dialog.show();
                 } else {
-                    Toast.makeText(this, "This device is not supported.",
-                            Toast.LENGTH_LONG).show();
+                    Utils.showToast(this, "This device is not supported.");
                     finish();
                 }
         }
@@ -257,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             }
 
             this.backPressedTwice = true;
-            Toast.makeText(this, getString(R.string.reallyClose), Toast.LENGTH_SHORT).show();
+            Utils.showToast(this, R.string.reallyClose);
 
             mHandler.postDelayed(mRunnable, Define.APP_CLOSING_DOUBLECLICK_DELAY_TIME);
 

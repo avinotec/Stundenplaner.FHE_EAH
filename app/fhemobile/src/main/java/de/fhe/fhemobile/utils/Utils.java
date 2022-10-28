@@ -137,8 +137,7 @@ public final class Utils {
      * @param _ResId
      */
     public static void showToast(final Context _Context, @StringRes final int _ResId) {
-        Toast.makeText(_Context, _ResId,
-                Toast.LENGTH_SHORT).show();
+        Toast.makeText(_Context, _ResId, Toast.LENGTH_SHORT).show();
     }
 
     /**

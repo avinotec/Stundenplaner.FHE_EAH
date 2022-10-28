@@ -41,9 +41,11 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.network.NetworkHandler;
+import de.fhe.fhemobile.utils.ApiErrorUtils;
 import de.fhe.fhemobile.utils.timetable.TimeTableSettings;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.timetable.TimeTableDialogView;
+import de.fhe.fhemobile.vos.ApiErrorResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
 import de.fhe.fhemobile.vos.timetable.TimeTableDialogResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
@@ -211,7 +213,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
     private final Callback<TimeTableDialogResponse> mFetchStudyProgramDataCallback = new Callback<TimeTableDialogResponse>() {
         @Override
         public void onResponse(final Call<TimeTableDialogResponse> call, final Response<TimeTableDialogResponse> response) {
-            if( response.body() != null ){
+            if (response.isSuccessful()){
                 mResponse = response.body();
 
                 final ArrayList<TimeTableStudyProgramVo> studyPrograms = new ArrayList<>();
@@ -226,27 +228,17 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
                 mView.setStudyCourseItems(studyPrograms);
             } else {
-                showInternalProblemToast();
+                ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.TIMETABLE_DIALOG_FRAGMENT_CODE1);
             }
         }
 
         @Override
         public void onFailure(final Call<TimeTableDialogResponse> call, final Throwable t) {
-            showConnectionErrorToast();
+            ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.TIMETABLE_DIALOG_FRAGMENT_CODE2);
             Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
         }
     };
-
-    static void showConnectionErrorToast() {
-        Toast.makeText(Main.getAppContext(), Main.getAppContext().getString(R.string.connection_failed),
-                Toast.LENGTH_LONG).show();
-    }
-
-    static void showInternalProblemToast(){
-        Toast.makeText(Main.getAppContext(),
-                Main.getAppContext().getString(R.string.internal_problems),
-                Toast.LENGTH_LONG).show();
-    }
 
     TimeTableDialogView     mView;
 

@@ -252,8 +252,8 @@ public abstract class SearchFragment extends FeatureFragment {
     }
 
     protected static void showRoomNotFoundErrorToast() {
-        Toast.makeText(Main.getAppContext(), "Room not found!",
-                Toast.LENGTH_LONG).show();
+        //todo: make translatable
+        Utils.showToast("Room not found!");
     }
 
 }

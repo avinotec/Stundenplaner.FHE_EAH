@@ -39,9 +39,11 @@ import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.phonebook.PhonebookModel;
 import de.fhe.fhemobile.models.semesterdates.SemesterDatesModel;
+import de.fhe.fhemobile.utils.ApiErrorUtils;
 import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.canteen.CanteenUtils;
+import de.fhe.fhemobile.vos.ApiErrorResponse;
 import de.fhe.fhemobile.vos.CafeAquaResponse;
 import de.fhe.fhemobile.vos.WeatherResponse;
 import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
@@ -136,10 +138,11 @@ public final class NetworkHandler {
              */
             @Override
             public void onResponse(final Call<ArrayList<EmployeeVo>> call, final Response<ArrayList<EmployeeVo>> response) {
-                if (response.body() != null) {
+                if (response.isSuccessful()) {
                     PhonebookModel.getInstance().setFoundEmployees(response.body());
                 } else {
-                    showInternalProblemToast();
+                    ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                    ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE1);
                 }
             }
 
@@ -150,7 +153,7 @@ public final class NetworkHandler {
              */
             @Override
             public void onFailure(final Call<ArrayList<EmployeeVo>> call, final Throwable t) {
-                showConnectionErrorToast();
+                ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE7);
                 Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
             }
 
@@ -172,10 +175,11 @@ public final class NetworkHandler {
              */
             @Override
             public void onResponse(final Call<SemesterDatesVo> call, final Response<SemesterDatesVo> response) {
-                if (response.body() != null) {
+                if (response.isSuccessful()) {
                     SemesterDatesModel.getInstance().setData(response.body().getSemester());
                 } else {
-                    showInternalProblemToast();
+                    ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                    ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE2);
                 }
             }
 
@@ -186,7 +190,7 @@ public final class NetworkHandler {
              */
             @Override
             public void onFailure(final Call<SemesterDatesVo> call, final Throwable t) {
-                showConnectionErrorToast();
+                ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE8);
                 Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
             }
         });
@@ -227,7 +231,7 @@ public final class NetworkHandler {
                  */
                 @Override
                 public void onFailure(final Call<CanteenDishVo[]> call, final Throwable t) {
-                    showConnectionErrorToast();
+                    ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE9);
                 }
             });
         }
@@ -277,7 +281,7 @@ public final class NetworkHandler {
              */
             @Override
             public void onFailure(final Call<NewsItemResponse> call, final Throwable t) {
-                showConnectionErrorToast();
+                ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE10);
                 Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
             }
         });
@@ -302,16 +306,17 @@ public final class NetworkHandler {
 
             @Override
             public void onResponse(final Call<CanteenVo[]> call, final Response<CanteenVo[]> response) {
-                if (response.body() != null) {
+                if (response.isSuccessful()) {
                     CanteenModel.getInstance().setCanteens(response.body());
                 } else {
-                    showInternalProblemToast();
+                    ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                    ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE3);
                 }
             }
 
             @Override
             public void onFailure(final Call<CanteenVo[]> call, final Throwable t) {
-                showConnectionErrorToast();
+                ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE11);
                 Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
             }
         });
@@ -332,10 +337,11 @@ public final class NetworkHandler {
             @Override
             public void onResponse(final Call<NewsCategoryResponse> call, final Response<NewsCategoryResponse> response) {
                 // MS: Bei den News sind die news/0 kaputt
-                if (response.body() != null) {
+                if (response.isSuccessful()) {
                     NewsModel.getInstance().setCategoryItems(response.body().getNewsCategories());
                 } else {
-                    showInternalProblemToast();
+                    ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                    ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE4);
                 }
             }
 
@@ -346,7 +352,7 @@ public final class NetworkHandler {
              */
             @Override
             public void onFailure(final Call<NewsCategoryResponse> call, final Throwable t) {
-                showConnectionErrorToast();
+                ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE12);
                 Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
             }
         });
@@ -441,12 +447,13 @@ public final class NetworkHandler {
                     @Override
                     public void onResponse(final Call<ModuleVo> call,
                                            final Response<ModuleVo> response) {
-                        if (response.body() != null) {
 
+                        if (response.isSuccessful()) {
                             updatedEventSeriesList.addAll(
 									getUpdatedEventSeries(module.getValue(), response.body().getEventSets()));
                         } else {
-                            showInternalProblemToast();
+                            ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                            ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE5);
                             //add old event series' to prevent them from getting lost
                             updatedEventSeriesList.addAll(module.getValue().values());
                         }
@@ -460,7 +467,8 @@ public final class NetworkHandler {
 
                     @Override
                     public void onFailure(final Call<ModuleVo> call, final Throwable t) {
-                        Utils.showToast(R.string.myschedule_connection_failed + "(internal: " + t.getCause() + ")");
+                        ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE6);
+                        Utils.showToast(R.string.myschedule_connection_failed);
                         Log.d(TAG, "failure: request " + call.request().url() + " (internal: " + t.getCause() + ")");
 
                         //add old event series' to prevent them from getting lost
@@ -476,6 +484,7 @@ public final class NetworkHandler {
             }
             //module id is null thus updates cannot be fetched
             else {
+                Utils.showToast(R.string.myschedule_connection_failed);
                 //add old event series' with module id == null to prevent them from getting lost
                 updatedEventSeriesList.addAll(module.getValue().values());
             }
@@ -489,23 +498,6 @@ public final class NetworkHandler {
     public void fetchCafeAquaStatus(final Callback<CafeAquaResponse> _Callback) {
         Assert.assertTrue(mApiErfurt != null);
         mApiErfurt.fetchCafeAquaStatus().enqueue(_Callback);
-    }
-
-    /**
-     *
-     */
-    static void showConnectionErrorToast() {
-        Toast.makeText(Main.getAppContext(), Main.getAppContext().getString(R.string.connection_failed),
-                Toast.LENGTH_LONG).show();
-    }
-
-    static void showInternalProblemToast() {
-        String message = Main.getAppContext().getString(R.string.internal_problems);
-        if (BuildConfig.DEBUG) message += " (response.body() == null)";
-
-        Toast.makeText(Main.getAppContext(),
-                message,
-                Toast.LENGTH_LONG).show();
     }
 
 }

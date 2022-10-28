@@ -51,9 +51,12 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.network.NetworkHandler;
+import de.fhe.fhemobile.utils.ApiErrorUtils;
 import de.fhe.fhemobile.utils.Define;
+import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.timetable.TimeTableSettings;
 import de.fhe.fhemobile.views.timetable.TimeTableView;
+import de.fhe.fhemobile.vos.ApiErrorResponse;
 import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -180,15 +183,16 @@ public class TimeTableFragment extends FeatureFragment {
 		}
 	};
 
-	static void showConnectionErrorToast() {
-		Toast.makeText(Main.getAppContext(), R.string.timetable_connection_failed,
-				Toast.LENGTH_LONG).show();
-	}
-
-	static void showInternalProblemToast(){
-		Toast.makeText(Main.getAppContext(),
-				Main.getAppContext().getString(R.string.internal_problems),
-				Toast.LENGTH_LONG).show();
+	private void restoreTimetableFromSharedPreferences(){
+		//load timetable from shared preferences
+		final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences(SP_TIMETABLE, Context.MODE_PRIVATE);
+		final String json = sharedPreferences.getString(SP_TIMETABLE, "");
+		if(!json.isEmpty()){
+			final ArrayList<TimeTableWeekVo> loadedTimeTableWeeks = new Gson()
+					.fromJson(json, new TypeToken<List<TimeTableWeekVo>>(){}.getType());
+			mView.setPagerItems(loadedTimeTableWeeks);
+		}
+		Utils.showToast(R.string.timetable_restored);
 	}
 
 
