@@ -158,7 +158,16 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 		eventLecturer.setText(currentItem.getLecturerListAsString());
 		eventViews.add(eventLecturer);
 
-		//highlight changes
+		//HIGHLIGHT CHANGES
+		//reset change highlighting before
+		for(TextView v : eventViews){
+			v.setTypeface(null, Typeface.NORMAL);
+			//reset strike through if necessary
+			if((v.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) == Paint.STRIKE_THRU_TEXT_FLAG){
+				v.setPaintFlags(v.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
+			}
+		}
+		//set change highlighting
 		for(final TimetableChangeType change : currentItem.getTypesOfChanges()){
 			switch (change){
 				case ADDITION:
@@ -175,7 +184,10 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 				case DELETION:
 					//set text strikethrough
 					for (final TextView v : eventViews) {
-						v.setPaintFlags(v.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+						//skip if already striked through
+						if((v.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) != Paint.STRIKE_THRU_TEXT_FLAG){
+							v.setPaintFlags(v.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
+						}
 					}
 					break;
 
