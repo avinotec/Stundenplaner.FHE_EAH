@@ -34,8 +34,9 @@ $debug = false;
 // aber nicht für debugging, nur für korrekte Antworten zurück an den Server
 $output = "";
 
-if (isset($_REQUEST['debug']))
+if (isset($_REQUEST['debug'])) {
 	$debug = htmlentities($_REQUEST['debug']);
+}
 
 if ($debug) {
 	mysqli_report(MYSQLI_REPORT_ALL);
@@ -93,8 +94,8 @@ try {
 if ($debug) { $output .= "<p> DEBUG: " . json_encode($_REQUEST) . "</p>"; }
 
 
-if ($debug) echo "<p>DEBUG: fcm_register_user.php Datenbankverbindung steht</p>";
-if ($debug) print_r( $_REQUEST );
+if ($debug) { echo "<p>DEBUG: fcm_register_user.php Datenbankverbindung steht</p>"; }
+if ($debug) { print_r($_REQUEST); }
 
 // ----------------- Get data from app ----------------------------------------------
 
@@ -103,12 +104,14 @@ $os = ANDROID;
 $language = LANG_DE;
 
 //get os
-if (isset($_REQUEST['os']))
+if (isset($_REQUEST['os'])) {
 	$os = htmlentities($_REQUEST['os']);
+}
 
 //get language
-if (isset($_REQUEST['language']))
+if (isset($_REQUEST['language'])) {
 	$language = htmlentities($_REQUEST['language']);
+}
 if ($language !== LANG_DE && $language !== LANG_EN) {
 	//error_log("Language: " . $language);
     //echo $output;
@@ -123,15 +126,15 @@ $arraySubscribedEventseries = array();
 if ($os === ANDROID) {
 	//Get token and subscriptions sent from app
 	// Alle übergebenen Parameter entwerten, um SQL-Injections zu unterbinden.
-    if(isset($_REQUEST["fcm_token"])) {
+    if (isset($_REQUEST["fcm_token"])) {
         $fcmToken = htmlentities($_REQUEST["fcm_token"]);
     } else {
-        if ($debug) echo "DEBUG: Fatal, no FCM token given.";
+        if ($debug) {echo "DEBUG: Fatal, no FCM token given.";}
         $output .= "(E2002) Internal Error";
         echo $output;
         exit;
     }
-	if(isset($_REQUEST["eventseries_names"])) {
+	if (isset($_REQUEST["eventseries_names"])) {
         $arraySubscribedEventseries =  $_REQUEST["eventseries_names"] ?? null;
     }
 } elseif ($os === IOS) {

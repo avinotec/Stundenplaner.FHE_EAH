@@ -51,9 +51,8 @@ function initDbConnection(): void
     global $db_timetable;
     global $_config;
 
-    /** @var TimetableDb|null $db_timetable gets initialized or, if already initialized,
-	 * this calls the destructor implicitly. */
-    $db_timetable = null;
+    /** @var TimetableDb|null $db_timetable gets initialized or, if already initialized, this calls the destructor implicitly. */
+	$db_timetable = null;
 
     // Wenn die Datenbank noch nicht weggeflogen ist, dann nicht erneut instanziieren
     try {
@@ -177,12 +176,13 @@ final class TimetableDb
      */
     public function __destruct()
     {
-        /** @var bool */
+        /** @var bool $debug */
         global $debug;
         if ($debug) {echo 'DEBUG: MySQLi: destructor called.<br />' . PHP_EOL;}
 
-        if ($this->mysqli)
-            $this->mysqli->close();
+        if ($this->mysqli) {
+	        $this->mysqli->close();
+        }
         $this->mysqli = null;
     }
 
@@ -205,12 +205,15 @@ final class TimetableDb
                                      string $language): bool
     {
         $subscribed_eventseries = $this->mysqli->real_escape_string($subscribed_eventseries);
-
-        $sql = /** @lang MySQL */
-            "INSERT INTO fcm_user (token, eventseries_name, os, language)" .
+	
+	    /** @var String $sql */
+	    $sql =
+	        /** @lang MySQL */
+	        "INSERT INTO fcm_user (token, eventseries_name, os, language) ".
             "VALUES ('$fcm_token', '$subscribed_eventseries', '$os', '$language')";
-
-        $result = $this->runQuery($sql, "insertUser");
+	
+	    /** @var bool $result */
+	    $result = $this->runQuery($sql, "insertUser");
 
         return $result;
     }
@@ -223,8 +226,9 @@ final class TimetableDb
     final public function deleteUser(string $fcm_token): bool
     {
         $sql = /** @lang MySQL */ "DELETE FROM fcm_user WHERE token = '$fcm_token'";
-
-        $result = $this->runQuery($sql, "deleteUser");
+	
+	    /** @var bool $result */
+	    $result = $this->runQuery($sql, "deleteUser");
         return $result;
     }
 
@@ -235,8 +239,11 @@ final class TimetableDb
      */
     final public function getSubscribingUsers(string $eventseries_name): ?mysqli_result
     {
-        $sql = /** @lang MySQL */"SELECT token, language, os FROM fcm_user WHERE eventseries_name = '$eventseries_name'";
-        $result = $this->runQueryAndGetResult($sql, "getSubscribingUsers") ;
+        $sql =
+	        /** @lang MySQL */
+	        "SELECT token, language, os FROM fcm_user WHERE eventseries_name = '$eventseries_name'";
+	    /** @var TYPE_NAME $result */
+	    $result = $this->runQueryAndGetResult($sql, "getSubscribingUsers") ;
         return $result;
     }
 
@@ -266,12 +273,12 @@ final class TimetableDb
     final public function insertEventSet(string $eventset_id,
                                          string $eventseries_name,
                                          string $module_id,
-                                         string $eventset_json): bool
-    {
+                                         string $eventset_json): bool {
         $sql = /** @lang MySQL */
             'INSERT INTO event_sets (eventset_id, eventseries, module_id, eventset_data, last_changed)'.
             "VALUES ('$eventset_id', '$eventseries_name', '$module_id', '$eventset_json', SYSDATE())";
-        $result = $this->runQuery($sql, "insertEventSet") ;
+	    /** @var bool $result */
+	    $result = $this->runQuery($sql, "insertEventSet") ;
         return $result;
     }
 
@@ -284,7 +291,8 @@ final class TimetableDb
     final public function deleteEventSet(string $eventset_id): bool
     {
         $sql = /** @lang MySQL */ "DELETE FROM event_sets WHERE eventset_id = '$eventset_id'";
-        $result = $this->runQuery($sql, "deleteEventSet");
+	    /** @var bool $result */
+	    $result = $this->runQuery($sql, "deleteEventSet");
         return $result ;
     }
 
@@ -298,8 +306,9 @@ final class TimetableDb
     {
         $sql = /** @lang MySQL */ "SELECT eventset_id FROM event_sets WHERE module_id = '$module_id'";
         $result = $this->runQueryAndGetResult($sql, "getEventSetIds");
-
-        $eventset_ids = array();
+	
+	    /** @var array eventset_ids */
+	    $eventset_ids = array();
         if (!is_null($result) && $result->num_rows > 0) {
             $eventset_ids[] = $result->fetch_assoc()["eventset_id"];
         }
@@ -325,7 +334,7 @@ final class TimetableDb
     /**
      * Run a sql query and get the result
      * @param string $sql The query
-     * @param string $function_name The name of the function runQueryAndGetResult gets called within (for debugging output)
+     * @param string $function_name caller of this funktion (debugging)
      * @return mysqli_result|null The sql result when succeeded, null if an error occurred
      */
     private function runQueryAndGetResult(string $sql, string $function_name): ?mysqli_result
@@ -337,8 +346,9 @@ final class TimetableDb
             $result = $this->mysqli->query($sql);
 
             // in case the query was not successful
-            if ($result === false)
-                return null; //otherwise the false will be returned as result
+            if ($result === false) {
+	            return null; //otherwise false will be returned as result
+            }
 
         } catch (Exception $e) {
             if ($debug) {
@@ -354,10 +364,10 @@ final class TimetableDb
     /**
      * Run the given sql statement
      * @param string $sql The sql statement
-     * @param string $function_name The name of the function runQuery gets called within (for debugging output)
+     * @param string $functionNameForDebuggingCallstack The name of the function runQuery gets called within (for debugging output)
      * @return bool true success, false failure
      */
-    private function runQuery(string $sql, string $function_name): bool
+    private function runQuery(string $sql, string $functionNameForDebuggingCallstack): bool
     {
         global $debug;
 
@@ -366,8 +376,8 @@ final class TimetableDb
 
         } catch (Exception $e) {
             if ($debug) {
-                echo 'DEBUG: ' . $function_name . ': Exception abgefangen: ' . $e->getMessage() . HTML_BR . PHP_EOL;
-                echo 'DEBUG: ' . $function_name . ': Stack trace:' . $e->getTraceAsString() . HTML_BR . PHP_EOL;
+                echo 'DEBUG: ' . $functionNameForDebuggingCallstack . ': Exception abgefangen: ' . $e->getMessage() . HTML_BR . PHP_EOL;
+                echo 'DEBUG: ' . $functionNameForDebuggingCallstack . ': Stack trace:' . $e->getTraceAsString() . HTML_BR . PHP_EOL;
                 return false; //error
             }
         }

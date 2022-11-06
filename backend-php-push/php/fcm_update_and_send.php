@@ -53,19 +53,22 @@ function fetchModuleAndUpdateDatabase(string $moduleId): void
     global $output;
 
 	$moduleURL = API_BASE_URL . ENDPOINT_MODULE_DETAIL . $moduleId;
-    $moduleData = array();
+	/** @var array $moduleData */
+	$moduleData = array();
 	// second parameter must be true to enable key-value iteration
 	$moduleData = json_decode(file_get_contents($moduleURL), true);
 
     // validate answer, otherwise skip
-	if (!array_key_exists("dataActivity", $moduleData)){
+	if (!array_key_exists("dataActivity", $moduleData)) {
         $output .= "<br><i>Module " . $moduleId . " is empty (this semester).</i><br>";
         return;
     }
 
     //initialize to set data types
-    $localEventsetIDs = array();
-    $fetchedEventsetIDs = array();
+	/** @var array $localEventsetIDs */
+	$localEventsetIDs = array();
+	/** @var array $fetchedEventsetIDs */
+	$fetchedEventsetIDs = array();
     $fetchedEventsetIDs = array_keys($moduleData["dataActivity"]);
 
     $localEventsetIDs = $db_timetable->getEventSetIds($moduleId);
@@ -77,7 +80,7 @@ function fetchModuleAndUpdateDatabase(string $moduleId): void
         $output .= "<p>Deleted Event Set Ids: ". implode(", ", $deletedEventsets) . "</p>";
 
 		//delete those event sets in database
-		foreach ($deletedEventsets as $deletedEventSetId){
+		foreach ($deletedEventsets as $deletedEventSetId) {
 			$db_timetable->deleteEventSet($deletedEventSetId);
 			$eventseriesName = getEventSeriesName($moduleData["dataActivity"][$deletedEventSetId]["activityName"]);
 			sendNotification($eventseriesName);
@@ -85,11 +88,12 @@ function fetchModuleAndUpdateDatabase(string $moduleId): void
 
 		//CHANGED and ADDED EVENT SERIES
 		// per module, check each event set for changes
-		foreach ($moduleData["dataActivity"] as $eventsetID=>$eventsetData){
+		foreach ($moduleData["dataActivity"] as $eventsetID => $eventsetData) {
 			$fetchedEventsetJSON = json_encode($eventsetData);
             // change escaped slashes ("\/") to "/"
             $fetchedEventsetJSON = stripslashes($fetchedEventsetJSON);
-            $eventseriesName = getEventSeriesName($eventsetData["activityName"]);
+			/** @var String $eventseriesName */
+			$eventseriesName = getEventSeriesName($eventsetData["activityName"]);
             //get local event set
             $resultLocalEventset = $db_timetable->getEventSet($eventsetID);
 
@@ -98,7 +102,7 @@ function fetchModuleAndUpdateDatabase(string $moduleId): void
                 $output .= "<p><b>Check for changes:</b><br>";
                 //compare local vs fetched event set checksum
                 $jsonLocalEventset = $resultLocalEventset[0]["eventsetData"];
-				if ($jsonLocalEventset !== $fetchedEventsetJSON){
+				if ($jsonLocalEventset !== $fetchedEventsetJSON) {
                     $output .= "Event set " . $resultLocalEventset[0]["eventsetID"]
                         . " has changed since " . $resultLocalEventset[0]["last_changed"] . "<br>";
 					//update database
@@ -114,7 +118,7 @@ function fetchModuleAndUpdateDatabase(string $moduleId): void
 				//EVENT SET ADDED
 				//no local event set with this id found --> event set is new and has to be added
 				$db_timetable->insertEventSet($eventsetID, $eventseriesName, $moduleId, $fetchedEventsetJSON);
-				sendNotification($eventseriesName);
+	            sendNotification($eventseriesName);
 				//todo: if eventseries is an exam, notify users with eventseries names belonging to the same module
 			}
 		}
@@ -188,7 +192,7 @@ function sendFCM(string $token, string $language, string $eventseriesName): void
 	$headers = array('Authorization: key='.SERVER_KEY, 'Content-Type: application/json');
 
 	//notification content
-	if ($language === LANG_DE){
+	if ($language === LANG_DE) {
 		$title = "Stundenplanänderung";
 		$message = $eventseriesName . " hat sich geändert. Bitte aktualisiere deinen Stundenplan!";
 	} else {
