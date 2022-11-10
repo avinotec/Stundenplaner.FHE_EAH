@@ -43,9 +43,9 @@ public class MyScheduleCalendarView extends LinearLayout {
      */
     public static void setLastUpdatedTextView(){
 
-        final DateFormat sdf =  new SimpleDateFormat("dd.MM.yy HH:mm", Locale.ROOT);
-        // this is the magic thing to advise the SimpleDateFormat to do nothing with the Timezones
-        sdf.setTimeZone( TimeZone.getTimeZone("UTC") );
+        //don't do any timezone magic here (like in MySchedule Events)
+        // because Main.getLastUpdateSubscribedEventSeries() is an accurately generated date object
+        final DateFormat sdf = new SimpleDateFormat("dd.MM.yy HH:mm", Locale.getDefault());
 
         if(mLastUpdatedTextView != null){
             if(Main.getLastUpdateSubscribedEventSeries() != null){
