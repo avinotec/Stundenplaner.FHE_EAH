@@ -25,8 +25,10 @@ import org.jetbrains.annotations.NonNls;
  */
 public final class Define {
 
+	//note: endpoints and URLs are defined in class Endpoints
+
 	public static final boolean ENABLE_MYSCHEDULE_UPDATING = true;
-	public static final boolean ENABLE_PUSHNOTIFICATIONS = false;
+	public static final boolean ENABLE_PUSHNOTIFICATIONS = true;
 
 
 	@NonNls
