@@ -115,6 +115,11 @@
     <string name="deleteTimeTableConfirm">Clear Schedule</string>
     <string name="deleteTimeTableCancel">Cancel</string>
 
+    <string name="fcm_timetablechange_title">Timetable Change</string>
+    <string name="fcm_timetablechange_message_part1">has changed.</string>
+    <string name="fcm_message_part2">Please update your schedule!</string>
+    <string name="fcm_examadded_message_part1">has been added.</string>
+
     <string name="imprint_data_protection_link" translatable="false"><a href="https://www.eah-jena.de/datenschutz">Data protection</a></string>
     <string name="notification_error_ssl_cert_invalid">A SSL-Certificate occurred. Do you want to proceed?</string>
     <string name="ssl_error_continue">Continue</string>

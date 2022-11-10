@@ -19,7 +19,9 @@ package de.fhe.fhemobile.services;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.util.Log;
@@ -39,6 +41,7 @@ import java.util.List;
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 
@@ -50,9 +53,29 @@ public class PushNotificationService extends FirebaseMessagingService {
 
 	@Override
 	public void onMessageReceived(final RemoteMessage remoteMessage) {
-		showNotification(
-				remoteMessage.getNotification().getTitle(),
-				remoteMessage.getNotification().getBody());
+
+		if(remoteMessage.getNotification().getTitle().equals("Timetable change")){
+
+			String message = remoteMessage.getNotification().getBody() + " "
+					+ Main.getAppContext().getString(R.string.fcm_timetablechange_message_part1);
+			String messageLong = message + " " + Main.getAppContext().getString(R.string.fcm_message_part2);
+
+			//todo: click action
+			showNotification(
+					Main.getAppContext().getString(R.string.fcm_timetablechange_title),
+					message,
+					messageLong);
+
+		} else if(remoteMessage.getNotification().getTitle().equals("Exam added")){
+			String message = remoteMessage.getNotification().getBody() + " "
+					+ Main.getAppContext().getString(R.string.fcm_examadded_message_part1);
+			String messageLong = message + " " + Main.getAppContext().getString(R.string.fcm_message_part2);
+
+			showNotification(
+					Main.getAppContext().getString(R.string.fcm_timetablechange_title),
+					message,
+					messageLong);
+		}
 
 		// Not getting messages here? See why this may be: https://goo.gl/39bRNJ
 		Log.d(TAG, "From: " + remoteMessage.getFrom());
@@ -99,8 +122,15 @@ public class PushNotificationService extends FirebaseMessagingService {
 		}
 	}
 
-
-	private void showNotification(final String title, final String body) {
+	/**
+	 * Build and show push notification
+	 * @param title The title of the notification
+	 * @param messageShort The message to show if notification is not expanded
+	 * @param messageLong The message to show if notification gets expanded
+	 */
+	private void showNotification(final String title,
+								  final String messageShort,
+								  final String messageLong) {
 		final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
 		//See Android Developer: Starting in Android 8.0 (API level 26), all notifications must be
@@ -121,15 +151,23 @@ public class PushNotificationService extends FirebaseMessagingService {
 			notificationManager.createNotificationChannel(notificationChannel);
 		}
 
+		// Create an explicit intent for an Activity in your app
+		PendingIntent pendingIntent = PendingIntent.getActivity(Main.getAppContext(), 0,
+				new Intent(Main.getAppContext(), MainActivity.class), 0);
+
+
 		final NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, Define.PushNotifications.CHANNEL_ID);
 		notificationBuilder.setAutoCancel(true)
 				.setDefaults(Notification.DEFAULT_ALL)
 				.setWhen(System.currentTimeMillis())
 				.setSmallIcon(R.drawable.ic_launcher)
 				.setContentTitle(title)
-				.setContentText(body);
-		//todo: Set the intent that will fire when the user taps the notification
-		//notificationBuilder.setContentIntent(pendingIntent);
+				.setContentText(messageShort)
+				.setStyle(new NotificationCompat.BigTextStyle().bigText(messageLong))
+				//automatically removes the notification when the user taps it
+				.setAutoCancel(true)
+				.setContentIntent(pendingIntent);
+
 		notificationManager.notify(new SecureRandom().nextInt(), notificationBuilder.build());
 	}
 }
