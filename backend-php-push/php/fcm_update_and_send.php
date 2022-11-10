@@ -98,18 +98,18 @@ function fetchModuleAndUpdateDatabase(string $moduleId): void
             $resultLocalEventset = $db_timetable->getEventSet($eventsetID);
 
             //EVENT SET probably CHANGED
-            if (!is_null($resultLocalEventset) && !empty($resultLocalEventset)) {
+            if (!is_null($resultLocalEventset) && !empty($resultLocalEventset) && !empty($resultLocalEventset[0])) {
                 $output .= "<p><b>Check for changes:</b><br>";
                 //compare local vs fetched event set checksum
-                $jsonLocalEventset = $resultLocalEventset[0]["eventsetData"];
+                $jsonLocalEventset = $resultLocalEventset[0]["eventset_data"];
 				if ($jsonLocalEventset !== $fetchedEventsetJSON) {
-                    $output .= "Event set " . $resultLocalEventset[0]["eventsetID"]
+                    $output .= "Event set " . $resultLocalEventset[0]["eventset_id"]
                         . " has changed since " . $resultLocalEventset[0]["last_changed"] . "<br>";
 					//update database
 					$db_timetable->updateEventSet($eventsetID, $fetchedEventsetJSON);
 					sendNotification($eventseriesName);
 				} else {
-                    $output .= "Event set " . $resultLocalEventset[0]["eventsetID"]
+                    $output .= "Event set " . $resultLocalEventset[0]["eventset_id"]
                         . " not changed<br>";
 
 				}
@@ -202,8 +202,12 @@ function sendFCM(string $token, string $language, string $eventseriesName): void
 
 	//prepare data
 	$fields = array (
-		'token' => $token,
-		'notification' => array('title' => $title, 'body' => $message, 'sound' => 'default')
+		'to' => $token,
+		'notification' => array(
+            'title' => $title,
+            'body' => $message,
+            'sound' => 'default'
+        )
 	);
 
 	//initiate curl request
