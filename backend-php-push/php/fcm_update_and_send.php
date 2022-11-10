@@ -107,9 +107,9 @@ function updateDatabaseAndGetNotifications(string & $moduleId): array
             //EVENT SET probably CHANGED
             if (!is_null($resultLocalEventset) && !empty($resultLocalEventset) && !empty($resultLocalEventset[0])) {
                 $output .= "<p><b>Check for changes:</b><br>";
-                
+
                 $jsonLocalEventset = $resultLocalEventset[0]["eventset_data"];
-	
+
 	            //compare local vs fetched event set checksum
 	            // in case they are equal, nothing changed
 				if ($jsonLocalEventset === $fetchedEventsetJSON) {
@@ -170,12 +170,12 @@ function getTimetableChangeNotifications(string & $eventseriesName): array
     // entries have structure ["tag" => <Exam added | Timetable change>, "token" => <token>, "eventseries" => <name>]
     $uncalledNotificationsAndroid = array();
 
-	/** @var  $resultSubscribingUser get tokens subscribing the given event series */
+	/** @var mysqli_result|null $resultSubscribingUser get tokens subscribing the given event series */
 	$resultSubscribingUser = $db_timetable->getSubscribingUsers($eventseriesName);
 
 	if ($debug) { $output .= sprintf("<p><b>Tokens subscribing the series %s: </b><br>", $eventseriesName); }
 
-	if ($resultSubscribingUser->num_rows > 0) {
+	if ($resultSubscribingUser != null &&$resultSubscribingUser->num_rows > 0) {
 
 		while ($subscribingUser = $resultSubscribingUser->fetch_assoc()) {
 			$output .= $subscribingUser["token"] . "<br>";
@@ -303,7 +303,7 @@ function sendFCM(string & $token, string & $subject, string & $title): void
 
 // a) get the Stundenplan from the server
 
-/** @var  $url string fetch all available module ids from StundenplanServer */
+/** @var string $url fetch all available module ids from StundenplanServer */
 $url = API_BASE_URL . ENDPOINT_MODULE;
 $jsonStringFromStundenplanServer = file_get_contents($url);
 //note: second parameter must be true to enable key-value iteration
@@ -327,7 +327,7 @@ foreach ($moduleIDs as $key => $moduleID) {
     if ($debug) print_r($notificationsToSend);
 	// gehe alle Benachrichtigungen durch und sende eine Benachrichtigung
     foreach ($notificationsToSend as $key => $notificationsData) {
-		
+
 		//TODO müssen wir je geänderter ID wirklich einen eigenen Aufruf machen?
 	    //TODO können wir die Aufrufe nicht bündeln? Nicht kriegsentscheidend.
         sendFCM($notificationsData["token"], $notificationsData["eventseries"], $notificationsData["tag"]);

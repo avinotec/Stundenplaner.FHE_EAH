@@ -101,9 +101,9 @@ if ($debug) { print_r($_REQUEST); }
 // ----------------- Get data from app ----------------------------------------------
 
 // initialize to set data types
-/** @var  $os value ANDROID or IOS */
+/** @var string $os value ANDROID or IOS */
 $os = ANDROID;
-/** @var  $language default language for responses to the user*/
+/** @var string $language default language for responses to the user*/
 $language = LANG_DE;
 
 //get os
@@ -123,9 +123,9 @@ if ($language !== LANG_DE && $language !== LANG_EN) {
 }
 
 // initialize to set data types
-/** @var  $fcmToken Token for Firebase Messaging Server */
+/** @var string $fcmToken Token for Firebase Messaging Server */
 $fcmToken = "";
-/** @var  $arraySubscribedEventseries which events are subscribed by the user*/
+/** @var array $arraySubscribedEventseries which events are subscribed by the user*/
 $arraySubscribedEventseries = array();
 
 if ($os === ANDROID) {
@@ -165,6 +165,8 @@ if (is_null($arraySubscribedEventseries) || is_null($fcmToken)) {
 	echo $output;
     return;
 }
+
+// ----------------------------------------------------------------------------------------------
 
 // all values are now valid
 // $arraySubscribedEventseries

@@ -82,7 +82,7 @@ function closeDbConnection(): void
 {
     global $db_timetable;
 
-    $db_timetable = null;
+	$db_timetable = null;
 }
 
 
@@ -199,19 +199,19 @@ final class TimetableDb
      * @param string $language
      * @return bool true success, false failure
      */
-    final public function insertUser(string $fcm_token,
-                                     string $subscribed_eventseries,
-                                     string $os,
-                                     string $language): bool
+    final public function insertUser(string & $fcm_token,
+                                     string & $subscribed_eventseries,
+                                     string & $os,
+                                     string & $language): bool
     {
         $subscribed_eventseries = $this->mysqli->real_escape_string($subscribed_eventseries);
-	
+
 	    /** @var String $sql */
 	    $sql =
 	        /** @lang MySQL */
 	        "INSERT INTO fcm_user (token, eventseries_name, os, language) ".
             "VALUES ('$fcm_token', '$subscribed_eventseries', '$os', '$language')";
-	
+
 	    /** @var bool $result */
 	    $result = $this->runQuery($sql, "insertUser");
 
@@ -223,10 +223,10 @@ final class TimetableDb
      * @param string $fcm_token
      * @return bool true success, false failure
      */
-    final public function deleteUser(string $fcm_token): bool
+    final public function deleteUser(string & $fcm_token): bool
     {
         $sql = /** @lang MySQL */ "DELETE FROM fcm_user WHERE token = '$fcm_token'";
-	
+
 	    /** @var bool $result */
 	    $result = $this->runQuery($sql, "deleteUser");
         return $result;
@@ -237,12 +237,12 @@ final class TimetableDb
      * @param string $eventseries_name The event series
      * @return mysqli_result|null The sql result of the query
      */
-    final public function getSubscribingUsers(string $eventseries_name): ?mysqli_result
+    final public function getSubscribingUsers(string & $eventseries_name): ?mysqli_result
     {
         $sql =
 	        /** @lang MySQL */
 	        "SELECT token, language, os FROM fcm_user WHERE eventseries_name = '$eventseries_name'";
-	    /** @var TYPE_NAME $result */
+	    /** @var mysqli_result | null $result */
 	    $result = $this->runQueryAndGetResult($sql, "getSubscribingUsers") ;
         return $result;
     }
@@ -259,7 +259,7 @@ final class TimetableDb
             'SELECT token, language, os '
             .'FROM fcm_user join event_sets on eventseries_name = eventseries '
             ."WHERE module_id = '$module_id'";
-        /** @var TYPE_NAME $result */
+        /** @var mysqli_result|null $result */
         $result = $this->runQueryAndGetResult($sql, "getUserSubscribingAnythingInModule") ;
         return $result;
     }
@@ -270,7 +270,7 @@ final class TimetableDb
      * @param string $new_eventset_data The json string containing the updated event set data
      * @return bool true success, false failure
      */
-    final public function updateEventSet(string $eventset_id, string $new_eventset_data): bool
+    final public function updateEventSet(string & $eventset_id, string & $new_eventset_data): bool
     {
         $sql = /** @lang MySQL */
             "UPDATE event_sets SET eventset_data = '$new_eventset_data'".
@@ -287,10 +287,10 @@ final class TimetableDb
      * @param string $eventset_json Data of the event set as json string
      * @return bool true success, false failure
      */
-    final public function insertEventSet(string $eventset_id,
-                                         string $eventseries_name,
-                                         string $module_id,
-                                         string $eventset_json): bool
+    final public function insertEventSet(string & $eventset_id,
+                                         string & $eventseries_name,
+                                         string & $module_id,
+                                         string & $eventset_json): bool
     {
         $sql = /** @lang MySQL */
             'INSERT INTO event_sets (eventset_id, eventseries, module_id, eventset_data, last_changed)'.
@@ -306,7 +306,7 @@ final class TimetableDb
      * @param string $eventset_id
      * @return bool true success, false failure
      */
-    final public function deleteEventSet(string $eventset_id): bool
+    final public function deleteEventSet(string & $eventset_id): bool
     {
         $sql = /** @lang MySQL */ "DELETE FROM event_sets WHERE eventset_id = '$eventset_id'";
 	    /** @var bool $result */
@@ -320,11 +320,11 @@ final class TimetableDb
      * @param string $module_id
      * @return array The list of queried event set ids
      */
-    final public function getEventSetIds(string $module_id): array
+    final public function getEventSetIds(string & $module_id): array
     {
         $sql = /** @lang MySQL */ "SELECT eventset_id FROM event_sets WHERE module_id = '$module_id'";
         $result = $this->runQueryAndGetResult($sql, "getEventSetIds");
-	
+
 	    /** @var array eventset_ids */
 	    $eventset_ids = array();
         if (!is_null($result) && $result->num_rows > 0) {
@@ -338,7 +338,7 @@ final class TimetableDb
      * @param string $eventset_id
      * @return array The array containing the queried event set
      */
-    final public function getEventSet(string $eventset_id): array
+    final public function getEventSet(string & $eventset_id): array
     {
         $sql = /** @lang MySQL */ "SELECT * FROM event_sets WHERE eventset_id = '$eventset_id'";
         $result = $this->runQueryAndGetResult($sql, "getEventSet");
@@ -352,10 +352,10 @@ final class TimetableDb
     /**
      * Run a sql query and get the result
      * @param string $sql The query
-     * @param string $function_name caller of this funktion (debugging)
+     * @param string $function_name caller of this funktion (debugging), constant string, so no reference
      * @return mysqli_result|null The sql result when succeeded, null if an error occurred
      */
-    private function runQueryAndGetResult(string $sql, string $function_name): ?mysqli_result
+    private function runQueryAndGetResult(string & $sql, string /* & */ $function_name): ?mysqli_result
     {
         global $debug;
 
@@ -383,9 +383,10 @@ final class TimetableDb
      * Run the given sql statement
      * @param string $sql The sql statement
      * @param string $functionNameForDebuggingCallstack The name of the function runQuery gets called within (for debugging output)
+	 * 					nicht als Referenz, da feste Strings übergeben werden
      * @return bool true success, false failure
      */
-    private function runQuery(string $sql, string $functionNameForDebuggingCallstack): bool
+    private function runQuery(string & $sql, string /* & */ $functionNameForDebuggingCallstack): bool
     {
         global $debug;
 
