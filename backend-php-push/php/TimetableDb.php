@@ -248,6 +248,23 @@ final class TimetableDb
     }
 
     /**
+     * Get all users subscribing an event series of the given module as sql result
+     * @param string $module_id The module ID
+     * @return mysqli_result|null The sql result of the query
+     */
+    final public function getUserSubscribingAnythingInModule(string $module_id): ?mysqli_result
+    {
+        $sql =
+            /** @lang MySQL */
+            "SELECT token, language, os 
+            FROM fcm_user join event_sets on eventseries_name = eventseries
+            WHERE module_id = '$module_id'";
+        /** @var TYPE_NAME $result */
+        $result = $this->runQueryAndGetResult($sql, "getUserSubscribingAnythingInModule") ;
+        return $result;
+    }
+
+    /**
      * Update the stored json of the corresponding event set
      * @param string $eventset_id
      * @param string $new_eventset_data The json string containing the updated event set data

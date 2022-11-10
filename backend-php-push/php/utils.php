@@ -19,7 +19,7 @@
 declare(strict_types=1);
 
 /**
- * Returns the event title without the number of the time table entry.
+ * Returns the event title without the number of the timetable entry.
  * (note: event titles have no such number if entered for the first time,
  * but later added events belonging to the same event series get one)
  *
