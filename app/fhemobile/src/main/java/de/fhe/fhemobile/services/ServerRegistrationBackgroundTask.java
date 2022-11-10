@@ -124,20 +124,22 @@ public class ServerRegistrationBackgroundTask implements Runnable {
 
 
         } catch (final MalformedURLException error) {
-            Log.d(TAG, "MalformedURLException error: " + error.toString());
+            Log.e(TAG, "MalformedURLException error", error);
             //Handles an incorrectly entered URL
         } catch (final SocketTimeoutException error) {
-            Log.d(TAG, "SocketTimeoutException: " + error.toString());
+            Log.e(TAG, "SocketTimeoutException", error);
             //Handles URL access timeout.
         } catch (final UnsupportedEncodingException e) {
-            Log.d(TAG, "UnsupportedEncodingException: " + e.toString());
+            Log.e(TAG, "UnsupportedEncodingException", e);
         } catch (final ProtocolException e) {
-            Log.d(TAG, "ProtocolException: " + e.toString());
+            Log.e(TAG, "ProtocolException", e);
         } catch (final IOException error) {
-            Log.d(TAG, "IOException: " + error.toString());
+            Log.e(TAG, "IOException", error);
             //Handles input and output errors
         } catch (final NullPointerException error) {
-            Log.d(TAG, "NullPointerException: " + error.toString());
+            Log.e(TAG, "NullPointerException", error);
+        } catch (final Exception e){
+            Log.e(TAG, "Exception", e);
         }
     }
 
