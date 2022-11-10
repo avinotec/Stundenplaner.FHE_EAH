@@ -16,6 +16,8 @@
  *
  **************************************************************************** */
 
+declare(strict_types=1);
+
 global $_config;
 /** @var $_config Array that collects all settings */
 $_config[] = array();

@@ -16,6 +16,8 @@
  *
  *****************************************************************************/
 
+declare(strict_types=1);
+
 const API_BASE_URL = "https://stundenplanung.eah-jena.de/api/mobileapp/";
 const ENDPOINT_MODULE = "v1/module";
 const ENDPOINT_MODULE_DETAIL = "v1/module/"; //+{id}

@@ -250,15 +250,15 @@ final class TimetableDb
     /**
      * Get all users subscribing an event series of the given module as sql result
      * @param string $module_id The module ID
-     * @return mysqli_result|null The sql result of the query
+     * @return mysqli_result|null The sql result of the query, array von token, language, os
      */
     final public function getUserSubscribingAnythingInModule(string $module_id): ?mysqli_result
     {
         $sql =
             /** @lang MySQL */
-            "SELECT token, language, os 
-            FROM fcm_user join event_sets on eventseries_name = eventseries
-            WHERE module_id = '$module_id'";
+            'SELECT token, language, os '
+            .'FROM fcm_user join event_sets on eventseries_name = eventseries '
+            ."WHERE module_id = '$module_id'";
         /** @var TYPE_NAME $result */
         $result = $this->runQueryAndGetResult($sql, "getUserSubscribingAnythingInModule") ;
         return $result;
@@ -290,7 +290,8 @@ final class TimetableDb
     final public function insertEventSet(string $eventset_id,
                                          string $eventseries_name,
                                          string $module_id,
-                                         string $eventset_json): bool {
+                                         string $eventset_json): bool
+    {
         $sql = /** @lang MySQL */
             'INSERT INTO event_sets (eventset_id, eventseries, module_id, eventset_data, last_changed)'.
             "VALUES ('$eventset_id', '$eventseries_name', '$module_id', '$eventset_json', SYSDATE())";

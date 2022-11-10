@@ -91,6 +91,7 @@ try {
 	exit();
 }
 
+// Ausgeben der Antwort vom Server
 if ($debug) { $output .= "<p> DEBUG: " . json_encode($_REQUEST) . "</p>"; }
 
 
@@ -100,7 +101,9 @@ if ($debug) { print_r($_REQUEST); }
 // ----------------- Get data from app ----------------------------------------------
 
 // initialize to set data types
+/** @var  $os value ANDROID or IOS */
 $os = ANDROID;
+/** @var  $language default language for responses to the user*/
 $language = LANG_DE;
 
 //get os
@@ -120,7 +123,9 @@ if ($language !== LANG_DE && $language !== LANG_EN) {
 }
 
 // initialize to set data types
+/** @var  $fcmToken Token for Firebase Messaging Server */
 $fcmToken = "";
+/** @var  $arraySubscribedEventseries which events are subscribed by the user*/
 $arraySubscribedEventseries = array();
 
 if ($os === ANDROID) {
@@ -161,10 +166,15 @@ if (is_null($arraySubscribedEventseries) || is_null($fcmToken)) {
     return;
 }
 
+// all values are now valid
+// $arraySubscribedEventseries
+// $os
+// $language
 
 // ----------------- DB entry for user to register ----------------------------------------------
 
 //Clear database from potential previous registrations with the given token
+// because we get only added events, but not deleted events
 $db_timetable->deleteUser($fcmToken);
 //Add token and subscribed event series names to database to register user
 foreach ($arraySubscribedEventseries as $subscribed_eventseries) {
@@ -172,6 +182,7 @@ foreach ($arraySubscribedEventseries as $subscribed_eventseries) {
 
 	if ($debug) { $output .= "<br>Register user $fcmToken for event series $subscribed_eventseries.<br>"; }
 
+	// store all information (Events) for this user (fcmToken) in the database
 	$db_timetable->insertUser($fcmToken, $subscribed_eventseries, $os, $language);
 }
 
