@@ -176,7 +176,8 @@ if (is_null($arraySubscribedEventseries) || is_null($fcmToken)) {
 // ----------------- DB entry for user to register ----------------------------------------------
 
 //Clear database from potential previous registrations with the given token
-// because we get only added events, but not deleted events
+// Reason: we only get the current subscription list, thus "unsubscribing" is done
+// by deleting all subscriptions of the token and adding the current ones
 $db_timetable->deleteUser($fcmToken);
 //Add token and subscribed event series names to database to register user
 foreach ($arraySubscribedEventseries as $subscribed_eventseries) {

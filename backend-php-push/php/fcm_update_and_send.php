@@ -44,7 +44,7 @@ $output = "";
  * Fetch module, update database and collect user tokens to send notifications to
  *
  * @param string $moduleId
- * @return array An array containing an entry ["token" => <token>, "eventseries" => <name>]
+ * @return array An array containing an entry ["token" => <token>, "subject" => <name>]
  *              for every notification that needs to be sent
  */
 function updateDatabaseAndGetNotifications(string & $moduleId): array
@@ -59,7 +59,7 @@ function updateDatabaseAndGetNotifications(string & $moduleId): array
 	$moduleURL = API_BASE_URL . ENDPOINT_MODULE_DETAIL . $moduleId;
 	/** @var array $moduleData */
 	$moduleData = array();
-	// retrieve data for the module from Stundenplan Server
+	// retrieve data for the module from Stundenplan Server (!not the database on this server)
 	$jsonString = file_get_contents($moduleURL);
 	// second parameter must be true to enable key-value iteration
 	$moduleData = json_decode($jsonString, true);
@@ -81,7 +81,7 @@ function updateDatabaseAndGetNotifications(string & $moduleId): array
 
 	if ($localEventsetIDs != null && count($localEventsetIDs) > 0) {
 		//DELETED EVENT SETS
-		//detect deleted event set ids, no longer provided by Stundenplan Server
+		//detect deleted event set ids, by detecting the event sets that are no longer provided by Stundenplan Server
 		$deletedEventSets = array_diff($localEventsetIDs, $fetchedEventsetIDs);
 		$deletedEventSetsString = implode(", ", $deletedEventSets);
         $output .= sprintf("<p>Deleted Event Set Ids: %s</p>", $deletedEventSetsString);
@@ -111,7 +111,7 @@ function updateDatabaseAndGetNotifications(string & $moduleId): array
                 $jsonLocalEventset = $resultLocalEventset[0]["eventset_data"];
 
 	            //compare local vs fetched event set checksum
-	            // in case they are equal, nothing changed
+	            // in case they are equal, nothing gets changed
 				if ($jsonLocalEventset === $fetchedEventsetJSON) {
 					// nothing changed since last request
 					$output .= sprintf("Event set %s not changed<br>", $resultLocalEventset[0]["eventset_id"]);
@@ -119,7 +119,7 @@ function updateDatabaseAndGetNotifications(string & $moduleId): array
 					$output .= sprintf("Event set %s has changed since %s<br>",
 						$resultLocalEventset[0]["eventset_id"],
 						$resultLocalEventset[0]["last_changed"]);
-					//update database, this eventsetID changed
+					//update database, the data of this event set has changed
 					$db_timetable->updateEventSet($eventsetID, $fetchedEventsetJSON);
 					$notificationsToBeSent = array_merge($notificationsToBeSent, getTimetableChangeNotifications($eventseriesName));
 				}
@@ -134,8 +134,10 @@ function updateDatabaseAndGetNotifications(string & $moduleId): array
                 // then notify all users subscribing an event series of the same module
                 //possible endings for exams: APL, PL, mdl. Prfg.,Wdh.-Prfg., Wdh.-APL
                 if (preg_match("/.*(PL)|(Prfg\\.)/", $eventseriesName)) {
-                    //$notificationsToBeSent = array_merge($notificationsToBeSent, getExamAddedNotifications($moduleId, $moduleData["dataModule"]["Name"]));
-	                $notificationsToBeSent = array_merge($notificationsToBeSent, getExamAddedNotifications($moduleId));
+
+                    $notificationsToBeSent = array_merge(
+                        $notificationsToBeSent,
+                        getExamAddedNotifications($moduleId, $moduleData["dataModule"]["Name"]));
                 }
 			}
 		}
@@ -156,7 +158,7 @@ function updateDatabaseAndGetNotifications(string & $moduleId): array
  * Get array containing the tokens that need to be notified about the change of the given event series
  *
  * @param string $eventseriesName The name of the changed events series
- * @return array An array containing an entry ["tag" => <Exam added | Timetable change>, "token" => <token>, "eventseries" => <name>]
+ * @return array An array containing an entry ["tag" => <Exam added | Timetable change>, "token" => <token>, "subject" => <name>]
  *              for every notification that needs to be sent
  */
 function getTimetableChangeNotifications(string & $eventseriesName): array
@@ -167,7 +169,7 @@ function getTimetableChangeNotifications(string & $eventseriesName): array
     global $output;
 
     //collect notification data
-    // entries have structure ["tag" => <Exam added | Timetable change>, "token" => <token>, "eventseries" => <name>]
+    // entries have structure ["tag" => <Exam added | Timetable change>, "token" => <token>, "subject" => <name>]
     $notificationsToBeSentAndroid = array();
 
 	/** @var mysqli_result|null $resultSubscribingUser get tokens subscribing the given event series */
@@ -184,7 +186,7 @@ function getTimetableChangeNotifications(string & $eventseriesName): array
                 $notificationsToBeSentAndroid[] = array(
                     "tag" => "Timetable change",
                     "token" => $subscribingUser["token"],
-                    "eventseries" => $eventseriesName);
+                    "subject" => $eventseriesName);
 
 			} elseif ($subscribingUser["os"] == IOS) {
 				;//send Ios Push
@@ -208,10 +210,11 @@ function getTimetableChangeNotifications(string & $eventseriesName): array
  * Get array containing the tokens that need to be notified about the added exam
  *
  * @param string $moduleId The ID of the module the exam belongs to
- * @return array An array containing an entry ["tag" => <Exam added | Timetable change>, "token" => <token>, "eventseries" => <name>]
+ * @param string $moduleName The name of the module the exam belongs to
+ * @return array An array containing an entry ["tag" => <Exam added | Timetable change>, "token" => <token>, "subject" => <name>]
  *              for every notification that needs to be sent
  */
-function getExamAddedNotifications(string & $moduleId): array
+function getExamAddedNotifications(string & $moduleId, string & $moduleName): array
 {
     global $debug;
     /** $db_timetable database connection */
@@ -219,7 +222,7 @@ function getExamAddedNotifications(string & $moduleId): array
     global $output;
 
     //collect notification data
-    // entries have structure ["tag" => <Exam added | Timetable change>, "token" => <token>, "eventseries" => <name>]
+    // entries have structure ["tag" => <Exam added | Timetable change>, "token" => <token>, "subject" => <name>]
     $notificationsToBeSentAndroid = array();
 
     //get tokens subscribing any event series in the given module
@@ -235,7 +238,7 @@ function getExamAddedNotifications(string & $moduleId): array
                 $notificationsToBeSentAndroid[] = array(
                     "tag" => "Exam added",
                     "token" => $subscribingUser["token"],
-                    "eventseries" => $moduleId);
+                    "subject" => $moduleName);
 
             } elseif ($subscribingUser["os"] == IOS) {
                 ;//send Ios Push
@@ -301,36 +304,35 @@ function sendFCM(string & $token, string & $subject, string & $title): void
 // -------------- Detect changed event sets and update database ----------------------------------
 
 
-// a) get the Stundenplan from the server
+// Get data from the Stundenplan server (!not the database on this server)
 
 /** @var string $url fetch all available module ids from StundenplanServer */
 $url = API_BASE_URL . ENDPOINT_MODULE;
 $jsonStringFromStundenplanServer = file_get_contents($url);
 //note: second parameter must be true to enable key-value iteration
-$moduleIDs = json_decode($jsonStringFromStundenplanServer, true);
+$moduleIds = json_decode($jsonStringFromStundenplanServer, true);
 
-$output .= sprintf("<p><b> Fetched module ids</b> (Anzahl: %s):<br>", count($moduleIDs));
+$output .= sprintf("<p><b> Fetched module ids</b> (Anzahl: %s):<br>", count($moduleIds));
 
 //fetch data of each module
 if ($debug) {
 	//for debugging: reduce array to size 5
-	$moduleIDs = array_slice($moduleIDs, 3, 7, true);
-	print_r($moduleIDs);
+	$moduleIds = array_slice($moduleIds, 3, 7, true);
+	print_r($moduleIds);
 }
 
-// alle Module durchgehen
-foreach ($moduleIDs as $key => $moduleID) {
-	$output .=  $moduleID . ", ";
-	// vermerke alle Benachrichtigungen zu einem moduleID
-	$notificationsToSend = array_unique(updateDatabaseAndGetNotifications($moduleID));
+// Check each module for changes
+foreach ($moduleIds as $key => $moduleId) {
+	$output .=  $moduleId . ", ";
+	// collect alle notifications that need to be sent concerning this moduleID
+	$notificationsToSend = array_unique(updateDatabaseAndGetNotifications($moduleId));
 
     if ($debug) print_r($notificationsToSend);
-	// gehe alle Benachrichtigungen durch und sende eine Benachrichtigung
+	// iterate over notifications and send each one out
     foreach ($notificationsToSend as $key => $notificationsData) {
 
-		//TODO müssen wir je geänderter ID wirklich einen eigenen Aufruf machen?
-	    //TODO können wir die Aufrufe nicht bündeln? Nicht kriegsentscheidend.
-        sendFCM($notificationsData["token"], $notificationsData["eventseries"], $notificationsData["tag"]);
+		//TODO: notifications bündeln durch Umstellung von "to" => string nach "registration_ids" => array of tokens
+        sendFCM($notificationsData["token"], $notificationsData["subject"], $notificationsData["tag"]);
         $output .= "<br>Notifications sent for event series or module ".$notificationsData["tag"]."!";
     }
 }
