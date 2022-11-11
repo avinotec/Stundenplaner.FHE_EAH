@@ -54,7 +54,7 @@ function updateDatabaseAndGetNotifications(string & $moduleId): array
     global $output;
 
     //collect notifications here
-    $uncalledNotifications = array();
+    $notificationsToBeSent = array();
 
 	$moduleURL = API_BASE_URL . ENDPOINT_MODULE_DETAIL . $moduleId;
 	/** @var array $moduleData */
@@ -67,7 +67,7 @@ function updateDatabaseAndGetNotifications(string & $moduleId): array
     // validate answer, otherwise skip
 	if (!array_key_exists("dataActivity", $moduleData)) {
         $output .= sprintf("<br><i>Module %s is empty (this semester).</i><br>", $moduleId);
-        return $uncalledNotifications;
+        return $notificationsToBeSent;
     }
 
     //initialize to set data types
@@ -90,7 +90,7 @@ function updateDatabaseAndGetNotifications(string & $moduleId): array
 		foreach ($deletedEventSets as $deletedEventSetId) {
 			$db_timetable->deleteEventSet($deletedEventSetId);
 			$eventseriesName = getEventSeriesName($moduleData["dataActivity"][$deletedEventSetId]["activityName"]);
-            $uncalledNotifications = array_merge($uncalledNotifications, getTimetableChangeNotifications($eventseriesName));
+            $notificationsToBeSent = array_merge($notificationsToBeSent, getTimetableChangeNotifications($eventseriesName));
 		}
 
 		//CHANGED and ADDED EVENT SERIES
@@ -121,21 +121,21 @@ function updateDatabaseAndGetNotifications(string & $moduleId): array
 						$resultLocalEventset[0]["last_changed"]);
 					//update database, this eventsetID changed
 					$db_timetable->updateEventSet($eventsetID, $fetchedEventsetJSON);
-					$uncalledNotifications = array_merge($uncalledNotifications, getTimetableChangeNotifications($eventseriesName));
+					$notificationsToBeSent = array_merge($notificationsToBeSent, getTimetableChangeNotifications($eventseriesName));
 				}
 				$output .= "</p>";
 			} else {
 				//EVENT SET ADDED
 				//no local event set with this id found --> event set is new and has to be added
 				$db_timetable->insertEventSet($eventsetID, $eventseriesName, $moduleId, $fetchedEventsetJSON);
-                $uncalledNotifications = array_merge($uncalledNotifications, getTimetableChangeNotifications($eventseriesName));
+                $notificationsToBeSent = array_merge($notificationsToBeSent, getTimetableChangeNotifications($eventseriesName));
 
                 //if event series corresponds to a new exam (no matter which group),
                 // then notify all users subscribing an event series of the same module
                 //possible endings for exams: APL, PL, mdl. Prfg.,Wdh.-Prfg., Wdh.-APL
                 if (preg_match("/.*(PL)|(Prfg\\.)/", $eventseriesName)) {
-                    //$uncalledNotifications = array_merge($uncalledNotifications, getExamAddedNotifications($moduleId, $moduleData["dataModule"]["Name"]));
-	                $uncalledNotifications = array_merge($uncalledNotifications, getExamAddedNotifications($moduleId));
+                    //$notificationsToBeSent = array_merge($notificationsToBeSent, getExamAddedNotifications($moduleId, $moduleData["dataModule"]["Name"]));
+	                $notificationsToBeSent = array_merge($notificationsToBeSent, getExamAddedNotifications($moduleId));
                 }
 			}
 		}
@@ -148,7 +148,7 @@ function updateDatabaseAndGetNotifications(string & $moduleId): array
         }
 	}
 
-    return $uncalledNotifications;
+    return $notificationsToBeSent;
 
 }
 
@@ -168,7 +168,7 @@ function getTimetableChangeNotifications(string & $eventseriesName): array
 
     //collect notification data
     // entries have structure ["tag" => <Exam added | Timetable change>, "token" => <token>, "eventseries" => <name>]
-    $uncalledNotificationsAndroid = array();
+    $notificationsToBeSentAndroid = array();
 
 	/** @var mysqli_result|null $resultSubscribingUser get tokens subscribing the given event series */
 	$resultSubscribingUser = $db_timetable->getSubscribingUsers($eventseriesName);
@@ -181,7 +181,7 @@ function getTimetableChangeNotifications(string & $eventseriesName): array
 			$output .= $subscribingUser["token"] . "<br>";
 
 			if ($subscribingUser["os"] === ANDROID) {
-                $uncalledNotificationsAndroid[] = array(
+                $notificationsToBeSentAndroid[] = array(
                     "tag" => "Timetable change",
                     "token" => $subscribingUser["token"],
                     "eventseries" => $eventseriesName);
@@ -201,7 +201,7 @@ function getTimetableChangeNotifications(string & $eventseriesName): array
 	}
 	$resultSubscribingUser->close();
 
-    return $uncalledNotificationsAndroid;
+    return $notificationsToBeSentAndroid;
 }
 
 /**
@@ -220,7 +220,7 @@ function getExamAddedNotifications(string & $moduleId): array
 
     //collect notification data
     // entries have structure ["tag" => <Exam added | Timetable change>, "token" => <token>, "eventseries" => <name>]
-    $uncalledNotificationsAndroid = array();
+    $notificationsToBeSentAndroid = array();
 
     //get tokens subscribing any event series in the given module
 	// Array von token, language, os
@@ -232,7 +232,7 @@ function getExamAddedNotifications(string & $moduleId): array
             $output .= $subscribingUser["token"] . "<br>";
 
             if ($subscribingUser["os"] === ANDROID) {
-                $uncalledNotificationsAndroid[] = array(
+                $notificationsToBeSentAndroid[] = array(
                     "tag" => "Exam added",
                     "token" => $subscribingUser["token"],
                     "eventseries" => $moduleId);
@@ -252,7 +252,7 @@ function getExamAddedNotifications(string & $moduleId): array
     }
     $resultSubscribingUser->close();
 
-    return $uncalledNotificationsAndroid;
+    return $notificationsToBeSentAndroid;
 }
 
 /**
