@@ -111,6 +111,10 @@ android {
             /* applicationId 'de.fhe.eahmobile' alte ID*/
             applicationId 'de.eahjena.stundenplan'
             dimension "version"
+    
+            // Debug App
+            buildConfigField "boolean", "ALLOW_INVALID_CERTIFICATE", "true"
+    
         }
         fhe {
             applicationId "de.fhe.fhemobile"
@@ -327,6 +331,10 @@ configurations.all {
 
 
     exclude group: 'com.android.support', module: ''
+    
+    // Compile SDK 33
+    exclude group: 'androidx.lifecycle', module: 'lifecycle-viewmodel-ktx'
+    
 }
 
 apply plugin: 'com.google.gms.google-services'
