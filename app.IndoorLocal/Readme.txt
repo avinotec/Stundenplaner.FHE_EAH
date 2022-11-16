@@ -1,3 +1,0 @@
-Bachelorarbeit Tim Münzinger
-
-Indoor-Lokalisation
