@@ -161,7 +161,7 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 		//HIGHLIGHT CHANGES
 		//reset change highlighting before
 		for(TextView v : eventViews){
-			v.setTypeface(null, Typeface.NORMAL);
+			v.setTypeface(v.getTypeface(), Typeface.NORMAL);
 			//reset strike through if necessary
 			if((v.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) == Paint.STRIKE_THRU_TEXT_FLAG){
 				v.setPaintFlags(v.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);

@@ -346,6 +346,8 @@ foreach ($moduleIds as $modueleKey => $moduleId) {
 // Das nennt sich Wiederanlaufsteuerung, wenn mittendrin in der Konstruktion was zusammenbricht, weiß man nicht,
 // ob alle Benachrichtigungen versendet worden sind.
 
+//Notifications to sent in Datenbank stat Variable
+//gesondertes Aufräum-php
 
 $output .= "</p>";
 
