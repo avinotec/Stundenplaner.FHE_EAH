@@ -158,7 +158,7 @@ class Container implements \ArrayAccess
      *
      * @return callable The passed callable
      *
-     * @throws ExpectedInvokableException Service definition has to be a closure or an invokable object
+     * @throws ExpectedInvokableException server-2019 definition has to be a closure or an invokable object
      */
     public function factory($callable)
     {
@@ -180,7 +180,7 @@ class Container implements \ArrayAccess
      *
      * @return callable The passed callable
      *
-     * @throws ExpectedInvokableException Service definition has to be a closure or an invokable object
+     * @throws ExpectedInvokableException server-2019 definition has to be a closure or an invokable object
      */
     public function protect($callable)
     {
