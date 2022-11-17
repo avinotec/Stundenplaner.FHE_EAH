@@ -257,8 +257,8 @@ final class TimetableDb
         $sql =
             /** @lang MySQL */
             'SELECT token, language, os '
-            .'FROM fcm_user join event_sets on eventseries_name = eventseries '
-            ."WHERE module_id = '$module_id'";
+            .'FROM fcm_user join event_sets on eventseries_name = event_sets.eventseries '
+            ."WHERE event_sets.module_id = '$module_id'";
         /** @var mysqli_result|null $result */
         $result = $this->runQueryAndGetResult($sql, "getUserSubscribingAnythingInModule") ;
         return $result;
