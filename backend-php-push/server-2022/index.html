@@ -3,6 +3,29 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>FCM Check</title>
+
+
+	<script>
+		// Create a new list item when clicking on the "Hinzufügen" button
+		function addEventSeries() {
+			var li = document.createElement("li");
+			var inputValue = document.getElementById("eventseriesToAdd").value;
+			var i = document.createElement("input");
+			i.setAttribute("type", "text");
+			if (inputValue === '') {
+				alert("You must write something!");
+			} else {
+				i.setAttribute("value", inputValue);
+				i.setAttribute("name", "eventseries_names[]");
+				li.appendChild(i);
+				document.getElementById("eventseries_names").appendChild(li);
+			}
+			document.getElementById("eventseriesToAdd").value = "";
+
+		}
+	</script>
+
+
 </head>
 
 <body>
@@ -19,6 +42,7 @@
 
 <br>
 <h2>Inputparameter für Beispielaufruf von fcm_register_user.php:</h2>
+
 <form action="fcm_register_user.php" method="post">
 
 	<p>
@@ -54,28 +78,14 @@
 
 	<br><br>
 	<button type="submit" name="sendbutton" id="sendbutton">Absenden</button>
-
-
 </form>
+
+<h2>Ausgabe der Datenbank</h2>
+
+<form action="fcm_dumpdatabase.php" method="post">
+	<button type="submit" name="queryDatabase" id="queryDatabase">Dump Datenbank</button>
+</form>
+
 </body>
 </html>
 
-<script>
-	// Create a new list item when clicking on the "Hinzufügen" button
-	function addEventSeries() {
-		var li = document.createElement("li");
-		var inputValue = document.getElementById("eventseriesToAdd").value;
-		var i = document.createElement("input");
-		i.setAttribute("type", "text");
-		if (inputValue === '') {
-			alert("You must write something!");
-		} else {
-			i.setAttribute("value", inputValue);
-			i.setAttribute("name", "eventseries_names[]");
-			li.appendChild(i);
-			document.getElementById("eventseries_names").appendChild(li);
-		}
-		document.getElementById("eventseriesToAdd").value = "";
-
-	}
-</script>
