@@ -408,7 +408,7 @@ final class TimetableDb
 	/** nur fuer DEBUGSQL
 	 * @return array | void
 	 */
-	function debugDisplayAllEventSets() : array
+	public function debugDisplayAllEventSets() : array
 	{
 		if ($GLOBALS['DEBUGDATABASE']) {
 			
@@ -425,7 +425,7 @@ final class TimetableDb
 	/** nur fuer DEBUGSQL
 	 * @return array | void
 	 */
-	function debugDisplayAllFcmUser() : array
+	public function debugDisplayAllFcmUser() : array
 	{
 		if ($GLOBALS['DEBUGDATABASE']) {
 			
