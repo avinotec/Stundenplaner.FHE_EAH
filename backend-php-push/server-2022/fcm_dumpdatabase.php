@@ -17,10 +17,11 @@ $GLOBALS['DEBUGDATABASE'] = true;
 
 
 if ($GLOBALS['DEBUGDATABASE']) {
+	global $db_timetable;
 	
     echo '<h1>Table event_sets</h1>';
     
-	$result = debugDisplayAllEventSets();
+	$result = $db_timetable->debugDisplayAllEventSets();
     
     print_r( $result );
 
@@ -30,7 +31,7 @@ if ($GLOBALS['DEBUGDATABASE']) {
 	
 	echo '<h1>Table fcm_user</h1>';
 	
-	$result = debugDisplayAllFcmUser();
+	$result = $db_timetable->debugDisplayAllFcmUser();
 	
 	print_r( $result );
 	
