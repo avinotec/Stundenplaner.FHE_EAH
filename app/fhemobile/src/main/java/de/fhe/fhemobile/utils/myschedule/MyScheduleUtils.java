@@ -237,7 +237,7 @@ public final class MyScheduleUtils {
 			//skip change detection if events of the event series' are equal
 			final Gson gson = new Gson();
 			String localEventsJson = gson.toJson(localEventSeries.getEvents());
-			@NonNls String fetchedEventsJson = gson.toJson(fetchedEventSeries.getEvents());
+			@NonNls final String fetchedEventsJson = gson.toJson(fetchedEventSeries.getEvents());
 			//TODO was wird hier entsorgt?
 			localEventsJson = localEventsJson.replaceAll("\"typesOfChanges\":\\[(\"[A-Z]+,?\")+\\]","\"typesOfChanges\":[]");
 			if(localEventsJson.equals(fetchedEventsJson)) {
@@ -273,9 +273,10 @@ public final class MyScheduleUtils {
 						if (BuildConfig.DEBUG) {
 							Assert.assertNotNull(fetchedEventDates);
 						}
+
+						final List<MyScheduleEventVo> deletedEvents = new ArrayList<>();
 						if (fetchedEventDates != null) {
 							Collections.sort(fetchedEventDates, new MyScheduleEventDateComparator());
-							final List<MyScheduleEventVo> deletedEvents = new ArrayList<>();
 
 							//FIND DELETED EVENTS
 							if (fetchedEventDates.size() < localEventSetEntry.getValue().size()) {
