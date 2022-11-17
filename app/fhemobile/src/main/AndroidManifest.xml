@@ -64,7 +64,6 @@
                     screenOrientation=fullSensor uses the sensor ignoring the device's rotation lock status -->
         <activity
             android:name=".activities.MainActivity"
-            android:label="@string/app_name"
             android:screenOrientation="unspecified"
             android:windowSoftInputMode="adjustPan"
             android:exported="true">
