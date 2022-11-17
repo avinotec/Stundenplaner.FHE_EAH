@@ -68,7 +68,7 @@ public final class MyScheduleUtils {
 	 */
 	public static String getEventSeriesName(final String title) {
 		if(title == null){
-			Log.e(TAG, "Cannot determine eventseries name. Given title is null.");
+			Log.e(TAG, "Cannot determine eventseries name. Given title is null."); //NON-NLS
 			return "";
 		}
 		//cut away all ".d" (where d stands for any digit)
@@ -84,7 +84,7 @@ public final class MyScheduleUtils {
 	 */
 	public static String getEventSeriesBaseTitle(final String title) {
 		if(title == null){
-			Log.e(TAG, "Cannot determine eventseries base title. Given title is null.");
+			Log.e(TAG, "Cannot determine eventseries base title. Given title is null."); //NON-NLS
 			return "";
 		}
 
@@ -130,8 +130,7 @@ public final class MyScheduleUtils {
 				eventSeriesMap.put(seriesTitleOfEventSet, eventSeries);
 
 			} else {
-				if (BuildConfig.DEBUG)
-					Assert.assertEquals(eventSeries.getModuleId(), eventSet.getModuleId());
+				if (BuildConfig.DEBUG) Assert.assertEquals(eventSeries.getModuleId(), eventSet.getModuleId());
 				//add event set id because events of the EventSet are merged
 				// with events of another EventSet into one EventSeries
 				eventSeries.addEventSetId(eventSet.getId());
@@ -270,9 +269,7 @@ public final class MyScheduleUtils {
 						if (BuildConfig.DEBUG) Assert.assertNotNull(fetchedEventSet);
 
 						final List<MyScheduleEventDateVo> fetchedEventDates = fetchedEventSet.getEventDates();
-						if (BuildConfig.DEBUG) {
-							Assert.assertNotNull(fetchedEventDates);
-						}
+						if (BuildConfig.DEBUG) { Assert.assertNotNull(fetchedEventDates); }
 
 						final List<MyScheduleEventVo> deletedEvents = new ArrayList<>();
 						if (fetchedEventDates != null) {
