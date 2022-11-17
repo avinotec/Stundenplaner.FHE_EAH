@@ -18,11 +18,11 @@
 package de.fhe.fhemobile.utils.myschedule;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 
+import org.jetbrains.annotations.NonNls;
 import org.junit.Assert;
 
 import java.util.ArrayList;
@@ -217,6 +217,7 @@ public final class MyScheduleUtils {
 			if (localEventSeries == null){
 				//if event series corresponds to a new exam (no matter which group), then always add
 				//possible endings for exams: APL, PL, mdl. Prfg.,Wdh.-Prfg., Wdh.-APL
+				//noinspection HardCodedStringLiteral
 				if(getEventSeriesBaseTitle(fetchedEventSeries.getTitle()).matches(".*(PL)|(Prfg\\.)")){
 					//set every event in the exam series as "added"
 					for ( final MyScheduleEventVo eventVo : fetchedEventSeries.getEvents() ) {
@@ -236,7 +237,8 @@ public final class MyScheduleUtils {
 			//skip change detection if events of the event series' are equal
 			final Gson gson = new Gson();
 			String localEventsJson = gson.toJson(localEventSeries.getEvents());
-			String fetchedEventsJson = gson.toJson(fetchedEventSeries.getEvents());
+			@NonNls String fetchedEventsJson = gson.toJson(fetchedEventSeries.getEvents());
+			//TODO was wird hier entsorgt?
 			localEventsJson = localEventsJson.replaceAll("\"typesOfChanges\":\\[(\"[A-Z]+,?\")+\\]","\"typesOfChanges\":[]");
 			if(localEventsJson.equals(fetchedEventsJson)) {
 				Log.d(TAG, "Detection of my schedule changes skipped because events are equal");
@@ -244,157 +246,164 @@ public final class MyScheduleUtils {
 			}
 
 			//detect added event sets
-			final Set<String> eventSetsAdded = Sets.difference(
-					fetchedEventSeries.getEventSetIds(), localEventSeries.getEventSetIds());
+			final Set<String> eventSetsAdded = Sets.difference( fetchedEventSeries.getEventSetIds(), localEventSeries.getEventSetIds());
 
 			//detect deleted event sets
-			final Set<String> eventSetsDeleted = Sets.difference(
-					localEventSeries.getEventSetIds(), fetchedEventSeries.getEventSetIds());
+			final Set<String> eventSetsDeleted = Sets.difference( localEventSeries.getEventSetIds(), fetchedEventSeries.getEventSetIds());
 
 			//detect changed events + update deleted and changed events
 			final Map<String, List<MyScheduleEventVo>> localEventsByEventSet = groupByEventSet(localEventSeries.getEvents());
-			for (final Map.Entry<String, List<MyScheduleEventVo>> localEventSetEntry : localEventsByEventSet.entrySet()) {
 
-				//set events deleted
-				if (eventSetsDeleted.contains(localEventSetEntry.getKey())) {
-					for (final MyScheduleEventVo deletedEvent : localEventSetEntry.getValue()) {
-						deletedEvent.addChange(TimetableChangeType.DELETION);
+			if ( localEventSeries != null ) {
+				for (final Map.Entry<String, List<MyScheduleEventVo>> localEventSetEntry : localEventsByEventSet.entrySet()) {
+
+					//set events deleted
+					if (eventSetsDeleted.contains(localEventSetEntry.getKey())) {
+						for (final MyScheduleEventVo deletedEvent : localEventSetEntry.getValue()) {
+							deletedEvent.addChange(TimetableChangeType.DELETION);
+						}
 					}
-				}
 
-				//DETECT CHANGED EVENTS PROPERTIES - compare local and fetched events
-				else {
-					final MyScheduleEventSetVo fetchedEventSet = fetchedEventSetsMap.get(localEventSetEntry.getKey());
-					if(BuildConfig.DEBUG) Assert.assertNotNull(fetchedEventSet);
+					//DETECT CHANGED EVENTS PROPERTIES - compare local and fetched events
+					else {
+						final MyScheduleEventSetVo fetchedEventSet = fetchedEventSetsMap.get(localEventSetEntry.getKey());
+						if (BuildConfig.DEBUG) Assert.assertNotNull(fetchedEventSet);
 
-					final List<MyScheduleEventDateVo> fetchedEventDates = fetchedEventSet.getEventDates();
-					if(BuildConfig.DEBUG) Assert.assertNotNull(fetchedEventDates);
+						final List<MyScheduleEventDateVo> fetchedEventDates = fetchedEventSet.getEventDates();
+						if (BuildConfig.DEBUG) {
+							Assert.assertNotNull(fetchedEventDates);
+						}
+						if (fetchedEventDates != null) {
+							Collections.sort(fetchedEventDates, new MyScheduleEventDateComparator());
+							final List<MyScheduleEventVo> deletedEvents = new ArrayList<>();
 
-					Collections.sort(fetchedEventDates, new MyScheduleEventDateComparator());
-					final List<MyScheduleEventVo> deletedEvents = new ArrayList<>();
+							//FIND DELETED EVENTS
+							if (fetchedEventDates.size() < localEventSetEntry.getValue().size()) {
 
-					//FIND DELETED EVENTS
-					if (fetchedEventDates.size() < localEventSetEntry.getValue().size()) {
+								//detect deleted events in localEventSet
+								for (int i = 0; i < localEventSetEntry.getValue().size(); i++) {
+									final MyScheduleEventVo localEvent = localEventSetEntry.getValue().get(i);
+									MyScheduleEventDateVo fetchedEvent = null;
 
-						//detect deleted events in localEventSet
-						for (int i = 0; i < localEventSetEntry.getValue().size(); i++) {
-							final MyScheduleEventVo localEvent = localEventSetEntry.getValue().get(i);
-							MyScheduleEventDateVo fetchedEvent = null;
+									if (i < fetchedEventDates.size()) {
+										fetchedEvent = fetchedEventDates.get(i);
+									}
 
-							if(i < fetchedEventDates.size()){
-								fetchedEvent = fetchedEventDates.get(i);
+									if (fetchedEvent == null
+											|| fetchedEvent.getStartDateTimeInSec() != localEvent.getStartDateTimeInSec()
+											|| fetchedEvent.getEndDateTimeInSec() != localEvent.getEndDateTimeInSec()) {
+										//mark as deleted and temporarily save to deletedEvents
+										localEvent.addChange(TimetableChangeType.DELETION);
+										deletedEvents.add(localEvent);
+										localEventSetEntry.getValue().remove(localEvent);
+
+										//reset counter to make the current fetchedEvent being compared to the next localEvent
+										i--;
+									}
+								}
 							}
+							//FIND ADDED EVENTS
+							else if (fetchedEventDates.size() > localEventSetEntry.getValue().size()) {
 
-							if (fetchedEvent == null
-									|| fetchedEvent.getStartDateTimeInSec() != localEvent.getStartDateTimeInSec()
-									|| fetchedEvent.getEndDateTimeInSec() != localEvent.getEndDateTimeInSec()) {
-								//mark as deleted and temporarily save to deletedEvents
-								localEvent.addChange(TimetableChangeType.DELETION);
-								deletedEvents.add(localEvent);
-								localEventSetEntry.getValue().remove(localEvent);
+								//note: the workflow fails if eventsets contain added and time-edited events.
+								// According to the Stundenplanung, this case is not supposed to occur.
 
-								//reset counter to make the current fetchedEvent being compared to the next localEvent
-								i--;
+								//detect added events in fetchedEventSet
+								for (int i = 0; i < fetchedEventDates.size(); i++) {
+									final MyScheduleEventDateVo fetchedEvent = fetchedEventDates.get(i);
+									MyScheduleEventVo localEvent = null;
+
+									if (i < localEventSetEntry.getValue().size()) {
+										localEvent = localEventSetEntry.getValue().get(i);
+									}
+
+									if (localEvent == null
+											|| fetchedEvent.getStartDateTimeInSec() != localEvent.getStartDateTimeInSec()
+											|| fetchedEvent.getEndDateTimeInSec() != localEvent.getEndDateTimeInSec()) {
+										//add new event
+										final MyScheduleEventVo newEvent = new MyScheduleEventVo(
+												fetchedEventSet.getTitle(),
+												fetchedEventSet.getId(),
+												fetchedEvent.getStartDateTimeInSec(),
+												fetchedEvent.getEndDateTimeInSec(),
+												fetchedEventSet.getLecturerList(),
+												fetchedEventSet.getLocationList());
+										newEvent.addChange(TimetableChangeType.ADDITION);
+										localEventSetEntry.getValue().add(i, newEvent);
+									}
+								}
 							}
 						}
-					}
-					//FIND ADDED EVENTS
-					else if (fetchedEventDates.size() > localEventSetEntry.getValue().size()) {
 
-						//note: the workflow fails if eventsets contain added and time-edited events.
-						// According to the Stundenplanung, this case is not supposed to occur.
+						//If fetchedEventSet size == localEventSet size (note: localEventSet is cleaned from deleted and increased by added events),
+						// we assume that we can compare events at the same positions to detect changed properties
+						if (BuildConfig.DEBUG) {
+							Assert.assertTrue(localEventSetEntry.getValue().size() == fetchedEventSet.getEventDates().size());
+						}
 
-						//detect added events in fetchedEventSet
-						for (int i = 0; i < fetchedEventDates.size(); i++) {
-							final MyScheduleEventDateVo fetchedEvent = fetchedEventDates.get(i);
-							MyScheduleEventVo localEvent = null;
+						if (localEventSetEntry.getValue().size() == fetchedEventSet.getEventDates().size()) {
+							//check for changed property values
+							for (int k = 0; k < localEventSetEntry.getValue().size(); k++) {
+								final MyScheduleEventDateVo fetchedEvent = fetchedEventSet.getEventDates().get(k);
+								final MyScheduleEventVo localEvent = localEventSetEntry.getValue().get(k);
 
-							if(i < localEventSetEntry.getValue().size()) {
-								localEvent = localEventSetEntry.getValue().get(i);
+								if (localEvent.getTypesOfChanges().contains(TimetableChangeType.ADDITION)) {
+									continue;
+								}
+
+								//start date time changed
+								if (fetchedEvent.getStartDateTimeInSec() != localEvent.getStartDateTimeInSec()) {
+									localEvent.addChange(TimetableChangeType.EDIT_TIME);
+									localEvent.setStartDateTimeInSec(fetchedEvent.getStartDateTimeInSec());
+								}
+								//end date changed
+								if (fetchedEvent.getEndDateTimeInSec() != localEvent.getEndDateTimeInSec()) {
+									localEvent.addChange(TimetableChangeType.EDIT_TIME);
+									localEvent.setEndDateTimeInSec(fetchedEvent.getEndDateTimeInSec());
+								}
+								//location changed
+								if (!fetchedEventSet.getLocationList().equals(localEvent.getLocationList())) {
+									localEvent.addChange(TimetableChangeType.EDIT_LOCATION);
+									localEvent.setLocationList(fetchedEventSet.getLocationList());
+								}
+								//lecturer changed
+								if (!fetchedEventSet.getLecturerList().equals(localEvent.getLecturerList())) {
+									localEvent.addChange(TimetableChangeType.EDIT_LECTURER);
+									localEvent.setLecturerList(fetchedEventSet.getLecturerList());
+								}
+								//title has been updated
+								if (!fetchedEventSet.getTitle().equals(localEvent.getTitle())) {
+									//note: we don't want to mark this change
+									localEvent.setTitle(fetchedEventSet.getTitle());
+								}
 							}
-
-							if (localEvent == null
-									|| fetchedEvent.getStartDateTimeInSec() != localEvent.getStartDateTimeInSec()
-									|| fetchedEvent.getEndDateTimeInSec() != localEvent.getEndDateTimeInSec()) {
-								//add new event
-								final MyScheduleEventVo newEvent = new MyScheduleEventVo(
-										fetchedEventSet.getTitle(),
-										fetchedEventSet.getId(),
-										fetchedEvent.getStartDateTimeInSec(),
-										fetchedEvent.getEndDateTimeInSec(),
-										fetchedEventSet.getLecturerList(),
-										fetchedEventSet.getLocationList());
-								newEvent.addChange(TimetableChangeType.ADDITION);
-								localEventSetEntry.getValue().add(i, newEvent);
-							}
 						}
+						//add deleted events for documentation
+						localEventSetEntry.getValue().addAll(deletedEvents);
+
 					}
-
-					//If fetchedEventSet size == localEventSet size (note: localEventSet is cleaned from deleted and increased by added events),
-					// we assume that we can compare events at the same positions to detect changed properties
-
-					if(BuildConfig.DEBUG){
-						Assert.assertEquals(localEventSetEntry.getValue().size(), fetchedEventSet.getEventDates().size());
-					}
-					//check for changed property values
-					for (int k = 0; k < localEventSetEntry.getValue().size(); k++) {
-						final MyScheduleEventDateVo fetchedEvent = fetchedEventSet.getEventDates().get(k);
-						final MyScheduleEventVo localEvent = localEventSetEntry.getValue().get(k);
-
-						if (localEvent.getTypesOfChanges().contains(TimetableChangeType.ADDITION)) {
-							continue;
-						}
-
-						//start date time changed
-						if (fetchedEvent.getStartDateTimeInSec() != localEvent.getStartDateTimeInSec()) {
-							localEvent.addChange(TimetableChangeType.EDIT_TIME);
-							localEvent.setStartDateTimeInSec(fetchedEvent.getStartDateTimeInSec());
-						}
-						//end date changed
-						if (fetchedEvent.getEndDateTimeInSec() != localEvent.getEndDateTimeInSec()) {
-							localEvent.addChange(TimetableChangeType.EDIT_TIME);
-							localEvent.setEndDateTimeInSec(fetchedEvent.getEndDateTimeInSec());
-						}
-						//location changed
-						if (!fetchedEventSet.getLocationList().equals(localEvent.getLocationList())) {
-							localEvent.addChange(TimetableChangeType.EDIT_LOCATION);
-							localEvent.setLocationList(fetchedEventSet.getLocationList());
-						}
-						//lecturer changed
-						if (!fetchedEventSet.getLecturerList().equals(localEvent.getLecturerList())) {
-							localEvent.addChange(TimetableChangeType.EDIT_LECTURER);
-							localEvent.setLecturerList(fetchedEventSet.getLecturerList());
-						}
-						//title has been updated
-						if (!fetchedEventSet.getTitle().equals(localEvent.getTitle())) {
-							//note: we don't want to mark this change
-							localEvent.setTitle(fetchedEventSet.getTitle());
-						}
-					}
-
-					//add deleted events for documentation
-					localEventSetEntry.getValue().addAll(deletedEvents);
-
 				}
 			}
 
 			//add new event sets
-			for (final String eventSetId : eventSetsAdded) {
-				final MyScheduleEventSetVo eventSet = fetchedEventSetsMap.get(eventSetId);
-				final List<MyScheduleEventVo> eventListToAdd = new ArrayList<>();
+			if ( eventSetsAdded != null && eventSetsAdded.size()>0 ) {
+				for (final String eventSetId : eventSetsAdded) {
+					final MyScheduleEventSetVo eventSet = fetchedEventSetsMap.get(eventSetId);
+					final List<MyScheduleEventVo> eventListToAdd = new ArrayList<>();
 
-				for (final MyScheduleEventDateVo addedEventDate : eventSet.getEventDates()) {
-					final MyScheduleEventVo eventToAdd = new MyScheduleEventVo(
-							eventSet.getTitle(),
-							eventSet.getId(),
-							addedEventDate.getStartDateTimeInSec(),
-							addedEventDate.getEndDateTimeInSec(),
-							eventSet.getLecturerList(),
-							eventSet.getLocationList());
-					eventToAdd.addChange(TimetableChangeType.ADDITION);
-					eventListToAdd.add(eventToAdd);
+					for (final MyScheduleEventDateVo addedEventDate : eventSet.getEventDates()) {
+						final MyScheduleEventVo eventToAdd = new MyScheduleEventVo(
+								eventSet.getTitle(),
+								eventSet.getId(),
+								addedEventDate.getStartDateTimeInSec(),
+								addedEventDate.getEndDateTimeInSec(),
+								eventSet.getLecturerList(),
+								eventSet.getLocationList());
+						eventToAdd.addChange(TimetableChangeType.ADDITION);
+						eventListToAdd.add(eventToAdd);
+					}
+					localEventsByEventSet.put(eventSetId, eventListToAdd);
 				}
-				localEventsByEventSet.put(eventSetId, eventListToAdd);
 			}
 
 			//flatten updated event list
