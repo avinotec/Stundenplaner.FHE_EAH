@@ -174,9 +174,9 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 					//set text bold
 					for (final TextView v : eventViews) {
 						if(v.getTypeface().equals(Typeface.ITALIC)){
-							v.setTypeface(null, Typeface.BOLD_ITALIC);
+							v.setTypeface(v.getTypeface(), Typeface.BOLD_ITALIC);
 						} else {
-							v.setTypeface(null, Typeface.BOLD);
+							v.setTypeface(v.getTypeface(), Typeface.BOLD);
 						}
 					}
 					break;
@@ -192,13 +192,13 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 					break;
 
 				case EDIT_TIME:
-					eventTime.setTypeface(null, Typeface.BOLD);
+					eventTime.setTypeface(eventTime.getTypeface(), Typeface.BOLD);
 					break;
 				case EDIT_LOCATION:
-					eventLocation.setTypeface(null, Typeface.BOLD);
+					eventLocation.setTypeface(eventLocation.getTypeface(), Typeface.BOLD);
 					break;
 				case EDIT_LECTURER:
-					eventLecturer.setTypeface(null, Typeface.BOLD_ITALIC);
+					eventLecturer.setTypeface(eventLecturer.getTypeface(), Typeface.BOLD_ITALIC);
 					break;
 			}
 		}
