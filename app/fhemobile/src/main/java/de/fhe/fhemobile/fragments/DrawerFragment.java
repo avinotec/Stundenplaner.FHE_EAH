@@ -66,7 +66,7 @@ public class DrawerFragment extends Fragment {
         mUserLearnedDrawer = mSP.getBoolean(PREF_USER_LEARNED_DRAWER, false);
 
         mCurrentSelectedPosition = mSP.getInt(PREF_SELECTED_POSITION, 0);
-        mCurrentSelectedId       = mSP.getInt(PREF_SELECTED_ID, Features.FeatureId.NEWS);
+        mCurrentSelectedId       = mSP.getInt(PREF_SELECTED_ID, Features.FeatureId.TIMETABLE);
 
         if (savedInstanceState != null) {
 //            mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
@@ -303,7 +303,7 @@ public class DrawerFragment extends Fragment {
     private View mFragmentContainerView;
 
     private int mCurrentSelectedPosition;
-    private int mCurrentSelectedId = Features.FeatureId.NEWS;
+    private int mCurrentSelectedId = Features.FeatureId.TIMETABLE;
     private boolean mFromSavedInstanceState;
     boolean mUserLearnedDrawer;
     private SharedPreferences mSP;

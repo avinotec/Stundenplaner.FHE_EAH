@@ -18,7 +18,6 @@ package de.fhe.fhemobile.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 
@@ -26,6 +25,7 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.canteen.CanteenSettingsFragment;
 import de.fhe.fhemobile.fragments.myschedule.MyScheduleSettingsFragment;
 import de.fhe.fhemobile.fragments.news.NewsCategoriesFragment;
+import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.Features;
 
 public class SettingsActivity extends SecondaryActivity {
@@ -49,7 +49,9 @@ public class SettingsActivity extends SecondaryActivity {
         switch(_Id) {
 
             case Features.FeatureId.NEWS:
-                setFragment(NewsCategoriesFragment.newInstance());
+                if(Define.ENABLE_V1_NEWS){
+                    setFragment(NewsCategoriesFragment.newInstance());
+                }
                 break;
 
             case Features.FeatureId.CANTEEN:
@@ -58,7 +60,6 @@ public class SettingsActivity extends SecondaryActivity {
             case Features.FeatureId.MYSCHEDULE:
                 setFragment(MyScheduleSettingsFragment.newInstance());
                 break;
-
         }
     }
 

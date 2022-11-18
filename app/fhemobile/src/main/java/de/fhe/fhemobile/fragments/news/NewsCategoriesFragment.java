@@ -48,9 +48,6 @@ public class NewsCategoriesFragment extends Fragment {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//
-//        }
     }
 
     @Override
