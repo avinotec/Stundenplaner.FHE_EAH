@@ -1,6 +1,0 @@
-# Contab Datei
-# start.php muss hierbei regelmäßig ausgeführt werden
-# Hierbei empfehle ich zum start erstmal jede Stunde -> jede Stunde zur Minute 0, zwischen 5 Uhr frühs und 22 Uhr Abends
-0 5-22 * * *	php {Pfad zur PHP Datei} > {Pfad zum Log} 2>&1
-
-# Ersten * durch 5-0 ersetzen damit nachts keine Benachrichtigungen gesendet werden.

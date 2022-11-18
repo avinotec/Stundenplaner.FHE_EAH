@@ -209,7 +209,7 @@ final class TimetableDb
 	    /** @var String $sql */
 	    $sql =
 	        /** @lang MySQL */
-	        "INSERT INTO fcm_user (token, eventseries_name, os, language) ".
+	        'INSERT INTO fcm_user (token, eventseries_name, os, language) '.
             "VALUES ('$fcm_token', '$subscribed_eventseries', '$os', '$language')";
 
 	    /** @var bool $result */
@@ -257,8 +257,8 @@ final class TimetableDb
         $sql =
             /** @lang MySQL */
             'SELECT token, language, os '
-            .'FROM fcm_user join event_sets on eventseries_name = eventseries '
-            ."WHERE module_id = '$module_id'";
+            .'FROM fcm_user join event_sets on eventseries_name = event_sets.eventseries '
+            ."WHERE event_sets.module_id = '$module_id'";
         /** @var mysqli_result|null $result */
         $result = $this->runQueryAndGetResult($sql, "getUserSubscribingAnythingInModule") ;
         return $result;
@@ -404,6 +404,41 @@ final class TimetableDb
         return true; //success
     }
 
+	
+	/** nur fuer DEBUGSQL
+	 * @return array | void
+	 */
+	public function debugDisplayAllEventSets() : array
+	{
+		if ($GLOBALS['DEBUGDATABASE']) {
+			
+			$sql = 'SELECT * FROM event_sets WHERE 1 = 1';
+			$result = $this->runQueryAndGetResult($sql, 'debugDisplayAllEventSets');
+			if (!is_null($result)) {
+				return $result->fetch_all(MYSQLI_ASSOC);
+			}
+		}
+		return array();
+	}
+
+
+	/** nur fuer DEBUGSQL
+	 * @return array | void
+	 */
+	public function debugDisplayAllFcmUser() : array
+	{
+		if ($GLOBALS['DEBUGDATABASE']) {
+			
+			$sql = 'SELECT * FROM fcm_user WHERE 1 = 1';
+			$result = $this->runQueryAndGetResult($sql, 'debugDisplayAllFcmUser');
+			if (!is_null($result)) {
+				return $result->fetch_all(MYSQLI_ASSOC);
+			}
+		}
+		return array();
+	}
+	
+	
 }
 
 

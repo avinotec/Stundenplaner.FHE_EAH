@@ -322,14 +322,14 @@ if ($debug) {
 }
 
 // Check each module for changes
-foreach ($moduleIds as $key => $moduleId) {
+foreach ($moduleIds as $modueleKey => $moduleId) {
 	$output .=  $moduleId . ", ";
 	// collect alle notifications that need to be sent concerning this moduleID
 	$notificationsToSend = array_unique(updateDatabaseAndGetNotifications($moduleId));
 
-    if ($debug) print_r($notificationsToSend);
+    if ($debug) {print_r($notificationsToSend);}
 	// iterate over notifications and send each one out
-    foreach ($notificationsToSend as $key => $notificationsData) {
+    foreach ($notificationsToSend as $notificationKey => $notificationsData) {
 
 		//TODO: notifications bündeln durch Umstellung von "to" => string nach "registration_ids" => array of tokens
         sendFCM($notificationsData["token"], $notificationsData["subject"], $notificationsData["tag"]);

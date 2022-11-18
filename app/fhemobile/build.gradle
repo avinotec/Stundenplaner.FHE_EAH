@@ -67,8 +67,8 @@ android {
     defaultConfig {
         minSdk 21
         targetSdkVersion 32
-        versionCode = 30
-        versionName = '3.3'
+        versionCode = 31
+        versionName = '3.3.1'
 
         multiDexEnabled = true
         resConfigs "de", "en", "notnight"
@@ -111,6 +111,10 @@ android {
             /* applicationId 'de.fhe.eahmobile' alte ID*/
             applicationId 'de.eahjena.stundenplan'
             dimension "version"
+    
+            // Debug App
+            buildConfigField "boolean", "ALLOW_INVALID_CERTIFICATE", "true"
+    
         }
         fhe {
             applicationId "de.fhe.fhemobile"
@@ -288,7 +292,7 @@ dependencies {
     // Testing-only dependencies
     //testImplementation 'junit:junit:4.+'
     implementation 'junit:junit:4.13.2'
-    implementation 'androidx.test:rules:1.4.0'
+    implementation 'androidx.test:rules:1.5.0'
     
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.google.android.material:material:1.7.0'
@@ -327,6 +331,10 @@ configurations.all {
 
 
     exclude group: 'com.android.support', module: ''
+    
+    // Compile SDK 33
+    exclude group: 'androidx.lifecycle', module: 'lifecycle-viewmodel-ktx'
+    
 }
 
 apply plugin: 'com.google.gms.google-services'
