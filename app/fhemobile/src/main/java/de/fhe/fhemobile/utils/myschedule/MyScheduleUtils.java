@@ -237,7 +237,7 @@ public final class MyScheduleUtils {
 			final Gson gson = new Gson();
 			String localEventsJson = gson.toJson(localEventSeries.getEvents());
 			@NonNls final String fetchedEventsJson = gson.toJson(fetchedEventSeries.getEvents());
-			//TODO was wird hier entsorgt?
+			//remove change marks from local json to enable comparison with fetched json
 			localEventsJson = localEventsJson.replaceAll("\"typesOfChanges\":\\[(\"[A-Z]+,?\")+\\]","\"typesOfChanges\":[]");
 			if(localEventsJson.equals(fetchedEventsJson)) {
 				Log.d(TAG, "Detection of my schedule changes skipped because events are equal");
@@ -245,10 +245,12 @@ public final class MyScheduleUtils {
 			}
 
 			//detect added event sets
-			final Set<String> eventSetsAdded = Sets.difference( fetchedEventSeries.getEventSetIds(), localEventSeries.getEventSetIds());
+			final Set<String> eventSetsAdded = Sets.difference(
+					fetchedEventSeries.getEventSetIds(), localEventSeries.getEventSetIds());
 
 			//detect deleted event sets
-			final Set<String> eventSetsDeleted = Sets.difference( localEventSeries.getEventSetIds(), fetchedEventSeries.getEventSetIds());
+			final Set<String> eventSetsDeleted = Sets.difference(
+					localEventSeries.getEventSetIds(), fetchedEventSeries.getEventSetIds());
 
 			//detect changed events + update deleted and changed events
 			final Map<String, List<MyScheduleEventVo>> localEventsByEventSet = groupByEventSet(localEventSeries.getEvents());
@@ -278,7 +280,7 @@ public final class MyScheduleUtils {
 							//FIND DELETED EVENTS
 							if (fetchedEventDates.size() < localEventSetEntry.getValue().size()) {
 
-								//detect deleted events in localEventSet
+								//detect deleted events by screening localEvent
 								for (int i = 0; i < localEventSetEntry.getValue().size(); i++) {
 									final MyScheduleEventVo localEvent = localEventSetEntry.getValue().get(i);
 									MyScheduleEventDateVo fetchedEvent = null;
