@@ -28,7 +28,6 @@ import org.junit.Assert;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -245,11 +244,11 @@ public final class MyScheduleUtils {
 		return updatedEventSeriesList;
 	}
 
-	/**
+	/** TODO unused?
 	 * Get a list of all event set IDs contained in the given event series'
 	 * @return List of event set ID strings
 	 */
-	public static ArrayList<String> collectEventSetIds(final List<MyScheduleEventSeriesVo> eventSeriesVos){
+/*	public static ArrayList<String> collectEventSetIds(final List<MyScheduleEventSeriesVo> eventSeriesVos){
 		ArrayList<String> eventSetIds = new ArrayList<>();
 
 		for(final MyScheduleEventSeriesVo eventSeries : eventSeriesVos) {
@@ -260,7 +259,12 @@ public final class MyScheduleUtils {
 
 		return eventSetIds;
 	}
+ */
 
+	/**
+	 *
+	 * @param examTitle
+	 */
 	private static void showExamAddedToast(final String examTitle){
 		Utils.showToast(Main.getAppContext().getString(R.string.exam_added) + ":\n"+ examTitle);
 	}
