@@ -212,7 +212,7 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 	 * return the index of the previous event.
 	 * @return The position of the first event with today's date
 	 */
-	public int getPositionOfFirstEventToday(){
+	public final int getPositionOfFirstEventToday(){
 		//iteration variables
 		int posToday = -1;
 		Long k = null;
