@@ -138,12 +138,12 @@ public class ServerRegistrationBackgroundTask implements Runnable {
             //Handles input and output errors
         } catch (final NullPointerException error) {
             Log.e(TAG, "NullPointerException", error);
-        } catch (final Exception e){
+        } catch (final RuntimeException e){
             Log.e(TAG, "Exception", e);
         }
     }
 
-    private String encodeAsParam(final String name, final String value) throws UnsupportedEncodingException {
+    private static String encodeAsParam(final String name, final String value) throws UnsupportedEncodingException {
         return "&" + URLEncoder.encode(name, "UTF-8")
                 + "=" + URLEncoder.encode(value, "UTF-8");
     }
