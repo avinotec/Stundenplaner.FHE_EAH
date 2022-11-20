@@ -244,23 +244,6 @@ public final class MyScheduleUtils {
 		return updatedEventSeriesList;
 	}
 
-	/* TODO unused?
-	 * Get a list of all event set IDs contained in the given event series'
-	 * @return List of event set ID strings
-	 */
-/*	public static ArrayList<String> collectEventSetIds(final List<MyScheduleEventSeriesVo> eventSeriesVos){
-		ArrayList<String> eventSetIds = new ArrayList<>();
-
-		for(final MyScheduleEventSeriesVo eventSeries : eventSeriesVos) {
-			eventSetIds.addAll(eventSeries.getEventSetIds());
-		}
-		//remove duplicates
-		eventSetIds = new ArrayList<>(new HashSet<>(eventSetIds));
-
-		return eventSetIds;
-	}
- */
-
 	/**
 	 *
 	 * @param examTitle
@@ -300,9 +283,9 @@ public final class MyScheduleUtils {
 				localEventSeries.getEventSetIds(), fetchedEventSeries.getEventSetIds());
 
 		//detect changed events + update deleted and changed events
-		final Map<String, List<MyScheduleEventVo>> localEventsByEventSet = groupByEventSet(localEventSeries.getEvents());
+		final Map<String, List<MyScheduleEventVo>> eventsByEventSetToBeUpdated = groupByEventSet(localEventSeries.getEvents());
 
-		for (final Map.Entry<String, List<MyScheduleEventVo>> localEventSetEntry : localEventsByEventSet.entrySet()) {
+		for (final Map.Entry<String, List<MyScheduleEventVo>> localEventSetEntry : eventsByEventSetToBeUpdated.entrySet()) {
 
 			//set events deleted
 			if (eventSetsDeleted.contains(localEventSetEntry.getKey())) {
@@ -445,17 +428,17 @@ public final class MyScheduleUtils {
 					eventToAdd.addChange(TimetableChangeType.ADDITION);
 					eventListToAdd.add(eventToAdd);
 				}
-				localEventsByEventSet.put(eventSetId, eventListToAdd);
+				eventsByEventSetToBeUpdated.put(eventSetId, eventListToAdd);
 			}
 		}
 
 		//flatten updated event list
 		final List<MyScheduleEventVo> updatedEvents = new ArrayList<>();
-		for (final List<MyScheduleEventVo> events : localEventsByEventSet.values()) {
+		for (final List<MyScheduleEventVo> events : eventsByEventSetToBeUpdated.values()) {
 			updatedEvents.addAll(events);
 		}
 		//set updated events
-		localEventSeries.setEvents(updatedEvents, localEventsByEventSet.keySet());
+		localEventSeries.setEvents(updatedEvents, eventsByEventSetToBeUpdated.keySet());
 	}
 
 }

@@ -90,17 +90,10 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 
 	public void addEvents(final List<MyScheduleEventVo> events) { this.mEvents.addAll(events); }
 
-	// TODO parameter eventSetIds wird nicht verwendet
 	public void setEvents(final List<MyScheduleEventVo> mEvents, final Set<String> evenSetIds) {
 		this.mEvents = mEvents;
+		this.mEventSetIds = evenSetIds;
 	}
-
-	//unused
-	//public void removeEvent(final MyScheduleEventVo event){ this.mEvents.remove(event); }
-	//unused
-	//public void removeEventSetId(final String eventSetId){
-	//                                                  TODO wrong type, eventSetID ist String, die Liste hat aber MyScheduleEventVo
-	//	if(mEventSetIds.contains(eventSetId)) mEvents.remove(eventSetId); }
 
 	public boolean isSubscribed() {
 		return subscribed;

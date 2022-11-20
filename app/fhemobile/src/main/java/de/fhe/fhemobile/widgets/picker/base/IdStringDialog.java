@@ -51,19 +51,10 @@ public class IdStringDialog extends DialogFragment {
         return builder.create();
     }
 
-    //onStart---------------------------------------------------------------------------------------
-/*
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
-*/
-
     //initDialog------------------------------------------------------------------------------------
     public void initDialog(final Context _Context, final List<IdItem> _Items, final String _Title) {
-        mContext     = _Context;
-        mItems       = _Items;
+        mContext = _Context;
+        mItems = _Items;
         mItemAdapter = new ArrayAdapter<>(mContext, android.R.layout.select_dialog_item);
 
         //fill the adapter
@@ -78,12 +69,6 @@ public class IdStringDialog extends DialogFragment {
         mListener = _Listener;
     }
 
-    //onDismiss-------------------------------------------------------------------------------------
-//    @Override
-//    public void onDismiss(@NonNull final DialogInterface dialog) {
-//        super.onDismiss(dialog);
-//    }
-
     private final AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
@@ -95,9 +80,9 @@ public class IdStringDialog extends DialogFragment {
     };
 
 
-    private Context              mContext;
-    List<IdItem>         mItems;
-    private String               mTitle;
-    private ArrayAdapter<String> mItemAdapter;
-    OnItemChosenListener mListener;
+    private Context                 mContext;
+    List<IdItem>                    mItems;
+    private String                  mTitle;
+    private ArrayAdapter<String>    mItemAdapter;
+    OnItemChosenListener            mListener;
 }
