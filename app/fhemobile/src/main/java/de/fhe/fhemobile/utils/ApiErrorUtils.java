@@ -24,6 +24,7 @@ import java.io.IOException;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.vos.ApiErrorResponse;
+import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 /**
@@ -61,7 +62,10 @@ public final class ApiErrorUtils {
         final Gson gson = new GsonBuilder().create();
         ApiErrorResponse error = new ApiErrorResponse();
         try {
-            error = gson.fromJson(response.errorBody().string(), ApiErrorResponse.class);
+            final ResponseBody body = response.errorBody();
+            if (body != null) {
+                error = gson.fromJson(body.string(), ApiErrorResponse.class);
+            }
         } catch (final IOException e) { }
         return error;
     }
