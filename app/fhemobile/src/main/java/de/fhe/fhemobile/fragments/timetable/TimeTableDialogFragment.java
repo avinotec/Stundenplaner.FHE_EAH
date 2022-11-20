@@ -228,7 +228,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
                 mView.setStudyCourseItems(studyPrograms);
             } else {
-                ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
                 ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.TIMETABLE_DIALOG_FRAGMENT_CODE1);
             }
         }

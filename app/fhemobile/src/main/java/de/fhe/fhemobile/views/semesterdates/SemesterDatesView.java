@@ -54,7 +54,7 @@ public class SemesterDatesView extends LinearLayout {
     public void initializeView() {
         if(mModel.getSemesterVos() != null) {
             initializeList();
-            TextView tvTitle = findViewById(R.id.tv_semester_title);
+            final TextView tvTitle = findViewById(R.id.tv_semester_title);
             //decided for name instead of long name when introducing previous and next semester buttons
             tvTitle.setText(mModel.getChosenSemesterVo().getLongName());
         }

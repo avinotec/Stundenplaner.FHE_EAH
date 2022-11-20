@@ -58,7 +58,7 @@ public abstract class SecondaryActivity extends AppCompatActivity {
         mContainer.addView(mContent);
     }
 
-    protected void setFragment(Fragment fragment){
+    protected void setFragment(final Fragment fragment){
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container_secondary_activity, fragment)
                 .commit();

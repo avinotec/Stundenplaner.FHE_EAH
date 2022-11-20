@@ -27,12 +27,5 @@
         android:scaleType="centerCrop"
         />
 
-    <de.fhe.fhemobile.widgets.AquaWidget
-        android:id="@+id/itemHeaderAquaWidget"
-        android:layout_width="92dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        />
-
 
 </RelativeLayout>

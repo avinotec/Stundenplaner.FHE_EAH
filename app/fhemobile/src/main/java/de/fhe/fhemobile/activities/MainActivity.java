@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if (mToolbar != null) setSupportActionBar(mToolbar);
         
         mDrawerFragment = (DrawerFragment) getSupportFragmentManager()

@@ -28,7 +28,6 @@ import org.junit.Assert;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -245,11 +244,11 @@ public final class MyScheduleUtils {
 		return updatedEventSeriesList;
 	}
 
-	/**
+	/** TODO unused?
 	 * Get a list of all event set IDs contained in the given event series'
 	 * @return List of event set ID strings
 	 */
-	public static ArrayList<String> collectEventSetIds(final List<MyScheduleEventSeriesVo> eventSeriesVos){
+/*	public static ArrayList<String> collectEventSetIds(final List<MyScheduleEventSeriesVo> eventSeriesVos){
 		ArrayList<String> eventSetIds = new ArrayList<>();
 
 		for(final MyScheduleEventSeriesVo eventSeries : eventSeriesVos) {
@@ -260,7 +259,12 @@ public final class MyScheduleUtils {
 
 		return eventSetIds;
 	}
+ */
 
+	/**
+	 *
+	 * @param examTitle
+	 */
 	private static void showExamAddedToast(final String examTitle){
 		Utils.showToast(Main.getAppContext().getString(R.string.exam_added) + ":\n"+ examTitle);
 	}
@@ -272,9 +276,9 @@ public final class MyScheduleUtils {
 	 * @param fetchedEventSetsMap The map of fetched event sets (to detect added event sets and changes event properties)
 	 */
 	private static void detectChangesAndUpdateLocal(
-			MyScheduleEventSeriesVo localEventSeries,
-			MyScheduleEventSeriesVo fetchedEventSeries,
-			Map<String, MyScheduleEventSetVo> fetchedEventSetsMap){
+			final MyScheduleEventSeriesVo localEventSeries,
+			final MyScheduleEventSeriesVo fetchedEventSeries,
+			final Map<String, MyScheduleEventSetVo> fetchedEventSetsMap){
 
 		//skip change detection if events of the event series' are equal
 		final Gson gson = new Gson();
@@ -425,7 +429,7 @@ public final class MyScheduleUtils {
 		}
 
 		//add new event sets
-		if (eventSetsAdded != null && eventSetsAdded.size() > 0) {
+		if (eventSetsAdded != null && !eventSetsAdded.isEmpty()) {
 			for (final String eventSetId : eventSetsAdded) {
 				final MyScheduleEventSetVo eventSet = fetchedEventSetsMap.get(eventSetId);
 				final List<MyScheduleEventVo> eventListToAdd = new ArrayList<>();

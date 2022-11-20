@@ -119,7 +119,7 @@ public final class SemesterDatesModel extends EventDispatcher {
 
             //set chosen semester to current
             for (int i = 0; i < mSemesterVos.length; i++) {
-                String semesterName = mSemesterVos[i].getName(); //e.g. WS 2022/2023 or SS 2022
+                final String semesterName = mSemesterVos[i].getName(); //e.g. WS 2022/2023 or SS 2022
 
                 // if semester name is "SS currentYear"
                 if (semesterName.endsWith(currentYear.toString())

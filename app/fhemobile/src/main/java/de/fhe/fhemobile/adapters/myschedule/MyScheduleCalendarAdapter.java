@@ -160,7 +160,7 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 
 		//HIGHLIGHT CHANGES
 		//reset change highlighting before
-		for(TextView v : eventViews){
+		for(final TextView v : eventViews){
 			v.setTypeface(v.getTypeface(), Typeface.NORMAL);
 			//reset strike through if necessary
 			if((v.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) == Paint.STRIKE_THRU_TEXT_FLAG){
@@ -212,7 +212,7 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 	 * return the index of the previous event.
 	 * @return The position of the first event with today's date
 	 */
-	public int getPositionOfFirstEventToday(){
+	public final int getPositionOfFirstEventToday(){
 		//iteration variables
 		int posToday = -1;
 		Long k = null;

@@ -19,12 +19,11 @@ package de.fhe.fhemobile.network;
 import java.util.ArrayList;
 import java.util.Map;
 
-import de.fhe.fhemobile.vos.myschedule.ModuleVo;
-import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSetVo;
-import de.fhe.fhemobile.vos.CafeAquaResponse;
 import de.fhe.fhemobile.vos.WeatherResponse;
 import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
 import de.fhe.fhemobile.vos.canteen.CanteenVo;
+import de.fhe.fhemobile.vos.myschedule.ModuleVo;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSetVo;
 import de.fhe.fhemobile.vos.news.NewsCategoryResponse;
 import de.fhe.fhemobile.vos.news.NewsItemResponse;
 import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
@@ -62,9 +61,6 @@ public interface ApiDeclaration {
     
     @GET(Endpoints.WEATHER)
     Call<WeatherResponse> fetchWeather();
-    
-    @GET(Endpoints.AQUA)
-    Call<CafeAquaResponse> fetchCafeAquaStatus();
     
     @GET(Endpoints.TIMETABLE)
     Call<TimeTableDialogResponse> fetchStudyProgramData();

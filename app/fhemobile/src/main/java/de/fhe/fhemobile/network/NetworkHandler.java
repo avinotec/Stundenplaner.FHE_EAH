@@ -21,7 +21,6 @@ import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.getUpdatedEventS
 import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.groupByModuleId;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -32,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
@@ -44,7 +42,6 @@ import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.canteen.CanteenUtils;
 import de.fhe.fhemobile.vos.ApiErrorResponse;
-import de.fhe.fhemobile.vos.CafeAquaResponse;
 import de.fhe.fhemobile.vos.WeatherResponse;
 import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
 import de.fhe.fhemobile.vos.canteen.CanteenMenuDayVo;
@@ -141,7 +138,7 @@ public final class NetworkHandler {
                 if (response.isSuccessful()) {
                     PhonebookModel.getInstance().setFoundEmployees(response.body());
                 } else {
-                    ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                    final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
                     ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE1);
                 }
             }
@@ -178,7 +175,7 @@ public final class NetworkHandler {
                 if (response.isSuccessful()) {
                     SemesterDatesModel.getInstance().setData(response.body().getSemester());
                 } else {
-                    ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                    final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
                     ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE2);
                 }
             }
@@ -309,7 +306,7 @@ public final class NetworkHandler {
                 if (response.isSuccessful()) {
                     CanteenModel.getInstance().setCanteens(response.body());
                 } else {
-                    ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                    final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
                     ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE3);
                 }
             }
@@ -340,7 +337,7 @@ public final class NetworkHandler {
                 if (response.isSuccessful()) {
                     NewsModel.getInstance().setCategoryItems(response.body().getNewsCategories());
                 } else {
-                    ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                    final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
                     ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE4);
                 }
             }
@@ -359,7 +356,7 @@ public final class NetworkHandler {
     }
 
     /**
-     * *
+     * * TODO Methode doppelt?
      */
     public void fetchAvailableNewsLists(final Callback<NewsCategoryResponse> _Callback) {
         Assert.assertTrue(mApiErfurt != null);
@@ -432,7 +429,7 @@ public final class NetworkHandler {
          */
         requestCounterMySchedule = 0;
         /* Das ist unser Halter für die Antworten */
-        List<MyScheduleEventSeriesVo> updatedEventSeriesList = new ArrayList<>();
+        final List<MyScheduleEventSeriesVo> updatedEventSeriesList = new ArrayList<>();
 
         //iterate over modules
         for (final Map.Entry<String, Map<String, MyScheduleEventSeriesVo>> module : modules.entrySet()) {
@@ -452,7 +449,7 @@ public final class NetworkHandler {
                             updatedEventSeriesList.addAll(
 									getUpdatedEventSeries(module.getValue(), response.body().getEventSets()));
                         } else {
-                            ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                            final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
                             ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE5);
                             //add old event series' to prevent them from getting lost
                             updatedEventSeriesList.addAll(module.getValue().values());
@@ -492,12 +489,5 @@ public final class NetworkHandler {
         }
     }
 
-    /**
-     * @param _Callback
-     */
-    public void fetchCafeAquaStatus(final Callback<CafeAquaResponse> _Callback) {
-        Assert.assertTrue(mApiErfurt != null);
-        mApiErfurt.fetchCafeAquaStatus().enqueue(_Callback);
-    }
 
 }

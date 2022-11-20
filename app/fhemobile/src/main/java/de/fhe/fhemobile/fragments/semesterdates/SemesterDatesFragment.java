@@ -27,7 +27,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 
@@ -73,10 +72,10 @@ public class SemesterDatesFragment extends FeatureFragment {
             }
 
             @Override
-            public void onPrepareMenu(@NonNull Menu menu) {
+            public void onPrepareMenu(@NonNull final Menu menu) {
                 MenuProvider.super.onPrepareMenu(menu);
 
-                MenuItem itemPreviousSemester = menu.findItem(R.id.action_previous_semester);
+                final MenuItem itemPreviousSemester = menu.findItem(R.id.action_previous_semester);
                 if(itemPreviousSemester != null){
                     if(mModel.getChosenSemester() == 0){
                         itemPreviousSemester.setEnabled(false);
@@ -87,7 +86,7 @@ public class SemesterDatesFragment extends FeatureFragment {
                     }
                 }
 
-                MenuItem itemNextSemester = menu.findItem(R.id.action_next_semester);
+                final MenuItem itemNextSemester = menu.findItem(R.id.action_next_semester);
                 if(itemNextSemester != null){
                     if(mModel.getSemesterVos() != null &&
                             mModel.getChosenSemester() == mModel.getSemesterVos().length - 1){
@@ -173,7 +172,7 @@ public class SemesterDatesFragment extends FeatureFragment {
             if(event.getType().equals(SemesterDatesChangeEvent.RECEIVED_SEMESTER_DATES) ||
                event.getType().equals(SemesterDatesChangeEvent.SEMESTER_SELECTION_CHANGED)) {
 
-                TextView tvTitle = mView.findViewById(R.id.tv_semester_title);
+                final TextView tvTitle = mView.findViewById(R.id.tv_semester_title);
                 tvTitle.setText(mModel.getChosenSemesterVo().getLongName());
             }
         }
