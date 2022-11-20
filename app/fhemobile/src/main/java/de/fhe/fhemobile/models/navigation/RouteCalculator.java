@@ -271,7 +271,7 @@ public class RouteCalculator {
                     //check normal walkable cell
                     if (floorGrid[x][y] == null){
                         //x_y is used as key to store the cell
-                        final Cell aCell = walkableCells.get( "" + x + '_' + y );
+                        final Cell aCell = walkableCells.get(x + "_" + y);
                         if(aCell != null){
                             //add a walkable cell with coordinates x,y to grid
                             floorGrid[x][y] = new Cell(x, y, complex, floor, true);

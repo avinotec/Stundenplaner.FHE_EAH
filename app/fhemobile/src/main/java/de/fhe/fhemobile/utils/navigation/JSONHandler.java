@@ -310,7 +310,7 @@ public final class JSONHandler {
                 entry.setWalkability(jEntry.optBoolean(WALKABLE));
 
                 /* walkableCells.put(Integer.toString(x) + '_' + Integer.toString(y), entry); */
-                walkableCells.put("" + x + '_' + y, entry);
+                walkableCells.put(x + "_" + y, entry);
 
             }
         } catch (final JSONException e) {
