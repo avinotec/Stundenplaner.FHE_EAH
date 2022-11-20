@@ -34,7 +34,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.webkit.WebView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;

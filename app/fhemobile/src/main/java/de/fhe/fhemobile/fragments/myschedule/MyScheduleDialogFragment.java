@@ -28,20 +28,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import org.junit.Assert;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.myschedule.MyScheduleDialogAdapter;
 import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
@@ -215,7 +213,7 @@ public class MyScheduleDialogFragment extends DialogFragment {
 
     private final Callback<TimeTableDialogResponse> mFetchStudyProgramDataCallback = new Callback<TimeTableDialogResponse>() {
         @Override
-        public void onResponse(final Call<TimeTableDialogResponse> call, final Response<TimeTableDialogResponse> response) {
+        public void onResponse(@NonNull final Call<TimeTableDialogResponse> call, final Response<TimeTableDialogResponse> response) {
             if(response.body() != null){
 
                 mStudyProgramDataResponse = response.body();
@@ -249,7 +247,7 @@ public class MyScheduleDialogFragment extends DialogFragment {
 
     final Callback<Map<String, MyScheduleEventSetVo>> mFetchSemesterTimeTableCallback = new Callback<Map<String, MyScheduleEventSetVo>>() {
         @Override
-        public void onResponse(final Call<Map<String, MyScheduleEventSetVo>> call, final Response<Map<String, MyScheduleEventSetVo>> response) {
+        public void onResponse(@NonNull final Call<Map<String, MyScheduleEventSetVo>> call, final Response<Map<String, MyScheduleEventSetVo>> response) {
             if(response.body() != null){
 
                 final List<MyScheduleEventSeriesVo> eventSeriesVos = groupByEventTitle(response.body());

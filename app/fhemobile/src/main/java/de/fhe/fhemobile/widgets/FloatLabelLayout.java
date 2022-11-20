@@ -47,6 +47,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.ViewPropertyAnimatorListenerAdapter;
 
@@ -251,7 +252,7 @@ public class FloatLabelLayout extends LinearLayout {
                     .scaleY(scale)
                     .setListener(new ViewPropertyAnimatorListenerAdapter() {
                         @Override
-                        public void onAnimationEnd(final View view) {
+                        public void onAnimationEnd(@NonNull final View view) {
                             mLabel.setVisibility(INVISIBLE);
                             mEditText.setHint(mHint);
                         }

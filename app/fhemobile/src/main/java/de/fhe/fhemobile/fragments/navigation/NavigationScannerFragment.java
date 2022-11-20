@@ -84,7 +84,7 @@ public class NavigationScannerFragment extends FeatureFragment implements ZXingS
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+    public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mScannerView = new ZXingScannerView(getContext());

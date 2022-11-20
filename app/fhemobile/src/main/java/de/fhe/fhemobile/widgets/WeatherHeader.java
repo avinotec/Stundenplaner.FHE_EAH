@@ -23,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -95,7 +97,7 @@ public class WeatherHeader extends RelativeLayout {
     
     private final Callback<WeatherResponse> mWeatherResponseCallback = new Callback<WeatherResponse>() {
         @Override
-        public void onResponse(final Call<WeatherResponse> call, final Response<WeatherResponse> response) {
+        public void onResponse(@NonNull final Call<WeatherResponse> call, final Response<WeatherResponse> response) {
             // MS: Bei den News sind die news/0 kaputt
             if ( response.body() != null ) {
                 update(response.body().getTemperature(), response.body().getBackgroundId(), response.body().getIconId());
@@ -103,7 +105,7 @@ public class WeatherHeader extends RelativeLayout {
         }
 
         @Override
-        public void onFailure(final Call<WeatherResponse> call, final Throwable t) {
+        public void onFailure(@NonNull final Call<WeatherResponse> call, @NonNull final Throwable t) {
 
         }
 

@@ -1,5 +1,6 @@
 package de.fhe.fhemobile.adapters.canteen;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
@@ -26,6 +27,7 @@ public class CanteenPagerAdapter extends FragmentStateAdapter {
 
     }
 
+    @NonNull
     @Override
     public Fragment createFragment(final int position) {
         return fragments.get(position);

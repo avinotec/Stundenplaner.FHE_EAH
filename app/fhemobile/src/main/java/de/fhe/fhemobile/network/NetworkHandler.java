@@ -22,6 +22,8 @@ import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.groupByModuleId;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -134,7 +136,7 @@ public final class NetworkHandler {
              * @param response
              */
             @Override
-            public void onResponse(final Call<ArrayList<EmployeeVo>> call, final Response<ArrayList<EmployeeVo>> response) {
+            public void onResponse(@NonNull final Call<ArrayList<EmployeeVo>> call, @NonNull final Response<ArrayList<EmployeeVo>> response) {
                 if (response.isSuccessful()) {
                     PhonebookModel.getInstance().setFoundEmployees(response.body());
                 } else {
@@ -149,7 +151,7 @@ public final class NetworkHandler {
              * @param t
              */
             @Override
-            public void onFailure(final Call<ArrayList<EmployeeVo>> call, final Throwable t) {
+            public void onFailure(@NonNull final Call<ArrayList<EmployeeVo>> call, @NonNull final Throwable t) {
                 ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE7);
                 Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
             }
@@ -171,7 +173,7 @@ public final class NetworkHandler {
              * @param response
              */
             @Override
-            public void onResponse(final Call<SemesterDatesVo> call, final Response<SemesterDatesVo> response) {
+            public void onResponse(@NonNull final Call<SemesterDatesVo> call, @NonNull final Response<SemesterDatesVo> response) {
                 if (response.isSuccessful()) {
                     SemesterDatesModel.getInstance().setData(response.body().getSemester());
                 } else {
@@ -186,7 +188,7 @@ public final class NetworkHandler {
              * @param t
              */
             @Override
-            public void onFailure(final Call<SemesterDatesVo> call, final Throwable t) {
+            public void onFailure(@NonNull final Call<SemesterDatesVo> call, @NonNull final Throwable t) {
                 ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE8);
                 Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
             }
@@ -206,7 +208,7 @@ public final class NetworkHandler {
             mApiErfurt.fetchCanteenData(canteenId).enqueue(new Callback<CanteenDishVo[]>() {
 
                 @Override
-                public void onResponse(final Call<CanteenDishVo[]> call, final Response<CanteenDishVo[]> response) {
+                public void onResponse(@NonNull final Call<CanteenDishVo[]> call, @NonNull final Response<CanteenDishVo[]> response) {
                     Log.d(TAG, "Canteen: " + call.request().url());
                     final CanteenDishVo[] dishes = response.body();
                     List<CanteenMenuDayVo> sortedDishes = null;
@@ -227,7 +229,7 @@ public final class NetworkHandler {
                  * @param t
                  */
                 @Override
-                public void onFailure(final Call<CanteenDishVo[]> call, final Throwable t) {
+                public void onFailure(@NonNull final Call<CanteenDishVo[]> call, @NonNull final Throwable t) {
                     ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE9);
                 }
             });
@@ -247,7 +249,7 @@ public final class NetworkHandler {
              * @param response
              */
             @Override
-            public void onResponse(final Call<NewsItemResponse> call, final Response<NewsItemResponse> response) {
+            public void onResponse(@NonNull final Call<NewsItemResponse> call, @NonNull final Response<NewsItemResponse> response) {
                 // MS: Bei den News sind die news/0 kaputt
                 if (response.code() == 200) {
                     if (response.body() != null) {
@@ -277,7 +279,7 @@ public final class NetworkHandler {
              * @param t
              */
             @Override
-            public void onFailure(final Call<NewsItemResponse> call, final Throwable t) {
+            public void onFailure(@NonNull final Call<NewsItemResponse> call, @NonNull final Throwable t) {
                 ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE10);
                 Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
             }
@@ -302,7 +304,7 @@ public final class NetworkHandler {
         mApiErfurt.fetchAvailableCanteens().enqueue(new Callback<CanteenVo[]>() {
 
             @Override
-            public void onResponse(final Call<CanteenVo[]> call, final Response<CanteenVo[]> response) {
+            public void onResponse(@NonNull final Call<CanteenVo[]> call, @NonNull final Response<CanteenVo[]> response) {
                 if (response.isSuccessful()) {
                     CanteenModel.getInstance().setCanteens(response.body());
                 } else {
@@ -312,7 +314,7 @@ public final class NetworkHandler {
             }
 
             @Override
-            public void onFailure(final Call<CanteenVo[]> call, final Throwable t) {
+            public void onFailure(@NonNull final Call<CanteenVo[]> call, @NonNull final Throwable t) {
                 ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE11);
                 Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
             }
@@ -332,7 +334,7 @@ public final class NetworkHandler {
              * @param response
              */
             @Override
-            public void onResponse(final Call<NewsCategoryResponse> call, final Response<NewsCategoryResponse> response) {
+            public void onResponse(@NonNull final Call<NewsCategoryResponse> call, @NonNull final Response<NewsCategoryResponse> response) {
                 // MS: Bei den News sind die news/0 kaputt
                 if (response.isSuccessful()) {
                     NewsModel.getInstance().setCategoryItems(response.body().getNewsCategories());
@@ -348,7 +350,7 @@ public final class NetworkHandler {
              * @param t
              */
             @Override
-            public void onFailure(final Call<NewsCategoryResponse> call, final Throwable t) {
+            public void onFailure(@NonNull final Call<NewsCategoryResponse> call, @NonNull final Throwable t) {
                 ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE12);
                 Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
             }
@@ -418,7 +420,7 @@ public final class NetworkHandler {
         final Map<String, Map<String, MyScheduleEventSeriesVo>> modules =
                 groupByModuleId(Main.getSubscribedEventSeries());
 
-        /**
+        /*
          *  From java 5 after a change in Java memory model reads and writes are atomic for all
          *  variables declared using the volatile keyword (including long and double variables) and
          *  simple atomic variable access is more efficient instead of accessing these variables
@@ -442,8 +444,8 @@ public final class NetworkHandler {
                 mApiEah.fetchModule(module.getKey()).enqueue(new Callback<ModuleVo>() {
 
                     @Override
-                    public void onResponse(final Call<ModuleVo> call,
-                                           final Response<ModuleVo> response) {
+                    public void onResponse(@NonNull final Call<ModuleVo> call,
+                                           @NonNull final Response<ModuleVo> response) {
 
                         if (response.isSuccessful()) {
                             updatedEventSeriesList.addAll(
@@ -463,7 +465,7 @@ public final class NetworkHandler {
                     }
 
                     @Override
-                    public void onFailure(final Call<ModuleVo> call, final Throwable t) {
+                    public void onFailure(@NonNull final Call<ModuleVo> call, @NonNull final Throwable t) {
                         ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE6);
                         Utils.showToast(R.string.myschedule_connection_failed);
                         Log.d(TAG, "failure: request " + call.request().url() + " (internal: " + t.getCause() + ")");

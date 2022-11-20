@@ -31,7 +31,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.MenuHost;
@@ -146,7 +145,7 @@ public class TimeTableFragment extends FeatureFragment {
 
 	private final Callback<Map<String, TimeTableWeekVo>> mCallback = new Callback<Map<String, TimeTableWeekVo>>() {
 		@Override
-		public void onResponse(final Call<Map<String, TimeTableWeekVo>> call, final Response<Map<String, TimeTableWeekVo>> response) {
+		public void onResponse(@NonNull final Call<Map<String, TimeTableWeekVo>> call, final Response<Map<String, TimeTableWeekVo>> response) {
 			if(response.isSuccessful()){
 				final ArrayList<TimeTableWeekVo> weekVos = new ArrayList(response.body().values());
 				mView.setPagerItems(weekVos);
@@ -166,11 +165,14 @@ public class TimeTableFragment extends FeatureFragment {
 			}
 		}
 
-		@Override
 		/**
+		 *
 		 * Is called on network failures and RetroFit conversion errors
+		 * @param call
+		 * @param t
 		 */
-		public void onFailure(final Call<Map<String, TimeTableWeekVo>> call, final Throwable t) {
+		@Override
+		public void onFailure(@NonNull final Call<Map<String, TimeTableWeekVo>> call, @NonNull final Throwable t) {
 			if(t instanceof IOException){
 				ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.TIMETABLE_FRAGMENT_CODE3);
 				Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
@@ -183,7 +185,7 @@ public class TimeTableFragment extends FeatureFragment {
 		}
 	};
 
-	private void restoreTimetableFromSharedPreferences(){
+	void restoreTimetableFromSharedPreferences(){
 		//load timetable from shared preferences
 		final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences(SP_TIMETABLE, Context.MODE_PRIVATE);
 		final String json = sharedPreferences.getString(SP_TIMETABLE, "");

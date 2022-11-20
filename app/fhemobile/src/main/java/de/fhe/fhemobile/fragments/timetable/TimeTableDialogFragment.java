@@ -26,7 +26,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.MenuHost;
@@ -36,7 +35,6 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 import java.util.Map;
 
-import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
@@ -212,7 +210,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
     private final Callback<TimeTableDialogResponse> mFetchStudyProgramDataCallback = new Callback<TimeTableDialogResponse>() {
         @Override
-        public void onResponse(final Call<TimeTableDialogResponse> call, final Response<TimeTableDialogResponse> response) {
+        public void onResponse(@NonNull final Call<TimeTableDialogResponse> call, final Response<TimeTableDialogResponse> response) {
             if (response.isSuccessful()){
                 mResponse = response.body();
 

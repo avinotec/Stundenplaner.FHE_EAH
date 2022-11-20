@@ -25,7 +25,6 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
