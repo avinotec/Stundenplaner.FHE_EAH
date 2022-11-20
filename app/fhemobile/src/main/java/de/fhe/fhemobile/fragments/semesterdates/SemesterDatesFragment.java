@@ -178,7 +178,7 @@ public class SemesterDatesFragment extends FeatureFragment {
         }
     };
 
-    private SemesterDatesView mView;
+    SemesterDatesView mView;
     SemesterDatesModel mModel;
 
 }
