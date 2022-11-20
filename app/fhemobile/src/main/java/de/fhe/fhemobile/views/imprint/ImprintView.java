@@ -57,7 +57,7 @@ public class ImprintView extends FrameLayout {
         final TextView dataProtection = findViewById(R.id.data_protection_link);
         dataProtection.setMovementMethod(LinkMovementMethod.getInstance());
         final TextView versionText = findViewById(R.id.version_number);
-        String sText = "Vers.: " + BuildConfig.FLAVOR + " " +BuildConfig.VERSION_NAME +" ("+ BuildConfig.VERSION_CODE + ')'; //$NON-NLS
+        String sText = "Vers.: " + BuildConfig.FLAVOR + " " +BuildConfig.VERSION_NAME +" ("+ BuildConfig.VERSION_CODE + ")"; //$NON-NLS
         if ( BuildConfig.DEBUG ) {
             sText += " DEBUG"; //NON-NLS
         }  //$NON-NLS
