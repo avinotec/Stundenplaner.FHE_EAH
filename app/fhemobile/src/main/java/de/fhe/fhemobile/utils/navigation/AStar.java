@@ -333,11 +333,15 @@ public class AStar {
 
     private static class CellComparator implements Comparator<Cell> {
 
-        @Override
+
+        CellComparator() {
+        }
+
         /**
          * @return int the value 0 if x == y; a value less than 0 if x < y; and a value greater than 0 if x > y
          */
-        public int compare(final Cell cellOne, final Cell cellTwo) {
+        @Override
+        public final int compare(final Cell cellOne, final Cell cellTwo) {
             return Integer.compare(cellOne.getCostsPathToCell(), cellTwo.getCostsPathToCell());
         }
     }
