@@ -6,8 +6,6 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-import org.jetbrains.annotations.NonNls;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,9 +27,6 @@ import de.fhe.fhemobile.views.navigation.PersonSearchView;
 public class PersonSearchFragment extends SearchFragment {
 
     public static final String TAG = PersonSearchFragment.class.getSimpleName();
-
-    @NonNls
-    public static final String PREFS_NAVIGATION_PERSON_CHOICE = "navigation person";
 
     PersonSearchView mView;
 

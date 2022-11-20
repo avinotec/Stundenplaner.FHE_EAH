@@ -11,10 +11,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentResultListener;
+
+import org.jetbrains.annotations.NonNls;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
@@ -32,6 +33,10 @@ import de.fhe.fhemobile.vos.navigation.RoomVo;
 public abstract class SearchFragment extends FeatureFragment {
 
     public static final String TAG = SearchFragment.class.getSimpleName();
+    @NonNls
+    public static final String PREFS_NAVIGATION_PERSON_CHOICE = "navigation person";
+    @NonNls
+    public static final String PREFS_NAVIGATION_ROOM_CHOICE = "navigation room";
 
     private final String PREFS_NAVIGATION;
 
