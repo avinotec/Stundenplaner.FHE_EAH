@@ -80,9 +80,6 @@
     <string name="timetable_error_incomplete" >Bitte fülle alle benötigten Felder aus.</string>
     <string name="timetable_restored"> Aktualisierung des Stundenplans fehlgeschlagen!\n Gespeicherter Stand wird geladen.</string>
 
-    <string name="aqua_open" >Geöffnet</string>
-    <string name="aqua_closed" >Geschlossen</string>
-
     <string name="mail_default_subject" >Betreff</string>
     <string name="mail_default_text" >Mit freundlichen Grüßen aus der EAH App</string>
 

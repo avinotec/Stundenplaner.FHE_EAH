@@ -21,7 +21,6 @@ import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.getUpdatedEventS
 import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.groupByModuleId;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -32,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
@@ -44,7 +42,6 @@ import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.canteen.CanteenUtils;
 import de.fhe.fhemobile.vos.ApiErrorResponse;
-import de.fhe.fhemobile.vos.CafeAquaResponse;
 import de.fhe.fhemobile.vos.WeatherResponse;
 import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
 import de.fhe.fhemobile.vos.canteen.CanteenMenuDayVo;
@@ -359,7 +356,7 @@ public final class NetworkHandler {
     }
 
     /**
-     * *
+     * * TODO Methode doppelt?
      */
     public void fetchAvailableNewsLists(final Callback<NewsCategoryResponse> _Callback) {
         Assert.assertTrue(mApiErfurt != null);
@@ -492,12 +489,5 @@ public final class NetworkHandler {
         }
     }
 
-    /**
-     * @param _Callback
-     */
-    public void fetchCafeAquaStatus(final Callback<CafeAquaResponse> _Callback) {
-        Assert.assertTrue(mApiErfurt != null);
-        mApiErfurt.fetchCafeAquaStatus().enqueue(_Callback);
-    }
 
 }

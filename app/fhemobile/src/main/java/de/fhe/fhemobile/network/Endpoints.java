@@ -66,7 +66,6 @@ public final class Endpoints {
     public static final String PHONEBOOK            = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/persons";  //not working
     //public static final String IMPRINT            = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/impress";
     public static final String WEATHER              = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/weather";
-    public static final String AQUA                 = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/aqua";
     //public static final String TIMETABLE            = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/timetable";
     public static final String TIMETABLE            = "api/mobileapp/v1/studentset/list";
     //public static final String TIMETABLE_EVENTS     = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/timetable/events";
@@ -83,9 +82,9 @@ public final class Endpoints {
     public static final String PARAM_STUDYGROUP_ID  = "studyGroupId";
     public static final String PARAM_SEMESTER_ID    = "semesterId";
     public static final String PARAM_MODULE_ID    = "moduleId";
-    public static final String PARAM_PUSH_DEVICE_ID = "pushId";
-    public static final String PARAM_SUBSCRIBED_LESSONS = "subscribedLessons";
-    public static final String PARAM_CHANGES_TIME_STAMP = "timeStamp";
+    //public static final String PARAM_PUSH_DEVICE_ID = "pushId";
+    //public static final String PARAM_SUBSCRIBED_LESSONS = "subscribedLessons";
+    //public static final String PARAM_CHANGES_TIME_STAMP = "timeStamp";
 
     /* Utility classes have all fields and methods declared as static.
     Creating private constructors in utility classes prevents them from being accidentally instantiated. */
