@@ -244,7 +244,7 @@ public final class MyScheduleUtils {
 		return updatedEventSeriesList;
 	}
 
-	/** TODO unused?
+	/* TODO unused?
 	 * Get a list of all event set IDs contained in the given event series'
 	 * @return List of event set ID strings
 	 */
