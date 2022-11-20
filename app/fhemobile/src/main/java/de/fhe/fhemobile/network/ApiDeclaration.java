@@ -47,14 +47,14 @@ public interface ApiDeclaration {
     @GET(Endpoints.SEMESTER)
     Call<SemesterDatesVo> fetchSemesterDates();
     
-    @GET(Endpoints.CANTEEN + "/{canteenId}")
-    Call<CanteenDishVo[]> fetchCanteenData(@Path("canteenId") String _CanteenId);
+    @GET(Endpoints.CANTEEN + "/{" + Endpoints.PARAM_CANTEEN_ID + "}")
+    Call<CanteenDishVo[]> fetchCanteenData(@Path(Endpoints.PARAM_CANTEEN_ID) String _CanteenId);
     
     @GET(Endpoints.CANTEEN)
     Call<CanteenVo[]> fetchAvailableCanteens();
 
-    @GET(Endpoints.RSS + "/{newsListId}")
-    Call<NewsItemResponse> fetchNewsData(@Path("newsListId") String _NewsListId);
+    @GET(Endpoints.RSS + "/{" + Endpoints.PARAM_NEWSLIST_ID + "}")
+    Call<NewsItemResponse> fetchNewsData(@Path(Endpoints.PARAM_NEWSLIST_ID) String _NewsListId);
 
     @GET(Endpoints.RSS)
     Call<NewsCategoryResponse> fetchAvailableNewsLists();

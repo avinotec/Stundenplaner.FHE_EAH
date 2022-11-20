@@ -83,10 +83,9 @@ public final class Endpoints {
     public static final String PARAM_LNAME          = "lastName";
     public static final String PARAM_STUDYGROUP_ID  = "studyGroupId";
     public static final String PARAM_SEMESTER_ID    = "semesterId";
-    public static final String PARAM_MODULE_ID    = "moduleId";
-    //public static final String PARAM_PUSH_DEVICE_ID = "pushId";
-    //public static final String PARAM_SUBSCRIBED_LESSONS = "subscribedLessons";
-    //public static final String PARAM_CHANGES_TIME_STAMP = "timeStamp";
+    public static final String PARAM_MODULE_ID      = "moduleId";
+    public static final String PARAM_CANTEEN_ID     = "canteenId";
+    public static final String PARAM_NEWSLIST_ID    = "newsListId";
 
     /* Utility classes have all fields and methods declared as static.
     Creating private constructors in utility classes prevents them from being accidentally instantiated. */

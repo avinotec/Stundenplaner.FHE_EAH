@@ -25,118 +25,116 @@ import org.jetbrains.annotations.NonNls;
  */
 public final class Define {
 
-	//note: endpoints and URLs are defined in class Endpoints
+    //!!!!!!!!!!!!!NOTE: endpoints and URLs are defined in class Endpoints
 
-	public static final boolean ENABLE_MYSCHEDULE_UPDATING = true;
-	public static final boolean ENABLE_PUSHNOTIFICATIONS = false;
-	//enable feature news (the original one, not the temporary webview solution)
-	public static final boolean ENABLE_V1_NEWS = false;
+    //switches for certain features
+    public static final boolean ENABLE_MYSCHEDULE_UPDATING = true;
+    public static final boolean ENABLE_PUSHNOTIFICATIONS = false;
+    //enable feature news (the original one, not the temporary webview solution)
+    public static final boolean ENABLE_V1_NEWS = false;
 
 
-	@NonNls
-	public static final String PARAM_TIMETABLE_ID = "paramTimeTableId";			// $NON-NLS
-
-	/* Utility classes have all fields and methods declared as static.
-	Creating private constructors in utility classes prevents them from being accidentally instantiated. */
-	private Define() {
-	}
-
-	//created by Nadja 11.03.2022
-	public static final class Canteen {
-		static final String PREF_SELECTED_CANTEENS = "selectedCanteens";      // $NON-NLS
-	}
-
-	public static final class News {
-		static final String PREF_CHOSEN_NEWS_CATEGORY = "chosenNewsCategory"; // $NON-NLS
-	}
-
-	//created by Nadja 11.03.2022
-	public static final class TimeTable{
-		public static final String SP_TIMETABLE = "spTimeTable"; //$NON-NLS
-		public static final String SP_TIMETABLE_SETTINGS = "spTimeTableFavourit";				// $NON-NLS
-		public static final String PREF_CHOSEN_TIMETABLE_ID = "prefChosenTimeTableId";	// $NON-NLS
-
-        public static final String PARAM_TIMETABLE_WEEK = "paramTimeTableWeek";			// $NON-NLS
+    public static final class Timetable {
+        public static final String PARAM_TIMETABLE_ID = "paramTimeTableId";            // $NON-NLS
     }
 
-	//created by Nadja 11.03.2022
-	public static final class MySchedule {
-		public static final String SP_MYSCHEDULE = "my_schedule"; 					// $NON-NLS
-		public static final String PREF_SUBSCRIBED_EVENTSERIES = "my_schedule_subscribed_eventseries";	// $NON-NLS
-		public static final String PREF_DATA_LAST_UPDATED = "my_schedule_last_updated";	// $NON-NLS
+    //created by Nadja 11.03.2022
+    public static final class Canteen {
+        static final String PREF_SELECTED_CANTEENS = "selectedCanteens";      // $NON-NLS
+    }
 
-		public static final String PREFS_APP_LAST_OPENED = "lastAppOpened";					// $NON-NLS
-	}
+    public static final class News {
+        static final String PREF_CHOSEN_NEWS_CATEGORY = "chosenNewsCategory"; // $NON-NLS
+    }
+
+    //created by Nadja 11.03.2022
+    public static final class TimeTable {
+        public static final String SP_TIMETABLE = "spTimeTable"; //$NON-NLS
+        public static final String SP_TIMETABLE_SETTINGS = "spTimeTableFavourit";         // $NON-NLS
+        public static final String PREF_CHOSEN_TIMETABLE_ID = "prefChosenTimeTableId";    // $NON-NLS
+        public static final String PARAM_TIMETABLE_WEEK = "paramTimeTableWeek";            // $NON-NLS
+
+    }
+
+    //created by Nadja 11.03.2022
+    public static final class MySchedule {
+        public static final String SP_MYSCHEDULE = "my_schedule";                    // $NON-NLS
+        public static final String PREF_SUBSCRIBED_EVENTSERIES = "my_schedule_subscribed_eventseries";    // $NON-NLS
+        public static final String PREF_DATA_LAST_UPDATED = "my_schedule_last_updated";    // $NON-NLS
+        public static final String PREFS_APP_LAST_OPENED = "lastAppOpened";                    // $NON-NLS
+
+    }
 
     //created by Nadja 17.11.2021
-	public static final class Maps{
-		public static final String BUILDING_03_02_01_FLOOR_UG1 = "building_03_02_01_floor_ug1";   //$NON-NLS
-		public static final String BUILDING_03_02_01_FLOOR_00 = "building_03_02_01_floor_00";   //$NON-NLS
-		public static final String BUILDING_03_02_01_FLOOR_01 = "building_03_02_01_floor_01";   //$NON-NLS
-		public static final String BUILDING_03_02_01_FLOOR_02 = "building_03_02_01_floor_02";   //$NON-NLS
-		public static final String BUILDING_03_02_01_FLOOR_03 = "building_03_02_01_floor_03";   //$NON-NLS
-		public static final String BUILDING_03_02_01_FLOOR_04 = "building_03_02_01_floor_04";   //$NON-NLS
-		public static final String BUILDING_03_02_01_GROUND = "building_03_02_01_ground";   	//$NON-NLS
-		public static final String BUILDING_04_FLOOR_UG1 = "building_04_floor_ug1";   //$NON-NLS
-		public static final String BUILDING_04_FLOOR_00 = "building_04_floor_00";   //$NON-NLS
-		public static final String BUILDING_04_FLOOR_01 = "building_04_floor_01";   //$NON-NLS
-		public static final String BUILDING_04_FLOOR_02 = "building_04_floor_02";   //$NON-NLS
-		public static final String BUILDING_04_FLOOR_03 = "building_04_floor_03";   //$NON-NLS
-		public static final String BUILDING_04_GROUND = "building_04_ground";   	//$NON-NLS
-		public static final String BUILDING_05_FLOOR_UG1 = "building_05_floor_ug1";   //$NON-NLS
-		public static final String BUILDING_05_FLOOR_UG2 = "building_05_floor_ug2";   //$NON-NLS
-		public static final String BUILDING_05_FLOOR_00 = "building_05_floor_00";   //$NON-NLS
-		public static final String BUILDING_05_FLOOR_01 = "building_05_floor_01";   //$NON-NLS
-		public static final String BUILDING_05_FLOOR_02 = "building_05_floor_02";   //$NON-NLS
-		public static final String BUILDING_05_FLOOR_03 = "building_05_floor_03";   //$NON-NLS
-		public static final String BUILDING_05_FLOOR_3Z = "building_05_floor_3Z";   //$NON-NLS
-		public static final String BUILDING_05_GROUND = "building_05_ground";   //$NON-NLS
-	}
+    public static final class Maps {
+        public static final String BUILDING_03_02_01_FLOOR_UG1 = "building_03_02_01_floor_ug1";   //$NON-NLS
+        public static final String BUILDING_03_02_01_FLOOR_00 = "building_03_02_01_floor_00";   //$NON-NLS
+        public static final String BUILDING_03_02_01_FLOOR_01 = "building_03_02_01_floor_01";   //$NON-NLS
+        public static final String BUILDING_03_02_01_FLOOR_02 = "building_03_02_01_floor_02";   //$NON-NLS
+        public static final String BUILDING_03_02_01_FLOOR_03 = "building_03_02_01_floor_03";   //$NON-NLS
+        public static final String BUILDING_03_02_01_FLOOR_04 = "building_03_02_01_floor_04";   //$NON-NLS
+        public static final String BUILDING_03_02_01_GROUND = "building_03_02_01_ground";    //$NON-NLS
+        public static final String BUILDING_04_FLOOR_UG1 = "building_04_floor_ug1";   //$NON-NLS
+        public static final String BUILDING_04_FLOOR_00 = "building_04_floor_00";   //$NON-NLS
+        public static final String BUILDING_04_FLOOR_01 = "building_04_floor_01";   //$NON-NLS
+        public static final String BUILDING_04_FLOOR_02 = "building_04_floor_02";   //$NON-NLS
+        public static final String BUILDING_04_FLOOR_03 = "building_04_floor_03";   //$NON-NLS
+        public static final String BUILDING_04_GROUND = "building_04_ground";    //$NON-NLS
+        public static final String BUILDING_05_FLOOR_UG1 = "building_05_floor_ug1";   //$NON-NLS
+        public static final String BUILDING_05_FLOOR_UG2 = "building_05_floor_ug2";   //$NON-NLS
+        public static final String BUILDING_05_FLOOR_00 = "building_05_floor_00";   //$NON-NLS
+        public static final String BUILDING_05_FLOOR_01 = "building_05_floor_01";   //$NON-NLS
+        public static final String BUILDING_05_FLOOR_02 = "building_05_floor_02";   //$NON-NLS
+        public static final String BUILDING_05_FLOOR_03 = "building_05_floor_03";   //$NON-NLS
+        public static final String BUILDING_05_FLOOR_3Z = "building_05_floor_3Z";   //$NON-NLS
+        public static final String BUILDING_05_GROUND = "building_05_ground";   //$NON-NLS
+    }
 
 
-	public static final class Navigation {
+    public static final class Navigation {
+        public static final String FLOORCONNECTION_TYPE_STAIR = "staircase";    //$NON-NLS
+        public static final String FLOORCONNECTION_TYPE_ELEVATOR = "elevator";  //$NON-NLS
 
-		public static final String FLOORCONNECTION_TYPE_STAIR = "staircase";    //$NON-NLS
-		public static final String FLOORCONNECTION_TYPE_ELEVATOR = "elevator";  //$NON-NLS
-		// --Commented out by Inspection (04.01.2022 18:49):public static final String FLOORCONNECTION_TYPE_BRIDGE = "bridge"; //$NON-NLS
+        //Size of the grid overlying the floorplan (unit: cells - needs to be integer)
+        //Note: cell numbering at gridded PNGs (docs folder) starts at 0 -> width/height = number + 1
+        public static final int cellgrid_width = 45;
+        public static final int cellgrid_height = 30;
 
-		//Size of the grid overlying the floorplan (unit: cells - needs to be integer)
-		//Note: cell numbering at gridded PNGs (docs folder) starts at 0 -> width/height = number + 1
-		public static final int cellgrid_width = 45;
-		public static final int cellgrid_height = 30;
+        //for A* algorithm
+        public static final int COSTS_CELL = 1;
+        public static final int COSTS_ROOM = 3;
+        public static final int COSTS_EXIT = 1;
+        // floorconnections already count twice
+        // because the cell at the entered floor and the one at the reached floor are both counted
+        public static final int COSTS_FLOORCONNECTION = 1;
 
-		//für A-Star Algorithmus
-		public static final int COSTS_CELL = 1;
-		public static final int COSTS_ROOM = 3;
-		public static final int COSTS_EXIT = 1;
-		// floorconnections already count twice
-		// because the cell at the entered floor and the one at the reached floor are both counted
-		public static final int COSTS_FLOORCONNECTION = 1;
+        //shared preferences used to save latest user input for navigation destination
+        public static final String SP_NAVIGATION = "navigation";    //$NON-NLS
 
-		//shared preferences used to save latest user input for navigation destination
-		public static final String SP_NAVIGATION = "navigation";    //$NON-NLS
+        //communication between NavigationDialogFragment and NavigationScannerFragment
+        public static final String REQUEST_SCANNED_START_ROOM = "requestScannedStartRoom";  //$NON-NLS
+        public static final String KEY_SCANNED_ROOM = "scannedRoom";    //$NON-NLS
+    }
 
-		//communication between NavigationDialogFragment and NavigationScannerFragment
-		public static final String REQUEST_SCANNED_START_ROOM = "requestScannedStartRoom";  //$NON-NLS
-		public static final String KEY_SCANNED_ROOM = "scannedRoom";    //$NON-NLS
-	}
-
-	/**
-	 * Define Class for Push notifications from Google Firebase to the App
-	 */
-	public static final class PushNotifications{
-
-		@NonNls
-		public static final String CHANNEL_ID = "de.fhe.fhemobile.push";  //$NON-NLS
-
-		public static final long[] VIBRATION_PATTERN = {1000, 500, 1000, 0};
-	}
+    /**
+     * Define Class for Push notifications from Google Firebase to the App
+     */
+    public static final class PushNotifications {
+        public static final String CHANNEL_ID = "de.fhe.fhemobile.push";  //$NON-NLS
+        public static final long[] VIBRATION_PATTERN = {1000, 500, 1000, 0};
+    }
 
 
-	/**
-	 * milliseconds within a double-click has to be executed to leave application
-	 */
-	public static final long APP_CLOSING_DOUBLECLICK_DELAY_TIME = 2000L;
+    /**
+     * milliseconds within a double-click has to be executed to leave application
+     */
+    public static final long APP_CLOSING_DOUBLECLICK_DELAY_TIME = 2000L;
+
+
+    /* Utility classes have all fields and methods declared as static.
+    Creating private constructors in utility classes prevents them from being accidentally instantiated. */
+    private Define() {
+    }
 
 
 }
