@@ -350,6 +350,27 @@ final class TimetableDb
     }
 
     /**
+     * Add an entry to table `notifications`
+     * @param string $fcm_token
+     * @param string $subject
+     * @param string $type
+     * @return bool
+     */
+    final public function insertNotification(string & $fcm_token,
+                                             string & $subject,
+                                             string $type): bool
+    {
+        $sql = /** @lang MySQL */
+            'INSERT INTO notifications (token, subject, type, status, timestamp)'.
+            "VALUES ('$fcm_token', '$subject', '$type', 'open', SYSDATE())" .
+            'ON DUPLICATE KEY UPDATE timestamp = SYSDATE()';
+        /** @var bool $result */
+        $result = $this->runQuery($sql, "addNotification") ;
+        return $result;
+
+    }
+
+    /**
      * Run a sql query and get the result
      * @param string $sql The query
      * @param string $function_name caller of this funktion (debugging), constant string, so no reference

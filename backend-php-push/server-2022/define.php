@@ -30,3 +30,6 @@ const IOS = "ios";
 
 const LANG_DE = "DE";
 const LANG_EN = "EN";
+
+const TIMETABLE_CHANGED = "Timetable changed";
+const EXAM_ADDED = "Exam added";

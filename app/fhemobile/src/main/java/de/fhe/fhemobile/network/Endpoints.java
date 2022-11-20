@@ -40,8 +40,10 @@ public final class Endpoints {
     //TODO
     //Testserver von Moritz
     //public static final String APP_SERVER_EAH = "https://lustigtestt.de/fhjena/rest_api/public/changes";
+    //Testserver von Nadja
+    public static final String APP_SERVER_EAH = "http://192.168.178.157:80/api/";
     //TODO der Server muss noch richtig in Gang gebracht werden.
-    public static final String APP_SERVER_EAH = "http://wi-srv7.wi.eah-jena.de/api/";
+//    public static final String APP_SERVER_EAH = "http://wi-srv7.wi.eah-jena.de/api/";
     public static final String URL_REGISTER_PUSH_NOTIFICATIONS_EAH = APP_SERVER_EAH + "fcm_register_user.php?os=android";
 
     /* Example
@@ -81,10 +83,9 @@ public final class Endpoints {
     public static final String PARAM_LNAME          = "lastName";
     public static final String PARAM_STUDYGROUP_ID  = "studyGroupId";
     public static final String PARAM_SEMESTER_ID    = "semesterId";
-    public static final String PARAM_MODULE_ID    = "moduleId";
-    //public static final String PARAM_PUSH_DEVICE_ID = "pushId";
-    //public static final String PARAM_SUBSCRIBED_LESSONS = "subscribedLessons";
-    //public static final String PARAM_CHANGES_TIME_STAMP = "timeStamp";
+    public static final String PARAM_MODULE_ID      = "moduleId";
+    public static final String PARAM_CANTEEN_ID     = "canteenId";
+    public static final String PARAM_NEWSLIST_ID    = "newsListId";
 
     /* Utility classes have all fields and methods declared as static.
     Creating private constructors in utility classes prevents them from being accidentally instantiated. */

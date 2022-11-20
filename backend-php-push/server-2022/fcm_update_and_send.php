@@ -41,20 +41,16 @@ $output = "";
 // ---------------- functions ------------------------------------------------
 // ---------------------------------------------------------------------------
 /**
- * Fetch module, update database and collect user tokens to send notifications to
+ * Fetch module, update database and book notifications for the user tokens that need to be notified
  *
  * @param string $moduleId
- * @return array An array containing an entry ["token" => <token>, "subject" => <name>]
- *              for every notification that needs to be sent
  */
-function updateDatabaseAndGetNotifications(string & $moduleId): array
+function updateDatabaseAndBookNotifications(string & $moduleId): void
 {
 	/** $db_timetable database connection */
 	global $db_timetable;
     global $output;
-
-    //collect notifications here
-    $notificationsToBeSent = array();
+    global $debug;
 
 	$moduleURL = API_BASE_URL . ENDPOINT_MODULE_DETAIL . $moduleId;
 	/** @var array $moduleData */
@@ -66,8 +62,9 @@ function updateDatabaseAndGetNotifications(string & $moduleId): array
 
     // validate answer, otherwise skip
 	if (!array_key_exists("dataActivity", $moduleData)) {
-        $output .= sprintf("<br><i>Module %s is empty (this semester).</i><br>", $moduleId);
-        return $notificationsToBeSent;
+        if($debug) $output .= sprintf("<br><i>Module %s is empty (this semester).</i><br>", $moduleId);
+        if($debug) $output .= sprintf("<br><i>Module %s is empty (this semester).</i><br>", $moduleId);
+        return;
     }
 
     //initialize to set data types
@@ -90,7 +87,7 @@ function updateDatabaseAndGetNotifications(string & $moduleId): array
 		foreach ($deletedEventSets as $deletedEventSetId) {
 			$db_timetable->deleteEventSet($deletedEventSetId);
 			$eventseriesName = getEventSeriesName($moduleData["dataActivity"][$deletedEventSetId]["activityName"]);
-            $notificationsToBeSent = array_merge($notificationsToBeSent, getTimetableChangeNotifications($eventseriesName));
+            bookTimetableChangedNotifications($eventseriesName);
 		}
 
 		//CHANGED and ADDED EVENT SERIES
@@ -121,23 +118,20 @@ function updateDatabaseAndGetNotifications(string & $moduleId): array
 						$resultLocalEventset[0]["last_changed"]);
 					//update database, the data of this event set has changed
 					$db_timetable->updateEventSet($eventsetID, $fetchedEventsetJSON);
-					$notificationsToBeSent = array_merge($notificationsToBeSent, getTimetableChangeNotifications($eventseriesName));
+					bookTimetableChangedNotifications($eventseriesName);
 				}
 				$output .= "</p>";
 			} else {
 				//EVENT SET ADDED
 				//no local event set with this id found --> event set is new and has to be added
 				$db_timetable->insertEventSet($eventsetID, $eventseriesName, $moduleId, $fetchedEventsetJSON);
-                $notificationsToBeSent = array_merge($notificationsToBeSent, getTimetableChangeNotifications($eventseriesName));
+                bookTimetableChangedNotifications($eventseriesName);
 
                 //if event series corresponds to a new exam (no matter which group),
                 // then notify all users subscribing an event series of the same module
                 //possible endings for exams: APL, PL, mdl. Prfg.,Wdh.-Prfg., Wdh.-APL
                 if (preg_match("/.*(PL)|(Prfg\\.)/", $eventseriesName)) {
-
-                    $notificationsToBeSent = array_merge(
-                        $notificationsToBeSent,
-                        getExamAddedNotifications($moduleId, $moduleData["dataModule"]["Name"]));
+                    bookExamAddedNotifications($moduleId, $moduleData["dataModule"]["Name"]);
                 }
 			}
 		}
@@ -150,27 +144,19 @@ function updateDatabaseAndGetNotifications(string & $moduleId): array
         }
 	}
 
-    return $notificationsToBeSent;
-
 }
 
 /**
- * Get array containing the tokens that need to be notified about the change of the given event series
+ * Book notifications for the tokens that need to be notified about the change of the given event series
  *
  * @param string $eventseriesName The name of the changed events series
- * @return array An array containing an entry ["tag" => <Exam added | Timetable change>, "token" => <token>, "subject" => <name>]
- *              for every notification that needs to be sent
  */
-function getTimetableChangeNotifications(string & $eventseriesName): array
+function bookTimetableChangedNotifications(string & $eventseriesName): void
 {
 	global $debug;
 	/** $db_timetable database connection */
 	global $db_timetable;
     global $output;
-
-    //collect notification data
-    // entries have structure ["tag" => <Exam added | Timetable change>, "token" => <token>, "subject" => <name>]
-    $notificationsToBeSentAndroid = array();
 
 	/** @var mysqli_result|null $resultSubscribingUser get tokens subscribing the given event series */
 	$resultSubscribingUser = $db_timetable->getSubscribingUsers($eventseriesName);
@@ -183,10 +169,10 @@ function getTimetableChangeNotifications(string & $eventseriesName): array
 			$output .= $subscribingUser["token"] . "<br>";
 
 			if ($subscribingUser["os"] === ANDROID) {
-                $notificationsToBeSentAndroid[] = array(
-                    "tag" => "Timetable change",
-                    "token" => $subscribingUser["token"],
-                    "subject" => $eventseriesName);
+                $db_timetable->insertNotification(
+                    $subscribingUser["token"],
+                    $eventseriesName,
+                    TIMETABLE_CHANGED);
 
 			} elseif ($subscribingUser["os"] == IOS) {
 				;//send Ios Push
@@ -196,37 +182,28 @@ function getTimetableChangeNotifications(string & $eventseriesName): array
 			}
 		}
 
-        $output .= sprintf("<br>Notifications need to be sent for event series %s!</p>", $eventseriesName);
+        if($debug) $output .= sprintf("<br>Notifications need to be sent for event series %s!</p>", $eventseriesName);
 
 	} else {
-        $output .= sprintf("There are no tokens subscribing %s!</p>", $eventseriesName);
+        if($debug) $output .= sprintf("There are no tokens subscribing %s!</p>", $eventseriesName);
 	}
 	$resultSubscribingUser->close();
-
-    return $notificationsToBeSentAndroid;
 }
 
 /**
- * Get array containing the tokens that need to be notified about the added exam
+ * Book notifications for the tokens that need to be notified about the added exam
  *
  * @param string $moduleId The ID of the module the exam belongs to
- * @param string $moduleName The name of the module the exam belongs to
- * @return array An array containing an entry ["tag" => <Exam added | Timetable change>, "token" => <token>, "subject" => <name>]
- *              for every notification that needs to be sent
  */
-function getExamAddedNotifications(string & $moduleId, string & $moduleName): array
+function bookExamAddedNotifications(string & $moduleId, string & $moduleName): void
 {
     global $debug;
     /** $db_timetable database connection */
     global $db_timetable;
     global $output;
 
-    //collect notification data
-    // entries have structure ["tag" => <Exam added | Timetable change>, "token" => <token>, "subject" => <name>]
-    $notificationsToBeSentAndroid = array();
-
     //get tokens subscribing any event series in the given module
-	// Array von token, language, os
+	// Array of token, language, os
     $resultSubscribingUser = $db_timetable->getUserSubscribingAnythingInModule($moduleId);
 
     if ($resultSubscribingUser->num_rows > 0) {
@@ -235,10 +212,10 @@ function getExamAddedNotifications(string & $moduleId, string & $moduleName): ar
             $output .= $subscribingUser["token"] . "<br>";
 
             if ($subscribingUser["os"] === ANDROID) {
-                $notificationsToBeSentAndroid[] = array(
-                    "tag" => "Exam added",
-                    "token" => $subscribingUser["token"],
-                    "subject" => $moduleName);
+                $db_timetable->insertNotification(
+                    $subscribingUser["token"],
+                    $moduleName,
+                    EXAM_ADDED);
 
             } elseif ($subscribingUser["os"] == IOS) {
                 ;//send Ios Push
@@ -248,14 +225,12 @@ function getExamAddedNotifications(string & $moduleId, string & $moduleName): ar
             }
         }
 
-        $output .= "<br>Notifications need to be sent for module $moduleId!</p>";
+        if($debug) $output .= "<br>Notifications need to be sent for module $moduleId!</p>";
 
     } else {
-        $output .= "There are no tokens subscribing $moduleId!</p>";
+        if($debug) $output .= "There are no tokens subscribing $moduleId!</p>";
     }
     $resultSubscribingUser->close();
-
-    return $notificationsToBeSentAndroid;
 }
 
 /**
@@ -322,19 +297,10 @@ if ($debug) {
 }
 
 // Check each module for changes
-foreach ($moduleIds as $modueleKey => $moduleId) {
+foreach ($moduleIds as $moduleKey => $moduleId) {
 	$output .=  $moduleId . ", ";
-	// collect alle notifications that need to be sent concerning this moduleID
-	$notificationsToSend = array_unique(updateDatabaseAndGetNotifications($moduleId));
-
-    if ($debug) {print_r($notificationsToSend);}
-	// iterate over notifications and send each one out
-    foreach ($notificationsToSend as $notificationKey => $notificationsData) {
-
-		//TODO: notifications bündeln durch Umstellung von "to" => string nach "registration_ids" => array of tokens
-        sendFCM($notificationsData["token"], $notificationsData["subject"], $notificationsData["tag"]);
-        $output .= "<br>Notifications sent for event series or module ".$notificationsData["tag"]."!";
-    }
+	// collect all notifications that need to be sent concerning this moduleID
+	updateDatabaseAndBookNotifications($moduleId);
 }
 
 //TODO
@@ -346,8 +312,15 @@ foreach ($moduleIds as $modueleKey => $moduleId) {
 // Das nennt sich Wiederanlaufsteuerung, wenn mittendrin in der Konstruktion was zusammenbricht, weiß man nicht,
 // ob alle Benachrichtigungen versendet worden sind.
 
-//Notifications to sent in Datenbank stat Variable
-//gesondertes Aufräum-php
+//TODO: iterate over notifications and send them out
+// iterate over notifications and send each one out
+//foreach ($notificationsToSend as $notificationKey => $notificationsData) {
+//
+//    //TODO: notifications bündeln durch Umstellung von "to" => string nach "registration_ids" => array of tokens
+//    sendFCM($notificationsData["token"], $notificationsData["subject"], $notificationsData["tag"]);
+//    $output .= "<br>Notifications sent for event series or module ".$notificationsData["tag"]."!";
+//}
+
 
 $output .= "</p>";
 

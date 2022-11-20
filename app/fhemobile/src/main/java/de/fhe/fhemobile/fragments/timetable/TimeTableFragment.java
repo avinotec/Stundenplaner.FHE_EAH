@@ -80,7 +80,7 @@ public class TimeTableFragment extends FeatureFragment {
 	public static TimeTableFragment newInstance(final String _TimeTableId) {
 		final TimeTableFragment fragment = new TimeTableFragment();
 		final Bundle args = new Bundle();
-		args.putString(Define.PARAM_TIMETABLE_ID, _TimeTableId);
+		args.putString(Define.Timetable.PARAM_TIMETABLE_ID, _TimeTableId);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -93,7 +93,7 @@ public class TimeTableFragment extends FeatureFragment {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments() != null) {
-			mChosenTimeTableId = getArguments().getString(Define.PARAM_TIMETABLE_ID);
+			mChosenTimeTableId = getArguments().getString(Define.Timetable.PARAM_TIMETABLE_ID);
 		}
 
 		//replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()

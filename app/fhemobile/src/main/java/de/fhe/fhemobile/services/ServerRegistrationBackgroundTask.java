@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.SocketTimeoutException;
@@ -62,10 +63,13 @@ public class ServerRegistrationBackgroundTask implements Runnable {
         } catch (final MalformedURLException e) {
             Log.e(TAG, "URL ist nicht URL-konform: " + URL_REGISTER_PUSH_NOTIFICATIONS_EAH, e);
         }
-        final HttpsURLConnection client;
+
+//        HttpsURLConnection client;
+        HttpURLConnection client; //debug
         try {
             if (BuildConfig.DEBUG) Assert.assertNotNull(url);
-            client = (HttpsURLConnection) url.openConnection();
+//            client = (HttpsURLConnection) url.openConnection();
+            client = (HttpURLConnection) url.openConnection(); //debug
 
             //add params
             String data = encodeAsParam("os", "android")
