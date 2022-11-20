@@ -33,6 +33,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,6 +54,10 @@ import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
 public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
 
     private static final String TAG = AbstractMyScheduleAdapter.class.getSimpleName();
+    @NonNls
+    static private final String HTML_FONT_BOLD_START = "<font><b>";
+    @NonNls
+    static private final String HTML_FONT_BOLD_END = "</b></font>";
 
     protected final Context mContext;
     protected List<MyScheduleEventSeriesVo> mItems;
@@ -265,11 +271,11 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
             switch (change){
                 case ADDITION:
                     //set text bold
-                    dayOfWeek = "<font><b>" + dayOfWeek + "</b></font>";
-                    date = "<font><b>" + date + "</b></font>";
-                    startTime = "<font><b>" + startTime + "</b></font>";
-                    endTime = "<font><b>" + endTime + "</b></font>";
-                    room = "<font><b>" + room + "</b></font>";
+                    dayOfWeek = HTML_FONT_BOLD_START + dayOfWeek + HTML_FONT_BOLD_END;
+                    date = HTML_FONT_BOLD_START + date + HTML_FONT_BOLD_END;
+                    startTime = HTML_FONT_BOLD_START + startTime + HTML_FONT_BOLD_END;
+                    endTime = HTML_FONT_BOLD_START + endTime + HTML_FONT_BOLD_END;
+                    room = HTML_FONT_BOLD_START + room + HTML_FONT_BOLD_END;
                     break;
 
                 case DELETION:
@@ -278,14 +284,14 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
                     break;
 
                 case EDIT_TIME:
-                    dayOfWeek = "<font><b>" + dayOfWeek + "</b></font>";
-                    date = "<font><b>" + date + "</b></font>";
-                    startTime = "<font><b>" + startTime + "</b></font>";
-                    endTime = "<font><b>" + endTime + "</b></font>";
+                    dayOfWeek = HTML_FONT_BOLD_START + dayOfWeek + HTML_FONT_BOLD_END;
+                    date = HTML_FONT_BOLD_START + date + HTML_FONT_BOLD_END;
+                    startTime = HTML_FONT_BOLD_START + startTime + HTML_FONT_BOLD_END;
+                    endTime = HTML_FONT_BOLD_START + endTime + HTML_FONT_BOLD_END;
                     break;
 
                 case EDIT_LOCATION:
-                    room = "<font><b>" + room + "</b></font>";
+                    room = HTML_FONT_BOLD_START + room + HTML_FONT_BOLD_END;
                     break;
             }
         }
