@@ -54,11 +54,11 @@ public class PushNotificationService extends FirebaseMessagingService {
 	@Override
 	public void onMessageReceived(final RemoteMessage remoteMessage) {
 
-		if(remoteMessage.getNotification().getTitle().equals("Timetable change")){
+		if("Timetable change".equals(remoteMessage.getNotification().getTitle())){
 
-			String message = remoteMessage.getNotification().getBody() + " "
+			final String message = remoteMessage.getNotification().getBody() + " "
 					+ Main.getAppContext().getString(R.string.fcm_timetablechange_message_part1);
-			String messageLong = message + " " + Main.getAppContext().getString(R.string.fcm_message_part2);
+			final String messageLong = message + " " + Main.getAppContext().getString(R.string.fcm_message_part2);
 
 			//todo: click action
 			showNotification(
@@ -66,10 +66,10 @@ public class PushNotificationService extends FirebaseMessagingService {
 					message,
 					messageLong);
 
-		} else if(remoteMessage.getNotification().getTitle().equals("Exam added")){
-			String message = remoteMessage.getNotification().getBody() + " "
+		} else if("Exam added".equals(remoteMessage.getNotification().getTitle())){
+			final String message = remoteMessage.getNotification().getBody() + " "
 					+ Main.getAppContext().getString(R.string.fcm_examadded_message_part1);
-			String messageLong = message + " " + Main.getAppContext().getString(R.string.fcm_message_part2);
+			final String messageLong = message + " " + Main.getAppContext().getString(R.string.fcm_message_part2);
 
 			showNotification(
 					Main.getAppContext().getString(R.string.fcm_timetablechange_title),
@@ -152,7 +152,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 		}
 
 		// Create an explicit intent for an Activity in your app
-		PendingIntent pendingIntent = PendingIntent.getActivity(Main.getAppContext(), 0,
+		final PendingIntent pendingIntent = PendingIntent.getActivity(Main.getAppContext(), 0,
 				new Intent(Main.getAppContext(), MainActivity.class), 0);
 
 

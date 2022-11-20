@@ -140,7 +140,7 @@ public class MyScheduleEventVo implements Parcelable {
 
     public Date getEndDateWithTime(){
         //convert from seconds to milliseconds,
-        Date endDateTime = new Date( mEndDateTime * 1000);
+        final Date endDateTime = new Date( mEndDateTime * 1000);
         return endDateTime;
     }
 

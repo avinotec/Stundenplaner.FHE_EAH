@@ -276,9 +276,9 @@ public final class MyScheduleUtils {
 	 * @param fetchedEventSetsMap The map of fetched event sets (to detect added event sets and changes event properties)
 	 */
 	private static void detectChangesAndUpdateLocal(
-			MyScheduleEventSeriesVo localEventSeries,
-			MyScheduleEventSeriesVo fetchedEventSeries,
-			Map<String, MyScheduleEventSetVo> fetchedEventSetsMap){
+			final MyScheduleEventSeriesVo localEventSeries,
+			final MyScheduleEventSeriesVo fetchedEventSeries,
+			final Map<String, MyScheduleEventSetVo> fetchedEventSetsMap){
 
 		//skip change detection if events of the event series' are equal
 		final Gson gson = new Gson();
@@ -429,7 +429,7 @@ public final class MyScheduleUtils {
 		}
 
 		//add new event sets
-		if (eventSetsAdded != null && eventSetsAdded.size() > 0) {
+		if (eventSetsAdded != null && !eventSetsAdded.isEmpty()) {
 			for (final String eventSetId : eventSetsAdded) {
 				final MyScheduleEventSetVo eventSet = fetchedEventSetsMap.get(eventSetId);
 				final List<MyScheduleEventVo> eventListToAdd = new ArrayList<>();

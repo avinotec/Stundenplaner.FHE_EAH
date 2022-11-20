@@ -232,7 +232,7 @@ public class MyScheduleDialogFragment extends DialogFragment {
 
                 mView.setStudyProgramItems(studyPrograms);
             } else {
-                ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
                 ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.MYSCHEDULE_DIALOG_FRAGMENT_CODE3);
             }
             mView.toggleProgressIndicatorVisibility(false);
@@ -260,7 +260,7 @@ public class MyScheduleDialogFragment extends DialogFragment {
                 mListAdapter.setItems(eventSeriesVos);
 
             } else {
-                ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
                 ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.MYSCHEDULE_DIALOG_FRAGMENT_CODE4);
             }
             mView.toggleProgressIndicatorVisibility(false);

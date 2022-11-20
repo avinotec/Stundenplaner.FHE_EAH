@@ -16,26 +16,22 @@
  */
 package de.fhe.fhemobile.utils;
 
-import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
-import java.util.Map;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.vos.ApiErrorResponse;
-import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
 import retrofit2.Response;
 
 /**
  * Created by Nadja on 28.10.2022
  */
-public class ApiErrorUtils {
+public final class ApiErrorUtils {
 
-    public class ApiErrorCode {
+    public static class ApiErrorCode {
 
         public static final String TIMETABLE_FRAGMENT_CODE1 = "4001";
         public static final String TIMETABLE_FRAGMENT_CODE2 = "4002";
@@ -61,15 +57,13 @@ public class ApiErrorUtils {
         public static final String NETWORK_HANDLER_CODE12 = "4021";
     }
 
-    public static ApiErrorResponse getApiErrorResponse(Response response) {
-        Gson gson = new GsonBuilder().create();
+    public static ApiErrorResponse getApiErrorResponse(final Response response) {
+        final Gson gson = new GsonBuilder().create();
         ApiErrorResponse error = new ApiErrorResponse();
         try {
             error = gson.fromJson(response.errorBody().string(), ApiErrorResponse.class);
-        } catch (IOException e) {
-        } finally {
-            return error;
-        }
+        } catch (final IOException e) { }
+        return error;
     }
 
     /**
@@ -77,8 +71,8 @@ public class ApiErrorUtils {
      * @param errorResponse {@link ApiErrorResponse} containing the message
      * @param internalErrorCode error code XXX
      */
-    public static void showErrorToast(ApiErrorResponse errorResponse, String internalErrorCode){
-        String message = Main.getAppContext().getString(R.string.error) + " "
+    public static void showErrorToast(final ApiErrorResponse errorResponse, final String internalErrorCode){
+        final String message = Main.getAppContext().getString(R.string.error) + " "
                 + internalErrorCode +": "
                 + errorResponse.getMessage(); //todo: replace with translatable message depending on id of errorResponse
 
@@ -89,8 +83,8 @@ public class ApiErrorUtils {
      * Show toast displaying "Error XXXX: internal problems"
      * @param internalErrorCode error code XXXX
      */
-    public static void showErrorToast(String internalErrorCode){
-        String message = Main.getAppContext().getString(R.string.error) + " "
+    public static void showErrorToast(final String internalErrorCode){
+        final String message = Main.getAppContext().getString(R.string.error) + " "
                 + internalErrorCode +": "
                 + Main.getAppContext().getString(R.string.internal_problems);
 
@@ -101,8 +95,8 @@ public class ApiErrorUtils {
      * Show toast displaying "Error XXXX: Cannot establish connection!"
      * @param internalErrorCode error code XXXX
      */
-    public static void showConnectionErrorToast(String internalErrorCode) {
-        String message = Main.getAppContext().getString(R.string.error) + " "
+    public static void showConnectionErrorToast(final String internalErrorCode) {
+        final String message = Main.getAppContext().getString(R.string.error) + " "
                 + internalErrorCode +": "
                 + Main.getAppContext().getString(R.string.connection_failed);
 

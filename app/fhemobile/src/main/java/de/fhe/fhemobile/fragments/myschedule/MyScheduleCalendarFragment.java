@@ -202,7 +202,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 				}
 
 				// show dialog to ask if old timetable should be cleared
-				AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getContext())
+				final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getContext())
 						.setTitle(R.string.deleteTimetableTitle)
 						.setPositiveButton(R.string.deleteTimeTableConfirm, new DialogInterface.OnClickListener() {
 

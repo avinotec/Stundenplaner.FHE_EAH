@@ -62,7 +62,7 @@ public class ServerRegistrationBackgroundTask implements Runnable {
         } catch (final MalformedURLException e) {
             Log.e(TAG, "URL ist nicht URL-konform: " + URL_REGISTER_PUSH_NOTIFICATIONS_EAH, e);
         }
-        HttpsURLConnection client;
+        final HttpsURLConnection client;
         try {
             if (BuildConfig.DEBUG) Assert.assertNotNull(url);
             client = (HttpsURLConnection) url.openConnection();
@@ -70,12 +70,12 @@ public class ServerRegistrationBackgroundTask implements Runnable {
             //add params
             String data = encodeAsParam("os", "android")
                     + encodeAsParam("fcm_token", fcmToken);
-            if(Locale.getDefault().getLanguage().equals("de")){
+            if("de".equals(Locale.getDefault().getLanguage())){
                 data += encodeAsParam("language", "DE");
             } else {
                 data += encodeAsParam("language", "EN");
             }
-            for(MyScheduleEventSeriesVo eventSeriesVo : subscribedEventSeriesVos){
+            for(final MyScheduleEventSeriesVo eventSeriesVo : subscribedEventSeriesVos){
                 data += encodeAsParam("eventseries_names[]", eventSeriesVo.getTitle());
             }
 
@@ -119,7 +119,7 @@ public class ServerRegistrationBackgroundTask implements Runnable {
                     sb.append(line).append("\n");
                 }
 
-                Log.d(TAG, "SERVER ERROR RESPONSE: " + sb.toString());
+                Log.d(TAG, "SERVER ERROR RESPONSE: " + sb);
             }
 
 
@@ -143,7 +143,7 @@ public class ServerRegistrationBackgroundTask implements Runnable {
         }
     }
 
-    private String encodeAsParam(String name, String value) throws UnsupportedEncodingException {
+    private String encodeAsParam(final String name, final String value) throws UnsupportedEncodingException {
         return "&" + URLEncoder.encode(name, "UTF-8")
                 + "=" + URLEncoder.encode(value, "UTF-8");
     }

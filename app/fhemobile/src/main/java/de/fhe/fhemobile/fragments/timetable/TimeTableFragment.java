@@ -158,7 +158,7 @@ public class TimeTableFragment extends FeatureFragment {
 				editor.apply();
 
 			} else {
-				ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+				final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
 				ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.TIMETABLE_FRAGMENT_CODE1);
 
 				//load timetable from shared preferences

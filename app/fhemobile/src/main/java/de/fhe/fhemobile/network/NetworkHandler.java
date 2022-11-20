@@ -138,7 +138,7 @@ public final class NetworkHandler {
                 if (response.isSuccessful()) {
                     PhonebookModel.getInstance().setFoundEmployees(response.body());
                 } else {
-                    ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                    final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
                     ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE1);
                 }
             }
@@ -175,7 +175,7 @@ public final class NetworkHandler {
                 if (response.isSuccessful()) {
                     SemesterDatesModel.getInstance().setData(response.body().getSemester());
                 } else {
-                    ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                    final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
                     ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE2);
                 }
             }
@@ -306,7 +306,7 @@ public final class NetworkHandler {
                 if (response.isSuccessful()) {
                     CanteenModel.getInstance().setCanteens(response.body());
                 } else {
-                    ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                    final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
                     ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE3);
                 }
             }
@@ -337,7 +337,7 @@ public final class NetworkHandler {
                 if (response.isSuccessful()) {
                     NewsModel.getInstance().setCategoryItems(response.body().getNewsCategories());
                 } else {
-                    ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                    final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
                     ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE4);
                 }
             }
@@ -429,7 +429,7 @@ public final class NetworkHandler {
          */
         requestCounterMySchedule = 0;
         /* Das ist unser Halter für die Antworten */
-        List<MyScheduleEventSeriesVo> updatedEventSeriesList = new ArrayList<>();
+        final List<MyScheduleEventSeriesVo> updatedEventSeriesList = new ArrayList<>();
 
         //iterate over modules
         for (final Map.Entry<String, Map<String, MyScheduleEventSeriesVo>> module : modules.entrySet()) {
@@ -449,7 +449,7 @@ public final class NetworkHandler {
                             updatedEventSeriesList.addAll(
 									getUpdatedEventSeries(module.getValue(), response.body().getEventSets()));
                         } else {
-                            ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                            final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
                             ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE5);
                             //add old event series' to prevent them from getting lost
                             updatedEventSeriesList.addAll(module.getValue().values());
