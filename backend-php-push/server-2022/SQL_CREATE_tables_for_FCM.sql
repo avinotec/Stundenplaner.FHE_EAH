@@ -21,10 +21,19 @@
 -- PHP-Version: 8.1.11
 
 
+-- utf-8 ist wohl nicht die richtige Sortierung. MySQL hat da wohl 2002 Unsinn gebaut und lässt alle Entwickler verirren.
+-- https://mathiasbynens.be/notes/mysql-utf8mb4#utf8-to-utf8mb4
+-- utf8mb4 ist wohl die richtige Bezeichnung für utf8 multibyte in 4 Bytes
+--
+
+-- TODO tokenlaenge einheitlich setzen. Wie lange ist ein Token
+-- FCM Token sind xxx Zeichen breit. Daher wird hier die token Breite auf xxx gesetzt.
+-- Anstelle VARCHAR wird daher auch CHAR(xxx) verwendet.
+
 --
 -- Datenbank: `stundenplan`
 --
-CREATE DATABASE IF NOT EXISTS `stundenplan` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE DATABASE IF NOT EXISTS `stundenplan` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 -- use database
 USE `stundenplan`;
 
@@ -33,7 +42,9 @@ USE `stundenplan`;
 SET FOREIGN_KEY_CHECKS = 0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-SET time_zone = "+00:00";
+-- SET time_zone = "+01:00";                wird wohl nicht benötigt, da dieses MySQL "SYSTEM" als Zeitzone verwendet
+-- SET GLOBAL time_zone = "+01:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT = @@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS = @@CHARACTER_SET_RESULTS */;
@@ -53,10 +64,11 @@ DROP TABLE IF EXISTS `fcm_user`;
 CREATE TABLE IF NOT EXISTS `fcm_user`
 (
     `id`               int(11)                                                 NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `token`            VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Firebase Messaging Token',
-    `eventseries_name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Subscribed event series',
-    `os`               VARCHAR(7) DEFAULT NULL COMMENT 'android or ios',
-    `language`         VARCHAR(2) COMMENT 'DE or EN'
+    `token`            VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Firebase Messaging Token',
+    `eventseries_name` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Subscribed event series',
+    -- `os`               VARCHAR(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT 'android or ios',
+    `os`               CHAR(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' NULL COMMENT '0:android or 1:ios',
+    `language`         CHAR(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'DE' COMMENT 'DE or EN'
 
 ) ENGINE = InnoDB
   DEFAULT CHARSET = latin1;
@@ -85,12 +97,11 @@ DROP TABLE IF EXISTS `event_sets`;
 CREATE TABLE IF NOT EXISTS `event_sets`
 (
 
-    `eventset_id`   VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci  NOT NULL PRIMARY KEY COMMENT 'in EAH API called activity_id',
-    `eventseries`   VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
-        COMMENT 'Name of the event series the event set belongs to, e.g. BT(BA)Mathe I/V/01',
-    `module_id`     VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci  NOT NULL COMMENT 'Module the event set belongs to',
-    `eventset_data` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci                  DEFAULT NULL COMMENT 'Data of the event series as json string',
-    `last_changed`  TIMESTAMP                                               NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+    `eventset_id`   VARCHAR(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci    NOT NULL PRIMARY KEY    COMMENT 'in EAH API called activity_id',
+    `eventseries`   VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci   NOT NULL                COMMENT 'Name of the event series the event set belongs to, e.g. BT(BA)Mathe I/V/01',
+    `module_id`     VARCHAR(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci    NOT NULL                COMMENT 'Module the event set belongs to',
+    `eventset_data` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci   DEFAULT NULL            COMMENT 'Data of the event series as json string',
+    `last_changed`  TIMESTAMP                                                       NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 
 ) ENGINE = InnoDB
   DEFAULT CHARSET = latin1;
@@ -116,10 +127,10 @@ DROP TABLE IF EXISTS `notifications`;
 
 CREATE TABLE IF NOT EXISTS `notifications`
 (
-    `token`     VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Firebase Messaging Token',
-    `subject`   VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Name of module or event series',
-    `type`      VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '"Event added" or "Timetable changed"',
-    `status`    VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'open, sent or failed',
+    `token`     VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Firebase Messaging Token',
+    `subject`   VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Name of module or event series',
+    `type`      CHAR(1)     CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '0:"undefined", 1:"Event added" or "2:Timetable changed"',
+    `status`    CHAR(1)     CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '0:undefined, 1:open, 2:sent, x:failed is still open',
     `timestamp` TIMESTAMP DEFAULT current_timestamp() ON UPDATE current_timestamp(),
     PRIMARY KEY (`token`, `subject`, `type`)
 
