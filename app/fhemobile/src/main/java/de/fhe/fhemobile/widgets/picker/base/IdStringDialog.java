@@ -19,7 +19,6 @@ package de.fhe.fhemobile.widgets.picker.base;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -80,10 +79,10 @@ public class IdStringDialog extends DialogFragment {
     }
 
     //onDismiss-------------------------------------------------------------------------------------
-    @Override
-    public void onDismiss(@NonNull final DialogInterface dialog) {
-        super.onDismiss(dialog);
-    }
+//    @Override
+//    public void onDismiss(@NonNull final DialogInterface dialog) {
+//        super.onDismiss(dialog);
+//    }
 
     private final AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
