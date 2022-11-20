@@ -244,23 +244,6 @@ public final class MyScheduleUtils {
 		return updatedEventSeriesList;
 	}
 
-	/** TODO unused?
-	 * Get a list of all event set IDs contained in the given event series'
-	 * @return List of event set ID strings
-	 */
-/*	public static ArrayList<String> collectEventSetIds(final List<MyScheduleEventSeriesVo> eventSeriesVos){
-		ArrayList<String> eventSetIds = new ArrayList<>();
-
-		for(final MyScheduleEventSeriesVo eventSeries : eventSeriesVos) {
-			eventSetIds.addAll(eventSeries.getEventSetIds());
-		}
-		//remove duplicates
-		eventSetIds = new ArrayList<>(new HashSet<>(eventSetIds));
-
-		return eventSetIds;
-	}
- */
-
 	/**
 	 *
 	 * @param examTitle
