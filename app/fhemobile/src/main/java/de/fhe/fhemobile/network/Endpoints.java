@@ -40,8 +40,10 @@ public final class Endpoints {
     //TODO
     //Testserver von Moritz
     //public static final String APP_SERVER_EAH = "https://lustigtestt.de/fhjena/rest_api/public/changes";
+    //Testserver von Nadja
+    public static final String APP_SERVER_EAH = "http://192.168.178.157:80/api/";
     //TODO der Server muss noch richtig in Gang gebracht werden.
-    public static final String APP_SERVER_EAH = "http://wi-srv7.wi.eah-jena.de/api/";
+//    public static final String APP_SERVER_EAH = "http://wi-srv7.wi.eah-jena.de/api/";
     public static final String URL_REGISTER_PUSH_NOTIFICATIONS_EAH = APP_SERVER_EAH + "fcm_register_user.php?os=android";
 
     /* Example
