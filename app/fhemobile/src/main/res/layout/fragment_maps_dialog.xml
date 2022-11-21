@@ -30,7 +30,6 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/header_image_height"
-            android:id="@+id/imageview_cafe_aqua"
             android:src="@drawable/th_maps"
             android:scaleType="centerCrop"
 	        android:contentDescription="Maps Background Logo" />

@@ -75,9 +75,6 @@
     <string name="timetable_error_incomplete">Please set all fields.</string>
     <string name="timetable_restored">Updating timetable failed!\n Saved state gets restored.</string>
 
-    <string name="aqua_open">Open</string>
-    <string name="aqua_closed">Closed</string>
-
     <string name="mail_default_subject">Subject</string>
     <string name="mail_default_text">With kind regards from EAH App</string>
 
