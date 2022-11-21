@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context="de.fhe.fhemobile.fragments.navigation.RoomSearchFragment">
+    tools:context="de.fhe.fhemobile.fragments.navigation.RoomNavigationSearchFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

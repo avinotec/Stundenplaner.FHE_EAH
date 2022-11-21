@@ -9,8 +9,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import java.util.ArrayList;
 
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.fragments.navigation.PersonSearchFragment;
-import de.fhe.fhemobile.fragments.navigation.RoomSearchFragment;
+import de.fhe.fhemobile.fragments.navigation.PersonNavigationSearchFragment;
+import de.fhe.fhemobile.fragments.navigation.RoomNavigationSearchFragment;
 
 /**
  * Created by Nadja on 12/2021
@@ -21,8 +21,8 @@ public class NavigationDialogPagerAdapter extends FragmentStateAdapter {
                                         @NonNull final Lifecycle lifecycle){
         super(fragmentManager, lifecycle);
 
-        fragments.add(new RoomSearchFragment());
-        fragments.add(new PersonSearchFragment());
+        fragments.add(new RoomNavigationSearchFragment());
+        fragments.add(new PersonNavigationSearchFragment());
     }
 
     @NonNull

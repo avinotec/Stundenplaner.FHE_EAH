@@ -19,14 +19,14 @@ import de.fhe.fhemobile.views.navigation.PersonSearchView;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link PersonSearchFragment#newInstance} factory method to
+ * Use the {@link PersonNavigationSearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  *
  * created by Nadja
  */
-public class PersonSearchFragment extends SearchFragment {
+public class PersonNavigationSearchFragment extends NavigationSearchFragment {
 
-    public static final String TAG = PersonSearchFragment.class.getSimpleName();
+    public static final String TAG = PersonNavigationSearchFragment.class.getSimpleName();
 
     PersonSearchView mView;
 
@@ -36,16 +36,16 @@ public class PersonSearchFragment extends SearchFragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment PersonSearchFragment.
+     * @return A new instance of fragment PersonNavigationSearchFragment.
      */
-    public static PersonSearchFragment newInstance() {
-        final PersonSearchFragment fragment = new PersonSearchFragment();
+    public static PersonNavigationSearchFragment newInstance() {
+        final PersonNavigationSearchFragment fragment = new PersonNavigationSearchFragment();
         final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public PersonSearchFragment() {
+    public PersonNavigationSearchFragment() {
         super(PREFS_NAVIGATION_PERSON_CHOICE);
     }
 
@@ -135,7 +135,7 @@ public class PersonSearchFragment extends SearchFragment {
 
         @Override
         public void onGoClicked() {
-            onGoButtonCLicked();
+            onGoButtonClicked();
         }
     };
 

@@ -36,14 +36,14 @@ import de.fhe.fhemobile.views.navigation.RoomSearchView;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link RoomSearchFragment#newInstance} factory method to
+ * Use the {@link RoomNavigationSearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  *
  * created by Nadja
  */
-public class RoomSearchFragment extends SearchFragment {
+public class RoomNavigationSearchFragment extends NavigationSearchFragment {
 
-    public static final String TAG = RoomSearchFragment.class.getSimpleName();
+    public static final String TAG = RoomNavigationSearchFragment.class.getSimpleName();
 
     RoomSearchView mView;
 
@@ -58,16 +58,16 @@ public class RoomSearchFragment extends SearchFragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment RoomSearchFragment.
+     * @return A new instance of fragment RoomNavigationSearchFragment.
      */
-    public static RoomSearchFragment newInstance() {
-        final RoomSearchFragment fragment = new RoomSearchFragment();
+    public static RoomNavigationSearchFragment newInstance() {
+        final RoomNavigationSearchFragment fragment = new RoomNavigationSearchFragment();
         final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public RoomSearchFragment() {
+    public RoomNavigationSearchFragment() {
         super(PREFS_NAVIGATION_ROOM_CHOICE);
     }
 
@@ -247,7 +247,7 @@ public class RoomSearchFragment extends SearchFragment {
         @Override
         public void onGoClicked() {
             //call onGoButtonClicked() and clear choice on success
-            if(onGoButtonCLicked()){
+            if(onGoButtonClicked()){
                 mDestBuilding = null;
                 mDestFloor = null;
             }

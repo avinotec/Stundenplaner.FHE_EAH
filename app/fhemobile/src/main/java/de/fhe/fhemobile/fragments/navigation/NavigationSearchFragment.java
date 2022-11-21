@@ -26,13 +26,13 @@ import de.fhe.fhemobile.views.navigation.SearchView;
 import de.fhe.fhemobile.vos.navigation.RoomVo;
 
 /**
- * Abstract class for {@link RoomSearchFragment} and {@link PersonSearchFragment}
+ * Abstract class for {@link RoomNavigationSearchFragment} and {@link PersonNavigationSearchFragment}
  *
  * created by Nadja - 03/2022
  */
-public abstract class SearchFragment extends FeatureFragment {
+public abstract class NavigationSearchFragment extends FeatureFragment {
 
-    public static final String TAG = SearchFragment.class.getSimpleName();
+    public static final String TAG = NavigationSearchFragment.class.getSimpleName();
     @NonNls
     public static final String PREFS_NAVIGATION_PERSON_CHOICE = "navigation person";
     @NonNls
@@ -43,7 +43,7 @@ public abstract class SearchFragment extends FeatureFragment {
     protected RoomVo mDestRoom;
     protected RoomVo mStartRoom;
 
-    public SearchFragment(final String prefTag) {
+    public NavigationSearchFragment(final String prefTag) {
         // Required empty public constructor
         PREFS_NAVIGATION = prefTag;
     }
@@ -62,7 +62,7 @@ public abstract class SearchFragment extends FeatureFragment {
             public void onFragmentResult(@NonNull final String requestKey, @NonNull final Bundle bundle) {
                 // We use a String here, but any type that can be put in a Bundle is supported
                 final String result = bundle.getString(KEY_SCANNED_ROOM);
-                Log.d(TAG, "scanned QR code received in SearchFragment: "+result);
+                Log.d(TAG, "scanned QR code received in NavigationSearchFragment: "+result);
 
                 mStartRoom = validateAndGetRoom(result);
                 getSearchView().setStartInputText(mStartRoom.getRoomName());
@@ -87,6 +87,12 @@ public abstract class SearchFragment extends FeatureFragment {
      */
     protected abstract void inflateAndInitializeView(final LayoutInflater inflater, final ViewGroup container);
 
+    /**
+     * Is called within onResume() to load previous room choice from shared preferences
+     * @param previousChoice String loaded from shared preferences
+     */
+    protected abstract void initializePickersFromSharedPreferences(String previousChoice);
+
 
     @Override
     public void onResume() {
@@ -96,8 +102,6 @@ public abstract class SearchFragment extends FeatureFragment {
 
         initializePickersFromSharedPreferences(previousChoice);
     }
-
-    protected abstract void initializePickersFromSharedPreferences(String previousChoice);
 
 
     public void setStartRoom(final String startRoom) {
@@ -128,7 +132,7 @@ public abstract class SearchFragment extends FeatureFragment {
      * changed to {@link NavigationFragment} startRoom and destRoom are cleared
      * @return true if no problems occurred and the navigation could be started
      */
-    protected boolean onGoButtonCLicked(){
+    protected boolean onGoButtonClicked(){
         if(mDestRoom != null){
             if(validateInputAndSetStartRoom(getSearchView().getStartInputText())){
                 ((MainActivity) getActivity()).changeFragment(
