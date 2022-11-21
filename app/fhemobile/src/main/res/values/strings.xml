@@ -129,7 +129,7 @@
     <string name="title_scanner_activity">Scanner</string>
     <string name="title_navigation_activity">Navigation</string>
     <string name="select_from_spinner">Please select</string>
-    <string name="campus_overview">Campus Overview</string>
+    <string name="room_not_found">Room not found!</string>
     <string name="building_03_02_01">Building 3, 2 and 1</string>
     <string name="building_04">Building 4</string>
     <string name="building_05">Building 5</string>
@@ -185,7 +185,9 @@
 
     <string name="push_notification_channel_name">My Schedule Changes</string>
     <string name="push_notification_channel_description">Channel for sending Push Notifications on timetable changes</string>
-	<string name="imprint">Imprint</string>
+    <string name="imprint">Imprint</string>
 
+    <!--    Campus Maps     -->
+    <string name="campus_overview">Campus Overview</string>
 
 </resources>

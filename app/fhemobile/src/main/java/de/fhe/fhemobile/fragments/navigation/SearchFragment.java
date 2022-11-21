@@ -257,8 +257,7 @@ public abstract class SearchFragment extends FeatureFragment {
     }
 
     protected static void showRoomNotFoundErrorToast() {
-        //todo: make translatable
-        Utils.showToast("Room not found!");
+        Utils.showToast(R.string.room_not_found);
     }
 
 }

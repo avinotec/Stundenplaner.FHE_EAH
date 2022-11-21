@@ -94,6 +94,7 @@
     <!-- string name="configure" >Konfiguration</string -->
     <!-- string name="add_widget" >Widget ergänzen</string -->
 
+    <!--    Campus Maps     -->
     <string name="campus_overview">Campus Übersicht</string>
 
     <string name="loading">Lädt…</string>
@@ -131,6 +132,7 @@
     <!--    Campus Navigation-->
     <string name="title_scanner_activity">Scanner</string>
     <string name="title_navigation_activity">Navigation</string>
+    <string name="room_not_found">Raum nicht gefunden!</string>
     <string name="select_from_spinner">Bitte wählen</string>
     <string name="building_03_02_01">Haus 3, 2 und 1</string>
     <string name="building_04">Haus 4</string>
