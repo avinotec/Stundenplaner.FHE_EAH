@@ -53,8 +53,7 @@ function updateDatabaseAndBookNotifications(string & $moduleId): void
     global $debug;
 
 	$moduleURL = API_BASE_URL . ENDPOINT_MODULE_DETAIL . $moduleId;
-	/** @var array $moduleData */
-	$moduleData = array();
+    $moduleData = array();
 	// retrieve data for the module from Stundenplan Server (!not the database on this server)
 	$jsonString = file_get_contents($moduleURL);
 	// second parameter must be true to enable key-value iteration
@@ -68,18 +67,16 @@ function updateDatabaseAndBookNotifications(string & $moduleId): void
     }
 
     //initialize to set data types
-	/** @var array $localEventsetIDs */
-	$localEventsetIDs = array();
-	/** @var array $fetchedEventsetIDs */
-	$fetchedEventsetIDs = array();
-    $fetchedEventsetIDs = array_keys($moduleData["dataActivity"]);
+    $localEventSetIDs = array();
+    $fetchedEventSetIDs = array();
+    $fetchedEventSetIDs = array_keys($moduleData["dataActivity"]);
 
-    $localEventsetIDs = $db_timetable->getEventSetIds($moduleId);
+    $localEventSetIDs = $db_timetable->getEventSetIds($moduleId);
 
-	if ($localEventsetIDs != null && count($localEventsetIDs) > 0) {
+	if ($localEventSetIDs != null && count($localEventSetIDs) > 0) {
 		//DELETED EVENT SETS
 		//detect deleted event set ids, by detecting the event sets that are no longer provided by Stundenplan Server
-		$deletedEventSets = array_diff($localEventsetIDs, $fetchedEventsetIDs);
+		$deletedEventSets = array_diff($localEventSetIDs, $fetchedEventSetIDs);
 		$deletedEventSetsString = implode(", ", $deletedEventSets);
         $output .= sprintf("<p>Deleted Event Set Ids: %s</p>", $deletedEventSetsString);
 
@@ -102,7 +99,7 @@ function updateDatabaseAndBookNotifications(string & $moduleId): void
             $resultLocalEventset = $db_timetable->getEventSet($eventsetID);
 
             //EVENT SET probably CHANGED
-            if (!is_null($resultLocalEventset) && !empty($resultLocalEventset) && !empty($resultLocalEventset[0])) {
+            if (!empty($resultLocalEventset) && !empty($resultLocalEventset[0])) {
                 $output .= "<p><b>Check for changes:</b><br>";
 
                 $jsonLocalEventset = $resultLocalEventset[0]["eventset_data"];
@@ -159,31 +156,15 @@ function bookTimetableChangedNotifications(string & $eventseriesName): void
     global $output;
 
 	/** @var mysqli_result|null $resultSubscribingUser get tokens subscribing the given event series */
+    // Array of token, language, os
 	$resultSubscribingUser = $db_timetable->getSubscribingUsers($eventseriesName);
 
 	if ($debug) { $output .= sprintf("<p><b>Tokens subscribing the series %s: </b><br>", $eventseriesName); }
 
 	if ($resultSubscribingUser != null &&$resultSubscribingUser->num_rows > 0) {
-
-		while ($subscribingUser = $resultSubscribingUser->fetch_assoc()) {
-			$output .= $subscribingUser["token"] . "<br>";
-
-			if ($subscribingUser["os"] === ANDROID) {
-                $db_timetable->insertNotification(
-                    $subscribingUser["token"],
-                    $eventseriesName,
-                    TIMETABLE_CHANGED);
-
-			} elseif ($subscribingUser["os"] == IOS) {
-				;//send Ios Push
-			} else {
-				$output .= "<p>++++ PUSH wrong OS!! ++++</p>>";
-				exit;
-			}
-		}
+        bookNotifications($resultSubscribingUser, $eventseriesName, TIMETABLE_CHANGED);
 
         if($debug) $output .= sprintf("<br>Notifications need to be sent for event series %s!</p>", $eventseriesName);
-
 	} else {
         if($debug) $output .= sprintf("There are no tokens subscribing %s!</p>", $eventseriesName);
 	}
@@ -194,6 +175,7 @@ function bookTimetableChangedNotifications(string & $eventseriesName): void
  * Book notifications for the tokens that need to be notified about the added exam
  *
  * @param string $moduleId The ID of the module the exam belongs to
+ * @param string $moduleName The name of the module the exam belongs to
  */
 function bookExamAddedNotifications(string & $moduleId, string & $moduleName): void
 {
@@ -207,30 +189,43 @@ function bookExamAddedNotifications(string & $moduleId, string & $moduleName): v
     $resultSubscribingUser = $db_timetable->getUserSubscribingAnythingInModule($moduleId);
 
     if ($resultSubscribingUser->num_rows > 0) {
-
-        while ($subscribingUser = $resultSubscribingUser->fetch_assoc()) {
-            $output .= $subscribingUser["token"] . "<br>";
-
-            if ($subscribingUser["os"] === ANDROID) {
-                $db_timetable->insertNotification(
-                    $subscribingUser["token"],
-                    $moduleName,
-                    EXAM_ADDED);
-
-            } elseif ($subscribingUser["os"] == IOS) {
-                ;//send Ios Push
-            } else {
-                $output .= "<p>++++ PUSH wrong OS!! ++++</p>>";
-                exit;
-            }
-        }
+        bookNotifications($resultSubscribingUser, $moduleName, EXAM_ADDED);
 
         if($debug) $output .= "<br>Notifications need to be sent for module $moduleId!</p>";
-
     } else {
         if($debug) $output .= "There are no tokens subscribing $moduleId!</p>";
     }
     $resultSubscribingUser->close();
+}
+
+/**
+ * Book notifications for the $subscribingUsers concerning the $subject
+ * @param mysqli_result|null $subscribingUsers Array of token, language, os
+ * @param string $subject eventSeriesName or moduleName
+ * @param string $type TIMETABLE_CHANGED or EXAM_ADDED
+ */
+function bookNotifications(?mysqli_result $subscribingUsers, string $subject, string $type): void
+{
+    /** $db_timetable database connection */
+    global $db_timetable;
+    global $output;
+
+    while ($subscribingUser = $subscribingUsers->fetch_assoc()) {
+        $output .= $subscribingUser["token"] . "<br>";
+
+        if ($subscribingUser["os"] === ANDROID) {
+            $db_timetable->insertNotification(
+                $subscribingUser["token"],
+                $subject,
+                $type);
+
+        } elseif ($subscribingUser["os"] == IOS) {
+            ;//send Ios Push
+        } else {
+            $output .= "<p>++++ PUSH wrong OS!! ++++</p>>";
+            exit;
+        }
+    }
 }
 
 /**
