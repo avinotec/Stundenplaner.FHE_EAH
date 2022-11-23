@@ -26,10 +26,6 @@
 -- utf8mb4 ist wohl die richtige Bezeichnung für utf8 multibyte in 4 Bytes
 --
 
--- TODO tokenlaenge einheitlich setzen. Wie lange ist ein Token
--- FCM Token sind xxx Zeichen breit. Daher wird hier die token Breite auf xxx gesetzt.
--- Anstelle VARCHAR wird daher auch CHAR(xxx) verwendet.
-
 --
 -- Datenbank: `stundenplan`
 --
@@ -96,7 +92,6 @@ DROP TABLE IF EXISTS `event_sets`;
 
 CREATE TABLE IF NOT EXISTS `event_sets`
 (
-
     `eventset_id`   VARCHAR(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci    NOT NULL PRIMARY KEY    COMMENT 'in EAH API called activity_id',
     `eventseries`   VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci   NOT NULL                COMMENT 'Name of the event series the event set belongs to, e.g. BT(BA)Mathe I/V/01',
     `module_id`     VARCHAR(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci    NOT NULL                COMMENT 'Module the event set belongs to',
@@ -127,10 +122,13 @@ DROP TABLE IF EXISTS `notifications`;
 
 CREATE TABLE IF NOT EXISTS `notifications`
 (
+    -- There is no official documentation about the length of the Firebase token.
+    -- Based on an empirical observation on stackoverflow (https://stackoverflow.com/a/64902685/15843067),
+    -- I assume and hope that 255 chars will always be sufficient.
     `token`     VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Firebase Messaging Token',
     `subject`   VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Name of module or event series',
     `type`      CHAR(1)     CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '0:"undefined", 1:"Event added" or "2:Timetable changed"',
-    `status`    CHAR(1)     CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '0:undefined, 1:open, 2:sent, x:failed is still open',
+    `status`    CHAR(1)     CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '0:undefined, 1:open, 2:sent; failed is considered as open',
     `timestamp` TIMESTAMP DEFAULT current_timestamp() ON UPDATE current_timestamp(),
     PRIMARY KEY (`token`, `subject`, `type`)
 
