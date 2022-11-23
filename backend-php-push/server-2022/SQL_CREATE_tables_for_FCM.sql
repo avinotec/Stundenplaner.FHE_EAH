@@ -94,7 +94,8 @@ CREATE TABLE IF NOT EXISTS `event_sets`
     `eventset_id`   VARCHAR(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci    NOT NULL PRIMARY KEY    COMMENT 'in EAH API called activity_id',
     `eventseries`   VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci   NOT NULL                COMMENT 'Name of the event series the event set belongs to, e.g. BT(BA)Mathe I/V/01',
     `module_id`     VARCHAR(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci    NOT NULL                COMMENT 'Module the event set belongs to',
-    `eventset_data` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci   DEFAULT NULL            COMMENT 'Data of the event series as json string',
+    -- VARHCAR(255) not enough because we store whole json here
+    `eventset_data` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci   DEFAULT NULL            COMMENT 'Data of the event series as json string',
     `last_changed`  TIMESTAMP                                                       NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 
 ) ENGINE = InnoDB
