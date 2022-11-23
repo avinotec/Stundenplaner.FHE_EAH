@@ -231,19 +231,26 @@ function bookNotifications(?mysqli_result $subscribingUsers, string $subject, st
 /**
  * Send Firebase Message
  *
- * @param string $token
+ * @param string $tokens A string containing multiple tokens seperated by comma
  * @param string $subject The event series oder module name the notification is about
  * @param string $title "timetable change" or "exam added"
  * @return void
  */
-function sendFCM(string & $token, string & $subject, string & $title): void
+function sendFCM(string & $tokens, string & $subject, string & $title): void
 {
 	//header data
 	$headers = array('Authorization: key='.SERVER_KEY, 'Content-Type: application/json');
 
     //prepare data
-	$fields = array (
-		'to' => $token,
+    $tokenArray = explode(',', $tokens);
+    if(empty($tokenArray)){
+        return;
+    }
+    echo "<p> tokenArray";
+    print_r($tokenArray);
+    echo "</p>";
+    $fields = array (
+		'registration_ids' => $tokenArray,
 		'notification' => array(
             'title' => $title,
             'body' => $subject,
@@ -298,24 +305,17 @@ foreach ($moduleIds as $moduleKey => $moduleId) {
 	updateDatabaseAndBookNotifications($moduleId);
 }
 
-//TODO
-// besser ist es, wenn wir das in 2 Schleifen machen
-// Erst feststellen, dass es eine Benachrichtigung gibt.
-// und die Benachrichtigung in einer zweiten Schleife machen, nämlich nach erfolgreichem Versenden vermerken, dass
-// benachrichtigt wurde. Insofern brauchen wir noch ein Flag, dass nicht benachrichtigte noch zu benachrichtigen sind.
-// man kann dann anschließend gerne noch aufräumen, alles was benachrichtigt wurde dann löschen.
-// Das nennt sich Wiederanlaufsteuerung, wenn mittendrin in der Konstruktion was zusammenbricht, weiß man nicht,
-// ob alle Benachrichtigungen versendet worden sind.
 
-//TODO: iterate over notifications and send them out
-// iterate over notifications and send each one out
-//foreach ($notificationsToSend as $notificationKey => $notificationsData) {
-//
-//    //TODO: notifications bündeln durch Umstellung von "to" => string nach "registration_ids" => array of tokens
-//    sendFCM($notificationsData["token"], $notificationsData["subject"], $notificationsData["tag"]);
-//    $output .= "<br>Notifications sent for event series or module ".$notificationsData["tag"]."!";
-//}
+global $db_timetable;
 
+//iterate over notifications and send them out
+$notificationsToSend = $db_timetable->getNotificationsToSent();
+
+foreach ($notificationsToSend as $notificationData) {
+    sendFCM($notificationData["tokens"], $notificationData["subject"], $notificationData["tag"]);
+    $output .= "<br>Notifications sent for event series or module ".$notificationData["tag"]."!";
+}
+//TODO: set up php script for cleaning notifications from time to time
 
 $output .= "</p>";
 

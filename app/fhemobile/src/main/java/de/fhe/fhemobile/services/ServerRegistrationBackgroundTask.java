@@ -72,7 +72,7 @@ public class ServerRegistrationBackgroundTask implements Runnable {
             client = (HttpURLConnection) url.openConnection(); //debug
 
             //add params
-            String data = encodeAsParam("os", "android")
+            String data = encodeAsParam("os", "0")
                     + encodeAsParam("fcm_token", fcmToken);
             if("de".equals(Locale.getDefault().getLanguage())){
                 data += encodeAsParam("language", "DE");

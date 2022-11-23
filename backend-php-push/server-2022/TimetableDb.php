@@ -376,9 +376,27 @@ final class TimetableDb
             "VALUES ('$fcm_token', '$subject', '$type', '$status', SYSDATE())" .
             'ON DUPLICATE KEY UPDATE timestamp = SYSDATE()';
         /** @var bool $result */
-        $result = $this->runQuery($sql, "addNotification");
+        $result = $this->runQuery($sql, "insertNotification");
         return $result;
 
+    }
+
+    /**
+     * Get array of notification that need to be sent out
+     * @return array Array of subject, type, tokens
+     */
+    final public function getNotificationsToSent(): array
+    {
+        $open = STATUS_OPEN;
+        $sql = /** @lang MySQL */
+            "SELECT subject, type, GROUP_CONCAT(token) AS tokens FROM notifications WHERE status = '$open'"
+            . "GROUP BY subject, type";
+        $result = $this->runQueryAndGetResult($sql, "getNotificationsToSent");
+        if (!is_null($result)) {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } else {
+            return array();
+        }
     }
 
     /**
