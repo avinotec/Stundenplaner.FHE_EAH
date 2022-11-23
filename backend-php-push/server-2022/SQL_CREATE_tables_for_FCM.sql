@@ -62,7 +62,6 @@ CREATE TABLE IF NOT EXISTS `fcm_user`
     `id`               int(11)                                                 NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `token`            VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Firebase Messaging Token',
     `eventseries_name` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Subscribed event series',
-    -- `os`               VARCHAR(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT 'android or ios',
     `os`               CHAR(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' NULL COMMENT '0:android or 1:ios',
     `language`         CHAR(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'DE' COMMENT 'DE or EN'
 
@@ -127,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `notifications`
     -- I assume and hope that 255 chars will always be sufficient.
     `token`     VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Firebase Messaging Token',
     `subject`   VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Name of module or event series',
-    `type`      CHAR(1)     CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '0:"undefined", 1:"Event added" or "2:Timetable changed"',
+    `type`      CHAR(1)     CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '0:undefined, 1:Timetable changed or 2:Exam added',
     `status`    CHAR(1)     CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '0:undefined, 1:open, 2:sent; failed is considered as open',
     `timestamp` TIMESTAMP DEFAULT current_timestamp() ON UPDATE current_timestamp(),
     PRIMARY KEY (`token`, `subject`, `type`)

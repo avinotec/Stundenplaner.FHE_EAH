@@ -25,11 +25,17 @@ const ENDPOINT_MODULE_DETAIL = "v1/module/"; //+{id}
 const FCM_URL = "https://fcm.googleapis.com/fcm/send";
 const SERVER_KEY = "AAAAU9EyU7g:APA91bF0q-zUEC2f3A6IMSk0at797Wb6OXt3AD-v1X_mCP5_s2HQ4EwSJqwhzjj0AnVB3aGUNMKMkhKSrZuwZblG4SPRrExBVRjQLvQ6w9tWTZePbAElHElzLBKRjLuo_xFeTNYLWHUL";
 
-const ANDROID = "android";
-const IOS = "ios";
+const ANDROID = "0";
+const IOS = "1";
 
 const LANG_DE = "DE";
 const LANG_EN = "EN";
 
-const TIMETABLE_CHANGED = "Timetable changed";
-const EXAM_ADDED = "Exam added";
+const UNDEFINED_CHANGE = "0";
+const TIMETABLE_CHANGED = "1";
+const EXAM_ADDED = "2";
+
+//TODO: Frage von Nadja: wofür brauchen wir undefined?
+const STATUS_UNDEFINED = "0";
+const STATUS_OPEN = "1";
+const STATUS_SENT = "2";
