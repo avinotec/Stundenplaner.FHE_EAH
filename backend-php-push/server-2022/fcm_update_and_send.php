@@ -45,24 +45,27 @@ $output = "";
  *
  * @param string $moduleId
  */
-function updateDatabaseAndBookNotifications(string & $moduleId): void
+function updateDatabaseAndBookNotifications(string &$moduleId): void
 {
-	/** $db_timetable database connection */
-	global $db_timetable;
+    /** $db_timetable database connection */
+    global $db_timetable;
     global $output;
     global $debug;
 
-	$moduleURL = API_BASE_URL . ENDPOINT_MODULE_DETAIL . $moduleId;
+    $moduleURL = API_BASE_URL . ENDPOINT_MODULE_DETAIL . $moduleId;
     $moduleData = array();
-	// retrieve data for the module from Stundenplan Server (!not the database on this server)
-	$jsonString = file_get_contents($moduleURL);
-	// second parameter must be true to enable key-value iteration
-	$moduleData = json_decode($jsonString, true);
+    // retrieve data for the module from Stundenplan Server (!not the database on this server)
+    $jsonString = file_get_contents($moduleURL);
+    // second parameter must be true to enable key-value iteration
+    $moduleData = json_decode($jsonString, true);
 
     // validate answer, otherwise skip
-	if (!array_key_exists("dataActivity", $moduleData)) {
-        if($debug) $output .= sprintf("<br><i>Module %s is empty (this semester).</i><br>", $moduleId);
-        if($debug) $output .= sprintf("<br><i>Module %s is empty (this semester).</i><br>", $moduleId);
+    if (!array_key_exists("dataActivity", $moduleData)) {
+        $moduleName = "";
+        if (array_key_exists("dataModule", $moduleData)){
+            $moduleName = $moduleData["dataModule"]["Name"];
+        }
+        if ($debug) $output .= sprintf("Module %s (%s) is empty (at least this semester).<br>", $moduleId, $moduleName);
         return;
     }
 
@@ -73,102 +76,103 @@ function updateDatabaseAndBookNotifications(string & $moduleId): void
 
     $localEventSetIDs = $db_timetable->getEventSetIds($moduleId);
 
-	if ($localEventSetIDs != null && count($localEventSetIDs) > 0) {
-		//DELETED EVENT SETS
-		//detect deleted event set ids, by detecting the event sets that are no longer provided by Stundenplan Server
-		$deletedEventSets = array_diff($localEventSetIDs, $fetchedEventSetIDs);
-		$deletedEventSetsString = implode(", ", $deletedEventSets);
-        $output .= sprintf("<p>Deleted Event Set Ids: %s</p>", $deletedEventSetsString);
+    if ($localEventSetIDs != null && count($localEventSetIDs) > 0) {
+        //DELETED EVENT SETS
+        //detect deleted event set ids, by detecting the event sets that are no longer provided by Stundenplan Server
+        $deletedEventSets = array_diff($localEventSetIDs, $fetchedEventSetIDs);
+        if (count($deletedEventSets) > 0) {
+            $output .= sprintf("Deleted Event Set Ids: %s <br>", implode(", ", $deletedEventSets));
+        }
 
-		//delete those event sets in database
-		foreach ($deletedEventSets as $deletedEventSetId) {
-			$db_timetable->deleteEventSet($deletedEventSetId);
-			$eventseriesName = getEventSeriesName($moduleData["dataActivity"][$deletedEventSetId]["activityName"]);
-            bookTimetableChangedNotifications($eventseriesName);
-		}
+        //delete those event sets in database
+        foreach ($deletedEventSets as $deletedEventSetId) {
+            $db_timetable->deleteEventSet($deletedEventSetId);
+            $eventSeriesName = getEventSeriesName($moduleData["dataActivity"][$deletedEventSetId]["activityName"]);
+            bookTimetableChangedNotifications($eventSeriesName);
+        }
 
-		//CHANGED and ADDED EVENT SERIES
-		// per module, check each event set for changes
-		foreach ($moduleData["dataActivity"] as $eventsetID => $eventsetData) {
-			$fetchedEventsetJSON = json_encode($eventsetData);
+        //CHANGED and ADDED EVENT SERIES
+        // per module, check each event set for changes
+        foreach ($moduleData["dataActivity"] as $eventsetID => $eventsetData) {
+            $fetchedEventSetJSON = json_encode($eventsetData);
             // change escaped slashes ("\/") to "/"
-            $fetchedEventsetJSON = stripslashes($fetchedEventsetJSON);
-			/** @var String $eventseriesName */
-			$eventseriesName = getEventSeriesName($eventsetData["activityName"]);
+            $fetchedEventSetJSON = stripslashes($fetchedEventSetJSON);
+            /** @var String $eventSeriesName */
+            $eventSeriesName = getEventSeriesName($eventsetData["activityName"]);
             //get local event set
-            $resultLocalEventset = $db_timetable->getEventSet($eventsetID);
+            //array of eventset_id, eventseries, module_id, eventset_data, last_changed
+            $resultLocalEventSet = $db_timetable->getEventSet($eventsetID);
 
             //EVENT SET probably CHANGED
-            if (!empty($resultLocalEventset) && !empty($resultLocalEventset[0])) {
-                $output .= "<p><b>Check for changes:</b><br>";
+            if (!empty($resultLocalEventSet) && !empty($resultLocalEventSet[0])) {
+                $output .= "<ul>";
 
-                $jsonLocalEventset = $resultLocalEventset[0]["eventset_data"];
+                $jsonLocalEventSet = $resultLocalEventSet[0]["eventset_data"];
 
-	            //compare local vs fetched event set checksum
-	            // in case they are equal, nothing gets changed
-				if ($jsonLocalEventset === $fetchedEventsetJSON) {
-					// nothing changed since last request
-					$output .= sprintf("Event set %s not changed<br>", $resultLocalEventset[0]["eventset_id"]);
-				} else {
-					$output .= sprintf("Event set %s has changed since %s<br>",
-						$resultLocalEventset[0]["eventset_id"],
-						$resultLocalEventset[0]["last_changed"]);
-					//update database, the data of this event set has changed
-					$db_timetable->updateEventSet($eventsetID, $fetchedEventsetJSON);
-					bookTimetableChangedNotifications($eventseriesName);
-				}
-				$output .= "</p>";
-			} else {
-				//EVENT SET ADDED
-				//no local event set with this id found --> event set is new and has to be added
-				$db_timetable->insertEventSet($eventsetID, $eventseriesName, $moduleId, $fetchedEventsetJSON);
-                bookTimetableChangedNotifications($eventseriesName);
+                //compare local vs fetched event set checksum
+                // in case they are equal, nothing gets changed
+                if ($jsonLocalEventSet === $fetchedEventSetJSON) {
+                    // nothing changed since last request
+                    if ($debug) $output .= sprintf("<li> Event set %s has not changed. </li>", $resultLocalEventSet[0]["eventset_id"]);
+                } else {
+                    $output .= sprintf("<li> Event set %s has changed since %s.</li>",
+                        $resultLocalEventSet[0]["eventset_id"],
+                        $resultLocalEventSet[0]["last_changed"]);
+                    //update database, the data of this event set has changed
+                    $db_timetable->updateEventSet($eventsetID, $fetchedEventSetJSON);
+                    bookTimetableChangedNotifications($eventSeriesName);
+                }
+                $output .= "</ul>";
+            } else {
+                //EVENT SET ADDED
+                //no local event set with this id found --> event set is new and has to be added
+                $db_timetable->insertEventSet($eventsetID, $eventSeriesName, $moduleId, $fetchedEventSetJSON);
+                bookTimetableChangedNotifications($eventSeriesName);
 
                 //if event series corresponds to a new exam (no matter which group),
                 // then notify all users subscribing an event series of the same module
                 //possible endings for exams: APL, PL, mdl. Prfg.,Wdh.-Prfg., Wdh.-APL
-                if (preg_match("/.*(PL)|(Prfg\\.)/", $eventseriesName)) {
+                if (preg_match("/.*(PL)|(Prfg\\.)/", $eventSeriesName)) {
                     bookExamAddedNotifications($moduleId, $moduleData["dataModule"]["Name"]);
+                    $output .= sprintf("Added exam found for %s <br>", $moduleData["dataModule"]["Name"]);
                 }
-			}
-		}
-	} else {
-		//new module -> needs to be added
-		foreach ($moduleData["dataActivity"] as $eventsetID => $eventsetData) {
-			$eventseriesName = getEventSeriesName($eventsetData["activityName"]);
-			$fetchedEventsetJSON = json_encode($eventsetData);
-			$db_timetable->insertEventSet($eventsetID, $eventseriesName, $moduleId, $fetchedEventsetJSON);
+            }
         }
-	}
+    } else {
+        //new module -> needs to be added
+        foreach ($moduleData["dataActivity"] as $eventsetID => $eventsetData) {
+            $eventSeriesName = getEventSeriesName($eventsetData["activityName"]);
+            $fetchedEventSetJSON = json_encode($eventsetData);
+            $db_timetable->insertEventSet($eventsetID, $eventSeriesName, $moduleId, $fetchedEventSetJSON);
+        }
+    }
 
 }
 
 /**
  * Book notifications for the tokens that need to be notified about the change of the given event series
  *
- * @param string $eventseriesName The name of the changed events series
+ * @param string $eventSeriesName The name of the changed events series
  */
-function bookTimetableChangedNotifications(string & $eventseriesName): void
+function bookTimetableChangedNotifications(string &$eventSeriesName): void
 {
-	global $debug;
-	/** $db_timetable database connection */
-	global $db_timetable;
+    global $debug;
+    /** $db_timetable database connection */
+    global $db_timetable;
     global $output;
 
-	/** @var mysqli_result|null $resultSubscribingUser get tokens subscribing the given event series */
+    /** @var mysqli_result|null $resultSubscribingUser get tokens subscribing the given event series */
     // Array of token, language, os
-	$resultSubscribingUser = $db_timetable->getSubscribingUsers($eventseriesName);
+    $resultSubscribingUser = $db_timetable->getSubscribingUsers($eventSeriesName);
 
-	if ($debug) { $output .= sprintf("<p><b>Tokens subscribing the series %s: </b><br>", $eventseriesName); }
+    if ($resultSubscribingUser != null && $resultSubscribingUser->num_rows > 0) {
+        if ($debug) $output .= sprintf("There are notifications that need to be sent for event series %s!<br>", $eventSeriesName);
 
-	if ($resultSubscribingUser != null &&$resultSubscribingUser->num_rows > 0) {
-        bookNotifications($resultSubscribingUser, $eventseriesName, TIMETABLE_CHANGED);
-
-        if($debug) $output .= sprintf("<br>Notifications need to be sent for event series %s!</p>", $eventseriesName);
-	} else {
-        if($debug) $output .= sprintf("There are no tokens subscribing %s!</p>", $eventseriesName);
-	}
-	$resultSubscribingUser->close();
+        bookNotifications($resultSubscribingUser, $eventSeriesName, TIMETABLE_CHANGED);
+    } else {
+        if ($debug) $output .= sprintf("There are no tokens subscribing %s!<br>", $eventSeriesName);
+    }
+    $resultSubscribingUser->close();
 }
 
 /**
@@ -177,7 +181,7 @@ function bookTimetableChangedNotifications(string & $eventseriesName): void
  * @param string $moduleId The ID of the module the exam belongs to
  * @param string $moduleName The name of the module the exam belongs to
  */
-function bookExamAddedNotifications(string & $moduleId, string & $moduleName): void
+function bookExamAddedNotifications(string &$moduleId, string &$moduleName): void
 {
     global $debug;
     /** $db_timetable database connection */
@@ -185,15 +189,15 @@ function bookExamAddedNotifications(string & $moduleId, string & $moduleName): v
     global $output;
 
     //get tokens subscribing any event series in the given module
-	// Array of token, language, os
+    // Array of token, language, os
     $resultSubscribingUser = $db_timetable->getUserSubscribingAnythingInModule($moduleId);
 
     if ($resultSubscribingUser->num_rows > 0) {
         bookNotifications($resultSubscribingUser, $moduleName, EXAM_ADDED);
 
-        if($debug) $output .= "<br>Notifications need to be sent for module $moduleId!</p>";
+        if ($debug) $output .= sprintf("There are notifications that need to be sent for module %s! <br>", $moduleId);
     } else {
-        if($debug) $output .= "There are no tokens subscribing $moduleId!</p>";
+        if ($debug) $output .= "There are no tokens subscribing $moduleId!<br>";
     }
     $resultSubscribingUser->close();
 }
@@ -208,11 +212,8 @@ function bookNotifications(?mysqli_result $subscribingUsers, string $subject, st
 {
     /** $db_timetable database connection */
     global $db_timetable;
-    global $output;
 
     while ($subscribingUser = $subscribingUsers->fetch_assoc()) {
-        $output .= $subscribingUser["token"] . "<br>";
-
         $db_timetable->insertNotification(
             $subscribingUser["token"],
             $subject,
@@ -230,38 +231,38 @@ function bookNotifications(?mysqli_result $subscribingUsers, string $subject, st
  */
 function sendFCM(string &$tokens, string &$subject, string &$type): void
 {
-	//header data
-	$headers = array('Authorization: key='.SERVER_KEY, 'Content-Type: application/json');
+    //header data
+    $headers = array('Authorization: key=' . SERVER_KEY, 'Content-Type: application/json');
 
     //prepare data
     $tokenArray = explode(',', $tokens);
-    if(empty($tokenArray)){
+    if (empty($tokenArray)) {
         return;
     }
     echo "<p> tokenArray";
     print_r($tokenArray);
     echo "</p>";
-    $fields = array (
-		'registration_ids' => $tokenArray,
-		'notification' => array(
+    $fields = array(
+        'registration_ids' => $tokenArray,
+        'notification' => array(
             'title' => $type,
             'body' => $subject,
             'sound' => 'default'
         )
-	);
+    );
 
-	//initiate curl request
-	$cRequest = curl_init();
-	curl_setopt($cRequest, CURLOPT_URL, FCM_URL);
-	curl_setopt($cRequest, CURLOPT_POST, true);
-	curl_setopt($cRequest, CURLOPT_HTTPHEADER, $headers);
-	curl_setopt($cRequest, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($cRequest, CURLOPT_POSTFIELDS, json_encode($fields));
+    //initiate curl request
+    $cRequest = curl_init();
+    curl_setopt($cRequest, CURLOPT_URL, FCM_URL);
+    curl_setopt($cRequest, CURLOPT_POST, true);
+    curl_setopt($cRequest, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($cRequest, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($cRequest, CURLOPT_POSTFIELDS, json_encode($fields));
 
-	// execute curl request
-	curl_exec($cRequest);
-	//close curl request
-	curl_close($cRequest);
+    // execute curl request
+    curl_exec($cRequest);
+    //close curl request
+    curl_close($cRequest);
 
 }
 
@@ -281,20 +282,27 @@ $jsonStringFromStundenplanServer = file_get_contents($url);
 //note: second parameter must be true to enable key-value iteration
 $moduleIds = json_decode($jsonStringFromStundenplanServer, true);
 
-$output .= sprintf("<p><b> Fetched module ids</b> (Anzahl: %s):<br>", count($moduleIds));
 
 //fetch data of each module
+$output .= sprintf("<b> %s module IDs had been fetched.</b><br>", count($moduleIds));
 if ($debug) {
-	//for debugging: reduce array to size 5
-	$moduleIds = array_slice($moduleIds, 3, 7, true);
-	print_r($moduleIds);
+    $output .= sprintf("<b><i><span style='color:DodgerBlue;'>Fetched module ids: </span></i></b>", count($moduleIds));
+
+    //TODO: comment out for complete modules fetching
+    //for debugging: reduce array to smaller size
+    $moduleIds = array_slice($moduleIds, 20, 10, true);
+
+    $output .= implode(", ", $moduleIds);
 }
 
 // Check each module for changes
 foreach ($moduleIds as $moduleKey => $moduleId) {
-	$output .=  $moduleId . ", ";
-	// collect all notifications that need to be sent concerning this moduleID
-	updateDatabaseAndBookNotifications($moduleId);
+    if ($debug) $output .= sprintf("<p style='color:DodgerBlue;'>Module %s:<br><p style='margin-left:40px'> ", $moduleId);
+
+    // collect all notifications that need to be sent concerning this moduleID
+    updateDatabaseAndBookNotifications($moduleId);
+
+    if ($debug) $output .= "</p></p>";
 }
 
 
@@ -302,15 +310,16 @@ global $db_timetable;
 
 //iterate over notifications and send them out
 $notificationsToSend = $db_timetable->getNotificationsToSendToAndroid();
+$output .= sprintf("<br><b> %s notifications to send out.</b><br>", count($notificationsToSend));
 
+if ($debug) $output .= "<b><i><span style='color:DodgerBlue;'>Notifications to send: { </span></i></b> <ul>";
 foreach ($notificationsToSend as $notificationData) {
     sendFCM($notificationData["tokens"], $notificationData["subject"], $notificationData["type"]);
-    $output .= "<br>Notifications sent for event series or module ".$notificationData["subject"]."!";
+    if ($debug) $output .= sprintf("<li>%s: %s</li>", $notificationData["type"], $notificationData["subject"]);
 }
+if ($debug) $output .= "</ul><b><i><span style='color:DodgerBlue;'>}</span></i></b>";
 //TODO: set up php script for cleaning notifications from time to time
 
-$output .= "</p>";
 
-
-$output .= "<p><i> Ende Script fcm_update_and_send.php</i></b></p>>";
+$output .= "<p><br><i><b> Ende Script fcm_update_and_send.php</i></b></p>>";
 echo $output;
