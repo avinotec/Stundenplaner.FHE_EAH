@@ -112,7 +112,7 @@
     <string name="deleteTimeTableConfirm">Clear Schedule</string>
     <string name="deleteTimeTableCancel">Cancel</string>
 
-    <string name="fcm_timetablechange_title">Timetable Change</string>
+    <string name="fcm_change_title">Timetable Change</string>
     <string name="fcm_timetablechange_message_part1">has changed.</string>
     <string name="fcm_message_part2">Please update your schedule!</string>
     <string name="fcm_examadded_message_part1">has been added.</string>

@@ -16,6 +16,9 @@
  */
 package de.fhe.fhemobile.services;
 
+import static de.fhe.fhemobile.utils.Define.PushNotifications.PARAM_EXAM_ADDED;
+import static de.fhe.fhemobile.utils.Define.PushNotifications.PARAM_TIMETABLE_CHANGED;
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -54,7 +57,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 	@Override
 	public void onMessageReceived(final RemoteMessage remoteMessage) {
 
-		if("Timetable change".equals(remoteMessage.getNotification().getTitle())){
+		if(PARAM_TIMETABLE_CHANGED.equals(remoteMessage.getNotification().getTitle())){
 
 			final String message = remoteMessage.getNotification().getBody() + " "
 					+ Main.getAppContext().getString(R.string.fcm_timetablechange_message_part1);
@@ -62,17 +65,17 @@ public class PushNotificationService extends FirebaseMessagingService {
 
 			//todo: click action
 			showNotification(
-					Main.getAppContext().getString(R.string.fcm_timetablechange_title),
+					Main.getAppContext().getString(R.string.fcm_change_title),
 					message,
 					messageLong);
 
-		} else if("Exam added".equals(remoteMessage.getNotification().getTitle())){
+		} else if(PARAM_EXAM_ADDED.equals(remoteMessage.getNotification().getTitle())){
 			final String message = remoteMessage.getNotification().getBody() + " "
 					+ Main.getAppContext().getString(R.string.fcm_examadded_message_part1);
 			final String messageLong = message + " " + Main.getAppContext().getString(R.string.fcm_message_part2);
 
 			showNotification(
-					Main.getAppContext().getString(R.string.fcm_timetablechange_title),
+					Main.getAppContext().getString(R.string.fcm_change_title),
 					message,
 					messageLong);
 		}
