@@ -128,6 +128,7 @@ CREATE TABLE IF NOT EXISTS `notifications`
     `token`     VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Firebase Messaging Token',
     `subject`   VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Name of module or event series',
     `type`      CHAR(1)     CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '0:undefined, 1:Timetable changed or 2:Exam added',
+    `os`        CHAR(1)     CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' NULL COMMENT '0:android or 1:ios',
     `status`    CHAR(1)     CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '0:undefined, 1:open, 2:sent; failed is considered as open',
     `timestamp` TIMESTAMP DEFAULT current_timestamp() ON UPDATE current_timestamp(),
     PRIMARY KEY (`token`, `subject`, `type`)

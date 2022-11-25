@@ -41,6 +41,7 @@ import java.util.Locale;
 import javax.net.ssl.HttpsURLConnection;
 
 import de.fhe.fhemobile.BuildConfig;
+import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 
 public class ServerRegistrationBackgroundTask implements Runnable {
@@ -72,12 +73,12 @@ public class ServerRegistrationBackgroundTask implements Runnable {
             client = (HttpURLConnection) url.openConnection(); //debug
 
             //add params
-            String data = encodeAsParam("os", "0")
+            String data = encodeAsParam("os", Define.PushNotifications.PARAM_ANDROID)
                     + encodeAsParam("fcm_token", fcmToken);
             if("de".equals(Locale.getDefault().getLanguage())){
-                data += encodeAsParam("language", "DE");
+                data += encodeAsParam("language", Define.PushNotifications.PARAM_LANG_DE);
             } else {
-                data += encodeAsParam("language", "EN");
+                data += encodeAsParam("language", Define.PushNotifications.PARAM_LANG_EN);
             }
             for(final MyScheduleEventSeriesVo eventSeriesVo : subscribedEventSeriesVos){
                 data += encodeAsParam("eventseries_names[]", eventSeriesVo.getTitle());

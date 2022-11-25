@@ -213,18 +213,11 @@ function bookNotifications(?mysqli_result $subscribingUsers, string $subject, st
     while ($subscribingUser = $subscribingUsers->fetch_assoc()) {
         $output .= $subscribingUser["token"] . "<br>";
 
-        if ($subscribingUser["os"] === ANDROID) {
-            $db_timetable->insertNotification(
-                $subscribingUser["token"],
-                $subject,
-                $type);
-
-        } elseif ($subscribingUser["os"] == IOS) {
-            ;//send Ios Push
-        } else {
-            $output .= "<p>++++ PUSH wrong OS!! ++++</p>>";
-            exit;
-        }
+        $db_timetable->insertNotification(
+            $subscribingUser["token"],
+            $subject,
+            $type,
+            $subscribingUser["os"]);
     }
 }
 
@@ -233,10 +226,9 @@ function bookNotifications(?mysqli_result $subscribingUsers, string $subject, st
  *
  * @param string $tokens A string containing multiple tokens seperated by comma
  * @param string $subject The event series oder module name the notification is about
- * @param string $title "timetable change" or "exam added"
- * @return void
+ * @param string $type "1" for timetable changed or "2" for exam added
  */
-function sendFCM(string & $tokens, string & $subject, string & $title): void
+function sendFCM(string &$tokens, string &$subject, string &$type): void
 {
 	//header data
 	$headers = array('Authorization: key='.SERVER_KEY, 'Content-Type: application/json');
@@ -252,7 +244,7 @@ function sendFCM(string & $tokens, string & $subject, string & $title): void
     $fields = array (
 		'registration_ids' => $tokenArray,
 		'notification' => array(
-            'title' => $title,
+            'title' => $type,
             'body' => $subject,
             'sound' => 'default'
         )
@@ -309,11 +301,11 @@ foreach ($moduleIds as $moduleKey => $moduleId) {
 global $db_timetable;
 
 //iterate over notifications and send them out
-$notificationsToSend = $db_timetable->getNotificationsToSent();
+$notificationsToSend = $db_timetable->getNotificationsToSendToAndroid();
 
 foreach ($notificationsToSend as $notificationData) {
-    sendFCM($notificationData["tokens"], $notificationData["subject"], $notificationData["tag"]);
-    $output .= "<br>Notifications sent for event series or module ".$notificationData["tag"]."!";
+    sendFCM($notificationData["tokens"], $notificationData["subject"], $notificationData["type"]);
+    $output .= "<br>Notifications sent for event series or module ".$notificationData["subject"]."!";
 }
 //TODO: set up php script for cleaning notifications from time to time
 

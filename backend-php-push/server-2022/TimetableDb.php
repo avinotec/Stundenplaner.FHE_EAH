@@ -364,16 +364,18 @@ final class TimetableDb
      * @param string $fcm_token
      * @param string $subject
      * @param string $type
+     * @param string $os
      * @return bool
      */
     final public function insertNotification(string &$fcm_token,
                                              string &$subject,
-                                             string $type): bool
+                                             string $type,
+                                             string &$os): bool
     {
         $status = STATUS_OPEN;
         $sql = /** @lang MySQL */
-            'INSERT INTO notifications (token, subject, type, status, timestamp)' .
-            "VALUES ('$fcm_token', '$subject', '$type', '$status', SYSDATE())" .
+            'INSERT INTO notifications (token, subject, type, os, status, timestamp)' .
+            "VALUES ('$fcm_token', '$subject', '$type', '$os', '$status', SYSDATE())" .
             'ON DUPLICATE KEY UPDATE timestamp = SYSDATE()';
         /** @var bool $result */
         $result = $this->runQuery($sql, "insertNotification");
@@ -382,14 +384,15 @@ final class TimetableDb
     }
 
     /**
-     * Get array of notification that need to be sent out
+     * Get array of notification that need to be sent out to android devices
      * @return array Array of subject, type, tokens
      */
-    final public function getNotificationsToSent(): array
+    final public function getNotificationsToSendToAndroid(): array
     {
         $open = STATUS_OPEN;
         $sql = /** @lang MySQL */
-            "SELECT subject, type, GROUP_CONCAT(token) AS tokens FROM notifications WHERE status = '$open'"
+            "SELECT subject, type, GROUP_CONCAT(token) AS tokens FROM notifications "
+            . "WHERE status = '$open' AND os = '0'"
             . "GROUP BY subject, type";
         $result = $this->runQueryAndGetResult($sql, "getNotificationsToSent");
         if (!is_null($result)) {
@@ -402,7 +405,7 @@ final class TimetableDb
     /**
      * Run a sql query and get the result
      * @param string $sql The query
-     * @param string $function_name caller of this funktion (debugging), constant string, so no reference
+     * @param string $function_name caller of this function (debugging), constant string, so no reference
      * @return mysqli_result|null The sql result when succeeded, null if an error occurred
      */
     private function runQueryAndGetResult(string &$sql, string /* & */ $function_name): ?mysqli_result
@@ -432,7 +435,7 @@ final class TimetableDb
     /**
      * Run the given sql statement
      * @param string $sql The sql statement
-     * @param string $functionNameForDebuggingCallstack The name of the function runQuery gets called within (for debugging output)
+     * @param string $functionNameForDebuggingCallstack The name of the function runQuery gets called within (for debugging output);
      *                    nicht als Referenz, da feste Strings übergeben werden
      * @return bool true success, false failure
      */

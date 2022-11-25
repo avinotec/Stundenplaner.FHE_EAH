@@ -122,6 +122,15 @@ public final class Define {
     public static final class PushNotifications {
         public static final String CHANNEL_ID = "de.fhe.fhemobile.push";  //$NON-NLS
         public static final long[] VIBRATION_PATTERN = {1000, 500, 1000, 0};
+
+        //the following fields need to be synchronized with the backend (php and database)
+        public static final String PARAM_UNDEFINED = "0";
+        public static final String PARAM_TIMETABLE_CHANGED = "1";
+        public static final String PARAM_EXAM_ADDED = "2";
+
+        public static final String PARAM_ANDROID = "0";
+        public static final String PARAM_LANG_DE = "DE";
+        public static final String PARAM_LANG_EN = "EN";
     }
 
 
