@@ -35,6 +35,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
 
+import de.fhe.fhemobile.comparator.LecturerComparator;
 import de.fhe.fhemobile.comparator.TimetableLocationComparator;
 import de.fhe.fhemobile.utils.myschedule.TimetableChangeType;
 import de.fhe.fhemobile.utils.timetable.TimeTableUtils;
@@ -177,6 +178,7 @@ public class MyScheduleEventVo implements Parcelable {
      * @return
      */
     public List<TimeTableLocationVo> getLocationList() {
+        //sorting needed to enable proper comparison via "equals"
         Collections.sort(mLocationList, new TimetableLocationComparator());
         return mLocationList;
     }
@@ -212,7 +214,13 @@ public class MyScheduleEventVo implements Parcelable {
         return new SimpleDateFormat("E" ).format(getStartDateWithTime());
     }
 
+    /**
+     * Return lecturer list, sorted by id
+     * @return
+     */
     public List<LecturerVo> getLecturerList() {
+        //sorting needed to enable proper comparison via "equals"
+        Collections.sort(mLecturerList, new LecturerComparator());
         return mLecturerList;
     }
 
