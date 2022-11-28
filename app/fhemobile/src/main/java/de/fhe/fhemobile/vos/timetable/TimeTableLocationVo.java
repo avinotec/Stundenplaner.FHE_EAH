@@ -19,6 +19,10 @@ public class TimeTableLocationVo implements Parcelable {
         mName = in.readString();
     }
 
+    public String getId() {
+        return mId;
+    }
+
     public String getName() {
         return mName;
     }

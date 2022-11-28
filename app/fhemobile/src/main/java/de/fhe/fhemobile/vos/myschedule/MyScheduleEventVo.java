@@ -27,6 +27,7 @@ import com.google.gson.annotations.SerializedName;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -34,6 +35,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
 
+import de.fhe.fhemobile.comparator.TimetableLocationComparator;
 import de.fhe.fhemobile.utils.myschedule.TimetableChangeType;
 import de.fhe.fhemobile.utils.timetable.TimeTableUtils;
 import de.fhe.fhemobile.vos.timetable.LecturerVo;
@@ -170,7 +172,12 @@ public class MyScheduleEventVo implements Parcelable {
 
     public String getEventSetId() { return mEventSetId; }
 
+    /**
+     * Return list of locations, sorted by location id
+     * @return
+     */
     public List<TimeTableLocationVo> getLocationList() {
+        Collections.sort(mLocationList, new TimetableLocationComparator());
         return mLocationList;
     }
 
