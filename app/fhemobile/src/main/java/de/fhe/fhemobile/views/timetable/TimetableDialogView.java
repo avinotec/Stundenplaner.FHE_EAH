@@ -31,9 +31,9 @@ import java.util.List;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.comparator.StudyProgramComparator;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
+import de.fhe.fhemobile.vos.timetable.TimetableStudyGroupVo;
+import de.fhe.fhemobile.vos.timetable.TimetableSemesterVo;
+import de.fhe.fhemobile.vos.timetable.TimetableStudyProgramVo;
 import de.fhe.fhemobile.widgets.picker.StudyGroupPicker;
 import de.fhe.fhemobile.widgets.picker.SemesterPicker;
 import de.fhe.fhemobile.widgets.picker.StudyProgramPicker;
@@ -42,13 +42,13 @@ import de.fhe.fhemobile.widgets.picker.base.OnItemChosenListener;
 /**
  * Created by paul on 12.03.15.
  */
-public class TimeTableDialogView extends LinearLayout {
+public class TimetableDialogView extends LinearLayout {
 
-    public TimeTableDialogView(final Context context, final AttributeSet attrs) {
+    public TimetableDialogView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public TimeTableDialogView(final Context context) {
+    public TimetableDialogView(final Context context) {
         super(context);
     }
 
@@ -74,18 +74,18 @@ public class TimeTableDialogView extends LinearLayout {
         toggleButtonEnabled(false);
     }
 
-    public void setStudyCourseItems(final ArrayList<TimeTableStudyProgramVo> _Items) {
+    public void setStudyCourseItems(final ArrayList<TimetableStudyProgramVo> _Items) {
         Collections.sort(_Items, new StudyProgramComparator());
         mStudyProgramPicker2.setItems(_Items);
         mStudyProgramPicker2.toggleEnabled(true);
     }
 
-    public void setSemesterItems(final List<TimeTableSemesterVo> _Items) {
+    public void setSemesterItems(final List<TimetableSemesterVo> _Items) {
         mSemesterPicker.setItems(_Items);
         mSemesterPicker.toggleEnabled(true);
     }
 
-    public void setStudyGroupItems(final List<TimeTableStudyGroupVo> _Items) {
+    public void setStudyGroupItems(final List<TimetableStudyGroupVo> _Items) {
         mStudyGroupPicker.setItems(_Items);
         mStudyGroupPicker.toggleEnabled(true);
     }
@@ -175,7 +175,7 @@ public class TimeTableDialogView extends LinearLayout {
     public interface IViewListener {
         void onStudyProgramChosen(String _StudyCourseId);
         void onSemesterChosen(String _SemesterId);
-        void onStudyGroupChosen(String _TimeTableId);
+        void onStudyGroupChosen(String _TimetableId);
         void onSearchClicked();
     }
 

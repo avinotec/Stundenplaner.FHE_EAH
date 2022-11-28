@@ -40,13 +40,13 @@ import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.ApiErrorUtils;
-import de.fhe.fhemobile.utils.timetable.TimeTableSettings;
+import de.fhe.fhemobile.utils.timetable.TimetableSettings;
 import de.fhe.fhemobile.utils.Utils;
-import de.fhe.fhemobile.views.timetable.TimeTableDialogView;
+import de.fhe.fhemobile.views.timetable.TimetableDialogView;
 import de.fhe.fhemobile.vos.ApiErrorResponse;
-import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableDialogResponse;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
+import de.fhe.fhemobile.vos.timetable.TimetableSemesterVo;
+import de.fhe.fhemobile.vos.timetable.TimetableDialogResponse;
+import de.fhe.fhemobile.vos.timetable.TimetableStudyProgramVo;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,27 +54,27 @@ import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link TimeTableDialogFragment#newInstance} factory method to
+ * Use the {@link TimetableDialogFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TimeTableDialogFragment extends FeatureFragment {
+public class TimetableDialogFragment extends FeatureFragment {
 
-    public static final String TAG = TimeTableDialogFragment.class.getSimpleName();
+    public static final String TAG = TimetableDialogFragment.class.getSimpleName();
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment TimeTableDialogFragment.
+     * @return A new instance of fragment TimetableDialogFragment.
      */
-    public static TimeTableDialogFragment newInstance() {
-        final TimeTableDialogFragment fragment = new TimeTableDialogFragment();
+    public static TimetableDialogFragment newInstance() {
+        final TimetableDialogFragment fragment = new TimetableDialogFragment();
         final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public TimeTableDialogFragment() {
+    public TimetableDialogFragment() {
         // Required empty public constructor
     }
 
@@ -109,7 +109,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (TimeTableDialogView) inflater.inflate(R.layout.fragment_timetable_dialog, container, false);
+        mView = (TimetableDialogView) inflater.inflate(R.layout.fragment_timetable_dialog, container, false);
         mView.setViewListener(mViewListener);
         mView.initializeView(getChildFragmentManager());
 
@@ -122,12 +122,12 @@ public class TimeTableDialogFragment extends FeatureFragment {
         NetworkHandler.getInstance().fetchStudyProgramData(mFetchStudyProgramDataCallback);
     }
 
-    void proceedToTimetable(final String _TimeTableId) {
-        ((MainActivity) getActivity()).changeFragment(TimeTableFragment.newInstance(_TimeTableId),
-                true, TimeTableFragment.TAG);
+    void proceedToTimetable(final String _TimetableId) {
+        ((MainActivity) getActivity()).changeFragment(TimetableFragment.newInstance(_TimetableId),
+                true, TimetableFragment.TAG);
     }
 
-    private final TimeTableDialogView.IViewListener mViewListener = new TimeTableDialogView.IViewListener() {
+    private final TimetableDialogView.IViewListener mViewListener = new TimetableDialogView.IViewListener() {
         @Override
         public void onStudyProgramChosen(final String _StudyProgramId) {
             mView.toggleGroupsPickerVisibility(false);
@@ -139,7 +139,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
             mChosenSemester = null;
 
             boolean errorOccurred = false;
-            final Map<String, TimeTableStudyProgramVo> studyPrograms = mResponse.getStudyPrograms();
+            final Map<String, TimetableStudyProgramVo> studyPrograms = mResponse.getStudyPrograms();
 
             if (studyPrograms.containsKey(_StudyProgramId)) {
                 mChosenStudyProgram = studyPrograms.get(_StudyProgramId);
@@ -172,7 +172,7 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
             mChosenSemester = null;
 
-            final Map<String, TimeTableSemesterVo> semesters = mChosenStudyProgram.getSemesters();
+            final Map<String, TimetableSemesterVo> semesters = mChosenStudyProgram.getSemesters();
             if(semesters.containsKey(_SemesterId)) {
                 mChosenSemester = semesters.get(_SemesterId);
                 mView.setStudyGroupItems(mChosenSemester.getStudyGroupList());
@@ -181,19 +181,19 @@ public class TimeTableDialogFragment extends FeatureFragment {
 
         /**
          * Choosing the group determines the timetable
-         * @param _TimeTableId
+         * @param _TimetableId
          */
         @Override
-        public void onStudyGroupChosen(final String _TimeTableId) {
+        public void onStudyGroupChosen(final String _TimetableId) {
             mView.toggleButtonEnabled(true);
-            mChosenStudyGroup = _TimeTableId;
+            mChosenStudyGroup = _TimetableId;
         }
 
         @Override
         public void onSearchClicked() {
             if (mChosenStudyGroup != null) {
                 if (mView.isRememberActivated()) {
-                    TimeTableSettings.saveTimeTableSelection(mChosenStudyGroup);
+                    TimetableSettings.saveTimetableSelection(mChosenStudyGroup);
                 }
                 proceedToTimetable(mChosenStudyGroup);
 
@@ -208,15 +208,15 @@ public class TimeTableDialogFragment extends FeatureFragment {
     };
 
 
-    private final Callback<TimeTableDialogResponse> mFetchStudyProgramDataCallback = new Callback<TimeTableDialogResponse>() {
+    private final Callback<TimetableDialogResponse> mFetchStudyProgramDataCallback = new Callback<TimetableDialogResponse>() {
         @Override
-        public void onResponse(@NonNull final Call<TimeTableDialogResponse> call, final Response<TimeTableDialogResponse> response) {
+        public void onResponse(@NonNull final Call<TimetableDialogResponse> call, final Response<TimetableDialogResponse> response) {
             if (response.isSuccessful()){
                 mResponse = response.body();
 
-                final ArrayList<TimeTableStudyProgramVo> studyPrograms = new ArrayList<>();
+                final ArrayList<TimetableStudyProgramVo> studyPrograms = new ArrayList<>();
                 //remove "Brückenkurse" and only keep bachelor and master study programs
-                for(final TimeTableStudyProgramVo studyProgramVo : response.body().getStudyProgramsAsList()){
+                for(final TimetableStudyProgramVo studyProgramVo : response.body().getStudyProgramsAsList()){
 
                     if("Bachelor".equals(studyProgramVo.getDegree())
                             || "Master".equals(studyProgramVo.getDegree())){
@@ -232,16 +232,16 @@ public class TimeTableDialogFragment extends FeatureFragment {
         }
 
         @Override
-        public void onFailure(final Call<TimeTableDialogResponse> call, final Throwable t) {
+        public void onFailure(final Call<TimetableDialogResponse> call, final Throwable t) {
             ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.TIMETABLE_DIALOG_FRAGMENT_CODE2);
             Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
         }
     };
 
-    TimeTableDialogView     mView;
+    TimetableDialogView mView;
 
-    TimeTableDialogResponse mResponse;
-    TimeTableStudyProgramVo mChosenStudyProgram;
-    TimeTableSemesterVo     mChosenSemester;
+    TimetableDialogResponse mResponse;
+    TimetableStudyProgramVo mChosenStudyProgram;
+    TimetableSemesterVo mChosenSemester;
     String                  mChosenStudyGroup;
 }

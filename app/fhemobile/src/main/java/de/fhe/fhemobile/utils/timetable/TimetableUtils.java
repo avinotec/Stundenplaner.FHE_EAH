@@ -21,11 +21,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public final class TimeTableUtils {
+public final class TimetableUtils {
 
     /* Utility classes have all fields and methods declared as static.
     Creating private constructors in utility classes prevents them from being accidentally instantiated. */
-	private TimeTableUtils() {
+	private TimetableUtils() {
 	}
 
 	/**

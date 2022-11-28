@@ -56,8 +56,8 @@ import de.fhe.fhemobile.vos.news.NewsItemResponse;
 import de.fhe.fhemobile.vos.news.NewsItemVo;
 import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
 import de.fhe.fhemobile.vos.semesterdates.SemesterDatesVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableDialogResponse;
-import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
+import de.fhe.fhemobile.vos.timetable.TimetableDialogResponse;
+import de.fhe.fhemobile.vos.timetable.TimetableWeekVo;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -378,7 +378,7 @@ public final class NetworkHandler {
     /**
      * @param _Callback
      */
-    public void fetchStudyProgramData(final Callback<TimeTableDialogResponse> _Callback) {
+    public void fetchStudyProgramData(final Callback<TimetableDialogResponse> _Callback) {
         Assert.assertTrue(mApiEah != null);
 
         mApiEah.fetchStudyProgramData().enqueue(_Callback);
@@ -388,11 +388,11 @@ public final class NetworkHandler {
      * @param _StudyGroupId
      * @param _Callback
      */
-    public void fetchTimeTableEvents(final String _StudyGroupId,
-                                     final Callback<Map<String, TimeTableWeekVo>> _Callback) {
+    public void fetchTimetableEvents(final String _StudyGroupId,
+                                     final Callback<Map<String, TimetableWeekVo>> _Callback) {
         Assert.assertTrue(mApiEah != null);
 
-        mApiEah.fetchTimeTableEvents(_StudyGroupId).enqueue(_Callback);
+        mApiEah.fetchTimetableEvents(_StudyGroupId).enqueue(_Callback);
     }
 
     /**
@@ -401,11 +401,11 @@ public final class NetworkHandler {
      * @param _SemesterId The semester's ID
      * @param _Callback
      */
-    public void fetchSemesterTimeTable(final String _SemesterId,
+    public void fetchSemesterTimetable(final String _SemesterId,
                                        final Callback<Map<String, MyScheduleEventSetVo>> _Callback) {
         Assert.assertTrue(mApiEah != null);
 
-        mApiEah.fetchSemesterTimeTable(_SemesterId).enqueue(_Callback);
+        mApiEah.fetchSemesterTimetable(_SemesterId).enqueue(_Callback);
     }
 
     //wait until all updates are collected

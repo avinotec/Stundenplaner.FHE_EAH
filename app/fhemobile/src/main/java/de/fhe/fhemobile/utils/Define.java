@@ -17,8 +17,6 @@
 
 package de.fhe.fhemobile.utils;
 
-import org.jetbrains.annotations.NonNls;
-
 /**
  * we define all static defines centrally here.
  * constants etc.
@@ -33,11 +31,6 @@ public final class Define {
     //enable feature news (the original one, not the temporary webview solution)
     public static final boolean ENABLE_V1_NEWS = false;
 
-
-    public static final class Timetable {
-        public static final String PARAM_TIMETABLE_ID = "paramTimeTableId";            // $NON-NLS
-    }
-
     //created by Nadja 11.03.2022
     public static final class Canteen {
         static final String PREF_SELECTED_CANTEENS = "selectedCanteens";      // $NON-NLS
@@ -48,7 +41,9 @@ public final class Define {
     }
 
     //created by Nadja 11.03.2022
-    public static final class TimeTable {
+    public static final class Timetable {
+        public static final String PARAM_TIMETABLE_ID = "paramTimeTableId";            // $NON-NLS
+
         public static final String SP_TIMETABLE = "spTimeTable"; //$NON-NLS
         public static final String SP_TIMETABLE_SETTINGS = "spTimeTableFavourit";         // $NON-NLS
         public static final String PREF_CHOSEN_TIMETABLE_ID = "prefChosenTimeTableId";    // $NON-NLS

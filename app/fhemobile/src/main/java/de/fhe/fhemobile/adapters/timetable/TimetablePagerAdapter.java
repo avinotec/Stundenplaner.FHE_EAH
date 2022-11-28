@@ -24,18 +24,18 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.ArrayList;
 
-import de.fhe.fhemobile.fragments.timetable.TimeTableWeekFragment;
-import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
+import de.fhe.fhemobile.fragments.timetable.TimetableWeekFragment;
+import de.fhe.fhemobile.vos.timetable.TimetableWeekVo;
 
 /**
  * Created by paul on 23.02.14
  * Updated by Nadja on 02.03.2022
  */
-public class TimeTablePagerAdapter extends FragmentStateAdapter {
+public class TimetablePagerAdapter extends FragmentStateAdapter {
 
-    public TimeTablePagerAdapter(final FragmentManager fm,
+    public TimetablePagerAdapter(final FragmentManager fm,
                                  final Lifecycle lifecycle,
-                                 final ArrayList<TimeTableWeekVo> _Data) {
+                                 final ArrayList<TimetableWeekVo> _Data) {
         super(fm, lifecycle);
         mData = _Data;
     }
@@ -47,7 +47,7 @@ public class TimeTablePagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(final int position) {
-        return TimeTableWeekFragment.newInstance(mData.get(position));
+        return TimetableWeekFragment.newInstance(mData.get(position));
     }
 
     /**
@@ -59,5 +59,5 @@ public class TimeTablePagerAdapter extends FragmentStateAdapter {
         return mData.size();
     }
 
-    private final ArrayList<TimeTableWeekVo> mData;
+    private final ArrayList<TimetableWeekVo> mData;
 }

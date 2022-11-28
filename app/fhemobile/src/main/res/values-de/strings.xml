@@ -112,8 +112,8 @@
     <string name="deleteTimetableTitle">Semesterwechsel</string>
     <string name="deleteTimetableMessageOptional">Das Semester ist zu Ende. Soll dein Stundenplan geleert werden?</string>
     <string name="deleteTimetableMessageForced">Ein neues Semester hat begonnen. Dein Stundenplan muss geleert werden.</string>
-    <string name="deleteTimeTableConfirm">Leeren</string>
-    <string name="deleteTimeTableCancel">Abbrechen</string>
+    <string name="deleteTimetableConfirm">Leeren</string>
+    <string name="deleteTimetableCancel">Abbrechen</string>
 
     <string name="fcm_change_title">Stundenplanänderung</string>
     <string name="fcm_timetablechange_message_part1">hat sich geändert.</string>

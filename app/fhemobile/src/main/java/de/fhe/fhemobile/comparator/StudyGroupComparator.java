@@ -19,17 +19,17 @@ package de.fhe.fhemobile.comparator;
 
 import java.util.Comparator;
 
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
+import de.fhe.fhemobile.vos.timetable.TimetableStudyGroupVo;
 
 /**
  * Comparator for comparing study groups by number
  *
  * Created by Nadja - 05/2022
  */
-public class StudyGroupComparator implements Comparator <TimeTableStudyGroupVo> {
+public class StudyGroupComparator implements Comparator <TimetableStudyGroupVo> {
 
 	@Override
-	public int compare(final TimeTableStudyGroupVo t1, final TimeTableStudyGroupVo t2) {
+	public int compare(final TimetableStudyGroupVo t1, final TimetableStudyGroupVo t2) {
 		return t1.getNumber().compareTo(t2.getNumber());
 	}
 }

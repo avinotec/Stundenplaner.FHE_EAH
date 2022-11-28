@@ -21,38 +21,43 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
+ * Value Object for a semester of a study program
+ *
  * Created by paul on 12.03.15
  * Edited by Nadja - 04/2022
  */
-public class TimeTableStudyGroupVo implements Parcelable {
+public class TimetableSemesterVo implements Parcelable {
 
-    public TimeTableStudyGroupVo() {
+    private static final String TAG = TimetableSemesterVo.class.getSimpleName();
+
+    public TimetableSemesterVo() {
     }
 
-    protected TimeTableStudyGroupVo(final Parcel in) {
+    protected TimetableSemesterVo(final Parcel in) {
         mId = in.readString();
-        mTitle = in.readString();
         mNumber = in.readString();
+        mTitle = in.readString();
+        in.readMap(mStudyGroups, TimetableStudyGroupVo.class.getClassLoader());
+    }
+
+    public String getId() { return mId;  }
+
+    public String getNumber() {
+        return mNumber;
     }
 
     public String getTitle() {
         return mTitle;
     }
 
-    public String getStudyGroupId() {
-        return mId;
+    public ArrayList<TimetableStudyGroupVo> getStudyGroupList() {
+        return new ArrayList<>(mStudyGroups.values());
     }
-
-    public String getNumber() {
-        //mNumber not available when fetched for MySchedule
-        if(mNumber == null){
-            final String[] splitString = mTitle.split("\\.");
-            mNumber = splitString[splitString.length-1].replaceAll("\\D", "");
-        }
-        return mNumber;
-    }
-
 
     // PARCELABLE --------------------------------------------------------------------------------
     @Override
@@ -63,31 +68,34 @@ public class TimeTableStudyGroupVo implements Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(mId);
-        dest.writeString(mTitle);
         dest.writeString(mNumber);
+        dest.writeString(mTitle);
+        dest.writeMap(mStudyGroups);
     }
 
-    public static final Creator<TimeTableStudyGroupVo> CREATOR = new Creator<TimeTableStudyGroupVo>() {
+    public static final Creator<TimetableSemesterVo> CREATOR = new Creator<TimetableSemesterVo>() {
         @Override
-        public TimeTableStudyGroupVo createFromParcel(final Parcel in) {
-            return new TimeTableStudyGroupVo(in);
+        public TimetableSemesterVo createFromParcel(final Parcel in) {
+            return new TimetableSemesterVo(in);
         }
 
         @Override
-        public TimeTableStudyGroupVo[] newArray(final int size) {
-            return new TimeTableStudyGroupVo[size];
+        public TimetableSemesterVo[] newArray(final int size) {
+            return new TimetableSemesterVo[size];
         }
     };
 
     // End PARCELABLE --------------------------------------------------------------------------------
 
-    //not SPLUS-Id
-    @SerializedName("studentsetId")
+    @SerializedName("posId")
     private String mId;
 
-    @SerializedName("studentsetName")
+    @SerializedName("posNumber")
+    private String mNumber;
+
+    @SerializedName("posName")
     private String mTitle;
 
-    @SerializedName("studentsetNumber")
-    private String mNumber;
+    @SerializedName("studentsetData")
+    private final Map<String, TimetableStudyGroupVo> mStudyGroups = new HashMap<>();
 }

@@ -50,9 +50,9 @@ import de.fhe.fhemobile.views.myschedule.MyScheduleDialogView;
 import de.fhe.fhemobile.vos.ApiErrorResponse;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSetVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableDialogResponse;
-import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
+import de.fhe.fhemobile.vos.timetable.TimetableDialogResponse;
+import de.fhe.fhemobile.vos.timetable.TimetableSemesterVo;
+import de.fhe.fhemobile.vos.timetable.TimetableStudyProgramVo;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -147,7 +147,7 @@ public class MyScheduleDialogFragment extends DialogFragment {
 
             boolean studyProgramEmpty = true;
 
-            for (final TimeTableStudyProgramVo studyProgram : mStudyProgramDataResponse.getStudyProgramsAsList()) {
+            for (final TimetableStudyProgramVo studyProgram : mStudyProgramDataResponse.getStudyProgramsAsList()) {
                 if (studyProgram != null
                         && studyProgram.getId() != null
                         && studyProgram.getId().equals(_StudyProgramId)) {
@@ -195,7 +195,7 @@ public class MyScheduleDialogFragment extends DialogFragment {
 
             mChosenSemester = null;
 
-            final Map<String, TimeTableSemesterVo> semesters = mChosenStudyProgram.getSemesters();
+            final Map<String, TimetableSemesterVo> semesters = mChosenStudyProgram.getSemesters();
             if (semesters.containsKey(_SemesterId)) {
 
                 //set chosen semester
@@ -204,23 +204,23 @@ public class MyScheduleDialogFragment extends DialogFragment {
                 Assert.assertTrue(mChosenSemester != null);
 
                 //get timetable (all events) for each study group in the chosen semester
-                NetworkHandler.getInstance().fetchSemesterTimeTable(mChosenSemester.getId(), mFetchSemesterTimeTableCallback);
+                NetworkHandler.getInstance().fetchSemesterTimetable(mChosenSemester.getId(), mFetchSemesterTimetableCallback);
             }
 
         }
 
     };
 
-    private final Callback<TimeTableDialogResponse> mFetchStudyProgramDataCallback = new Callback<TimeTableDialogResponse>() {
+    private final Callback<TimetableDialogResponse> mFetchStudyProgramDataCallback = new Callback<TimetableDialogResponse>() {
         @Override
-        public void onResponse(@NonNull final Call<TimeTableDialogResponse> call, final Response<TimeTableDialogResponse> response) {
+        public void onResponse(@NonNull final Call<TimetableDialogResponse> call, final Response<TimetableDialogResponse> response) {
             if(response.body() != null){
 
                 mStudyProgramDataResponse = response.body();
 
-                final ArrayList<TimeTableStudyProgramVo> studyPrograms = new ArrayList<>();
+                final ArrayList<TimetableStudyProgramVo> studyPrograms = new ArrayList<>();
                 //remove "Brückenkurse" and only keep bachelor and master study programs
-                for(final TimeTableStudyProgramVo studyProgramVo : response.body().getStudyProgramsAsList()){
+                for(final TimetableStudyProgramVo studyProgramVo : response.body().getStudyProgramsAsList()){
 
                     if("Bachelor".equals(studyProgramVo.getDegree())
                             || "Master".equals(studyProgramVo.getDegree())){
@@ -237,7 +237,7 @@ public class MyScheduleDialogFragment extends DialogFragment {
         }
 
         @Override
-        public void onFailure(final Call<TimeTableDialogResponse> call, final Throwable t) {
+        public void onFailure(final Call<TimetableDialogResponse> call, final Throwable t) {
             ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.MYSCHEDULE_DIALOG_FRAGMENT_CODE1);
             Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
         }
@@ -245,7 +245,7 @@ public class MyScheduleDialogFragment extends DialogFragment {
 
 
 
-    final Callback<Map<String, MyScheduleEventSetVo>> mFetchSemesterTimeTableCallback = new Callback<Map<String, MyScheduleEventSetVo>>() {
+    final Callback<Map<String, MyScheduleEventSetVo>> mFetchSemesterTimetableCallback = new Callback<Map<String, MyScheduleEventSetVo>>() {
         @Override
         public void onResponse(@NonNull final Call<Map<String, MyScheduleEventSetVo>> call, final Response<Map<String, MyScheduleEventSetVo>> response) {
             if(response.body() != null){
@@ -274,10 +274,10 @@ public class MyScheduleDialogFragment extends DialogFragment {
 
 
     MyScheduleDialogView mView;
-    TimeTableDialogResponse     mStudyProgramDataResponse;
+    TimetableDialogResponse mStudyProgramDataResponse;
 
-    TimeTableStudyProgramVo     mChosenStudyProgram;
-    TimeTableSemesterVo         mChosenSemester;
+    TimetableStudyProgramVo mChosenStudyProgram;
+    TimetableSemesterVo mChosenSemester;
 
     MyScheduleDialogAdapter mListAdapter;
 

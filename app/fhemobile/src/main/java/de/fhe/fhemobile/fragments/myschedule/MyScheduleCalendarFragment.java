@@ -203,7 +203,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 				// show dialog to ask if old timetable should be cleared
 				final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getContext())
 						.setTitle(R.string.deleteTimetableTitle)
-						.setPositiveButton(R.string.deleteTimeTableConfirm, new DialogInterface.OnClickListener() {
+						.setPositiveButton(R.string.deleteTimetableConfirm, new DialogInterface.OnClickListener() {
 
 							public void onClick(final DialogInterface dialog, final int which) {
 								MainActivity.clearSubscribedEventSeriesAndUpdateAdapters();
@@ -212,7 +212,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 						.setIcon(android.R.drawable.ic_dialog_alert);
 				if(userCanRefuse) {
 					dialogBuilder.setMessage(R.string.deleteTimetableMessageOptional);
-					dialogBuilder.setNegativeButton(R.string.deleteTimeTableCancel, null);
+					dialogBuilder.setNegativeButton(R.string.deleteTimetableCancel, null);
 				} else {
 					dialogBuilder.setMessage(R.string.deleteTimetableMessageForced);
 				}

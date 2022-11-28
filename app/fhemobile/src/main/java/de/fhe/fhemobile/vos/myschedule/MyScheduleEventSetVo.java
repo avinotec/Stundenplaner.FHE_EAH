@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 import de.fhe.fhemobile.vos.timetable.LecturerVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableLocationVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
+import de.fhe.fhemobile.vos.timetable.TimetableLocationVo;
+import de.fhe.fhemobile.vos.timetable.TimetableStudyGroupVo;
 
 
 /**
@@ -60,11 +60,11 @@ public class MyScheduleEventSetVo {
 
 	public void setEvents(final Map<String, MyScheduleEventDateVo> events) { this.mEventDates = events; }
 
-	public List<TimeTableStudyGroupVo> getStudyGroups() { return new ArrayList<>(mStudyGroups.values()); }
+	public List<TimetableStudyGroupVo> getStudyGroups() { return new ArrayList<>(mStudyGroups.values()); }
 
 	public List<LecturerVo> getLecturerList() { return new ArrayList<>(mLecturerMap.values());	}
 
-	public List<TimeTableLocationVo> getLocationList() { return new ArrayList<>(mLocationMap.values()); }
+	public List<TimetableLocationVo> getLocationList() { return new ArrayList<>(mLocationMap.values()); }
 
 
 	@SerializedName("activityId")
@@ -80,13 +80,13 @@ public class MyScheduleEventSetVo {
 	private String mModuleName;
 
 	@SerializedName("dataStudentset")
-	private final Map<String, TimeTableStudyGroupVo> mStudyGroups = new HashMap<>();
+	private final Map<String, TimetableStudyGroupVo> mStudyGroups = new HashMap<>();
 
 	@SerializedName("dataStaff")
 	private final Map<String, LecturerVo> mLecturerMap = new HashMap<>();
 
 	@SerializedName("dataLocation")
-	private final Map<String, TimeTableLocationVo> mLocationMap = new HashMap<>();
+	private final Map<String, TimetableLocationVo> mLocationMap = new HashMap<>();
 
 	@SerializedName("dataDatetime")
 	private Map<String, MyScheduleEventDateVo> mEventDates = new HashMap<>();

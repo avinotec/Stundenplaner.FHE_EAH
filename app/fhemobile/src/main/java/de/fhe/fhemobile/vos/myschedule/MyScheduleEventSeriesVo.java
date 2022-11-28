@@ -34,7 +34,7 @@ import java.util.Set;
 
 import de.fhe.fhemobile.comparator.MyScheduleEventComparator;
 import de.fhe.fhemobile.comparator.StudyGroupComparator;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyGroupVo;
+import de.fhe.fhemobile.vos.timetable.TimetableStudyGroupVo;
 
 
 /**
@@ -73,7 +73,7 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 
 	public void setTitle(final String title) { this.mTitle = title; }
 
-	public List<TimeTableStudyGroupVo> getStudyGroups() { return mStudyGroups; }
+	public List<TimetableStudyGroupVo> getStudyGroups() { return mStudyGroups; }
 
 	public void addEventSetId(final String eventSetId){ mEventSetIds.add(eventSetId);}
 
@@ -124,7 +124,7 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 		final StringBuilder studyGroupsString = new StringBuilder();
 
 		if(!mStudyGroups.isEmpty()) {
-			for (final TimeTableStudyGroupVo studyGroup : mStudyGroups) {
+			for (final TimetableStudyGroupVo studyGroup : mStudyGroups) {
 				studyGroupsString.append(studyGroup.getNumber()).append(", ");
 			}
 			return studyGroupsString.substring(0, studyGroupsString.length() - 2);
@@ -148,7 +148,7 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 
 	MyScheduleEventSeriesVo(final Parcel in) {
 		mTitle = in.readString();
-		in.readList(mStudyGroups, TimeTableStudyGroupVo.class.getClassLoader());
+		in.readList(mStudyGroups, TimetableStudyGroupVo.class.getClassLoader());
 		mModuleId = in.readString();
 		mEventSetIds = new HashSet(Arrays.asList(in.readArray(String.class.getClassLoader())));
 		in.readList(mEvents, MyScheduleEventDateVo.class.getClassLoader());
@@ -189,7 +189,7 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 	private String mTitle;
 
 	@SerializedName("studyGroups")
-	private final List<TimeTableStudyGroupVo> mStudyGroups = new ArrayList<>();
+	private final List<TimetableStudyGroupVo> mStudyGroups = new ArrayList<>();
 
 	@SerializedName("moduleId")
 	private String mModuleId;

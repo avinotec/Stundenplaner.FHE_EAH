@@ -109,8 +109,8 @@
     <string name="deleteTimetableTitle">Semester Change</string>
     <string name="deleteTimetableMessageOptional">The semester is over. Do you want to clear your schedule?</string>
     <string name="deleteTimetableMessageForced">A new semester has started. You need to clear your schedule.</string>
-    <string name="deleteTimeTableConfirm">Clear Schedule</string>
-    <string name="deleteTimeTableCancel">Cancel</string>
+    <string name="deleteTimetableConfirm">Clear Schedule</string>
+    <string name="deleteTimetableCancel">Cancel</string>
 
     <string name="fcm_change_title">Timetable Change</string>
     <string name="fcm_timetablechange_message_part1">has changed.</string>

@@ -16,7 +16,7 @@
  */
 package de.fhe.fhemobile.vos.timetable;
 
-import static de.fhe.fhemobile.utils.timetable.TimeTableUtils.cutStudyProgramPrefix;
+import static de.fhe.fhemobile.utils.timetable.TimetableUtils.cutStudyProgramPrefix;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -34,9 +34,9 @@ import java.util.TimeZone;
  * Created by paul on 16.03.15
  * Edited by Nadja - 04/2022
  */
-public final class TimeTableEventVo implements Parcelable {
+public final class TimetableEventVo implements Parcelable {
 
-    public TimeTableEventVo() {
+    public TimetableEventVo() {
     }
 
     public String getGuiTitle() {
@@ -88,7 +88,7 @@ public final class TimeTableEventVo implements Parcelable {
 
         if(mLocationList.isEmpty()) return "";
 
-        for(final TimeTableLocationVo room : mLocationList.values()){
+        for(final TimetableLocationVo room : mLocationList.values()){
             if(room.getName() != null) {
                 final String roomName = room.getName().replaceAll("\\(", " (");
                 stringBuilder.append(roomName).append(", ");
@@ -145,24 +145,24 @@ public final class TimeTableEventVo implements Parcelable {
         dest.writeMap(mLocationList);
     }
 
-    TimeTableEventVo(final Parcel in) {
+    TimetableEventVo(final Parcel in) {
         // VERSION 1
         mId = in.readString();
         this.mTitle = in.readString();
         this.mStartDateTime = in.readLong();
         this.mEndDateTime = in.readLong();
         in.readMap(mLecturerList , LecturerVo.class.getClassLoader());
-        in.readMap(mLocationList, TimeTableLocationVo.class.getClassLoader());
+        in.readMap(mLocationList, TimetableLocationVo.class.getClassLoader());
     }
 
 
-    public static final Parcelable.Creator<TimeTableEventVo> CREATOR = new Parcelable.Creator<TimeTableEventVo>() {
-        public TimeTableEventVo createFromParcel(final Parcel source) {
-            return new TimeTableEventVo(source);
+    public static final Parcelable.Creator<TimetableEventVo> CREATOR = new Parcelable.Creator<TimetableEventVo>() {
+        public TimetableEventVo createFromParcel(final Parcel source) {
+            return new TimetableEventVo(source);
         }
 
-        public TimeTableEventVo[] newArray(final int size) {
-            return new TimeTableEventVo[size];
+        public TimetableEventVo[] newArray(final int size) {
+            return new TimetableEventVo[size];
         }
     };
 
@@ -185,5 +185,5 @@ public final class TimeTableEventVo implements Parcelable {
     private final Map<String, LecturerVo> mLecturerList = new HashMap<>();
 
     @SerializedName("dataLocation")
-    private final Map<String, TimeTableLocationVo> mLocationList = new HashMap<>();
+    private final Map<String, TimetableLocationVo> mLocationList = new HashMap<>();
 }

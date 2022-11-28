@@ -34,26 +34,26 @@ import java.util.Locale;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.HeaderListAdapter;
-import de.fhe.fhemobile.vos.timetable.TimeTableDayVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableEventVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
+import de.fhe.fhemobile.vos.timetable.TimetableDayVo;
+import de.fhe.fhemobile.vos.timetable.TimetableEventVo;
+import de.fhe.fhemobile.vos.timetable.TimetableWeekVo;
 import de.fhe.fhemobile.widgets.headerList.HeaderItem;
 import de.fhe.fhemobile.widgets.headerList.IBaseItem;
-import de.fhe.fhemobile.widgets.headerList.TimeTableEventItem;
+import de.fhe.fhemobile.widgets.headerList.TimetableEventItem;
 
 /**
  * Created by paul on 23.01.14.
  */
-public class TimeTableWeekView extends LinearLayout {
+public class TimetableWeekView extends LinearLayout {
 
-    private static final String TAG = TimeTableWeekView.class.getSimpleName();
+    private static final String TAG = TimetableWeekView.class.getSimpleName();
 
-    public TimeTableWeekView(final Context context, final AttributeSet attrs) {
+    public TimetableWeekView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
     }
 
-    public void initializeView(final TimeTableWeekVo weekVo) {
+    public void initializeView(final TimetableWeekVo weekVo) {
         mWeekHeader.setText(Main.getSafeString(R.string.timetable_week) + " " + weekVo.getGuiSemesterWeek()); // $NON-NLS
         buildListEntries(weekVo);
 
@@ -66,17 +66,17 @@ public class TimeTableWeekView extends LinearLayout {
         mEventList.setAdapter(adapter);
     }
 
-    private void buildListEntries(final TimeTableWeekVo _Data) {
+    private void buildListEntries(final TimetableWeekVo _Data) {
         mData = new ArrayList<>();
 
-        for (final TimeTableDayVo dayVo : _Data.getDays()) {
+        for (final TimetableDayVo dayVo : _Data.getDays()) {
 
             mData.add(new HeaderItem(dayVo.getDayName()));
-            for (final TimeTableEventVo eventVo : dayVo.getEvents()) {
+            for (final TimetableEventVo eventVo : dayVo.getEvents()) {
 
                 if ( BuildConfig.DEBUG ) Assert.assertTrue( eventVo != null );
                 if ( eventVo != null ) {
-                    mData.add(new TimeTableEventItem(
+                    mData.add(new TimetableEventItem(
                                     eventVo.getStartTimeString() + " – " + eventVo.getEndTimeString(),
                                     eventVo.getGuiTitle(),
                                     eventVo.getLocationListAsString(),

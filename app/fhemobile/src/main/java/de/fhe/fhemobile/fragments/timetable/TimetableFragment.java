@@ -18,7 +18,7 @@
 package de.fhe.fhemobile.fragments.timetable;
 
 
-import static de.fhe.fhemobile.utils.Define.TimeTable.SP_TIMETABLE;
+import static de.fhe.fhemobile.utils.Define.Timetable.SP_TIMETABLE;
 
 import android.app.Activity;
 import android.content.Context;
@@ -53,10 +53,10 @@ import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.ApiErrorUtils;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.Utils;
-import de.fhe.fhemobile.utils.timetable.TimeTableSettings;
-import de.fhe.fhemobile.views.timetable.TimeTableView;
+import de.fhe.fhemobile.utils.timetable.TimetableSettings;
+import de.fhe.fhemobile.views.timetable.TimetableView;
 import de.fhe.fhemobile.vos.ApiErrorResponse;
-import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
+import de.fhe.fhemobile.vos.timetable.TimetableWeekVo;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,28 +64,33 @@ import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link TimeTableFragment#newInstance} factory method to
+ * Use the {@link TimetableFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TimeTableFragment extends FeatureFragment {
+public class TimetableFragment extends FeatureFragment {
 
-	public static final String TAG = TimeTableFragment.class.getSimpleName();
+	public static final String TAG = TimetableFragment.class.getSimpleName();
 
-	/**
-	 * Use this factory method to create a new instance of
-	 * this fragment using the provided parameters.
-	 *
-	 * @return A new instance of fragment TimeTableFragment.
-	 */
-	public static TimeTableFragment newInstance(final String _TimeTableId) {
-		final TimeTableFragment fragment = new TimeTableFragment();
+	public static TimetableFragment newInstance() {
+		final String chosenTimetable = TimetableSettings.getTimetableSelection();
+
+		return TimetableFragment.newInstance(chosenTimetable);
+
+	}
+
+	public static TimetableFragment newInstance(String timeTableId){
+		final TimetableFragment fragment = new TimetableFragment();
 		final Bundle args = new Bundle();
-		args.putString(Define.Timetable.PARAM_TIMETABLE_ID, _TimeTableId);
+
+		if(timeTableId != null){
+			args.putString(Define.Timetable.PARAM_TIMETABLE_ID, timeTableId);
+		}
 		fragment.setArguments(args);
 		return fragment;
 	}
 
-	public TimeTableFragment() {
+
+	public TimetableFragment() {
 		// Required empty public constructor
 	}
 
@@ -93,7 +98,7 @@ public class TimeTableFragment extends FeatureFragment {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments() != null) {
-			mChosenTimeTableId = getArguments().getString(Define.Timetable.PARAM_TIMETABLE_ID);
+			mChosenTimetableId = getArguments().getString(Define.Timetable.PARAM_TIMETABLE_ID);
 		}
 
 		//replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
@@ -104,7 +109,7 @@ public class TimeTableFragment extends FeatureFragment {
 			public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
 				// Add menu items here
 				menu.clear();
-				if (TimeTableSettings.getTimeTableSelection() != null) {
+				if (TimetableSettings.getTimetableSelection() != null) {
 					menuInflater.inflate(R.menu.menu_timetable, menu);
 				}
 			}
@@ -114,9 +119,9 @@ public class TimeTableFragment extends FeatureFragment {
 				// Handle the menu selection
 				if (menuItem.getItemId() == R.id.action_reset_selection) {
 
-					TimeTableSettings.saveTimeTableSelection(null);
-					((MainActivity) activity).changeFragment(TimeTableDialogFragment.newInstance(),
-							false, TimeTableDialogFragment.TAG);
+					TimetableSettings.saveTimetableSelection(null);
+					((MainActivity) activity).changeFragment(TimetableDialogFragment.newInstance(),
+							false, TimetableDialogFragment.TAG);
 					return true;
 				}
 
@@ -128,7 +133,7 @@ public class TimeTableFragment extends FeatureFragment {
 	@Override
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
 	                         final Bundle savedInstanceState) {
-		mView = (TimeTableView) inflater.inflate(R.layout.fragment_timetable, container, false);
+		mView = (TimetableView) inflater.inflate(R.layout.fragment_timetable, container, false);
 
 		mView.initializeView(getChildFragmentManager(), getLifecycle());
 
@@ -138,16 +143,16 @@ public class TimeTableFragment extends FeatureFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		NetworkHandler.getInstance().fetchTimeTableEvents(mChosenTimeTableId, mCallback);
+		NetworkHandler.getInstance().fetchTimetableEvents(mChosenTimetableId, mCallback);
 //		todo: for debugging response = null
-//		NetworkHandler.getInstance().fetchTimeTableEvents("53B3DB05F11C6EA417AA82B3DA33991B", mCallback);
+//		NetworkHandler.getInstance().fetchTimetableEvents("53B3DB05F11C6EA417AA82B3DA33991B", mCallback);
 	}
 
-	private final Callback<Map<String, TimeTableWeekVo>> mCallback = new Callback<Map<String, TimeTableWeekVo>>() {
+	private final Callback<Map<String, TimetableWeekVo>> mCallback = new Callback<Map<String, TimetableWeekVo>>() {
 		@Override
-		public void onResponse(@NonNull final Call<Map<String, TimeTableWeekVo>> call, final Response<Map<String, TimeTableWeekVo>> response) {
+		public void onResponse(@NonNull final Call<Map<String, TimetableWeekVo>> call, final Response<Map<String, TimetableWeekVo>> response) {
 			if(response.isSuccessful()){
-				final ArrayList<TimeTableWeekVo> weekVos = new ArrayList(response.body().values());
+				final ArrayList<TimetableWeekVo> weekVos = new ArrayList(response.body().values());
 				mView.setPagerItems(weekVos);
 
 				//save timetable for offline usage
@@ -172,7 +177,7 @@ public class TimeTableFragment extends FeatureFragment {
 		 * @param t
 		 */
 		@Override
-		public void onFailure(@NonNull final Call<Map<String, TimeTableWeekVo>> call, @NonNull final Throwable t) {
+		public void onFailure(@NonNull final Call<Map<String, TimetableWeekVo>> call, @NonNull final Throwable t) {
 			if(t instanceof IOException){
 				ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.TIMETABLE_FRAGMENT_CODE3);
 				Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
@@ -190,19 +195,19 @@ public class TimeTableFragment extends FeatureFragment {
 		final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences(SP_TIMETABLE, Context.MODE_PRIVATE);
 		final String json = sharedPreferences.getString(SP_TIMETABLE, "");
 		if(!json.isEmpty()){
-			final ArrayList<TimeTableWeekVo> loadedTimeTableWeeks = new Gson()
-					.fromJson(json, new TypeToken<List<TimeTableWeekVo>>(){}.getType());
-			mView.setPagerItems(loadedTimeTableWeeks);
+			final ArrayList<TimetableWeekVo> loadedTimetableWeeks = new Gson()
+					.fromJson(json, new TypeToken<List<TimetableWeekVo>>(){}.getType());
+			mView.setPagerItems(loadedTimetableWeeks);
 		}
 		Utils.showToast(R.string.timetable_restored);
 	}
 
 
-	TimeTableView mView;
+	TimetableView mView;
 
 
 	//note: the timetable is determined by the study group
 	// that is why the timetable id is a study group id
-	private String mChosenTimeTableId;
+	private String mChosenTimetableId;
 
 }

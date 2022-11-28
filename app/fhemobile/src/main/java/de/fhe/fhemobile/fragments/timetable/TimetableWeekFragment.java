@@ -25,16 +25,16 @@ import android.view.ViewGroup;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.utils.Define;
-import de.fhe.fhemobile.views.timetable.TimeTableWeekView;
-import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
+import de.fhe.fhemobile.views.timetable.TimetableWeekView;
+import de.fhe.fhemobile.vos.timetable.TimetableWeekVo;
 
 
-public class TimeTableWeekFragment extends Fragment {
+public class TimetableWeekFragment extends Fragment {
 
-    public static final String TAG = TimeTableWeekFragment.class.getSimpleName();
+    public static final String TAG = TimetableWeekFragment.class.getSimpleName();
 
 
-    public TimeTableWeekFragment() {
+    public TimetableWeekFragment() {
         // Required empty public constructor
     }
 
@@ -42,12 +42,12 @@ public class TimeTableWeekFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment {@link TimeTableFragment}.
+     * @return A new instance of fragment {@link TimetableFragment}.
      */
-    public static TimeTableWeekFragment newInstance(final TimeTableWeekVo _Week) {
-        final TimeTableWeekFragment fragment = new TimeTableWeekFragment();
+    public static TimetableWeekFragment newInstance(final TimetableWeekVo _Week) {
+        final TimetableWeekFragment fragment = new TimetableWeekFragment();
         final Bundle args = new Bundle();
-        args.putParcelable(Define.TimeTable.PARAM_TIMETABLE_WEEK, _Week);
+        args.putParcelable(Define.Timetable.PARAM_TIMETABLE_WEEK, _Week);
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,7 +57,7 @@ public class TimeTableWeekFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mWeek = getArguments().getParcelable(Define.TimeTable.PARAM_TIMETABLE_WEEK);
+            mWeek = getArguments().getParcelable(Define.Timetable.PARAM_TIMETABLE_WEEK);
         }
     }
 
@@ -65,13 +65,13 @@ public class TimeTableWeekFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (TimeTableWeekView) inflater.inflate(R.layout.fragment_timetable_week, container, false);
+        mView = (TimetableWeekView) inflater.inflate(R.layout.fragment_timetable_week, container, false);
         mView.initializeView(mWeek);
         return mView;
     }
 
 
-    private TimeTableWeekView mView;
-    private TimeTableWeekVo   mWeek;
+    private TimetableWeekView mView;
+    private TimetableWeekVo mWeek;
 
 }

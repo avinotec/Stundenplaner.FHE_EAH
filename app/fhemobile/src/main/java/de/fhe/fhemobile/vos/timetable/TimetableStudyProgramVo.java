@@ -32,18 +32,18 @@ import de.fhe.fhemobile.comparator.SemesterComparator;
  * Created by paul on 12.03.15
  * Edited by Nadja - 04/2022
  */
-public class TimeTableStudyProgramVo implements Parcelable {
+public class TimetableStudyProgramVo implements Parcelable {
 
-    private static final String TAG = TimeTableStudyProgramVo.class.getSimpleName();
+    private static final String TAG = TimetableStudyProgramVo.class.getSimpleName();
 
-    public TimeTableStudyProgramVo() {
+    public TimetableStudyProgramVo() {
     }
 
-    protected TimeTableStudyProgramVo(final Parcel in) {
+    protected TimetableStudyProgramVo(final Parcel in) {
         mShortTitle = in.readString();
         mLongTitle = in.readString();
         mDegree = in.readString();
-        in.readMap(mSemesters, TimeTableSemesterVo.class.getClassLoader());
+        in.readMap(mSemesters, TimetableSemesterVo.class.getClassLoader());
     }
 
     public String getId() {
@@ -62,14 +62,14 @@ public class TimeTableStudyProgramVo implements Parcelable {
      * Get semesters as Arraylist, sorted by semester number
      * @return
      */
-    public ArrayList<TimeTableSemesterVo> getSemestersAsSortedList() {
-        final ArrayList<TimeTableSemesterVo>  semesterList = new ArrayList<>(mSemesters.values());
+    public ArrayList<TimetableSemesterVo> getSemestersAsSortedList() {
+        final ArrayList<TimetableSemesterVo>  semesterList = new ArrayList<>(mSemesters.values());
         Collections.sort(semesterList, new SemesterComparator());
         return semesterList;
     }
 
 
-    public Map<String, TimeTableSemesterVo> getSemesters() {
+    public Map<String, TimetableSemesterVo> getSemesters() {
         return mSemesters;
     }
 
@@ -100,15 +100,15 @@ public class TimeTableStudyProgramVo implements Parcelable {
         dest.writeMap(mSemesters);
     }
 
-    public static final Creator<TimeTableStudyProgramVo> CREATOR = new Creator<TimeTableStudyProgramVo>() {
+    public static final Creator<TimetableStudyProgramVo> CREATOR = new Creator<TimetableStudyProgramVo>() {
         @Override
-        public TimeTableStudyProgramVo createFromParcel(final Parcel in) {
-            return new TimeTableStudyProgramVo(in);
+        public TimetableStudyProgramVo createFromParcel(final Parcel in) {
+            return new TimetableStudyProgramVo(in);
         }
 
         @Override
-        public TimeTableStudyProgramVo[] newArray(final int size) {
-            return new TimeTableStudyProgramVo[size];
+        public TimetableStudyProgramVo[] newArray(final int size) {
+            return new TimetableStudyProgramVo[size];
         }
     };
 
@@ -125,5 +125,5 @@ public class TimeTableStudyProgramVo implements Parcelable {
     private String              mDegree;
 
     @SerializedName("semesterData")
-    private final Map<String, TimeTableSemesterVo> mSemesters = new HashMap<>();
+    private final Map<String, TimetableSemesterVo> mSemesters = new HashMap<>();
 }

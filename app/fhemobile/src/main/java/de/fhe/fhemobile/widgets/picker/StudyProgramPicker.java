@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 import de.fhe.fhemobile.comparator.StudyProgramComparator;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
+import de.fhe.fhemobile.vos.timetable.TimetableStudyProgramVo;
 import de.fhe.fhemobile.widgets.picker.base.IdPicker;
 
 /**
@@ -36,7 +36,7 @@ public class StudyProgramPicker extends IdPicker {
         super(context, attrs);
     }
 
-    public void setItems(final List<TimeTableStudyProgramVo> _Items) {
+    public void setItems(final List<TimetableStudyProgramVo> _Items) {
         Collections.sort(_Items, new StudyProgramComparator());
         mItems = _Items;
         if (mItems == null) {
@@ -59,5 +59,5 @@ public class StudyProgramPicker extends IdPicker {
         return mItems.size();
     }
 
-    private List<TimeTableStudyProgramVo> mItems;
+    private List<TimetableStudyProgramVo> mItems;
 }

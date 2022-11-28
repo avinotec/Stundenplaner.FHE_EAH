@@ -19,15 +19,15 @@ package de.fhe.fhemobile.comparator;
 
 import java.util.Comparator;
 
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
+import de.fhe.fhemobile.vos.timetable.TimetableStudyProgramVo;
 
 /**
  * Comparator for comparing study program by title
  */
-public class StudyProgramComparator implements Comparator <TimeTableStudyProgramVo> {
+public class StudyProgramComparator implements Comparator <TimetableStudyProgramVo> {
 
 	@Override
-	public int compare(final TimeTableStudyProgramVo t1, final TimeTableStudyProgramVo t2) {
+	public int compare(final TimetableStudyProgramVo t1, final TimetableStudyProgramVo t2) {
 		return t1.getLongTitle().compareTo(t2.getLongTitle());
 	}
 }

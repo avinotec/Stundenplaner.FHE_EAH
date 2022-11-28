@@ -17,7 +17,7 @@
 package de.fhe.fhemobile.widgets.headerList;
 
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
-import static de.fhe.fhemobile.utils.timetable.TimeTableUtils.prettifyName;
+import static de.fhe.fhemobile.utils.timetable.TimetableUtils.prettifyName;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +29,7 @@ import de.fhe.fhemobile.R;
 /**
  * Created by paul on 03.03.15.
  */
-public class TimeTableEventItem implements IBaseItem {
+public class TimetableEventItem implements IBaseItem {
 
     //Variables
     private final String mTime;
@@ -38,13 +38,13 @@ public class TimeTableEventItem implements IBaseItem {
     private final String mPerson;
 
     /**
-     * Constructs a new {@link TimeTableEventItem} object
+     * Constructs a new {@link TimetableEventItem} object
      * @param _Time the time
      * @param _Title the title
      * @param _Room the room
      * @param _Person the lecturer
      */
-    public TimeTableEventItem(final String _Time, final String _Title, final String _Room, final String _Person) {
+    public TimetableEventItem(final String _Time, final String _Title, final String _Room, final String _Person) {
 
         mTime   = _Time;
         mTitle  = (_Title != null) ? correctUmlauts(_Title) : "";  // Was auch immer das für eine Vorlesung ist, die keinen Titel hat.

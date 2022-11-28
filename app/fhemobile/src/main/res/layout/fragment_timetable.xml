@@ -14,7 +14,7 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ~
   -->
-<de.fhe.fhemobile.views.timetable.TimeTableView
+<de.fhe.fhemobile.views.timetable.TimetableView
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
@@ -29,4 +29,4 @@
         />
 
 
-</de.fhe.fhemobile.views.timetable.TimeTableView>
+</de.fhe.fhemobile.views.timetable.TimetableView>

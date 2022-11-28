@@ -31,21 +31,21 @@ import java.util.Date;
 
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.adapters.timetable.TimeTablePagerAdapter;
-import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
+import de.fhe.fhemobile.adapters.timetable.TimetablePagerAdapter;
+import de.fhe.fhemobile.vos.timetable.TimetableWeekVo;
 
 //import com.viewpagerindicator.CirclePageIndicator;
 
 /**
  * Created by paul on 13.03.15.
  */
-public class TimeTableView extends LinearLayout {
+public class TimetableView extends LinearLayout {
 
     public interface IViewListener {
 
     }
 
-    public TimeTableView(final Context context, final AttributeSet attrs) {
+    public TimetableView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -54,14 +54,14 @@ public class TimeTableView extends LinearLayout {
         mLifecycle = _Lifecycle;
     }
 
-    public void setPagerItems(final ArrayList<TimeTableWeekVo> _Items) {
+    public void setPagerItems(final ArrayList<TimetableWeekVo> _Items) {
 
-        final TimeTablePagerAdapter mAdapter = new TimeTablePagerAdapter(mFragmentManager, mLifecycle, _Items);
+        final TimetablePagerAdapter mAdapter = new TimetablePagerAdapter(mFragmentManager, mLifecycle, _Items);
         if (BuildConfig.DEBUG) Assert.assertNotNull(mAdapter);
         mPager.setAdapter(mAdapter);
         if (BuildConfig.DEBUG) Assert.assertNotNull(mPager);
         //set current pager item to current semester week
-        for(final TimeTableWeekVo item : _Items){
+        for(final TimetableWeekVo item : _Items){
             //if the item's week end is after or equal now
             // and the item's week start is before or equal now
             if(!item.getWeekEnd().before(new Date())){

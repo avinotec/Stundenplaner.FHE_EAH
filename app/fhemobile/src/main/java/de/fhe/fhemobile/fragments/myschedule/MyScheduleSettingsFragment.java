@@ -54,7 +54,7 @@ public class MyScheduleSettingsFragment extends FeatureFragment {
 	 * Use this factory method to create a new instance of
 	 * this fragment using the provided parameters.
 	 *
-	 * @return A new instance of fragment TimeTableDialogFragment.
+	 * @return A new instance of fragment TimetableDialogFragment.
 	 */
 	public static MyScheduleSettingsFragment newInstance() {
 		final MyScheduleSettingsFragment fragment = new MyScheduleSettingsFragment();

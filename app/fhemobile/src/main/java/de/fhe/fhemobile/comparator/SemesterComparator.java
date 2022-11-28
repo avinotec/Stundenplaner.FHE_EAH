@@ -19,16 +19,16 @@ package de.fhe.fhemobile.comparator;
 
 import java.util.Comparator;
 
-import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
+import de.fhe.fhemobile.vos.timetable.TimetableSemesterVo;
 
 /**
  * Comparator for comparing semester numbers
  * (note: number is a string and can contain non-digit characters)
  */
-public class SemesterComparator implements Comparator<TimeTableSemesterVo> {
+public class SemesterComparator implements Comparator<TimetableSemesterVo> {
 
 	@Override
-	public int compare(final TimeTableSemesterVo t1, final TimeTableSemesterVo t2) {
+	public int compare(final TimetableSemesterVo t1, final TimetableSemesterVo t2) {
 		return t1.getNumber().compareTo(t2.getNumber());
 	}
 }

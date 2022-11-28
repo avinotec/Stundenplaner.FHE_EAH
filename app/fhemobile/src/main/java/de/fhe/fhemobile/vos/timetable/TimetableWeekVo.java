@@ -30,16 +30,16 @@ import java.util.Map;
  * Created by paul on 16.03.15
  * Edited by Nadja - 04/2022
  */
-public class TimeTableWeekVo implements Parcelable {
+public class TimetableWeekVo implements Parcelable {
 
-    public TimeTableWeekVo() {
+    public TimetableWeekVo() {
     }
 
-    TimeTableWeekVo(final Parcel in) {
+    TimetableWeekVo(final Parcel in) {
         mWeekStart = in.readLong();
         mWeekEnd = in.readLong();
         mSemesterWeek = in.readInt();
-        in.readMap(mDays, TimeTableDayVo.class.getClassLoader());
+        in.readMap(mDays, TimetableDayVo.class.getClassLoader());
     }
 
     public Date getWeekStart() {
@@ -61,7 +61,7 @@ public class TimeTableWeekVo implements Parcelable {
      */
     public int getGuiSemesterWeek(){ return mSemesterWeek+1;}
 
-    public Collection<TimeTableDayVo> getDays() {
+    public Collection<TimetableDayVo> getDays() {
         return mDays.values();
     }
 
@@ -80,13 +80,13 @@ public class TimeTableWeekVo implements Parcelable {
         dest.writeMap(mDays);
     }
 
-    public static final Parcelable.Creator<TimeTableWeekVo> CREATOR = new Parcelable.Creator<TimeTableWeekVo>() {
-        public TimeTableWeekVo createFromParcel(final Parcel source) {
-            return new TimeTableWeekVo(source);
+    public static final Parcelable.Creator<TimetableWeekVo> CREATOR = new Parcelable.Creator<TimetableWeekVo>() {
+        public TimetableWeekVo createFromParcel(final Parcel source) {
+            return new TimetableWeekVo(source);
         }
 
-        public TimeTableWeekVo[] newArray(final int size) {
-            return new TimeTableWeekVo[size];
+        public TimetableWeekVo[] newArray(final int size) {
+            return new TimetableWeekVo[size];
         }
     };
 
@@ -102,5 +102,5 @@ public class TimeTableWeekVo implements Parcelable {
     private int mSemesterWeek;
 
     @SerializedName("dataDay")
-    private final Map<String, TimeTableDayVo> mDays = new HashMap<>();
+    private final Map<String, TimetableDayVo> mDays = new HashMap<>();
 }

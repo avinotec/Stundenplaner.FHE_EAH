@@ -28,8 +28,8 @@ import de.fhe.fhemobile.vos.news.NewsCategoryResponse;
 import de.fhe.fhemobile.vos.news.NewsItemResponse;
 import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
 import de.fhe.fhemobile.vos.semesterdates.SemesterDatesVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableDialogResponse;
-import de.fhe.fhemobile.vos.timetable.TimeTableWeekVo;
+import de.fhe.fhemobile.vos.timetable.TimetableDialogResponse;
+import de.fhe.fhemobile.vos.timetable.TimetableWeekVo;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -63,13 +63,13 @@ public interface ApiDeclaration {
     Call<WeatherResponse> fetchWeather();
     
     @GET(Endpoints.TIMETABLE)
-    Call<TimeTableDialogResponse> fetchStudyProgramData();
+    Call<TimetableDialogResponse> fetchStudyProgramData();
 
     @GET(Endpoints.TIMETABLE_EVENTS + "{" + Endpoints.PARAM_STUDYGROUP_ID + "}/detail")
-    Call<Map<String,TimeTableWeekVo>> fetchTimeTableEvents(@Path(Endpoints.PARAM_STUDYGROUP_ID) String _StudyGroupId);
+    Call<Map<String, TimetableWeekVo>> fetchTimetableEvents(@Path(Endpoints.PARAM_STUDYGROUP_ID) String _StudyGroupId);
 
     @GET(Endpoints.MY_SCHEDULE + "{" + Endpoints.PARAM_SEMESTER_ID + "}")
-    Call<Map<String, MyScheduleEventSetVo>> fetchSemesterTimeTable(@Path(Endpoints.PARAM_SEMESTER_ID) String _SemesterId);
+    Call<Map<String, MyScheduleEventSetVo>> fetchSemesterTimetable(@Path(Endpoints.PARAM_SEMESTER_ID) String _SemesterId);
 
     @GET(Endpoints.MODULE + "{" + Endpoints.PARAM_MODULE_ID + "}")
     Call<ModuleVo> fetchModule(@Path(Endpoints.PARAM_MODULE_ID) String _ModuleId);

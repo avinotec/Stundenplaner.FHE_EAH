@@ -25,17 +25,17 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.fhe.fhemobile.utils.timetable.TimeTableUtils;
+import de.fhe.fhemobile.utils.timetable.TimetableUtils;
 
 /**
  * Created by paul on 16.03.15
  * Edited by Nadja - 04/2022
  */
-public final class TimeTableDayVo implements Parcelable {
+public final class TimetableDayVo implements Parcelable {
 
-    TimeTableDayVo(final Parcel in) {
+    TimetableDayVo(final Parcel in) {
         mDayNumber = in.readInt();
-        in.readMap(mEvents, TimeTableEventVo.class.getClassLoader());
+        in.readMap(mEvents, TimetableEventVo.class.getClassLoader());
     }
 
     // PARCELABLE --------------------------------------------------------------------------------
@@ -51,13 +51,13 @@ public final class TimeTableDayVo implements Parcelable {
         return 0;
     }
 
-    public static final Parcelable.Creator<TimeTableDayVo> CREATOR = new Parcelable.Creator<TimeTableDayVo>() {
-        public TimeTableDayVo createFromParcel(final Parcel source) {
-            return new TimeTableDayVo(source);
+    public static final Parcelable.Creator<TimetableDayVo> CREATOR = new Parcelable.Creator<TimetableDayVo>() {
+        public TimetableDayVo createFromParcel(final Parcel source) {
+            return new TimetableDayVo(source);
         }
 
-        public TimeTableDayVo[] newArray(final int size) {
-            return new TimeTableDayVo[size];
+        public TimetableDayVo[] newArray(final int size) {
+            return new TimetableDayVo[size];
         }
     };
 
@@ -65,10 +65,10 @@ public final class TimeTableDayVo implements Parcelable {
 
 
     public String getDayName() {
-        return TimeTableUtils.getWeekDayName(mDayNumber);
+        return TimetableUtils.getWeekDayName(mDayNumber);
     }
 
-    public Collection<TimeTableEventVo> getEvents() {
+    public Collection<TimetableEventVo> getEvents() {
         return mEvents.values();
     }
 
@@ -78,5 +78,5 @@ public final class TimeTableDayVo implements Parcelable {
     private final int mDayNumber;
 
     @SerializedName("dataActivity")
-    private final Map<String, TimeTableEventVo> mEvents = new HashMap<>();
+    private final Map<String, TimetableEventVo> mEvents = new HashMap<>();
 }

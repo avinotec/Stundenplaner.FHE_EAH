@@ -31,8 +31,8 @@ import java.util.List;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.myschedule.MyScheduleDialogAdapter;
 import de.fhe.fhemobile.comparator.StudyProgramComparator;
-import de.fhe.fhemobile.vos.timetable.TimeTableStudyProgramVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
+import de.fhe.fhemobile.vos.timetable.TimetableStudyProgramVo;
+import de.fhe.fhemobile.vos.timetable.TimetableSemesterVo;
 import de.fhe.fhemobile.widgets.picker.StudyProgramPicker;
 import de.fhe.fhemobile.widgets.picker.SemesterPicker;
 import de.fhe.fhemobile.widgets.picker.base.OnItemChosenListener;
@@ -77,13 +77,13 @@ public class MyScheduleDialogView extends LinearLayout {
     }
 
 
-    public void setStudyProgramItems(final List<TimeTableStudyProgramVo> _Items) {
+    public void setStudyProgramItems(final List<TimetableStudyProgramVo> _Items) {
         Collections.sort(_Items, new StudyProgramComparator());
         mStudyProgramPicker.setItems(_Items);
         mStudyProgramPicker.toggleEnabled(true);
     }
 
-    public void setSemesterItems(final List<TimeTableSemesterVo> _Items) {
+    public void setSemesterItems(final List<TimetableSemesterVo> _Items) {
         mSemesterPicker.setItems(_Items);
         mSemesterPicker.toggleEnabled(true);
     }

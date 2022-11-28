@@ -21,7 +21,7 @@ import android.util.AttributeSet;
 
 import java.util.List;
 
-import de.fhe.fhemobile.vos.timetable.TimeTableSemesterVo;
+import de.fhe.fhemobile.vos.timetable.TimetableSemesterVo;
 import de.fhe.fhemobile.widgets.picker.base.IdPicker;
 
 /**
@@ -34,7 +34,7 @@ public class SemesterPicker extends IdPicker {
         super(context, attrs);
     }
 
-    public void setItems(final List<TimeTableSemesterVo> _items) {
+    public void setItems(final List<TimetableSemesterVo> _items) {
         mItems = _items;
         if (mItems == null) {
             throw new AssertionError("Semester items cannot be null!");
@@ -59,5 +59,5 @@ public class SemesterPicker extends IdPicker {
         return mItems == null ? 0 : mItems.size();
     }
 
-    private List<TimeTableSemesterVo> mItems;
+    private List<TimetableSemesterVo> mItems;
 }

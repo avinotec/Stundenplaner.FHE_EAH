@@ -25,20 +25,20 @@ import java.util.Map;
  * Created by paul on 12.03.15
  * Edited by Nadja - 04/2022
  */
-public class TimeTableDialogResponse {
+public class TimetableDialogResponse {
 
-    public TimeTableDialogResponse(){
+    public TimetableDialogResponse(){
 
     }
 
-    public ArrayList<TimeTableStudyProgramVo> getStudyProgramsAsList() {
+    public ArrayList<TimetableStudyProgramVo> getStudyProgramsAsList() {
         return new ArrayList(mStudyPrograms.values());
     }
 
-    public Map<String, TimeTableStudyProgramVo> getStudyPrograms() {
+    public Map<String, TimetableStudyProgramVo> getStudyPrograms() {
         return mStudyPrograms;
     }
 
     @SerializedName("studentset")
-    private Map<String, TimeTableStudyProgramVo> mStudyPrograms;
+    private Map<String, TimetableStudyProgramVo> mStudyPrograms;
 }

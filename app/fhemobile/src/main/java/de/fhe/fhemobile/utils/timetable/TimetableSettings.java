@@ -25,35 +25,35 @@ import de.fhe.fhemobile.utils.Define;
 /**
  *
  */
-public final class TimeTableSettings {
+public final class TimetableSettings {
 
-    public static final String TAG = TimeTableSettings.class.getSimpleName();
+    public static final String TAG = TimetableSettings.class.getSimpleName();
 
     /* Utility classes have all fields and methods declared as static.
     Creating private constructors in utility classes prevents them from being accidentally instantiated. */
-	private TimeTableSettings() {
+	private TimetableSettings() {
 	}
 
 	/**
      * Saves timetable favourite to Shared Preferences
-     * @param _TimeTableId
+     * @param _TimetableId
      */
-    public static void saveTimeTableSelection(final String _TimeTableId) {
-        final SharedPreferences sp = Main.getAppContext().getSharedPreferences(Define.TimeTable.SP_TIMETABLE_SETTINGS, Context.MODE_PRIVATE);
-        sp.edit().putString(Define.TimeTable.PREF_CHOSEN_TIMETABLE_ID, _TimeTableId).apply();
+    public static void saveTimetableSelection(final String _TimetableId) {
+        final SharedPreferences sp = Main.getAppContext().getSharedPreferences(Define.Timetable.SP_TIMETABLE_SETTINGS, Context.MODE_PRIVATE);
+        sp.edit().putString(Define.Timetable.PREF_CHOSEN_TIMETABLE_ID, _TimetableId).apply();
     }
 
     /**
      * Loads timetable id that was set as favourite (is selected) from Shared Preferences
      * @return the timetable id
      */
-    public static String getTimeTableSelection() {
+    public static String getTimetableSelection() {
 
-        final SharedPreferences sp = Main.getAppContext().getSharedPreferences(Define.TimeTable.SP_TIMETABLE_SETTINGS, Context.MODE_PRIVATE);
-        String result = sp.getString(Define.TimeTable.PREF_CHOSEN_TIMETABLE_ID, null);
+        final SharedPreferences sp = Main.getAppContext().getSharedPreferences(Define.Timetable.SP_TIMETABLE_SETTINGS, Context.MODE_PRIVATE);
+        String result = sp.getString(Define.Timetable.PREF_CHOSEN_TIMETABLE_ID, null);
         //avoid errors due to usage of old SplusId
         if(result != null && result.startsWith("SPLUS")) {
-            saveTimeTableSelection(null);
+            saveTimetableSelection(null);
             result = null;
         }
 

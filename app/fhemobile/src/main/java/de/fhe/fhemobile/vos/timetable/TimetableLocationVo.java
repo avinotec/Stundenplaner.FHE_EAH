@@ -10,11 +10,11 @@ import java.util.Objects;
 /**
  * Created by Nadja - 04/2022
  */
-public class TimeTableLocationVo implements Parcelable {
+public class TimetableLocationVo implements Parcelable {
 
-    public TimeTableLocationVo(){ }
+    public TimetableLocationVo(){ }
 
-    TimeTableLocationVo(final Parcel in){
+    TimetableLocationVo(final Parcel in){
         mId = in.readString();
         mName = in.readString();
     }
@@ -30,8 +30,8 @@ public class TimeTableLocationVo implements Parcelable {
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
-        if (!(o instanceof TimeTableLocationVo)) return false;
-        final TimeTableLocationVo that = (TimeTableLocationVo) o;
+        if (!(o instanceof TimetableLocationVo)) return false;
+        final TimetableLocationVo that = (TimetableLocationVo) o;
         return mId.equals(that.mId) && mName.equals(that.mName);
     }
 
@@ -53,15 +53,15 @@ public class TimeTableLocationVo implements Parcelable {
         dest.writeString(mName);
     }
 
-    public static final Parcelable.Creator<TimeTableLocationVo> CREATOR = new Parcelable.Creator<TimeTableLocationVo>(){
+    public static final Parcelable.Creator<TimetableLocationVo> CREATOR = new Parcelable.Creator<TimetableLocationVo>(){
         @Override
-        public TimeTableLocationVo createFromParcel(final Parcel parcel) {
-            return new TimeTableLocationVo(parcel);
+        public TimetableLocationVo createFromParcel(final Parcel parcel) {
+            return new TimetableLocationVo(parcel);
         }
 
         @Override
-        public TimeTableLocationVo[] newArray(final int i) {
-            return new TimeTableLocationVo[i];
+        public TimetableLocationVo[] newArray(final int i) {
+            return new TimetableLocationVo[i];
         }
     };
 

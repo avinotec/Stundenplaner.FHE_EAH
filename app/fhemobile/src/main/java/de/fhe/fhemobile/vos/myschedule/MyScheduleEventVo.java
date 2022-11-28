@@ -17,7 +17,7 @@
 package de.fhe.fhemobile.vos.myschedule;
 
 
-import static de.fhe.fhemobile.utils.timetable.TimeTableUtils.cutStudyProgramPrefix;
+import static de.fhe.fhemobile.utils.timetable.TimetableUtils.cutStudyProgramPrefix;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -38,9 +38,9 @@ import java.util.TimeZone;
 import de.fhe.fhemobile.comparator.LecturerComparator;
 import de.fhe.fhemobile.comparator.TimetableLocationComparator;
 import de.fhe.fhemobile.utils.myschedule.TimetableChangeType;
-import de.fhe.fhemobile.utils.timetable.TimeTableUtils;
+import de.fhe.fhemobile.utils.timetable.TimetableUtils;
 import de.fhe.fhemobile.vos.timetable.LecturerVo;
-import de.fhe.fhemobile.vos.timetable.TimeTableLocationVo;
+import de.fhe.fhemobile.vos.timetable.TimetableLocationVo;
 
 /**
  * Value object for a time table event in MySchedule
@@ -54,7 +54,7 @@ public class MyScheduleEventVo implements Parcelable {
                              final long startDateTime,
                              final long endDateTime,
                              final List<LecturerVo> lecturerList,
-                             final List<TimeTableLocationVo> locationList){
+                             final List<TimetableLocationVo> locationList){
         mTitle = title;
         mEventSetId = eventSetId;
         mStartDateTime = startDateTime;
@@ -86,11 +86,11 @@ public class MyScheduleEventVo implements Parcelable {
         this.mStartDateTime = in.readLong();
         this.mEndDateTime = in.readLong();
         in.readList(mLecturerList , LecturerVo.class.getClassLoader());
-        in.readList(mLocationList, TimeTableLocationVo.class.getClassLoader());
+        in.readList(mLocationList, TimetableLocationVo.class.getClassLoader());
         typesOfChanges = new HashSet(Arrays.asList(in.readArray(TimetableChangeType.class.getClassLoader())));
 
         //remove null objects
-        for(final TimeTableLocationVo location : mLocationList){
+        for(final TimetableLocationVo location : mLocationList){
             if(location.getName() == null){
                 mLocationList.remove(location);
             }
@@ -177,7 +177,7 @@ public class MyScheduleEventVo implements Parcelable {
      * Return list of locations, sorted by location id
      * @return
      */
-    public List<TimeTableLocationVo> getLocationList() {
+    public List<TimetableLocationVo> getLocationList() {
         //sorting needed to enable proper comparison via "equals"
         Collections.sort(mLocationList, new TimetableLocationComparator());
         return mLocationList;
@@ -188,7 +188,7 @@ public class MyScheduleEventVo implements Parcelable {
 
         if(mLocationList.isEmpty()) return "";
 
-        for(final TimeTableLocationVo room : mLocationList){
+        for(final TimetableLocationVo room : mLocationList){
             if(room.getName() != null) {
                 final String roomName = room.getName().replaceAll("\\(", " (");
                 stringBuilder.append(roomName).append(", ");
@@ -203,7 +203,7 @@ public class MyScheduleEventVo implements Parcelable {
     }
 
     public String getWeekDayName(){
-        return TimeTableUtils.getWeekDayName(getStartDateWithTime());
+        return TimetableUtils.getWeekDayName(getStartDateWithTime());
     }
 
     /**
@@ -258,7 +258,7 @@ public class MyScheduleEventVo implements Parcelable {
         this.mLecturerList = lecturerList;
     }
 
-    public void setLocationList(final List<TimeTableLocationVo> locationList) {
+    public void setLocationList(final List<TimetableLocationVo> locationList) {
         this.mLocationList = locationList;
     }
 
@@ -282,7 +282,7 @@ public class MyScheduleEventVo implements Parcelable {
     private List<LecturerVo> mLecturerList = new ArrayList<>();
 
     @SerializedName("location")
-    private List<TimeTableLocationVo> mLocationList = new ArrayList<>();
+    private List<TimetableLocationVo> mLocationList = new ArrayList<>();
 
     @SerializedName("typesOfChanges")
     private Set<TimetableChangeType> typesOfChanges = new HashSet<>();
