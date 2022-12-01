@@ -46,11 +46,6 @@ public class NewsCategoriesFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -65,14 +60,6 @@ public class NewsCategoriesFragment extends Fragment {
         }
 
         return mView;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mView != null) {
-            mView.destroy();
-        }
     }
 
     private final NewsCategoriesView.ViewListener mViewsListener = new NewsCategoriesView.ViewListener() {

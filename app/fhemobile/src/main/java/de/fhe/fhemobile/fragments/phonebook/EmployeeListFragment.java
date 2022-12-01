@@ -84,18 +84,6 @@ public class EmployeeListFragment extends Fragment {
         mCallbacks = null;
     }
 
-    /**
-     * Called when the fragment is no longer in use.  This is called
-     * after {@link #onStop()} and before {@link #onDetach()}.
-     */
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mView != null) {
-            mView.destroy();
-        }
-    }
-
     private final EmployeeListView.ViewListener mViewListener = new EmployeeListView.ViewListener() {
         @Override
         public void onListItemClicked(final Integer _ListPosition) {

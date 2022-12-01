@@ -32,6 +32,8 @@ import de.fhe.fhemobile.views.phonebook.PhonebookSearchView;
 
 public class PhonebookSearchFragment extends FeatureFragment {
 
+    private static final String TAG = PhonebookSearchFragment.class.getSimpleName();
+
     public PhonebookSearchFragment() {
         // Required empty public constructor
     }
@@ -44,21 +46,6 @@ public class PhonebookSearchFragment extends FeatureFragment {
     }
 
     @Override
-    public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mView != null) {
-            mView.destroy();
-        }
-    }
-
-    @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -66,7 +53,6 @@ public class PhonebookSearchFragment extends FeatureFragment {
         mView.initializeView(mViewListener);
         return mView;
     }
-
     private final PhonebookSearchView.ViewListener mViewListener = new PhonebookSearchView.ViewListener() {
         @Override
         public void onSearchClicked(final String _FirstName, final String _LastName) {
@@ -80,7 +66,6 @@ public class PhonebookSearchFragment extends FeatureFragment {
         }
     };
 
-    private static final String LOG_TAG = PhonebookSearchFragment.class.getSimpleName();
 
     private PhonebookSearchView mView;
 }
