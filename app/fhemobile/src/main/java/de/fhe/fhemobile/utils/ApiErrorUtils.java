@@ -16,6 +16,8 @@
  */
 package de.fhe.fhemobile.utils;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -31,6 +33,8 @@ import retrofit2.Response;
  * Created by Nadja on 28.10.2022
  */
 public final class ApiErrorUtils {
+
+    private static final String TAG = ApiErrorUtils.class.getSimpleName();
 
     public static class ApiErrorCode {
 
@@ -66,42 +70,50 @@ public final class ApiErrorUtils {
             if (body != null) {
                 error = gson.fromJson(body.string(), ApiErrorResponse.class);
             }
-        } catch (final IOException e) { }
+        } catch (final IOException e) {
+            Log.e(TAG, "Problem parsing ApiErrorResponse", e);
+        }
         return error;
     }
 
     /**
      * Show toast displaying "Error XXXX: message"
-     * @param errorResponse {@link ApiErrorResponse} containing the message
+     *
+     * @param errorResponse     {@link ApiErrorResponse} containing the message
      * @param internalErrorCode error code XXX
      */
-    public static void showErrorToast(final ApiErrorResponse errorResponse, final String internalErrorCode){
-        final String message = Main.getAppContext().getString(R.string.error) + " "
-                + internalErrorCode +": "
-                + errorResponse.getMessage(); //todo: replace with translatable message depending on id of errorResponse
-
-        Utils.showToast(message);
+    public static void showErrorToast(final ApiErrorResponse errorResponse, final String internalErrorCode) {
+        try {
+            final String message = Main.getAppContext().getString(R.string.error) + " "
+                    + internalErrorCode + ": "
+                    + errorResponse.getMessage(); //todo: replace with translatable message depending on id of errorResponse
+            Utils.showToast(message);
+        } catch (Exception e) {
+            Log.e(TAG, "Problem showing Error Toast", e);
+            showErrorToast(internalErrorCode);
+        }
     }
 
     /**
      * Show toast displaying "Error XXXX: internal problems"
+     *
      * @param internalErrorCode error code XXXX
      */
-    public static void showErrorToast(final String internalErrorCode){
+    public static void showErrorToast(final String internalErrorCode) {
         final String message = Main.getAppContext().getString(R.string.error) + " "
-                + internalErrorCode +": "
+                + internalErrorCode + ": "
                 + Main.getAppContext().getString(R.string.internal_problems);
-
         Utils.showToast(message);
     }
 
     /**
      * Show toast displaying "Error XXXX: Cannot establish connection!"
+     *
      * @param internalErrorCode error code XXXX
      */
     public static void showConnectionErrorToast(final String internalErrorCode) {
         final String message = Main.getAppContext().getString(R.string.error) + " "
-                + internalErrorCode +": "
+                + internalErrorCode + ": "
                 + Main.getAppContext().getString(R.string.connection_failed);
 
         Utils.showToast(message);
