@@ -1,6 +1,10 @@
 
 -- NOTE: values are composed for WS 22/23
 
+-- use database
+USE `stundenplan`;
+
+
 -- ------------------------------------------------- SET UP SCENARIO 1 -------------------------------------------------
 
 -- Insert subscription with my test phone's firebase token
