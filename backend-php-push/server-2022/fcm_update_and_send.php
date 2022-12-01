@@ -126,15 +126,18 @@ function updateDatabaseAndBookNotifications(string &$moduleId): void
             } else {
                 //EVENT SET ADDED
                 //no local event set with this id found --> event set is new and has to be added
+                if ($debug) $output .= sprintf("<li> Event set %s has been added. ", $eventsetID);
                 $db_timetable->insertEventSet($eventsetID, $eventSeriesName, $moduleId, $fetchedEventSetJSON);
                 bookTimetableChangedNotifications($eventSeriesName);
+                if($debug) $output .= "</li>";
 
                 //if event series corresponds to a new exam (no matter which group),
                 // then notify all users subscribing an event series of the same module
                 //possible endings for exams: APL, PL, mdl. Prfg.,Wdh.-Prfg., Wdh.-APL
                 if (preg_match("/.*(PL)|(Prfg\\.)/", $eventSeriesName)) {
+                    if ($debug) $output .= sprintf("<li> Exam %s has been added for module %s. ", $eventsetID, $moduleData["dataModule"]["Name"]);
                     bookExamAddedNotifications($moduleId, $moduleData["dataModule"]["Name"]);
-                    $output .= sprintf("Added exam found for %s <br>", $moduleData["dataModule"]["Name"]);
+                    if($debug) $output .= "</li>";
                 }
             }
         }
@@ -166,11 +169,11 @@ function bookTimetableChangedNotifications(string &$eventSeriesName): void
     $resultSubscribingUser = $db_timetable->getSubscribingUsers($eventSeriesName);
 
     if ($resultSubscribingUser != null && $resultSubscribingUser->num_rows > 0) {
-        if ($debug) $output .= sprintf("There are notifications that need to be sent for event series %s!<br>", $eventSeriesName);
+        if ($debug) $output .= sprintf("There are notifications that need to be sent for event series %s!", $eventSeriesName);
 
         bookNotifications($resultSubscribingUser, $eventSeriesName, TIMETABLE_CHANGED);
     } else {
-        if ($debug) $output .= sprintf("There are no tokens subscribing %s!<br>", $eventSeriesName);
+        if ($debug) $output .= sprintf("There are no tokens subscribing %s!", $eventSeriesName);
     }
     $resultSubscribingUser->close();
 }
@@ -195,9 +198,9 @@ function bookExamAddedNotifications(string &$moduleId, string &$moduleName): voi
     if ($resultSubscribingUser->num_rows > 0) {
         bookNotifications($resultSubscribingUser, $moduleName, EXAM_ADDED);
 
-        if ($debug) $output .= sprintf("There are notifications that need to be sent for module %s! <br>", $moduleId);
+        if ($debug) $output .= sprintf("There are notifications that need to be sent for module %s!", $moduleId);
     } else {
-        if ($debug) $output .= "There are no tokens subscribing $moduleId!<br>";
+        if ($debug) $output .= "There are no tokens subscribing $moduleId!";
     }
     $resultSubscribingUser->close();
 }
@@ -231,6 +234,7 @@ function bookNotifications(?mysqli_result $subscribingUsers, string $subject, st
  */
 function sendFCM(string &$tokens, string &$subject, string &$type): void
 {
+    global $db_timetable;
     //header data
     $headers = array('Authorization: key=' . SERVER_KEY, 'Content-Type: application/json');
 
@@ -239,9 +243,6 @@ function sendFCM(string &$tokens, string &$subject, string &$type): void
     if (empty($tokenArray)) {
         return;
     }
-    echo "<p> tokenArray";
-    print_r($tokenArray);
-    echo "</p>";
     $fields = array(
         'registration_ids' => $tokenArray,
         'notification' => array(
@@ -264,6 +265,7 @@ function sendFCM(string &$tokens, string &$subject, string &$type): void
     //close curl request
     curl_close($cRequest);
 
+    $db_timetable->markNotificationsAsSent($tokenArray, $subject, $type);
 }
 
 
@@ -279,8 +281,8 @@ function sendFCM(string &$tokens, string &$subject, string &$type): void
 /** @var string $url fetch all available module ids from StundenplanServer */
 $url = API_BASE_URL . ENDPOINT_MODULE;
 $jsonStringFromStundenplanServer = file_get_contents($url);
-//note: second parameter must be true to enable key-value iteration
-$moduleIds = json_decode($jsonStringFromStundenplanServer, true);
+//note: second parameter must be true to enable key-value array interpretation
+$moduleIds = array_values(json_decode($jsonStringFromStundenplanServer, true));
 
 
 //fetch data of each module
@@ -290,13 +292,15 @@ if ($debug) {
 
     //TODO: comment out for complete modules fetching
     //for debugging: reduce array to smaller size
-    $moduleIds = array_slice($moduleIds, 20, 10, true);
+    $moduleIds = array_slice($moduleIds, 20, 2, true);
+    //add Personalmanagement for testing exam added
+    $moduleIds[] = "A615C4E5AF9DAB47C65F7B181CFD4C70";
 
     $output .= implode(", ", $moduleIds);
 }
 
 // Check each module for changes
-foreach ($moduleIds as $moduleKey => $moduleId) {
+foreach ($moduleIds as $moduleId) {
     if ($debug) $output .= sprintf("<p style='color:DodgerBlue;'>Module %s:<br><p style='margin-left:40px'> ", $moduleId);
 
     // collect all notifications that need to be sent concerning this moduleID
@@ -315,7 +319,7 @@ $output .= sprintf("<br><b> %s notifications to send out.</b><br>", count($notif
 if ($debug) $output .= "<b><i><span style='color:DodgerBlue;'>Notifications to send: { </span></i></b> <ul>";
 foreach ($notificationsToSend as $notificationData) {
     sendFCM($notificationData["tokens"], $notificationData["subject"], $notificationData["type"]);
-    if ($debug) $output .= sprintf("<li>%s: %s</li>", $notificationData["type"], $notificationData["subject"]);
+    if ($debug) $output .= sprintf("<li>Type %s: %s</li>", $notificationData["type"], $notificationData["subject"]);
 }
 if ($debug) $output .= "</ul><b><i><span style='color:DodgerBlue;'>}</span></i></b>";
 //TODO: set up php script for cleaning notifications from time to time

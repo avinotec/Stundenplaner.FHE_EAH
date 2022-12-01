@@ -263,7 +263,7 @@ final class TimetableDb
         $sql =
             /** @lang MySQL */
             'SELECT token, language, os '
-            . 'FROM fcm_user join event_sets on eventseries_name = event_sets.eventseries '
+            . 'FROM fcm_user join event_sets on fcm_user.eventseries_name = event_sets.eventseries '
             . "WHERE event_sets.module_id = '$module_id'";
         /** @var mysqli_result|null $result */
         $result = $this->runQueryAndGetResult($sql, "getUserSubscribingAnythingInModule");
@@ -301,7 +301,7 @@ final class TimetableDb
     {
         $sql = /** @lang MySQL */
             'INSERT INTO event_sets (eventset_id, eventseries, module_id, eventset_data, last_changed)' .
-            "VALUES ('$eventset_id', '$eventseries_name', '$module_id', '$eventset_json', SYSDATE())";
+            "VALUES ('$eventset_id', '$eventseries_name', '$module_id', '$eventset_json', NOW())";
         /** @var bool $result */
         $result = $this->runQuery($sql, "insertEventSet");
         return $result;
@@ -372,11 +372,11 @@ final class TimetableDb
                                              string $type,
                                              string &$os): bool
     {
-        $status = STATUS_OPEN;
+        $status_open = STATUS_OPEN;
         $sql = /** @lang MySQL */
             'INSERT INTO notifications (token, subject, type, os, status, timestamp)' .
-            "VALUES ('$fcm_token', '$subject', '$type', '$os', '$status', SYSDATE())" .
-            'ON DUPLICATE KEY UPDATE timestamp = SYSDATE()';
+            "VALUES ('$fcm_token', '$subject', '$type', '$os', '$status_open', NOW())" .
+            "ON DUPLICATE KEY UPDATE timestamp = NOW() and status = '$status_open'";
         /** @var bool $result */
         $result = $this->runQuery($sql, "insertNotification");
         return $result;
@@ -389,16 +389,35 @@ final class TimetableDb
      */
     final public function getNotificationsToSendToAndroid(): array
     {
-        $open = STATUS_OPEN;
+        $status_open = STATUS_OPEN;
         $sql = /** @lang MySQL */
             "SELECT subject, type, GROUP_CONCAT(token) AS tokens FROM notifications "
-            . "WHERE status = '$open' AND os = '0'"
+            . "WHERE status = '$status_open' AND os = '0'"
             . "GROUP BY subject, type";
         $result = $this->runQueryAndGetResult($sql, "getNotificationsToSent");
         if (!is_null($result)) {
             return $result->fetch_all(MYSQLI_ASSOC);
         } else {
             return array();
+        }
+    }
+
+    /**
+     * Change status of the corresponding notification to sent
+     *
+     * @param array $tokenArray Tokens getting the notification
+     * @param string $subject Subject of the notification
+     * @param string $type Type of notification
+     * @return void
+     */
+    final public function markNotificationsAsSent(array $tokenArray, string $subject, string $type): void
+    {
+        $sent = STATUS_SENT;
+        foreach ($tokenArray as $token){
+            $sql = /** @lang MySQL */
+                "UPDATE notifications SET `status`='$sent'"
+                . "WHERE type = '$type' and subject = '$subject' and token = '$token'";
+            $this->runQuery($sql, "markNotificationsAsSent");
         }
     }
 
@@ -431,6 +450,7 @@ final class TimetableDb
 
         return $result;
     }
+
 
     /**
      * Run the given sql statement
@@ -473,7 +493,6 @@ final class TimetableDb
         }
         return array();
     }
-
 
     /** nur fuer DEBUGSQL
      * @return array | void
