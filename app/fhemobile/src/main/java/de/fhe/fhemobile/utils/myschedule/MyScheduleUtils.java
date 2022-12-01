@@ -295,6 +295,7 @@ public final class MyScheduleUtils {
 			}
 			//DETECT CHANGED EVENTS PROPERTIES - compare local and fetched events
 			else {
+				if(fetchedEventSetsMap == null || fetchedEventSetsMap.size() == 0) break;
 				final MyScheduleEventSetVo fetchedEventSet = fetchedEventSetsMap.get(localEventSetEntry.getKey());
 				//fetchedEventSet != null because it would be contained in eventSetsDeleted otherwise
 				if (BuildConfig.DEBUG) Assert.assertNotNull(fetchedEventSet);
