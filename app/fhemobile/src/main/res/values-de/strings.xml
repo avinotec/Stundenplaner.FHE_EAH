@@ -118,7 +118,7 @@
     <string name="fcm_change_title">Stundenplanänderung</string>
     <string name="fcm_timetablechange_message_part1">hat sich geändert.</string>
     <string name="fcm_message_part2">Bitte aktualisiere deinen Stundenplan!</string>
-    <string name="fcm_examadded_message_part1">wurde hinzugefügt.</string>
+    <string name="fcm_examadded_message_part1">Prüfung hinzugefügt für</string>
 
 
     <string name="notification_error_ssl_cert_invalid">Es ist ein Zertifikat-Fehler aufgetreten. Möchtest du die Seite trotzdem öffnen?</string>

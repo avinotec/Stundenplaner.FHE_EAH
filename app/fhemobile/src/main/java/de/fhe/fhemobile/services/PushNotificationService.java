@@ -70,8 +70,8 @@ public class PushNotificationService extends FirebaseMessagingService {
 					messageLong);
 
 		} else if(PARAM_EXAM_ADDED.equals(remoteMessage.getNotification().getTitle())){
-			final String message = remoteMessage.getNotification().getBody() + " "
-					+ Main.getAppContext().getString(R.string.fcm_examadded_message_part1);
+			final String message = Main.getAppContext().getString(R.string.fcm_examadded_message_part1)
+					+ " " + remoteMessage.getNotification().getBody() + ".";
 			final String messageLong = message + " " + Main.getAppContext().getString(R.string.fcm_message_part2);
 
 			showNotification(
