@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `fcm_user`
     `language`         CHAR(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'DE' COMMENT 'DE or EN'
 
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Indizes für die Tabelle `fcm_user`
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `event_sets`
     `last_changed`  TIMESTAMP                                                       NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1;
+  DEFAULT CHARSET = utf8mb4;
 
 
 ALTER TABLE `event_sets`
@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `notifications`
     PRIMARY KEY (`token`, `subject`, `type`)
 
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = latin1;
+  DEFAULT CHARSET = utf8mb4;
 
 ALTER TABLE `notifications`
     ADD INDEX `timestamp` (`timestamp`);
