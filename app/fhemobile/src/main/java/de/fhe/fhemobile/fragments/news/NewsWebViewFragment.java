@@ -55,10 +55,19 @@ public class NewsWebViewFragment extends FeatureFragment {
     }
 
     @Override
-    public void onCreate(@Nullable final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        mView = (NewsWebView) inflater.inflate(R.layout.fragment_news_webview, container, false);
+        return mView;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
+        // see https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
         final MenuHost menuHost = requireActivity();
         menuHost.addMenuProvider(new MenuProvider() {
             @Override
@@ -75,14 +84,6 @@ public class NewsWebViewFragment extends FeatureFragment {
                 return false;
             }
         });
-    }
-
-    @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-                             final Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        mView = (NewsWebView) inflater.inflate(R.layout.fragment_news_webview, container, false);
-        return mView;
     }
 
     /**

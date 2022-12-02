@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
@@ -62,8 +63,24 @@ public class NavigationScannerFragment extends FeatureFragment implements ZXingS
                 requestPermissionLauncher.launch(Manifest.permission.CAMERA);
             }
         }
+    }
+
+    @Override
+    public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        mScannerView = new ZXingScannerView(getContext());
+        mScannerView.setAutoFocus(mAutoFocus);
+
+        return mScannerView;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
+        // see https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
         final MenuHost menuHost = requireActivity();
         menuHost.addMenuProvider(new MenuProvider() {
             @Override
@@ -80,17 +97,6 @@ public class NavigationScannerFragment extends FeatureFragment implements ZXingS
                 return false;
             }
         });
-
-    }
-
-    @Override
-    public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
-                             final Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        mScannerView = new ZXingScannerView(getContext());
-        mScannerView.setAutoFocus(mAutoFocus);
-
-        return mScannerView;
     }
 
     @Override

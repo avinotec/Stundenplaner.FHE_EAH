@@ -73,11 +73,33 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 		// Required empty public constructor
 	}
 
+
 	@Override
-	public void onCreate(final Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+	                         final Bundle savedInstanceState) {
+		// Inflate the layout for this fragment
+		mView = (MyScheduleCalendarView) inflater.inflate(R.layout.fragment_myschedule_calendar, container, false);
+
+		askForClearingScheduleAfterTurnOfSemester();
+
+		//Set text view to show if list is empty
+		mView.setEmptyCalendarView();
+		MyScheduleCalendarView.setLastUpdatedTextView();
+
+		return mView;
+	}
+
+	/**
+	 * Now adapters and list are initiated and layouts inflated, so the view can jump to today's courses
+	 */
+	@Override
+	public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+
+		mView.jumpToToday();
 
 		//replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
+		// see https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
 		final MenuHost menuHost = requireActivity();
 		final FragmentActivity activity = getActivity();
 		menuHost.addMenuProvider(new MenuProvider() {
@@ -117,32 +139,6 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 				return false;
 			}
 		});
-	}
-
-
-	@Override
-	public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-	                         final Bundle savedInstanceState) {
-		// Inflate the layout for this fragment
-		mView = (MyScheduleCalendarView) inflater.inflate(R.layout.fragment_myschedule_calendar, container, false);
-
-		askForClearingScheduleAfterTurnOfSemester();
-
-		//Set text view to show if list is empty
-		mView.setEmptyCalendarView();
-		MyScheduleCalendarView.setLastUpdatedTextView();
-
-		return mView;
-	}
-
-	/**
-	 * Now adapters and list are initiated and layouts inflated, so the view can jump to today's courses
-	 */
-	@Override
-	public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-
-		mView.jumpToToday();
 	}
 
 	@Override

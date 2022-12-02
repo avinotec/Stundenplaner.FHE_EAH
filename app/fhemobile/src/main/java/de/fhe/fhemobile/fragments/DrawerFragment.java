@@ -31,6 +31,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -75,9 +76,34 @@ public class DrawerFragment extends Fragment {
 
         // Select either the default item (0) or the last selected item.
         selectItem(mCurrentSelectedPosition, mCurrentSelectedId);
+    }
 
+    @Override
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_drawer, container, false);
+        mDrawerListView = (ListView) view.findViewById(R.id.drawerListView);
+        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+                selectItem(position, (int) id);
+                //DrawerAdapter.ViewHolder viewHolder = (DrawerAdapter.ViewHolder) view.getTag();
+//                viewHolder.mCheckedIndicator.setVisibility(View.VISIBLE);
+            }
+        });
+        mDrawerListView.setAdapter(new DrawerAdapter(
+                getActivity(),
+                FeatureProvider.getFeaturedItems()));
+        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
+        // see https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
         final MenuHost menuHost = requireActivity();
         menuHost.addMenuProvider(new MenuProvider() {
             @Override
@@ -99,26 +125,6 @@ public class DrawerFragment extends Fragment {
                 return false;
             }
         });
-    }
-
-    @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-                             final Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_drawer, container, false);
-        mDrawerListView = (ListView) view.findViewById(R.id.drawerListView);
-        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
-                selectItem(position, (int) id);
-                //DrawerAdapter.ViewHolder viewHolder = (DrawerAdapter.ViewHolder) view.getTag();
-//                viewHolder.mCheckedIndicator.setVisibility(View.VISIBLE);
-            }
-        });
-        mDrawerListView.setAdapter(new DrawerAdapter(
-                getActivity(),
-                FeatureProvider.getFeaturedItems()));
-        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
-        return view;
     }
 
     public boolean isDrawerOpen() {

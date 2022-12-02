@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 
@@ -58,8 +59,28 @@ public class SemesterDatesFragment extends FeatureFragment {
         super.onCreate(savedInstanceState);
 
         mModel = SemesterDatesModel.getInstance();
+    }
+
+    @Override
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        mView = (SemesterDatesView) inflater.inflate(R.layout.fragment_semester_dates, container, false);
+        mView.initializeView();
+
+        if(SemesterDatesModel.getInstance().getSemesterVos() == null) {
+            NetworkHandler.getInstance().fetchSemesterDates();
+        }
+
+        return mView;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
+        // see https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
         final MenuHost menuHost = requireActivity();
         menuHost.addMenuProvider(new MenuProvider() {
             @Override
@@ -131,20 +152,6 @@ public class SemesterDatesFragment extends FeatureFragment {
                 return false;
             }
         });
-    }
-
-    @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-                             final Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        mView = (SemesterDatesView) inflater.inflate(R.layout.fragment_semester_dates, container, false);
-        mView.initializeView();
-
-        if(SemesterDatesModel.getInstance().getSemesterVos() == null) {
-            NetworkHandler.getInstance().fetchSemesterDates();
-        }
-
-        return mView;
     }
 
     @Override

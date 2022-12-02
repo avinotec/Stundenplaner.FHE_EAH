@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
@@ -67,48 +68,6 @@ public class MapsFragment extends Fragment {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
-        final MenuHost menuHost = requireActivity();
-        final Activity activity = getActivity();
-        menuHost.addMenuProvider(new MenuProvider() {
-            @Override
-            public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
-                menu.clear();
-                // Add menu items here
-                if (mMap.getMaps().size() > 1) {
-                    menuInflater.inflate(R.menu.menu_maps, menu);
-                }
-            }
-
-            @Override
-            public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
-                // Handle the menu selection
-                if(menuItem.getItemId() == R.id.action_up) {
-                    if (mCurrentMapIndex < mMap.getMaps().size() - 1) {
-                        mCurrentMapIndex++;
-                        final MapVo map = mMap.getMaps().get(mCurrentMapIndex);
-
-                        mView.initializeView(map);
-                        updateActionBarTitle(getContext().getResources().getString(map.getNameID()));
-                    }
-                    return true;
-                }
-
-                if (menuItem.getItemId() == R.id.action_down) {
-                    if (mCurrentMapIndex > 0) {
-                        mCurrentMapIndex--;
-                        final MapVo map = mMap.getMaps().get(mCurrentMapIndex);
-
-                        mView.initializeView(map);
-                        updateActionBarTitle(getContext().getResources().getString(map.getNameID()));
-                    }
-                    return true;
-                }
-
-                return false;
-            }
-        });
 
         if (getArguments() != null) {
             final int mapId = getArguments().getInt(ARGS_MAP_ID);
@@ -256,10 +215,55 @@ public class MapsFragment extends Fragment {
             });
         }
 
-
-
-
         return mView;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
+        // see https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
+        final MenuHost menuHost = requireActivity();
+        final Activity activity = getActivity();
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
+                menu.clear();
+                // Add menu items here
+                if (mMap.getMaps().size() > 1) {
+                    menuInflater.inflate(R.menu.menu_maps, menu);
+                }
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
+                // Handle the menu selection
+                if(menuItem.getItemId() == R.id.action_up) {
+                    if (mCurrentMapIndex < mMap.getMaps().size() - 1) {
+                        mCurrentMapIndex++;
+                        final MapVo map = mMap.getMaps().get(mCurrentMapIndex);
+
+                        mView.initializeView(map);
+                        updateActionBarTitle(getContext().getResources().getString(map.getNameID()));
+                    }
+                    return true;
+                }
+
+                if (menuItem.getItemId() == R.id.action_down) {
+                    if (mCurrentMapIndex > 0) {
+                        mCurrentMapIndex--;
+                        final MapVo map = mMap.getMaps().get(mCurrentMapIndex);
+
+                        mView.initializeView(map);
+                        updateActionBarTitle(getContext().getResources().getString(map.getNameID()));
+                    }
+                    return true;
+                }
+
+                return false;
+            }
+        });
     }
 
     @Override
@@ -267,7 +271,6 @@ public class MapsFragment extends Fragment {
         super.onSaveInstanceState(outState);
 
         outState.putInt(SAV_MAP_INDEX, mCurrentMapIndex);
-//        Log.d(LOG_TAG, "onSaveInstanceState ");
     }
 
     void updateActionBarTitle(final String _Title) {

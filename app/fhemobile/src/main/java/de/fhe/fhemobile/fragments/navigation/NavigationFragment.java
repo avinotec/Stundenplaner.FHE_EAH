@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 
@@ -126,25 +127,6 @@ public class NavigationFragment extends FeatureFragment {
         NavigationUtils.getFloorConnections();
         NavigationUtils.getExits();
         getRoute();
-
-
-        //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
-        final MenuHost menuHost = requireActivity();
-        menuHost.addMenuProvider(new MenuProvider() {
-            @Override
-            public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
-                // Add menu items here
-                menu.clear();
-                menuInflater.inflate(R.menu.menu_main, menu);
-                menu.findItem(R.id.action_settings).setVisible(false);
-            }
-
-            @Override
-            public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
-                // Handle the menu selection
-                return false;
-            }
-        });
     }
 
 
@@ -169,6 +151,29 @@ public class NavigationFragment extends FeatureFragment {
         return mView;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
+        // see https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
+        final MenuHost menuHost = requireActivity();
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
+                // Add menu items here
+                menu.clear();
+                menuInflater.inflate(R.menu.menu_main, menu);
+                menu.findItem(R.id.action_settings).setVisible(false);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
+                // Handle the menu selection
+                return false;
+            }
+        });
+    }
 
     /**
      * Set currentFloorPlan to the next one, display floorplan image and navigation route
@@ -198,7 +203,6 @@ public class NavigationFragment extends FeatureFragment {
      * Update buttons to being enabled or disabled
      */
     private  void updateButtonStatus(){
-
 	    //start floor reached -> disable prevButton
 	    mView.togglePrevPlanButtonEnabled(floorPlanIterator.hasPrevious());
 
