@@ -74,7 +74,7 @@ public class TimetableDialogView extends LinearLayout {
         toggleButtonEnabled(false);
     }
 
-    public void setStudyCourseItems(final ArrayList<TimetableStudyProgramVo> _Items) {
+    public void setStudyProgramItems(final ArrayList<TimetableStudyProgramVo> _Items) {
         Collections.sort(_Items, new StudyProgramComparator());
         mStudyProgramPicker2.setItems(_Items);
         mStudyProgramPicker2.toggleEnabled(true);

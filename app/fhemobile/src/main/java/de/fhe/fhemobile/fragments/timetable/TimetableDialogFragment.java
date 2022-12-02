@@ -126,7 +126,7 @@ public class TimetableDialogFragment extends FeatureFragment {
     @Override
     public void onResume() {
         super.onResume();
-        NetworkHandler.getInstance().fetchStudyProgramData(mFetchStudyProgramDataCallback);
+        NetworkHandler.getInstance().fetchStudyPrograms(mFetchStudyProgramsCallback);
     }
 
     void proceedToTimetable(final String _TimetableId) {
@@ -215,7 +215,7 @@ public class TimetableDialogFragment extends FeatureFragment {
     };
 
 
-    private final Callback<TimetableDialogResponse> mFetchStudyProgramDataCallback = new Callback<TimetableDialogResponse>() {
+    private final Callback<TimetableDialogResponse> mFetchStudyProgramsCallback = new Callback<TimetableDialogResponse>() {
         @Override
         public void onResponse(@NonNull final Call<TimetableDialogResponse> call, final Response<TimetableDialogResponse> response) {
             if (response.isSuccessful()){
@@ -231,7 +231,7 @@ public class TimetableDialogFragment extends FeatureFragment {
                     }
                 }
 
-                mView.setStudyCourseItems(studyPrograms);
+                mView.setStudyProgramItems(studyPrograms);
             } else {
                 final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
                 ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.TIMETABLE_DIALOG_FRAGMENT_CODE1);

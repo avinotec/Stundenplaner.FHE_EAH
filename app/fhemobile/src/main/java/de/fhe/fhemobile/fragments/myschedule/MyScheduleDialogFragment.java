@@ -125,7 +125,7 @@ public class MyScheduleDialogFragment extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        NetworkHandler.getInstance().fetchStudyProgramData(mFetchStudyProgramDataCallback);
+        NetworkHandler.getInstance().fetchStudyPrograms(mFetchStudyProgramDataCallback);
     }
 
 

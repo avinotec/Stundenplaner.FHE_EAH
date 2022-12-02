@@ -126,10 +126,9 @@ public final class NetworkHandler {
      * @param _LastName
      */
     public void fetchEmployees(final String _FirstName, final String _LastName) {
-
         Assert.assertTrue(mApiErfurt != null);
-        mApiErfurt.fetchEmployees(_FirstName, _LastName).enqueue(new Callback<ArrayList<EmployeeVo>>() {
 
+        mApiErfurt.fetchEmployees(_FirstName, _LastName).enqueue(new Callback<ArrayList<EmployeeVo>>() {
             /**
              *
              * @param call
@@ -155,7 +154,6 @@ public final class NetworkHandler {
                 ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE7);
                 Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
             }
-
         });
     }
 
@@ -223,11 +221,6 @@ public final class NetworkHandler {
                     }
                 }
 
-                /**
-                 *
-                 * @param call
-                 * @param t
-                 */
                 @Override
                 public void onFailure(@NonNull final Call<CanteenDishVo[]> call, @NonNull final Throwable t) {
                     ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE9);
@@ -236,13 +229,25 @@ public final class NetworkHandler {
         }
     }
 
+    // ---------------------------------- NEWS -----------------------------------------------------
+
     /**
-     * *
+     *
+     * @param _NewsCategory
+     * @param _Callback
+     */
+    public void fetchNewsData(final String _NewsCategory, final Callback<NewsItemResponse> _Callback) {
+        Assert.assertTrue(mApiErfurt != null);
+
+        mApiErfurt.fetchNewsData(_NewsCategory).enqueue(_Callback);
+    }
+
+    /**
+     *
      */
     public void fetchNewsData() {
-
-        fetchNewsData(UserSettings.getInstance().getChosenNewsCategory(), new Callback<NewsItemResponse>() {
-
+        fetchNewsData(UserSettings.getInstance().getChosenNewsCategory(),
+                new Callback<NewsItemResponse>() {
             /**
              *
              * @param call
@@ -287,46 +292,12 @@ public final class NetworkHandler {
     }
 
     /**
-     * *
-     */
-    public void fetchNewsData(final String _NewsCategory, final Callback<NewsItemResponse> _Callback) {
-        Assert.assertTrue(mApiErfurt != null);
-
-        mApiErfurt.fetchNewsData(_NewsCategory).enqueue(_Callback);
-    }
-
-    /**
-     * *
-     */
-    public void fetchAvailableCanteens() {
-        Assert.assertTrue(mApiErfurt != null);
-
-        mApiErfurt.fetchAvailableCanteens().enqueue(new Callback<CanteenVo[]>() {
-
-            @Override
-            public void onResponse(@NonNull final Call<CanteenVo[]> call, @NonNull final Response<CanteenVo[]> response) {
-                if (response.isSuccessful()) {
-                    CanteenModel.getInstance().setCanteens(response.body());
-                } else {
-                    final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
-                    ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE3);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull final Call<CanteenVo[]> call, @NonNull final Throwable t) {
-                ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE11);
-                Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
-            }
-        });
-    }
-
-    /**
-     * *
+     *
      */
     public void fetchAvailableNewsLists() {
+        Assert.assertTrue(mApiErfurt != null);
 
-        fetchAvailableNewsLists(new Callback<NewsCategoryResponse>() {
+        mApiErfurt.fetchAvailableNewsLists().enqueue(new Callback<NewsCategoryResponse>() {
 
             /**
              *
@@ -357,17 +328,39 @@ public final class NetworkHandler {
         });
     }
 
+    // ---------------------------------- CANTEEN -----------------------------------------------------
+
     /**
-     * * TODO Methode doppelt?
+     *
      */
-    public void fetchAvailableNewsLists(final Callback<NewsCategoryResponse> _Callback) {
+    public void fetchAvailableCanteens() {
         Assert.assertTrue(mApiErfurt != null);
 
-        mApiErfurt.fetchAvailableNewsLists().enqueue(_Callback);
+        mApiErfurt.fetchAvailableCanteens().enqueue(new Callback<CanteenVo[]>() {
+
+            @Override
+            public void onResponse(@NonNull final Call<CanteenVo[]> call, @NonNull final Response<CanteenVo[]> response) {
+                if (response.isSuccessful()) {
+                    CanteenModel.getInstance().setCanteens(response.body());
+                } else {
+                    final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                    ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE3);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull final Call<CanteenVo[]> call, @NonNull final Throwable t) {
+                ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE11);
+                Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
+            }
+        });
     }
 
+    // ---------------------------------- WEATHER -----------------------------------------------------
+
     /**
-     * *
+     *
+     * @param _Callback
      */
     public void fetchWeather(final Callback<WeatherResponse> _Callback) {
         Assert.assertTrue(mApiErfurt != null);
@@ -375,10 +368,11 @@ public final class NetworkHandler {
         mApiErfurt.fetchWeather().enqueue(_Callback);
     }
 
+    // ---------------------------------- TIMETABLE -----------------------------------------------------
     /**
      * @param _Callback
      */
-    public void fetchStudyProgramData(final Callback<TimetableDialogResponse> _Callback) {
+    public void fetchStudyPrograms(final Callback<TimetableDialogResponse> _Callback) {
         Assert.assertTrue(mApiEah != null);
 
         mApiEah.fetchStudyProgramData().enqueue(_Callback);
@@ -399,6 +393,8 @@ public final class NetworkHandler {
         mApiEah.fetchTimetableEvents(_StudyGroupId).enqueue(_Callback);
     }
 
+    // ---------------------------------- MY SCHEDULE ---------------------------------------------
+
     /**
      * Fetch timetable (a set of {@link MyScheduleEventSetVo}s) of a given semester
      *
@@ -415,6 +411,7 @@ public final class NetworkHandler {
 
         mApiEah.fetchSemesterTimetable(_SemesterId).enqueue(_Callback);
     }
+
 
     //wait until all updates are collected
     private volatile int requestCounterMySchedule;
