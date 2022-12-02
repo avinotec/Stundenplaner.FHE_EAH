@@ -27,8 +27,8 @@ import de.fhe.fhemobile.fragments.navigation.NavigationDialogFragment;
 import de.fhe.fhemobile.fragments.news.NewsListFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdates.SemesterDatesFragment;
-import de.fhe.fhemobile.fragments.timetable.TimetableFragment;
 import de.fhe.fhemobile.utils.Define;
+import de.fhe.fhemobile.utils.timetable.TimetableFragmentsFactory;
 
 /**
  * Created by paul on 18.03.15
@@ -60,7 +60,7 @@ public final class FeatureFragmentFactory {
                         NewsWebViewFragment.newInstance(); //display as Webview - Nadja 6.9.21
                 break;
             case Features.FeatureId.TIMETABLE:
-            default:                                fragment = TimetableFragment.newInstance();
+            default:                                fragment = TimetableFragmentsFactory.getFragment();
 
         }
 

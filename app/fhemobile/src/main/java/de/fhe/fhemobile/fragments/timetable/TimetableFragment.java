@@ -71,20 +71,10 @@ public class TimetableFragment extends FeatureFragment {
 
 	public static final String TAG = TimetableFragment.class.getSimpleName();
 
-	public static TimetableFragment newInstance() {
-		final String chosenTimetable = TimetableSettings.getTimetableSelection();
-
-		return TimetableFragment.newInstance(chosenTimetable);
-
-	}
-
 	public static TimetableFragment newInstance(String timeTableId){
 		final TimetableFragment fragment = new TimetableFragment();
 		final Bundle args = new Bundle();
-
-		if(timeTableId != null){
-			args.putString(Define.Timetable.PARAM_TIMETABLE_ID, timeTableId);
-		}
+		args.putString(Define.Timetable.PARAM_TIMETABLE_ID, timeTableId);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -146,6 +136,7 @@ public class TimetableFragment extends FeatureFragment {
 		NetworkHandler.getInstance().fetchTimetableEvents(mChosenTimetableId, mCallback);
 //		todo: for debugging response = null
 //		NetworkHandler.getInstance().fetchTimetableEvents("53B3DB05F11C6EA417AA82B3DA33991B", mCallback);
+
 	}
 
 	private final Callback<Map<String, TimetableWeekVo>> mCallback = new Callback<Map<String, TimetableWeekVo>>() {
@@ -180,10 +171,10 @@ public class TimetableFragment extends FeatureFragment {
 		public void onFailure(@NonNull final Call<Map<String, TimetableWeekVo>> call, @NonNull final Throwable t) {
 			if(t instanceof IOException){
 				ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.TIMETABLE_FRAGMENT_CODE3);
-				Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 			} else {
 				ApiErrorUtils.showErrorToast(ApiErrorUtils.ApiErrorCode.TIMETABLE_FRAGMENT_CODE2);
 			}
+			Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
 
 			//load timetable from shared preferences
 			restoreTimetableFromSharedPreferences();
