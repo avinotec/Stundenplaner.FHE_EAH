@@ -354,7 +354,9 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         editor.apply();
 
         // wir geben mal den erhaltenen JSON String aus. Dann können wir sehen, was Carsten uns sendet.
-        if (BuildConfig.DEBUG) Log.d("MainAcitivity", "saveSubscribedEventSeriesToSharedPreferences(): received JSON: " + json );
+        if (BuildConfig.DEBUG){
+            Log.d(TAG, "saveSubscribedEventSeriesToSharedPreferences(): received JSON: " + json);
+        }
     }
 
 

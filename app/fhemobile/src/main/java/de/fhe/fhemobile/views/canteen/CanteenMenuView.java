@@ -16,13 +16,23 @@
  */
 package de.fhe.fhemobile.views.canteen;
 
+import static de.fhe.fhemobile.Main.getAppContext;
+import static de.fhe.fhemobile.utils.Define.Canteen.CANTEEN;
+import static de.fhe.fhemobile.utils.Define.Canteen.SP_CANTEEN;
+import static de.fhe.fhemobile.utils.Define.MySchedule.SP_MYSCHEDULE;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,10 +42,13 @@ import de.fhe.fhemobile.events.CanteenChangeEvent;
 import de.fhe.fhemobile.events.Event;
 import de.fhe.fhemobile.events.EventListener;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
+import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.UserSettings;
+import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.headerlistview.HeaderListView;
 import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
 import de.fhe.fhemobile.vos.canteen.CanteenMenuDayVo;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 import de.fhe.fhemobile.widgets.stickyHeaderList.CanteenRowItem;
 import de.fhe.fhemobile.widgets.stickyHeaderList.DefaultHeaderItem;
 import de.fhe.fhemobile.widgets.stickyHeaderList.IHeaderItem;
@@ -57,8 +70,6 @@ public class CanteenMenuView extends LinearLayout {
         super(context, attrs);
     }
 
-
-
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -73,11 +84,7 @@ public class CanteenMenuView extends LinearLayout {
         mCanteenId = _CanteenId;
         mCanteenNameText.setText(UserSettings.getInstance().getSelectedCanteen(mCanteenId).getCanteenName());
 
-        if(CanteenModel.getInstance().getMenu(mCanteenId) != null) {
-            populateMenuDaysList();
-        } else {
-            mCanteenProgressBar.setVisibility(VISIBLE);
-        }
+        populateMenuDaysList();
 
         Log.d(TAG, mCanteenId + " View initialized");
     }
@@ -115,8 +122,21 @@ public class CanteenMenuView extends LinearLayout {
 
         sectionList.add(headerSection);
 
-        final List<CanteenMenuDayVo> menuDaysList = CanteenModel.getInstance().getMenu(mCanteenId);
-
+        List<CanteenMenuDayVo> menuDaysList = CanteenModel.getInstance().getMenu(mCanteenId);
+        //if empty, load from shared preferences
+        if (menuDaysList == null || menuDaysList.size() == 0){
+            final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences(SP_CANTEEN, Context.MODE_PRIVATE);
+            final String json = sharedPreferences.getString(CANTEEN + mCanteenId, "");
+            final Gson gson = new Gson();
+            if(!"".equals(json)){
+                final Type listType = new TypeToken<ArrayList<CanteenMenuDayVo>>(){}.getType();
+                menuDaysList = gson.fromJson(json, listType);
+                Log.d(TAG, "Menu for " + mCanteenId + " loaded from Shared Preferences");
+            }
+            showUpdateFailedToast();
+        }
+        //populate view
+        mCanteenProgressBar.setVisibility(GONE);
         for (final CanteenMenuDayVo collection : menuDaysList) {
             final ArrayList<IRowItem> rowItems = new ArrayList<>();
 
@@ -129,11 +149,11 @@ public class CanteenMenuView extends LinearLayout {
 
         final StickyHeaderAdapter mAdapter = new StickyHeaderAdapter(getContext(), sectionList);
         mMenuDaysListView.setAdapter(mAdapter);
-
-        Log.d(TAG, mCanteenId + " List populated");
     }
 
-
+    private static void showUpdateFailedToast(){
+        Utils.showToast(R.string.canteen_update_failed);
+    }
 
 
     private final EventListener mReceivedCanteenMenuEventListener = new EventListener() {
@@ -149,6 +169,7 @@ public class CanteenMenuView extends LinearLayout {
         public void onEvent(final Event event) {
             mCanteenProgressBar.setVisibility(GONE);
             mErrorText.setVisibility(VISIBLE);
+            populateMenuDaysList();
         }
     };
 

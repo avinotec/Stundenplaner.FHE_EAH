@@ -34,6 +34,9 @@ public final class Define {
     //created by Nadja 11.03.2022
     public static final class Canteen {
         static final String PREF_SELECTED_CANTEENS = "selectedCanteens";      // $NON-NLS
+
+        public static final String SP_CANTEEN = "spCanteen";
+        public static final String CANTEEN = "canteen";
     }
 
     public static final class News {

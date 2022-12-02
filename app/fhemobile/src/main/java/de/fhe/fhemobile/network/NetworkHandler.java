@@ -346,9 +346,9 @@ public final class NetworkHandler {
                         sortedDishes = CanteenUtils.sortCanteenItems(dishes);
 
                     if (sortedDishes != null) {
-                        CanteenModel.getInstance().addMenu(canteenId, sortedDishes);
+                        CanteenModel.getInstance().setMenu(canteenId, sortedDishes);
                     } else {
-                        CanteenModel.getInstance().addMenu(canteenId, new ArrayList<>());
+                        //do nothing
                     }
                 }
 

@@ -95,6 +95,7 @@
     <string name="canteen_food_no_data_available">No data available</string>
     <string name="loading">Loading…</string>
     <string name="canteen_no_canteens_selected">Please select one or more canteens under settings first.</string>
+    <string name="canteen_update_failed">Could not update menu.</string>
 
     <!-- My Schedule -->
     <string name="myschedule_dialog_headline">Please select study program and semester.</string>

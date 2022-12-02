@@ -128,6 +128,7 @@
 
     <string name="canteen_food_no_data_available">Keine Daten verfügbar</string>
     <string name="canteen_no_canteens_selected">Wähle bitte erst eine oder mehrere Mensen in den Einstellungen aus.</string>
+    <string name="canteen_update_failed">Menü konnte nicht aktualisiert werden.</string>
 
     <!--    Campus Navigation-->
     <string name="title_scanner_activity">Scanner</string>

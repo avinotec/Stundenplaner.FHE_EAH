@@ -16,9 +16,17 @@
  */
 package de.fhe.fhemobile.models.canteen;
 
+import static de.fhe.fhemobile.Main.getAppContext;
+import static de.fhe.fhemobile.utils.Define.Canteen.CANTEEN;
+import static de.fhe.fhemobile.utils.Define.Canteen.SP_CANTEEN;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.List;
@@ -46,10 +54,23 @@ public final class CanteenModel extends EventDispatcher {
         return mMenus.get(canteenId);
     }
 
-    public void addMenu(@NonNull final String canteenId, final List<CanteenMenuDayVo> mMenuDays) {
+    /**
+     * Set the list of {@link CanteenMenuDayVo}s for the given canteen
+     * @param canteenId The id of the canteen
+     * @param mMenuDays The {@link CanteenMenuDayVo} objects
+     */
+    public void setMenu(@NonNull final String canteenId, final List<CanteenMenuDayVo> mMenuDays) {
         if(mMenuDays != null && !mMenuDays.isEmpty()) {
             this.mMenus.put(canteenId, mMenuDays);
             notifyChange(CanteenChangeEvent.getReceivedCanteenMenuEventWithCanteenId(canteenId));
+
+            //save menu to shared preferences
+            final Gson gson = new Gson();
+            final String json = gson.toJson(mMenuDays);
+            final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences(SP_CANTEEN, Context.MODE_PRIVATE);
+            final SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(CANTEEN + canteenId, json);
+            editor.apply();
 
         } else {
             notifyChange(CanteenChangeEvent.getReceivedEmptyMenuEventWithCanteenId(canteenId));
