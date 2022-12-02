@@ -228,8 +228,8 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 					//if event has not finished yet
 					if(eventVo.getEndDateWithTime().compareTo(now) >= 0) {
 
-						//update, if event startTime is earlier the event found before
-						if(k == null || eventVo.getStartDateTimeInSec() <= k){
+						//update, if event startTime is earlier than event found before
+						if(k == null || eventVo.getStartDateTimeInSec() < k){
 							k = eventVo.getStartDateTimeInSec();
 							posToday = mItems.indexOf(eventVo);
 						}
