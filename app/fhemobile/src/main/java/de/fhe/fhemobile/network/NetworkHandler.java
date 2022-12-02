@@ -391,6 +391,10 @@ public final class NetworkHandler {
     public void fetchTimetableEvents(final String _StudyGroupId,
                                      final Callback<Map<String, TimetableWeekVo>> _Callback) {
         Assert.assertTrue(mApiEah != null);
+        if(_StudyGroupId == null){
+            Log.e(TAG, "StudyGroupId is null. Cannot fetch semester timetable.");
+            return;
+        }
 
         mApiEah.fetchTimetableEvents(_StudyGroupId).enqueue(_Callback);
     }
@@ -404,6 +408,10 @@ public final class NetworkHandler {
     public void fetchSemesterTimetable(final String _SemesterId,
                                        final Callback<Map<String, MyScheduleEventSetVo>> _Callback) {
         Assert.assertTrue(mApiEah != null);
+        if(_SemesterId == null){
+            Log.e(TAG, "SemesterId is null. Cannot fetch semester timetable.");
+            return;
+        }
 
         mApiEah.fetchSemesterTimetable(_SemesterId).enqueue(_Callback);
     }
