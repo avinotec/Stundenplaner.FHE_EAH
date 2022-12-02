@@ -119,6 +119,8 @@ public final class NetworkHandler {
         return ourInstance;
     }
 
+    // -------------------------------- PHONEBOOK SEARCH -------------------------------------------
+
     /**
      * *
      *
@@ -157,6 +159,8 @@ public final class NetworkHandler {
         });
     }
 
+    // ---------------------------------- SEMESTER DATES -------------------------------------------
+
     /**
      * *
      */
@@ -193,44 +197,8 @@ public final class NetworkHandler {
         });
     }
 
-    /**
-     * Fetch menu of the canteens specified in {@link UserSettings}
-     */
-    public void fetchCanteenMenus() {
-        Assert.assertTrue(mApiErfurt != null);
-
-        final ArrayList<String> selectedCanteenIds = UserSettings.getInstance().getSelectedCanteenIds();
-        Log.d(TAG, "Selected Canteens: " + selectedCanteenIds);
-
-        for (final String canteenId : selectedCanteenIds) {
-            mApiErfurt.fetchCanteenData(canteenId).enqueue(new Callback<CanteenDishVo[]>() {
-
-                @Override
-                public void onResponse(@NonNull final Call<CanteenDishVo[]> call, @NonNull final Response<CanteenDishVo[]> response) {
-                    Log.d(TAG, "Canteen: " + call.request().url());
-                    final CanteenDishVo[] dishes = response.body();
-                    List<CanteenMenuDayVo> sortedDishes = null;
-
-                    if (dishes != null && dishes.length > 0)
-                        sortedDishes = CanteenUtils.sortCanteenItems(dishes);
-
-                    if (sortedDishes != null) {
-                        CanteenModel.getInstance().addMenu(canteenId, sortedDishes);
-                    } else {
-                        CanteenModel.getInstance().addMenu(canteenId, new ArrayList<>());
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull final Call<CanteenDishVo[]> call, @NonNull final Throwable t) {
-                    ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE9);
-                }
-            });
-        }
-    }
 
     // ---------------------------------- NEWS -----------------------------------------------------
-
     /**
      *
      * @param _NewsCategory
@@ -328,8 +296,8 @@ public final class NetworkHandler {
         });
     }
 
-    // ---------------------------------- CANTEEN -----------------------------------------------------
 
+    // ---------------------------------- CANTEEN -----------------------------------------------------
     /**
      *
      */
@@ -354,6 +322,42 @@ public final class NetworkHandler {
                 Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
             }
         });
+    }
+
+    /**
+     * Fetch menu of the canteens specified in {@link UserSettings}
+     */
+    public void fetchCanteenMenus() {
+        Assert.assertTrue(mApiErfurt != null);
+
+        final ArrayList<String> selectedCanteenIds = UserSettings.getInstance().getSelectedCanteenIds();
+        Log.d(TAG, "Selected Canteens: " + selectedCanteenIds);
+
+        for (final String canteenId : selectedCanteenIds) {
+            mApiErfurt.fetchCanteenData(canteenId).enqueue(new Callback<CanteenDishVo[]>() {
+
+                @Override
+                public void onResponse(@NonNull final Call<CanteenDishVo[]> call, @NonNull final Response<CanteenDishVo[]> response) {
+                    Log.d(TAG, "Canteen: " + call.request().url());
+                    final CanteenDishVo[] dishes = response.body();
+                    List<CanteenMenuDayVo> sortedDishes = null;
+
+                    if (dishes != null && dishes.length > 0)
+                        sortedDishes = CanteenUtils.sortCanteenItems(dishes);
+
+                    if (sortedDishes != null) {
+                        CanteenModel.getInstance().addMenu(canteenId, sortedDishes);
+                    } else {
+                        CanteenModel.getInstance().addMenu(canteenId, new ArrayList<>());
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull final Call<CanteenDishVo[]> call, @NonNull final Throwable t) {
+                    ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE9);
+                }
+            });
+        }
     }
 
     // ---------------------------------- WEATHER -----------------------------------------------------
