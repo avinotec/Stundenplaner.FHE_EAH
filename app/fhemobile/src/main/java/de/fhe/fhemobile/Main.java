@@ -36,6 +36,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
 import de.fhe.fhemobile.comparator.MyScheduleEventComparator;
@@ -56,6 +57,7 @@ public class Main extends Application {
 
     //Threading
     public static final ExecutorService executorService = Executors.newFixedThreadPool(2);
+    public static final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
 
     //My Schedule

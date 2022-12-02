@@ -47,7 +47,7 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.activities.SettingsActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.network.NetworkHandler;
+import de.fhe.fhemobile.services.FetchMyScheduleBackgroundTask;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.Features;
 import de.fhe.fhemobile.views.myschedule.MyScheduleCalendarView;
@@ -110,7 +110,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 				}
 				if (menuItem.getItemId() == R.id.action_update){
 					if(Define.ENABLE_MYSCHEDULE_UPDATING){
-						NetworkHandler.getInstance().fetchMySchedule();
+						FetchMyScheduleBackgroundTask.fetch();
 					}
 				}
 
@@ -146,12 +146,19 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 	}
 
 	@Override
-	public void onResume() {
-		super.onResume();
-
-		if(Define.ENABLE_MYSCHEDULE_UPDATING){
-			NetworkHandler.getInstance().fetchMySchedule();
+	public void onStart() {
+		super.onStart();
+		if(Define.ENABLE_MYSCHEDULE_UPDATING) {
+			//Fetch/update my schedule
+			FetchMyScheduleBackgroundTask.startPeriodicFetching();
 		}
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+
+		FetchMyScheduleBackgroundTask.stopPeriodicFetching();
 	}
 
 	/**

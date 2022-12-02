@@ -44,6 +44,12 @@ import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 
+/**
+ * {@link Runnable} to register subscribed event series at server
+ * using another thread
+ *
+ * created by Nadja - 09/22
+ */
 public class ServerRegistrationBackgroundTask implements Runnable {
 
     private static final String TAG = ServerRegistrationBackgroundTask.class.getSimpleName();
