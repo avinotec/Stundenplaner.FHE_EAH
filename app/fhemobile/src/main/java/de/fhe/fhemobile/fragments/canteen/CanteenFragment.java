@@ -36,6 +36,8 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.SettingsActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.network.NetworkHandler;
+import de.fhe.fhemobile.services.FetchMyScheduleBackgroundTask;
+import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.Features;
 import de.fhe.fhemobile.views.canteen.CanteenView;
 
@@ -83,7 +85,7 @@ public class CanteenFragment extends FeatureFragment {
             public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
                 // Add menu items here
                 menu.clear();
-                menuInflater.inflate(R.menu.menu_main, menu);
+                menuInflater.inflate(R.menu.menu_canteen, menu);
             }
 
             @Override
@@ -94,6 +96,9 @@ public class CanteenFragment extends FeatureFragment {
                     intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.CANTEEN);
                     activity.startActivity(intent);
                     return true;
+                }
+                if (menuItem.getItemId() == R.id.action_update){
+                    NetworkHandler.getInstance().fetchCanteenMenus();
                 }
 
                 return false;

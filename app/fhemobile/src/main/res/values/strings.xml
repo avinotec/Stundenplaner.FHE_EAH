@@ -21,7 +21,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
     <string name="action_jump_to_today">Today</string>
-    <string name="action_update">Update My Schedule</string>
+    <string name="action_update">Update</string>
     <string name="action_edit_my_courses">Edit my courses</string>
     <string name="action_before">Before</string>
     <string name="action_next">Next</string>

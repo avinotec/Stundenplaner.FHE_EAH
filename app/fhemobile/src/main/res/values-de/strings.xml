@@ -21,7 +21,7 @@
     <string name="navigation_drawer_close" >Schließe Navigation</string>
     <string name="action_settings" >Settings</string>
     <string name="action_jump_to_today">Heute</string>
-    <string name="action_update">Aktualisiere Meinen Stundenplan</string>
+    <string name="action_update">Aktualisiere</string>
     <string name="action_edit_my_courses">Meine Kurse bearbeiten</string>
     <string name="action_before">Vorheriges</string>
     <string name="action_next">Nächstes</string>
