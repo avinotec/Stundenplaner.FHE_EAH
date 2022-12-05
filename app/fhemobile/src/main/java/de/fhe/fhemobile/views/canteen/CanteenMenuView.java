@@ -26,11 +26,12 @@ import android.content.SharedPreferences;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -42,13 +43,11 @@ import de.fhe.fhemobile.events.CanteenChangeEvent;
 import de.fhe.fhemobile.events.Event;
 import de.fhe.fhemobile.events.EventListener;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
-import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.headerlistview.HeaderListView;
 import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
 import de.fhe.fhemobile.vos.canteen.CanteenMenuDayVo;
-import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 import de.fhe.fhemobile.widgets.stickyHeaderList.CanteenRowItem;
 import de.fhe.fhemobile.widgets.stickyHeaderList.DefaultHeaderItem;
 import de.fhe.fhemobile.widgets.stickyHeaderList.IHeaderItem;
@@ -74,7 +73,6 @@ public class CanteenMenuView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mCanteenProgressBar = (ProgressBar)     findViewById(R.id.progress_indicator_canteen);
         mErrorText          = (TextView)        findViewById(R.id.tv_canteen_error);
         mMenuDaysListView   = (HeaderListView)  findViewById(R.id.lv_canteen_menu);
         mCanteenNameText    = (TextView)        findViewById(R.id.tv_canteen_title);
@@ -84,46 +82,30 @@ public class CanteenMenuView extends LinearLayout {
         mCanteenId = _CanteenId;
         mCanteenNameText.setText(UserSettings.getInstance().getSelectedCanteen(mCanteenId).getCanteenName());
 
-        populateMenuDaysList();
-
-        Log.d(TAG, mCanteenId + " View initialized");
+        mErrorText.setVisibility(VISIBLE);
     }
 
     public void registerModelListener() {
         CanteenModel.getInstance().addListener(
                 CanteenChangeEvent.getReceivedCanteenMenuEventWithCanteenId(mCanteenId),
                 mReceivedCanteenMenuEventListener);
-
-        CanteenModel.getInstance().addListener(
-                CanteenChangeEvent.getReceivedEmptyMenuEventWithCanteenId(mCanteenId),
-                mReceivedEmptyCanteenMenuEventListener);
-
     }
 
     public void deregisterModelListener() {
         CanteenModel.getInstance().removeListener(
                 CanteenChangeEvent.getReceivedCanteenMenuEventWithCanteenId(mCanteenId),
                 mReceivedCanteenMenuEventListener);
-
-        CanteenModel.getInstance().removeListener(
-                CanteenChangeEvent.getReceivedEmptyMenuEventWithCanteenId(mCanteenId),
-                mReceivedEmptyCanteenMenuEventListener);
     }
 
     /**
-     * Load menu from {@link CanteenModel}
-     * and use list of {@link CanteenMenuDayVo}s to populate listview
+     * Load menu from {@link CanteenModel} or from shared preferences if menu is empty.
+     * If menu is not empty, use the list of {@link CanteenMenuDayVo}s to populate listview,
+     * otherwise show an error text.
      */
-    void populateMenuDaysList() {
-        final ArrayList<IHeaderItem> sectionList = new ArrayList<>();
-
-        final DefaultHeaderItem headerSection = new DefaultHeaderItem("", false);
-        headerSection.addItem(new CanteenImageRowItem(R.drawable.th_canteen));
-
-        sectionList.add(headerSection);
-
+    public void populateMenuDaysList(){
         List<CanteenMenuDayVo> menuDaysList = CanteenModel.getInstance().getMenu(mCanteenId);
-        //if empty, load from shared preferences
+
+        //if menu empty, load from shared preferences
         if (menuDaysList == null || menuDaysList.size() == 0){
             final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences(SP_CANTEEN, Context.MODE_PRIVATE);
             final String json = sharedPreferences.getString(CANTEEN + mCanteenId, "");
@@ -135,8 +117,34 @@ public class CanteenMenuView extends LinearLayout {
             }
             showUpdateFailedToast();
         }
+
+        //if non-empty, populate view
+        if(menuDaysList != null){
+            mErrorText.setVisibility(GONE);
+            mMenuDaysListView.setVisibility(VISIBLE);
+            populateMenuDaysList(menuDaysList);
+        } else {
+            mErrorText.setVisibility(VISIBLE);
+            mMenuDaysListView.setVisibility(GONE);
+        }
+    }
+
+    /**
+     * Use the given list of {@link CanteenMenuDayVo}s to populate the listview.
+     *
+     * @param menuDaysList List of {@link CanteenMenuDayVo}
+     */
+    private void populateMenuDaysList(@NonNull List<CanteenMenuDayVo> menuDaysList) {
+        mErrorText.setVisibility(GONE);
+
+        final ArrayList<IHeaderItem> sectionList = new ArrayList<>();
+
+        final DefaultHeaderItem headerSection = new DefaultHeaderItem("", false);
+        headerSection.addItem(new CanteenImageRowItem(R.drawable.th_canteen));
+
+        sectionList.add(headerSection);
+
         //populate view
-        mCanteenProgressBar.setVisibility(GONE);
         for (final CanteenMenuDayVo collection : menuDaysList) {
             final ArrayList<IRowItem> rowItems = new ArrayList<>();
 
@@ -146,7 +154,6 @@ public class CanteenMenuView extends LinearLayout {
 
             sectionList.add(new DefaultHeaderItem(collection.getHeadline(), true, rowItems));
         }
-
         final StickyHeaderAdapter mAdapter = new StickyHeaderAdapter(getContext(), sectionList);
         mMenuDaysListView.setAdapter(mAdapter);
     }
@@ -159,16 +166,6 @@ public class CanteenMenuView extends LinearLayout {
     private final EventListener mReceivedCanteenMenuEventListener = new EventListener() {
         @Override
         public void onEvent(final Event event) {
-            mCanteenProgressBar.setVisibility(GONE);
-            populateMenuDaysList();
-        }
-    };
-
-    private final EventListener mReceivedEmptyCanteenMenuEventListener = new EventListener() {
-        @Override
-        public void onEvent(final Event event) {
-            mCanteenProgressBar.setVisibility(GONE);
-            mErrorText.setVisibility(VISIBLE);
             populateMenuDaysList();
         }
     };
@@ -178,10 +175,6 @@ public class CanteenMenuView extends LinearLayout {
     private HeaderListView mMenuDaysListView;
     private TextView mCanteenNameText;
 
-    ProgressBar mCanteenProgressBar;
     TextView mErrorText;
-
-
-
 
 }

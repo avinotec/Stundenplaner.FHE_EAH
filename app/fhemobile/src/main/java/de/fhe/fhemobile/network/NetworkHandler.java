@@ -345,16 +345,13 @@ public final class NetworkHandler {
                     if (dishes != null && dishes.length > 0)
                         sortedDishes = CanteenUtils.sortCanteenItems(dishes);
 
-                    if (sortedDishes != null) {
-                        CanteenModel.getInstance().setMenu(canteenId, sortedDishes);
-                    } else {
-                        //do nothing
-                    }
+                    CanteenModel.getInstance().setMenu(canteenId, sortedDishes);
                 }
 
                 @Override
                 public void onFailure(@NonNull final Call<CanteenDishVo[]> call, @NonNull final Throwable t) {
                     ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE9);
+                    CanteenModel.getInstance().setMenu(canteenId, null);
                 }
             });
         }

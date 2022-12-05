@@ -36,22 +36,12 @@
 	   android:padding="3dp"
 	   android:textIsSelectable="false" />
 
-    <ProgressBar
-        style="?android:attr/progressBarStyleLarge"
-        android:id="@+id/progress_indicator_canteen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-		android:layout_margin="5dp"
-        android:visibility="gone"
-        />
-
     <TextView
         android:id="@+id/tv_canteen_error"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="20dp"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:text="@string/canteen_food_no_data_available"
         android:textSize="@dimen/list_header_big_text_size"
         android:textColor="@color/third_color"

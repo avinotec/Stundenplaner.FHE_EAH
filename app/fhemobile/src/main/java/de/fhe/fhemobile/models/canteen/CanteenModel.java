@@ -40,11 +40,23 @@ import de.fhe.fhemobile.vos.canteen.CanteenVo;
 
 /**
  * Created by paul on 23.01.14
- * Edited by Nadja - 04/2022
+ * Edited by Nadja - 04/2022 and 12/2022
  */
 public final class CanteenModel extends EventDispatcher {
 
     private static final String TAG = CanteenModel.class.getSimpleName();
+
+    /* Utility classes have all fields and methods declared as static.
+    Creating private constructors in utility classes prevents them from being accidentally instantiated. */
+    private CanteenModel() {
+    }
+
+    public static CanteenModel getInstance() {
+        if(ourInstance == null) {
+            ourInstance = new CanteenModel();
+        }
+        return ourInstance;
+    }
 
     public Map<String, List<CanteenMenuDayVo>> getMenus() {
         return mMenus;
@@ -61,9 +73,6 @@ public final class CanteenModel extends EventDispatcher {
      */
     public void setMenu(@NonNull final String canteenId, final List<CanteenMenuDayVo> mMenuDays) {
         if(mMenuDays != null && !mMenuDays.isEmpty()) {
-            this.mMenus.put(canteenId, mMenuDays);
-            notifyChange(CanteenChangeEvent.getReceivedCanteenMenuEventWithCanteenId(canteenId));
-
             //save menu to shared preferences
             final Gson gson = new Gson();
             final String json = gson.toJson(mMenuDays);
@@ -71,14 +80,14 @@ public final class CanteenModel extends EventDispatcher {
             final SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(CANTEEN + canteenId, json);
             editor.apply();
-
-        } else {
-            notifyChange(CanteenChangeEvent.getReceivedEmptyMenuEventWithCanteenId(canteenId));
         }
+
+        //needed for distinguishing menu days fetched from data loaded from shared preferences
+        this.mMenus.put(canteenId, mMenuDays);
+        notifyChange(CanteenChangeEvent.getReceivedCanteenMenuEventWithCanteenId(canteenId));
     }
 
     public CanteenVo[] getCanteens() {
-
         if(mCanteens == null){
             NetworkHandler.getInstance().fetchAvailableCanteens();
         }
@@ -118,21 +127,12 @@ public final class CanteenModel extends EventDispatcher {
         notifyChange(de.fhe.fhemobile.events.CanteenChangeEvent.RECEIVED_CANTEENS);
     }
 
-    public static CanteenModel getInstance() {
-        if(ourInstance == null) {
-            ourInstance = new CanteenModel();
-        }
-        return ourInstance;
-    }
-
-    /* Utility classes have all fields and methods declared as static.
-    Creating private constructors in utility classes prevents them from being accidentally instantiated. */
-    private CanteenModel() {
-    }
 
     private void notifyChange(final String type) {
         dispatchEvent(new CanteenChangeEvent(type));
     }
+
+
 
     private static CanteenModel ourInstance;
 

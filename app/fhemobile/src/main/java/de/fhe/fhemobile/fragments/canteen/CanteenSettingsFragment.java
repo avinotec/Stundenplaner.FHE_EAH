@@ -56,8 +56,7 @@ public class CanteenSettingsFragment extends FeatureFragment {
 
         if(CanteenModel.getInstance().getCanteens() == null) {
             NetworkHandler.getInstance().fetchAvailableCanteens();
-        }
-        else {
+        } else {
             mView.initCanteenSelectionListView();
         }
 
