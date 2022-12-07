@@ -128,7 +128,7 @@ $fcmToken = "";
 /** @var array $arraySubscribedEventseries which events are subscribed by the user*/
 $arraySubscribedEventseries = array();
 
-if ($os === ANDROID) {
+if ($os == ANDROID) {
 	//Get token and subscriptions sent from app
 	// Alle übergebenen Parameter entwerten, um SQL-Injections zu unterbinden.
     if (isset($_REQUEST["fcm_token"])) {
@@ -142,7 +142,7 @@ if ($os === ANDROID) {
 	if (isset($_REQUEST["eventseries_names"])) {
         $arraySubscribedEventseries =  $_REQUEST["eventseries_names"] ?? null;
     }
-} elseif ($os === IOS) {
+} elseif ($os == IOS) {
 	//
     $output .= "(E2003) Keine IOS Unterstützung!";
     error_log("(E2003) Keine IOS Unterstützung!");
