@@ -261,11 +261,14 @@ function sendFCM(string &$tokens, string &$subject, string &$type): void
     curl_setopt($cRequest, CURLOPT_POSTFIELDS, json_encode($fields));
 
     // execute curl request
-    curl_exec($cRequest);
+    $result = curl_exec($cRequest);
     //close curl request
     curl_close($cRequest);
 
-    $db_timetable->markNotificationsAsSent($tokenArray, $subject, $type);
+	if ($result !== false) {
+		// successfull sent
+		$db_timetable->markNotificationsAsSent( $tokenArray, $subject, $type );
+	}
 }
 
 
@@ -287,17 +290,19 @@ $moduleIds = array_values(json_decode($jsonStringFromStundenplanServer, true));
 
 //fetch data of each module
 $output .= sprintf("<b> %s module IDs had been fetched.</b><br>", count($moduleIds));
-if ($debug) {
+
+//DEBUG
+if (false && $debug) {
     $output .= sprintf("<b><i><span style='color:DodgerBlue;'>Fetched module ids: </span></i></b>", count($moduleIds));
 
     //TODO: comment out for complete modules fetching
-    //for debugging: reduce array to smaller size
+    //DEBUG: for debugging: reduce array to smaller size
     $moduleIds = array_slice($moduleIds, 20, 2, true);
     //add Personalmanagement for testing exam added
     $moduleIds[] = "A615C4E5AF9DAB47C65F7B181CFD4C70";
-
     $output .= implode(", ", $moduleIds);
-}
+} // DEBUG
+
 
 // Check each module for changes
 foreach ($moduleIds as $moduleId) {
