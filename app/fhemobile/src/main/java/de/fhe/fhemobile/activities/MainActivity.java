@@ -308,9 +308,15 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     }
 
 
-    public static void removeFromSubscribedEventSeriesAndUpdateAdapters(final MyScheduleEventSeriesVo eventSeries){
-        eventSeries.setSubscribed(false);
-        subscribedEventSeries.remove(eventSeries);
+    public static void removeFromSubscribedEventSeriesAndUpdateAdapters(final MyScheduleEventSeriesVo unsubscribedEventSeries){
+        unsubscribedEventSeries.setSubscribed(false);
+
+        //note: do not use subscribedEventSeries.remove(unsubscribedEventSeries)
+        // because data of subscribed event series can be outdated,
+        // then series.equals(unsubscribedEventSeries) returns false and thus remove() does not remove anything
+        for(MyScheduleEventSeriesVo s : subscribedEventSeries){
+            if(s.getTitle().equals(unsubscribedEventSeries.getTitle())) subscribedEventSeries.remove(s);
+        }
 
         saveSubscribedEventSeriesToSharedPreferences();
 

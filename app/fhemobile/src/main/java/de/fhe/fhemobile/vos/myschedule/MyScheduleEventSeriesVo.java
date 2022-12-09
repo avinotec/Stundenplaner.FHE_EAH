@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import de.fhe.fhemobile.comparator.MyScheduleEventComparator;
@@ -142,6 +143,24 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 				this.setSubscribed(true);
 			}
 		}
+	}
+
+	/**
+	 * Override equals() method to exclude the subscribed status from being considered when comparing
+	 * @param o
+	 * @return
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof MyScheduleEventSeriesVo)) return false;
+		MyScheduleEventSeriesVo that = (MyScheduleEventSeriesVo) o;
+		return mTitle.equals(that.mTitle) && Objects.equals(mStudyGroups, that.mStudyGroups) && mModuleId.equals(that.mModuleId) && Objects.equals(mEventSetIds, that.mEventSetIds) && Objects.equals(mEvents, that.mEvents);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(mTitle, mStudyGroups, mModuleId, mEventSetIds, mEvents);
 	}
 
 	// PARCELABLE --------------------------------------------------------------------------------
