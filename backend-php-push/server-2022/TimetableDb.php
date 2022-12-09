@@ -413,12 +413,25 @@ final class TimetableDb
     final public function markNotificationsAsSent(array $tokenArray, string $subject, string $type): void
     {
         $sent = STATUS_SENT;
-        foreach ($tokenArray as $token){
+        foreach ($tokenArray as $token) {
             $sql = /** @lang MySQL */
                 "UPDATE notifications SET `status`='$sent'"
                 . "WHERE type = '$type' and subject = '$subject' and token = '$token'";
             $this->runQuery($sql, "markNotificationsAsSent");
         }
+    }
+
+    /**
+     * Delete all notifications with status "sent"
+     *
+     * @return void
+     */
+    final public function cleanSentNotifications(): void
+    {
+        $sent = STATUS_SENT;
+        $sql = /** @lang MySQL */
+            "DELETE FROM notifications WHERE status = '$sent'";
+        $this->runQuery($sql, "cleanSentNotifications");
     }
 
     /**
