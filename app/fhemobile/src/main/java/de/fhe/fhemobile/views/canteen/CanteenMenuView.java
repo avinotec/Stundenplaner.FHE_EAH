@@ -83,6 +83,7 @@ public class CanteenMenuView extends LinearLayout {
         mCanteenNameText.setText(UserSettings.getInstance().getSelectedCanteen(mCanteenId).getCanteenName());
 
         mErrorText.setVisibility(VISIBLE);
+        populateMenuDaysList();
     }
 
     public void registerModelListener() {
