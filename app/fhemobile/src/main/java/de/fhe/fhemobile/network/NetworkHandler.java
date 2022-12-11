@@ -333,6 +333,7 @@ public final class NetworkHandler {
         final ArrayList<String> selectedCanteenIds = UserSettings.getInstance().getSelectedCanteenIds();
         Log.d(TAG, "Selected Canteens: " + selectedCanteenIds);
 
+        boolean connectionFailedErrorThrown = false;
         for (final String canteenId : selectedCanteenIds) {
             mApiErfurt.fetchCanteenData(canteenId).enqueue(new Callback<CanteenDishVo[]>() {
 
@@ -350,7 +351,10 @@ public final class NetworkHandler {
 
                 @Override
                 public void onFailure(@NonNull final Call<CanteenDishVo[]> call, @NonNull final Throwable t) {
-                    ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE9);
+                    //prevent showing error toast for every canteen
+                    if(!connectionFailedErrorThrown){
+                        ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE9);
+                    }
                     CanteenModel.getInstance().setMenu(canteenId, null);
                 }
             });
