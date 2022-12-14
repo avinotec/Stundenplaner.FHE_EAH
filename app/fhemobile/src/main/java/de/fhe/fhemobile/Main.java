@@ -141,7 +141,6 @@ public class Main extends Application {
 
     public static void removeFromSubscribedEventSeries(MyScheduleEventSeriesVo seriesVo){
         subscribedEventSeries.remove(seriesVo.getTitle());
-        int x = 1;
     }
 
     public static boolean containedInSubscribedEventSeries(MyScheduleEventSeriesVo eventSeries){

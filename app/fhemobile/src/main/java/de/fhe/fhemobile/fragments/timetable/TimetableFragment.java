@@ -153,11 +153,14 @@ public class TimetableFragment extends FeatureFragment {
 				final ArrayList<TimetableWeekVo> weekVos = new ArrayList(response.body().values());
 				mView.setPagerItems(weekVos);
 
-				//save timetable for offline usage
-				final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences(SP_TIMETABLE, Context.MODE_PRIVATE);
-				final SharedPreferences.Editor editor = sharedPreferences.edit();
-				editor.putString(SP_TIMETABLE, new Gson().toJson(weekVos));
-				editor.apply();
+				if(TimetableSettings.getTimetableSelection() != null){
+					//save timetable for offline usage
+					final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences(SP_TIMETABLE, Context.MODE_PRIVATE);
+					final SharedPreferences.Editor editor = sharedPreferences.edit();
+					editor.putString(SP_TIMETABLE, new Gson().toJson(weekVos));
+					editor.apply();
+				}
+
 
 			} else {
 				final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
