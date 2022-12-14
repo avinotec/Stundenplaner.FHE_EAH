@@ -41,6 +41,7 @@
     <string name="connection_failed">Keine Verbindung möglich!</string>
     <string name="internal_problems">interne Probleme</string>
     <string name="error">Fehler</string>
+    <string name="no_data_available">Keine Daten verfügbar</string>
     <string name="exam_added">Prüfung hinzugefügt</string>
 
     <string name="phonebook_firstname" >Vorname</string>

@@ -63,14 +63,14 @@ public final class ApiErrorUtils {
     }
 
     public static ApiErrorResponse getApiErrorResponse(final Response response) {
-        final Gson gson = new GsonBuilder().create();
+        final Gson gson = new Gson();
         ApiErrorResponse error = new ApiErrorResponse();
         try {
             final ResponseBody body = response.errorBody();
             if (body != null) {
                 error = gson.fromJson(body.string(), ApiErrorResponse.class);
             }
-        } catch (final IOException e) {
+        } catch (final Exception e) {
             Log.e(TAG, "Problem parsing ApiErrorResponse", e);
         }
         return error;
@@ -84,9 +84,12 @@ public final class ApiErrorUtils {
      */
     public static void showErrorToast(final ApiErrorResponse errorResponse, final String internalErrorCode) {
         try {
+            String details = "";
+            if(errorResponse.getId() == 1001){
+                details = ": " + Main.getAppContext().getString(R.string.no_data_available);
+            }
             final String message = Main.getAppContext().getString(R.string.error) + " "
-                    + internalErrorCode + ": "
-                    + errorResponse.getMessage(); //todo: replace with translatable message depending on id of errorResponse
+                    + internalErrorCode + details;
             Utils.showToast(message);
         } catch (Exception e) {
             Log.e(TAG, "Problem showing Error Toast", e);

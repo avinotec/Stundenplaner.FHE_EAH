@@ -41,6 +41,7 @@
     <string name="connection_failed">Cannot establish connection!</string>
     <string name="internal_problems">internal problems</string>
     <string name="error">Error</string>
+    <string name="no_data_available">No data available</string>
     <string name="exam_added">Exam added</string>
 
     <string name="phonebook_firstname">First name</string>
