@@ -72,12 +72,12 @@ public class ServerRegistrationBackgroundTask implements Runnable {
             Log.e(TAG, "URL ist nicht URL-konform: " + URL_REGISTER_PUSH_NOTIFICATIONS_EAH, e);
         }
 
-//        HttpsURLConnection client;
-        HttpURLConnection client; //debug
+        HttpsURLConnection client;
+//        HttpURLConnection client; //debug
         try {
             if (BuildConfig.DEBUG) Assert.assertNotNull(url);
-//            client = (HttpsURLConnection) url.openConnection();
-            client = (HttpURLConnection) url.openConnection(); //debug
+            client = (HttpsURLConnection) url.openConnection();
+//            client = (HttpURLConnection) url.openConnection(); //debug
 
             //add params
             String data = encodeAsParam("os", Define.PushNotifications.PARAM_ANDROID)
