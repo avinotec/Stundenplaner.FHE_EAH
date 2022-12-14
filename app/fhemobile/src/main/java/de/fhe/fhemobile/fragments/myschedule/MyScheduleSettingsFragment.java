@@ -18,21 +18,14 @@
 package de.fhe.fhemobile.fragments.myschedule;
 
 
-import static de.fhe.fhemobile.Main.getSubscribedEventSeries;
-
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import java.util.Collections;
-
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.utils.Define;
@@ -83,15 +76,6 @@ public class MyScheduleSettingsFragment extends FeatureFragment {
 
 		mView.setCourseListEmptyView();
 		return mView;
-	}
-
-
-	@Override
-	public void onAttach(@NonNull final Context context) {
-		super.onAttach(context);
-		if(!getSubscribedEventSeries().isEmpty()){
-			Collections.sort(getSubscribedEventSeries(), new EventSeriesTitleComparator());
-		}
 	}
 
 	@Override

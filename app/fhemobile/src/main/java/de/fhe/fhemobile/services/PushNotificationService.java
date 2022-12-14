@@ -39,7 +39,7 @@ import org.junit.Assert;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
@@ -106,7 +106,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 	 * Register the given event series' for the given firebase token
 	 * @param eventSeriesVos List of {@link MyScheduleEventSeriesVo}s to register for
 	 */
-	public static void sendRegistrationToServer(final String token, final List<MyScheduleEventSeriesVo> eventSeriesVos){
+	public static void sendRegistrationToServer(final String token, final Collection<MyScheduleEventSeriesVo> eventSeriesVos){
 		if(BuildConfig.DEBUG && Define.ENABLE_PUSHNOTIFICATIONS) Assert.assertNotNull(fcmToken);
 		if(fcmToken != null) {
 			Main.executorService.execute(new ServerRegistrationBackgroundTask(token, eventSeriesVos));
@@ -114,7 +114,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 	}
 
 	/**
-	 * Register the {@link Main#subscribedEventSeries} for the current {@link PushNotificationService#fcmToken}
+	 * Register the subscribedEventSeries for the current {@link PushNotificationService#fcmToken}
 	 */
 	public static void registerSubscribedEventSeries(){
 		if(BuildConfig.DEBUG) Assert.assertNotNull(fcmToken);

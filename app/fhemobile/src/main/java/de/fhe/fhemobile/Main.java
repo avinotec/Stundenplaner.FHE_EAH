@@ -32,8 +32,11 @@ import org.junit.Assert;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -63,21 +66,7 @@ public class Main extends Application {
     //My Schedule
     public static Date lastUpdateSubscribedEventSeries;
     //note: always keep subscribedEventSeries sorted for display in the view
-    public static ArrayList<MyScheduleEventSeriesVo> subscribedEventSeries = new ArrayList<MyScheduleEventSeriesVo>(){
-        @Override
-        public boolean add(final MyScheduleEventSeriesVo myScheduleEventSeriesVo) {
-            super.add(myScheduleEventSeriesVo);
-            Collections.sort(subscribedEventSeries, new EventSeriesTitleComparator());
-            return true;
-        }
-
-        @Override
-        public boolean remove(final Object o) {
-            super.remove(o);
-            Collections.sort(subscribedEventSeries, new EventSeriesTitleComparator());
-            return true;
-        }
-    };
+    private static HashMap<String, MyScheduleEventSeriesVo> subscribedEventSeries = new HashMap();
 
     @Override
     public void onCreate() {
@@ -92,10 +81,14 @@ public class Main extends Application {
         final String json = sharedPreferences.getString(Define.MySchedule.PREF_SUBSCRIBED_EVENTSERIES, "");
 
         // falls die Liste leer sein sollte, überspringen
-        if ( !json.isEmpty() && !"null".equals(json)) { //NON-NLS
+        if (!json.isEmpty() && !"null".equals(json)) { //NON-NLS
             final Gson gson = new Gson();
             final Type listType = new TypeToken<ArrayList<MyScheduleEventSeriesVo>>(){}.getType();
-            subscribedEventSeries = gson.fromJson(json, listType);
+            ArrayList<MyScheduleEventSeriesVo> list = gson.fromJson(json, listType);
+            clearSubscribedEventSeries();
+            for(MyScheduleEventSeriesVo eventSeriesVo : list){
+                addToSubscribedEventSeries(eventSeriesVo);
+            }
         }
         final long lastUpdated = sharedPreferences.getLong(Define.MySchedule.PREF_DATA_LAST_UPDATED,  -1);
         if(lastUpdated != -1) lastUpdateSubscribedEventSeries = new Date(lastUpdated);
@@ -119,8 +112,44 @@ public class Main extends Application {
         return mAppContext;
     }
 
-    public static ArrayList<MyScheduleEventSeriesVo> getSubscribedEventSeries(){
-        return subscribedEventSeries;
+    public static List<MyScheduleEventSeriesVo> getSortedSubscribedEventSeries(){
+        List<MyScheduleEventSeriesVo> list = new ArrayList<>(subscribedEventSeries.values());
+        Collections.sort(list, new EventSeriesTitleComparator());
+        return list;
+    }
+
+    public static Collection<MyScheduleEventSeriesVo> getSubscribedEventSeries(){
+        return subscribedEventSeries.values();
+    }
+
+    public static void addToSubscribedEventSeries(MyScheduleEventSeriesVo seriesVo){
+        //set subscribed
+        //needed for the case that an exam is being deleted by the user while fetching my schedule is adding it
+        seriesVo.setSubscribed(true);
+        subscribedEventSeries.put(seriesVo.getTitle(), seriesVo);
+    }
+
+    public static void updateSubscribedEventSeries(MyScheduleEventSeriesVo seriesVo){
+        subscribedEventSeries.put(seriesVo.getTitle(), seriesVo);
+    }
+
+    public static void addToSubscribedEventSeries(List<MyScheduleEventSeriesVo> seriesVos){
+        for(MyScheduleEventSeriesVo series : seriesVos){
+            addToSubscribedEventSeries(series);
+        }
+    }
+
+    public static void removeFromSubscribedEventSeries(MyScheduleEventSeriesVo seriesVo){
+        subscribedEventSeries.remove(seriesVo.getTitle());
+        int x = 1;
+    }
+
+    public static boolean containedInSubscribedEventSeries(MyScheduleEventSeriesVo eventSeries){
+        return subscribedEventSeries.containsKey(eventSeries.getTitle());
+    }
+
+    public static void clearSubscribedEventSeries(){
+        subscribedEventSeries.clear();
     }
 
     /**
@@ -130,7 +159,7 @@ public class Main extends Application {
     public static ArrayList<MyScheduleEventVo> getEventsOfAllSubscribedEventSeries(){
         final ArrayList<MyScheduleEventVo> eventList = new ArrayList<>();
 
-        for(final MyScheduleEventSeriesVo eventSeries : subscribedEventSeries) {
+        for(final MyScheduleEventSeriesVo eventSeries : subscribedEventSeries.values()) {
             eventList.addAll(eventSeries.getEvents());
         }
         Collections.sort(eventList, new MyScheduleEventComparator());

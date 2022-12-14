@@ -16,14 +16,17 @@
  */
 package de.fhe.fhemobile.activities;
 
+import static de.fhe.fhemobile.Main.addToSubscribedEventSeries;
+import static de.fhe.fhemobile.Main.clearSubscribedEventSeries;
 import static de.fhe.fhemobile.Main.getAppContext;
 import static de.fhe.fhemobile.Main.getEventsOfAllSubscribedEventSeries;
-import static de.fhe.fhemobile.Main.getSubscribedEventSeries;
+import static de.fhe.fhemobile.Main.getSortedSubscribedEventSeries;
 import static de.fhe.fhemobile.Main.setLastUpdateSubscribedEventSeries;
-import static de.fhe.fhemobile.Main.subscribedEventSeries;
+import static de.fhe.fhemobile.Main.updateSubscribedEventSeries;
 import static de.fhe.fhemobile.utils.Define.MySchedule.PREF_SUBSCRIBED_EVENTSERIES;
 import static de.fhe.fhemobile.utils.Define.MySchedule.SP_MYSCHEDULE;
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
+import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.isExam;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -55,6 +58,7 @@ import java.util.Date;
 import java.util.List;
 
 import de.fhe.fhemobile.BuildConfig;
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.myschedule.MyScheduleCalendarAdapter;
 import de.fhe.fhemobile.adapters.myschedule.MyScheduleSettingsAdapter;
@@ -95,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
 
         myScheduleSettingsAdapter = new MyScheduleSettingsAdapter(
-                this, subscribedEventSeries);
+                this, Main.getSortedSubscribedEventSeries());
 
         myScheduleCalendarAdapter = new MyScheduleCalendarAdapter();
         myScheduleCalendarAdapter.setItems(getEventsOfAllSubscribedEventSeries());
@@ -298,36 +302,41 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
      */
     public static void addToSubscribedEventSeriesAndUpdateAdapters(final MyScheduleEventSeriesVo eventSeries){
         eventSeries.setSubscribed(true);
-        subscribedEventSeries.add(eventSeries);
+        addToSubscribedEventSeries(eventSeries);
 
         saveSubscribedEventSeriesToSharedPreferences();
 
         myScheduleCalendarAdapter.setItems(getEventsOfAllSubscribedEventSeries());
         myScheduleCalendarAdapter.notifyDataSetChanged();
+        myScheduleSettingsAdapter.setItems(getSortedSubscribedEventSeries());
         myScheduleSettingsAdapter.notifyDataSetChanged();
     }
 
 
     public static void removeFromSubscribedEventSeriesAndUpdateAdapters(final MyScheduleEventSeriesVo unsubscribedEventSeries){
         unsubscribedEventSeries.setSubscribed(false);
-
-        //note: do not use subscribedEventSeries.remove(unsubscribedEventSeries)
-        // because data of subscribed event series can be outdated,
-        // then series.equals(unsubscribedEventSeries) returns false and thus remove() does not remove anything
-        for(MyScheduleEventSeriesVo s : subscribedEventSeries){
-            if(s.getTitle().equals(unsubscribedEventSeries.getTitle())) subscribedEventSeries.remove(s);
-        }
-
+        Main.removeFromSubscribedEventSeries(unsubscribedEventSeries);
         saveSubscribedEventSeriesToSharedPreferences();
 
         myScheduleCalendarAdapter.setItems(getEventsOfAllSubscribedEventSeries());
         myScheduleCalendarAdapter.notifyDataSetChanged();
+        myScheduleSettingsAdapter.setItems(getSortedSubscribedEventSeries());
         myScheduleSettingsAdapter.notifyDataSetChanged();
     }
 
-    public static void setSubscribedEventSeriesAndUpdateAdapters(final List<MyScheduleEventSeriesVo> newSubscribedEventSeries){
-        subscribedEventSeries.clear();
-        subscribedEventSeries.addAll(newSubscribedEventSeries);
+    public static void updateSubscribedEventSeriesAndAdapters(final List<MyScheduleEventSeriesVo> updatedSubscribedEventSeries){
+
+        for(MyScheduleEventSeriesVo series : updatedSubscribedEventSeries){
+
+            if(Main.containedInSubscribedEventSeries(series)){
+                updateSubscribedEventSeries(series);
+            } else if(isExam(series)){
+                addToSubscribedEventSeries(series);
+            } else {
+                //the series has been deleted from subscribed event series (has been unsubscribed)
+                // while the updates had been computed (while My Schedule had been fetched)
+            }
+        }
         setLastUpdateSubscribedEventSeries(new Date());
         MyScheduleCalendarView.setLastUpdatedTextView();
 
@@ -335,12 +344,14 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
         myScheduleCalendarAdapter.setItems(getEventsOfAllSubscribedEventSeries());
         myScheduleCalendarAdapter.notifyDataSetChanged();
+        myScheduleSettingsAdapter.setItems(getSortedSubscribedEventSeries());
         myScheduleSettingsAdapter.notifyDataSetChanged();
+
     }
 
 
     public static void clearSubscribedEventSeriesAndUpdateAdapters(){
-        subscribedEventSeries.clear();
+        clearSubscribedEventSeries();
         setLastUpdateSubscribedEventSeries(null);
         MyScheduleCalendarView.setLastUpdatedTextView();
 
@@ -348,12 +359,13 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
         myScheduleCalendarAdapter.setItems(getEventsOfAllSubscribedEventSeries());
         myScheduleCalendarAdapter.notifyDataSetChanged();
+        myScheduleSettingsAdapter.setItems(getSortedSubscribedEventSeries());
         myScheduleSettingsAdapter.notifyDataSetChanged();
     }
 
     public static void saveSubscribedEventSeriesToSharedPreferences() {
         final Gson gson = new Gson();
-        final String json = correctUmlauts(gson.toJson(getSubscribedEventSeries(), ArrayList.class));
+        final String json = correctUmlauts(gson.toJson(getSortedSubscribedEventSeries(), ArrayList.class));
         final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences(SP_MYSCHEDULE, Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(PREF_SUBSCRIBED_EVENTSERIES, json);

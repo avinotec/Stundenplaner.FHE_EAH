@@ -35,6 +35,7 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -57,7 +58,7 @@ public class ServerRegistrationBackgroundTask implements Runnable {
     final String fcmToken;
     final List<MyScheduleEventSeriesVo> subscribedEventSeriesVos = new ArrayList<>();
 
-    public ServerRegistrationBackgroundTask(final String token, final List<MyScheduleEventSeriesVo> eventSeriesVos) {
+    public ServerRegistrationBackgroundTask(final String token, final Collection<MyScheduleEventSeriesVo> eventSeriesVos) {
         fcmToken = token;
         subscribedEventSeriesVos.addAll(eventSeriesVos);
     }

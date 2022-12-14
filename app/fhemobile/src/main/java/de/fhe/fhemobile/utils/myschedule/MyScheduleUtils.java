@@ -26,6 +26,7 @@ import org.jetbrains.annotations.NonNls;
 import org.junit.Assert;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -91,6 +92,18 @@ public final class MyScheduleUtils {
 	}
 
 	/**
+	 * The given {@link MyScheduleEventSeriesVo} is identified as exam
+	 * when its base title ends with APL, PL, mdl. Prfg.,Wdh.-Prfg., Wdh.-APL
+	 * @param eventSeries The {@link MyScheduleEventSeriesVo} to check
+	 * @return True if the event series is identified as exam
+	 */
+	public static boolean isExam(MyScheduleEventSeriesVo eventSeries){
+		//example: "BT/MT/WT(BA)Biomat./APL/01" -> base title "BT/MT/WT(BA)Biomat./APL" ends with an exam ending
+	 	//noinspection HardCodedStringLiteral
+		return getEventSeriesBaseTitle(eventSeries.getTitle()).matches(".*(PL)|(Prfg\\.)");
+	}
+
+	/**
 	 * Group events of the given {@link MyScheduleEventSetVo}s into {@link MyScheduleEventSeriesVo}s
 	 * @param _EventSets A map of the {@link MyScheduleEventSetVo}s to group
 	 * @return The list of {@link MyScheduleEventSeriesVo}s
@@ -145,12 +158,12 @@ public final class MyScheduleUtils {
 	/**
 	 * Group the given {@link MyScheduleEventSeriesVo}s by module ID
 	 *
-	 * @param eventSeriesVos The list of {@link MyScheduleEventSeriesVo} to group
+	 * @param eventSeriesVos The collection of {@link MyScheduleEventSeriesVo} to group
 	 * @return Map containing a list of the module's {@link MyScheduleEventSeriesVo}s
 	 * for each module ID found
 	 */
 	public static Map<String, Map<String, MyScheduleEventSeriesVo>> groupByModuleId(
-			final List<MyScheduleEventSeriesVo> eventSeriesVos) {
+			final Collection<MyScheduleEventSeriesVo> eventSeriesVos) {
 
 		final Map<String, Map<String, MyScheduleEventSeriesVo>> modules = new HashMap<>();
 
@@ -192,12 +205,12 @@ public final class MyScheduleUtils {
 
 	/**
 	 * Compare local and fetched events to detect changes
-	 *  @param localEventSeriesSubList A subset of {@link Main#subscribedEventSeries}
+	 *  @param localEventSeriesSubList A subset of the subscribedEventSeries
 	 *                           containing event series that belong to the same module,
 	 *                           sorted by eventseries title
 	 * @param fetchedEventSetsMap The fetched {@link MyScheduleEventSetVo}s
 	 *                               corresponding to the given subset of eventseries,
-	 * @return List of updated {@link Main#subscribedEventSeries}
+	 * @return List of updated the subscribedEventSeries
 	 */
 	public static List<MyScheduleEventSeriesVo> getUpdatedEventSeries(
 			final Map<String, MyScheduleEventSeriesVo> localEventSeriesSubList,
@@ -216,11 +229,9 @@ public final class MyScheduleUtils {
 				detectChangesAndUpdateLocal(localEventSeries, fetchedEventSeries, fetchedEventSetsMap);
 			} else {
 				//if event series corresponds to a new exam (no matter which group), then always add
-				//possible endings for exams: APL, PL, mdl. Prfg.,Wdh.-Prfg., Wdh.-APL
-				//noinspection HardCodedStringLiteral
-				if(getEventSeriesBaseTitle(fetchedEventSeries.getTitle()).matches(".*(PL)|(Prfg\\.)")){
+				if(isExam(fetchedEventSeries)){
 					//set every event in the exam series as "added"
-					for ( final MyScheduleEventVo eventVo : fetchedEventSeries.getEvents() ) {
+					for (final MyScheduleEventVo eventVo : fetchedEventSeries.getEvents()) {
 						eventVo.addChange(TimetableChangeType.ADDITION);
 					}
 					//add exam as subscribed eventseries

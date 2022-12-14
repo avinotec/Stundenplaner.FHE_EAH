@@ -16,7 +16,7 @@
  */
 package de.fhe.fhemobile.network;
 
-import static de.fhe.fhemobile.activities.MainActivity.setSubscribedEventSeriesAndUpdateAdapters;
+import static de.fhe.fhemobile.activities.MainActivity.updateSubscribedEventSeriesAndAdapters;
 import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.getUpdatedEventSeries;
 import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.groupByModuleId;
 
@@ -470,7 +470,7 @@ public final class NetworkHandler {
                         requestCounterMySchedule--;
                         if(requestCounterMySchedule <= 0){
                             // last request received, so proceed, finally
-							setSubscribedEventSeriesAndUpdateAdapters(updatedEventSeriesList);
+							updateSubscribedEventSeriesAndAdapters(updatedEventSeriesList);
 						}
                     }
 
@@ -486,7 +486,7 @@ public final class NetworkHandler {
                         requestCounterMySchedule--;
 						if(requestCounterMySchedule <= 0){
                             // even when failed, this is the last request received, so proceed, finally
-							setSubscribedEventSeriesAndUpdateAdapters(updatedEventSeriesList);
+							updateSubscribedEventSeriesAndAdapters(updatedEventSeriesList);
 						}
                     }
                 });

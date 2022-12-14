@@ -16,7 +16,6 @@
  */
 package de.fhe.fhemobile.vos.myschedule;
 
-import static de.fhe.fhemobile.Main.getSubscribedEventSeries;
 import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.getEventSeriesBaseTitle;
 import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.getEventSeriesName;
 
@@ -33,6 +32,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.comparator.MyScheduleEventComparator;
 import de.fhe.fhemobile.comparator.StudyGroupComparator;
 import de.fhe.fhemobile.vos.timetable.TimetableStudyGroupVo;
@@ -137,9 +137,8 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 
 	public void checkAndSetSubscribed(){
 		//check if this event series belongs to a subscribed event series
-		for(final MyScheduleEventSeriesVo subscribedEventSeries : getSubscribedEventSeries()){
+		for(final MyScheduleEventSeriesVo subscribedEventSeries : Main.getSubscribedEventSeries()){
 			if (this.getTitle().equals(subscribedEventSeries.getTitle())){
-
 				this.setSubscribed(true);
 			}
 		}
