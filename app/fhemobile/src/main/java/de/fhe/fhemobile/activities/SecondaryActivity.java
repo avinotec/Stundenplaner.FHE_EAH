@@ -50,6 +50,7 @@ public abstract class SecondaryActivity extends AppCompatActivity {
             setSupportActionBar(mToolbar);
         }
 
+        //activate back arrow button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
