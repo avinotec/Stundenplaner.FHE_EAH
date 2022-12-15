@@ -27,7 +27,7 @@ public final class Define {
 
     //switches for certain features
     public static final boolean ENABLE_MYSCHEDULE_UPDATING = true;
-    public static final boolean ENABLE_PUSHNOTIFICATIONS = false;
+    public static final boolean ENABLE_PUSHNOTIFICATIONS = true;
     //enable feature news (the original one, not the temporary webview solution)
     public static final boolean ENABLE_V1_NEWS = false;
 
