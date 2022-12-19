@@ -161,7 +161,7 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 		//HIGHLIGHT CHANGES
 		//reset change highlighting before
 		for(final TextView v : eventViews){
-			v.setTypeface(v.getTypeface(), Typeface.NORMAL);
+			v.setTypeface(null, Typeface.NORMAL);
 			//reset strike through if necessary
 			if((v.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) == Paint.STRIKE_THRU_TEXT_FLAG){
 				v.setPaintFlags(v.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
@@ -173,10 +173,10 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 				case ADDITION:
 					//set text bold
 					for (final TextView v : eventViews) {
-						if(v.getTypeface().equals(Typeface.ITALIC)){
-							v.setTypeface(v.getTypeface(), Typeface.BOLD_ITALIC);
+						if(v.getTypeface() != null && v.getTypeface().equals(Typeface.ITALIC)){
+							v.setTypeface(null, Typeface.BOLD_ITALIC);
 						} else {
-							v.setTypeface(v.getTypeface(), Typeface.BOLD);
+							v.setTypeface(null, Typeface.BOLD);
 						}
 					}
 					break;
@@ -192,13 +192,13 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 					break;
 
 				case EDIT_TIME:
-					eventTime.setTypeface(eventTime.getTypeface(), Typeface.BOLD);
+					eventTime.setTypeface(null, Typeface.BOLD);
 					break;
 				case EDIT_LOCATION:
-					eventLocation.setTypeface(eventLocation.getTypeface(), Typeface.BOLD);
+					eventLocation.setTypeface(null, Typeface.BOLD);
 					break;
 				case EDIT_LECTURER:
-					eventLecturer.setTypeface(eventLecturer.getTypeface(), Typeface.BOLD_ITALIC);
+					eventLecturer.setTypeface(null, Typeface.BOLD_ITALIC);
 					break;
 			}
 		}
