@@ -81,8 +81,8 @@ public final class NetworkHandler {
      * Private constructor
      */
     private NetworkHandler() {
-        Assert.assertTrue(mApiErfurt == null);
-        Assert.assertTrue(mApiEah == null);
+        Assert.assertNull(mApiErfurt);
+        Assert.assertNull(mApiEah);
 
         final Gson gson = new GsonBuilder()
                 .setDateFormat("HH:mm:ss'T'yyyy-MM-dd")
@@ -103,10 +103,10 @@ public final class NetworkHandler {
 
         mApiErfurt = mRestAdapter.create(ApiDeclaration.class);
         mApiEah = mRestAdapterEah.create(ApiDeclaration.class);
-        Assert.assertTrue(mApiErfurt != null);
-        Assert.assertTrue(mRestAdapter != null);
-        Assert.assertTrue(mApiEah != null);
-        Assert.assertTrue(mRestAdapterEah != null);
+        Assert.assertNotNull(mApiErfurt);
+        Assert.assertNotNull(mRestAdapter);
+        Assert.assertNotNull(mApiEah);
+        Assert.assertNotNull(mRestAdapterEah);
 
     }
 
@@ -115,7 +115,7 @@ public final class NetworkHandler {
      * @return the Singleton
      */
     public static NetworkHandler getInstance() {
-        Assert.assertTrue(ourInstance != null);
+        Assert.assertNotNull(ourInstance);
         return ourInstance;
     }
 
@@ -128,7 +128,7 @@ public final class NetworkHandler {
      * @param _LastName
      */
     public void fetchEmployees(final String _FirstName, final String _LastName) {
-        Assert.assertTrue(mApiErfurt != null);
+        Assert.assertNotNull(mApiErfurt);
 
         mApiErfurt.fetchEmployees(_FirstName, _LastName).enqueue(new Callback<ArrayList<EmployeeVo>>() {
             /**
@@ -165,7 +165,7 @@ public final class NetworkHandler {
      * *
      */
     public void fetchSemesterDates() {
-        Assert.assertTrue(mApiErfurt != null);
+        Assert.assertNotNull(mApiErfurt);
 
         mApiErfurt.fetchSemesterDates().enqueue(new Callback<SemesterDatesVo>() {
 
@@ -205,7 +205,7 @@ public final class NetworkHandler {
      * @param _Callback
      */
     public void fetchNewsData(final String _NewsCategory, final Callback<NewsItemResponse> _Callback) {
-        Assert.assertTrue(mApiErfurt != null);
+        Assert.assertNotNull(mApiErfurt);
 
         mApiErfurt.fetchNewsData(_NewsCategory).enqueue(_Callback);
     }
@@ -263,7 +263,7 @@ public final class NetworkHandler {
      *
      */
     public void fetchAvailableNewsLists() {
-        Assert.assertTrue(mApiErfurt != null);
+        Assert.assertNotNull(mApiErfurt);
 
         mApiErfurt.fetchAvailableNewsLists().enqueue(new Callback<NewsCategoryResponse>() {
 
@@ -302,7 +302,7 @@ public final class NetworkHandler {
      *
      */
     public void fetchAvailableCanteens() {
-        Assert.assertTrue(mApiErfurt != null);
+        Assert.assertNotNull(mApiErfurt);
 
         mApiErfurt.fetchAvailableCanteens().enqueue(new Callback<CanteenVo[]>() {
 
@@ -328,7 +328,7 @@ public final class NetworkHandler {
      * Fetch menu of the canteens specified in {@link UserSettings}
      */
     public void fetchCanteenMenus() {
-        Assert.assertTrue(mApiErfurt != null);
+        Assert.assertNotNull(mApiErfurt);
 
         final ArrayList<String> selectedCanteenIds = UserSettings.getInstance().getSelectedCanteenIds();
         Log.d(TAG, "Selected Canteens: " + selectedCanteenIds);
@@ -368,7 +368,7 @@ public final class NetworkHandler {
      * @param _Callback
      */
     public void fetchWeather(final Callback<WeatherResponse> _Callback) {
-        Assert.assertTrue(mApiErfurt != null);
+        Assert.assertNotNull(mApiErfurt);
 
         mApiErfurt.fetchWeather().enqueue(_Callback);
     }
@@ -378,7 +378,7 @@ public final class NetworkHandler {
      * @param _Callback
      */
     public void fetchStudyPrograms(final Callback<TimetableDialogResponse> _Callback) {
-        Assert.assertTrue(mApiEah != null);
+        Assert.assertNotNull(mApiEah);
 
         mApiEah.fetchStudyProgramData().enqueue(_Callback);
     }
@@ -389,7 +389,7 @@ public final class NetworkHandler {
      */
     public void fetchTimetableEvents(final String _StudyGroupId,
                                      final Callback<Map<String, TimetableWeekVo>> _Callback) {
-        Assert.assertTrue(mApiEah != null);
+        Assert.assertNotNull(mApiEah);
         if(_StudyGroupId == null){
             Log.e(TAG, "StudyGroupId is null. Cannot fetch semester timetable.");
             return;
@@ -408,7 +408,7 @@ public final class NetworkHandler {
      */
     public void fetchSemesterTimetable(final String _SemesterId,
                                        final Callback<Map<String, MyScheduleEventSetVo>> _Callback) {
-        Assert.assertTrue(mApiEah != null);
+        Assert.assertNotNull(mApiEah);
         if(_SemesterId == null){
             Log.e(TAG, "SemesterId is null. Cannot fetch semester timetable.");
             return;
@@ -425,7 +425,7 @@ public final class NetworkHandler {
      * Fetch all subscribed event series to detect changes and update
      */
     public void fetchMySchedule() {
-        Assert.assertTrue(mApiEah != null);
+        Assert.assertNotNull(mApiEah);
 
         final Map<String, Map<String, MyScheduleEventSeriesVo>> modules =
                 groupByModuleId(Main.getSubscribedEventSeries());

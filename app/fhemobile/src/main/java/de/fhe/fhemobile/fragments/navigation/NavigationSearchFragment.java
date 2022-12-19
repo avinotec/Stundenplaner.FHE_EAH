@@ -122,7 +122,7 @@ public abstract class NavigationSearchFragment extends FeatureFragment {
 
         //note: Scanner is not added to back stack
         ((MainActivity) getActivity()).changeFragment(
-                new NavigationScannerFragment().newInstance(), true, NavigationScannerFragment.TAG);
+                NavigationScannerFragment.newInstance(), true, NavigationScannerFragment.TAG);
 
     }
 
@@ -136,7 +136,7 @@ public abstract class NavigationSearchFragment extends FeatureFragment {
         if(mDestRoom != null){
             if(validateInputAndSetStartRoom(getSearchView().getStartInputText())){
                 ((MainActivity) getActivity()).changeFragment(
-                        new NavigationFragment().newInstance(mStartRoom, mDestRoom),
+                        NavigationFragment.newInstance(mStartRoom, mDestRoom),
                         true, NavigationFragment.TAG);
 
                 mDestRoom = null;

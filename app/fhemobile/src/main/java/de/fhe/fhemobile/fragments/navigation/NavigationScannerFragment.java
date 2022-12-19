@@ -163,6 +163,7 @@ public class NavigationScannerFragment extends FeatureFragment implements ZXingS
                     // same time, respect the user's decision. Don't link to system
                     // settings in an effort to convince the user to change their
                     // decision.
+                    //Todo?
                 }
             });
 }

@@ -54,8 +54,8 @@ public class DefaultHeaderItem extends IHeaderItem {
             viewHolder = new ViewHolder();
 
             // TODO: sticky header library apparently has a bug with using the parent ViewGroup
-            //       as the sticky header always looses its height. So I just set the parant to null
-            //       and not as intented to "_parent, false".
+            //       as the sticky header always looses its height. So I just set the parent to null
+            //       and not as intended to "_parent, false".
             _convertView = _inflater.inflate(R.layout.item_header_text_default, null);
 
             viewHolder.mHeadline = (TextView) _convertView.findViewById(R.id.tv_item_header_default_day);

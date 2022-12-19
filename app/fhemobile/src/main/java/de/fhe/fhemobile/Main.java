@@ -65,8 +65,7 @@ public class Main extends Application {
 
     //My Schedule
     public static Date lastUpdateSubscribedEventSeries;
-    //note: always keep subscribedEventSeries sorted for display in the view
-    private static HashMap<String, MyScheduleEventSeriesVo> subscribedEventSeries = new HashMap();
+    private static final HashMap<String, MyScheduleEventSeriesVo> subscribedEventSeries = new HashMap<>();
 
     @Override
     public void onCreate() {
@@ -112,12 +111,20 @@ public class Main extends Application {
         return mAppContext;
     }
 
+    /**
+     * Get list of subscribed event series, sorted by title
+     * @return List of {@link MyScheduleEventVo}s
+     */
     public static List<MyScheduleEventSeriesVo> getSortedSubscribedEventSeries(){
         List<MyScheduleEventSeriesVo> list = new ArrayList<>(subscribedEventSeries.values());
         Collections.sort(list, new EventSeriesTitleComparator());
         return list;
     }
 
+    /**
+     * Get collection of subscribed event series
+     * @return Collection of {@link MyScheduleEventVo}s
+     */
     public static Collection<MyScheduleEventSeriesVo> getSubscribedEventSeries(){
         return subscribedEventSeries.values();
     }

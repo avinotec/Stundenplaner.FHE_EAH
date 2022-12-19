@@ -112,7 +112,7 @@ public final class FeatureProvider {
      * @param _FeatureId
      * @return
      */
-    public static final String getFeatureTitle(final int _FeatureId) {
+    public static String getFeatureTitle(final int _FeatureId) {
         String result = "";
         int stringRes = -1;
 

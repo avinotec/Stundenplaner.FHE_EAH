@@ -19,7 +19,6 @@ package de.fhe.fhemobile.views.canteen;
 import static de.fhe.fhemobile.Main.getAppContext;
 import static de.fhe.fhemobile.utils.Define.Canteen.CANTEEN;
 import static de.fhe.fhemobile.utils.Define.Canteen.SP_CANTEEN;
-import static de.fhe.fhemobile.utils.Define.MySchedule.SP_MYSCHEDULE;
 
 import android.content.Context;
 import android.content.SharedPreferences;

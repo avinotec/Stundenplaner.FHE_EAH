@@ -109,11 +109,6 @@ public class MyScheduleDialogView extends LinearLayout {
         mSemesterPicker.reset(true);
     }
 
-    public void setSemesterPickerEnabled(final boolean enabled){
-        mSemesterPicker.toggleEnabled(enabled);
-    }
-
-
 
     private final OnItemChosenListener mStudyProgramListener = new OnItemChosenListener() {
         @Override
@@ -133,14 +128,6 @@ public class MyScheduleDialogView extends LinearLayout {
         }
     };
 
-
-    public void setSelectedSemesterText(final String text){
-        mSemesterPicker.setDisplayValue(text);
-    }
-
-    public void setSelectedGroupText(final String text){
-        mStudyProgramPicker.setDisplayValue(text);
-    }
 
     /**
      * Sets view to show if the course list is empty

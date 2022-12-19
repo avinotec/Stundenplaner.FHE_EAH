@@ -74,7 +74,7 @@ public class TimetableWeekView extends LinearLayout {
             mData.add(new HeaderItem(dayVo.getDayName()));
             for (final TimetableEventVo eventVo : dayVo.getEvents()) {
 
-                if ( BuildConfig.DEBUG ) Assert.assertTrue( eventVo != null );
+                if ( BuildConfig.DEBUG ) Assert.assertNotNull(eventVo);
                 if ( eventVo != null ) {
                     mData.add(new TimetableEventItem(
                                     eventVo.getStartTimeString() + " – " + eventVo.getEndTimeString(),

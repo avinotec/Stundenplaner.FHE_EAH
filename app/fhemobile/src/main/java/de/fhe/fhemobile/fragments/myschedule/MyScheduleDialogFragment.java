@@ -160,18 +160,15 @@ public class MyScheduleDialogFragment extends DialogFragment {
 
                         //set items of semester picker
                         mView.setSemesterItems(studyProgram.getSemestersAsSortedList());
-                    }
-                    // No terms are available
-                    else {
-                        studyProgramEmpty = true;
+                    } else {
+                        // No semesters available
                     }
 
                     //chosen study program found
                     break;
-                }
-                else {
-                    // No Id is available, chosen study program not found
-                    studyProgramEmpty = true;
+
+                } else {
+                    // No Id  available, chosen study program not found
                 }
             }
 
@@ -201,7 +198,7 @@ public class MyScheduleDialogFragment extends DialogFragment {
                 //set chosen semester
                 mChosenSemester = semesters.get(_SemesterId);
 
-                Assert.assertTrue(mChosenSemester != null);
+                Assert.assertNotNull(mChosenSemester);
 
                 //get timetable (all events) for each study group in the chosen semester
                 NetworkHandler.getInstance().fetchSemesterTimetable(mChosenSemester.getId(), mFetchSemesterTimetableCallback);

@@ -58,10 +58,11 @@ public final class CanteenModel extends EventDispatcher {
         return ourInstance;
     }
 
-    public Map<String, List<CanteenMenuDayVo>> getMenus() {
-        return mMenus;
-    }
-
+    /**
+     * Get menu of the given canteen
+     * @param canteenId The canteen
+     * @return List of {@link CanteenMenuDayVo}s
+     */
     public List<CanteenMenuDayVo> getMenu(final String canteenId){
         return mMenus.get(canteenId);
     }
@@ -136,7 +137,7 @@ public final class CanteenModel extends EventDispatcher {
 
     private static CanteenModel ourInstance;
 
-    private final HashMap<String, List<CanteenMenuDayVo>> mMenus = new HashMap();
+    private final HashMap<String, List<CanteenMenuDayVo>> mMenus = new HashMap<>();
 
     private CanteenVo[] mCanteens;
 }

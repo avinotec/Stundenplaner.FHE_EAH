@@ -36,8 +36,6 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.SettingsActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.network.NetworkHandler;
-import de.fhe.fhemobile.services.FetchMyScheduleBackgroundTask;
-import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.Features;
 import de.fhe.fhemobile.views.canteen.CanteenView;
 

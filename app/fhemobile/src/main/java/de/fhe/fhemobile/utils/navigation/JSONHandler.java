@@ -82,14 +82,6 @@ public final class JSONHandler {
 
         try {
             final InputStream input = Main.getAppContext().getAssets().open(jsonFile);
-//            final InputStreamReader reader; //$NON-NLS
-//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-//                reader = new InputStreamReader(input, StandardCharsets.UTF_8);
-//            }
-//            //if android < 19
-//            else {
-//                reader = new InputStreamReader(input, Charset.forName("UTF-8"));
-//            }
             final InputStreamReader reader = new InputStreamReader(input, StandardCharsets.UTF_8);
 
             final BufferedReader br = new BufferedReader(reader);

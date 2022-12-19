@@ -63,7 +63,6 @@ public class PushNotificationService extends FirebaseMessagingService {
 					+ Main.getAppContext().getString(R.string.fcm_timetablechange_message_part1);
 			final String messageLong = message + " " + Main.getAppContext().getString(R.string.fcm_message_part2);
 
-			//todo: click action
 			showNotification(
 					Main.getAppContext().getString(R.string.fcm_change_title),
 					message,

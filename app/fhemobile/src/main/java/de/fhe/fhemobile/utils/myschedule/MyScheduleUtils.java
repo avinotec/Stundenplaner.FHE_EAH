@@ -240,9 +240,6 @@ public final class MyScheduleUtils {
 					//inform user that exam has been added
 					showExamAddedToast(fetchedEventSeries.getTitle());
 				}
-
-				//Go on with the next subscribed eventseries or exam
-				continue;
 			}
 		}
 
@@ -377,7 +374,7 @@ public final class MyScheduleUtils {
 				//If fetchedEventSet size == localEventSet size (note: localEventSet is cleaned from deleted and increased by added events),
 				// we assume that we can compare events at the same positions to detect changed properties
 				if (BuildConfig.DEBUG) {
-					Assert.assertTrue(localEventSetEntry.getValue().size() == fetchedEventSet.getEventDates().size());
+					Assert.assertEquals(localEventSetEntry.getValue().size(), fetchedEventSet.getEventDates().size());
 				}
 
 				if (localEventSetEntry.getValue().size() == fetchedEventSet.getEventDates().size()) {

@@ -118,11 +118,7 @@ public class DrawerFragment extends Fragment {
             @Override
             public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
                 // Handle the menu selection
-                if(mDrawerToggle.onOptionsItemSelected(menuItem)) {
-                    return true;
-                }
-
-                return false;
+                return mDrawerToggle.onOptionsItemSelected(menuItem);
             }
         });
     }
