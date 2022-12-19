@@ -458,8 +458,16 @@ public final class NetworkHandler {
                                            @NonNull final Response<ModuleVo> response) {
 
                         if (response.isSuccessful()) {
-                            updatedEventSeriesList.addAll(
-									getUpdatedEventSeries(module.getValue(), response.body().getEventSets()));
+                            try{
+                                updatedEventSeriesList.addAll(
+                                        getUpdatedEventSeries(module.getValue(), response.body().getEventSets()));
+                            } catch (NullPointerException e){
+                                Log.e(TAG, "Exception while updating module "+module.getKey(), e);
+                                final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                                ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.MYSCHEDULE_UTILS_CODE1);
+                                //add old event series' to prevent them from getting lost
+                                updatedEventSeriesList.addAll(module.getValue().values());
+                            }
                         } else {
                             final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
                             ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE5);

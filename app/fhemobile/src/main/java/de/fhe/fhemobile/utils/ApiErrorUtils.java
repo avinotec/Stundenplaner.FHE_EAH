@@ -19,9 +19,6 @@ package de.fhe.fhemobile.utils;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.io.IOException;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
@@ -47,6 +44,7 @@ public final class ApiErrorUtils {
         public static final String MYSCHEDULE_DIALOG_FRAGMENT_CODE4 = "4007";
         public static final String TIMETABLE_DIALOG_FRAGMENT_CODE1 = "4008";
         public static final String TIMETABLE_DIALOG_FRAGMENT_CODE2 = "4009";
+        public static final String MYSCHEDULE_UTILS_CODE1 = "4022";
 
         public static final String NETWORK_HANDLER_CODE1 = "4010";
         public static final String NETWORK_HANDLER_CODE2 = "4011";
