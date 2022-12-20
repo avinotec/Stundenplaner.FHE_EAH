@@ -301,7 +301,7 @@ final class TimetableDb
     {
         $sql = /** @lang MySQL */
             'INSERT INTO event_sets (eventset_id, eventseries, module_id, eventset_data, last_changed)' .
-            "VALUES ('$eventset_id', '$eventseries_name', '$module_id', '$eventset_json', NOW())";
+            "VALUES ('$eventset_id', '$eventseries_name', '$module_id', '$eventset_json', current_timestamp())";
         /** @var bool $result */
         $result = $this->runQuery($sql, "insertEventSet");
         return $result;
@@ -374,9 +374,9 @@ final class TimetableDb
     {
         $status_open = STATUS_OPEN;
         $sql = /** @lang MySQL */
-            'INSERT INTO notifications (token, subject, type, os, status, timestamp)' .
-            "VALUES ('$fcm_token', '$subject', '$type', '$os', '$status_open', NOW())" .
-            "ON DUPLICATE KEY UPDATE timestamp = NOW() and status = '$status_open'";
+            'INSERT INTO notifications (token, subject, type, os, status)' .
+            "VALUES ('$fcm_token', '$subject', '$type', '$os', '$status_open')" .
+            "ON DUPLICATE KEY UPDATE timestamp = current_timestamp() and status = '$status_open'";
         /** @var bool $result */
         $result = $this->runQuery($sql, "insertNotification");
         return $result;
