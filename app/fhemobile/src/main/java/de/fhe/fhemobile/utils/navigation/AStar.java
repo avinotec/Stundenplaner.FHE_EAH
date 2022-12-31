@@ -146,7 +146,9 @@ public class AStar {
 
                 // if cellsToWalk already contains cells at this floor
                 if(cellsToWalk.containsKey(bfKeyCurrentCellLoop)){
-                    cellsToWalk.get(bfKeyCurrentCellLoop).add(currentCell);
+                    final ArrayList<Cell> tmp = cellsToWalk.get(bfKeyCurrentCellLoop);
+                    if (tmp != null)    // hier gab es Abstürze OutOfMemory, bzw. tmp war null
+                            tmp.add(currentCell);
                 } else {
                     final ArrayList<Cell> list = new ArrayList<>();
                     list.add(currentCell);
