@@ -77,13 +77,9 @@ public class CanteenMenuView extends LinearLayout {
         mCanteenNameText    = (TextView)        findViewById(R.id.tv_canteen_title);
     }
 
-    public void initializeView(String _CanteenId){
-
-        // Absturz, _CanteenId war null
-        if (_CanteenId != null && !_CanteenId.isEmpty() ) {
-            mCanteenId = _CanteenId;
-            mCanteenNameText.setText(UserSettings.getInstance().getSelectedCanteen(mCanteenId).getCanteenName());
-        }
+    public void initializeView(final String _CanteenId){
+        mCanteenId = _CanteenId;
+        mCanteenNameText.setText(UserSettings.getInstance().getSelectedCanteen(mCanteenId).getCanteenName());
 
         mErrorText.setVisibility(VISIBLE);
         populateMenuDaysList();

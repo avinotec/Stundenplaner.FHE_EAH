@@ -154,8 +154,6 @@ public class TimetableFragment extends FeatureFragment {
 				mView.setPagerItems(weekVos);
 
 				if(TimetableSettings.getTimetableSelection() != null){
-//TODO Exception java.lang.NullPointerException: Attempt to invoke virtual method 'android.content.SharedPreferences android.content.Context.getSharedPreferences(java.lang.String, int)' on a null object reference
-// ich würde vermuten, dass getAppContext() warum auch immer null war.
 					//save timetable for offline usage
 					final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences(SP_TIMETABLE, Context.MODE_PRIVATE);
 					final SharedPreferences.Editor editor = sharedPreferences.edit();
