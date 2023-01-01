@@ -70,444 +70,444 @@ import retrofit2.converter.gson.GsonConverterFactory;
 //RetroFitClient
 public final class NetworkHandler {
 
-    static final String TAG = NetworkHandler.class.getSimpleName();
+	static final String TAG = NetworkHandler.class.getSimpleName();
 
-    private static final NetworkHandler ourInstance = new NetworkHandler();
+	private static final NetworkHandler ourInstance = new NetworkHandler();
 
-    private ApiDeclaration mApiErfurt = null;
-    private ApiDeclaration mApiEah = null;
+	private ApiDeclaration mApiErfurt = null;
+	private ApiDeclaration mApiEah = null;
 
-    /**
-     * Private constructor
-     */
-    private NetworkHandler() {
-        Assert.assertNull(mApiErfurt);
-        Assert.assertNull(mApiEah);
+	/**
+	 * Private constructor
+	 */
+	private NetworkHandler() {
+		Assert.assertNull(mApiErfurt);
+		Assert.assertNull(mApiEah);
 
-        final Gson gson = new GsonBuilder()
-                .setDateFormat("HH:mm:ss'T'yyyy-MM-dd")
-                .create();
+		final Gson gson = new GsonBuilder()
+				.setDateFormat("HH:mm:ss'T'yyyy-MM-dd")
+				.create();
 
-        final Retrofit mRestAdapter = new Retrofit.Builder()
-                .baseUrl(Endpoints.BASE_URL + Endpoints.APP_NAME)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                //.setConverter(new GsonConverter(gson))
+		final Retrofit mRestAdapter = new Retrofit.Builder()
+				.baseUrl(Endpoints.BASE_URL + Endpoints.APP_NAME)
+				.addConverterFactory(GsonConverterFactory.create(gson))
+				//.setConverter(new GsonConverter(gson))
 //                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        final Retrofit mRestAdapterEah = new Retrofit.Builder()
-                .baseUrl(Endpoints.BASE_URL_EAH)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                //.setConverter(new GsonConverter(gson))
+				.build();
+		final Retrofit mRestAdapterEah = new Retrofit.Builder()
+				.baseUrl(Endpoints.BASE_URL_EAH)
+				.addConverterFactory(GsonConverterFactory.create(gson))
+				//.setConverter(new GsonConverter(gson))
 //                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
+				.build();
 
-        mApiErfurt = mRestAdapter.create(ApiDeclaration.class);
-        mApiEah = mRestAdapterEah.create(ApiDeclaration.class);
-        Assert.assertNotNull(mApiErfurt);
-        Assert.assertNotNull(mRestAdapter);
-        Assert.assertNotNull(mApiEah);
-        Assert.assertNotNull(mRestAdapterEah);
+		mApiErfurt = mRestAdapter.create(ApiDeclaration.class);
+		mApiEah = mRestAdapterEah.create(ApiDeclaration.class);
+		Assert.assertNotNull(mApiErfurt);
+		Assert.assertNotNull(mRestAdapter);
+		Assert.assertNotNull(mApiEah);
+		Assert.assertNotNull(mRestAdapterEah);
 
-    }
+	}
 
-    /**
-     * Singelton
-     * @return the Singleton
-     */
-    public static NetworkHandler getInstance() {
-        Assert.assertNotNull(ourInstance);
-        return ourInstance;
-    }
+	/**
+	 * Singelton
+	 * @return the Singleton
+	 */
+	public static NetworkHandler getInstance() {
+		Assert.assertNotNull(ourInstance);
+		return ourInstance;
+	}
 
-    // -------------------------------- PHONEBOOK SEARCH -------------------------------------------
+	// -------------------------------- PHONEBOOK SEARCH -------------------------------------------
 
-    /**
-     * *
-     *
-     * @param _FirstName
-     * @param _LastName
-     */
-    public void fetchEmployees(final String _FirstName, final String _LastName) {
-        Assert.assertNotNull(mApiErfurt);
+	/**
+	 * *
+	 *
+	 * @param _FirstName
+	 * @param _LastName
+	 */
+	public void fetchEmployees(final String _FirstName, final String _LastName) {
+		Assert.assertNotNull(mApiErfurt);
 
-        mApiErfurt.fetchEmployees(_FirstName, _LastName).enqueue(new Callback<ArrayList<EmployeeVo>>() {
-            /**
-             *
-             * @param call
-             * @param response
-             */
-            @Override
-            public void onResponse(@NonNull final Call<ArrayList<EmployeeVo>> call, @NonNull final Response<ArrayList<EmployeeVo>> response) {
-                if (response.isSuccessful()) {
-                    PhonebookModel.getInstance().setFoundEmployees(response.body());
-                } else {
-                    final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
-                    ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE1);
-                }
-            }
+		mApiErfurt.fetchEmployees(_FirstName, _LastName).enqueue(new Callback<ArrayList<EmployeeVo>>() {
+			/**
+			 *
+			 * @param call
+			 * @param response
+			 */
+			@Override
+			public void onResponse(@NonNull final Call<ArrayList<EmployeeVo>> call, @NonNull final Response<ArrayList<EmployeeVo>> response) {
+				if (response.isSuccessful()) {
+					PhonebookModel.getInstance().setFoundEmployees(response.body());
+				} else {
+					final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+					ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE1);
+				}
+			}
 
-            /**
-             *
-             * @param call
-             * @param t
-             */
-            @Override
-            public void onFailure(@NonNull final Call<ArrayList<EmployeeVo>> call, @NonNull final Throwable t) {
-                ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE7);
-                Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
-            }
-        });
-    }
+			/**
+			 *
+			 * @param call
+			 * @param t
+			 */
+			@Override
+			public void onFailure(@NonNull final Call<ArrayList<EmployeeVo>> call, @NonNull final Throwable t) {
+				ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE7);
+				Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
+			}
+		});
+	}
 
-    // ---------------------------------- SEMESTER DATES -------------------------------------------
+	// ---------------------------------- SEMESTER DATES -------------------------------------------
 
-    /**
-     * *
-     */
-    public void fetchSemesterDates() {
-        Assert.assertNotNull(mApiErfurt);
+	/**
+	 * *
+	 */
+	public void fetchSemesterDates() {
+		Assert.assertNotNull(mApiErfurt);
 
-        mApiErfurt.fetchSemesterDates().enqueue(new Callback<SemesterDatesVo>() {
+		mApiErfurt.fetchSemesterDates().enqueue(new Callback<SemesterDatesVo>() {
 
-            /**
-             *
-             * @param call
-             * @param response
-             */
-            @Override
-            public void onResponse(@NonNull final Call<SemesterDatesVo> call, @NonNull final Response<SemesterDatesVo> response) {
-                if (response.isSuccessful()) {
-                    SemesterDatesModel.getInstance().setData(response.body().getSemester());
-                } else {
-                    final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
-                    ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE2);
-                }
-            }
+			/**
+			 *
+			 * @param call
+			 * @param response
+			 */
+			@Override
+			public void onResponse(@NonNull final Call<SemesterDatesVo> call, @NonNull final Response<SemesterDatesVo> response) {
+				if (response.isSuccessful()) {
+					SemesterDatesModel.getInstance().setData(response.body().getSemester());
+				} else {
+					final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+					ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE2);
+				}
+			}
 
-            /**
-             *
-             * @param call
-             * @param t
-             */
-            @Override
-            public void onFailure(@NonNull final Call<SemesterDatesVo> call, @NonNull final Throwable t) {
-                ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE8);
-                Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
-            }
-        });
-    }
-
-
-    // ---------------------------------- NEWS -----------------------------------------------------
-    /**
-     *
-     * @param _NewsCategory
-     * @param _Callback
-     */
-    public void fetchNewsData(final String _NewsCategory, final Callback<NewsItemResponse> _Callback) {
-        Assert.assertNotNull(mApiErfurt);
-
-        mApiErfurt.fetchNewsData(_NewsCategory).enqueue(_Callback);
-    }
-
-    /**
-     *
-     */
-    public void fetchNewsData() {
-        fetchNewsData(UserSettings.getInstance().getChosenNewsCategory(),
-                new Callback<NewsItemResponse>() {
-            /**
-             *
-             * @param call
-             * @param response
-             */
-            @Override
-            public void onResponse(@NonNull final Call<NewsItemResponse> call, @NonNull final Response<NewsItemResponse> response) {
-                // MS: Bei den News sind die news/0 kaputt
-                if (response.code() == 200) {
-                    if (response.body() != null) {
-                        final NewsItemVo[] newsItemVos = response.body().getChannel().getNewsItems();
-                        NewsModel.getInstance().setNewsItems(newsItemVos);
-                    }
-                } else /* if ( response.code() == 204 ) */ {
-                    // no content, bspw. wegen einer Weiterleitung
-                    // TODO: Leere Meldung erzeugen
-                    final NewsItemVo aNoNewsItemErrorObj = new NewsItemVo();
-                    aNoNewsItemErrorObj.setTitle("System Error");
-                    aNoNewsItemErrorObj.setLink("");
-                    aNoNewsItemErrorObj.setDescription("An internal error in this news system showed up. Please report.");
-                    aNoNewsItemErrorObj.setAuthor("The News System");
-
-                    final NewsItemVo[] mNewsItems = new NewsItemVo[1];
-                    mNewsItems[0] = aNoNewsItemErrorObj;
-                    final NewsItemVo[] newsItemVos = mNewsItems;
-                    NewsModel.getInstance().setNewsItems(newsItemVos);
-
-                }
-            }
-
-            /**
-             *
-             * @param call
-             * @param t
-             */
-            @Override
-            public void onFailure(@NonNull final Call<NewsItemResponse> call, @NonNull final Throwable t) {
-                ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE10);
-                Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
-            }
-        });
-    }
-
-    /**
-     *
-     */
-    public void fetchAvailableNewsLists() {
-        Assert.assertNotNull(mApiErfurt);
-
-        mApiErfurt.fetchAvailableNewsLists().enqueue(new Callback<NewsCategoryResponse>() {
-
-            /**
-             *
-             * @param call
-             * @param response
-             */
-            @Override
-            public void onResponse(@NonNull final Call<NewsCategoryResponse> call, @NonNull final Response<NewsCategoryResponse> response) {
-                // MS: Bei den News sind die news/0 kaputt
-                if (response.isSuccessful()) {
-                    NewsModel.getInstance().setCategoryItems(response.body().getNewsCategories());
-                } else {
-                    final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
-                    ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE4);
-                }
-            }
-
-            /**
-             *
-             * @param call
-             * @param t
-             */
-            @Override
-            public void onFailure(@NonNull final Call<NewsCategoryResponse> call, @NonNull final Throwable t) {
-                ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE12);
-                Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
-            }
-        });
-    }
+			/**
+			 *
+			 * @param call
+			 * @param t
+			 */
+			@Override
+			public void onFailure(@NonNull final Call<SemesterDatesVo> call, @NonNull final Throwable t) {
+				ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE8);
+				Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
+			}
+		});
+	}
 
 
-    // ---------------------------------- CANTEEN -----------------------------------------------------
-    /**
-     *
-     */
-    public void fetchAvailableCanteens() {
-        Assert.assertNotNull(mApiErfurt);
+	// ---------------------------------- NEWS -----------------------------------------------------
+	/**
+	 *
+	 * @param _NewsCategory
+	 * @param _Callback
+	 */
+	public void fetchNewsData(final String _NewsCategory, final Callback<NewsItemResponse> _Callback) {
+		Assert.assertNotNull(mApiErfurt);
 
-        mApiErfurt.fetchAvailableCanteens().enqueue(new Callback<CanteenVo[]>() {
+		mApiErfurt.fetchNewsData(_NewsCategory).enqueue(_Callback);
+	}
 
-            @Override
-            public void onResponse(@NonNull final Call<CanteenVo[]> call, @NonNull final Response<CanteenVo[]> response) {
-                if (response.isSuccessful()) {
-                    CanteenModel.getInstance().setCanteens(response.body());
-                } else {
-                    final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
-                    ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE3);
-                }
-            }
+	/**
+	 *
+	 */
+	public void fetchNewsData() {
+		fetchNewsData(UserSettings.getInstance().getChosenNewsCategory(),
+				new Callback<NewsItemResponse>() {
+					/**
+					 *
+					 * @param call
+					 * @param response
+					 */
+					@Override
+					public void onResponse(@NonNull final Call<NewsItemResponse> call, @NonNull final Response<NewsItemResponse> response) {
+						// MS: Bei den News sind die news/0 kaputt
+						if (response.code() == 200) {
+							if (response.body() != null) {
+								final NewsItemVo[] newsItemVos = response.body().getChannel().getNewsItems();
+								NewsModel.getInstance().setNewsItems(newsItemVos);
+							}
+						} else /* if ( response.code() == 204 ) */ {
+							// no content, bspw. wegen einer Weiterleitung
+							// TODO: Leere Meldung erzeugen
+							final NewsItemVo aNoNewsItemErrorObj = new NewsItemVo();
+							aNoNewsItemErrorObj.setTitle("System Error");
+							aNoNewsItemErrorObj.setLink("");
+							aNoNewsItemErrorObj.setDescription("An internal error in this news system showed up. Please report.");
+							aNoNewsItemErrorObj.setAuthor("The News System");
 
-            @Override
-            public void onFailure(@NonNull final Call<CanteenVo[]> call, @NonNull final Throwable t) {
-                ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE11);
-                Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
-            }
-        });
-    }
+							final NewsItemVo[] mNewsItems = new NewsItemVo[1];
+							mNewsItems[0] = aNoNewsItemErrorObj;
+							final NewsItemVo[] newsItemVos = mNewsItems;
+							NewsModel.getInstance().setNewsItems(newsItemVos);
 
-    /**
-     * Fetch menu of the canteens specified in {@link UserSettings}
-     */
-    public void fetchCanteenMenus() {
-        Assert.assertNotNull(mApiErfurt);
-
-        final ArrayList<String> selectedCanteenIds = UserSettings.getInstance().getSelectedCanteenIds();
-        Log.d(TAG, "Selected Canteens: " + selectedCanteenIds);
-
-        boolean connectionFailedErrorThrown = false;
-        for (final String canteenId : selectedCanteenIds) {
-            mApiErfurt.fetchCanteenData(canteenId).enqueue(new Callback<CanteenDishVo[]>() {
-
-                @Override
-                public void onResponse(@NonNull final Call<CanteenDishVo[]> call, @NonNull final Response<CanteenDishVo[]> response) {
-                    Log.d(TAG, "Canteen: " + call.request().url());
-                    final CanteenDishVo[] dishes = response.body();
-                    List<CanteenMenuDayVo> sortedDishes = null;
-
-                    if (dishes != null && dishes.length > 0)
-                        sortedDishes = CanteenUtils.sortCanteenItems(dishes);
-
-                    CanteenModel.getInstance().setMenu(canteenId, sortedDishes);
-                }
-
-                @Override
-                public void onFailure(@NonNull final Call<CanteenDishVo[]> call, @NonNull final Throwable t) {
-                    //prevent showing error toast for every canteen
-                    if(!connectionFailedErrorThrown){
-                        ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE9);
-                    }
-                    CanteenModel.getInstance().setMenu(canteenId, null);
-                }
-            });
-        }
-    }
-
-    // ---------------------------------- WEATHER -----------------------------------------------------
-
-    /**
-     *
-     * @param _Callback
-     */
-    public void fetchWeather(final Callback<WeatherResponse> _Callback) {
-        Assert.assertNotNull(mApiErfurt);
-
-        mApiErfurt.fetchWeather().enqueue(_Callback);
-    }
-
-    // ---------------------------------- TIMETABLE -----------------------------------------------------
-    /**
-     * @param _Callback
-     */
-    public void fetchStudyPrograms(final Callback<TimetableDialogResponse> _Callback) {
-        Assert.assertNotNull(mApiEah);
-
-        mApiEah.fetchStudyProgramData().enqueue(_Callback);
-    }
-
-    /**
-     * @param _StudyGroupId
-     * @param _Callback
-     */
-    public void fetchTimetableEvents(final String _StudyGroupId,
-                                     final Callback<Map<String, TimetableWeekVo>> _Callback) {
-        Assert.assertNotNull(mApiEah);
-        if(_StudyGroupId == null){
-            Log.e(TAG, "StudyGroupId is null. Cannot fetch semester timetable.");
-            return;
-        }
-
-        mApiEah.fetchTimetableEvents(_StudyGroupId).enqueue(_Callback);
-    }
-
-    // ---------------------------------- MY SCHEDULE ---------------------------------------------
-
-    /**
-     * Fetch timetable (a set of {@link MyScheduleEventSetVo}s) of a given semester
-     *
-     * @param _SemesterId The semester's ID
-     * @param _Callback
-     */
-    public void fetchSemesterTimetable(final String _SemesterId,
-                                       final Callback<Map<String, MyScheduleEventSetVo>> _Callback) {
-        Assert.assertNotNull(mApiEah);
-        if(_SemesterId == null){
-            Log.e(TAG, "SemesterId is null. Cannot fetch semester timetable.");
-            return;
-        }
-
-        mApiEah.fetchSemesterTimetable(_SemesterId).enqueue(_Callback);
-    }
-
-
-    //wait until all updates are collected
-    private volatile int requestCounterMySchedule;
-
-    /**
-     * Fetch all subscribed event series to detect changes and update
-     */
-    public void fetchMySchedule() {
-        Assert.assertNotNull(mApiEah);
-
-        final Map<String, Map<String, MyScheduleEventSeriesVo>> modules =
-                groupByModuleId(Main.getSubscribedEventSeries());
-
-        /*
-         *  From java 5 after a change in Java memory model reads and writes are atomic for all
-         *  variables declared using the volatile keyword (including long and double variables) and
-         *  simple atomic variable access is more efficient instead of accessing these variables
-         *  via synchronized java code.
-         *
-         *  Wir feuern verschiedene Anfragen. Erst wenn alle Antworten zurückgekommen sind, dann
-         *  verarbeiten wir diese.
-         */
-        requestCounterMySchedule = 0;
-        /* Das ist unser Halter für die Antworten */
-        final List<MyScheduleEventSeriesVo> updatedEventSeriesList = new ArrayList<>();
-
-        //iterate over modules
-        for (final Map.Entry<String, Map<String, MyScheduleEventSeriesVo>> module : modules.entrySet()) {
-            //skip if module id is null -> caused by eventseries added before module IDs were introduced
-            if (module.getKey() != null) {
-
-                //update all subscribed event series of this module
-                // we count the several requests
-                requestCounterMySchedule++;
-                mApiEah.fetchModule(module.getKey()).enqueue(new Callback<ModuleVo>() {
-
-                    @Override
-                    public void onResponse(@NonNull final Call<ModuleVo> call,
-                                           @NonNull final Response<ModuleVo> response) {
-
-                        if (response.isSuccessful()) {
-                            try{
-                                updatedEventSeriesList.addAll(
-                                        getUpdatedEventSeries(module.getValue(), response.body().getEventSets()));
-                            } catch (NullPointerException e){
-                                Log.e(TAG, "Exception while updating module "+module.getKey(), e);
-                                final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
-                                ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.MYSCHEDULE_UTILS_CODE1);
-                                //add old event series' to prevent them from getting lost
-                                updatedEventSeriesList.addAll(module.getValue().values());
-                            }
-                        } else {
-                            final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
-                            ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE5);
-                            //add old event series' to prevent them from getting lost
-                            updatedEventSeriesList.addAll(module.getValue().values());
-                        }
-                        // we received an answer, anyhow, so we decrease the outstanding requests counter
-                        requestCounterMySchedule--;
-                        if(requestCounterMySchedule <= 0){
-                            // last request received, so proceed, finally
-							updateSubscribedEventSeriesAndAdapters(updatedEventSeriesList);
 						}
-                    }
+					}
 
-                    @Override
-                    public void onFailure(@NonNull final Call<ModuleVo> call, @NonNull final Throwable t) {
-                        ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE6);
-                        Utils.showToast(R.string.myschedule_connection_failed);
-                        Log.d(TAG, "failure: request " + call.request().url() + " (internal: " + t.getCause() + ")");
+					/**
+					 *
+					 * @param call
+					 * @param t
+					 */
+					@Override
+					public void onFailure(@NonNull final Call<NewsItemResponse> call, @NonNull final Throwable t) {
+						ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE10);
+						Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
+					}
+				});
+	}
 
-                        //add old event series' to prevent them from getting lost
-                        updatedEventSeriesList.addAll(module.getValue().values());
-                        // we received an answer, anyhow, so we decrease the outstanding requests counter
-                        requestCounterMySchedule--;
+	/**
+	 *
+	 */
+	public void fetchAvailableNewsLists() {
+		Assert.assertNotNull(mApiErfurt);
+
+		mApiErfurt.fetchAvailableNewsLists().enqueue(new Callback<NewsCategoryResponse>() {
+
+			/**
+			 *
+			 * @param call
+			 * @param response
+			 */
+			@Override
+			public void onResponse(@NonNull final Call<NewsCategoryResponse> call, @NonNull final Response<NewsCategoryResponse> response) {
+				// MS: Bei den News sind die news/0 kaputt
+				if (response.isSuccessful()) {
+					NewsModel.getInstance().setCategoryItems(response.body().getNewsCategories());
+				} else {
+					final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+					ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE4);
+				}
+			}
+
+			/**
+			 *
+			 * @param call
+			 * @param t
+			 */
+			@Override
+			public void onFailure(@NonNull final Call<NewsCategoryResponse> call, @NonNull final Throwable t) {
+				ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE12);
+				Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
+			}
+		});
+	}
+
+
+	// ---------------------------------- CANTEEN -----------------------------------------------------
+	/**
+	 *
+	 */
+	public void fetchAvailableCanteens() {
+		Assert.assertNotNull(mApiErfurt);
+
+		mApiErfurt.fetchAvailableCanteens().enqueue(new Callback<CanteenVo[]>() {
+
+			@Override
+			public void onResponse(@NonNull final Call<CanteenVo[]> call, @NonNull final Response<CanteenVo[]> response) {
+				if (response.isSuccessful()) {
+					CanteenModel.getInstance().setCanteens(response.body());
+				} else {
+					final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+					ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE3);
+				}
+			}
+
+			@Override
+			public void onFailure(@NonNull final Call<CanteenVo[]> call, @NonNull final Throwable t) {
+				ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE11);
+				Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
+			}
+		});
+	}
+
+	/**
+	 * Fetch menu of the canteens specified in {@link UserSettings}
+	 */
+	public void fetchCanteenMenus() {
+		Assert.assertNotNull(mApiErfurt);
+
+		final ArrayList<String> selectedCanteenIds = UserSettings.getInstance().getSelectedCanteenIds();
+		Log.d(TAG, "Selected Canteens: " + selectedCanteenIds);
+
+		boolean connectionFailedErrorThrown = false;
+		for (final String canteenId : selectedCanteenIds) {
+			mApiErfurt.fetchCanteenData(canteenId).enqueue(new Callback<CanteenDishVo[]>() {
+
+				@Override
+				public void onResponse(@NonNull final Call<CanteenDishVo[]> call, @NonNull final Response<CanteenDishVo[]> response) {
+					Log.d(TAG, "Canteen: " + call.request().url());
+					final CanteenDishVo[] dishes = response.body();
+					List<CanteenMenuDayVo> sortedDishes = null;
+
+					if (dishes != null && dishes.length > 0)
+						sortedDishes = CanteenUtils.sortCanteenItems(dishes);
+
+					CanteenModel.getInstance().setMenu(canteenId, sortedDishes);
+				}
+
+				@Override
+				public void onFailure(@NonNull final Call<CanteenDishVo[]> call, @NonNull final Throwable t) {
+					//prevent showing error toast for every canteen
+					if(!connectionFailedErrorThrown){
+						ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE9);
+					}
+					CanteenModel.getInstance().setMenu(canteenId, null);
+				}
+			});
+		}
+	}
+
+	// ---------------------------------- WEATHER -----------------------------------------------------
+
+	/**
+	 *
+	 * @param _Callback
+	 */
+	public void fetchWeather(final Callback<WeatherResponse> _Callback) {
+		Assert.assertNotNull(mApiErfurt);
+
+		mApiErfurt.fetchWeather().enqueue(_Callback);
+	}
+
+	// ---------------------------------- TIMETABLE -----------------------------------------------------
+	/**
+	 * @param _Callback
+	 */
+	public void fetchStudyPrograms(final Callback<TimetableDialogResponse> _Callback) {
+		Assert.assertNotNull(mApiEah);
+
+		mApiEah.fetchStudyProgramData().enqueue(_Callback);
+	}
+
+	/**
+	 * @param _StudyGroupId
+	 * @param _Callback
+	 */
+	public void fetchTimetableEvents(final String _StudyGroupId,
+	                                 final Callback<Map<String, TimetableWeekVo>> _Callback) {
+		Assert.assertNotNull(mApiEah);
+		if(_StudyGroupId == null){
+			Log.e(TAG, "StudyGroupId is null. Cannot fetch semester timetable.");
+			return;
+		}
+
+		mApiEah.fetchTimetableEvents(_StudyGroupId).enqueue(_Callback);
+	}
+
+	// ---------------------------------- MY SCHEDULE ---------------------------------------------
+
+	/**
+	 * Fetch timetable (a set of {@link MyScheduleEventSetVo}s) of a given semester
+	 *
+	 * @param _SemesterId The semester's ID
+	 * @param _Callback
+	 */
+	public void fetchSemesterTimetable(final String _SemesterId,
+	                                   final Callback<Map<String, MyScheduleEventSetVo>> _Callback) {
+		Assert.assertNotNull(mApiEah);
+		if(_SemesterId == null){
+			Log.e(TAG, "SemesterId is null. Cannot fetch semester timetable.");
+			return;
+		}
+
+		mApiEah.fetchSemesterTimetable(_SemesterId).enqueue(_Callback);
+	}
+
+
+	//wait until all updates are collected
+	private volatile int requestCounterMySchedule;
+
+	/**
+	 * Fetch all subscribed event series to detect changes and update
+	 */
+	public void fetchMySchedule() {
+		Assert.assertNotNull(mApiEah);
+
+		final Map<String, Map<String, MyScheduleEventSeriesVo>> modules =
+				groupByModuleId(Main.getSubscribedEventSeries());
+
+		/*
+		 *  From java 5 after a change in Java memory model reads and writes are atomic for all
+		 *  variables declared using the volatile keyword (including long and double variables) and
+		 *  simple atomic variable access is more efficient instead of accessing these variables
+		 *  via synchronized java code.
+		 *
+		 *  Wir feuern verschiedene Anfragen. Erst wenn alle Antworten zurückgekommen sind, dann
+		 *  verarbeiten wir diese.
+		 */
+		requestCounterMySchedule = 0;
+		/* Das ist unser Halter für die Antworten */
+		final List<MyScheduleEventSeriesVo> updatedEventSeriesList = new ArrayList<>();
+
+		//iterate over modules
+		for (final Map.Entry<String, Map<String, MyScheduleEventSeriesVo>> module : modules.entrySet()) {
+			//skip if module id is null -> caused by eventseries added before module IDs were introduced
+			if (module.getKey() != null) {
+
+				//update all subscribed event series of this module
+				// we count the several requests
+				requestCounterMySchedule++;
+				mApiEah.fetchModule(module.getKey()).enqueue(new Callback<ModuleVo>() {
+
+					@Override
+					public void onResponse(@NonNull final Call<ModuleVo> call,
+					                       @NonNull final Response<ModuleVo> response) {
+
+						if (response.isSuccessful()) {
+							try{
+								updatedEventSeriesList.addAll(
+										getUpdatedEventSeries(module.getValue(), response.body().getEventSets()));
+							} catch (NullPointerException e){
+								Log.e(TAG, "Exception while updating module "+module.getKey(), e);
+								final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+								ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.MYSCHEDULE_UTILS_CODE1);
+								//add old event series' to prevent them from getting lost
+								updatedEventSeriesList.addAll(module.getValue().values());
+							}
+						} else {
+							final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+							ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE5);
+							//add old event series' to prevent them from getting lost
+							updatedEventSeriesList.addAll(module.getValue().values());
+						}
+						// we received an answer, anyhow, so we decrease the outstanding requests counter
+						requestCounterMySchedule--;
 						if(requestCounterMySchedule <= 0){
-                            // even when failed, this is the last request received, so proceed, finally
+							// last request received, so proceed, finally
 							updateSubscribedEventSeriesAndAdapters(updatedEventSeriesList);
 						}
-                    }
-                });
-            }
-            //module id is null thus updates cannot be fetched
-            else {
-                Utils.showToast(R.string.myschedule_connection_failed);
-                //add old event series' with module id == null to prevent them from getting lost
-                updatedEventSeriesList.addAll(module.getValue().values());
-            }
+					}
 
-        }
-    }
+					@Override
+					public void onFailure(@NonNull final Call<ModuleVo> call, @NonNull final Throwable t) {
+						ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE6);
+						Utils.showToast(R.string.myschedule_connection_failed);
+						Log.d(TAG, "failure: request " + call.request().url() + " (internal: " + t.getCause() + ")");
+
+						//add old event series' to prevent them from getting lost
+						updatedEventSeriesList.addAll(module.getValue().values());
+						// we received an answer, anyhow, so we decrease the outstanding requests counter
+						requestCounterMySchedule--;
+						if(requestCounterMySchedule <= 0){
+							// even when failed, this is the last request received, so proceed, finally
+							updateSubscribedEventSeriesAndAdapters(updatedEventSeriesList);
+						}
+					}
+				});
+			}
+			//module id is null thus updates cannot be fetched
+			else {
+				Utils.showToast(R.string.myschedule_connection_failed);
+				//add old event series' with module id == null to prevent them from getting lost
+				updatedEventSeriesList.addAll(module.getValue().values());
+			}
+
+		}
+	}
 
 
 }
