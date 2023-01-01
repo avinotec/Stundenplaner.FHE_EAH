@@ -15,11 +15,18 @@ in der aktuellen Release-Version implementiert:
 - Impressum
 
 Sprachen in der App: Deutsch, Englisch
- 
+
 ## Beschreibung der Features, aktueller Stand, Hinweise
-#### Stundenplan 
+#### Stundenplan
   - Abruf des allgemeinen Stundenplans für ein spezifisches Semester in einem Studiengang
   - *Status: Updates veröffentlicht am 23.09.2022*
+
+  - URL: https://stundenplanung.eah-jena.de/api/mobileapp/v1/studentset/list	TimeTable
+  - URL: https://stundenplanung.eah-jena.de/api/mobileapp/v1/studentset/		TimeTableEvents
+  - URL: https://stundenplanung.eah-jena.de/api/mobileapp/v1/pos/	MySchedule
+  - URL: https://stundenplanung.eah-jena.de/api/mobileapp/v1/module/ Module
+
+
 #### Individueller Stundenplaner
   - Zusammenstellung eines Stundenplans durch individuelle Auswahl von Kursen
   - *Status:*
