@@ -36,7 +36,7 @@ public final class Define {
         static final String PREF_SELECTED_CANTEENS = "selectedCanteens";      // $NON-NLS
 
         public static final String SP_CANTEEN = "spCanteen";
-        public static final String CANTEEN = "canteen";
+        public static final String CANTEEN = "canteen"; // $NON-NLS
     }
 
     public static final class News {

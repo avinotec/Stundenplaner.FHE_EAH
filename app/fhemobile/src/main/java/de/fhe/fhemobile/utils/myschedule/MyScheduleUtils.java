@@ -304,19 +304,26 @@ public final class MyScheduleUtils {
 			//DETECT CHANGED EVENTS PROPERTIES - compare local and fetched events
 			else {
 				if(fetchedEventSetsMap == null || fetchedEventSetsMap.size() == 0) break;
+
 				final MyScheduleEventSetVo fetchedEventSet = fetchedEventSetsMap.get(localEventSetEntry.getKey());
 				//fetchedEventSet != null because it would be contained in eventSetsDeleted otherwise
 				if (BuildConfig.DEBUG) Assert.assertNotNull(fetchedEventSet);
+				if ( fetchedEventSet == null)
+					break;
 
 				final List<MyScheduleEventDateVo> fetchedEventDates = fetchedEventSet.getEventDates();
 				//fetchedEventDates != null because getEventDates returns an empty ArrayList at least
 				if (BuildConfig.DEBUG) Assert.assertNotNull(fetchedEventDates);
+				if ( fetchedEventDates == null )
+					break;
 
 				final List<MyScheduleEventVo> deletedEvents = new ArrayList<>();
 				Collections.sort(fetchedEventDates, new MyScheduleEventDateComparator());
 
 				//FIND DELETED EVENTS
-				if (fetchedEventDates.size() < localEventSetEntry.getValue().size()) {
+				//TODO, nur wenn die Liste kleiner ist? Aber sie kann doch auch geaendert sein?
+				//if (fetchedEventDates.size() < localEventSetEntry.getValue().size())
+				{
 
 					//detect deleted events by screening localEvent
 					for (int i = 0; i < localEventSetEntry.getValue().size(); i++) {
@@ -341,7 +348,9 @@ public final class MyScheduleUtils {
 					}
 				}
 				//FIND ADDED EVENTS
-				else if (fetchedEventDates.size() > localEventSetEntry.getValue().size()) {
+				// TODO oder es koennen welche dazugekommen sein
+				//else if (fetchedEventDates.size() > localEventSetEntry.getValue().size())
+				{
 
 					//note: the workflow fails if eventsets contain added and time-edited events.
 					// According to the Stundenplanung, this case is not supposed to occur.

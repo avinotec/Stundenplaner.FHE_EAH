@@ -450,7 +450,7 @@ public final class NetworkHandler {
 
                 //update all subscribed event series of this module
                 // we count the several requests
-                requestCounterMySchedule++;
+                ++requestCounterMySchedule;
                 mApiEah.fetchModule(module.getKey()).enqueue(new Callback<ModuleVo>() {
 
                     @Override
@@ -459,8 +459,17 @@ public final class NetworkHandler {
 
                         if (response.isSuccessful()) {
                             try{
-                                updatedEventSeriesList.addAll(
-                                        getUpdatedEventSeries(module.getValue(), response.body().getEventSets()));
+                                assert response.body() != null;
+                                Map<String, MyScheduleEventSetVo> tmp = response.body().getEventSets();
+                                if ( tmp == null || tmp.isEmpty() )
+                                {
+                                    //add old event series' to prevent them from getting lost
+                                    updatedEventSeriesList.addAll(module.getValue().values());
+                                }
+                                else
+                                    updatedEventSeriesList.addAll( getUpdatedEventSeries(module.getValue(), tmp));
+
+
                             } catch (NullPointerException e){
                                 Log.e(TAG, "Exception while updating module "+module.getKey(), e);
                                 final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
