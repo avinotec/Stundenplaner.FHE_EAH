@@ -38,11 +38,10 @@ public final class Endpoints {
     public static final String JOBOFFERS_ENDPOINT = "https://stellenticket.eah-jena.de/de/offers/fulltextsearch/EAH-Jena/#Inhalt";
 
 
-    //Testserver von Moritz
-    //public static final String APP_SERVER_EAH = "https://lustigtestt.de/fhjena/rest_api/public/changes";
     //Testserver von Nadja
 //    public static final String APP_SERVER_EAH = "http://192.168.178.157:80/api/";
     public static final String APP_SERVER_EAH = "https://wi-srv7.wi.eah-jena.de/api/";
+    // https://wi-srv7.wi.eah-jena.de/api/fcm_register_user.php?
     public static final String URL_REGISTER_PUSH_NOTIFICATIONS_EAH = APP_SERVER_EAH + "fcm_register_user.php?";
 
     /* Example

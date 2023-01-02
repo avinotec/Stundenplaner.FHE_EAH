@@ -59,8 +59,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 
 		if(PARAM_TIMETABLE_CHANGED.equals(remoteMessage.getNotification().getTitle())){
 
-			final String message = remoteMessage.getNotification().getBody() + " "
-					+ Main.getAppContext().getString(R.string.fcm_timetablechange_message_part1);
+			final String message = remoteMessage.getNotification().getBody() + " " + Main.getAppContext().getString(R.string.fcm_timetablechange_message_part1);
 			final String messageLong = message + " " + Main.getAppContext().getString(R.string.fcm_message_part2);
 
 			showNotification(
@@ -69,8 +68,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 					messageLong);
 
 		} else if(PARAM_EXAM_ADDED.equals(remoteMessage.getNotification().getTitle())){
-			final String message = Main.getAppContext().getString(R.string.fcm_examadded_message_part1)
-					+ " " + remoteMessage.getNotification().getBody() + ".";
+			final String message = Main.getAppContext().getString(R.string.fcm_examadded_message_part1) + " " + remoteMessage.getNotification().getBody() + ".";
 			final String messageLong = message + " " + Main.getAppContext().getString(R.string.fcm_message_part2);
 
 			showNotification(
@@ -80,23 +78,36 @@ public class PushNotificationService extends FirebaseMessagingService {
 		}
 
 		// Not getting messages here? See why this may be: https://goo.gl/39bRNJ
-		Log.d(TAG, "From: " + remoteMessage.getFrom());
-		Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
+		Log.d(TAG, "From: " + remoteMessage.getFrom());                                             // NON-NLS
+		Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());      // NON-NLS
 	}
 
+	/**
+	 * sometimes a new token is sent from FCM
+	 * @param token the new changed Token
+	 */
 	@Override
-	public void onNewToken(@NonNull final String token) {
-		Log.d(TAG, "Refreshed token: " + token);
+	public final void onNewToken(@NonNull final String token) {
+		Log.d(TAG, "Refreshed token: " + token);                        // NON-NLS
+
+		if (token.isEmpty()) {
+			Log.d(TAG, "(E9908) onNewToken(): failed: empty token."); // NON-NLS
+			return; // Abbruch
+		}
 
 		if(Define.ENABLE_PUSHNOTIFICATIONS){
 			//unregister old token
-			sendRegistrationToServer(fcmToken, new ArrayList<>());
+			sendRegistrationToServer(new ArrayList<>());
 			//set and register new token
 			setFcmToken(token);
-			sendRegistrationToServer(fcmToken, Main.getSubscribedEventSeries());
+			sendRegistrationToServer(Main.getSubscribedEventSeries());
 		}
 	}
 
+	/**
+	 *
+	 * @param fcmToken
+	 */
 	public static void setFcmToken(final String fcmToken) {
 		PushNotificationService.fcmToken = fcmToken;
 	}
@@ -105,11 +116,11 @@ public class PushNotificationService extends FirebaseMessagingService {
 	 * Register the given event series' for the given firebase token
 	 * @param eventSeriesVos List of {@link MyScheduleEventSeriesVo}s to register for
 	 */
-	public static void sendRegistrationToServer(final String token, final Collection<MyScheduleEventSeriesVo> eventSeriesVos){
+	public static void sendRegistrationToServer(final Collection<MyScheduleEventSeriesVo> eventSeriesVos){
 		if(BuildConfig.DEBUG && Define.ENABLE_PUSHNOTIFICATIONS) Assert.assertNotNull(fcmToken);
-		if(fcmToken != null) {
-			Main.executorService.execute(new ServerRegistrationBackgroundTask(token, eventSeriesVos));
-		}
+
+		// calls run
+		Main.executorService.execute(new ServerRegistrationBackgroundTask(fcmToken, eventSeriesVos));
 	}
 
 	/**
