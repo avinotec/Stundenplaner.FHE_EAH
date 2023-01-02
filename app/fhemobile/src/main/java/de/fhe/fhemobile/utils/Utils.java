@@ -23,10 +23,10 @@ import android.widget.Toast;
 
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.multidex.BuildConfig;
 
 import org.junit.Assert;
 
+import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 
 /**

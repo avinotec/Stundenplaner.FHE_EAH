@@ -22,8 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.multidex.BuildConfig;
-
 import org.junit.Assert;
 
 import java.text.SimpleDateFormat;
@@ -31,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.HeaderListAdapter;
