@@ -70,9 +70,9 @@ android {
         versionCode = 32
         versionName = '3.3.2'
 
-        multiDexEnabled = true
         resConfigs "de", "en", "notnight"
-
+        multiDexEnabled false
+    
         // For Testing
         //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         
@@ -192,9 +192,9 @@ android {
             //pseudoLocalesEnabled true     MS
             pseudoLocalesEnabled false
             renderscriptOptimLevel = 3
-	
-	
-	        //schöneren APK Namen
+    
+    
+            //schöneren APK Namen
             //archivesBaseName = "Stundenplan"
             //If you don't need to run a Crashlytics report, speed up your debug builds by disabling the plugin as follows:
             //ext.enableCrashlytics = false
@@ -284,7 +284,7 @@ dependencies {
     
     
     implementation 'com.google.firebase:firebase-analytics:21.2.0'
-    implementation 'com.google.firebase:firebase-messaging:23.1.0'
+    implementation 'com.google.firebase:firebase-messaging:23.1.1'
 
 
 
@@ -294,7 +294,6 @@ dependencies {
     implementation 'junit:junit:4.13.2'
     implementation 'androidx.test:rules:1.5.0'
     
-    implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.google.android.material:material:1.7.0'
 
     // Adds libraries defining annotations to only the compile classpath.
