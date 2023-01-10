@@ -120,7 +120,9 @@ public class PushNotificationService extends FirebaseMessagingService {
 		if(BuildConfig.DEBUG && Define.ENABLE_PUSHNOTIFICATIONS) Assert.assertNotNull(fcmToken);
 
 		// calls run
-		Main.executorService.execute(new ServerRegistrationBackgroundTask(fcmToken, eventSeriesVos));
+		if(fcmToken != null) {
+			Main.executorService.execute(new ServerRegistrationBackgroundTask(fcmToken, eventSeriesVos));
+		}
 	}
 
 	/**
@@ -130,8 +132,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 		if(BuildConfig.DEBUG) Assert.assertNotNull(fcmToken);
 
 		if(fcmToken != null) {
-			Main.executorService.execute(new ServerRegistrationBackgroundTask(
-					fcmToken, Main.getSubscribedEventSeries()));
+			Main.executorService.execute(new ServerRegistrationBackgroundTask(fcmToken, Main.getSubscribedEventSeries()));
 		}
 	}
 
