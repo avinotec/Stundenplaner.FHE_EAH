@@ -71,6 +71,8 @@ public interface ApiDeclaration {
     @GET(Endpoints.MY_SCHEDULE + "{" + Endpoints.PARAM_SEMESTER_ID + "}")
     Call<Map<String, MyScheduleEventSetVo>> fetchSemesterTimetable(@Path(Endpoints.PARAM_SEMESTER_ID) String _SemesterId);
 
+    //https://stundenplanung.eah-jena.de/
+    // api/mobileapp/v1/module/{moduleId}
     @GET(Endpoints.MODULE + "{" + Endpoints.PARAM_MODULE_ID + "}")
     Call<ModuleVo> fetchModule(@Path(Endpoints.PARAM_MODULE_ID) String _ModuleId);
 }
