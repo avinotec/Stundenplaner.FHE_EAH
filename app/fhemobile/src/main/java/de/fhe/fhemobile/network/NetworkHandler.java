@@ -44,6 +44,7 @@ import de.fhe.fhemobile.utils.ApiErrorUtils;
 import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.canteen.CanteenUtils;
+import de.fhe.fhemobile.views.myschedule.MyScheduleCalendarView;
 import de.fhe.fhemobile.vos.ApiErrorResponse;
 import de.fhe.fhemobile.vos.WeatherResponse;
 import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
@@ -473,6 +474,7 @@ public final class NetworkHandler {
 						if(requestCounterMySchedule <= 0){
 							// last request received, so proceed, finally
 							updateSubscribedEventSeriesAndAdapters(updatedEventSeriesList);
+							MyScheduleCalendarView.stopRefreshingAnimation();
 						}
 					}
 
@@ -493,6 +495,7 @@ public final class NetworkHandler {
 						if(requestCounterMySchedule <= 0){
 							// even when failed, this is the last request received, so proceed, finally
 							updateSubscribedEventSeriesAndAdapters(updatedEventSeriesList);
+							MyScheduleCalendarView.stopRefreshingAnimation();
 						}
 					}
 				});
@@ -503,7 +506,6 @@ public final class NetworkHandler {
 				//add old event series' with module id == null to prevent them from getting lost
 				updatedEventSeriesList.addAll(module.getValue().values());
 			}
-
 		}
 	}
 
