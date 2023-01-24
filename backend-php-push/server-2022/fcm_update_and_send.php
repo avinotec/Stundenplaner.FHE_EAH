@@ -94,9 +94,9 @@ function updateDatabaseAndBookNotifications(string &$moduleId): void
         //CHANGED and ADDED EVENT SERIES
         // per module, check each event set for changes
         foreach ($moduleData["dataActivity"] as $eventsetID => $eventsetData) {
-            $fetchedEventSetJSON = json_encode($eventsetData);
+            $fetchedEventSetJson = utf8_encode(json_encode($eventsetData));
             // change escaped slashes ("\/") to "/"
-            $fetchedEventSetJSON = stripslashes($fetchedEventSetJSON);
+//            $fetchedEventSetJson = stripslashes($fetchedEventSetJson);
             /** @var String $eventSeriesName */
             $eventSeriesName = getEventSeriesName($eventsetData["activityName"]);
             //get local event set
@@ -107,19 +107,21 @@ function updateDatabaseAndBookNotifications(string &$moduleId): void
             if (!empty($resultLocalEventSet) && !empty($resultLocalEventSet[0])) {
                 $output .= "<ul>";
 
-                $jsonLocalEventSet = $resultLocalEventSet[0]["eventset_data"];
+                $localEventSetJson = $resultLocalEventSet[0]["eventset_data"];
 
                 //compare local vs fetched event set checksum
                 // in case they are equal, nothing gets changed
-                if ($jsonLocalEventSet === $fetchedEventSetJSON) {
+                if ($localEventSetJson === $fetchedEventSetJson) {
                     // nothing changed since last request
-                    if ($debug) $output .= sprintf("<li> Event set %s has not changed. </li>", $resultLocalEventSet[0]["eventset_id"]);
+//                    if ($debug) $output .= sprintf("<li> Event set %s has not changed. </li>", $resultLocalEventSet[0]["eventset_id"]);
                 } else {
                     $output .= sprintf("<li> Event set %s has changed since %s.</li>",
                         $resultLocalEventSet[0]["eventset_id"],
                         $resultLocalEventSet[0]["last_changed"]);
+//                    file_put_contents('D:/Downloads/json_compare/'.$eventsetID.'_local.txt', $localEventSetJson);
+//                    file_put_contents('D:/Downloads/json_compare/'.$eventsetID.'_fetched.txt', $fetchedEventSetJson);
                     //update database, the data of this event set has changed
-                    $db_timetable->updateEventSet($eventsetID, $fetchedEventSetJSON);
+                    $db_timetable->updateEventSet($eventsetID, $fetchedEventSetJson);
                     bookTimetableChangedNotifications($eventSeriesName);
                 }
                 $output .= "</ul>";
@@ -127,7 +129,7 @@ function updateDatabaseAndBookNotifications(string &$moduleId): void
                 //EVENT SET ADDED
                 //no local event set with this id found --> event set is new and has to be added
                 if ($debug) $output .= sprintf("<li> Event set %s has been added. ", $eventsetID);
-                $db_timetable->insertEventSet($eventsetID, $eventSeriesName, $moduleId, $fetchedEventSetJSON);
+                $db_timetable->insertEventSet($eventsetID, $eventSeriesName, $moduleId, $fetchedEventSetJson);
                 bookTimetableChangedNotifications($eventSeriesName);
                 if($debug) $output .= "</li>";
 
@@ -145,8 +147,8 @@ function updateDatabaseAndBookNotifications(string &$moduleId): void
         //new module -> needs to be added
         foreach ($moduleData["dataActivity"] as $eventsetID => $eventsetData) {
             $eventSeriesName = getEventSeriesName($eventsetData["activityName"]);
-            $fetchedEventSetJSON = json_encode($eventsetData);
-            $db_timetable->insertEventSet($eventsetID, $eventSeriesName, $moduleId, $fetchedEventSetJSON);
+            $fetchedEventSetJson = json_encode($eventsetData);
+            $db_timetable->insertEventSet($eventsetID, $eventSeriesName, $moduleId, $fetchedEventSetJson);
         }
     }
 
@@ -245,10 +247,9 @@ function sendFCM(string &$tokens, string &$subject, string &$type): void
     }
     $fields = array(
         'registration_ids' => $tokenArray,
-        'notification' => array(
-            'title' => $type,
-            'body' => $subject,
-            'sound' => 'default'
+        'data' => array(
+            'type' => $type,
+            'subject' => $subject
         )
     );
 
@@ -292,14 +293,18 @@ $moduleIds = array_values(json_decode($jsonStringFromStundenplanServer, true));
 $output .= sprintf("<b> %s module IDs had been fetched.</b><br>", count($moduleIds));
 
 //DEBUG
-if (false && $debug) {
+if ($debug) {
     $output .= sprintf("<b><i><span style='color:DodgerBlue;'>Fetched module ids: </span></i></b>", count($moduleIds));
 
-    //TODO: comment out for complete modules fetching
+    //TODO: comment out for complete modules fetching (or set $debug to false)
     //DEBUG: for debugging: reduce array to smaller size
-    $moduleIds = array_slice($moduleIds, 20, 2, true);
+//    $moduleIds = array_slice($moduleIds, 20, 2, true);
+    $moduleIds = array_slice($moduleIds, 20, 200, true);
     //add Personalmanagement for testing exam added
     $moduleIds[] = "A615C4E5AF9DAB47C65F7B181CFD4C70";
+
+    $moduleIds[] = "09FF2B2A861392FAD18A0E92574B675B";
+    $moduleIds[] = "E8A862F1C4B17A679D3FB04C6B129735";
     $output .= implode(", ", $moduleIds);
 } // DEBUG
 
@@ -327,7 +332,6 @@ foreach ($notificationsToSend as $notificationData) {
     if ($debug) $output .= sprintf("<li>Type %s: %s</li>", $notificationData["type"], $notificationData["subject"]);
 }
 if ($debug) $output .= "</ul><b><i><span style='color:DodgerBlue;'>}</span></i></b>";
-//TODO: set up php script for cleaning notifications from time to time
 
 
 $output .= "<p><br><i><b> Ende Script fcm_update_and_send.php</i></b></p>>";
