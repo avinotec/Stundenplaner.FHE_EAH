@@ -49,7 +49,9 @@ public class FetchMyScheduleBackgroundTask implements Runnable {
      * after it finished the current run.
      */
     public static void stopPeriodicFetching(){
-        if(mScheduledFuture != null){
+        //mScheduledFuture.isCancelled() necessary to check because calling cancel() on a futures
+        // that has been already canceled causes a SocketException
+        if(mScheduledFuture != null && !mScheduledFuture.isCancelled()){
             Main.scheduledExecutorService.schedule(
                     () -> mScheduledFuture.cancel(true),0, TimeUnit.SECONDS);
         }

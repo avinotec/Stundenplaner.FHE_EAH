@@ -92,8 +92,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         setContentView(R.layout.activity_main);
 
         /* Fix: No Network Security Config specified, using platform default - Android Log */
-        if (android.os.Build.VERSION.SDK_INT > 9)
-        {
+        if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
@@ -381,7 +380,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
         // wir geben mal den erhaltenen JSON String aus. Dann können wir sehen, was Carsten uns sendet.
         if (BuildConfig.DEBUG){
-            Log.d(TAG, "saveSubscribedEventSeriesToSharedPreferences(): received JSON: " + json);
+            Log.d(TAG, "saveSubscribedEventSeriesToSharedPreferences(): JSON: " + json);
         }
     }
 
