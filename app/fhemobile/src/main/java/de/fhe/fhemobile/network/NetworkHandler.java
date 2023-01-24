@@ -29,6 +29,7 @@ import com.google.gson.GsonBuilder;
 
 import org.junit.Assert;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -329,11 +330,11 @@ public final class NetworkHandler {
 	 */
 	public void fetchCanteenMenus() {
 		Assert.assertNotNull(mApiErfurt);
+		connectionFailedErrorThrown = false;
 
 		final ArrayList<String> selectedCanteenIds = UserSettings.getInstance().getSelectedCanteenIds();
 		Log.d(TAG, "Selected Canteens: " + selectedCanteenIds);
 
-		boolean connectionFailedErrorThrown = false;
 		for (final String canteenId : selectedCanteenIds) {
 			mApiErfurt.fetchCanteenData(canteenId).enqueue(new Callback<CanteenDishVo[]>() {
 
@@ -351,10 +352,12 @@ public final class NetworkHandler {
 
 				@Override
 				public void onFailure(@NonNull final Call<CanteenDishVo[]> call, @NonNull final Throwable t) {
-					//prevent showing error toast for every canteen
-					if(!connectionFailedErrorThrown){
+					//connectionFailedErrorThrown -> prevent showing error toast for every canteen
+					if(!connectionFailedErrorThrown || !(t instanceof UnknownHostException)){
 						ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE9);
+						connectionFailedErrorThrown = t instanceof UnknownHostException;
 					}
+
 					CanteenModel.getInstance().setMenu(canteenId, null);
 				}
 			});
@@ -418,28 +421,19 @@ public final class NetworkHandler {
 	}
 
 
-	//wait until all updates are collected
-	private volatile int requestCounterMySchedule;
-
 	/**
 	 * Fetch all subscribed event series to detect changes and update
 	 */
 	public void fetchMySchedule() {
 		Assert.assertNotNull(mApiEah);
+		connectionFailedErrorThrown = false;
+
+		// Wir feuern verschiedene Anfragen. Erst wenn alle Antworten zurückgekommen sind, dann
+		// verarbeiten wir diese.
+		requestCounterMySchedule = 0;
 
 		final Map<String, Map<String, MyScheduleEventSeriesVo>> modules =
 				groupByModuleId(Main.getSubscribedEventSeries());
-
-		/*
-		 *  From java 5 after a change in Java memory model reads and writes are atomic for all
-		 *  variables declared using the volatile keyword (including long and double variables) and
-		 *  simple atomic variable access is more efficient instead of accessing these variables
-		 *  via synchronized java code.
-		 *
-		 *  Wir feuern verschiedene Anfragen. Erst wenn alle Antworten zurückgekommen sind, dann
-		 *  verarbeiten wir diese.
-		 */
-		requestCounterMySchedule = 0;
 		/* Das ist unser Halter für die Antworten */
 		final List<MyScheduleEventSeriesVo> updatedEventSeriesList = new ArrayList<>();
 
@@ -448,14 +442,14 @@ public final class NetworkHandler {
 			//skip if module id is null -> caused by eventseries added before module IDs were introduced
 			if (module.getKey() != null) {
 
-				//update all subscribed event series of this module
-				// we count the several requests
+				// Count how many requests we send out in total, to wait till all are processed
 				requestCounterMySchedule++;
+
+				//Update all subscribed event series of this module
 				mApiEah.fetchModule(module.getKey()).enqueue(new Callback<ModuleVo>() {
 
 					@Override
-					public void onResponse(@NonNull final Call<ModuleVo> call,
-					                       @NonNull final Response<ModuleVo> response) {
+					public void onResponse(@NonNull final Call<ModuleVo> call, @NonNull final Response<ModuleVo> response) {
 
 						if (response.isSuccessful()) {
 							try{
@@ -484,8 +478,12 @@ public final class NetworkHandler {
 
 					@Override
 					public void onFailure(@NonNull final Call<ModuleVo> call, @NonNull final Throwable t) {
-						ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE6);
-						Utils.showToast(R.string.myschedule_connection_failed);
+						//connectionFailedErrorThrown -> prevent showing error toast for every module
+						if(!connectionFailedErrorThrown || !(t instanceof UnknownHostException)){
+							ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE6);
+							connectionFailedErrorThrown = t instanceof UnknownHostException;
+							Utils.showToast(R.string.myschedule_connection_failed);
+						}
 						Log.d(TAG, "failure: request " + call.request().url() + " (internal: " + t.getCause() + ")");
 
 						//add old event series' to prevent them from getting lost
@@ -509,5 +507,15 @@ public final class NetworkHandler {
 		}
 	}
 
+	/*
+	 *  From java 5 after a change in Java memory model reads and writes are atomic for all
+	 *  variables declared using the volatile keyword (including long and double variables) and
+	 *  simple atomic variable access is more efficient instead of accessing these variables
+	 *  via synchronized java code.
+	 */
+	//prevent showing error toast for every fetching attempt (canteen or module for My Schedule)
+	private volatile boolean connectionFailedErrorThrown = false;
 
+	//wait until all updates for My Schedule are collected
+	private volatile int requestCounterMySchedule;
 }
