@@ -26,9 +26,9 @@
     
     <!--Navigation Drawer-->
     
-    <dimen name="drawer_width">300dp</dimen>
-    <dimen name="drawer_item_height">48dp</dimen>
-    <dimen name="drawer_item_text_size">18sp</dimen>
+    <dimen name="drawer_width">250dp</dimen>
+    <dimen name="drawer_item_height">46dp</dimen>
+    <dimen name="drawer_item_text_size">17sp</dimen>
     <dimen name="drawer_item_indicator_width">8dp</dimen>
     
     <!--Header metrics-->

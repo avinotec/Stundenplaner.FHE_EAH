@@ -27,6 +27,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.utils.feature.FeatureProvider;
+import de.fhe.fhemobile.utils.feature.Features;
 
 /**
  * Created by paul on 22.01.14.
@@ -64,15 +66,24 @@ public class DrawerAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.item_drawer, parent, false);
 
             viewHolder.mCheckedIndicator = (LinearLayout) convertView.findViewById(R.id.drawerSelectedItem);
-            viewHolder.mLabel = (TextView) convertView.findViewById(R.id.drawerLabel);
+            viewHolder.mLabel = (TextView) convertView.findViewById(R.id.drawer_label);
 
             convertView.setTag(viewHolder);
-        }
-        else {
+
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
         viewHolder.mLabel.setText(mItems.get(position).getText());
+        String label = (String) viewHolder.mLabel.getText();
+        if (FeatureProvider.getFeatureTitle(Features.FeatureId.TIMETABLE).equals(label)
+                || FeatureProvider.getFeatureTitle(Features.FeatureId.MAPS).equals(label)
+                || FeatureProvider.getFeatureTitle(Features.FeatureId.NEWS).equals(label)
+                || FeatureProvider.getFeatureTitle(Features.FeatureId.EVENTS).equals(label)
+                || FeatureProvider.getFeatureTitle(Features.FeatureId.JOBOFFERS).equals(label)
+                || FeatureProvider.getFeatureTitle(Features.FeatureId.IMPRINT).equals(label))  {
+            convertView.findViewById(R.id.drawer_separator).setVisibility(View.GONE);
+        }
 
         return convertView;
     }

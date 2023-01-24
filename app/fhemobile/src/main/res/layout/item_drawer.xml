@@ -34,8 +34,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/drawerLabel"
+        android:text="Drawer Item"
+        android:id="@+id/drawer_label"
         android:textColor="@color/drawer_item_text"
         android:textSize="@dimen/drawer_item_text_size"
         android:fontFamily="@font/roboto_condensed_regular"
@@ -47,5 +47,10 @@
         android:layout_marginLeft="@dimen/list_item_horizontal_padding"
         android:layout_marginRight="@dimen/list_item_horizontal_padding"
         android:layout_toEndOf="@+id/drawerSelectedItem" />
+
+    <View
+        android:id="@+id/drawer_separator"
+        style="@style/ColoredDivider"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

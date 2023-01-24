@@ -37,6 +37,7 @@
     <color name="drawer_item_text">@color/primary_color</color>
     <color name="drawer_item_indicator">@color/primary_transparent_color</color>
     <color name="drawer_divider">#eee</color>
+    <color name="colored_divider">#50009990</color>
 
     <!--Button Colors-->
 
