@@ -16,6 +16,7 @@
  */
 package de.fhe.fhemobile.services;
 
+import static android.app.PendingIntent.FLAG_IMMUTABLE;
 import static de.fhe.fhemobile.utils.Define.PushNotifications.PARAM_EXAM_ADDED;
 import static de.fhe.fhemobile.utils.Define.PushNotifications.PARAM_TIMETABLE_CHANGED;
 
@@ -182,7 +183,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 
         // Create an explicit intent for an Activity in your app
         final PendingIntent pendingIntent = PendingIntent.getActivity(Main.getAppContext(), 0,
-                new Intent(Main.getAppContext(), MainActivity.class), 0);
+                new Intent(Main.getAppContext(), MainActivity.class), FLAG_IMMUTABLE);
 
 
         final NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, Define.PushNotifications.CHANNEL_ID);
