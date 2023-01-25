@@ -474,7 +474,7 @@ public final class NetworkHandler {
 						if(requestCounterMySchedule <= 0){
 							// last request received, so proceed, finally
 							updateSubscribedEventSeriesAndAdapters(updatedEventSeriesList);
-							MyScheduleCalendarView.stopRefreshingAnimation();
+//							MyScheduleCalendarView2.stopRefreshingAnimation();
 						}
 					}
 
@@ -495,7 +495,7 @@ public final class NetworkHandler {
 						if(requestCounterMySchedule <= 0){
 							// even when failed, this is the last request received, so proceed, finally
 							updateSubscribedEventSeriesAndAdapters(updatedEventSeriesList);
-							MyScheduleCalendarView.stopRefreshingAnimation();
+//							MyScheduleCalendarView2.stopRefreshingAnimation();
 						}
 					}
 				});
