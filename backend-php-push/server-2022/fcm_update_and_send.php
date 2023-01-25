@@ -104,7 +104,6 @@ function updateDatabaseAndBookNotifications(string &$moduleId): void
             $fetchedEventSetJson = utf8_encode(json_encode($eventsetData));
             // change escaped slashes ("\/") to "/"
 //            $fetchedEventSetJson = stripslashes($fetchedEventSetJson);
-            /** @var String $eventSeriesName */
             $eventSeriesName = getEventSeriesName($eventsetData["activityName"]);
             //get local event set
             //array of eventset_id, eventseries, module_id, eventset_data, last_changed
@@ -201,8 +200,8 @@ function bookExamAddedNotifications(string &$moduleId, string &$moduleName): voi
     global $output;
 
     //get tokens subscribing any event series in the given module
-    // Array of token, language, os
-    $resultSubscribingUser = $db_timetable->getUserSubscribingAnythingInModule($moduleId);
+	/** @var array $mysqli_result Array of token, language, os */
+	$resultSubscribingUser = $db_timetable->getUserSubscribingAnythingInModule($moduleId);
 
     if ($resultSubscribingUser->num_rows > 0) {
         bookNotifications($resultSubscribingUser, $moduleName, EXAM_ADDED);
@@ -289,7 +288,7 @@ function sendFCM(string &$tokens, string &$subject, string &$type): void
 
 // Get data from the Stundenplan server (!not the database on this server)
 
-/** @var string $url fetch all available module ids from StundenplanServer */
+/** fetch all available module ids from StundenplanServer */
 $url = API_BASE_URL . ENDPOINT_MODULE;
 $jsonStringFromStundenplanServer = file_get_contents($url);
 //note: second parameter must be true to enable key-value array interpretation
@@ -301,7 +300,7 @@ $output .= sprintf("<b> %s module IDs had been fetched.</b><br>", count($moduleI
 
 //DEBUG
 if ($debug) {
-    $output .= sprintf("<b><i><span style='color:DodgerBlue;'>Fetched module ids: </span></i></b>", count($moduleIds));
+    $output .= sprintf("<b><i><span style='color:DodgerBlue;'>Fetched module ids: </span></i></b> %s", count($moduleIds));
 
     //TODO: comment out for complete modules fetching (or set $debug to false)
     //DEBUG: for debugging: reduce array to smaller size
