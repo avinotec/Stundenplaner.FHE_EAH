@@ -56,6 +56,13 @@ function updateDatabaseAndBookNotifications(string &$moduleId): void
     $moduleData = array();
     // retrieve data for the module from Stundenplan Server (!not the database on this server)
     $jsonString = file_get_contents($moduleURL);
+	
+	if ( $jsonString === false )
+	{
+		$output .= "(E500) updateDatabaseAndBookNotifications: failed reading from '$moduleURL'.".date("Y.m.d H:s");
+		return;
+	}
+	
     // second parameter must be true to enable key-value iteration
     $moduleData = json_decode($jsonString, true);
 
