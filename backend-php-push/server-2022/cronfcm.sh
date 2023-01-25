@@ -1,13 +1,13 @@
 #!/bin/bash
 #
-# Contab Datei
+# Crontab Datei
 # start.php muss hierbei regelmäßig ausgeführt werden
 # Hierbei empfehle ich zum start erstmal jede Stunde -> jede Stunde zur Minute 0, zwischen 5 Uhr frühs und 22 Uhr Abends
 #0 5-22 * * *	php {Pfad zur PHP Datei} > {Pfad zum Log} 2>&1
 #
 # Ersten * durch 5-0 ersetzen damit nachts keine Benachrichtigungen gesendet werden.
 #
-php -f /var/www/html/api/fcm_update_and_send.php 
+php -f /var/www/html/api/fcm_update_and_send.php
 
 
 
@@ -19,10 +19,10 @@ php -f /var/www/html/api/fcm_update_and_send.php
 #
 #
 #crontab eintragen
-# crontab -e 
+# crontab -e
 #
 #
-# alle 5 Minuten	
+# alle 5 Minuten
 # */5 * * * *
 # */5 * * * * /var/www/html/api/cronfcm.sh >> /var/www/html/api/cronfcm.log 2>&1
 #

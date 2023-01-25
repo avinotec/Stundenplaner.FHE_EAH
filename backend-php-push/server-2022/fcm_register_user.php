@@ -101,9 +101,9 @@ if ($debug) { print_r($_REQUEST); }
 // ----------------- Get data from app ----------------------------------------------
 
 // initialize to set data types
-/** @var string $os value ANDROID or IOS */
+/** value ANDROID or IOS */
 $os = ANDROID;
-/** @var string $language default language for responses to the user*/
+/**  default language for responses to the user*/
 $language = LANG_DE;
 
 //get os
@@ -123,9 +123,9 @@ if ($language !== LANG_DE && $language !== LANG_EN) {
 }
 
 // initialize to set data types
-/** @var string $fcmToken Token for Firebase Messaging Server */
+/** Token for Firebase Messaging Server */
 $fcmToken = "";
-/** @var array $arraySubscribedEventseries which events are subscribed by the user*/
+/** which events are subscribed by the user*/
 $arraySubscribedEventseries = array();
 
 if ($os == ANDROID) {

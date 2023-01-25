@@ -211,7 +211,6 @@ final class TimetableDb
     {
         $subscribed_eventseries = $this->mysqli->real_escape_string($subscribed_eventseries);
 
-        /** @var String $sql */
         $sql =
             /** @lang MySQL */
             'INSERT INTO fcm_user (token, eventseries_name, os, language) ' .
