@@ -29,10 +29,13 @@ import com.google.gson.GsonBuilder;
 
 import org.junit.Assert;
 
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
@@ -60,6 +63,9 @@ import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
 import de.fhe.fhemobile.vos.semesterdates.SemesterDatesVo;
 import de.fhe.fhemobile.vos.timetable.TimetableDialogResponse;
 import de.fhe.fhemobile.vos.timetable.TimetableWeekVo;
+import okhttp3.ConnectionPool;
+import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -90,14 +96,24 @@ public final class NetworkHandler {
 				.setDateFormat("HH:mm:ss'T'yyyy-MM-dd")
 				.create();
 
+		OkHttpClient client = new OkHttpClient.Builder()
+				.connectTimeout(30, TimeUnit.SECONDS)
+				.readTimeout(60, TimeUnit.SECONDS)
+				//todo @Stepping: Internet schlägt zusätzlich folgendes zur Behebung von SocketException vor,
+				// da ich aber nicht weiß was das tut und damit die Nebeneffekte nicht abschätzen kann, habe ich es erstmal auskommentiert
+//				.connectionPool(new ConnectionPool(0, 5, TimeUnit.MINUTES))
+//				.protocols(Arrays.asList(Protocol.HTTP_1_1))
+				.build();
 		final Retrofit mRestAdapter = new Retrofit.Builder()
 				.baseUrl(Endpoints.BASE_URL + Endpoints.APP_NAME)
+				.client(client)
 				.addConverterFactory(GsonConverterFactory.create(gson))
 				//.setConverter(new GsonConverter(gson))
 //                .setLogLevel(RestAdapter.LogLevel.FULL)
 				.build();
 		final Retrofit mRestAdapterEah = new Retrofit.Builder()
 				.baseUrl(Endpoints.BASE_URL_EAH)
+				.client(client)
 				.addConverterFactory(GsonConverterFactory.create(gson))
 				//.setConverter(new GsonConverter(gson))
 //                .setLogLevel(RestAdapter.LogLevel.FULL)
@@ -353,10 +369,11 @@ public final class NetworkHandler {
 
 				@Override
 				public void onFailure(@NonNull final Call<CanteenDishVo[]> call, @NonNull final Throwable t) {
+					boolean isCertainExc = (t instanceof UnknownHostException || t instanceof SocketTimeoutException);
 					//connectionFailedErrorThrown -> prevent showing error toast for every canteen
-					if(!connectionFailedErrorThrown || !(t instanceof UnknownHostException)){
+					if(!connectionFailedErrorThrown || !isCertainExc) {
 						ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE9);
-						connectionFailedErrorThrown = t instanceof UnknownHostException;
+						connectionFailedErrorThrown = isCertainExc;
 					}
 
 					CanteenModel.getInstance().setMenu(canteenId, null);
@@ -480,10 +497,11 @@ public final class NetworkHandler {
 
 					@Override
 					public void onFailure(@NonNull final Call<ModuleVo> call, @NonNull final Throwable t) {
+						boolean isCertainExc = (t instanceof UnknownHostException || t instanceof SocketTimeoutException);
 						//connectionFailedErrorThrown -> prevent showing error toast for every module
-						if(!connectionFailedErrorThrown || !(t instanceof UnknownHostException)){
+						if(!connectionFailedErrorThrown || !isCertainExc){
 							ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE6);
-							connectionFailedErrorThrown = t instanceof UnknownHostException;
+							connectionFailedErrorThrown = isCertainExc;
 							Utils.showToast(R.string.myschedule_connection_failed);
 						}
 						Log.d(TAG, "failure: request " + call.request().url() + " (internal: " + t.getCause() + ")");
