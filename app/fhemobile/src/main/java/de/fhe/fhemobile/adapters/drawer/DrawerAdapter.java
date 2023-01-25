@@ -75,14 +75,13 @@ public class DrawerAdapter extends BaseAdapter {
         }
 
         viewHolder.mLabel.setText(mItems.get(position).getText());
+
+        //set separator
         String label = (String) viewHolder.mLabel.getText();
-        if (FeatureProvider.getFeatureTitle(Features.FeatureId.TIMETABLE).equals(label)
-                || FeatureProvider.getFeatureTitle(Features.FeatureId.MAPS).equals(label)
-                || FeatureProvider.getFeatureTitle(Features.FeatureId.NEWS).equals(label)
-                || FeatureProvider.getFeatureTitle(Features.FeatureId.EVENTS).equals(label)
-                || FeatureProvider.getFeatureTitle(Features.FeatureId.JOBOFFERS).equals(label)
-                || FeatureProvider.getFeatureTitle(Features.FeatureId.IMPRINT).equals(label))  {
-            convertView.findViewById(R.id.drawer_separator).setVisibility(View.GONE);
+        if (FeatureProvider.getFeatureTitle(Features.FeatureId.MYSCHEDULE).equals(label)
+                || FeatureProvider.getFeatureTitle(Features.FeatureId.NAVIGATION).equals(label)
+                || FeatureProvider.getFeatureTitle(Features.FeatureId.SEMESTER_DATES).equals(label))  {
+            convertView.findViewById(R.id.drawer_separator).setVisibility(View.VISIBLE);
         }
 
         return convertView;

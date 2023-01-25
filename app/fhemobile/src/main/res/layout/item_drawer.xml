@@ -51,6 +51,7 @@
     <View
         android:id="@+id/drawer_separator"
         style="@style/ColoredDivider"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"/>
 
 </RelativeLayout>
