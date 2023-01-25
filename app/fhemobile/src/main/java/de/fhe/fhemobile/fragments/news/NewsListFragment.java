@@ -88,13 +88,13 @@ public class NewsListFragment extends FeatureFragment {
 
                 menu.clear();
                 // Add menu items here
-                menuInflater.inflate(R.menu.menu_main, menu);
+                menuInflater.inflate(R.menu.menu_newslist, menu);
             }
 
             @Override
             public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
                 // Handle the menu selection
-                if (menuItem.getItemId() == R.id.action_settings) {
+                if (menuItem.getItemId() == R.id.action_settings_news) {
                     final Intent intent = new Intent(activity, SettingsActivity.class);
                     intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.NEWS);
                     activity.startActivity(intent);

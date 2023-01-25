@@ -107,7 +107,6 @@ public class NavigationDialogFragment extends FeatureFragment {
                 // Add menu items here
                 menu.clear();
                 menuInflater.inflate(R.menu.menu_main, menu);
-                menu.findItem(R.id.action_settings).setVisible(false);
             }
 
             @Override

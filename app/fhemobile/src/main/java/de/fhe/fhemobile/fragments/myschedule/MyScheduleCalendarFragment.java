@@ -111,7 +111,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 				menuInflater.inflate(R.menu.menu_myschedule_calendar, menu);
 				if(!Define.ENABLE_MYSCHEDULE_UPDATING){
 					//disable button for updating
-					final MenuItem updateButton = menu.findItem(R.id.action_update);
+					final MenuItem updateButton = menu.findItem(R.id.action_update_myschedule);
 					updateButton.setEnabled(false);
 					updateButton.setVisible(false);
 				}
@@ -130,7 +130,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 					activity.startActivity(intent);
 					return true;
 				}
-				if (menuItem.getItemId() == R.id.action_update){
+				if (menuItem.getItemId() == R.id.action_update_myschedule){
 					if(Define.ENABLE_MYSCHEDULE_UPDATING){
 						FetchMyScheduleBackgroundTask.fetch();
 					}

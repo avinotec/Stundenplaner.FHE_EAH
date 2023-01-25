@@ -89,13 +89,13 @@ public class CanteenFragment extends FeatureFragment {
             @Override
             public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
                 // Handle the menu selection
-                if (menuItem.getItemId() == R.id.action_settings) {
+                if (menuItem.getItemId() == R.id.action_settings_canteen) {
                     final Intent intent = new Intent(activity, SettingsActivity.class);
                     intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.CANTEEN);
                     activity.startActivity(intent);
                     return true;
                 }
-                if (menuItem.getItemId() == R.id.action_update){
+                if (menuItem.getItemId() == R.id.action_update_canteen){
                     NetworkHandler.getInstance().fetchCanteenMenus();
                 }
 
