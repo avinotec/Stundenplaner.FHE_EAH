@@ -16,6 +16,7 @@
  */
 package de.fhe.fhemobile.network;
 
+import static de.fhe.fhemobile.Main.getAppContext;
 import static de.fhe.fhemobile.activities.MainActivity.updateSubscribedEventSeriesAndAdapters;
 import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.getUpdatedEventSeries;
 import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.groupByModuleId;
@@ -29,6 +30,7 @@ import com.google.gson.GsonBuilder;
 
 import org.junit.Assert;
 
+import java.io.File;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -47,7 +49,6 @@ import de.fhe.fhemobile.utils.ApiErrorUtils;
 import de.fhe.fhemobile.utils.UserSettings;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.canteen.CanteenUtils;
-import de.fhe.fhemobile.views.myschedule.MyScheduleCalendarView;
 import de.fhe.fhemobile.vos.ApiErrorResponse;
 import de.fhe.fhemobile.vos.WeatherResponse;
 import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
@@ -63,7 +64,7 @@ import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
 import de.fhe.fhemobile.vos.semesterdates.SemesterDatesVo;
 import de.fhe.fhemobile.vos.timetable.TimetableDialogResponse;
 import de.fhe.fhemobile.vos.timetable.TimetableWeekVo;
-import okhttp3.ConnectionPool;
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.Protocol;
 import retrofit2.Call;
@@ -96,14 +97,19 @@ public final class NetworkHandler {
 				.setDateFormat("HH:mm:ss'T'yyyy-MM-dd")
 				.create();
 
-		OkHttpClient client = new OkHttpClient.Builder()
+		final File directory = new File( getAppContext().getCacheDir(), "http_cache");
+		// $0.05 worth of phone storage in 2020
+		final long maxSize = 50L * 1024L * 1024L; // 50 MiB
+
+		final OkHttpClient client = new OkHttpClient.Builder()
+				.cache(new Cache( directory, maxSize ))
 				.connectTimeout(30, TimeUnit.SECONDS)
 				.readTimeout(60, TimeUnit.SECONDS)
-				//todo @Stepping: Internet schlägt zusätzlich folgendes zur Behebung von SocketException vor,
-				// da ich aber nicht weiß was das tut und damit die Nebeneffekte nicht abschätzen kann, habe ich es erstmal auskommentiert
 //				.connectionPool(new ConnectionPool(0, 5, TimeUnit.MINUTES))
-//				.protocols(Arrays.asList(Protocol.HTTP_1_1))
+				//.retryOnConnectionFailure(true)
+				.protocols(Arrays.asList(Protocol.HTTP_2, Protocol.HTTP_1_1))
 				.build();
+
 		final Retrofit mRestAdapter = new Retrofit.Builder()
 				.baseUrl(Endpoints.BASE_URL + Endpoints.APP_NAME)
 				.client(client)
@@ -111,6 +117,7 @@ public final class NetworkHandler {
 				//.setConverter(new GsonConverter(gson))
 //                .setLogLevel(RestAdapter.LogLevel.FULL)
 				.build();
+
 		final Retrofit mRestAdapterEah = new Retrofit.Builder()
 				.baseUrl(Endpoints.BASE_URL_EAH)
 				.client(client)
