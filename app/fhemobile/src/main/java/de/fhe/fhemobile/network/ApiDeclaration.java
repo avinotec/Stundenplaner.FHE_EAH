@@ -41,38 +41,38 @@ import retrofit2.http.Query;
  */
 public interface ApiDeclaration {
 
-    @GET(Endpoints.PHONEBOOK)
-    Call<ArrayList<EmployeeVo>> fetchEmployees(@Query(Endpoints.PARAM_FNAME) String _FirstName, @Query(Endpoints.PARAM_LNAME) String _LastName);
-    
-    @GET(Endpoints.SEMESTER)
-    Call<SemesterDatesVo> fetchSemesterDates();
-    
-    @GET(Endpoints.CANTEEN + "/{" + Endpoints.PARAM_CANTEEN_ID + "}")
-    Call<CanteenDishVo[]> fetchCanteenData(@Path(Endpoints.PARAM_CANTEEN_ID) String _CanteenId);
-    
-    @GET(Endpoints.CANTEEN)
-    Call<CanteenVo[]> fetchAvailableCanteens();
+	@GET(Endpoints.PHONEBOOK)
+	Call<ArrayList<EmployeeVo>> fetchEmployees(@Query(Endpoints.PARAM_FNAME) String _FirstName, @Query(Endpoints.PARAM_LNAME) String _LastName);
 
-    @GET(Endpoints.RSS + "/{" + Endpoints.PARAM_NEWSLIST_ID + "}")
-    Call<NewsItemResponse> fetchNewsData(@Path(Endpoints.PARAM_NEWSLIST_ID) String _NewsListId);
+	@GET(Endpoints.SEMESTER)
+	Call<SemesterDatesVo> fetchSemesterDates();
 
-    @GET(Endpoints.RSS)
-    Call<NewsCategoryResponse> fetchAvailableNewsLists();
-    
-    @GET(Endpoints.WEATHER)
-    Call<WeatherResponse> fetchWeather();
-    
-    @GET(Endpoints.TIMETABLE)
-    Call<TimetableDialogResponse> fetchStudyProgramData();
+	@GET(Endpoints.CANTEEN + "/{" + Endpoints.PARAM_CANTEEN_ID + "}")
+	Call<CanteenDishVo[]> fetchCanteenData(@Path(Endpoints.PARAM_CANTEEN_ID) String _CanteenId);
 
-    @GET(Endpoints.TIMETABLE_EVENTS + "{" + Endpoints.PARAM_STUDYGROUP_ID + "}/detail")
-    Call<Map<String, TimetableWeekVo>> fetchTimetableEvents(@Path(Endpoints.PARAM_STUDYGROUP_ID) String _StudyGroupId);
+	@GET(Endpoints.CANTEEN)
+	Call<CanteenVo[]> fetchAvailableCanteens();
 
-    @GET(Endpoints.MY_SCHEDULE + "{" + Endpoints.PARAM_SEMESTER_ID + "}")
-    Call<Map<String, MyScheduleEventSetVo>> fetchSemesterTimetable(@Path(Endpoints.PARAM_SEMESTER_ID) String _SemesterId);
+	@GET(Endpoints.RSS + "/{" + Endpoints.PARAM_NEWSLIST_ID + "}")
+	Call<NewsItemResponse> fetchNewsData(@Path(Endpoints.PARAM_NEWSLIST_ID) String _NewsListId);
 
-    //https://stundenplanung.eah-jena.de/
-    // api/mobileapp/v1/module/{moduleId}
-    @GET(Endpoints.MODULE + "{" + Endpoints.PARAM_MODULE_ID + "}")
-    Call<ModuleVo> fetchModule(@Path(Endpoints.PARAM_MODULE_ID) String _ModuleId);
+	@GET(Endpoints.RSS)
+	Call<NewsCategoryResponse> fetchAvailableNewsLists();
+
+	@GET(Endpoints.WEATHER)
+	Call<WeatherResponse> fetchWeather();
+
+	@GET(Endpoints.TIMETABLE)
+	Call<TimetableDialogResponse> fetchStudyProgramData();
+
+	@GET(Endpoints.TIMETABLE_EVENTS + "{" + Endpoints.PARAM_STUDYGROUP_ID + "}/detail")
+	Call<Map<String, TimetableWeekVo>> fetchTimetableEvents(@Path(Endpoints.PARAM_STUDYGROUP_ID) String _StudyGroupId);
+
+	@GET(Endpoints.MY_SCHEDULE + "{" + Endpoints.PARAM_SEMESTER_ID + "}")
+	Call<Map<String, MyScheduleEventSetVo>> fetchSemesterTimetable(@Path(Endpoints.PARAM_SEMESTER_ID) String _SemesterId);
+
+	//https://stundenplanung.eah-jena.de/
+	// api/mobileapp/v1/module/{moduleId}
+	@GET(Endpoints.MODULE + "{" + Endpoints.PARAM_MODULE_ID + "}")
+	Call<ModuleVo> fetchModule(@Path(Endpoints.PARAM_MODULE_ID) String _ModuleId);
 }
