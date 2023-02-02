@@ -302,7 +302,7 @@ $output .= sprintf("<b> %s module IDs had been fetched.</b><br>", count($moduleI
 if ($debug) {
     $output .= sprintf("<b><i><span style='color:DodgerBlue;'>Fetched module ids: </span></i></b> %s", count($moduleIds));
 
-    //TODO: comment out for complete modules fetching (or set $debug to false)
+    //TODO: @Stepping comment out for complete modules fetching (or set $debug to false)
     //DEBUG: for debugging: reduce array to smaller size
 //    $moduleIds = array_slice($moduleIds, 20, 2, true);
     $moduleIds = array_slice($moduleIds, 20, 200, true);
