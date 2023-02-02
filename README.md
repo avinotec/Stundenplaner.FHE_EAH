@@ -19,7 +19,6 @@ Sprachen in der App: Deutsch, Englisch
 ## Beschreibung der Features, aktueller Stand, Hinweise
 #### Stundenplan
   - Abruf des allgemeinen Stundenplans für ein spezifisches Semester in einem Studiengang
-  - *Status: Updates veröffentlicht am 23.09.2022*
 
 - https://stundenplanung.eah-jena.de/api/mobileapp/v1/activity/{id}
 - https://stundenplanung.eah-jena.de/api/mobileapp/v1/module
