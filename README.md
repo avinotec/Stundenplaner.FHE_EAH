@@ -33,7 +33,7 @@ Sprachen in der App: Deutsch, Englisch
   - Zusammenstellung eines Stundenplans durch individuelle Auswahl von Kursen
   - *Status:*
     - *Updates veröffentlicht am 23.09.2022*
-    - *Verarbeitung von Stundenplanänderungen in Arbeit (Stand: 12.10.2022)*
+    - *Update Januar 2023: Push-Benachrichtigungen und Abruf von Stundenplanänderungen*
 #### Mensa
   - Menüs der Jenaer Mensen und zugehörige Studentenpreise
   - *Status: Updates veröffentlicht am 23.09.2022*
