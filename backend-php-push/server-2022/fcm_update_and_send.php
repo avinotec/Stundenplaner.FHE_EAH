@@ -101,7 +101,7 @@ function updateDatabaseAndBookNotifications(string &$moduleId): void
         //CHANGED and ADDED EVENT SERIES
         // per module, check each event set for changes
         foreach ($moduleData["dataActivity"] as $eventsetID => $eventsetData) {
-            $fetchedEventSetJson = utf8_encode(json_encode($eventsetData));
+            $fetchedEventSetJson = json_encode($eventsetData);
             // change escaped slashes ("\/") to "/"
 //            $fetchedEventSetJson = stripslashes($fetchedEventSetJson);
             $eventSeriesName = getEventSeriesName($eventsetData["activityName"]);
@@ -124,8 +124,8 @@ function updateDatabaseAndBookNotifications(string &$moduleId): void
                     $output .= sprintf("<li> Event set %s has changed since %s.</li>",
                         $resultLocalEventSet[0]["eventset_id"],
                         $resultLocalEventSet[0]["last_changed"]);
-//                    file_put_contents('D:/Downloads/json_compare/'.$eventsetID.'_local.txt', $localEventSetJson);
-//                    file_put_contents('D:/Downloads/json_compare/'.$eventsetID.'_fetched.txt', $fetchedEventSetJson);
+                    file_put_contents('D:/Downloads/json_compare/'.$eventsetID.'_local.json', $localEventSetJson);
+                    file_put_contents('D:/Downloads/json_compare/'.$eventsetID.'_fetched.json', $fetchedEventSetJson);
                     //update database, the data of this event set has changed
                     $db_timetable->updateEventSet($eventsetID, $fetchedEventSetJson);
                     bookTimetableChangedNotifications($eventSeriesName);
@@ -307,10 +307,11 @@ if ($debug) {
 //    $moduleIds = array_slice($moduleIds, 20, 2, true);
     $moduleIds = array_slice($moduleIds, 20, 200, true);
     //add Personalmanagement for testing exam added
-    $moduleIds[] = "A615C4E5AF9DAB47C65F7B181CFD4C70";
-
-    $moduleIds[] = "09FF2B2A861392FAD18A0E92574B675B";
-    $moduleIds[] = "E8A862F1C4B17A679D3FB04C6B129735";
+//    $moduleIds[] = "A615C4E5AF9DAB47C65F7B181CFD4C70";
+//
+//    $moduleIds[] = "09FF2B2A861392FAD18A0E92574B675B";
+//    $moduleIds[] = "E8A862F1C4B17A679D3FB04C6B129735";
+    $moduleIds[] = "1C3A91921F135DD40715BB9E399B3F6C";
     $output .= implode(", ", $moduleIds);
 } // DEBUG
 

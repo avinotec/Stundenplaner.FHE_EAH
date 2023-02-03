@@ -277,8 +277,9 @@ final class TimetableDb
      */
     final public function updateEventSet(string &$eventset_id, string &$new_eventset_data): bool
     {
+        $data = mysqli_real_escape_string($this->mysqli, $new_eventset_data);
         $sql = /** @lang MySQL */
-            "UPDATE event_sets SET eventset_data = '$new_eventset_data'" .
+            "UPDATE event_sets SET eventset_data = '$data'" .
             "WHERE eventset_id = '$eventset_id'";
         /** @var bool $result */
         $result = $this->runQuery($sql, "updateEventSet");
@@ -298,9 +299,10 @@ final class TimetableDb
                                          string &$module_id,
                                          string &$eventset_json): bool
     {
+        $data = mysqli_real_escape_string($this->mysqli, $eventset_json);
         $sql = /** @lang MySQL */
             'INSERT INTO event_sets (eventset_id, eventseries, module_id, eventset_data, last_changed)' .
-            "VALUES ('$eventset_id', '$eventseries_name', '$module_id', '$eventset_json', current_timestamp())";
+            "VALUES ('$eventset_id', '$eventseries_name', '$module_id', '$data', current_timestamp())";
         /** @var bool $result */
         $result = $this->runQuery($sql, "insertEventSet");
         return $result;
