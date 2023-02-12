@@ -51,7 +51,7 @@ Sprachen in der App: Deutsch, Englisch
   - *Status: initiale Lösung als WebView*
 #### Semestertermine
   - Vorlesungszeiten, Prüfungszeitraum, Bewerbungsfristen, ...
-  - Hinweis: manuelle Einspeißung der Daten
+  - Hinweis: manuelle Einspeisung der Daten
 #### Jobangebote
   - [Stellenticket der EAH](https://stellenticket.eah-jena.de/de/offers/fulltextsearch/EAH-Jena/#Inhalt): Stellenausschreibungen für AkademikerInnen und Studierende
   - *Status: Feature veröffentlicht im Frühling 2022* 
