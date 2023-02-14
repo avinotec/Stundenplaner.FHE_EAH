@@ -82,7 +82,7 @@ public class CanteenMenuView extends LinearLayout {
         mCanteenNameText.setText(UserSettings.getInstance().getSelectedCanteen(mCanteenId).getCanteenName());
 
         mErrorText.setVisibility(VISIBLE);
-        populateMenuDaysList();
+        initMenuDaysList();
     }
 
     public void registerModelListener() {
@@ -98,6 +98,14 @@ public class CanteenMenuView extends LinearLayout {
     }
 
     /**
+     * Initial population of menu days list with list loaded from shared preferences
+     */
+    public void initMenuDaysList(){
+        List<CanteenMenuDayVo> menuDaysList = getCanteenMenuDaysFromSharedPreferences();
+        populateMenuDaysList(menuDaysList);
+    }
+
+    /**
      * Load menu from {@link CanteenModel} or from shared preferences if menu is empty.
      * If menu is not empty, use the list of {@link CanteenMenuDayVo}s to populate listview,
      * otherwise show an error text.
@@ -107,26 +115,11 @@ public class CanteenMenuView extends LinearLayout {
 
         //if menu empty, load from shared preferences
         if (menuDaysList == null || menuDaysList.size() == 0){
-            final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences(SP_CANTEEN, Context.MODE_PRIVATE);
-            final String json = sharedPreferences.getString(CANTEEN + mCanteenId, "");
-            final Gson gson = new Gson();
-            if(!"".equals(json)){
-                final Type listType = new TypeToken<ArrayList<CanteenMenuDayVo>>(){}.getType();
-                menuDaysList = gson.fromJson(json, listType);
-                Log.d(TAG, "Menu for " + mCanteenId + " loaded from Shared Preferences");
-            }
+            menuDaysList = getCanteenMenuDaysFromSharedPreferences();
             showUpdateFailedToast();
         }
 
-        //if non-empty, populate view
-        if(menuDaysList != null){
-            mErrorText.setVisibility(GONE);
-            mMenuDaysListView.setVisibility(VISIBLE);
-            populateMenuDaysList(menuDaysList);
-        } else {
-            mErrorText.setVisibility(VISIBLE);
-            mMenuDaysListView.setVisibility(GONE);
-        }
+        populateMenuDaysList(menuDaysList);
     }
 
     /**
@@ -135,27 +128,54 @@ public class CanteenMenuView extends LinearLayout {
      * @param menuDaysList List of {@link CanteenMenuDayVo}
      */
     private void populateMenuDaysList(@NonNull List<CanteenMenuDayVo> menuDaysList) {
-        mErrorText.setVisibility(GONE);
+        //if non-empty, populate view
+        if(menuDaysList != null && menuDaysList.size() > 0) {
+            mMenuDaysListView.setVisibility(VISIBLE);
 
-        final ArrayList<IHeaderItem> sectionList = new ArrayList<>();
+            mErrorText.setVisibility(GONE);
 
-        final DefaultHeaderItem headerSection = new DefaultHeaderItem("", false);
-        headerSection.addItem(new CanteenImageRowItem(R.drawable.th_canteen));
+            final ArrayList<IHeaderItem> sectionList = new ArrayList<>();
 
-        sectionList.add(headerSection);
+            final DefaultHeaderItem headerSection = new DefaultHeaderItem("", false);
+            headerSection.addItem(new CanteenImageRowItem(R.drawable.th_canteen));
 
-        //populate view
-        for (final CanteenMenuDayVo collection : menuDaysList) {
-            final ArrayList<IRowItem> rowItems = new ArrayList<>();
+            sectionList.add(headerSection);
 
-            for (final CanteenDishVo canteenItem : collection.getItems()) {
-                rowItems.add(new CanteenRowItem(canteenItem));
+            //populate view
+            for (final CanteenMenuDayVo collection : menuDaysList) {
+                final ArrayList<IRowItem> rowItems = new ArrayList<>();
+
+                for (final CanteenDishVo canteenItem : collection.getItems()) {
+                    rowItems.add(new CanteenRowItem(canteenItem));
+                }
+
+                sectionList.add(new DefaultHeaderItem(collection.getHeadline(), true, rowItems));
             }
-
-            sectionList.add(new DefaultHeaderItem(collection.getHeadline(), true, rowItems));
+            final StickyHeaderAdapter mAdapter = new StickyHeaderAdapter(getContext(), sectionList);
+            mMenuDaysListView.setAdapter(mAdapter);
         }
-        final StickyHeaderAdapter mAdapter = new StickyHeaderAdapter(getContext(), sectionList);
-        mMenuDaysListView.setAdapter(mAdapter);
+        //if list is empty, show error text
+        else {
+            mErrorText.setVisibility(VISIBLE);
+            mMenuDaysListView.setVisibility(GONE);
+        }
+    }
+
+    /**
+     * Load menu from shared preferences
+     * @return List of {@link CanteenMenuDayVo}s
+     */
+    private List<CanteenMenuDayVo> getCanteenMenuDaysFromSharedPreferences() {
+        List<CanteenMenuDayVo> menuDaysList = new ArrayList<>();
+        final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences(SP_CANTEEN, Context.MODE_PRIVATE);
+        final String json = sharedPreferences.getString(CANTEEN + mCanteenId, "");
+        final Gson gson = new Gson();
+        if(!"".equals(json)){
+            final Type listType = new TypeToken<ArrayList<CanteenMenuDayVo>>(){}.getType();
+            menuDaysList = gson.fromJson(json, listType);
+            Log.d(TAG, "Menu for " + mCanteenId + " loaded from Shared Preferences");
+        }
+        return menuDaysList;
     }
 
     private static void showUpdateFailedToast(){
