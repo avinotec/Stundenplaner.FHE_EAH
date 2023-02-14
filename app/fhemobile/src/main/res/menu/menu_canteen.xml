@@ -20,11 +20,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/action_update_canteen"
-        android:icon="@drawable/ic_update"
-        android:title="@string/action_update"
-        android:orderInCategory="100"
-        app:showAsAction="always" />
+
+<!--    NOTE: replaced by swipe down gesture-->
+<!--    <item android:id="@+id/action_update_canteen"-->
+<!--        android:icon="@drawable/ic_update"-->
+<!--        android:title="@string/action_update"-->
+<!--        android:orderInCategory="100"-->
+<!--        app:showAsAction="always" />-->
+
 
     <item android:id="@+id/action_settings_canteen"
         android:icon="@drawable/ic_more_vert"

@@ -129,7 +129,7 @@ public final class CanteenModel extends EventDispatcher {
     }
 
 
-    private void notifyChange(final String type) {
+    public void notifyChange(final String type) {
         dispatchEvent(new CanteenChangeEvent(type));
     }
 

@@ -19,8 +19,9 @@ package de.fhe.fhemobile.events;
 
 public class CanteenChangeEvent extends SimpleEvent {
 
-    public static final String RECEIVED_CANTEEN_MENU = "receivedCanteenMenu";
     public static final String RECEIVED_CANTEENS = "receivedCanteens";
+    public static final String RECEIVED_CANTEEN_MENU = "receivedCanteenMenu";
+    public static final String RECEIVED_All_CANTEEN_MENUS = "receivedAllCanteenMenus";
 
 
     public CanteenChangeEvent(final String type) {

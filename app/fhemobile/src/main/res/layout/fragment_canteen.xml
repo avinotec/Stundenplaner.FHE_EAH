@@ -31,6 +31,10 @@
         android:gravity="center"
         android:visibility="gone"/>
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/srl_canteen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager_canteen"
@@ -38,6 +42,8 @@
         android:layout_height="match_parent"
         android:layoutDirection="rtl"
         />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 </de.fhe.fhemobile.views.canteen.CanteenView>

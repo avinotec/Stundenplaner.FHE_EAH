@@ -23,10 +23,16 @@ import android.widget.TextView;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.canteen.CanteenPagerAdapter;
+import de.fhe.fhemobile.events.CanteenChangeEvent;
+import de.fhe.fhemobile.events.Event;
+import de.fhe.fhemobile.events.EventListener;
+import de.fhe.fhemobile.models.canteen.CanteenModel;
+import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.UserSettings;
 
 
@@ -44,6 +50,8 @@ public class CanteenView extends LinearLayout {
         super.onFinishInflate();
 
         mNoCanteensSelectedText = (TextView) findViewById(R.id.tv_canteen_no_canteens_selected);
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_canteen);
     }
 
     public void initializeView(final FragmentManager _Manager, final Lifecycle _Lifecycle){
@@ -54,8 +62,41 @@ public class CanteenView extends LinearLayout {
         } else{
             mNoCanteensSelectedText.setVisibility(VISIBLE);
         }
+
+        //refresh gesture
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
+            mSwipeRefreshLayout.setRefreshing(true);
+            NetworkHandler.getInstance().fetchCanteenMenus();
+        });
     }
 
+    public void registerModelListener() {
+        CanteenModel.getInstance().addListener(
+                CanteenChangeEvent.RECEIVED_All_CANTEEN_MENUS,
+                mReceivedAllCanteenMenusEventListener);
+    }
+
+    public void deregisterModelListener() {
+        CanteenModel.getInstance().removeListener(
+                CanteenChangeEvent.RECEIVED_All_CANTEEN_MENUS,
+                mReceivedAllCanteenMenusEventListener);
+    }
+
+    /**
+     * Stop refreshing animation started by swipe down gesture
+     */
+    public void stopRefreshingAnimation() {
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    private final EventListener mReceivedAllCanteenMenusEventListener = new EventListener() {
+        @Override
+        public void onEvent(Event event) {
+            stopRefreshingAnimation();
+        }
+    };
+
     TextView mNoCanteensSelectedText;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
 }
