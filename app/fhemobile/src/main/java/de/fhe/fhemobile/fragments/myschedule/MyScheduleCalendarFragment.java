@@ -96,7 +96,8 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 	public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
-		mView.jumpToToday();
+		//outdated: My Schedule Calendar list was changed to not displaying past days
+//		mView.jumpToToday();
 
 		//replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
 		// see https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
@@ -120,10 +121,12 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 			@Override
 			public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
 				// Handle the menu selection
-				if (menuItem.getItemId() == R.id.action_jump_to_today) {
-					mView.jumpToToday();
-					return true;
-				}
+
+				//outdated: My Schedule Calendar list was changed to not displaying past days
+//				if (menuItem.getItemId() == R.id.action_jump_to_today) {
+//					mView.jumpToToday();
+//					return true;
+//				}
 				if (menuItem.getItemId() == R.id.action_edit_my_courses) {
 					final Intent intent = new Intent(activity, SettingsActivity.class);
 					intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.MYSCHEDULE);

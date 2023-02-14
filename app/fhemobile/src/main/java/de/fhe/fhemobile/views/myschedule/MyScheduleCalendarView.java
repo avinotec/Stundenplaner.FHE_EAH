@@ -79,8 +79,10 @@ public class MyScheduleCalendarView extends LinearLayout {
         }
     }
 
+
     /**
      * View scrolls to today
+     * //outdated: My Schedule Calendar list was changed to not displaying past days
      */
     public void jumpToToday(){
         final int currentDayIndex = MainActivity.myScheduleCalendarAdapter.getPositionOfFirstEventToday();
