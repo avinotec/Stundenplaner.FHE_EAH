@@ -56,6 +56,7 @@ import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.myschedule.MyScheduleCalendarAdapter;
 import de.fhe.fhemobile.adapters.myschedule.MyScheduleSettingsAdapter;
+import de.fhe.fhemobile.events.MyScheduleChangeEvent;
 import de.fhe.fhemobile.fragments.DrawerFragment;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
@@ -348,6 +349,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         myScheduleSettingsAdapter.setItems(MyScheduleModel.getInstance().getSortedSubscribedEventSeries());
         myScheduleSettingsAdapter.notifyDataSetChanged();
 
+        MyScheduleModel.getInstance().notifyChange(MyScheduleChangeEvent.MYSCHEDULE_UPDATED);
     }
 
 

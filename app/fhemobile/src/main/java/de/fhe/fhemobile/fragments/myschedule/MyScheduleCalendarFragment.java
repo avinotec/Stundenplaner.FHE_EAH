@@ -107,12 +107,14 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 				menu.clear();
 				// Add menu items here
 				menuInflater.inflate(R.menu.menu_myschedule_calendar, menu);
-				if(!Define.ENABLE_MYSCHEDULE_UPDATING){
-					//disable button for updating
-					final MenuItem updateButton = menu.findItem(R.id.action_update_myschedule);
-					updateButton.setEnabled(false);
-					updateButton.setVisible(false);
-				}
+
+				//replaced by swipe down gesture
+//				if(!Define.ENABLE_MYSCHEDULE_UPDATING){
+//					//disable button for updating
+//					final MenuItem updateButton = menu.findItem(R.id.action_update_myschedule);
+//					updateButton.setEnabled(false);
+//					updateButton.setVisible(false);
+//				}
 			}
 
 			@Override
@@ -130,11 +132,13 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 					activity.startActivity(intent);
 					return true;
 				}
-				if (menuItem.getItemId() == R.id.action_update_myschedule){
-					if(Define.ENABLE_MYSCHEDULE_UPDATING){
-						FetchMyScheduleBackgroundTask.fetch();
-					}
-				}
+
+				//replaced by swipe down gesture
+//				if (menuItem.getItemId() == R.id.action_update_myschedule){
+//					if(Define.ENABLE_MYSCHEDULE_UPDATING){
+//						FetchMyScheduleBackgroundTask.fetch();
+//					}
+//				}
 
 				return false;
 			}
@@ -148,6 +152,18 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 			//Fetch/update my schedule
 			FetchMyScheduleBackgroundTask.startPeriodicFetching();
 		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		mView.registerModelListener();
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		mView.deregisterModelListener();
 	}
 
 	@Override

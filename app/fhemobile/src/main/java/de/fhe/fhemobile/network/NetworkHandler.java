@@ -514,7 +514,6 @@ public final class NetworkHandler {
 						if(requestCounterMySchedule <= 0){
 							// last request received, so proceed, finally
 							updateSubscribedEventSeriesAndAdapters(updatedEventSeriesList);
-//							MyScheduleCalendarView2.stopRefreshingAnimation();
 						}
 					}
 

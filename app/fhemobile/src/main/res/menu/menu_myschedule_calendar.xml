@@ -20,11 +20,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/action_update_myschedule"
-        android:icon="@drawable/ic_update"
-        android:title="@string/action_update"
-        android:orderInCategory="100"
-        app:showAsAction="always" />
+<!--    outdated: replaced by swipe down gesture-->
+<!--    <item android:id="@+id/action_update_myschedule"-->
+<!--        android:icon="@drawable/ic_update"-->
+<!--        android:title="@string/action_update"-->
+<!--        android:orderInCategory="100"-->
+<!--        app:showAsAction="always" />-->
 
 <!--    outdated: My Schedule Calendar list was changed to not displaying past days -->
 <!--    <item android:id="@+id/action_jump_to_today"-->

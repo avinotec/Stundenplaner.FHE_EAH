@@ -22,6 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -29,13 +31,20 @@ import java.util.Locale;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
+import de.fhe.fhemobile.events.Event;
+import de.fhe.fhemobile.events.EventListener;
+import de.fhe.fhemobile.events.MyScheduleChangeEvent;
+import de.fhe.fhemobile.models.myschedule.MyScheduleModel;
+import de.fhe.fhemobile.services.FetchMyScheduleBackgroundTask;
 import de.fhe.fhemobile.utils.Define;
 
 
 public class MyScheduleCalendarView extends LinearLayout {
 
+    //-- STATIC --------------------------------------------------------------------------------
     private static final String TAG = MyScheduleCalendarView.class.getSimpleName();
     private static TextView mLastUpdatedTextView;
+
 
     /**
      * Set (or update) the text view displaying the date the schedule has been last updated
@@ -47,18 +56,22 @@ public class MyScheduleCalendarView extends LinearLayout {
         final DateFormat sdf = new SimpleDateFormat("dd.MM.yy HH:mm", Locale.getDefault());
 
         if(mLastUpdatedTextView != null){
-            if(Main.getLastUpdateSubscribedEventSeries() != null){
+            if(MyScheduleModel.getInstance().getLastUpdateSubscribedEventSeries() != null){
                 mLastUpdatedTextView.setText(String.format("%s %s",
                         Main.getAppContext().getString(R.string.myschedule_last_updated),
-                        sdf.format(Main.getLastUpdateSubscribedEventSeries())));
+                        sdf.format(MyScheduleModel.getInstance().getLastUpdateSubscribedEventSeries())));
             } else {
                 mLastUpdatedTextView.setText(String.format("%s --", Main.getAppContext().getString(R.string.myschedule_last_updated)));
             }
         }
     }
 
+    //-- END STATIC --------------------------------------------------------------------------------
 
-    public MyScheduleCalendarView(final Context context, final AttributeSet attrs) { super(context, attrs);  }
+
+    public MyScheduleCalendarView(final Context context, final AttributeSet attrs) {
+        super(context, attrs);
+    }
 
     public MyScheduleCalendarView(final Context context) {
         super(context);
@@ -77,6 +90,33 @@ public class MyScheduleCalendarView extends LinearLayout {
             //disable showing last updating time
             mLastUpdatedTextView.setVisibility(GONE);
         }
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_myschedule_calendar);
+    }
+
+    public void initializeView(){
+        //Init view with empty calendar
+        setEmptyCalendarView();
+        MyScheduleCalendarView.setLastUpdatedTextView();
+
+
+        //refresh gesture
+        if(Define.ENABLE_MYSCHEDULE_UPDATING){
+            mSwipeRefreshLayout.setOnRefreshListener(() -> {
+                mSwipeRefreshLayout.setRefreshing(true);
+                FetchMyScheduleBackgroundTask.fetch();
+            });
+        }
+    }
+
+    public void registerModelListener() {
+        MyScheduleModel.getInstance().addListener(MyScheduleChangeEvent.MYSCHEDULE_UPDATED,
+                mUpdatedMyScheduleEventListener);
+    }
+
+    public void deregisterModelListener() {
+        MyScheduleModel.getInstance().removeListener(MyScheduleChangeEvent.MYSCHEDULE_UPDATED,
+                mUpdatedMyScheduleEventListener);
     }
 
 
@@ -99,7 +139,22 @@ public class MyScheduleCalendarView extends LinearLayout {
         mCalendarListView.setEmptyView(emptyView);
     }
 
+    /**
+     * Stop refreshing animation started by swipe down gesture
+     */
+    public void stopRefreshingAnimation() {
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    private final EventListener mUpdatedMyScheduleEventListener = new EventListener() {
+        @Override
+        public void onEvent(Event event) {
+            stopRefreshingAnimation();
+        }
+    };
+
 
     private ListView mCalendarListView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
 }
