@@ -40,10 +40,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.events.CanteenChangeEvent;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
+import de.fhe.fhemobile.models.myschedule.MyScheduleModel;
 import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.phonebook.PhonebookModel;
 import de.fhe.fhemobile.models.semesterdates.SemesterDatesModel;
@@ -474,7 +474,7 @@ public final class NetworkHandler {
 		requestCounterMySchedule = 0;
 
 		final Map<String, Map<String, MyScheduleEventSeriesVo>> modules =
-				groupByModuleId(Main.getSubscribedEventSeries());
+				groupByModuleId(MyScheduleModel.getInstance().getSubscribedEventSeries());
 		/* Das ist unser Halter für die Antworten */
 		final List<MyScheduleEventSeriesVo> updatedEventSeriesList = new ArrayList<>();
 
