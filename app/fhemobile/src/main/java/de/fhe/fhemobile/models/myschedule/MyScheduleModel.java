@@ -16,10 +16,15 @@
  */
 package de.fhe.fhemobile.models.myschedule;
 
+import static de.fhe.fhemobile.Main.getAppContext;
+import static de.fhe.fhemobile.utils.Define.MySchedule.PREF_SUBSCRIBED_EVENTSERIES;
 import static de.fhe.fhemobile.utils.Define.MySchedule.SP_MYSCHEDULE;
+import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
+import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.isExam;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -36,11 +41,14 @@ import java.util.List;
 
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
+import de.fhe.fhemobile.adapters.myschedule.MyScheduleCalendarAdapter;
+import de.fhe.fhemobile.adapters.myschedule.MyScheduleSettingsAdapter;
 import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
 import de.fhe.fhemobile.comparator.MyScheduleEventComparator;
 import de.fhe.fhemobile.events.EventDispatcher;
 import de.fhe.fhemobile.events.MyScheduleChangeEvent;
 import de.fhe.fhemobile.utils.Define;
+import de.fhe.fhemobile.views.myschedule.MyScheduleCalendarView;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
 
@@ -53,6 +61,7 @@ public class MyScheduleModel extends EventDispatcher {
 
     private static final String TAG = MyScheduleModel.class.getSimpleName();
 
+
     /* Utility classes have all fields and methods declared as static.
     Creating private constructors in utility classes prevents them from being accidentally instantiated. */
     private MyScheduleModel(){
@@ -61,29 +70,137 @@ public class MyScheduleModel extends EventDispatcher {
     public static MyScheduleModel getInstance() {
         if(ourInstance == null) {
             ourInstance = new MyScheduleModel();
+            ourInstance.initModel();
 
-            // load subscribed event series for My Schedule from Shared Preferences
-            final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences(SP_MYSCHEDULE, Context.MODE_PRIVATE);
-            final String json = sharedPreferences.getString(Define.MySchedule.PREF_SUBSCRIBED_EVENTSERIES, "");
-
-            // falls die Liste leer sein sollte, überspringen
-            if (!json.isEmpty() && !"null".equals(json)) { //NON-NLS
-                final Gson gson = new Gson();
-                final Type listType = new TypeToken<ArrayList<MyScheduleEventSeriesVo>>(){}.getType();
-                ArrayList<MyScheduleEventSeriesVo> list = gson.fromJson(json, listType);
-                ourInstance.clearSubscribedEventSeries();
-                for(MyScheduleEventSeriesVo eventSeriesVo : list){
-                    ourInstance.addToSubscribedEventSeries(eventSeriesVo);
-                }
-            }
-            final long lastUpdated = sharedPreferences.getLong(Define.MySchedule.PREF_DATA_LAST_UPDATED,  -1);
-            if(lastUpdated != -1) ourInstance.lastUpdateSubscribedEventSeries = new Date(lastUpdated);
-
-            if (BuildConfig.DEBUG) {
-                Assert.assertNotNull("onCreate(): subscribed eventseries is not initialized", ourInstance.subscribedEventSeries);
-            }
         }
         return ourInstance;
+    }
+
+    /**
+     * Initialize {@link MyScheduleModel} by loading My Schedule from Shared Preferences
+     * and set list adapters
+     */
+    private void initModel() {
+        // load subscribed event series for My Schedule from Shared Preferences
+        final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences(SP_MYSCHEDULE, Context.MODE_PRIVATE);
+        final String json = sharedPreferences.getString(Define.MySchedule.PREF_SUBSCRIBED_EVENTSERIES, "");
+
+        // skip if list from shared preferences is empty
+        if (!json.isEmpty() && !"null".equals(json)) { //NON-NLS
+            final Gson gson = new Gson();
+            final Type listType = new TypeToken<ArrayList<MyScheduleEventSeriesVo>>(){}.getType();
+            ArrayList<MyScheduleEventSeriesVo> list = gson.fromJson(json, listType);
+            for(MyScheduleEventSeriesVo eventSeriesVo : list){
+                ourInstance.addToSubscribedEventSeries(eventSeriesVo);
+            }
+        }
+        final long lastUpdated = sharedPreferences.getLong(Define.MySchedule.PREF_DATA_LAST_UPDATED,  -1);
+        if(lastUpdated != -1) ourInstance.lastUpdateSubscribedEventSeries = new Date(lastUpdated);
+
+        if (BuildConfig.DEBUG) {
+            Assert.assertNotNull("onCreate(): subscribed eventseries is not initialized", ourInstance.subscribedEventSeries);
+        }
+
+        //adapters
+        ourInstance.setMyScheduleCalendarAdapter(new MyScheduleCalendarAdapter(
+                ourInstance.getEventsOfAllSubscribedEventSeries()));
+        ourInstance.setMyScheduleSettingsAdapter(new MyScheduleSettingsAdapter(
+                Main.getAppContext(), ourInstance.getSortedSubscribedEventSeries()));
+    }
+
+    /**
+     * Add event series to subscriptions and update listview adapters
+     * @param eventSeries
+     */
+    public void addToSubscribedEventSeriesAndUpdateAdapters(final MyScheduleEventSeriesVo eventSeries){
+        eventSeries.setSubscribed(true);
+        //add to subscribed event series
+        //set subscribed -> needed for the case that an exam is being deleted by the user while fetching my schedule is adding it
+        eventSeries.setSubscribed(true);
+        subscribedEventSeries.put(eventSeries.getTitle(), eventSeries);
+
+        saveSubscribedEventSeriesToSharedPreferences();
+
+        myScheduleCalendarAdapter.setItems(getInstance().getEventsOfAllSubscribedEventSeries());
+        myScheduleCalendarAdapter.notifyDataSetChanged();
+        myScheduleSettingsAdapter.setItems(getInstance().getSortedSubscribedEventSeries());
+        myScheduleSettingsAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Remove given event series from subscriptions and update listview adapters
+     * @param unsubscribedEventSeries
+     */
+    public void removeFromSubscribedEventSeriesAndUpdateAdapters(final MyScheduleEventSeriesVo unsubscribedEventSeries){
+        unsubscribedEventSeries.setSubscribed(false);
+        subscribedEventSeries.remove(unsubscribedEventSeries.getTitle());
+        saveSubscribedEventSeriesToSharedPreferences();
+
+        myScheduleCalendarAdapter.setItems(getInstance().getEventsOfAllSubscribedEventSeries());
+        myScheduleCalendarAdapter.notifyDataSetChanged();
+        myScheduleSettingsAdapter.setItems(getInstance().getSortedSubscribedEventSeries());
+        myScheduleSettingsAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Update subscriptions to given list of event series and update listview adapters
+     * @param updatedSubscribedEventSeries
+     */
+    public void updateSubscribedEventSeriesAndAdapters(final List<MyScheduleEventSeriesVo> updatedSubscribedEventSeries){
+
+        for(MyScheduleEventSeriesVo series : updatedSubscribedEventSeries){
+
+            if(getInstance().containedInSubscribedEventSeries(series)){
+                //update subscribed event series
+                subscribedEventSeries.put(series.getTitle(), series);
+            } else if(isExam(series)){
+                //add to subscribed event series
+                //set subscribed -> needed for the case that an exam is being deleted by the user while fetching my schedule is adding it
+                series.setSubscribed(true);
+                subscribedEventSeries.put(series.getTitle(), series);
+            } else {
+                //the series has been deleted from subscribed event series (has been unsubscribed)
+                // while the updates had been computed (while My Schedule had been fetched)
+            }
+        }
+        setLastUpdateSubscribedEventSeries(new Date());
+        //todo
+//        MyScheduleCalendarView.setLastUpdatedTextView();
+
+        saveSubscribedEventSeriesToSharedPreferences();
+
+        myScheduleCalendarAdapter.setItems(getInstance().getEventsOfAllSubscribedEventSeries());
+        myScheduleCalendarAdapter.notifyDataSetChanged();
+        myScheduleSettingsAdapter.setItems(getInstance().getSortedSubscribedEventSeries());
+        myScheduleSettingsAdapter.notifyDataSetChanged();
+        notifyChange(MyScheduleChangeEvent.MYSCHEDULE_UPDATED);
+    }
+
+    public void clearSubscribedEventSeriesAndUpdateAdapters(){
+        subscribedEventSeries.clear();
+        getInstance().setLastUpdateSubscribedEventSeries(null);
+
+        saveSubscribedEventSeriesToSharedPreferences();
+
+        myScheduleCalendarAdapter.setItems(getInstance().getEventsOfAllSubscribedEventSeries());
+        myScheduleCalendarAdapter.notifyDataSetChanged();
+        myScheduleSettingsAdapter.setItems(getInstance().getSortedSubscribedEventSeries());
+        myScheduleSettingsAdapter.notifyDataSetChanged();
+        notifyChange(MyScheduleChangeEvent.MYSCHEDULE_UPDATED);
+    }
+
+    public void saveSubscribedEventSeriesToSharedPreferences() {
+        final Gson gson = new Gson();
+        final String json = correctUmlauts(gson.toJson(getInstance().getSortedSubscribedEventSeries(), ArrayList.class));
+        final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences(SP_MYSCHEDULE, Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(PREF_SUBSCRIBED_EVENTSERIES, json);
+        editor.apply();
+
+        // wir geben mal den erhaltenen JSON String aus. Dann können wir sehen, was Carsten uns sendet.
+        if (BuildConfig.DEBUG){
+            Log.d(TAG, "saveSubscribedEventSeriesToSharedPreferences(): JSON: " + json);
+        }
     }
 
     /**
@@ -104,33 +221,13 @@ public class MyScheduleModel extends EventDispatcher {
         return subscribedEventSeries.values();
     }
 
-    public void addToSubscribedEventSeries(MyScheduleEventSeriesVo seriesVo){
-        //set subscribed
-        //needed for the case that an exam is being deleted by the user while fetching my schedule is adding it
-        seriesVo.setSubscribed(true);
-        subscribedEventSeries.put(seriesVo.getTitle(), seriesVo);
-    }
-
-    public void updateSubscribedEventSeries(MyScheduleEventSeriesVo seriesVo){
-        subscribedEventSeries.put(seriesVo.getTitle(), seriesVo);
-    }
-
-    public void addToSubscribedEventSeries(List<MyScheduleEventSeriesVo> seriesVos){
-        for(MyScheduleEventSeriesVo series : seriesVos){
-            addToSubscribedEventSeries(series);
-        }
-    }
-
-    public void removeFromSubscribedEventSeries(MyScheduleEventSeriesVo seriesVo){
-        subscribedEventSeries.remove(seriesVo.getTitle());
-    }
-
+    /**
+     * Check if given event series is contained in subscriptions
+     * @param eventSeries
+     * @return
+     */
     public boolean containedInSubscribedEventSeries(MyScheduleEventSeriesVo eventSeries){
         return subscribedEventSeries.containsKey(eventSeries.getTitle());
-    }
-
-    public void clearSubscribedEventSeries(){
-        subscribedEventSeries.clear();
     }
 
     /**
@@ -166,6 +263,16 @@ public class MyScheduleModel extends EventDispatcher {
         editor.apply();
     }
 
+    /**
+     * Add given {@link MyScheduleEventSeriesVo} to subscriptions
+     * @param seriesVo
+     */
+    public void addToSubscribedEventSeries(MyScheduleEventSeriesVo seriesVo){
+        //set subscribed -> needed for the case that an exam is being deleted by the user while fetching my schedule is adding it
+        seriesVo.setSubscribed(true);
+        subscribedEventSeries.put(seriesVo.getTitle(), seriesVo);
+    }
+
     public Date getLastUpdateSubscribedEventSeries() {
         return lastUpdateSubscribedEventSeries;
     }
@@ -174,9 +281,26 @@ public class MyScheduleModel extends EventDispatcher {
         dispatchEvent(new MyScheduleChangeEvent(type));
     }
 
+    public MyScheduleCalendarAdapter getMyScheduleCalendarAdapter() {
+        return myScheduleCalendarAdapter;
+    }
+
+    public MyScheduleSettingsAdapter getMyScheduleSettingsAdapter() {
+        return myScheduleSettingsAdapter;
+    }
+
+    private void setMyScheduleCalendarAdapter(MyScheduleCalendarAdapter myScheduleCalendarAdapter) {
+        this.myScheduleCalendarAdapter = myScheduleCalendarAdapter;
+    }
+
+    private void setMyScheduleSettingsAdapter(MyScheduleSettingsAdapter myScheduleSettingsAdapter) {
+        this.myScheduleSettingsAdapter = myScheduleSettingsAdapter;
+    }
 
     private static MyScheduleModel ourInstance;
 
+    private MyScheduleCalendarAdapter myScheduleCalendarAdapter;
+    private MyScheduleSettingsAdapter myScheduleSettingsAdapter;
 
     public final HashMap<String, MyScheduleEventSeriesVo> subscribedEventSeries = new HashMap<>();
     public Date lastUpdateSubscribedEventSeries;

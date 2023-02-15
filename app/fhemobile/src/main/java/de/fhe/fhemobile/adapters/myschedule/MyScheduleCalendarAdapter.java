@@ -49,6 +49,10 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 	public MyScheduleCalendarAdapter() {
 	}
 
+	public MyScheduleCalendarAdapter(final List<MyScheduleEventVo> items){
+		setItems(items);
+	}
+
 	public void setItems(final List<MyScheduleEventVo> items){
 		mItems = new ArrayList<>();
 

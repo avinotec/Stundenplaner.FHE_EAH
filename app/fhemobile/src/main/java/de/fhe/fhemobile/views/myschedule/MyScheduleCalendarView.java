@@ -30,7 +30,6 @@ import java.util.Locale;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.events.Event;
 import de.fhe.fhemobile.events.EventListener;
 import de.fhe.fhemobile.events.MyScheduleChangeEvent;
@@ -49,7 +48,7 @@ public class MyScheduleCalendarView extends LinearLayout {
     /**
      * Set (or update) the text view displaying the date the schedule has been last updated
      */
-    public static void setLastUpdatedTextView(){
+    public void setLastUpdatedTextView(){
 
         //don't do any timezone magic here (like in MySchedule Events)
         // because Main.getLastUpdateSubscribedEventSeries() is an accurately generated date object
@@ -83,7 +82,7 @@ public class MyScheduleCalendarView extends LinearLayout {
         super.onFinishInflate();
 
         mCalendarListView = findViewById(R.id.lv_myschedule_calendar_courses);
-        mCalendarListView.setAdapter(MainActivity.myScheduleCalendarAdapter);
+        mCalendarListView.setAdapter(MyScheduleModel.getInstance().getMyScheduleCalendarAdapter());
 
         mLastUpdatedTextView = findViewById(R.id.tv_myschedule_calendar_last_updated);
         if(!Define.ENABLE_MYSCHEDULE_UPDATING){
@@ -97,7 +96,7 @@ public class MyScheduleCalendarView extends LinearLayout {
     public void initializeView(){
         //Init view with empty calendar
         setEmptyCalendarView();
-        MyScheduleCalendarView.setLastUpdatedTextView();
+        setLastUpdatedTextView();
 
 
         //refresh gesture
@@ -125,7 +124,7 @@ public class MyScheduleCalendarView extends LinearLayout {
      * //outdated: My Schedule Calendar list was changed to not displaying past days
      */
     public void jumpToToday(){
-        final int currentDayIndex = MainActivity.myScheduleCalendarAdapter.getPositionOfFirstEventToday();
+        final int currentDayIndex = MyScheduleModel.getInstance().getMyScheduleCalendarAdapter().getPositionOfFirstEventToday();
         if(currentDayIndex >= 0){
             mCalendarListView.setSelection(currentDayIndex);
         }
@@ -149,6 +148,7 @@ public class MyScheduleCalendarView extends LinearLayout {
     private final EventListener mUpdatedMyScheduleEventListener = new EventListener() {
         @Override
         public void onEvent(Event event) {
+            setLastUpdatedTextView();
             stopRefreshingAnimation();
         }
     };

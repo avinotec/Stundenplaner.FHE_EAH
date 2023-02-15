@@ -21,7 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import java.util.List;
 
-import de.fhe.fhemobile.activities.MainActivity;
+import de.fhe.fhemobile.models.myschedule.MyScheduleModel;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 
 public class MyScheduleSettingsAdapter extends AbstractMyScheduleAdapter {
@@ -43,7 +43,7 @@ public class MyScheduleSettingsAdapter extends AbstractMyScheduleAdapter {
             @Override
             public void onClick(final View v) {
 
-                MainActivity.removeFromSubscribedEventSeriesAndUpdateAdapters(currentItem);
+                MyScheduleModel.getInstance().removeFromSubscribedEventSeriesAndUpdateAdapters(currentItem);
             }
         };
     }

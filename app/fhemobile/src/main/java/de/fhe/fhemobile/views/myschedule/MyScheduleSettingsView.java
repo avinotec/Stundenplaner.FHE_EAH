@@ -28,8 +28,8 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.myschedule.MyScheduleDialogFragment;
+import de.fhe.fhemobile.models.myschedule.MyScheduleModel;
 
 
 public class MyScheduleSettingsView extends LinearLayout {
@@ -65,7 +65,7 @@ public class MyScheduleSettingsView extends LinearLayout {
 
 
         mCourseListView = (ListView) findViewById(R.id.lv_myschedule_settings);
-        mCourseListView.setAdapter(MainActivity.myScheduleSettingsAdapter);
+        mCourseListView.setAdapter(MyScheduleModel.getInstance().getMyScheduleSettingsAdapter());
     }
 
     /**

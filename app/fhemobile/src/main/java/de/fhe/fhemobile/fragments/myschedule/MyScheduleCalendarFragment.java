@@ -44,9 +44,9 @@ import java.util.Locale;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.activities.SettingsActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.models.myschedule.MyScheduleModel;
 import de.fhe.fhemobile.services.FetchMyScheduleBackgroundTask;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.Features;
@@ -225,7 +225,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 						.setPositiveButton(R.string.deleteTimetableConfirm, new DialogInterface.OnClickListener() {
 
 							public void onClick(final DialogInterface dialog, final int which) {
-								MainActivity.clearSubscribedEventSeriesAndUpdateAdapters();
+								MyScheduleModel.getInstance().clearSubscribedEventSeriesAndUpdateAdapters();
 							}
 						})
 						.setIcon(android.R.drawable.ic_dialog_alert);
