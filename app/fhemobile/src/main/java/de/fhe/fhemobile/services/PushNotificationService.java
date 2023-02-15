@@ -46,6 +46,7 @@ import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
+import de.fhe.fhemobile.models.myschedule.MyScheduleModel;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 
@@ -115,7 +116,7 @@ public class PushNotificationService extends FirebaseMessagingService {
             sendRegistrationToServer(new ArrayList<>());
             //set and register new token
             setFcmToken(token);
-            sendRegistrationToServer(Main.getSubscribedEventSeries());
+            sendRegistrationToServer(MyScheduleModel.getInstance().getSubscribedEventSeries());
         }
     }
 
@@ -147,7 +148,7 @@ public class PushNotificationService extends FirebaseMessagingService {
         if (BuildConfig.DEBUG) Assert.assertNotNull(fcmToken);
 
         if (fcmToken != null) {
-            Main.executorService.execute(new ServerRegistrationBackgroundTask(fcmToken, Main.getSubscribedEventSeries()));
+            Main.executorService.execute(new ServerRegistrationBackgroundTask(fcmToken, MyScheduleModel.getInstance().getSubscribedEventSeries()));
         }
     }
 
