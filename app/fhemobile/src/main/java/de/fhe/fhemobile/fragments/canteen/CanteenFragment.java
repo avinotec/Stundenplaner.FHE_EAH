@@ -64,7 +64,6 @@ public class CanteenFragment extends FeatureFragment {
 
         // Inflate the layout for this fragment
         mView = (CanteenView) inflater.inflate(R.layout.fragment_canteen, container, false);
-        //note: menus of selected canteens must be fetched before with NetworkHandler.getInstance().fetchCanteenData()
         mView.initializeView(getChildFragmentManager(), getLifecycle());
 
         return mView;
