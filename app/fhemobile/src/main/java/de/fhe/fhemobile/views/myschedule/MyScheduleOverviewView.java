@@ -32,17 +32,17 @@ import de.fhe.fhemobile.fragments.myschedule.MyScheduleDialogFragment;
 import de.fhe.fhemobile.models.myschedule.MyScheduleModel;
 
 
-public class MyScheduleSettingsView extends LinearLayout {
+public class MyScheduleOverviewView extends LinearLayout {
 
     private FragmentManager mFragmentManager;
     private ListView mCourseListView;
 
 
-    public MyScheduleSettingsView(final Context context, final AttributeSet attrs) {
+    public MyScheduleOverviewView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public MyScheduleSettingsView(final Context context) {
+    public MyScheduleOverviewView(final Context context) {
         super(context);
     }
 
@@ -55,7 +55,7 @@ public class MyScheduleSettingsView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        final FloatingActionButton mAddButton = (FloatingActionButton) findViewById(R.id.btn_myschedule_settings_add_eventseries);
+        final FloatingActionButton mAddButton = (FloatingActionButton) findViewById(R.id.btn_myschedule_overview_add_eventseries);
         mAddButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -64,8 +64,8 @@ public class MyScheduleSettingsView extends LinearLayout {
         });
 
 
-        mCourseListView = (ListView) findViewById(R.id.lv_myschedule_settings);
-        mCourseListView.setAdapter(MyScheduleModel.getInstance().getMyScheduleSettingsAdapter());
+        mCourseListView = (ListView) findViewById(R.id.lv_myschedule_overview);
+        mCourseListView.setAdapter(MyScheduleModel.getInstance().getMyScheduleOverviewAdapter());
     }
 
     /**
@@ -83,4 +83,5 @@ public class MyScheduleSettingsView extends LinearLayout {
         final MyScheduleDialogFragment myScheduleDialogFragment = MyScheduleDialogFragment.newInstance();
         myScheduleDialogFragment.show(fm, "fragment_edit_name");
     }
+
 }

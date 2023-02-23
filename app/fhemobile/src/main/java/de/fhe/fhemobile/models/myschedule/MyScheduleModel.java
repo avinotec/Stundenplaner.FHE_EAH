@@ -42,13 +42,12 @@ import java.util.List;
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.adapters.myschedule.MyScheduleCalendarAdapter;
-import de.fhe.fhemobile.adapters.myschedule.MyScheduleSettingsAdapter;
+import de.fhe.fhemobile.adapters.myschedule.MyScheduleOverviewAdapter;
 import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
 import de.fhe.fhemobile.comparator.MyScheduleEventComparator;
 import de.fhe.fhemobile.events.EventDispatcher;
 import de.fhe.fhemobile.events.MyScheduleChangeEvent;
 import de.fhe.fhemobile.utils.Define;
-import de.fhe.fhemobile.views.myschedule.MyScheduleCalendarView;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
 
@@ -104,7 +103,7 @@ public class MyScheduleModel extends EventDispatcher {
         //adapters
         ourInstance.setMyScheduleCalendarAdapter(new MyScheduleCalendarAdapter(
                 ourInstance.getEventsOfAllSubscribedEventSeries()));
-        ourInstance.setMyScheduleSettingsAdapter(new MyScheduleSettingsAdapter(
+        ourInstance.setMyScheduleOverviewAdapter(new MyScheduleOverviewAdapter(
                 Main.getAppContext(), ourInstance.getSortedSubscribedEventSeries()));
     }
 
@@ -123,8 +122,8 @@ public class MyScheduleModel extends EventDispatcher {
 
         myScheduleCalendarAdapter.setItems(getInstance().getEventsOfAllSubscribedEventSeries());
         myScheduleCalendarAdapter.notifyDataSetChanged();
-        myScheduleSettingsAdapter.setItems(getInstance().getSortedSubscribedEventSeries());
-        myScheduleSettingsAdapter.notifyDataSetChanged();
+        myScheduleOverviewAdapter.setItems(getInstance().getSortedSubscribedEventSeries());
+        myScheduleOverviewAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -138,8 +137,8 @@ public class MyScheduleModel extends EventDispatcher {
 
         myScheduleCalendarAdapter.setItems(getInstance().getEventsOfAllSubscribedEventSeries());
         myScheduleCalendarAdapter.notifyDataSetChanged();
-        myScheduleSettingsAdapter.setItems(getInstance().getSortedSubscribedEventSeries());
-        myScheduleSettingsAdapter.notifyDataSetChanged();
+        myScheduleOverviewAdapter.setItems(getInstance().getSortedSubscribedEventSeries());
+        myScheduleOverviewAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -171,8 +170,8 @@ public class MyScheduleModel extends EventDispatcher {
 
         myScheduleCalendarAdapter.setItems(getInstance().getEventsOfAllSubscribedEventSeries());
         myScheduleCalendarAdapter.notifyDataSetChanged();
-        myScheduleSettingsAdapter.setItems(getInstance().getSortedSubscribedEventSeries());
-        myScheduleSettingsAdapter.notifyDataSetChanged();
+        myScheduleOverviewAdapter.setItems(getInstance().getSortedSubscribedEventSeries());
+        myScheduleOverviewAdapter.notifyDataSetChanged();
         notifyChange(MyScheduleChangeEvent.MYSCHEDULE_UPDATED);
     }
 
@@ -184,8 +183,8 @@ public class MyScheduleModel extends EventDispatcher {
 
         myScheduleCalendarAdapter.setItems(getInstance().getEventsOfAllSubscribedEventSeries());
         myScheduleCalendarAdapter.notifyDataSetChanged();
-        myScheduleSettingsAdapter.setItems(getInstance().getSortedSubscribedEventSeries());
-        myScheduleSettingsAdapter.notifyDataSetChanged();
+        myScheduleOverviewAdapter.setItems(getInstance().getSortedSubscribedEventSeries());
+        myScheduleOverviewAdapter.notifyDataSetChanged();
         notifyChange(MyScheduleChangeEvent.MYSCHEDULE_UPDATED);
     }
 
@@ -285,22 +284,22 @@ public class MyScheduleModel extends EventDispatcher {
         return myScheduleCalendarAdapter;
     }
 
-    public MyScheduleSettingsAdapter getMyScheduleSettingsAdapter() {
-        return myScheduleSettingsAdapter;
+    public MyScheduleOverviewAdapter getMyScheduleOverviewAdapter() {
+        return myScheduleOverviewAdapter;
     }
 
     private void setMyScheduleCalendarAdapter(MyScheduleCalendarAdapter myScheduleCalendarAdapter) {
         this.myScheduleCalendarAdapter = myScheduleCalendarAdapter;
     }
 
-    private void setMyScheduleSettingsAdapter(MyScheduleSettingsAdapter myScheduleSettingsAdapter) {
-        this.myScheduleSettingsAdapter = myScheduleSettingsAdapter;
+    private void setMyScheduleOverviewAdapter(MyScheduleOverviewAdapter myScheduleOverviewAdapter) {
+        this.myScheduleOverviewAdapter = myScheduleOverviewAdapter;
     }
 
     private static MyScheduleModel ourInstance;
 
     private MyScheduleCalendarAdapter myScheduleCalendarAdapter;
-    private MyScheduleSettingsAdapter myScheduleSettingsAdapter;
+    private MyScheduleOverviewAdapter myScheduleOverviewAdapter;
 
     public final HashMap<String, MyScheduleEventSeriesVo> subscribedEventSeries = new HashMap<>();
     public Date lastUpdateSubscribedEventSeries;

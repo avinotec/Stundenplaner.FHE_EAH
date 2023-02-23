@@ -105,7 +105,7 @@
     <string name="myschedule_last_updated">Last updated: </string>
     <string name="myschedule_connection_failed">Updating your schedule failed!\n Previous state gets restored.</string>
     <string name="today">Today</string>
-    <string name="myschedule_settings_headline">My Courses</string>
+    <string name="myschedule_overview_headline">My Courses</string>
     <string name="myschedule_settings_studygroups">Study Groups: </string>
 
     <string name="deleteTimetableTitle">Semester Change</string>

@@ -24,11 +24,11 @@ import java.util.List;
 import de.fhe.fhemobile.models.myschedule.MyScheduleModel;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 
-public class MyScheduleSettingsAdapter extends AbstractMyScheduleAdapter {
+public class MyScheduleOverviewAdapter extends AbstractMyScheduleAdapter {
 
-    private static final String TAG = MyScheduleSettingsAdapter.class.getSimpleName();
+    private static final String TAG = MyScheduleOverviewAdapter.class.getSimpleName();
 
-    public MyScheduleSettingsAdapter(final Context context, final List<MyScheduleEventSeriesVo> _items) {
+    public MyScheduleOverviewAdapter(final Context context, final List<MyScheduleEventSeriesVo> _items) {
         super(context);
         setItems(_items);
         setRoomVisible(true);

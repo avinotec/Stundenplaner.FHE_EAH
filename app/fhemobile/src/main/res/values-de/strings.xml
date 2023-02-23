@@ -108,7 +108,7 @@
     <string name="myschedule_connection_failed">"Aktualisierung deines Stundenplans nicht möglich!\n Bisheriger Stand wird geladen."</string>
     <string name="today">Heute</string>
     <string name="myschedule_settings_studygroups">Sets: </string>
-    <string name="myschedule_settings_headline">Meine Kurse</string>
+    <string name="myschedule_overview_headline">Meine Kurse</string>
 
     <string name="deleteTimetableTitle">Semesterwechsel</string>
     <string name="deleteTimetableMessageOptional">Das Semester ist zu Ende. Soll dein Stundenplan geleert werden?</string>

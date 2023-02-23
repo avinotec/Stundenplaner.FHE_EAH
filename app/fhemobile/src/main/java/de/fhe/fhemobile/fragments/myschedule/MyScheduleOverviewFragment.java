@@ -29,18 +29,18 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.utils.Define;
-import de.fhe.fhemobile.views.myschedule.MyScheduleSettingsView;
+import de.fhe.fhemobile.views.myschedule.MyScheduleOverviewView;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MyScheduleSettingsFragment#newInstance} factory method to
+ * Use the {@link MyScheduleOverviewFragment#newInstance} factory method to
  * create an instance of this fragment.
  *
  * Fragment of view showing overview of all subscribed courses
  */
-public class MyScheduleSettingsFragment extends FeatureFragment {
+public class MyScheduleOverviewFragment extends FeatureFragment {
 
-	public static final String TAG = MyScheduleSettingsFragment.class.getSimpleName();
+	public static final String TAG = MyScheduleOverviewFragment.class.getSimpleName();
 
 
 	/**
@@ -49,14 +49,14 @@ public class MyScheduleSettingsFragment extends FeatureFragment {
 	 *
 	 * @return A new instance of fragment TimetableDialogFragment.
 	 */
-	public static MyScheduleSettingsFragment newInstance() {
-		final MyScheduleSettingsFragment fragment = new MyScheduleSettingsFragment();
+	public static MyScheduleOverviewFragment newInstance() {
+		final MyScheduleOverviewFragment fragment = new MyScheduleOverviewFragment();
 		final Bundle args = new Bundle();
 		fragment.setArguments(args);
 		return fragment;
 	}
 
-	public MyScheduleSettingsFragment() {
+	public MyScheduleOverviewFragment() {
 		// Required empty public constructor
 	}
 
@@ -70,8 +70,8 @@ public class MyScheduleSettingsFragment extends FeatureFragment {
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
 							 final Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		final MyScheduleSettingsView mView = (MyScheduleSettingsView) inflater.inflate(
-				R.layout.fragment_myschedule_settings, container, false);
+		final MyScheduleOverviewView mView = (MyScheduleOverviewView) inflater.inflate(
+				R.layout.fragment_myschedule_setup, container, false);
 		mView.initializeView(getChildFragmentManager());
 
 		mView.setCourseListEmptyView();

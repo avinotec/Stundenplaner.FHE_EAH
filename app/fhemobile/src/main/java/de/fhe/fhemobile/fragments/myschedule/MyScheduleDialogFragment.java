@@ -70,7 +70,7 @@ public class MyScheduleDialogFragment extends DialogFragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment MyScheduleSettingsFragment.
+     * @return A new instance of fragment {@link MyScheduleDialogFragment}.
      */
     public static MyScheduleDialogFragment newInstance() {
         final MyScheduleDialogFragment fragment = new MyScheduleDialogFragment();
