@@ -40,7 +40,7 @@ public class Main extends Application {
 
     //Threading
     public static final ExecutorService executorService = Executors.newFixedThreadPool(2);
-    public static final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
+    public static final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(2);
 
 
     @Override

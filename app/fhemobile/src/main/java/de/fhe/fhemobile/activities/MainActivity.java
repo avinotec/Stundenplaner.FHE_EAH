@@ -16,6 +16,8 @@
  */
 package de.fhe.fhemobile.activities;
 
+import static de.fhe.fhemobile.utils.Define.MySchedule.PREF_ENABLE_PUSH_NOTIFICATIONS;
+
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -32,6 +34,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -39,6 +42,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.DrawerFragment;
 import de.fhe.fhemobile.fragments.FeatureFragment;
@@ -109,8 +113,9 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                     finish();
                 }
         }
-
-        if (Define.ENABLE_PUSHNOTIFICATIONS){
+        if (//if push notifications enabled
+                PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+                        .getBoolean(PREF_ENABLE_PUSH_NOTIFICATIONS, false)){
             //code from Firebase Documentation
             FirebaseMessaging.getInstance().getToken()
                     .addOnCompleteListener(new OnCompleteListener<String>() {

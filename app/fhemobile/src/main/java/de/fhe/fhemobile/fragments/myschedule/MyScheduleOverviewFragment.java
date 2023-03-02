@@ -18,13 +18,17 @@
 package de.fhe.fhemobile.fragments.myschedule;
 
 
+import static de.fhe.fhemobile.utils.Define.MySchedule.PREF_ENABLE_PUSH_NOTIFICATIONS;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.services.PushNotificationService;
@@ -47,7 +51,7 @@ public class MyScheduleOverviewFragment extends FeatureFragment {
 	 * Use this factory method to create a new instance of
 	 * this fragment using the provided parameters.
 	 *
-	 * @return A new instance of fragment TimetableDialogFragment.
+	 * @return A new instance of fragment {@link MyScheduleOverviewFragment}.
 	 */
 	public static MyScheduleOverviewFragment newInstance() {
 		final MyScheduleOverviewFragment fragment = new MyScheduleOverviewFragment();
@@ -82,7 +86,9 @@ public class MyScheduleOverviewFragment extends FeatureFragment {
 	public void onDetach() {
 		super.onDetach();
 
-		if(Define.ENABLE_PUSHNOTIFICATIONS){
+		if(//if push notifications enabled
+				PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+						.getBoolean(PREF_ENABLE_PUSH_NOTIFICATIONS, false)){
 			PushNotificationService.registerSubscribedEventSeries();
 		}
 	}

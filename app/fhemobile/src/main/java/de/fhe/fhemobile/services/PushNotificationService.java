@@ -17,6 +17,8 @@
 package de.fhe.fhemobile.services;
 
 import static android.app.PendingIntent.FLAG_IMMUTABLE;
+import static de.fhe.fhemobile.utils.Define.MySchedule.PREF_ENABLE_PUSH_NOTIFICATIONS;
+import static de.fhe.fhemobile.utils.Define.MySchedule.SP_MYSCHEDULE;
 import static de.fhe.fhemobile.utils.Define.PushNotifications.PARAM_EXAM_ADDED;
 import static de.fhe.fhemobile.utils.Define.PushNotifications.PARAM_TIMETABLE_CHANGED;
 
@@ -32,6 +34,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
+import androidx.preference.PreferenceManager;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -111,7 +114,9 @@ public class PushNotificationService extends FirebaseMessagingService {
             return; // Abbruch
         }
 
-        if (Define.ENABLE_PUSHNOTIFICATIONS) {
+        if (//if push notifications enabled
+                PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+                        .getBoolean(PREF_ENABLE_PUSH_NOTIFICATIONS, false)) {
             //unregister old token
             sendRegistrationToServer(new ArrayList<>());
             //set and register new token
@@ -133,7 +138,7 @@ public class PushNotificationService extends FirebaseMessagingService {
      * @param eventSeriesVos List of {@link MyScheduleEventSeriesVo}s to register for
      */
     public static void sendRegistrationToServer(final Collection<MyScheduleEventSeriesVo> eventSeriesVos) {
-        if (BuildConfig.DEBUG && Define.ENABLE_PUSHNOTIFICATIONS) Assert.assertNotNull(fcmToken);
+        if (BuildConfig.DEBUG) Assert.assertNotNull(fcmToken);
 
         // calls run
         if (fcmToken != null) {

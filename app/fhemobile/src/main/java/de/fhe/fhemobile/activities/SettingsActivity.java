@@ -23,7 +23,7 @@ import androidx.annotation.NonNull;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.canteen.CanteenSettingsFragment;
-import de.fhe.fhemobile.fragments.myschedule.MyScheduleOverviewFragment;
+import de.fhe.fhemobile.fragments.myschedule.MySchedulePreferencesFragment;
 import de.fhe.fhemobile.fragments.news.NewsCategoriesFragment;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.Features;
@@ -58,7 +58,7 @@ public class SettingsActivity extends SecondaryActivity {
                 setFragment(CanteenSettingsFragment.newInstance());
                 break;
             case Features.FeatureId.MYSCHEDULE:
-                setFragment(MyScheduleOverviewFragment.newInstance());
+                setFragment(MySchedulePreferencesFragment.newInstance());
                 break;
         }
     }

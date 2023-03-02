@@ -119,6 +119,17 @@
     <string name="fcm_message_part2">Please update your schedule!</string>
     <string name="fcm_examadded_message_part1">Exam added for</string>
 
+    <string name="myschedule_pref_category_mycourses">My Courses</string>
+    <string name="myschedule_pref_overview_title">Overview</string>
+    <string name="myschedule_pref_addcourse_title">Add course</string>
+    <string name="myschedule_pref_category_fcm">Notifications</string>
+    <string name="myschedule_pref_fcm_title">Push Notifications</string>
+    <string name="myschedule_pref_fcm_summary">Get notifications about timetable changes and added exams</string>
+    <string name="myschedule_pref_category_calsync">Calendar Synchronisation</string>
+    <string name="myschedule_pref_sync_title">Synchronize</string>
+    <string name="myschedule_pref_sync_summary">Sync My Schedule to the chosen calendar</string>
+
+
     <string name="imprint_data_protection_link" translatable="false"><a href="https://www.eah-jena.de/datenschutz">Data protection</a></string>
     <string name="notification_error_ssl_cert_invalid">A SSL-Certificate occurred. Do you want to proceed?</string>
     <string name="ssl_error_continue">Continue</string>
