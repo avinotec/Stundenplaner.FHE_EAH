@@ -18,8 +18,6 @@
 package de.fhe.fhemobile.fragments.myschedule;
 
 
-import static de.fhe.fhemobile.utils.Define.MySchedule.PREF_ENABLE_PUSH_NOTIFICATIONS;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,7 +86,7 @@ public class MyScheduleOverviewFragment extends FeatureFragment {
 
 		if(//if push notifications enabled
 				PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
-						.getBoolean(PREF_ENABLE_PUSH_NOTIFICATIONS, false)){
+						.getBoolean(getResources().getString(R.string.sp_myschedule_enable_fcm), false)){
 			PushNotificationService.registerSubscribedEventSeries();
 		}
 	}

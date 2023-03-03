@@ -129,6 +129,12 @@
     <string name="myschedule_pref_sync_title">Synchronize</string>
     <string name="myschedule_pref_sync_summary">Sync My Schedule to the chosen calendar</string>
 
+<!--    shared preference keys -->
+    <string name="sp_myschedule_enable_fcm" translatable="false">enable_fcm</string>
+    <string name="sp_myschedule_enable_calsync" translatable="false">enable_calsync</string>
+    <string name="sp_myschedule_chosen_calendar" translatable="false">chosen_cal_for_calsync</string>
+    <string name="pref_myschedule_available_calendars" translatable="false">available_calendars</string>
+
 
     <string name="imprint_data_protection_link" translatable="false"><a href="https://www.eah-jena.de/datenschutz">Data protection</a></string>
     <string name="notification_error_ssl_cert_invalid">A SSL-Certificate occurred. Do you want to proceed?</string>

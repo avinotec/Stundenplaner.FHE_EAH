@@ -37,7 +37,7 @@
         <!-- Note: always use SwitchPreferenceCompat (not SwitchPreference)
          to ensure the switch to always look the same, independent of android version -->
         <SwitchPreferenceCompat
-            android:key="enableFcm"
+            android:key="@string/sp_myschedule_enable_fcm"
             android:title="@string/myschedule_pref_fcm_title"
             android:summary="@string/myschedule_pref_fcm_summary"
             android:defaultValue="true"/>
@@ -47,10 +47,16 @@
 <!--    <PreferenceCategory-->
 <!--        android:title="@string/myschedule_pref_category_calsync">-->
 
+<!--        <ListPreference-->
+<!--            android:key="@string/pref_myschedule_available_calendars"-->
+<!--            android:title="Ausgewählter Kalender"-->
+<!--            android:summary="Wähle einen Kalender, in den synchronisiert werden soll."-->
+<!--            />-->
+
 <!--        &lt;!&ndash; Note: always use SwitchPreferenceCompat (not SwitchPreference)-->
 <!--         to ensure the switch to always look the same, independent of android version &ndash;&gt;-->
 <!--        <SwitchPreferenceCompat-->
-<!--            android:key="syncCalendar"-->
+<!--            android:key="@string/sp_myschedule_enable_calsync"-->
 <!--            android:title="@string/myschedule_pref_sync_title"-->
 <!--            android:summary="@string/myschedule_pref_sync_summary"/>-->
 

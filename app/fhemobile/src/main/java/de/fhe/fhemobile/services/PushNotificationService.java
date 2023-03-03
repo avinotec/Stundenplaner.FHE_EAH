@@ -17,8 +17,6 @@
 package de.fhe.fhemobile.services;
 
 import static android.app.PendingIntent.FLAG_IMMUTABLE;
-import static de.fhe.fhemobile.utils.Define.MySchedule.PREF_ENABLE_PUSH_NOTIFICATIONS;
-import static de.fhe.fhemobile.utils.Define.MySchedule.SP_MYSCHEDULE;
 import static de.fhe.fhemobile.utils.Define.PushNotifications.PARAM_EXAM_ADDED;
 import static de.fhe.fhemobile.utils.Define.PushNotifications.PARAM_TIMETABLE_CHANGED;
 
@@ -116,7 +114,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 
         if (//if push notifications enabled
                 PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
-                        .getBoolean(PREF_ENABLE_PUSH_NOTIFICATIONS, false)) {
+                        .getBoolean(getResources().getString(R.string.sp_myschedule_enable_fcm), false)) {
             //unregister old token
             sendRegistrationToServer(new ArrayList<>());
             //set and register new token

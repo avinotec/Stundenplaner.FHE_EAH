@@ -16,8 +16,6 @@
  */
 package de.fhe.fhemobile.activities;
 
-import static de.fhe.fhemobile.utils.Define.MySchedule.PREF_ENABLE_PUSH_NOTIFICATIONS;
-
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -115,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         }
         if (//if push notifications enabled
                 PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
-                        .getBoolean(PREF_ENABLE_PUSH_NOTIFICATIONS, false)){
+                        .getBoolean(getResources().getString(R.string.sp_myschedule_enable_fcm), false)){
             //code from Firebase Documentation
             FirebaseMessaging.getInstance().getToken()
                     .addOnCompleteListener(new OnCompleteListener<String>() {

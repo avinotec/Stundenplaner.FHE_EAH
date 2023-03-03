@@ -56,7 +56,6 @@ public final class Define {
     //created by Nadja 11.03.2022
     public static final class MySchedule {
         public static final String SP_MYSCHEDULE = "my_schedule";                    // $NON-NLS
-        public static final String PREF_ENABLE_PUSH_NOTIFICATIONS = "enableFcm";                    // $NON-NLS
         public static final String PREF_SUBSCRIBED_EVENTSERIES = "my_schedule_subscribed_eventseries";    // $NON-NLS
         public static final String PREF_DATA_LAST_UPDATED = "my_schedule_last_updated";    // $NON-NLS
         public static final String PREFS_APP_LAST_OPENED = "lastAppOpened";                    // $NON-NLS
