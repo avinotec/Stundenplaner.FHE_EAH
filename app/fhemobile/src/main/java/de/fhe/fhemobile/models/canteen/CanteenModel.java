@@ -39,6 +39,8 @@ import de.fhe.fhemobile.vos.canteen.CanteenMenuDayVo;
 import de.fhe.fhemobile.vos.canteen.CanteenVo;
 
 /**
+ * Class to store canteen data und send canteen data related events
+ *
  * Created by paul on 23.01.14
  * Edited by Nadja - 04/2022 and 12/2022
  */
@@ -129,7 +131,7 @@ public final class CanteenModel extends EventDispatcher {
     }
 
 
-    private void notifyChange(final String type) {
+    public void notifyChange(final String type) {
         dispatchEvent(new CanteenChangeEvent(type));
     }
 
@@ -138,6 +140,5 @@ public final class CanteenModel extends EventDispatcher {
     private static CanteenModel ourInstance;
 
     private final HashMap<String, List<CanteenMenuDayVo>> mMenus = new HashMap<>();
-
     private CanteenVo[] mCanteens;
 }

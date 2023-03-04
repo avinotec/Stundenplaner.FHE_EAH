@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 
-import de.fhe.fhemobile.activities.MainActivity;
+import de.fhe.fhemobile.models.myschedule.MyScheduleModel;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 
 public class MyScheduleDialogAdapter extends AbstractMyScheduleAdapter {
@@ -28,9 +28,9 @@ public class MyScheduleDialogAdapter extends AbstractMyScheduleAdapter {
                 btnAddCourse.setActivated(!btnAddCourse.isActivated());
 
                 if(btnAddCourse.isActivated()){
-                    MainActivity.addToSubscribedEventSeriesAndUpdateAdapters(currentItem);
+                    MyScheduleModel.getInstance().addToSubscribedEventSeriesAndUpdateAdapters(currentItem);
                 } else {
-                    MainActivity.removeFromSubscribedEventSeriesAndUpdateAdapters(currentItem);
+                    MyScheduleModel.getInstance().removeFromSubscribedEventSeriesAndUpdateAdapters(currentItem);
                 }
             }
         };

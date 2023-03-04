@@ -12,6 +12,7 @@ in der aktuellen Release-Version implementiert:
 - News
 - Veranstaltungskalender
 - Semestertermine
+- Jobangebote
 - Impressum
 
 Sprachen in der App: Deutsch, Englisch
@@ -19,7 +20,6 @@ Sprachen in der App: Deutsch, Englisch
 ## Beschreibung der Features, aktueller Stand, Hinweise
 #### Stundenplan
   - Abruf des allgemeinen Stundenplans für ein spezifisches Semester in einem Studiengang
-  - *Status: Updates veröffentlicht am 23.09.2022*
 
 - https://stundenplanung.eah-jena.de/api/mobileapp/v1/activity/{id}
 - https://stundenplanung.eah-jena.de/api/mobileapp/v1/module
@@ -33,7 +33,7 @@ Sprachen in der App: Deutsch, Englisch
   - Zusammenstellung eines Stundenplans durch individuelle Auswahl von Kursen
   - *Status:*
     - *Updates veröffentlicht am 23.09.2022*
-    - *Verarbeitung von Stundenplanänderungen in Arbeit (Stand: 12.10.2022)*
+    - *Update Januar 2023: Push-Benachrichtigungen und Abruf von Stundenplanänderungen*
 #### Mensa
   - Menüs der Jenaer Mensen und zugehörige Studentenpreise
   - *Status: Updates veröffentlicht am 23.09.2022*
@@ -51,7 +51,10 @@ Sprachen in der App: Deutsch, Englisch
   - *Status: initiale Lösung als WebView*
 #### Semestertermine
   - Vorlesungszeiten, Prüfungszeitraum, Bewerbungsfristen, ...
-  - Hinweis: manuelle Einspeißung der Daten
+  - Hinweis: manuelle Einspeisung der Daten
+#### Jobangebote
+  - [Stellenticket der EAH](https://stellenticket.eah-jena.de/de/offers/fulltextsearch/EAH-Jena/#Inhalt): Stellenausschreibungen für AkademikerInnen und Studierende
+  - *Status: Feature veröffentlicht im Frühling 2022* 
 #### Impressum
   - Datenschutz-Verlinkung und Impressum der Hochschul-Homepage
 

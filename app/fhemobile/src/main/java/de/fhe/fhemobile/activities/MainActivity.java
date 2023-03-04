@@ -16,22 +16,10 @@
  */
 package de.fhe.fhemobile.activities;
 
-import static de.fhe.fhemobile.Main.addToSubscribedEventSeries;
-import static de.fhe.fhemobile.Main.clearSubscribedEventSeries;
-import static de.fhe.fhemobile.Main.getAppContext;
-import static de.fhe.fhemobile.Main.getEventsOfAllSubscribedEventSeries;
-import static de.fhe.fhemobile.Main.getSortedSubscribedEventSeries;
-import static de.fhe.fhemobile.Main.setLastUpdateSubscribedEventSeries;
-import static de.fhe.fhemobile.Main.updateSubscribedEventSeries;
-import static de.fhe.fhemobile.utils.Define.MySchedule.PREF_SUBSCRIBED_EVENTSERIES;
-import static de.fhe.fhemobile.utils.Define.MySchedule.SP_MYSCHEDULE;
-import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
-import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.isExam;
+import static de.fhe.fhemobile.utils.Define.MySchedule.PREF_ENABLE_PUSH_NOTIFICATIONS;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -46,23 +34,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.adapters.myschedule.MyScheduleCalendarAdapter;
-import de.fhe.fhemobile.adapters.myschedule.MyScheduleSettingsAdapter;
 import de.fhe.fhemobile.fragments.DrawerFragment;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
@@ -75,15 +56,10 @@ import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.feature.FeatureFragmentFactory;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
-import de.fhe.fhemobile.views.myschedule.MyScheduleCalendarView;
-import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 
 public class MainActivity extends AppCompatActivity implements DrawerFragment.NavigationDrawerCallbacks {
 
     static final String TAG = MainActivity.class.getSimpleName();
-
-    public static MyScheduleCalendarAdapter myScheduleCalendarAdapter;
-    public static MyScheduleSettingsAdapter myScheduleSettingsAdapter;
 
 
     @Override
@@ -103,13 +79,6 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         mDrawerFragment = (DrawerFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
-
-
-        myScheduleSettingsAdapter = new MyScheduleSettingsAdapter(
-                this, Main.getSortedSubscribedEventSeries());
-
-        myScheduleCalendarAdapter = new MyScheduleCalendarAdapter();
-        myScheduleCalendarAdapter.setItems(getEventsOfAllSubscribedEventSeries());
 
 
         // Set up the drawer.
@@ -144,8 +113,9 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                     finish();
                 }
         }
-
-        if (Define.ENABLE_PUSHNOTIFICATIONS){
+        if (//if push notifications enabled
+                PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+                        .getBoolean(PREF_ENABLE_PUSH_NOTIFICATIONS, false)){
             //code from Firebase Documentation
             FirebaseMessaging.getInstance().getToken()
                     .addOnCompleteListener(new OnCompleteListener<String>() {
@@ -301,87 +271,6 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             restoreActionBar();
         }
         return super.onCreateOptionsMenu(menu);
-    }
-
-    /**
-     *
-     * @param eventSeries
-     */
-    public static void addToSubscribedEventSeriesAndUpdateAdapters(final MyScheduleEventSeriesVo eventSeries){
-        eventSeries.setSubscribed(true);
-        addToSubscribedEventSeries(eventSeries);
-
-        saveSubscribedEventSeriesToSharedPreferences();
-
-        myScheduleCalendarAdapter.setItems(getEventsOfAllSubscribedEventSeries());
-        myScheduleCalendarAdapter.notifyDataSetChanged();
-        myScheduleSettingsAdapter.setItems(getSortedSubscribedEventSeries());
-        myScheduleSettingsAdapter.notifyDataSetChanged();
-    }
-
-
-    public static void removeFromSubscribedEventSeriesAndUpdateAdapters(final MyScheduleEventSeriesVo unsubscribedEventSeries){
-        unsubscribedEventSeries.setSubscribed(false);
-        Main.removeFromSubscribedEventSeries(unsubscribedEventSeries);
-        saveSubscribedEventSeriesToSharedPreferences();
-
-        myScheduleCalendarAdapter.setItems(getEventsOfAllSubscribedEventSeries());
-        myScheduleCalendarAdapter.notifyDataSetChanged();
-        myScheduleSettingsAdapter.setItems(getSortedSubscribedEventSeries());
-        myScheduleSettingsAdapter.notifyDataSetChanged();
-    }
-
-    public static void updateSubscribedEventSeriesAndAdapters(final List<MyScheduleEventSeriesVo> updatedSubscribedEventSeries){
-
-        for(MyScheduleEventSeriesVo series : updatedSubscribedEventSeries){
-
-            if(Main.containedInSubscribedEventSeries(series)){
-                updateSubscribedEventSeries(series);
-            } else if(isExam(series)){
-                addToSubscribedEventSeries(series);
-            } else {
-                //the series has been deleted from subscribed event series (has been unsubscribed)
-                // while the updates had been computed (while My Schedule had been fetched)
-            }
-        }
-        setLastUpdateSubscribedEventSeries(new Date());
-        MyScheduleCalendarView.setLastUpdatedTextView();
-
-        saveSubscribedEventSeriesToSharedPreferences();
-
-        myScheduleCalendarAdapter.setItems(getEventsOfAllSubscribedEventSeries());
-        myScheduleCalendarAdapter.notifyDataSetChanged();
-        myScheduleSettingsAdapter.setItems(getSortedSubscribedEventSeries());
-        myScheduleSettingsAdapter.notifyDataSetChanged();
-
-    }
-
-
-    public static void clearSubscribedEventSeriesAndUpdateAdapters(){
-        clearSubscribedEventSeries();
-        setLastUpdateSubscribedEventSeries(null);
-        MyScheduleCalendarView.setLastUpdatedTextView();
-
-        saveSubscribedEventSeriesToSharedPreferences();
-
-        myScheduleCalendarAdapter.setItems(getEventsOfAllSubscribedEventSeries());
-        myScheduleCalendarAdapter.notifyDataSetChanged();
-        myScheduleSettingsAdapter.setItems(getSortedSubscribedEventSeries());
-        myScheduleSettingsAdapter.notifyDataSetChanged();
-    }
-
-    public static void saveSubscribedEventSeriesToSharedPreferences() {
-        final Gson gson = new Gson();
-        final String json = correctUmlauts(gson.toJson(getSortedSubscribedEventSeries(), ArrayList.class));
-        final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences(SP_MYSCHEDULE, Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(PREF_SUBSCRIBED_EVENTSERIES, json);
-        editor.apply();
-
-        // wir geben mal den erhaltenen JSON String aus. Dann können wir sehen, was Carsten uns sendet.
-        if (BuildConfig.DEBUG){
-            Log.d(TAG, "saveSubscribedEventSeriesToSharedPreferences(): JSON: " + json);
-        }
     }
 
 

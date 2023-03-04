@@ -64,7 +64,6 @@ public class CanteenFragment extends FeatureFragment {
 
         // Inflate the layout for this fragment
         mView = (CanteenView) inflater.inflate(R.layout.fragment_canteen, container, false);
-        //note: menus of selected canteens must be fetched before with NetworkHandler.getInstance().fetchCanteenData()
         mView.initializeView(getChildFragmentManager(), getLifecycle());
 
         return mView;
@@ -95,9 +94,11 @@ public class CanteenFragment extends FeatureFragment {
                     activity.startActivity(intent);
                     return true;
                 }
-                if (menuItem.getItemId() == R.id.action_update_canteen){
-                    NetworkHandler.getInstance().fetchCanteenMenus();
-                }
+
+                //replaced by swipe down gesture
+//                if (menuItem.getItemId() == R.id.action_update_canteen){
+//                    NetworkHandler.getInstance().fetchCanteenMenus();
+//                }
 
                 return false;
             }
@@ -109,6 +110,18 @@ public class CanteenFragment extends FeatureFragment {
         super.onRestoreActionBar(_ActionBar);
 
         _ActionBar.setTitle(R.string.drawer_canteen);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mView.registerModelListener();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mView.deregisterModelListener();
     }
 
     private CanteenView mView;

@@ -17,7 +17,6 @@
 package de.fhe.fhemobile.network;
 
 import static de.fhe.fhemobile.Main.getAppContext;
-import static de.fhe.fhemobile.activities.MainActivity.updateSubscribedEventSeriesAndAdapters;
 import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.getUpdatedEventSeries;
 import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.groupByModuleId;
 
@@ -30,6 +29,7 @@ import com.google.gson.GsonBuilder;
 
 import org.junit.Assert;
 
+import java.io.EOFException;
 import java.io.File;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -39,9 +39,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.events.CanteenChangeEvent;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
+import de.fhe.fhemobile.models.myschedule.MyScheduleModel;
 import de.fhe.fhemobile.models.news.NewsModel;
 import de.fhe.fhemobile.models.phonebook.PhonebookModel;
 import de.fhe.fhemobile.models.semesterdates.SemesterDatesModel;
@@ -324,7 +325,7 @@ public final class NetworkHandler {
 
 	// ---------------------------------- CANTEEN -----------------------------------------------------
 	/**
-	 *
+	 * Fetch available canteens
 	 */
 	public void fetchAvailableCanteens() {
 		Assert.assertNotNull(mApiErfurt);
@@ -359,6 +360,7 @@ public final class NetworkHandler {
 		final ArrayList<String> selectedCanteenIds = UserSettings.getInstance().getSelectedCanteenIds();
 		Log.d(TAG, "Selected Canteens: " + selectedCanteenIds);
 
+		requestCounterCanteenMenus = selectedCanteenIds.size();
 		for (final String canteenId : selectedCanteenIds) {
 			mApiErfurt.fetchCanteenData(canteenId).enqueue(new Callback<CanteenDishVo[]>() {
 
@@ -372,11 +374,19 @@ public final class NetworkHandler {
 						sortedDishes = CanteenUtils.sortCanteenItems(dishes);
 
 					CanteenModel.getInstance().setMenu(canteenId, sortedDishes);
+
+					requestCounterCanteenMenus--;
+					if(requestCounterCanteenMenus <= 0){
+						CanteenModel.getInstance().notifyChange(CanteenChangeEvent.RECEIVED_All_CANTEEN_MENUS);
+					}
 				}
 
 				@Override
 				public void onFailure(@NonNull final Call<CanteenDishVo[]> call, @NonNull final Throwable t) {
-					boolean isCertainExc = (t instanceof UnknownHostException || t instanceof SocketTimeoutException);
+					//UnknownHostException -> no internet connection,
+					// SocketTimeoutException -> read or connection timed out,
+					// EOFException -> timed out network requests can return an improper end of file
+					boolean isCertainExc = (t instanceof UnknownHostException || t instanceof SocketTimeoutException || t instanceof EOFException);
 					//connectionFailedErrorThrown -> prevent showing error toast for every canteen
 					if(!connectionFailedErrorThrown || !isCertainExc) {
 						ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE9);
@@ -384,6 +394,11 @@ public final class NetworkHandler {
 					}
 
 					CanteenModel.getInstance().setMenu(canteenId, null);
+
+					requestCounterCanteenMenus--;
+					if(requestCounterCanteenMenus <= 0){
+						CanteenModel.getInstance().notifyChange(CanteenChangeEvent.RECEIVED_All_CANTEEN_MENUS);
+					}
 				}
 			});
 		}
@@ -458,7 +473,7 @@ public final class NetworkHandler {
 		requestCounterMySchedule = 0;
 
 		final Map<String, Map<String, MyScheduleEventSeriesVo>> modules =
-				groupByModuleId(Main.getSubscribedEventSeries());
+				groupByModuleId(MyScheduleModel.getInstance().getSubscribedEventSeries());
 		/* Das ist unser Halter für die Antworten */
 		final List<MyScheduleEventSeriesVo> updatedEventSeriesList = new ArrayList<>();
 
@@ -497,14 +512,16 @@ public final class NetworkHandler {
 						requestCounterMySchedule--;
 						if(requestCounterMySchedule <= 0){
 							// last request received, so proceed, finally
-							updateSubscribedEventSeriesAndAdapters(updatedEventSeriesList);
-//							MyScheduleCalendarView2.stopRefreshingAnimation();
+							MyScheduleModel.getInstance().updateSubscribedEventSeriesAndAdapters(updatedEventSeriesList);
 						}
 					}
 
 					@Override
 					public void onFailure(@NonNull final Call<ModuleVo> call, @NonNull final Throwable t) {
-						boolean isCertainExc = (t instanceof UnknownHostException || t instanceof SocketTimeoutException);
+						//UnknownHostException -> no internet connection,
+						// SocketTimeoutException -> read or connection timed out,
+						// EOFException -> timed out network requests can return an improper end of file
+						boolean isCertainExc = (t instanceof UnknownHostException || t instanceof SocketTimeoutException || t instanceof EOFException);
 						//connectionFailedErrorThrown -> prevent showing error toast for every module
 						if(!connectionFailedErrorThrown || !isCertainExc){
 							ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE6);
@@ -519,7 +536,7 @@ public final class NetworkHandler {
 						requestCounterMySchedule--;
 						if(requestCounterMySchedule <= 0){
 							// even when failed, this is the last request received, so proceed, finally
-							updateSubscribedEventSeriesAndAdapters(updatedEventSeriesList);
+							MyScheduleModel.getInstance().updateSubscribedEventSeriesAndAdapters(updatedEventSeriesList);
 //							MyScheduleCalendarView2.stopRefreshingAnimation();
 						}
 					}
@@ -545,4 +562,8 @@ public final class NetworkHandler {
 
 	//wait until all updates for My Schedule are collected
 	private volatile int requestCounterMySchedule;
+
+
+	//wait until all canteens are fetched
+	private volatile int requestCounterCanteenMenus;
 }

@@ -253,7 +253,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
-	implementation 'androidx.appcompat:appcompat:1.5.1'
+	implementation 'androidx.appcompat:appcompat:1.6.1'
     //implementation "com.viewpagerindicator:library:2.4.1@aar.jar"
     //implementation 'com.darwinsys:hirondelle-date4j:1.5.1'            DateTime object, exchanged with deprecated Date class :-(
 
@@ -263,6 +263,9 @@ dependencies {
 
     //Swipe to refresh
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    //Settings
+    implementation 'androidx.preference:preference:1.2.0'
     
     
     // ------------ okhttp ------------------------

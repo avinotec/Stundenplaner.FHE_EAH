@@ -49,8 +49,22 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 	public MyScheduleCalendarAdapter() {
 	}
 
+	public MyScheduleCalendarAdapter(final List<MyScheduleEventVo> items){
+		setItems(items);
+	}
+
 	public void setItems(final List<MyScheduleEventVo> items){
-		mItems = items;
+		mItems = new ArrayList<>();
+
+		//add items to mItems, ignore past days
+		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd");
+		for(MyScheduleEventVo item : items){
+			Date startDateWithTime = item.getStartDateWithTime();
+			if(sdfDate.format(startDateWithTime).equals(sdfDate.format(new Date()))
+					|| startDateWithTime.compareTo(new Date()) > 0){
+				mItems.add(item);
+			}
+		}
 	}
 
 
@@ -135,7 +149,7 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 			weekdayHeader.setText(weekDay);
 			weekdayHeader.setVisibility(View.VISIBLE);
 
-		} else{
+		} else {
 			weekdayHeader.setVisibility(View.GONE);
 		}
 

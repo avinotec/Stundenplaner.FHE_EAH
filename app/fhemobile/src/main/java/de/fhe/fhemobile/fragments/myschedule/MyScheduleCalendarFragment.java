@@ -44,9 +44,9 @@ import java.util.Locale;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.activities.SettingsActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.models.myschedule.MyScheduleModel;
 import de.fhe.fhemobile.services.FetchMyScheduleBackgroundTask;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.Features;
@@ -82,10 +82,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 
 		askForClearingScheduleAfterTurnOfSemester();
 
-		//Set text view to show if list is empty
-		mView.setEmptyCalendarView();
-		MyScheduleCalendarView.setLastUpdatedTextView();
-
+		mView.initializeView();
 		return mView;
 	}
 
@@ -96,7 +93,8 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 	public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
-		mView.jumpToToday();
+		//outdated: My Schedule Calendar list was changed to not displaying past days
+//		mView.jumpToToday();
 
 		//replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
 		// see https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
@@ -109,32 +107,38 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 				menu.clear();
 				// Add menu items here
 				menuInflater.inflate(R.menu.menu_myschedule_calendar, menu);
-				if(!Define.ENABLE_MYSCHEDULE_UPDATING){
-					//disable button for updating
-					final MenuItem updateButton = menu.findItem(R.id.action_update_myschedule);
-					updateButton.setEnabled(false);
-					updateButton.setVisible(false);
-				}
+
+				//replaced by swipe down gesture
+//				if(!Define.ENABLE_MYSCHEDULE_UPDATING){
+//					//disable button for updating
+//					final MenuItem updateButton = menu.findItem(R.id.action_update_myschedule);
+//					updateButton.setEnabled(false);
+//					updateButton.setVisible(false);
+//				}
 			}
 
 			@Override
 			public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
 				// Handle the menu selection
-				if (menuItem.getItemId() == R.id.action_jump_to_today) {
-					mView.jumpToToday();
-					return true;
-				}
+
+				//outdated: My Schedule Calendar list was changed to not displaying past days
+//				if (menuItem.getItemId() == R.id.action_jump_to_today) {
+//					mView.jumpToToday();
+//					return true;
+//				}
 				if (menuItem.getItemId() == R.id.action_edit_my_courses) {
 					final Intent intent = new Intent(activity, SettingsActivity.class);
 					intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.MYSCHEDULE);
 					activity.startActivity(intent);
 					return true;
 				}
-				if (menuItem.getItemId() == R.id.action_update_myschedule){
-					if(Define.ENABLE_MYSCHEDULE_UPDATING){
-						FetchMyScheduleBackgroundTask.fetch();
-					}
-				}
+
+				//replaced by swipe down gesture
+//				if (menuItem.getItemId() == R.id.action_update_myschedule){
+//					if(Define.ENABLE_MYSCHEDULE_UPDATING){
+//						FetchMyScheduleBackgroundTask.fetch();
+//					}
+//				}
 
 				return false;
 			}
@@ -148,6 +152,18 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 			//Fetch/update my schedule
 			FetchMyScheduleBackgroundTask.startPeriodicFetching();
 		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		mView.registerModelListener();
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		mView.deregisterModelListener();
 	}
 
 	@Override
@@ -209,7 +225,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 						.setPositiveButton(R.string.deleteTimetableConfirm, new DialogInterface.OnClickListener() {
 
 							public void onClick(final DialogInterface dialog, final int which) {
-								MainActivity.clearSubscribedEventSeriesAndUpdateAdapters();
+								MyScheduleModel.getInstance().clearSubscribedEventSeriesAndUpdateAdapters();
 							}
 						})
 						.setIcon(android.R.drawable.ic_dialog_alert);

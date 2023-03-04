@@ -17,36 +17,16 @@
 
 package de.fhe.fhemobile;
 
-import static de.fhe.fhemobile.utils.Define.MySchedule.SP_MYSCHEDULE;
 
 import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
 
 import androidx.annotation.StringRes;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import org.junit.Assert;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
-import de.fhe.fhemobile.comparator.MyScheduleEventComparator;
-import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.FeatureProvider;
-import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
-import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
 
 
 /**
@@ -60,12 +40,8 @@ public class Main extends Application {
 
     //Threading
     public static final ExecutorService executorService = Executors.newFixedThreadPool(2);
-    public static final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
+    public static final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(2);
 
-
-    //My Schedule
-    public static Date lastUpdateSubscribedEventSeries;
-    private static final HashMap<String, MyScheduleEventSeriesVo> subscribedEventSeries = new HashMap<>();
 
     @Override
     public void onCreate() {
@@ -74,27 +50,6 @@ public class Main extends Application {
 
         // load active features from xml
         FeatureProvider.loadFeatures(this);
-
-        // load subscribed eventseries for My Schedule from Shared Preferences
-        final SharedPreferences sharedPreferences = getSharedPreferences(SP_MYSCHEDULE, Context.MODE_PRIVATE);
-        final String json = sharedPreferences.getString(Define.MySchedule.PREF_SUBSCRIBED_EVENTSERIES, "");
-
-        // falls die Liste leer sein sollte, überspringen
-        if (!json.isEmpty() && !"null".equals(json)) { //NON-NLS
-            final Gson gson = new Gson();
-            final Type listType = new TypeToken<ArrayList<MyScheduleEventSeriesVo>>(){}.getType();
-            ArrayList<MyScheduleEventSeriesVo> list = gson.fromJson(json, listType);
-            clearSubscribedEventSeries();
-            for(MyScheduleEventSeriesVo eventSeriesVo : list){
-                addToSubscribedEventSeries(eventSeriesVo);
-            }
-        }
-        final long lastUpdated = sharedPreferences.getLong(Define.MySchedule.PREF_DATA_LAST_UPDATED,  -1);
-        if(lastUpdated != -1) lastUpdateSubscribedEventSeries = new Date(lastUpdated);
-
-        if (BuildConfig.DEBUG) {
-            Assert.assertNotNull("onCreate(): subscribed eventseries is not initialized", subscribedEventSeries);
-        }
     }
 
     /**
@@ -111,91 +66,7 @@ public class Main extends Application {
         return mAppContext;
     }
 
-    /**
-     * Get list of subscribed event series, sorted by title
-     * @return List of {@link MyScheduleEventVo}s
-     */
-    public static List<MyScheduleEventSeriesVo> getSortedSubscribedEventSeries(){
-        List<MyScheduleEventSeriesVo> list = new ArrayList<>(subscribedEventSeries.values());
-        Collections.sort(list, new EventSeriesTitleComparator());
-        return list;
-    }
-
-    /**
-     * Get collection of subscribed event series
-     * @return Collection of {@link MyScheduleEventVo}s
-     */
-    public static Collection<MyScheduleEventSeriesVo> getSubscribedEventSeries(){
-        return subscribedEventSeries.values();
-    }
-
-    public static void addToSubscribedEventSeries(MyScheduleEventSeriesVo seriesVo){
-        //set subscribed
-        //needed for the case that an exam is being deleted by the user while fetching my schedule is adding it
-        seriesVo.setSubscribed(true);
-        subscribedEventSeries.put(seriesVo.getTitle(), seriesVo);
-    }
-
-    public static void updateSubscribedEventSeries(MyScheduleEventSeriesVo seriesVo){
-        subscribedEventSeries.put(seriesVo.getTitle(), seriesVo);
-    }
-
-    public static void addToSubscribedEventSeries(List<MyScheduleEventSeriesVo> seriesVos){
-        for(MyScheduleEventSeriesVo series : seriesVos){
-            addToSubscribedEventSeries(series);
-        }
-    }
-
-    public static void removeFromSubscribedEventSeries(MyScheduleEventSeriesVo seriesVo){
-        subscribedEventSeries.remove(seriesVo.getTitle());
-    }
-
-    public static boolean containedInSubscribedEventSeries(MyScheduleEventSeriesVo eventSeries){
-        return subscribedEventSeries.containsKey(eventSeries.getTitle());
-    }
-
-    public static void clearSubscribedEventSeries(){
-        subscribedEventSeries.clear();
-    }
-
-    /**
-     * Get a sorted list of all events contained in the subscribed event series'
-     * @return List of {@link MyScheduleEventVo}, sorted by start datetime
-     */
-    public static ArrayList<MyScheduleEventVo> getEventsOfAllSubscribedEventSeries(){
-        final ArrayList<MyScheduleEventVo> eventList = new ArrayList<>();
-
-        for(final MyScheduleEventSeriesVo eventSeries : subscribedEventSeries.values()) {
-            eventList.addAll(eventSeries.getEvents());
-        }
-        Collections.sort(eventList, new MyScheduleEventComparator());
-        return eventList;
-    }
-
-    /**
-     * Set date {@link Main#subscribedEventSeries} had been last updated,
-     * and save it to shared preferences
-     * @param lastUpdateSubscribedEventSeries The {@link Date}
-     */
-    public static void setLastUpdateSubscribedEventSeries(final Date lastUpdateSubscribedEventSeries) {
-        Main.lastUpdateSubscribedEventSeries = lastUpdateSubscribedEventSeries;
-
-        final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences(SP_MYSCHEDULE, Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        if(Main.lastUpdateSubscribedEventSeries == null){
-            editor.putLong(Define.MySchedule.PREF_DATA_LAST_UPDATED, -1);
-        } else{
-            editor.putLong(Define.MySchedule.PREF_DATA_LAST_UPDATED,
-                    Main.lastUpdateSubscribedEventSeries.getTime());
-        }
-        editor.apply();
-    }
-
-    public static Date getLastUpdateSubscribedEventSeries() {
-        return lastUpdateSubscribedEventSeries;
-    }
-
-/* minSDK now >= 21. Runtime Library is no longer DEX
+    /* minSDK now >= 21. Runtime Library is no longer DEX
     //MS 201908 Multidex apk introduced
     // Or if you do override the Application class but it's not possible to change the base class,
     // then you can instead override the attachBaseContext() method and call MultiDex.install(this) to enable multidex:

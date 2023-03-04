@@ -48,7 +48,7 @@ import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSetVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
 
 /**
- * Abstract class for {@link MyScheduleDialogAdapter} and {@link MyScheduleSettingsAdapter}
+ * Abstract class for {@link MyScheduleDialogAdapter} and {@link MyScheduleOverviewAdapter}
  * Created by Nadja - 02/2022
  */
 public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
@@ -134,7 +134,7 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).
-                    inflate(R.layout.item_myschedule_settings, parent, false);
+                    inflate(R.layout.item_myschedule_eventseries, parent, false);
         }
 
         final MyScheduleEventSeriesVo currentItem = mItems.get(position);

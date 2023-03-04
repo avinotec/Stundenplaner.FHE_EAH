@@ -39,10 +39,17 @@
             android:textSize="15sp"
             android:visibility="visible" />
 
-        <ListView
-            android:id="@+id/lv_myschedule_calendar_courses"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/srl_myschedule_calendar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/lv_myschedule_calendar_courses"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <TextView
             android:id="@+id/tv_myschedule_calendar_empty"

@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2014-2022 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
+ *  Copyright (c) 2023-2023  Ernst-Abbe-Hochschule Jena
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -16,19 +16,11 @@
  */
 package de.fhe.fhemobile.events;
 
+public class MyScheduleChangeEvent extends SimpleEvent {
 
-public class CanteenChangeEvent extends SimpleEvent {
+    public static final String MYSCHEDULE_UPDATED = "updatedMySchedule";
 
-    public static final String RECEIVED_CANTEENS = "receivedCanteens";
-    public static final String RECEIVED_CANTEEN_MENU = "receivedCanteenMenu";
-    public static final String RECEIVED_All_CANTEEN_MENUS = "receivedAllCanteenMenus";
-
-
-    public CanteenChangeEvent(final String type) {
+    public MyScheduleChangeEvent(final String type){
         super(type);
-    }
-
-    public static String getReceivedCanteenMenuEventWithCanteenId(final String canteenId){
-        return RECEIVED_CANTEEN_MENU + canteenId;
     }
 }
