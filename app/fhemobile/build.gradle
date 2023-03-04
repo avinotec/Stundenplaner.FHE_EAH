@@ -314,6 +314,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.5.3'
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
 	implementation 'com.google.firebase:firebase-inappmessaging-display:20.3.1'
+	implementation 'com.google.firebase:firebase-crashlytics:18.2.9'
 	
 	
 	//implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.10'
@@ -343,3 +344,4 @@ configurations.all {
 }
 
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
