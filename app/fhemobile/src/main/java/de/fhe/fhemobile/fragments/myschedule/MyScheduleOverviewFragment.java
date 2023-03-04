@@ -32,7 +32,6 @@ import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.services.PushNotificationService;
-import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.views.myschedule.MyScheduleOverviewView;
 
 /**

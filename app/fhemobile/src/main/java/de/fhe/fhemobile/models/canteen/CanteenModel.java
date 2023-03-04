@@ -30,7 +30,6 @@ import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import de.fhe.fhemobile.events.CanteenChangeEvent;
 import de.fhe.fhemobile.events.EventDispatcher;

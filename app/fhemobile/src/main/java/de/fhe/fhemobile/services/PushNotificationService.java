@@ -18,7 +18,6 @@ package de.fhe.fhemobile.services;
 
 import static android.app.PendingIntent.FLAG_IMMUTABLE;
 import static de.fhe.fhemobile.utils.Define.MySchedule.PREF_ENABLE_PUSH_NOTIFICATIONS;
-import static de.fhe.fhemobile.utils.Define.MySchedule.SP_MYSCHEDULE;
 import static de.fhe.fhemobile.utils.Define.PushNotifications.PARAM_EXAM_ADDED;
 import static de.fhe.fhemobile.utils.Define.PushNotifications.PARAM_TIMETABLE_CHANGED;
 
