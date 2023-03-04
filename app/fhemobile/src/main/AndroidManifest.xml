@@ -21,7 +21,7 @@
     android:installLocation="auto" >
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- uses-permission android:name="android.permission.CALL_PHONE" / -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -48,14 +48,13 @@
         android:xlargeScreens="true" / -->
 
 
+    <!-- usesCleartextTraffic http anstelle https -->
     <application
         android:name=".Main"
         android:allowBackup="true"
         android:fullBackupContent="true"
-        android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="false"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         android:networkSecurityConfig="@xml/network_security_config"
@@ -82,7 +81,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="https"
+                    android:scheme="http"
                     android:host="www.eah-jena.de"
                     android:pathPrefix="/app" />
             </intent-filter>
