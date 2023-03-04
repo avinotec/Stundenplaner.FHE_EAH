@@ -44,7 +44,7 @@ android {
      * This property is optional because the plugin uses a recommended version of
      * the build tools by default.
      */
-    buildToolsVersion '33.0.0'
+    buildToolsVersion '34.0.0 rc1'
 
     compileOptions {
         // Error: Invoke-customs are only supported starting with Android O (--min-api 26)
@@ -290,7 +290,7 @@ dependencies {
     
     
     implementation 'com.google.firebase:firebase-analytics:21.2.0'
-    implementation 'com.google.firebase:firebase-messaging:23.1.1'
+    implementation 'com.google.firebase:firebase-messaging:23.1.2'
 
 
 
@@ -300,7 +300,7 @@ dependencies {
     implementation 'junit:junit:4.13.2'
     implementation 'androidx.test:rules:1.5.0'
     
-    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'com.google.android.material:material:1.8.0'
 
     // Adds libraries defining annotations to only the compile classpath.
     //compileOnly 'com.google.dagger:dagger:2.29.1'
@@ -313,7 +313,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.5.3'
     implementation 'androidx.navigation:navigation-ui:2.5.3'
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
-	implementation 'com.google.firebase:firebase-inappmessaging-display:20.2.0'
+	implementation 'com.google.firebase:firebase-inappmessaging-display:20.3.1'
 	
 	
 	//implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.10'
