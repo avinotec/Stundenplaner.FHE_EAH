@@ -122,14 +122,17 @@
     <string name="fcm_examadded_message_part1">Prüfung hinzugefügt für</string>
 
     <string name="myschedule_pref_category_mycourses">Meine Kurse</string>
-    <string name="myschedule_pref_overview_title">Übersicht</string>
+    <string name="myschedule_pref_overview_title">Mein Stundenplan (Übersicht)</string>
     <string name="myschedule_pref_addcourse_title">Kurs hinzufügen</string>
+    <string name="myschedule_pref_addcourse_summary">Füge Kurse zu deinem Stundenplan hinzu</string>
     <string name="myschedule_pref_category_fcm">Benachrichtigungen</string>
     <string name="myschedule_pref_fcm_title">Push-Benachrichtigungen</string>
-    <string name="myschedule_pref_fcm_summary">Werde bei Stundenplanänderungen und hinzugefügten Prüfungen benachrichtigt</string>
+    <string name="myschedule_pref_fcm_summary">Benachrichtige mich bei Stundenplanänderungen und hinzugefügten Prüfungen</string>
     <string name="myschedule_pref_category_calsync">Kalendersynchronisation</string>
-    <string name="myschedule_pref_sync_title">Synchronisieren</string>
-    <string name="myschedule_pref_sync_summary">Mein Stundenplan in den gewählten Kalender synchronisieren</string>
+    <string name="myschedule_pref_choose_calendar_title">Kalendar wählen</string>
+    <string name="myschedule_pref_choose_calendar_summary">Wähle einen Kalender, in den synchronisiert werden soll</string>
+    <string name="myschedule_pref_calsync_title">Synchronisieren</string>
+    <string name="myschedule_pref_calsync_summary">Mein Stundenplan in den gewählten Kalender synchronisieren</string>
 
 
     <string name="notification_error_ssl_cert_invalid">Es ist ein Zertifikat-Fehler aufgetreten. Möchtest du die Seite trotzdem öffnen?</string>

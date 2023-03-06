@@ -24,11 +24,12 @@
         android:title="@string/myschedule_pref_category_mycourses">
 
         <Preference
+            android:title="@string/myschedule_pref_addcourse_title"
+            app:fragment="de.fhe.fhemobile.fragments.myschedule.MyScheduleDialogFragment"
+            android:summary="@string/myschedule_pref_addcourse_summary"/>
+        <Preference
             android:title="@string/myschedule_pref_overview_title"
             app:fragment="de.fhe.fhemobile.fragments.myschedule.MyScheduleOverviewFragment"/>
-        <Preference
-            android:title="Kurs hinzufügen"
-            app:fragment="de.fhe.fhemobile.fragments.myschedule.MyScheduleDialogFragment"/>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -48,17 +49,17 @@
 <!--        android:title="@string/myschedule_pref_category_calsync">-->
 
 <!--        <ListPreference-->
-<!--            android:key="@string/pref_myschedule_available_calendars"-->
-<!--            android:title="Ausgewählter Kalender"-->
-<!--            android:summary="Wähle einen Kalender, in den synchronisiert werden soll."-->
+<!--            android:key="@string/sp_myschedule_calendar_to_sync"-->
+<!--            android:title="@string/myschedule_pref_choose_calendar_title"-->
+<!--            android:summary="@string/myschedule_pref_choose_calendar_summary"-->
 <!--            />-->
 
 <!--        &lt;!&ndash; Note: always use SwitchPreferenceCompat (not SwitchPreference)-->
 <!--         to ensure the switch to always look the same, independent of android version &ndash;&gt;-->
 <!--        <SwitchPreferenceCompat-->
 <!--            android:key="@string/sp_myschedule_enable_calsync"-->
-<!--            android:title="@string/myschedule_pref_sync_title"-->
-<!--            android:summary="@string/myschedule_pref_sync_summary"/>-->
+<!--            android:title="@string/myschedule_pref_calsync_title"-->
+<!--            android:summary="@string/myschedule_pref_calsync_summary"/>-->
 
 <!--    </PreferenceCategory>-->
 
