@@ -13,7 +13,7 @@
 require_once 'TimetableDb.php';
 
 $GLOBALS['DEBUGDATABASE'] = false;
-$GLOBALS['DEBUGDATABASE'] = true;
+//$GLOBALS['DEBUGDATABASE'] = true;
 
 
 if ($GLOBALS['DEBUGDATABASE']) {

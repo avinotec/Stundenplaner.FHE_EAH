@@ -124,8 +124,8 @@ function updateDatabaseAndBookNotifications(string &$moduleId): void
                     $output .= sprintf("<li> Event set %s has changed since %s.</li>",
                         $resultLocalEventSet[0]["eventset_id"],
                         $resultLocalEventSet[0]["last_changed"]);
-                    file_put_contents('D:/Downloads/json_compare/'.$eventsetID.'_local.json', $localEventSetJson);
-                    file_put_contents('D:/Downloads/json_compare/'.$eventsetID.'_fetched.json', $fetchedEventSetJson);
+                    //DEBUG file_put_contents('D:/Downloads/json_compare/'.$eventsetID.'_local.json', $localEventSetJson);
+                    //DEBUG file_put_contents('D:/Downloads/json_compare/'.$eventsetID.'_fetched.json', $fetchedEventSetJson);
                     //update database, the data of this event set has changed
                     $db_timetable->updateEventSet($eventsetID, $fetchedEventSetJson);
                     bookTimetableChangedNotifications($eventSeriesName);
