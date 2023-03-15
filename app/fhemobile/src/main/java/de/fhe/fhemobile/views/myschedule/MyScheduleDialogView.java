@@ -69,9 +69,10 @@ public class MyScheduleDialogView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mStudyProgramPicker = (StudyProgramPicker)  findViewById(R.id.studyprogrampicker_myschedule_dialog);
+        mStudyProgramPicker = (StudyProgramPicker)  findViewById(R.id.studyprogrampicker_myschedule_dialog_2);
         mSemesterPicker     = (SemesterPicker)      findViewById(R.id.semesterpicker_myschedule_dialog);
-        mProgressIndicator  = (ProgressBar)         findViewById(R.id.progressbar_myschedule_dialog);
+        mStudyProgramProgressIndicator = (ProgressBar)         findViewById(R.id.progressbar_myschedule_dialog_1);
+        mCourseListProgressIndicator = (ProgressBar)         findViewById(R.id.progressbar_myschedule_dialog_2);
 
         mCourseListView = (ListView) findViewById(R.id.lv_myschedule_dialog_events);
     }
@@ -81,6 +82,9 @@ public class MyScheduleDialogView extends LinearLayout {
         Collections.sort(_Items, new StudyProgramComparator());
         mStudyProgramPicker.setItems(_Items);
         mStudyProgramPicker.toggleEnabled(true);
+
+        setStudyProgramProgressIndicatorVisible(false);
+        findViewById(R.id.layout_myschedule_dialog).setVisibility(VISIBLE);
     }
 
     public void setSemesterItems(final List<TimetableSemesterVo> _Items) {
@@ -89,16 +93,20 @@ public class MyScheduleDialogView extends LinearLayout {
     }
 
 
-    public void toggleSemesterPickerVisibility(final boolean _Visible) {
+    public void setSemesterPickerVisible(final boolean _Visible) {
         mSemesterPicker.setVisibility(_Visible ? VISIBLE : GONE);
     }
 
-    public void toggleEventListVisibility(final boolean _Visible){
+    public void setEventListVisible(final boolean _Visible){
         mCourseListView.setVisibility(_Visible ? VISIBLE : GONE);
     }
 
-    public void toggleProgressIndicatorVisibility(final boolean _Visible){
-        mProgressIndicator.setVisibility(_Visible ? VISIBLE : GONE);
+    public void setStudyProgramProgressIndicatorVisible(final boolean _Visible){
+        mStudyProgramProgressIndicator.setVisibility(_Visible ? VISIBLE : GONE);
+    }
+
+    public void setCourseListProgressIndicatorVisible(final boolean _Visible){
+        mCourseListProgressIndicator.setVisibility(_Visible ? VISIBLE : GONE);
     }
 
     public void setEventListAdapter(final MyScheduleDialogAdapter adapter){
@@ -150,7 +158,8 @@ public class MyScheduleDialogView extends LinearLayout {
     private StudyProgramPicker  mStudyProgramPicker;
     private SemesterPicker      mSemesterPicker;
     private ListView            mCourseListView;
-    private ProgressBar         mProgressIndicator;
+    private ProgressBar         mStudyProgramProgressIndicator;
+    private ProgressBar         mCourseListProgressIndicator;
 
 
 }

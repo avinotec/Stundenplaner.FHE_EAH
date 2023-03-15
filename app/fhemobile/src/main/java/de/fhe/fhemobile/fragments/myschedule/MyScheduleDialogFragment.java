@@ -136,7 +136,7 @@ public class MyScheduleDialogFragment extends DialogFragment {
         public void onStudyProgramChosen(final String _StudyProgramId) {
             //reset needed because a new study course had been chosen
             mView.resetSemesterPicker();
-            mView.toggleEventListVisibility(false);
+            mView.setEventListVisible(false);
 
             mListAdapter.setItems(new ArrayList<>());
             mListAdapter.notifyDataSetChanged();
@@ -173,11 +173,11 @@ public class MyScheduleDialogFragment extends DialogFragment {
             }
 
             if (studyProgramEmpty) {
-                mView.toggleSemesterPickerVisibility(false);
+                mView.setSemesterPickerVisible(false);
                 Utils.showToast(R.string.timetable_error);
             }
             else {
-                mView.toggleSemesterPickerVisibility(true);
+                mView.setSemesterPickerVisible(true);
             }
 
         }
@@ -185,8 +185,8 @@ public class MyScheduleDialogFragment extends DialogFragment {
 
         @Override
         public void onSemesterChosen(final String _SemesterId) {
-            mView.toggleProgressIndicatorVisibility(true);
-            mView.toggleEventListVisibility(false);
+            mView.setCourseListProgressIndicatorVisible(true);
+            mView.setEventListVisible(false);
             mListAdapter.setItems(new ArrayList<>());
             mListAdapter.notifyDataSetChanged();
 
@@ -229,14 +229,17 @@ public class MyScheduleDialogFragment extends DialogFragment {
             } else {
                 final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
                 ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.MYSCHEDULE_DIALOG_FRAGMENT_CODE3);
+
+                mView.setStudyProgramProgressIndicatorVisible(false);
             }
-            mView.toggleProgressIndicatorVisibility(false);
         }
 
         @Override
         public void onFailure(final Call<TimetableDialogResponse> call, final Throwable t) {
             ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.MYSCHEDULE_DIALOG_FRAGMENT_CODE1);
             Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
+
+            mView.setStudyProgramProgressIndicatorVisible(false);
         }
     };
 
@@ -251,14 +254,14 @@ public class MyScheduleDialogFragment extends DialogFragment {
 
                 Collections.sort(eventSeriesVos, new EventSeriesTitleComparator());
 
-                mView.toggleEventListVisibility(true);
+                mView.setEventListVisible(true);
                 mListAdapter.setItems(eventSeriesVos);
 
             } else {
                 final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
                 ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.MYSCHEDULE_DIALOG_FRAGMENT_CODE4);
             }
-            mView.toggleProgressIndicatorVisibility(false);
+            mView.setCourseListProgressIndicatorVisible(false);
 
         }
 
