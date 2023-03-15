@@ -27,7 +27,8 @@
         android:layout_height="wrap_content"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_gravity="center_horizontal"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:indeterminate="true"/>
 
         <LinearLayout
             android:id="@+id/layout_myschedule_dialog"
@@ -86,7 +87,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:visibility="gone" />
-
 
         </LinearLayout>
 
