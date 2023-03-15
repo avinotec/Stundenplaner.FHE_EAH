@@ -71,9 +71,8 @@ public class MyScheduleOverviewView extends LinearLayout {
     /**
      * Sets view to show if the course list is empty
      */
-    public void setCourseListEmptyView(){
-        final TextView emptyView = new TextView( getContext() );
-        emptyView.setText(getResources().getString(R.string.myschedule_empty));
+    public void setEmptyCourseListView(){
+        final TextView emptyView = findViewById(R.id.tv_myschedule_overview_empty);
         mCourseListView.setEmptyView(emptyView);
     }
 

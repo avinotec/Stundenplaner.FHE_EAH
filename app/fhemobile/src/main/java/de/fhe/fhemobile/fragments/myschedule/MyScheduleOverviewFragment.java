@@ -72,10 +72,10 @@ public class MyScheduleOverviewFragment extends FeatureFragment {
 							 final Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		final MyScheduleOverviewView mView = (MyScheduleOverviewView) inflater.inflate(
-				R.layout.fragment_myschedule_setup, container, false);
+				R.layout.fragment_myschedule_overview, container, false);
 		mView.initializeView(getChildFragmentManager());
 
-		mView.setCourseListEmptyView();
+		mView.setEmptyCourseListView();
 		return mView;
 	}
 

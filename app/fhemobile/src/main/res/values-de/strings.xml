@@ -102,7 +102,8 @@
 
     <!-- My Schedule -->
     <string name="myschedule_dialog_headline" >Wähle bitte Studiengang und Semester.</string>
-    <string name="myschedule_empty">Du hast noch keinen Stundenplan zusammengestellt.</string>
+    <string name="myschedule_calendar_empty">Keine bevorstehenden Veranstaltungen!</string>
+    <string name="myschedule_overview_empty">Du hast keinen Stundenplan zusammengestellt.</string>
     <string name="myschedule_dialog_empty">Wähle Studiengang und Semester aus.</string>
     <string name="myschedule_last_updated">Zuletzt aktualisiert: </string>
     <string name="myschedule_connection_failed">"Aktualisierung deines Stundenplans nicht möglich!\n Bisheriger Stand wird geladen."</string>

@@ -100,7 +100,8 @@
 
     <!-- My Schedule -->
     <string name="myschedule_dialog_headline">Please select study program and semester.</string>
-    <string name="myschedule_empty">You did not compose a schedule.</string>
+    <string name="myschedule_calendar_empty">No upcoming events!</string>
+    <string name="myschedule_overview_empty">You did not compose a schedule.</string>
     <string name="myschedule_dialog_empty">Choose study program and semester.</string>
     <string name="myschedule_last_updated">Last updated: </string>
     <string name="myschedule_connection_failed">Updating your schedule failed!\n Previous state gets restored.</string>

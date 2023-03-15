@@ -48,6 +48,15 @@
 
 			<View style="@style/Divider" />
 
+			<TextView
+				android:id="@+id/tv_myschedule_overview_empty"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_gravity="center"
+				android:gravity="center"
+				android:text="@string/myschedule_overview_empty"
+				android:visibility="visible" />
+
 			<ListView
 				android:id="@+id/lv_myschedule_overview"
 				android:layout_width="match_parent"

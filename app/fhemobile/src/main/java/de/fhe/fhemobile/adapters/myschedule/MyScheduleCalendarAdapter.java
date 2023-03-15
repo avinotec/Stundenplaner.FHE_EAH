@@ -54,14 +54,15 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 	}
 
 	public void setItems(final List<MyScheduleEventVo> items){
-		mItems = new ArrayList<>();
+		if(items == null) return;
 
+		mItems = new ArrayList<>();
 		//add items to mItems, ignore past days
 		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd");
-		for(MyScheduleEventVo item : items){
+		for (MyScheduleEventVo item : items) {
 			Date startDateWithTime = item.getStartDateWithTime();
-			if(sdfDate.format(startDateWithTime).equals(sdfDate.format(new Date()))
-					|| startDateWithTime.compareTo(new Date()) > 0){
+			if (sdfDate.format(startDateWithTime).equals(sdfDate.format(new Date()))
+					|| startDateWithTime.compareTo(new Date()) > 0) {
 				mItems.add(item);
 			}
 		}

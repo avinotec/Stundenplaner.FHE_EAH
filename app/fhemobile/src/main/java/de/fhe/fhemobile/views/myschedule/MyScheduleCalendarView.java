@@ -102,8 +102,12 @@ public class MyScheduleCalendarView extends LinearLayout {
         //refresh gesture
         if(Define.ENABLE_MYSCHEDULE_UPDATING){
             mSwipeRefreshLayout.setOnRefreshListener(() -> {
-                mSwipeRefreshLayout.setRefreshing(true);
-                FetchMyScheduleBackgroundTask.fetch();
+                if(MyScheduleModel.getInstance().getSubscribedEventSeries().size() > 0){
+                    mSwipeRefreshLayout.setRefreshing(true);
+                    FetchMyScheduleBackgroundTask.fetch();
+                } else {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
             });
         }
     }
