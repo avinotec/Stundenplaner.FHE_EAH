@@ -78,6 +78,8 @@ public class MyScheduleEventVo implements Parcelable {
         dest.writeList(mLecturerList);
         dest.writeList(mLocationList);
         dest.writeArray(typesOfChanges.toArray());
+        dest.writeByte((byte) (mChangedSinceLastCalSync ? 1 : 0));
+        dest.writeLong(mCalEventId);
     }
 
     MyScheduleEventVo(final Parcel in) {
@@ -88,6 +90,8 @@ public class MyScheduleEventVo implements Parcelable {
         in.readList(mLecturerList , LecturerVo.class.getClassLoader());
         in.readList(mLocationList, TimetableLocationVo.class.getClassLoader());
         typesOfChanges = new HashSet(Arrays.asList(in.readArray(TimetableChangeType.class.getClassLoader())));
+        mChangedSinceLastCalSync = in.readByte() == 1;
+        this.mCalEventId = in.readLong();
 
         //remove null objects
         for(final TimetableLocationVo location : mLocationList){
@@ -242,8 +246,17 @@ public class MyScheduleEventVo implements Parcelable {
         return typesOfChanges;
     }
 
+    public boolean changedSinceLastCalSync() {
+        return mChangedSinceLastCalSync;
+    }
+
+    public Long getCalEventId() {
+        return mCalEventId;
+    }
+
     public void addChange(final TimetableChangeType type){
         typesOfChanges.add(type);
+        mChangedSinceLastCalSync = true;
     }
 
     public void setStartDateTimeInSec(final long mStartDateTime) {
@@ -266,6 +279,14 @@ public class MyScheduleEventVo implements Parcelable {
         this.mTitle = title;
     }
 
+    public void setCalEventId(Long mCalEventId) {
+        this.mCalEventId = mCalEventId;
+    }
+
+    public void setChangedSinceLastCalSync(boolean mChangedSinceLastCalSync) {
+        this.mChangedSinceLastCalSync = mChangedSinceLastCalSync;
+    }
+
     @SerializedName("title")
     private String mTitle;
 
@@ -286,5 +307,11 @@ public class MyScheduleEventVo implements Parcelable {
 
     @SerializedName("typesOfChanges")
     private Set<TimetableChangeType> typesOfChanges = new HashSet<>();
+
+    @SerializedName("mChangedSinceLastCalSync")
+    private boolean mChangedSinceLastCalSync = true;
+
+    @SerializedName("calendarEventId")
+    private Long mCalEventId = null;
 
 }
