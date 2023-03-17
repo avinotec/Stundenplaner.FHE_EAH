@@ -25,7 +25,7 @@ import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.network.NetworkHandler;
 
 /**
- * {@link Runnable} for fetching My Schedule using not the main thread
+ * {@link Runnable} for fetching My Schedule using another but the main thread
  *
  * created by Nadja - 12/22
  */

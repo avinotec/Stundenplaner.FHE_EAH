@@ -56,7 +56,7 @@ public class ServerRegistrationBackgroundTask implements Runnable {
 
 	private static final String TAG = ServerRegistrationBackgroundTask.class.getSimpleName();
 
-	// FCM Token: eyrLLTIcSh6tGpGV89Ti8x:APA91bH5oRRLl3xAgK12yOWXnVr8rZtNd9pfjrIPU2D9z6rld0Bap3J3f-cg7qqVSkmcICQFG6v6Y5Y6wBwSMgMo2oX7za8AwueWQfeTCB8sUqSwLifnxYeI6WDbW9LDlYd1VmxjLAH4
+	// example FCM Token: eyrLLTIcSh6tGpGV89Ti8x:APA91bH5oRRLl3xAgK12yOWXnVr8rZtNd9pfjrIPU2D9z6rld0Bap3J3f-cg7qqVSkmcICQFG6v6Y5Y6wBwSMgMo2oX7za8AwueWQfeTCB8sUqSwLifnxYeI6WDbW9LDlYd1VmxjLAH4
 	// 164 Zeichen
 	final String fcmToken;
 	final List<MyScheduleEventSeriesVo> subscribedEventSeriesVos = new ArrayList<>();
