@@ -38,14 +38,16 @@ buildscript {
 	 * Google's Maven repository.
 	 */
 	repositories {
+		//jcenter()
 		google()
-		maven { url 'https://maven.google.com' }
-//        maven { url "https://jitpack.io" }
-		mavenCentral()
-		mavenLocal()
-		
+		//201908 MS: somewhere read, that google sometimes is older and needs updates directly through maven
+		maven { url "https://dl.bintray.com/populov/maven" }
+		maven { url "https://maven.google.com" }
+		maven { url "https://jitpack.io" }
 		// Smack
 		maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+		mavenCentral()
+		mavenLocal()
 	}
 	
 	/**
@@ -55,8 +57,8 @@ buildscript {
 	 */
 	dependencies {
 		classpath 'com.android.tools.build:gradle:7.4.2'
-		classpath 'com.google.gms:google-services:4.3.14'
-		classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1'
+		classpath 'com.google.gms:google-services:4.3.15'
+		classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.4'
 	}
 }
 
@@ -70,11 +72,16 @@ buildscript {
  */
 allprojects {
 	repositories {
-		//maven { url "https://jitpack.io" }
+		//jcenter()
 		google()
-		mavenCentral()
 		//201908 MS: somewhere read, that google sometimes is older and needs updates directly through maven
+		maven { url "https://dl.bintray.com/populov/maven" }
 		maven { url "https://maven.google.com" }
+		maven { url "https://jitpack.io" }
+		// Smack
+		maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+		mavenCentral()
+		mavenLocal()
 	}
 	
 }
