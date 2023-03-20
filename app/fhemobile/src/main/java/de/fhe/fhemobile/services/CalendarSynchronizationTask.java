@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2022-2022 Ernst-Abbe-Hochschule Jena
+ *  Copyright (c) 2023-2023 Ernst-Abbe-Hochschule Jena
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,37 +18,40 @@ package de.fhe.fhemobile.services;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import de.fhe.fhemobile.Main;
-import de.fhe.fhemobile.network.NetworkHandler;
+import de.fhe.fhemobile.models.myschedule.CalendarModel;
+import de.fhe.fhemobile.models.myschedule.MyScheduleModel;
+import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
 
 /**
- * {@link Runnable} for fetching My Schedule using another but the main thread
+ * {@link Runnable} for syncing My Schedule to a calendar
  *
- * created by Nadja - 12/22
+ * Created by Nadja - 16.02.2023
  */
-public class FetchMyScheduleBackgroundTask implements Runnable {
+public class CalendarSynchronizationTask implements Runnable {
 
-    private static final String TAG = FetchMyScheduleBackgroundTask.class.getSimpleName();
+    private static final String TAG = CalendarSynchronizationTask.class.getSimpleName();
 
     /**
-     * Construct a new {@link FetchMyScheduleBackgroundTask} that fetches my schedule
-     * and is run every 10 min.
+     * Construct a new {@link CalendarSynchronizationTask}
+     * that synchronizes My Schedule with the users calendar every 10 min.
      */
-    public static void startPeriodicFetching(){
+    public static void startPeriodicSynchronizing(){
         if(mScheduledFuture == null){
             mScheduledFuture = Main.scheduledExecutorService.scheduleWithFixedDelay(
-                    new FetchMyScheduleBackgroundTask(), 0, 10, TimeUnit.MINUTES);
+                    new CalendarSynchronizationTask(),0,10, TimeUnit.MINUTES);
         }
     }
 
     /**
-     * Stop the {@link FetchMyScheduleBackgroundTask} that periodically fetches my schedule
+     * Stop the {@link CalendarSynchronizationTask} that periodically synchronizes my schedule
      * after it finished the current run.
      */
-    public static void stopPeriodicFetching(){
+    public static void stopPeriodicSynchronizing(){
         //mScheduledFuture.isCancelled() necessary to check because calling cancel() on a futures
         // that has been already canceled causes a SocketException
         if(mScheduledFuture != null && !mScheduledFuture.isCancelled()){
@@ -57,20 +60,13 @@ public class FetchMyScheduleBackgroundTask implements Runnable {
         }
     }
 
-    /**
-     * Construct a new {@link FetchMyScheduleBackgroundTask} that fetches my schedule.
-     * The tasks gets scheduled for one immediate execution.
-     */
-    public static void fetch(){
-        Main.scheduledExecutorService.schedule(new FetchMyScheduleBackgroundTask(), 0, TimeUnit.SECONDS);
-    }
 
     @Override
     public void run() {
-        Log.i(TAG, "Started FetchMyScheduleBackgroundTask.run()");
-        NetworkHandler.getInstance().fetchMySchedule();
+        Log.i(TAG, "Started CalendarSynchronizationTask.run()");
+
+        CalendarModel.getInstance().syncMySchedule();
     }
 
     private static ScheduledFuture mScheduledFuture;
-
 }

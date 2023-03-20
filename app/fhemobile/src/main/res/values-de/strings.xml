@@ -134,6 +134,7 @@
     <string name="myschedule_pref_choose_calendar_summary">Wähle einen Kalender, in den synchronisiert werden soll</string>
     <string name="myschedule_pref_calsync_title">Synchronisieren</string>
     <string name="myschedule_pref_calsync_summary">Mein Stundenplan in den gewählten Kalender synchronisieren</string>
+    <string name="myschedule_calsync_warning">Du musst erst einen Kalender auswählen!</string>
 
 
     <string name="notification_error_ssl_cert_invalid">Es ist ein Zertifikat-Fehler aufgetreten. Möchtest du die Seite trotzdem öffnen?</string>

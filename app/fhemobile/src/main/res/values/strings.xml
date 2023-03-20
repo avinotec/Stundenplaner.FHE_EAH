@@ -128,10 +128,11 @@
     <string name="myschedule_pref_fcm_title">Push Notifications</string>
     <string name="myschedule_pref_fcm_summary">Notify about timetable changes and added exams</string>
     <string name="myschedule_pref_category_calsync">Calendar Synchronisation</string>
-    <string name="myschedule_pref_choose_calendar_title">Choose calendar</string>
-    <string name="myschedule_pref_choose_calendar_summary">Choose a calendar to synchronize to</string>
+    <string name="myschedule_pref_choose_calendar_title">Select calendar</string>
+    <string name="myschedule_pref_choose_calendar_summary">Select a calendar to synchronize to</string>
     <string name="myschedule_pref_calsync_title">Synchronize</string>
     <string name="myschedule_pref_calsync_summary">Sync My Schedule to the chosen calendar</string>
+    <string name="myschedule_calsync_warning">You need to select a calendar first!</string>
 
 <!--    shared preference keys -->
     <string name="sp_myschedule_enable_fcm" translatable="false">enable_fcm</string>
