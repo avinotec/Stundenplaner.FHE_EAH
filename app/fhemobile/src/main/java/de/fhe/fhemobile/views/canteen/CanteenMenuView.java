@@ -114,7 +114,7 @@ public class CanteenMenuView extends LinearLayout {
         List<CanteenMenuDayVo> menuDaysList = CanteenModel.getInstance().getMenu(mCanteenId);
 
         //if menu empty, load from shared preferences
-        if (menuDaysList == null || menuDaysList.size() == 0){
+        if (menuDaysList == null || menuDaysList.isEmpty()){
             menuDaysList = getCanteenMenuDaysFromSharedPreferences();
             showUpdateFailedToast();
         }
@@ -129,7 +129,7 @@ public class CanteenMenuView extends LinearLayout {
      */
     private void populateMenuDaysList(@NonNull List<CanteenMenuDayVo> menuDaysList) {
         //if non-empty, populate view
-        if(menuDaysList != null && menuDaysList.size() > 0) {
+        if(menuDaysList != null && !menuDaysList.isEmpty()) {
             mMenuDaysListView.setVisibility(VISIBLE);
 
             mErrorText.setVisibility(GONE);
@@ -170,7 +170,7 @@ public class CanteenMenuView extends LinearLayout {
         final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences(SP_CANTEEN, Context.MODE_PRIVATE);
         final String json = sharedPreferences.getString(CANTEEN + mCanteenId, "");
         final Gson gson = new Gson();
-        if(!"".equals(json)){
+        if(!json.isEmpty()){
             final Type listType = new TypeToken<ArrayList<CanteenMenuDayVo>>(){}.getType();
             menuDaysList = gson.fromJson(json, listType);
             Log.d(TAG, "Menu for " + mCanteenId + " loaded from Shared Preferences");
