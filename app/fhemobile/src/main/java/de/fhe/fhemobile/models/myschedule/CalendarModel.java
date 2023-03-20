@@ -271,8 +271,8 @@ public class CalendarModel {
         final ContentValues values = new ContentValues();
         values.put(Events.CALENDAR_ID, chosenCalId);
         values.put(Events.TITLE, scheduleEvent.getTitle());
-        values.put(Events.DTSTART, scheduleEvent.getStartDateTimeInSec());
-        values.put(Events.DTEND, scheduleEvent.getEndDateTimeInSec());
+        values.put(Events.DTSTART, scheduleEvent.getStartDateTimeInSec()*1000); //time in milliseconds
+        values.put(Events.DTEND, scheduleEvent.getEndDateTimeInSec()*1000);
         values.put(Events.EVENT_LOCATION, scheduleEvent.getLocationListAsString());
         values.put(Events.DESCRIPTION, scheduleEvent.getLecturerListAsString()+", Sets: "+ scheduleEvent.getLocationListAsString());
 //        values.put(Events.EVENT_COLOR, HOF_CALENDAR_COLOR); //todo set color

@@ -72,6 +72,10 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         addPreferencesFromResource(R.xml.preferences_visualizer);
 
         mCalendarListPref = findPreference(getResources().getString(R.string.sp_myschedule_calendar_to_sync));
+        if(mCalendarListPref.getValue() != null){
+            setAvailableCalendars();
+            mCalendarListPref.setSummary(mCalendarListPref.getEntry());
+        }
         mCalendarListPref.setEntries(new CharSequence[0]);
         mCalendarListPref.setEntryValues(new CharSequence[0]);
 
@@ -88,7 +92,11 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         mCalendarListPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
-                preference.setSummary(String.valueOf(newValue));
+                if(mCalendarListPref != null){
+                    preference.setSummary(mCalendarListPref.getEntry());
+                } else {
+                    preference.setSummary(R.string.myschedule_pref_choose_calendar_summary);
+                }
                 return false;
             }
         });
@@ -101,6 +109,9 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                 boolean syncEnabled = ((SwitchPreferenceCompat) preference).isChecked();
 
                 //todo: check if a calendar is chosen
+
+                //todo: only for debugging
+                CalendarModel.getInstance().syncMySchedule();
 
                 if(syncEnabled) {
                     CalendarSynchronizationTask.startPeriodicSynchronizing();
