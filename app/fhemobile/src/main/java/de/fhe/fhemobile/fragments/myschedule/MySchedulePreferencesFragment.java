@@ -35,13 +35,13 @@ import androidx.preference.SwitchPreferenceCompat;
 import com.google.common.collect.Iterables;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.models.myschedule.CalendarModel;
 import de.fhe.fhemobile.services.CalendarSynchronizationTask;
+import de.fhe.fhemobile.utils.Utils;
 
 public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
 
@@ -72,10 +72,6 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         addPreferencesFromResource(R.xml.preferences_visualizer);
 
         mCalendarListPref = findPreference(getResources().getString(R.string.sp_myschedule_calendar_to_sync));
-        if(mCalendarListPref.getValue() != null){
-            setAvailableCalendars();
-            mCalendarListPref.setSummary(mCalendarListPref.getEntry());
-        }
         mCalendarListPref.setEntries(new CharSequence[0]);
         mCalendarListPref.setEntryValues(new CharSequence[0]);
 
@@ -101,27 +97,40 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
             }
         });
 
-
         mCalendarSyncSwitchPref = findPreference(getResources().getString(R.string.sp_myschedule_enable_calsync));
         mCalendarSyncSwitchPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(@NonNull Preference preference) {
                 boolean syncEnabled = ((SwitchPreferenceCompat) preference).isChecked();
 
-                //todo: check if a calendar is chosen
-
-                //todo: only for debugging
-                CalendarModel.getInstance().syncMySchedule();
-
-                if(syncEnabled) {
-                    CalendarSynchronizationTask.startPeriodicSynchronizing();
-                } else {
-                    CalendarSynchronizationTask.stopPeriodicSynchronizing();
+                //no calendar chosen
+                if(mCalendarListPref.getValue() == null){
+                    mCalendarSyncSwitchPref.setChecked(false);
+                    Utils.showToast(R.string.myschedule_calsync_warning);
+                }
+                //calendar chosen
+                else {
+                    //toggle synchronisation
+                    if(syncEnabled) {
+                        CalendarSynchronizationTask.startPeriodicSynchronizing();
+                    } else {
+                        CalendarSynchronizationTask.stopPeriodicSynchronizing();
+                    }
                 }
                 return false;
             }
         });
 
+        //set some values if a calendar is already chosen
+        if(mCalendarListPref.getValue() != null){
+            setAvailableCalendars();
+            mCalendarListPref.setSummary(mCalendarListPref.getEntry());
+        }
+        //no calendar chosen
+        else {
+            CalendarSynchronizationTask.stopPeriodicSynchronizing();
+            mCalendarSyncSwitchPref.setChecked(false);
+        }
     }
 
     /**
