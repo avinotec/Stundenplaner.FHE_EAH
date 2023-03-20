@@ -44,7 +44,7 @@ android {
      * This property is optional because the plugin uses a recommended version of
      * the build tools by default.
      */
-    buildToolsVersion '34.0.0 rc1'
+    buildToolsVersion '34.0.0 rc2'
 
     compileOptions {
         // Error: Invoke-customs are only supported starting with Android O (--min-api 26)
