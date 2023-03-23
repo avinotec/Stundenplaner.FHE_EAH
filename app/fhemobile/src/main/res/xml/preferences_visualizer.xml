@@ -51,8 +51,12 @@
         <ListPreference
             android:key="@string/sp_myschedule_calendar_to_sync"
             android:title="@string/myschedule_pref_choose_calendar_title"
-            android:summary="@string/myschedule_pref_choose_calendar_summary"
-            />
+            android:summary="@string/myschedule_pref_choose_calendar_summary" />
+
+        <Preference
+            android:key="@string/myschedule_pref_delete_calendar"
+            android:title="@string/myschedule_pref_delete_calendar_title"
+            android:summary="@string/myschedule_pref_delete_calendar_summary"/>
 
         <!-- Note: always use SwitchPreferenceCompat (not SwitchPreference)
          to ensure the switch to always look the same, independent of android version -->

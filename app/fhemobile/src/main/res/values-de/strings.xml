@@ -115,7 +115,7 @@
     <string name="deleteTimetableMessageOptional">Das Semester ist zu Ende. Soll dein Stundenplan geleert werden?</string>
     <string name="deleteTimetableMessageForced">Ein neues Semester hat begonnen. Dein Stundenplan muss geleert werden.</string>
     <string name="deleteTimetableConfirm">Leeren</string>
-    <string name="deleteTimetableCancel">Abbrechen</string>
+    <string name="dialog_cancel">Abbrechen</string>
 
     <string name="fcm_change_title">Stundenplanänderung</string>
     <string name="fcm_timetablechange_message_part1">hat sich geändert.</string>
@@ -132,12 +132,18 @@
     <string name="myschedule_pref_category_calsync">Kalendersynchronisation</string>
     <string name="myschedule_pref_choose_calendar_title">Kalendar wählen</string>
     <string name="myschedule_pref_choose_calendar_summary">Wähle einen Kalender, in den synchronisiert werden soll</string>
+    <string name="myschedule_pref_delete_calendar_title">Lokalen Kalender löschen</string>
+    <string name="myschedule_pref_delete_calendar_summary">Löscht den lokalen Kalender \"Mein Stundenplan\"</string>
     <string name="myschedule_pref_calsync_title">Synchronisieren</string>
     <string name="myschedule_pref_calsync_summary">Mein Stundenplan in den gewählten Kalender synchronisieren</string>
     <string name="myschedule_calsync_warning">Du musst erst einen Kalender auswählen!</string>
     <string name="myschedule_calsync_calendar_name">Mein Stundenplan</string>
     <string name="myschedule_delete_calendar_error">Es wurde kein lokaler Kalendar zum Löschen gefunden.</string>
     <string name="myschedule_create_local_calendar">Neuen lokalen Kalender erstellen</string>
+
+    <string name="dialog_delete_cal_title">Lokalen Kalender löschen</string>
+    <string name="dialog_delete_cal_message">Möchtest du den Kalender \"Mein Stundenplan\" löschen?</string>
+    <string name="dialog_delete_cal_confirm">Delete</string>
 
 
     <string name="notification_error_ssl_cert_invalid">Es ist ein Zertifikat-Fehler aufgetreten. Möchtest du die Seite trotzdem öffnen?</string>

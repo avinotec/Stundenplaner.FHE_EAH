@@ -123,8 +123,6 @@ public class CalendarModel {
         while (cursor.moveToNext()) {
             long calID = cursor.getLong(CalendarProjection.ID_INDEX);
             String displayName = cursor.getString(CalendarProjection.DISPLAY_NAME_INDEX);
-            String accountName = cursor.getString(CalendarProjection.ACCOUNT_NAME_INDEX);
-            String ownerName = cursor.getString(CalendarProjection.OWNER_ACCOUNT_INDEX);
 
             result.put(displayName, calID);
             Log.d(TAG, "Kalender: " + displayName + " Id:" + calID);
@@ -267,7 +265,7 @@ public class CalendarModel {
     }
 
 
-    public void createLocalCalendar(){
+    public String createLocalCalendar(){
         /* If an application needs to create a local calendar, it can do this by performing the
         calendar insertion as a sync adapter, using an ACCOUNT_TYPE of ACCOUNT_TYPE_LOCAL.
         ACCOUNT_TYPE_LOCAL is a special account type for calendars that are not associated with a
@@ -291,14 +289,21 @@ public class CalendarModel {
         values.put(Calendars.CALENDAR_TIME_ZONE, "Europe/Brussels");
         values.put(Calendars.CAN_PARTIALLY_UPDATE, 1);
 
-        Main.getAppContext().getContentResolver().insert(calendarUri, values);
+        final Uri uri = Main.getAppContext().getContentResolver().insert(calendarUri, values);
+        if(uri != null){
+            String calId = uri.getLastPathSegment();
+            PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
+                    .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), calId).apply();
+            return calId;
+        }
+        return null;
     }
 
     /**
      * Delete local calendar
      * @return True, if deletion had been successful
      */
-    private boolean deleteLocalCalendar(){
+    public boolean deleteLocalCalendar(){
         final Long localCalendarID = getLocalCalendarId();
 
         if (localCalendarID == null) {

@@ -18,6 +18,8 @@ package de.fhe.fhemobile.fragments.myschedule;
 
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
@@ -40,6 +42,7 @@ import java.util.Map;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.models.myschedule.CalendarModel;
+import de.fhe.fhemobile.models.myschedule.MyScheduleModel;
 import de.fhe.fhemobile.services.CalendarSynchronizationTask;
 import de.fhe.fhemobile.utils.Utils;
 
@@ -71,6 +74,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
         addPreferencesFromResource(R.xml.preferences_visualizer);
 
+        // calendar list preference
         mCalendarListPref = findPreference(getResources().getString(R.string.sp_myschedule_calendar_to_sync));
         mCalendarListPref.setEntries(new CharSequence[0]);
         mCalendarListPref.setEntryValues(new CharSequence[0]);
@@ -79,7 +83,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceClick(@NonNull Preference preference) {
                 if(checkCalendarPermission()){
-                    setAvailableCalendars();
+                    setAvailableCalendars((ListPreference) preference);
                 }
 
                 return false;
@@ -96,7 +100,36 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                 return false;
             }
         });
+        mCalendarListPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            /**
+             * Called when a Preference has been changed by the user.
+             * This is called before the state of the Preference is about to be updated and before the state is persisted.
+             * @param preference The changed preference
+             * @param newValue   The new value of the preference
+             * @return True to update the state of the Preference with the new value.
+             */
+            @Override
+            public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
+                if(((String) newValue).equals("-1")){
+                    //create local calendar and get its id
+                    String calId = CalendarModel.getInstance().createLocalCalendar();
+                    //update the list preference entries
+                    // (the entry "create local calendar" with value -1 is going to be replaced
+                    // by the name of the local calendar and its calendar id as values)
+                    setAvailableCalendars((ListPreference) preference);
+                    //set the chosen calendar top the local calendar id
+                    ((ListPreference) preference).setValue(calId);
+                    //return false to prevent the value being updated to -1 instead of the calId
+                    return false;
+                }
+                //set value of the preference to newValue
+                else {
+                    return true;
+                }
+            }
+        });
 
+        // calendar switch
         mCalendarSyncSwitchPref = findPreference(getResources().getString(R.string.sp_myschedule_enable_calsync));
         mCalendarSyncSwitchPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -121,6 +154,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
             }
         });
 
+        // initialize values
         //set some values if a calendar is already chosen
         if(mCalendarListPref.getValue() != null){
             setAvailableCalendars();
@@ -131,12 +165,42 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
             CalendarSynchronizationTask.stopPeriodicSynchronizing();
             mCalendarSyncSwitchPref.setChecked(false);
         }
+
+        // delete calendar
+        Preference deleteCalPref = findPreference(getResources().getString(R.string.myschedule_pref_delete_calendar));
+        deleteCalPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(@NonNull Preference preference) {
+
+                new AlertDialog.Builder(getContext())
+                        .setTitle(R.string.dialog_delete_cal_title)
+                        .setMessage(R.string.dialog_delete_cal_message)
+                        .setPositiveButton(R.string.dialog_delete_cal_confirm, new DialogInterface.OnClickListener() {
+
+                            public void onClick(final DialogInterface dialog, final int which) {
+                                CalendarModel.getInstance().deleteLocalCalendar();
+                            }
+                        })
+                        .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //dialog is closed
+                            }
+                        }).show();
+
+                return false;
+            }
+        });
+    }
+
+    private void setAvailableCalendars(){
+        setAvailableCalendars(mCalendarListPref);
     }
 
     /**
      * Set calendar options (displayed name and value/id saved to shared preferences)
      */
-    private void setAvailableCalendars(){
+    private void setAvailableCalendars(ListPreference preference){
         Map<String, Long> availableCalendars = CalendarModel.getInstance().getCalendars();
 
         if(availableCalendars == null){
@@ -149,7 +213,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         }
 
         //the human-readable entries to be shown in the list
-        mCalendarListPref.setEntries(Iterables.toArray(availableCalendars.keySet(), String.class));
+        preference.setEntries(Iterables.toArray(availableCalendars.keySet(), String.class));
         //array to find the value to save for a preference when an entry from entries is selected
         CharSequence[] values = new CharSequence[availableCalendars.values().size()];
         int i = 0;
@@ -157,8 +221,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
             values[i] = String.valueOf(calId);
             i++;
         }
-        mCalendarListPref.setEntryValues(values);
-        mCalendarListPref.notify();
+        preference.setEntryValues(values);
     }
 
     private boolean checkCalendarPermission() {
