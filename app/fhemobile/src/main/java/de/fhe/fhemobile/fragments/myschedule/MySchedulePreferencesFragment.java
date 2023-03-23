@@ -80,7 +80,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
             public boolean onPreferenceClick(@NonNull Preference preference) {
                 if(checkCalendarPermission()){
                     setAvailableCalendars();
-                };
+                }
 
                 return false;
             }
@@ -143,7 +143,10 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
             availableCalendars = new HashMap<>();
         }
 
-        //todo: add option to create a new local calendar
+        //option to create a new local calendar
+        if(CalendarModel.getInstance().getLocalCalendarId() == null){
+            availableCalendars.put(getResources().getString(R.string.myschedule_create_local_calendar), -1l);
+        }
 
         //the human-readable entries to be shown in the list
         mCalendarListPref.setEntries(Iterables.toArray(availableCalendars.keySet(), String.class));
@@ -155,7 +158,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
             i++;
         }
         mCalendarListPref.setEntryValues(values);
-
+        mCalendarListPref.notify();
     }
 
     private boolean checkCalendarPermission() {

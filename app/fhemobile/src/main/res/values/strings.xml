@@ -133,6 +133,9 @@
     <string name="myschedule_pref_calsync_title">Synchronize</string>
     <string name="myschedule_pref_calsync_summary">Sync My Schedule to the chosen calendar</string>
     <string name="myschedule_calsync_warning">You need to select a calendar first!</string>
+    <string name="myschedule_calsync_calendar_name">My Schedule</string>
+    <string name="myschedule_delete_calendar_error">No local calendar found to delete</string>
+    <string name="myschedule_create_local_calendar">Create new local calendar</string>
 
 <!--    shared preference keys -->
     <string name="sp_myschedule_enable_fcm" translatable="false">enable_fcm</string>
