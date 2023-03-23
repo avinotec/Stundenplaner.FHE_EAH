@@ -42,7 +42,6 @@ import java.util.Map;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.models.myschedule.CalendarModel;
-import de.fhe.fhemobile.models.myschedule.MyScheduleModel;
 import de.fhe.fhemobile.services.CalendarSynchronizationTask;
 import de.fhe.fhemobile.utils.Utils;
 
@@ -74,25 +73,41 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
         addPreferencesFromResource(R.xml.preferences_visualizer);
 
+        //workaround/helper preference when calendar permissions are not granted
+        //reason: the list of the ListPreference's dialog can not be updated once it is opened
+        // thus it stays empty till opened again if permissions needed to be requested first
+        mNoCalendarPermissionPref = findPreference(getResources().getString(R.string.sp_myschedule_calendar_no_permission));
+        mNoCalendarPermissionPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(@NonNull Preference preference) {
+                requestCalendarPermission();
+                return true;
+            }
+        });
+
         // calendar list preference
         mCalendarListPref = findPreference(getResources().getString(R.string.sp_myschedule_calendar_to_sync));
+        //initialize
         mCalendarListPref.setEntries(new CharSequence[0]);
         mCalendarListPref.setEntryValues(new CharSequence[0]);
 
         mCalendarListPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            /**
+             * Called when a Preference has been clicked.
+             * @param preference The preference that was clicked
+             * @return True if the click was handled.
+             */
             @Override
             public boolean onPreferenceClick(@NonNull Preference preference) {
-                if(checkCalendarPermission()){
-                    setAvailableCalendars((ListPreference) preference);
-                }
-
-                return false;
+                populateCalendarList((ListPreference) preference);
+                return true;
             }
         });
+        //listener for setting summary string
         mCalendarListPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
-                if(mCalendarListPref != null){
+                if(mCalendarListPref.getEntry() != null){
                     preference.setSummary(mCalendarListPref.getEntry());
                 } else {
                     preference.setSummary(R.string.myschedule_pref_choose_calendar_summary);
@@ -100,6 +115,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                 return false;
             }
         });
+        //listener for creating local calendar
         mCalendarListPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             /**
              * Called when a Preference has been changed by the user.
@@ -116,7 +132,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                     //update the list preference entries
                     // (the entry "create local calendar" with value -1 is going to be replaced
                     // by the name of the local calendar and its calendar id as values)
-                    setAvailableCalendars((ListPreference) preference);
+                    populateCalendarList((ListPreference) preference);
                     //set the chosen calendar top the local calendar id
                     ((ListPreference) preference).setValue(calId);
                     //return false to prevent the value being updated to -1 instead of the calId
@@ -128,6 +144,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                 }
             }
         });
+
 
         // calendar switch
         mCalendarSyncSwitchPref = findPreference(getResources().getString(R.string.sp_myschedule_enable_calsync));
@@ -157,7 +174,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         // initialize values
         //set some values if a calendar is already chosen
         if(mCalendarListPref.getValue() != null){
-            setAvailableCalendars();
+            populateCalendarList();
             mCalendarListPref.setSummary(mCalendarListPref.getEntry());
         }
         //no calendar chosen
@@ -166,9 +183,19 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
             mCalendarSyncSwitchPref.setChecked(false);
         }
 
+        if(!isCalendarPermissionGranted()){
+            mNoCalendarPermissionPref.setVisible(true);
+            mCalendarListPref.setVisible(false);
+            mCalendarSyncSwitchPref.setEnabled(false);
+        } else {
+            mCalendarListPref.setVisible(true);
+            mCalendarSyncSwitchPref.setEnabled(true);
+        }
+
+
         // delete calendar
-        Preference deleteCalPref = findPreference(getResources().getString(R.string.myschedule_pref_delete_calendar));
-        deleteCalPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        mDeleteCalendarPref = findPreference(getResources().getString(R.string.myschedule_pref_delete_calendar));
+        mDeleteCalendarPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(@NonNull Preference preference) {
 
@@ -179,6 +206,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
 
                             public void onClick(final DialogInterface dialog, final int which) {
                                 CalendarModel.getInstance().deleteLocalCalendar();
+                                mDeleteCalendarPref.setVisible(false);
                             }
                         })
                         .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
@@ -191,16 +219,18 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                 return false;
             }
         });
+        //initialize
+        mDeleteCalendarPref.setVisible(false);
     }
 
-    private void setAvailableCalendars(){
-        setAvailableCalendars(mCalendarListPref);
+    private void populateCalendarList(){
+        populateCalendarList(mCalendarListPref);
     }
 
     /**
      * Set calendar options (displayed name and value/id saved to shared preferences)
      */
-    private void setAvailableCalendars(ListPreference preference){
+    private void populateCalendarList(ListPreference preference){
         Map<String, Long> availableCalendars = CalendarModel.getInstance().getCalendars();
 
         if(availableCalendars == null){
@@ -210,6 +240,8 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         //option to create a new local calendar
         if(CalendarModel.getInstance().getLocalCalendarId() == null){
             availableCalendars.put(getResources().getString(R.string.myschedule_create_local_calendar), -1l);
+        } else {
+            mDeleteCalendarPref.setVisible(true);
         }
 
         //the human-readable entries to be shown in the list
@@ -224,19 +256,17 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         preference.setEntryValues(values);
     }
 
-    private boolean checkCalendarPermission() {
-        if (ContextCompat.checkSelfPermission(Main.getAppContext(),
+    private boolean isCalendarPermissionGranted() {
+        return ContextCompat.checkSelfPermission(Main.getAppContext(),
                 Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(Main.getAppContext(),
-                Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
+                Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED;
+    }
 
-            return true;
-
-        } else {
-            requestPermissionLauncher.launch(new String[]{Manifest.permission.READ_CALENDAR,
-                    Manifest.permission.WRITE_CALENDAR});
-            return false;
-        }
+    private void requestCalendarPermission() {
+        requestPermissionLauncher.launch(new String[]{
+                Manifest.permission.READ_CALENDAR,
+                Manifest.permission.WRITE_CALENDAR});
     }
 
     /**
@@ -250,11 +280,16 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                 public void onActivityResult(Map<String, Boolean> result) {
                     //permissions are granted
                     if(!result.containsValue(Boolean.FALSE)){
-                        setAvailableCalendars();
+                        mNoCalendarPermissionPref.setVisible(false);
+                        mCalendarListPref.setVisible(true);
+                        mCalendarSyncSwitchPref.setEnabled(true);
+                        populateCalendarList();
                     }
                 }
             });
 
+    Preference mNoCalendarPermissionPref;
     ListPreference          mCalendarListPref;
+    Preference              mDeleteCalendarPref;
     SwitchPreferenceCompat  mCalendarSyncSwitchPref;
 }

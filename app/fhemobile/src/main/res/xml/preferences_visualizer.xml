@@ -48,10 +48,17 @@
     <PreferenceCategory
         android:title="@string/myschedule_pref_category_calsync">
 
+        <Preference
+            android:key="@string/sp_myschedule_calendar_no_permission"
+            android:title="@string/myschedule_pref_choose_calendar_title"
+            android:summary="@string/myschedule_pref_choose_calendar_summary" />
+
         <ListPreference
             android:key="@string/sp_myschedule_calendar_to_sync"
             android:title="@string/myschedule_pref_choose_calendar_title"
-            android:summary="@string/myschedule_pref_choose_calendar_summary" />
+            android:summary="@string/myschedule_pref_choose_calendar_summary"
+            app:isPreferenceVisible="false"/>
+
 
         <Preference
             android:key="@string/myschedule_pref_delete_calendar"

@@ -148,6 +148,7 @@
     <string name="sp_myschedule_enable_fcm" translatable="false">enable_fcm</string>
     <string name="sp_myschedule_enable_calsync" translatable="false">enable_calsync</string>
     <string name="sp_myschedule_calendar_to_sync" translatable="false">chosen_cal_for_calsync</string>
+    <string name="sp_myschedule_calendar_no_permission" translatable="false">no_calendar_permission</string>
 
 
     <string name="imprint_data_protection_link" translatable="false"><a href="https://www.eah-jena.de/datenschutz">Data protection</a></string>
