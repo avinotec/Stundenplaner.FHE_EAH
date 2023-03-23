@@ -188,6 +188,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
             mCalendarListPref.setVisible(false);
             mCalendarSyncSwitchPref.setEnabled(false);
         } else {
+            mNoCalendarPermissionPref.setVisible(false);
             mCalendarListPref.setVisible(true);
             mCalendarSyncSwitchPref.setEnabled(true);
         }
