@@ -223,7 +223,7 @@ public class CalendarModel {
         values.put(Events.DTEND, scheduleEvent.getEndDateTimeInSec()*1000);
         values.put(Events.EVENT_LOCATION, scheduleEvent.getLocationListAsString());
         values.put(Events.DESCRIPTION, scheduleEvent.getLecturerListAsString()+", Sets: "+ scheduleEvent.getLocationListAsString());
-//        values.put(Events.EVENT_COLOR, HOF_CALENDAR_COLOR); //todo set color
+        values.put(Events.EVENT_COLOR, ContextCompat.getColor(Main.getAppContext(), R.color.primary_color));
         // set timezone to Germany
         values.put(Events.EVENT_TIMEZONE, "Europe/Brussels");
 
@@ -279,9 +279,8 @@ public class CalendarModel {
         // The new display name for the calendar
         values.put(Calendars.CALENDAR_DISPLAY_NAME, localCalendarName);
         //put other values
-//        values.put(Calendars.OWNER_ACCOUNT, "");
         values.put(Calendars.NAME, localCalendarName);
-//        values.put(Calendars.CALENDAR_COLOR, HOF_CALENDAR_COLOR);
+        values.put(Calendars.CALENDAR_COLOR, ContextCompat.getColor(Main.getAppContext(), R.color.primary_color));
         values.put(Calendars.CALENDAR_ACCESS_LEVEL, Calendars.CAL_ACCESS_ROOT);
         values.put(Calendars.VISIBLE, 1);
         values.put(Calendars.SYNC_EVENTS, 1);
