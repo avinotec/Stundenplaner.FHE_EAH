@@ -20,7 +20,7 @@ package de.fhe.fhemobile.fragments.maps;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -78,7 +78,18 @@ public class MapsFragment extends Fragment {
             mCurrentMapIndex = savedInstanceState.getInt(SAV_MAP_INDEX);
         }
         else {
-            mCurrentMapIndex = 0;
+            //set mCurrentMapIndex to where building is usually entered
+            switch(mMap.getNameID()){
+                case R.string.building_03_02_01:
+                    mCurrentMapIndex = 2; //Erdgeschoss
+                    break;
+                case R.string.building_04:
+                    mCurrentMapIndex = 1; //Untergeschoss
+                    break;
+                case R.string.building_05:
+                    mCurrentMapIndex = 3; //Erdgeschoss
+
+            }
         }
 
     }
@@ -87,8 +98,8 @@ public class MapsFragment extends Fragment {
     public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        mView = (MapsView) inflater.inflate(R.layout.fragment_maps, container, false);
         try {
-            mView = (MapsView) inflater.inflate(R.layout.fragment_maps, container, false);
             final MapVo map;
 
             if (mMap.getMaps().size() > 1) {
@@ -102,117 +113,7 @@ public class MapsFragment extends Fragment {
 
             updateActionBarTitle(getContext().getResources().getString(map.getNameID()));
         } catch (final Resources.NotFoundException e) {
-            mView = new MapsView(getContext(), new AttributeSet() {
-                @Override
-                public int getAttributeCount() {
-                    return 0;
-                }
-
-                @Override
-                public String getAttributeName(final int i) {
-                    return null;
-                }
-
-                @Override
-                public String getAttributeValue(final int i) {
-                    return null;
-                }
-
-                @Override
-                public String getAttributeValue(final String s, final String s1) {
-                    return null;
-                }
-
-                @Override
-                public String getPositionDescription() {
-                    return null;
-                }
-
-                @Override
-                public int getAttributeNameResource(final int i) {
-                    return 0;
-                }
-
-                @Override
-                public int getAttributeListValue(final String s, final String s1, final String[] strings, final int i) {
-                    return 0;
-                }
-
-                @Override
-                public boolean getAttributeBooleanValue(final String s, final String s1, final boolean b) {
-                    return false;
-                }
-
-                @Override
-                public int getAttributeResourceValue(final String s, final String s1, final int i) {
-                    return 0;
-                }
-
-                @Override
-                public int getAttributeIntValue(final String s, final String s1, final int i) {
-                    return 0;
-                }
-
-                @Override
-                public int getAttributeUnsignedIntValue(final String s, final String s1, final int i) {
-                    return 0;
-                }
-
-                @Override
-                public float getAttributeFloatValue(final String s, final String s1, final float v) {
-                    return 0;
-                }
-
-                @Override
-                public int getAttributeListValue(final int i, final String[] strings, final int i1) {
-                    return 0;
-                }
-
-                @Override
-                public boolean getAttributeBooleanValue(final int i, final boolean b) {
-                    return false;
-                }
-
-                @Override
-                public int getAttributeResourceValue(final int i, final int i1) {
-                    return 0;
-                }
-
-                @Override
-                public int getAttributeIntValue(final int i, final int i1) {
-                    return 0;
-                }
-
-                @Override
-                public int getAttributeUnsignedIntValue(final int i, final int i1) {
-                    return 0;
-                }
-
-                @Override
-                public float getAttributeFloatValue(final int i, final float v) {
-                    return 0;
-                }
-
-                @Override
-                public String getIdAttribute() {
-                    return null;
-                }
-
-                @Override
-                public String getClassAttribute() {
-                    return null;
-                }
-
-                @Override
-                public int getIdAttributeResourceValue(final int i) {
-                    return 0;
-                }
-
-                @Override
-                public int getStyleAttribute() {
-                    return 0;
-                }
-            });
+            Log.e(TAG, "Resource.NotFoundException", e);
         }
 
         return mView;
