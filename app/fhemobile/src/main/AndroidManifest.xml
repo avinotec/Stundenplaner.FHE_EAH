@@ -48,7 +48,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <!-- newer firebase libraries have minSDK of 19 -->
-    <uses-sdk tools:overrideLibrary="com.google.firebase.firebase_analytics, com.google.firebase.messaging, com.google.firebase.measurement, com.google.android.gms.measurement.sdk, com.google.firebase.measurement_impl, com.google.android.gms.measurement.api, com.google.android.gms.measurement.sdk.api, com.google.android.gms.measurement_base" />
+    <!-- uses-sdk tools:overrideLibrary="com.google.firebase.firebase_analytics, com.google.firebase.messaging, com.google.firebase.measurement, com.google.firebase.measurement_impl, com.google.android.gms.measurement.api, com.google.android.gms.measurement.sdk.api, com.google.android.gms.measurement_base" / -->
+    <uses-sdk tools:overrideLibrary="com.google.firebase.messaging" />
+
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
 
 	<supports-screens
 		android:anyDensity="true"
