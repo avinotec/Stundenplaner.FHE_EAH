@@ -139,6 +139,7 @@
     <string name="myschedule_calsync_calendar_name">My Schedule</string>
     <string name="myschedule_delete_calendar_error">No local calendar found to delete</string>
     <string name="myschedule_create_local_calendar">Create new local calendar</string>
+    <string name="myschedule_calsync_event_dropped_tag">[Dropped]</string>
 
     <string name="dialog_delete_cal_title">Delete local calendar</string>
     <string name="dialog_delete_cal_message">Do you want to delete the calendar \"My Schedule\"?</string>

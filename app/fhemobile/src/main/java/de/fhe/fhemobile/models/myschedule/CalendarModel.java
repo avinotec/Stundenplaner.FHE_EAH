@@ -214,7 +214,7 @@ public class CalendarModel {
     private void createCalendarEntry(MyScheduleEventVo scheduleEvent){
 
         String chosenCalId = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
-                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), null); //todo: what to set as default?
+                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "");
 
         final ContentValues values = new ContentValues();
         values.put(Events.CALENDAR_ID, chosenCalId);
@@ -223,7 +223,6 @@ public class CalendarModel {
         values.put(Events.DTEND, scheduleEvent.getEndDateTimeInSec()*1000);
         values.put(Events.EVENT_LOCATION, scheduleEvent.getLocationListAsString());
         values.put(Events.DESCRIPTION, scheduleEvent.getLecturerListAsString()+", Sets: "+ scheduleEvent.getLocationListAsString());
-        values.put(Events.EVENT_COLOR, ContextCompat.getColor(Main.getAppContext(), R.color.primary_color));
         // set timezone to Germany
         values.put(Events.EVENT_TIMEZONE, "Europe/Brussels");
 
@@ -238,21 +237,23 @@ public class CalendarModel {
     private void updateCalendarEntry(MyScheduleEventVo scheduleEvent){
         long calEventId = scheduleEvent.getCalEventId();
 
+        String eventTitle = scheduleEvent.getTitle();
+        //mark event as deleted
         if(scheduleEvent.getTypesOfChanges().contains(TimetableChangeType.DELETION)){
-            //todo: add "entfällt" to title or delete event
+            eventTitle = Main.getAppContext().getString(R.string.myschedule_calsync_event_dropped_tag) + eventTitle;
         }
 
         String chosenCalId = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
-                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), null); //todo: what to set as default?
+                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "");
 
         final ContentValues values = new ContentValues();
         values.put(Events.CALENDAR_ID, chosenCalId);
-        values.put(Events.TITLE, scheduleEvent.getTitle());
+        values.put(Events.TITLE, eventTitle);
         values.put(Events.DTSTART, scheduleEvent.getStartDateTimeInSec());
         values.put(Events.DTEND, scheduleEvent.getEndDateTimeInSec());
         values.put(Events.EVENT_LOCATION, scheduleEvent.getLocationListAsString());
         values.put(Events.DESCRIPTION, scheduleEvent.getLecturerListAsString()+", Sets: "+scheduleEvent.getLocationListAsString());
-//        values.put(Events.EVENT_COLOR, HOF_CALENDAR_COLOR); //todo set color
+        values.put(Events.EVENT_COLOR, ContextCompat.getColor(Main.getAppContext(), R.color.primary_color));
         // set timezone to Germany
         values.put(Events.EVENT_TIMEZONE, "Europe/Brussels");
 
