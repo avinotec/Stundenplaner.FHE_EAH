@@ -71,66 +71,70 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
         addPreferencesFromResource(R.xml.preferences_visualizer);
 
-        mCalendarListPref = findPreference(getResources().getString(R.string.sp_myschedule_calendar_to_sync));
-        mCalendarListPref.setEntries(new CharSequence[0]);
-        mCalendarListPref.setEntryValues(new CharSequence[0]);
+        if ( de.fhe.fhemobile.utils.Define.ENABLE_CALENDAR ) {
 
-        mCalendarListPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(@NonNull Preference preference) {
-                if(checkCalendarPermission()){
-                    setAvailableCalendars();
-                };
+            mCalendarListPref = findPreference(getResources().getString(R.string.sp_myschedule_calendar_to_sync));
+            mCalendarListPref.setEntries(new CharSequence[0]);
+            mCalendarListPref.setEntryValues(new CharSequence[0]);
 
-                return false;
-            }
-        });
-        mCalendarListPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
-                if(mCalendarListPref != null){
-                    preference.setSummary(mCalendarListPref.getEntry());
-                } else {
-                    preference.setSummary(R.string.myschedule_pref_choose_calendar_summary);
-                }
-                return false;
-            }
-        });
-
-        mCalendarSyncSwitchPref = findPreference(getResources().getString(R.string.sp_myschedule_enable_calsync));
-        mCalendarSyncSwitchPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(@NonNull Preference preference) {
-                boolean syncEnabled = ((SwitchPreferenceCompat) preference).isChecked();
-
-                //no calendar chosen
-                if(mCalendarListPref.getValue() == null){
-                    mCalendarSyncSwitchPref.setChecked(false);
-                    Utils.showToast(R.string.myschedule_calsync_warning);
-                }
-                //calendar chosen
-                else {
-                    //toggle synchronisation
-                    if(syncEnabled) {
-                        CalendarSynchronizationTask.startPeriodicSynchronizing();
-                    } else {
-                        CalendarSynchronizationTask.stopPeriodicSynchronizing();
+            mCalendarListPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(@NonNull Preference preference) {
+                    if (checkCalendarPermission()) {
+                        setAvailableCalendars();
                     }
-                }
-                return false;
-            }
-        });
+                    ;
 
-        //set some values if a calendar is already chosen
-        if(mCalendarListPref.getValue() != null){
-            setAvailableCalendars();
-            mCalendarListPref.setSummary(mCalendarListPref.getEntry());
-        }
-        //no calendar chosen
-        else {
-            CalendarSynchronizationTask.stopPeriodicSynchronizing();
-            mCalendarSyncSwitchPref.setChecked(false);
-        }
+                    return false;
+                }
+            });
+            mCalendarListPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
+                    if (mCalendarListPref != null) {
+                        preference.setSummary(mCalendarListPref.getEntry());
+                    } else {
+                        preference.setSummary(R.string.myschedule_pref_choose_calendar_summary);
+                    }
+                    return false;
+                }
+            });
+
+            mCalendarSyncSwitchPref = findPreference(getResources().getString(R.string.sp_myschedule_enable_calsync));
+            mCalendarSyncSwitchPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(@NonNull Preference preference) {
+                    boolean syncEnabled = ((SwitchPreferenceCompat) preference).isChecked();
+
+                    //no calendar chosen
+                    if (mCalendarListPref.getValue() == null) {
+                        mCalendarSyncSwitchPref.setChecked(false);
+                        Utils.showToast(R.string.myschedule_calsync_warning);
+                    }
+                    //calendar chosen
+                    else {
+                        //toggle synchronisation
+                        if (syncEnabled) {
+                            CalendarSynchronizationTask.startPeriodicSynchronizing();
+                        } else {
+                            CalendarSynchronizationTask.stopPeriodicSynchronizing();
+                        }
+                    }
+                    return false;
+                }
+            });
+
+            //set some values if a calendar is already chosen
+            if (mCalendarListPref.getValue() != null) {
+                setAvailableCalendars();
+                mCalendarListPref.setSummary(mCalendarListPref.getEntry());
+            }
+            //no calendar chosen
+            else {
+                CalendarSynchronizationTask.stopPeriodicSynchronizing();
+                mCalendarSyncSwitchPref.setChecked(false);
+            }
+        } // ENABLE_CALENDAR
     }
 
     /**

@@ -50,16 +50,17 @@
 
         <ListPreference
             android:key="@string/sp_myschedule_calendar_to_sync"
-            android:title="@string/myschedule_pref_choose_calendar_title"
             android:summary="@string/myschedule_pref_choose_calendar_summary"
-            />
+            android:title="@string/myschedule_pref_choose_calendar_title"
+            app:enabled="false" />
 
         <!-- Note: always use SwitchPreferenceCompat (not SwitchPreference)
          to ensure the switch to always look the same, independent of android version -->
         <SwitchPreferenceCompat
             android:key="@string/sp_myschedule_enable_calsync"
+            android:summary="@string/myschedule_pref_calsync_summary"
             android:title="@string/myschedule_pref_calsync_title"
-            android:summary="@string/myschedule_pref_calsync_summary"/>
+            app:enabled="false" />
 
     </PreferenceCategory>
 

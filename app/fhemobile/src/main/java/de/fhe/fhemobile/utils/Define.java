@@ -42,6 +42,8 @@ public final class Define {
         static final String PREF_CHOSEN_NEWS_CATEGORY = "chosenNewsCategory"; // $NON-NLS
     }
 
+    public static final boolean ENABLE_CALENDAR = false ;
+
     //created by Nadja 11.03.2022
     public static final class Timetable {
         public static final String PARAM_TIMETABLE_ID = "paramTimeTableId";            // $NON-NLS
