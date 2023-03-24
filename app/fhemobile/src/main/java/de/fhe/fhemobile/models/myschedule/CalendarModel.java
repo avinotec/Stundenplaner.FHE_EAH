@@ -181,6 +181,15 @@ public class CalendarModel {
         return null;
     }
 
+    public void deleteCalendarEntries(MyScheduleEventSeriesVo eventSeries){
+        for(MyScheduleEventVo event : eventSeries.getEvents()){
+            //eventId can be null if the calendar has not been synchronized since subscribing this eventSeries
+            if(event.getCalEventId() != null){
+                deleteCalendarEntry(event);
+            }
+        }
+    }
+
     public void syncMySchedule(){
         for(MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
             syncEventSeries(eventSeries);
@@ -265,6 +274,15 @@ public class CalendarModel {
         scheduleEvent.setChangedSinceLastCalSync(false);
     }
 
+    private void deleteCalendarEntry(MyScheduleEventVo scheduleEvent){
+        long calEventId = scheduleEvent.getCalEventId();
+
+        //delete event
+        Uri updateUri = ContentUris.withAppendedId(Events.CONTENT_URI, calEventId);
+        final ContentResolver cr = Main.getAppContext().getContentResolver();
+        cr.delete(updateUri, null, null);
+    }
+
 
     public String createLocalCalendar(){
         /* If an application needs to create a local calendar, it can do this by performing the
@@ -325,7 +343,6 @@ public class CalendarModel {
                 .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "").apply();
 
         return true;
-
     }
 
 

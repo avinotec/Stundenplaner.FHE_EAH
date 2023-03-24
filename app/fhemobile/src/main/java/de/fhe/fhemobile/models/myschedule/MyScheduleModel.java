@@ -112,7 +112,6 @@ public class MyScheduleModel extends EventDispatcher {
      * @param eventSeries
      */
     public void addToSubscribedEventSeriesAndUpdateAdapters(final MyScheduleEventSeriesVo eventSeries){
-        eventSeries.setSubscribed(true);
         //add to subscribed event series
         //set subscribed -> needed for the case that an exam is being deleted by the user while fetching my schedule is adding it
         eventSeries.setSubscribed(true);
@@ -131,6 +130,8 @@ public class MyScheduleModel extends EventDispatcher {
      * @param unsubscribedEventSeries
      */
     public void removeFromSubscribedEventSeriesAndUpdateAdapters(final MyScheduleEventSeriesVo unsubscribedEventSeries){
+        CalendarModel.getInstance().deleteCalendarEntries(unsubscribedEventSeries);
+
         unsubscribedEventSeries.setSubscribed(false);
         subscribedEventSeries.remove(unsubscribedEventSeries.getTitle());
         saveSubscribedEventSeriesToSharedPreferences();
