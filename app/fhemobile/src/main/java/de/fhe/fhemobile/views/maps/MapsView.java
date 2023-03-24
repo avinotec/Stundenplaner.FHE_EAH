@@ -31,6 +31,9 @@ import de.fhe.fhemobile.vos.maps.MapVo;
  * Edit by Nadja: rename from MapsSingleView to MapsView
  */
 public class MapsView extends FrameLayout {
+    private static final String TAG = MapsView.class.getSimpleName();
+
+
     public MapsView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
@@ -56,10 +59,6 @@ public class MapsView extends FrameLayout {
         mMapView = (WebView) findViewById(R.id.mapsWebView);
 
     }
-
-    private static final String LOG_TAG = MapsView.class.getSimpleName();
-
-    // --Commented out by Inspection (02.11.2021 17:08):private final Context mContext;
 
     private WebView mMapView;
 }

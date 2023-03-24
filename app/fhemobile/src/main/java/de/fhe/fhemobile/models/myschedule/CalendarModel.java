@@ -16,23 +16,28 @@
  */
 package de.fhe.fhemobile.models.myschedule;
 
+import static android.provider.CalendarContract.ACCOUNT_TYPE_LOCAL;
+
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract.*;
 import android.util.Log;
 
 
+import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.myschedule.TimetableChangeType;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
@@ -89,13 +94,6 @@ public class CalendarModel {
     public static CalendarModel getInstance() {
         if(ourInstance == null) {
             ourInstance = new CalendarModel();
-//            ourInstance.setChosenCalendar(new CalendarVo(
-//                    "EAH - Mein Stundenplan",
-//                    Main.getAppContext().getString(R.string.app_name),
-//                    ACCOUNT_TYPE_LOCAL
-//            ));
-//            //read my schedule events already contained in calendar
-//            readCalendar();
         }
         return ourInstance;
     }
@@ -125,8 +123,6 @@ public class CalendarModel {
         while (cursor.moveToNext()) {
             long calID = cursor.getLong(CalendarProjection.ID_INDEX);
             String displayName = cursor.getString(CalendarProjection.DISPLAY_NAME_INDEX);
-            String accountName = cursor.getString(CalendarProjection.ACCOUNT_NAME_INDEX);
-            String ownerName = cursor.getString(CalendarProjection.OWNER_ACCOUNT_INDEX);
 
             result.put(displayName, calID);
             Log.d(TAG, "Kalender: " + displayName + " Id:" + calID);
@@ -136,52 +132,63 @@ public class CalendarModel {
     }
 
 
-//    private Long getLocalCalendarId(){
-//        // Run query
-//        Cursor cursor;
-//        ContentResolver cr = Main.getAppContext().getContentResolver();
-//        Uri uri = Calendars.CONTENT_URI;
-//        String selection = "(("
-//                + Calendars.NAME + " = ?) AND ("
-//                + Calendars.ACCOUNT_NAME + " = ?) AND ("
-//                + Calendars.OWNER_ACCOUNT + " = ?) AND ("
-//                + Calendars.ACCOUNT_TYPE + " = ?)"
-//                + ")";
-//        String[] selectionArgs = new String[]{
-//                chosenCalendar.getCalendarName(),
-//                chosenCalendar.getAccountName(),
-//                chosenCalendar.getAccountName(),
-//                chosenCalendar.getAccountType()};
-//
-//        // Submit the query and get a Cursor object back.
-//        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-//            return null;
-//        }
-//        cursor = cr.query(uri,
-//                PROJECTION,
-//                selection,
-//                selectionArgs,
-//                null);
-//
-//        if (cursor == null) {
-//            return null;
-//        }
-//
-//        // Use the cursor to step through the returned records
-//        while (cursor.moveToNext()) {
-//            long calID = cursor.getLong(ID_INDEX);
-//            String displayName = cursor.getString(DISPLAY_NAME_INDEX);
-//            Log.d(TAG, "Local calendar " + displayName + " found.");
-//
-//            return calID;
-//        }
-//
-//        cursor.close();
-//        return null;
-//    }
-//
-//
+    /**
+     * Get the calendar id of the local calendar created by the app
+     * @return The calendar id or null, if no such calendar was found
+     */
+    public Long getLocalCalendarId(){
+        // Run query
+        Cursor cursor;
+        ContentResolver cr = Main.getAppContext().getContentResolver();
+        Uri uri = Calendars.CONTENT_URI;
+        String selection = "(("
+                + Calendars.NAME + " = ?) AND ("
+                + Calendars.ACCOUNT_NAME + " = ?) AND ("
+                + Calendars.ACCOUNT_TYPE + " = ?)"
+                + ")";
+        String[] selectionArgs = new String[]{
+                localCalendarName,
+                localCalendarAccount,
+                localCalendarAccountType};
 
+        //if necessary permission is not granted
+        if (ContextCompat.checkSelfPermission(Main.getAppContext(),
+                Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+            return null;
+        }
+
+        // Submit the query and get a Cursor object back.
+        cursor = cr.query(uri,
+                CalendarProjection.PROJECTION,
+                selection,
+                selectionArgs,
+                null);
+
+        if (cursor == null) {
+            return null;
+        }
+
+        // Use the cursor to step through the returned records
+        while (cursor.moveToNext()) {
+            long calID = cursor.getLong(CalendarProjection.ID_INDEX);
+            String displayName = cursor.getString(CalendarProjection.DISPLAY_NAME_INDEX);
+            Log.d(TAG, "Local calendar " + displayName + " found.");
+
+            return calID;
+        }
+
+        cursor.close();
+        return null;
+    }
+
+    public void deleteCalendarEntries(MyScheduleEventSeriesVo eventSeries){
+        for(MyScheduleEventVo event : eventSeries.getEvents()){
+            //eventId can be null if the calendar has not been synchronized since subscribing this eventSeries
+            if(event.getCalEventId() != null){
+                deleteCalendarEntry(event);
+            }
+        }
+    }
 
     public void syncMySchedule(){
         for(MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
@@ -210,63 +217,13 @@ public class CalendarModel {
         }
     }
 
-//    /**
-//     * Find calendar events with the given title
-//     *
-//     * @param eventSeriesTitle Title of the event series (which equals the eventSeriesTitle of all its calendar entries)
-//     * @return List of {@link CalendarEventVo} created from the found calendar entries
-//     */
-//    private ArrayList<CalendarEventVo> findEvents(final String eventSeriesTitle){
-//        ArrayList<CalendarEventVo> result = new ArrayList<>();
-//
-//        Cursor cursor;
-//        ContentResolver cr = Main.getAppContext().getContentResolver();
-//        String selection = "(("
-//                + Instances.CALENDAR_ID + " = ?) AND ("
-//                + Instances.TITLE + " = ?))"
-//                + ")";
-//        String chosenCalId = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
-//                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), ""); //todo: what to set as default?
-//        String[] selectionArgs = new String[]{chosenCalId, eventSeriesTitle};
-//
-//        // Construct the query with the desired date range.
-//        Uri.Builder builder = CalendarContract.Instances.CONTENT_URI.buildUpon();
-////        ContentUris.appendId(builder, start);
-//////        Specify the date range you want to search for recurring event instances
-////        // + 5 ms to  dazu damit falls es gleich dem Startdatum ist er das Event nimmt
-////        ContentUris.appendId(builder, end+ 5);
-//
-//        // Submit the query
-//        cursor = cr.query(builder.build(),
-//                CalendarEventProjection.PROJECTION,
-//                selection,
-//                selectionArgs,
-//                Instances.DTSTART + " ASC");
-//
-//        if (cursor == null) return null;
-//
-//        //get CalendarEventVos
-//        while (cursor.moveToNext()) {
-//            final long eventId = cursor.getLong(CalendarEventProjection.ID_INDEX);
-//            final String title = cursor.getString(CalendarEventProjection.TITLE_INDEX);
-//            final long start = cursor.getLong(CalendarEventProjection.BEGIN_INDEX);
-//            final long end = cursor.getLong(CalendarEventProjection.END_INDEX);
-//
-//            final CalendarEventVo calEntry = new CalendarEventVo(eventId, title, start, end);
-//            result.add(calEntry);
-//        }
-//        cursor.close();
-//
-//        return result;
-//    }
-
     /**
      * Creates an event in calendar
      */
     private void createCalendarEntry(MyScheduleEventVo scheduleEvent){
 
         String chosenCalId = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
-                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), null); //todo: what to set as default?
+                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "");
 
         final ContentValues values = new ContentValues();
         values.put(Events.CALENDAR_ID, chosenCalId);
@@ -275,7 +232,6 @@ public class CalendarModel {
         values.put(Events.DTEND, scheduleEvent.getEndDateTimeInSec()*1000);
         values.put(Events.EVENT_LOCATION, scheduleEvent.getLocationListAsString());
         values.put(Events.DESCRIPTION, scheduleEvent.getLecturerListAsString()+", Sets: "+ scheduleEvent.getLocationListAsString());
-//        values.put(Events.EVENT_COLOR, HOF_CALENDAR_COLOR); //todo set color
         // set timezone to Germany
         values.put(Events.EVENT_TIMEZONE, "Europe/Brussels");
 
@@ -290,21 +246,23 @@ public class CalendarModel {
     private void updateCalendarEntry(MyScheduleEventVo scheduleEvent){
         long calEventId = scheduleEvent.getCalEventId();
 
+        String eventTitle = scheduleEvent.getTitle();
+        //mark event as deleted
         if(scheduleEvent.getTypesOfChanges().contains(TimetableChangeType.DELETION)){
-            //todo: add "entfällt" to title or delete event
+            eventTitle = Main.getAppContext().getString(R.string.myschedule_calsync_event_dropped_tag) + eventTitle;
         }
 
         String chosenCalId = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
-                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), null); //todo: what to set as default?
+                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "");
 
         final ContentValues values = new ContentValues();
         values.put(Events.CALENDAR_ID, chosenCalId);
-        values.put(Events.TITLE, scheduleEvent.getTitle());
+        values.put(Events.TITLE, eventTitle);
         values.put(Events.DTSTART, scheduleEvent.getStartDateTimeInSec());
         values.put(Events.DTEND, scheduleEvent.getEndDateTimeInSec());
         values.put(Events.EVENT_LOCATION, scheduleEvent.getLocationListAsString());
         values.put(Events.DESCRIPTION, scheduleEvent.getLecturerListAsString()+", Sets: "+scheduleEvent.getLocationListAsString());
-//        values.put(Events.EVENT_COLOR, HOF_CALENDAR_COLOR); //todo set color
+        values.put(Events.EVENT_COLOR, ContextCompat.getColor(Main.getAppContext(), R.color.primary_color));
         // set timezone to Germany
         values.put(Events.EVENT_TIMEZONE, "Europe/Brussels");
 
@@ -316,59 +274,76 @@ public class CalendarModel {
         scheduleEvent.setChangedSinceLastCalSync(false);
     }
 
+    private void deleteCalendarEntry(MyScheduleEventVo scheduleEvent){
+        long calEventId = scheduleEvent.getCalEventId();
 
-//    private void createLocalCalendar(){
-//        /* If an application needs to create a local calendar, it can do this by performing the
-//        calendar insertion as a sync adapter, using an ACCOUNT_TYPE of ACCOUNT_TYPE_LOCAL.
-//        ACCOUNT_TYPE_LOCAL is a special account type for calendars that are not associated with a
-//        device account. Calendars of this type are not synced to a server. */
-//        Uri calendarUri = Uri.parse(Calendars.CONTENT_URI.toString());
-//        calendarUri = asSyncAdapter(calendarUri, chosenCalendar.getAccountName(), chosenCalendar.getAccountType());
-//
-//        ContentValues values = new ContentValues();
-//        values.put(Calendars.ACCOUNT_TYPE, ACCOUNT_TYPE_LOCAL);
-//        // The new display name for the calendar
-//        values.put(Calendars.CALENDAR_DISPLAY_NAME, "Mein Stundenplan"); //todo: make translatable
-//
-//        //put other values
-//        values.put(Calendars.OWNER_ACCOUNT, chosenCalendar.getAccountName());
-//        values.put(Calendars.ACCOUNT_NAME, chosenCalendar.getAccountName());
-//        values.put(Calendars.NAME, chosenCalendar.getCalendarName());
-//        values.put(Calendars.CALENDAR_COLOR, HOF_CALENDAR_COLOR);
-//        values.put(Calendars.CALENDAR_ACCESS_LEVEL, CalendarContract.Calendars.CAL_ACCESS_ROOT);
-//        values.put(Calendars.VISIBLE, 1);
-//        values.put(Calendars.SYNC_EVENTS, 1);
-//        // set timezone to Germany
-//        values.put(Calendars.CALENDAR_TIME_ZONE, "Europe/Brussels");
-//        values.put(Calendars.CAN_PARTIALLY_UPDATE, 1);
-//
-//        Main.getAppContext().getContentResolver().insert(calendarUri, values);
-//    }
-//
-//    /**
-//     * Delete local calendar
-//     * @return True, if deletion had been successful
-//     */
-//    private boolean deleteLocalCalendar(){
-//        final Long localCalendarID = getLocalCalendarId();
-//
-//        if (localCalendarID == null) return false;
-//
-//        final Uri.Builder builder = Calendars.CONTENT_URI.buildUpon();
-//        final Uri calendarToRemoveUri = builder.appendPath(localCalendarID.toString())
-//                .appendQueryParameter(android.provider.CalendarContract.CALLER_IS_SYNCADAPTER, "true")
-//                .appendQueryParameter(Calendars.ACCOUNT_NAME, chosenCalendar.getAccountName())
-//                .appendQueryParameter(Calendars.ACCOUNT_TYPE, chosenCalendar.getAccountType())
-//                .build();
-//
-//        Main.getAppContext().getContentResolver().delete(calendarToRemoveUri, null, null);
-//
-//        //remove all events
-//        removeAllLecturesEventIDs();
-//        saveCalendarData(); // update calendar entries in shared preferences
-//        return true;
+        //delete event
+        Uri updateUri = ContentUris.withAppendedId(Events.CONTENT_URI, calEventId);
+        final ContentResolver cr = Main.getAppContext().getContentResolver();
+        cr.delete(updateUri, null, null);
+    }
 
-//    }
+
+    public String createLocalCalendar(){
+        /* If an application needs to create a local calendar, it can do this by performing the
+        calendar insertion as a sync adapter, using an ACCOUNT_TYPE of ACCOUNT_TYPE_LOCAL.
+        ACCOUNT_TYPE_LOCAL is a special account type for calendars that are not associated with a
+        device account. Calendars of this type are not synced to a server. */
+        Uri calendarUri = Uri.parse(Calendars.CONTENT_URI.toString());
+        calendarUri = asSyncAdapter(calendarUri, localCalendarAccount, localCalendarAccountType);
+
+        ContentValues values = new ContentValues();
+        values.put(Calendars.ACCOUNT_NAME, localCalendarAccount);
+        values.put(Calendars.ACCOUNT_TYPE, localCalendarAccountType);
+        // The new display name for the calendar
+        values.put(Calendars.CALENDAR_DISPLAY_NAME, localCalendarName);
+        //put other values
+        values.put(Calendars.NAME, localCalendarName);
+        values.put(Calendars.CALENDAR_COLOR, ContextCompat.getColor(Main.getAppContext(), R.color.primary_color));
+        values.put(Calendars.CALENDAR_ACCESS_LEVEL, Calendars.CAL_ACCESS_ROOT);
+        values.put(Calendars.VISIBLE, 1);
+        values.put(Calendars.SYNC_EVENTS, 1);
+        // set timezone to Germany
+        values.put(Calendars.CALENDAR_TIME_ZONE, "Europe/Brussels");
+        values.put(Calendars.CAN_PARTIALLY_UPDATE, 1);
+
+        final Uri uri = Main.getAppContext().getContentResolver().insert(calendarUri, values);
+        if(uri != null){
+            String calId = uri.getLastPathSegment();
+            PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
+                    .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), calId).apply();
+            return calId;
+        }
+        return null;
+    }
+
+    /**
+     * Delete local calendar
+     * @return True, if deletion had been successful
+     */
+    public boolean deleteLocalCalendar(){
+        final Long localCalendarID = getLocalCalendarId();
+
+        if (localCalendarID == null) {
+            Utils.showToast(R.string.myschedule_delete_calendar_error);
+            return false;
+        }
+
+        final Uri.Builder builder = Calendars.CONTENT_URI.buildUpon();
+        final Uri calendarToRemoveUri = builder.appendPath(localCalendarID.toString())
+                .appendQueryParameter(android.provider.CalendarContract.CALLER_IS_SYNCADAPTER, "true")
+                .appendQueryParameter(Calendars.ACCOUNT_NAME, localCalendarAccount)
+                .appendQueryParameter(Calendars.ACCOUNT_TYPE, localCalendarAccountType)
+                .build();
+
+        Main.getAppContext().getContentResolver().delete(calendarToRemoveUri, null, null);
+        unlinkAllCalendarEventsAndMyScheduleEvents();
+
+        PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
+                .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "").apply();
+
+        return true;
+    }
 
 
     /**
@@ -386,9 +361,26 @@ public class CalendarModel {
     }
 
 
+    /**
+     * Remove all calendar event ids stored in {@link MyScheduleEventVo}s
+     * and mark as "needed to be synchronized in a future synchronisation"
+     */
+    private void unlinkAllCalendarEventsAndMyScheduleEvents(){
+        for(MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
+            for(MyScheduleEventVo event : eventSeries.getEvents()){
+                event.setCalEventId(null);
+                // set mChangedSinceLastCalSync to true to mark event as "to synchronize"
+                // in the next future synchronisation run
+                event.setChangedSinceLastCalSync(true);
+            }
+        }
+    }
 
 
     private static CalendarModel ourInstance;
-//    private static HashMap<String, Long> calendars = new HashMap<>();
-//    private CalendarVo chosenCalendar;
+
+    private static String localCalendarName = Main.getAppContext().getString(R.string.myschedule_calsync_calendar_name);
+    private static String localCalendarAccount = Main.getAppContext().getString(R.string.app_name);
+    private static String localCalendarAccountType = ACCOUNT_TYPE_LOCAL;
+
 }

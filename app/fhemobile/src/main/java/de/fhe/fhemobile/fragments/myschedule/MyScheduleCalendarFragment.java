@@ -231,7 +231,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 						.setIcon(android.R.drawable.ic_dialog_alert);
 				if(userCanRefuse) {
 					dialogBuilder.setMessage(R.string.deleteTimetableMessageOptional);
-					dialogBuilder.setNegativeButton(R.string.deleteTimetableCancel, null);
+					dialogBuilder.setNegativeButton(R.string.dialog_cancel, null);
 				} else {
 					dialogBuilder.setMessage(R.string.deleteTimetableMessageForced);
 				}
