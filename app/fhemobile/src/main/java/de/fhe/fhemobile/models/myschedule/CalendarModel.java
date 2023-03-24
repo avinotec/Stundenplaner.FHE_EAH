@@ -322,7 +322,7 @@ public class CalendarModel {
         unlinkAllCalendarEventsAndMyScheduleEvents();
 
         PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
-                .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), null).apply();
+                .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "").apply();
 
         return true;
 
