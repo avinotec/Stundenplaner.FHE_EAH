@@ -161,6 +161,13 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                         .setPositiveButton(R.string.dialog_delete_cal_confirm, new DialogInterface.OnClickListener() {
 
                             public void onClick(final DialogInterface dialog, final int which) {
+                                //if the calendar to deleted, is the one my schedule is synchronized to,
+                                // then stop synchronization
+                                if(mCalendarSelectionPref.getEntry().equals(getResources().getString(R.string.myschedule_calsync_calendar_name))){
+                                    CalendarSynchronizationTask.stopPeriodicSynchronizing();
+                                    mCalendarSyncSwitchPref.setChecked(false);
+                                }
+
                                 CalendarModel.getInstance().deleteLocalCalendar();
                                 mDeleteCalendarPref.setVisible(false);
                                 mCalendarSelectionPref.setSummary(R.string.myschedule_pref_choose_calendar_summary);
