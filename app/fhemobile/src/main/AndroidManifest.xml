@@ -48,10 +48,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <!-- newer firebase libraries have minSDK of 19 -->
-    <!-- uses-sdk tools:overrideLibrary="com.google.firebase.firebase_analytics, com.google.firebase.messaging, com.google.firebase.measurement, com.google.firebase.measurement_impl, com.google.android.gms.measurement.api, com.google.android.gms.measurement.sdk.api, com.google.android.gms.measurement_base" / -->
-    <uses-sdk tools:overrideLibrary="com.google.firebase.messaging" />
+    <uses-sdk tools:overrideLibrary="com.google.firebase.firebase_analytics, com.google.firebase.messaging, com.google.firebase.measurement, com.google.firebase.measurement_impl, com.google.android.gms.measurement.api, com.google.android.gms.measurement.sdk.api, com.google.android.gms.measurement_base" />
+    <!-- uses-sdk tools:overrideLibrary="com.google.firebase.messaging" / -->
 
-    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
+    <!-- uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/ -->
 
 	<supports-screens
 		android:anyDensity="true"
@@ -176,12 +176,27 @@
 
         <service
             android:name=".services.PushNotificationService"
-            android:exported="true">
+            android:exported="false">
             <!-- android:permission="TODO" -->
 
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
+            <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
+                 See README(https://goo.gl/l4GJaQ) for more. -->
+            <!-- TODO meta-data
+                android:name="com.google.firebase.messaging.default_notification_icon"
+                android:resource="@drawable/ic_stat_ic_notification" / -->
+            <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+				 notification message. See README(https://goo.gl/6BKBk7) for more. -->
+            <!-- TODO meta-data
+                android:name="com.google.firebase.messaging.default_notification_color"
+                android:resource="@color/colorAccent" / -->
+
+            <!-- not used meta-data
+                android:name="com.google.firebase.messaging.default_notification_channel_id"
+                android:value="@string/default_notification_channel_id" / -->
+
         </service>
 
 <!--        <service-->
