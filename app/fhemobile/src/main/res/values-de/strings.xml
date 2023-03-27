@@ -146,7 +146,7 @@
 
     <string name="dialog_delete_cal_title">Lokalen Kalender löschen</string>
     <string name="dialog_delete_cal_message">Möchtest du den Kalender \"Mein Stundenplan\" löschen?</string>
-    <string name="dialog_delete_cal_confirm">Delete</string>
+    <string name="dialog_delete_cal_confirm">Löschen</string>
 
 
     <string name="notification_error_ssl_cert_invalid">Es ist ein Zertifikat-Fehler aufgetreten. Möchtest du die Seite trotzdem öffnen?</string>
