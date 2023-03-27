@@ -129,7 +129,7 @@
     <string name="myschedule_pref_category_fcm">Benachrichtigungen</string>
     <string name="myschedule_pref_fcm_title">Push-Benachrichtigungen</string>
     <string name="myschedule_pref_fcm_summary">Benachrichtige mich bei Stundenplanänderungen und hinzugefügten Prüfungen</string>
-    <string name="myschedule_pref_fcm_error">Keine Berechtigung zum Senden von Push-Benachrichtigungen.</string>
+    <string name="myschedule_pref_fcm_error">Keine Berechtigung zum Senden von Push-Benachrichtigungen</string>
     <string name="myschedule_pref_category_calsync">Kalendersynchronisation</string>
     <string name="myschedule_pref_choose_calendar_title">Kalendar wählen</string>
     <string name="myschedule_pref_choose_calendar_summary">Wähle einen Kalender, in den synchronisiert werden soll</string>
@@ -142,6 +142,7 @@
     <string name="myschedule_delete_calendar_error">Es wurde kein lokaler Kalendar zum Löschen gefunden.</string>
     <string name="myschedule_create_local_calendar">Neuen lokalen Kalender erstellen</string>
     <string name="myschedule_calsync_event_dropped_tag">[Entfällt]</string>
+    <string name="myschedule_calsync_error">Keine Kalender-Berechtigung</string>
 
     <string name="dialog_delete_cal_title">Lokalen Kalender löschen</string>
     <string name="dialog_delete_cal_message">Möchtest du den Kalender \"Mein Stundenplan\" löschen?</string>

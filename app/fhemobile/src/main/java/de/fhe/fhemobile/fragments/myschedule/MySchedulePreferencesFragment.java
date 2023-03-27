@@ -361,6 +361,8 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                         mCalendarSelectionPref.setVisible(true);
                         mCalendarSyncSwitchPref.setEnabled(true);
                         populateCalendarList();
+                    } else {
+                        Utils.showToast(R.string.myschedule_calsync_error);
                     }
                 }
             });
