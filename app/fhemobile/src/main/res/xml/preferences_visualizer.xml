@@ -41,7 +41,7 @@
             android:key="@string/sp_myschedule_enable_fcm"
             android:title="@string/myschedule_pref_fcm_title"
             android:summary="@string/myschedule_pref_fcm_summary"
-            android:defaultValue="true"/>
+            android:defaultValue="false"/>
 
     </PreferenceCategory>
 
@@ -56,8 +56,7 @@
         <ListPreference
             android:key="@string/sp_myschedule_calendar_to_sync"
             android:title="@string/myschedule_pref_choose_calendar_title"
-            android:summary="@string/myschedule_pref_choose_calendar_summary"
-            app:isPreferenceVisible="false"/>
+            android:summary="@string/myschedule_pref_choose_calendar_summary"/>
 
 
         <Preference

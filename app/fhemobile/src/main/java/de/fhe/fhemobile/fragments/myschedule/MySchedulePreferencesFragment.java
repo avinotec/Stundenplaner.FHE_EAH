@@ -21,6 +21,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultCallback;
@@ -73,6 +74,44 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
         addPreferencesFromResource(R.xml.preferences_visualizer);
 
+        initializePushNotificationsCategory();
+        initializeCalendarCategory();
+    }
+
+
+    private void initializePushNotificationsCategory(){
+        SwitchPreferenceCompat notificationPref = (SwitchPreferenceCompat) findPreference(getResources().getString(R.string.sp_myschedule_enable_fcm));
+        //workaround to enable push notifications by default:
+        // the preference is set to false in XML to avoid push notifications being enabled
+        // before the permission at api level 33 could be granted;
+        // There should be no problem with enabling notifications not before this code here is run
+        // because this code is run before the user can access any fragment with an add-course-to-my-schedule-option
+        notificationPref.setChecked(true);
+
+        if (!isNotificationPermissionGranted()){
+            notificationPref.setChecked(false);
+        }
+
+        notificationPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
+                //do not set preference value when permission is not granted
+                return isNotificationPermissionGranted();
+            }
+        });
+
+        notificationPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(@NonNull Preference preference) {
+                if(!isNotificationPermissionGranted()){
+                    requestNotificationPermission();
+                }
+                return true;
+            }
+        });
+    }
+
+    private void initializeCalendarCategory() {
         //first, find all preference to ensure them being set when used in listeners
 
         //workaround/helper preference when calendar permissions are not granted
@@ -240,8 +279,6 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
             mCalendarSelectionPref.setVisible(true);
             mCalendarSyncSwitchPref.setEnabled(true);
         }
-
-
     }
 
     /**
@@ -281,9 +318,32 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
     }
 
     private void requestCalendarPermission() {
-        requestPermissionLauncher.launch(new String[]{
+        requestCalendarPermissionLauncher.launch(new String[]{
                 Manifest.permission.READ_CALENDAR,
                 Manifest.permission.WRITE_CALENDAR});
+    }
+
+    private boolean isNotificationPermissionGranted() {
+        /**
+         * Ab Android Level 33:
+         * Standardmäßig enthält das FCM SDK (Version 23.0.6 oder höher) die im Manifest definierte
+         * POST_NOTIFICATIONS Berechtigung. Ihre App muss jedoch auch die Laufzeitversion dieser
+         * Berechtigung über die Konstante android.permission.POST_NOTIFICATIONS anfordern.
+         */
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            return ContextCompat.checkSelfPermission(Main.getAppContext(), Manifest.permission.POST_NOTIFICATIONS)
+                    == PackageManager.PERMISSION_GRANTED;
+        } else {
+            return true;
+        }
+    }
+
+    private void requestNotificationPermission() {
+        if (ContextCompat.checkSelfPermission(Main.getAppContext(), Manifest.permission.POST_NOTIFICATIONS) !=
+                PackageManager.PERMISSION_GRANTED) {
+
+            requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+        }
     }
 
     /**
@@ -291,7 +351,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
      * system permissions dialog. Save the return value, an instance of
      * ActivityResultLauncher, as an instance variable.
      */
-    private final ActivityResultLauncher requestPermissionLauncher =
+    private final ActivityResultLauncher requestCalendarPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>() {
                 @Override
                 public void onActivityResult(Map<String, Boolean> result) {
@@ -302,6 +362,17 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                         mCalendarSyncSwitchPref.setEnabled(true);
                         populateCalendarList();
                     }
+                }
+            });
+    private final ActivityResultLauncher<String> requestNotificationPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                SwitchPreferenceCompat notificationPref = (SwitchPreferenceCompat) findPreference(getResources().getString(R.string.sp_myschedule_enable_fcm));
+                if (isGranted) {
+                    // FCM SDK (and your app) can post notifications.
+                    notificationPref.setChecked(true);
+                } else {
+                    notificationPref.setChecked(false);
+                    Utils.showToast(R.string.myschedule_pref_fcm_error);
                 }
             });
 
