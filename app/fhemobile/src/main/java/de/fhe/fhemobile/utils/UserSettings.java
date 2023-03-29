@@ -46,7 +46,7 @@ public final class UserSettings {
 
     private final SharedPreferences   mSP;
 
-    private ArrayList<CanteenVo> mSelectedCanteens = new ArrayList<>();
+    private final ArrayList<CanteenVo> mSelectedCanteens ; //redundant = new ArrayList<>();
     private String mChosenNewsCategory = null;
 
     /**
