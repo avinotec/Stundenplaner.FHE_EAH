@@ -37,7 +37,6 @@ import androidx.preference.SwitchPreferenceCompat;
 
 import com.google.common.collect.Iterables;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import de.fhe.fhemobile.BuildConfig;
@@ -48,6 +47,8 @@ import de.fhe.fhemobile.services.CalendarSynchronizationTask;
 import de.fhe.fhemobile.utils.Utils;
 
 public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
+
+    final long CALENDAR_ID_RESERVED_LOCAL_CALENDAR = -1L;
 
     /**
      * Use this factory method to create a new instance of
@@ -167,17 +168,17 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                     return true;
                 }
                 //"create new local calendar" is chosen
-                else if ("-1".equals((String) newValue)){
+                else if ((""+CALENDAR_ID_RESERVED_LOCAL_CALENDAR).equals((String) newValue)){
                     //create local calendar and get its id
                     String calId = CalendarModel.getInstance().createLocalCalendar();
                     //update the list preference entries
-                    // (the entry "create local calendar" with value -1 is going to be replaced
+                    // (the entry "create local calendar" with value CREATE_NEW_LOCAL_CALENDAR ("-1") is going to be replaced
                     // by the name of the local calendar and its calendar id as values)
                     populateCalendarList();
                     //set the chosen calendar top the local calendar id
                     mCalendarSelectionPref.setValue(calId);
                     mCalendarSelectionPref.setSummary(getResources().getString(R.string.myschedule_calsync_calendar_name));
-                    //return false to prevent the value being updated to -1 instead of the calId
+                    //return false to prevent the value being updated to CREATE_NEW_LOCAL_CALENDAR ("-1") instead of the calId
                     return false;
                 }
                 //calendar chosen
@@ -203,6 +204,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                             public void onClick(final DialogInterface dialog, final int which) {
                                 //if the calendar to deleted, is the one my schedule is synchronized to,
                                 // then stop synchronization
+//TODO warum wird nur für den lokalen Kalender periodisch synchronisiert und nicht in alle Kalender?
                                 if(mCalendarSelectionPref.getEntry().equals(getResources().getString(R.string.myschedule_calsync_calendar_name))){
                                     CalendarSynchronizationTask.stopPeriodicSynchronizing();
                                     mCalendarSyncSwitchPref.setChecked(false);
@@ -228,7 +230,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         mCalendarSyncSwitchPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(@NonNull Preference preference) {
-                boolean syncEnabled = ((SwitchPreferenceCompat) preference).isChecked();
+                final boolean syncEnabled = ((SwitchPreferenceCompat) preference).isChecked();
 
                 //no calendar chosen
                 if(mCalendarSelectionPref.getValue() == null){
@@ -255,6 +257,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
 
         // initialize some values
         //only set to visible if there is a local calendar that can be deleted
+        //TODO alle Kalender löschen können
         mDeleteCalendarPref.setVisible(false);
 
         //if a calendar is already chosen
@@ -292,13 +295,14 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
     private void populateCalendarList(){
         Map<String, Long> availableCalendars = CalendarModel.getInstance().getCalendars();
 
-        if(availableCalendars == null){
-            availableCalendars = new HashMap<>();
-        }
+        //returns non-null
+        //if(availableCalendars == null){
+        //    availableCalendars = new HashMap<>();
+        //}
 
         //option to create a new local calendar
         if(CalendarModel.getInstance().getLocalCalendarId() == null){
-            availableCalendars.put(getResources().getString(R.string.myschedule_create_local_calendar), -1l);
+            availableCalendars.put(getResources().getString(R.string.myschedule_create_local_calendar), CALENDAR_ID_RESERVED_LOCAL_CALENDAR);
         } else {
             mDeleteCalendarPref.setVisible(true);
         }
@@ -329,7 +333,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
     }
 
     private boolean isNotificationPermissionGranted() {
-        /**
+        /*
          * Ab Android Level 33:
          * Standardmäßig enthält das FCM SDK (Version 23.0.6 oder höher) die im Manifest definierte
          * POST_NOTIFICATIONS Berechtigung. Ihre App muss jedoch auch die Laufzeitversion dieser
@@ -347,7 +351,9 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         if (ContextCompat.checkSelfPermission(Main.getAppContext(), Manifest.permission.POST_NOTIFICATIONS) !=
                 PackageManager.PERMISSION_GRANTED) {
 
-            requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+            }
         }
     }
 
@@ -361,7 +367,8 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                 @Override
                 public void onActivityResult(Map<String, Boolean> result) {
                     //permissions are granted
-                    if(!result.containsValue(Boolean.FALSE)){
+                    final boolean denied = result.containsValue(Boolean.FALSE);
+                    if( !denied ){
                         mNoCalendarPermissionPref.setVisible(false);
                         mCalendarSelectionPref.setVisible(true);
                         mCalendarSyncSwitchPref.setEnabled(true);
