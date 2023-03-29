@@ -33,7 +33,6 @@ package de.fhe.fhemobile.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Build;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -118,10 +117,11 @@ public class FloatLabelLayout extends LinearLayout {
 
         addView(mLabel, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
-        mInterpolator = AnimationUtils.loadInterpolator(context,
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-                        ? android.R.interpolator.fast_out_slow_in
-                        : android.R.anim.decelerate_interpolator);
+//        mInterpolator = AnimationUtils.loadInterpolator(context,
+//                Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+//                        ? android.R.interpolator.fast_out_slow_in
+//                        : android.R.anim.decelerate_interpolator);
+        mInterpolator = AnimationUtils.loadInterpolator(context, android.R.interpolator.fast_out_slow_in );
     }
 
     @Override
