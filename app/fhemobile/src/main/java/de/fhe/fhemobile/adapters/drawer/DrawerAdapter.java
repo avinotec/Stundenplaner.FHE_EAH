@@ -77,7 +77,7 @@ public class DrawerAdapter extends BaseAdapter {
         viewHolder.mLabel.setText(mItems.get(position).getText());
 
         //set separator
-        String label = (String) viewHolder.mLabel.getText();
+        final String label = (String) viewHolder.mLabel.getText();
         if (FeatureProvider.getFeatureTitle(Features.FeatureId.MYSCHEDULE).equals(label)
                 || FeatureProvider.getFeatureTitle(Features.FeatureId.NAVIGATION).equals(label)
                 || FeatureProvider.getFeatureTitle(Features.FeatureId.SEMESTER_DATES).equals(label))  {
