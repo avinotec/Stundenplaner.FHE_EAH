@@ -18,6 +18,7 @@ package de.fhe.fhemobile.widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -29,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.Utils;
@@ -56,8 +58,45 @@ public class WeatherHeader extends RelativeLayout {
 
         preInitialize();
     }
-    
-    private void preInitialize() {
+
+    /**
+     * Returns the resource ID based on resource name.
+     *
+     * @param _variableName Resource name identifier
+     * @param _resourcename Resource type
+     * @return Resource ID
+     */
+    public static int getResourceId(final String _variableName, final String _resourcename) {
+        try {
+            return Main.getAppContext().getResources().getIdentifier(_variableName, _resourcename, Main.getAppContext().getPackageName());
+        } catch (final RuntimeException e) {
+            Log.e(Utils.TAG, "Fehler bei der Ressourcensuche",e);
+            return -1;
+        }
+    }
+
+	/**
+	 * Retrieves a resource string.
+	 *
+	 * @param _variableName Resource name of the wanted string
+	 * @return String of the Resource value
+	 */
+	public static String getStringResource(final String _variableName) {
+	    if (_variableName == null || _variableName.isEmpty()) {
+	        return _variableName;
+	    }
+
+	    try {
+	        return Main.getAppContext().getString(getResourceId(_variableName, "string"));
+	    } catch (final RuntimeException e) {
+	        Log.e( Utils.TAG, "Error in fetching ressource", e);
+
+	        //fallback if not found
+	        return _variableName;
+	    }
+	}
+
+	private void preInitialize() {
         final LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.widget_weather_header, this, true);
     }
@@ -75,10 +114,10 @@ public class WeatherHeader extends RelativeLayout {
         NetworkHandler.getInstance().fetchWeather(mWeatherResponseCallback);
     }
     
-    void update(final String _Temperature, final int _BackgroundId, final int _IconId) {
+    void update(final String _Temperature, final int _BackgroundId) {
         mTemperature.setText(_Temperature);
-        mBackground.setImageResource(Utils.getResourceId("wetter_bg" + _BackgroundId, "drawable"));
-        mIcon.setImageResource(Utils.getResourceId("wetter_icon" + _BackgroundId, "drawable"));
+        mBackground.setImageResource(getResourceId("wetter_bg" + _BackgroundId, "drawable"));
+        mIcon.setImageResource(getResourceId("wetter_icon" + _BackgroundId, "drawable"));
         
     }
 
@@ -100,7 +139,7 @@ public class WeatherHeader extends RelativeLayout {
         public void onResponse(@NonNull final Call<WeatherResponse> call, final Response<WeatherResponse> response) {
             // MS: Bei den News sind die news/0 kaputt
             if ( response.body() != null ) {
-                update(response.body().getTemperature(), response.body().getBackgroundId(), response.body().getIconId());
+                update(response.body().getTemperature(), response.body().getBackgroundId());
             }
         }
 

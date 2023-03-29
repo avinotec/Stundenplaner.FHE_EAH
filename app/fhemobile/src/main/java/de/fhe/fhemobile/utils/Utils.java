@@ -17,7 +17,6 @@
 package de.fhe.fhemobile.utils;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -71,44 +70,7 @@ public final class Utils {
 
     //getStringResource-----------------------------------------------------------------------------
 
-    /**
-     * Retrieves a resource string.
-     *
-     * @param _variableName Resource name of the wanted string
-     * @return String of the Resource value
-     */
-    public static String getStringResource(final String _variableName) {
-        if (_variableName == null || _variableName.isEmpty()) {
-            return _variableName;
-        }
-
-        try {
-            return Main.getAppContext().getString(getResourceId(_variableName, "string"));
-        } catch (final RuntimeException e) {
-            Log.e( TAG, "Error in fetching ressource", e);
-
-            //fallback if not found
-            return _variableName;
-        }
-    }
-
     //getResourceId---------------------------------------------------------------------------------
-
-    /**
-     * Returns the resource ID based on resource name.
-     *
-     * @param _variableName Resource name identifier
-     * @param _resourcename Resource type
-     * @return Resource ID
-     */
-    public static int getResourceId(final String _variableName, final String _resourcename) {
-        try {
-            return Main.getAppContext().getResources().getIdentifier(_variableName, _resourcename, Main.getAppContext().getPackageName());
-        } catch (final RuntimeException e) {
-            Log.e(TAG, "Fehler bei der Ressourcensuche",e);
-            return -1;
-        }
-    }
 
     /**
      * hides the current soft keyboard, if it is open.
