@@ -17,7 +17,6 @@
 
 package de.fhe.fhemobile.fragments.maps;
 
-import android.app.Activity;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -126,7 +125,7 @@ public class MapsFragment extends Fragment {
         //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
         // see https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
         final MenuHost menuHost = requireActivity();
-        final Activity activity = getActivity();
+        //not used: final Activity activity = getActivity();
         menuHost.addMenuProvider(new MenuProvider() {
             @Override
             public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
