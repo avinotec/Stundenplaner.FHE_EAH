@@ -16,7 +16,7 @@
  */
 package de.fhe.fhemobile.utils.semesterdates;
 
-import de.fhe.fhemobile.vos.semesterdates.SemesterTimesVo;
+import de.fhe.fhemobile.vos.semesterdates.SemesterPeriodOrDateVo;
 
 /**
  * Created by Paul Cech on 13.05.15.
@@ -35,7 +35,7 @@ public final class SemesterDatesUtils {
      * @param _time
      * @return
      */
-    public static String getHeadline(final SemesterTimesVo _time) {
+    public static String getHeadline(final SemesterPeriodOrDateVo _time) {
         String result = "";
 
         if(_time.getDate() != null) {
@@ -53,14 +53,14 @@ public final class SemesterDatesUtils {
      * @param _time
      * @return
      */
-    public static String getSubHeadline(final SemesterTimesVo _time) {
+    public static String getSubHeadline(final SemesterPeriodOrDateVo _time) {
         String result = "";
 
         if(_time.getDate() != null) {
             result = _time.getDate().getDate();
         }
         else if(_time.getPeriod() != null) {
-            result = _time.getPeriod().getBegin() + " – " + _time.getPeriod().getEnd();
+            result = _time.getPeriod().getStartDateString() + " – " + _time.getPeriod().getEndDateString();
         }
 
         return result;

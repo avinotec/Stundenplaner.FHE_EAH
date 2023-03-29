@@ -32,7 +32,7 @@ import de.fhe.fhemobile.events.SemesterDatesChangeEvent;
 import de.fhe.fhemobile.models.semesterdates.SemesterDatesModel;
 import de.fhe.fhemobile.utils.semesterdates.SemesterDatesUtils;
 import de.fhe.fhemobile.utils.headerlistview.HeaderListView;
-import de.fhe.fhemobile.vos.semesterdates.SemesterTimesVo;
+import de.fhe.fhemobile.vos.semesterdates.SemesterPeriodOrDateVo;
 import de.fhe.fhemobile.vos.semesterdates.SemesterVo;
 import de.fhe.fhemobile.widgets.stickyHeaderList.DefaultHeaderItem;
 import de.fhe.fhemobile.widgets.stickyHeaderList.DoubleRowItem;
@@ -99,19 +99,19 @@ public class SemesterDatesView extends LinearLayout {
         sectionList.add(headerSection);
 
         final ArrayList<IRowItem> courseRowItems = new ArrayList<>();
-        for (final SemesterTimesVo times : chosenSemester.getCourseTimes()) {
+        for (final SemesterPeriodOrDateVo times : chosenSemester.getCourseTimes()) {
             courseRowItems.add(new DoubleRowItem(SemesterDatesUtils.getHeadline(times), SemesterDatesUtils.getSubHeadline(times)));
         }
         sectionList.add(new DefaultHeaderItem(mContext.getString(R.string.semester_periods), true, courseRowItems));
 
         final ArrayList<IRowItem> holidayRowItems = new ArrayList<>();
-        for (final SemesterTimesVo times : chosenSemester.getHolidays()) {
+        for (final SemesterPeriodOrDateVo times : chosenSemester.getHolidays()) {
             holidayRowItems.add(new DoubleRowItem(SemesterDatesUtils.getHeadline(times), SemesterDatesUtils.getSubHeadline(times)));
         }
         sectionList.add(new DefaultHeaderItem(mContext.getString(R.string.semester_holidays), true, holidayRowItems));
 
         final ArrayList<IRowItem> datesRowItems = new ArrayList<>();
-        for (final SemesterTimesVo times : chosenSemester.getImportantDates()) {
+        for (final SemesterPeriodOrDateVo times : chosenSemester.getImportantDates()) {
             datesRowItems.add(new DoubleRowItem(SemesterDatesUtils.getHeadline(times), SemesterDatesUtils.getSubHeadline(times)));
         }
         sectionList.add(new DefaultHeaderItem(mContext.getString(R.string.semester_important_dates), true, datesRowItems));

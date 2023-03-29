@@ -62,7 +62,7 @@ import de.fhe.fhemobile.vos.news.NewsCategoryResponse;
 import de.fhe.fhemobile.vos.news.NewsItemResponse;
 import de.fhe.fhemobile.vos.news.NewsItemVo;
 import de.fhe.fhemobile.vos.phonebook.EmployeeVo;
-import de.fhe.fhemobile.vos.semesterdates.SemesterDatesVo;
+import de.fhe.fhemobile.vos.semesterdates.SemesterResponse;
 import de.fhe.fhemobile.vos.timetable.TimetableDialogResponse;
 import de.fhe.fhemobile.vos.timetable.TimetableWeekVo;
 import okhttp3.Cache;
@@ -193,7 +193,7 @@ public final class NetworkHandler {
 	public void fetchSemesterDates() {
 		Assert.assertNotNull(mApiErfurt);
 
-		mApiErfurt.fetchSemesterDates().enqueue(new Callback<SemesterDatesVo>() {
+		mApiErfurt.fetchSemesterDates().enqueue(new Callback<SemesterResponse>() {
 
 			/**
 			 *
@@ -201,7 +201,7 @@ public final class NetworkHandler {
 			 * @param response
 			 */
 			@Override
-			public void onResponse(@NonNull final Call<SemesterDatesVo> call, @NonNull final Response<SemesterDatesVo> response) {
+			public void onResponse(@NonNull final Call<SemesterResponse> call, @NonNull final Response<SemesterResponse> response) {
 				if (response.isSuccessful()) {
 					SemesterDatesModel.getInstance().setData(response.body().getSemester());
 				} else {
@@ -216,7 +216,7 @@ public final class NetworkHandler {
 			 * @param t
 			 */
 			@Override
-			public void onFailure(@NonNull final Call<SemesterDatesVo> call, @NonNull final Throwable t) {
+			public void onFailure(@NonNull final Call<SemesterResponse> call, @NonNull final Throwable t) {
 				ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE8);
 				Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
 			}

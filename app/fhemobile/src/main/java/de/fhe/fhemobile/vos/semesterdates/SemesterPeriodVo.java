@@ -22,20 +22,24 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * Value object for a period in a semester e.g. "Vorlesungszeitraum" or "Ostern + Anreistag"
+ *
  * Created by paul on 24.01.14.
  */
-public class DateVo implements Parcelable {
+public class SemesterPeriodVo implements Parcelable {
 
-    public DateVo() {
+    public SemesterPeriodVo() {
     }
 
-    public DateVo(final String mDate, final String mName) {
-        this.mDate = mDate;
+    public SemesterPeriodVo(final String mBegin, final String mEnd, final String mName) {
+        this.mStartDate = mBegin;
+        this.mEndDate = mEnd;
         this.mName = mName;
     }
 
-    public DateVo(final Parcel _In) {
-        mDate = _In.readString();
+    public SemesterPeriodVo(final Parcel _In) {
+        mStartDate = _In.readString();
+        mEndDate = _In.readString();
         mName = _In.readString();
     }
 
@@ -60,46 +64,44 @@ public class DateVo implements Parcelable {
      */
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeString(mDate);
+        dest.writeString(mStartDate);
+        dest.writeString(mEndDate);
         dest.writeString(mName);
     }
 
-    public static final Parcelable.Creator<DateVo> CREATOR
-            = new Parcelable.Creator<DateVo>() {
-        public DateVo createFromParcel(final Parcel in) {
-            return new DateVo(in);
+    public static final Parcelable.Creator<SemesterPeriodVo> CREATOR
+            = new Parcelable.Creator<SemesterPeriodVo>() {
+        public SemesterPeriodVo createFromParcel(final Parcel in) {
+            return new SemesterPeriodVo(in);
         }
 
-        public DateVo[] newArray(final int size) {
-            return new DateVo[size];
+        public SemesterPeriodVo[] newArray(final int size) {
+            return new SemesterPeriodVo[size];
         }
     };
 
-    public String getDate() {
-        return mDate;
+
+    public String getStartDateString() {
+        return mStartDate;
     }
 
-// --Commented out by Inspection START (29.03.2023 02:17):
-//    public void setDate(final String mDate) {
-//        this.mDate = mDate;
-//    }
-// --Commented out by Inspection STOP (29.03.2023 02:17)
+    public String getEndDateString() {
+        return mEndDate;
+    }
 
     public String getName() {
         return mName;
     }
 
-// --Commented out by Inspection START (29.03.2023 02:17):
-//    public void setName(final String mName) {
-//        this.mName = mName;
-//    }
-// --Commented out by Inspection STOP (29.03.2023 02:17)
+    //**********************************************************************
+    @SerializedName("begin")
+    private String mStartDate;
 
-    @SerializedName("date")
-    private String mDate;
+    @SerializedName("end")
+    private String mEndDate;
 
     @SerializedName("name")
-    private String mName;
+    private String mName;   //e.g. "Vorlesungszeitraumn"
 
 
 }

@@ -25,16 +25,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by paul on 27.01.14.
+ * Value Object of an semester, containing its dates and periods.
+ * Used to display semester dates.
  *
- * Vo used when displaying semester dates
+ * Created by paul on 27.01.14.
  */
 public class SemesterVo implements Parcelable {
 
     public SemesterVo() {
     }
 
-    public SemesterVo(final String mName, final String mLongName, final List<SemesterTimesVo> mCourseTimes, final List<SemesterTimesVo> mHolidays, final List<SemesterTimesVo> mImportantDates) {
+    public SemesterVo(final String mName, final String mLongName, final List<SemesterPeriodOrDateVo> mCourseTimes, final List<SemesterPeriodOrDateVo> mHolidays, final List<SemesterPeriodOrDateVo> mImportantDates) {
         this.mName              = mName;
         this.mLongName          = mLongName;
         this.mCourseTimes       = mCourseTimes;
@@ -45,9 +46,9 @@ public class SemesterVo implements Parcelable {
     public SemesterVo(final Parcel _In) {
         mName       = _In.readString();
         mLongName   = _In.readString();
-        _In.readTypedList(mCourseTimes, SemesterTimesVo.CREATOR);
-        _In.readTypedList(mHolidays, SemesterTimesVo.CREATOR);
-        _In.readTypedList(mImportantDates, SemesterTimesVo.CREATOR);
+        _In.readTypedList(mCourseTimes, SemesterPeriodOrDateVo.CREATOR);
+        _In.readTypedList(mHolidays, SemesterPeriodOrDateVo.CREATOR);
+        _In.readTypedList(mImportantDates, SemesterPeriodOrDateVo.CREATOR);
     }
 
     /**
@@ -105,27 +106,27 @@ public class SemesterVo implements Parcelable {
         this.mLongName = mLongName;
     }
 
-    public List<SemesterTimesVo> getCourseTimes() {
+    public List<SemesterPeriodOrDateVo> getCourseTimes() {
         return mCourseTimes;
     }
 
-    public void setCourseTimes(final List<SemesterTimesVo> mCourseTimes) {
+    public void setCourseTimes(final List<SemesterPeriodOrDateVo> mCourseTimes) {
         this.mCourseTimes = mCourseTimes;
     }
 
-    public List<SemesterTimesVo> getHolidays() {
+    public List<SemesterPeriodOrDateVo> getHolidays() {
         return mHolidays;
     }
 
-    public void setHolidays(final List<SemesterTimesVo> mHolidays) {
+    public void setHolidays(final List<SemesterPeriodOrDateVo> mHolidays) {
         this.mHolidays = mHolidays;
     }
 
-    public List<SemesterTimesVo> getImportantDates() {
+    public List<SemesterPeriodOrDateVo> getImportantDates() {
         return mImportantDates;
     }
 
-    public void setImportantDates(final List<SemesterTimesVo> mImportantDates) {
+    public void setImportantDates(final List<SemesterPeriodOrDateVo> mImportantDates) {
         this.mImportantDates = mImportantDates;
     }
 
@@ -137,12 +138,12 @@ public class SemesterVo implements Parcelable {
     private String mLongName;
 
     @SerializedName("courseTimes")
-    private List<SemesterTimesVo> mCourseTimes = new ArrayList<SemesterTimesVo>();
+    private List<SemesterPeriodOrDateVo> mCourseTimes = new ArrayList<SemesterPeriodOrDateVo>();
 
     @SerializedName("holidays")
-    private List<SemesterTimesVo> mHolidays = new ArrayList<SemesterTimesVo>();
+    private List<SemesterPeriodOrDateVo> mHolidays = new ArrayList<SemesterPeriodOrDateVo>();
 
     @SerializedName("importantDates")
-    private List<SemesterTimesVo> mImportantDates = new ArrayList<SemesterTimesVo>();
+    private List<SemesterPeriodOrDateVo> mImportantDates = new ArrayList<SemesterPeriodOrDateVo>();
 
 }

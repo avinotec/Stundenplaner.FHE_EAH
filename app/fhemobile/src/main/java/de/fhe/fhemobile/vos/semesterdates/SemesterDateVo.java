@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2014-2022 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
+ *  Copyright (c) 2014-2023 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -22,21 +22,23 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by paul on 27.01.14.
+ * Value object for an event in the semester e.g. "Semesterbeginn" or "Hochschulinformationstag"
+ *
+ * Created by paul on 24.01.14.
  */
-public class SemesterTimesVo implements Parcelable {
+public class SemesterDateVo implements Parcelable {
 
-    public SemesterTimesVo() {
+    public SemesterDateVo() {
     }
 
-    public SemesterTimesVo(final DateVo mDate, final PeriodVo mPeriod) {
+    public SemesterDateVo(final String mDate, final String mSemesterType) {
         this.mDate = mDate;
-        this.mPeriod = mPeriod;
+        this.mName = mSemesterType;
     }
 
-    public SemesterTimesVo(final Parcel _In) {
-        mDate = _In.readParcelable(DateVo.class.getClassLoader());
-        mPeriod = _In.readParcelable(PeriodVo.class.getClassLoader());
+    public SemesterDateVo(final Parcel _In) {
+        mDate = _In.readString();
+        mName = _In.readString();
     }
 
     /**
@@ -60,44 +62,34 @@ public class SemesterTimesVo implements Parcelable {
      */
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeParcelable(mDate, 0);
-        dest.writeParcelable(mPeriod, 0);
+        dest.writeString(mDate);
+        dest.writeString(mName);
     }
 
-    public static final Parcelable.Creator<SemesterTimesVo> CREATOR
-            = new Parcelable.Creator<SemesterTimesVo>() {
-        public SemesterTimesVo createFromParcel(final Parcel in) {
-            return new SemesterTimesVo(in);
+    public static final Parcelable.Creator<SemesterDateVo> CREATOR = new Parcelable.Creator<SemesterDateVo>() {
+        public SemesterDateVo createFromParcel(final Parcel in) {
+            return new SemesterDateVo(in);
         }
 
-        public SemesterTimesVo[] newArray(final int size) {
-            return new SemesterTimesVo[size];
+        public SemesterDateVo[] newArray(final int size) {
+            return new SemesterDateVo[size];
         }
     };
 
-
-    public DateVo getDate() {
+    public String getDate() {
         return mDate;
     }
 
-    public void setDate(final DateVo mDate) {
-        this.mDate = mDate;
-    }
 
-    public PeriodVo getPeriod() {
-        return mPeriod;
+    public String getName() {
+        return mName;
     }
-
-    public void setPeriod(final PeriodVo mPeriod) {
-        this.mPeriod = mPeriod;
-    }
-
 
     @SerializedName("date")
-    private DateVo mDate;
+    private String mDate;
 
-    @SerializedName("period")
-    private PeriodVo mPeriod;
+    @SerializedName("name")
+    private String mName;
 
 
 }

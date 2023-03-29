@@ -21,9 +21,9 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by paul on 03.03.15.
  */
-public class SemesterDatesVo {
+public class SemesterResponse {
 
-    public SemesterDatesVo() {
+    public SemesterResponse() {
     }
 
     public SemesterVo[] getSemester() {
