@@ -79,17 +79,21 @@ public class DateVo implements Parcelable {
         return mDate;
     }
 
-    public void setDate(final String mDate) {
-        this.mDate = mDate;
-    }
+// --Commented out by Inspection START (29.03.2023 02:17):
+//    public void setDate(final String mDate) {
+//        this.mDate = mDate;
+//    }
+// --Commented out by Inspection STOP (29.03.2023 02:17)
 
     public String getName() {
         return mName;
     }
 
-    public void setName(final String mName) {
-        this.mName = mName;
-    }
+// --Commented out by Inspection START (29.03.2023 02:17):
+//    public void setName(final String mName) {
+//        this.mName = mName;
+//    }
+// --Commented out by Inspection STOP (29.03.2023 02:17)
 
     @SerializedName("date")
     private String mDate;
