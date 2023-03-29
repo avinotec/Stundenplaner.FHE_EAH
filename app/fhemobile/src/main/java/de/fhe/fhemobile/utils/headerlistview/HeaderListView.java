@@ -161,7 +161,7 @@ public class HeaderListView extends RelativeLayout {
 
 				noHeaderUpToHeader = false;
 //TODO firstVisibleItem >= 0 is always true ???
-				if (currIsHeader && !prevHasHeader && firstVisibleItem >= 0) {
+				if (currIsHeader && !prevHasHeader) {
 					resetHeader(direction < 0 ? actualSection - 1 : actualSection);
 				} else if ((currIsHeader && firstVisibleItem > 0) || needScrolling) {
 					if (!prevHasRows) {
