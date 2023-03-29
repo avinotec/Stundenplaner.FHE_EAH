@@ -291,7 +291,7 @@ dependencies {
     // ------------ okhttp ------------------------
     
     
-    implementation 'com.google.firebase:firebase-analytics:21.2.0'
+    implementation 'com.google.firebase:firebase-analytics:21.2.1'
     implementation 'com.google.firebase:firebase-messaging:23.1.2'
 
 
@@ -323,7 +323,7 @@ dependencies {
 	implementation 'com.google.firebase:firebase-crashlytics'
     
     implementation 'com.google.gms:google-services:4.3.15'
-    implementation 'com.google.firebase:firebase-inappmessaging-display-ktx:20.3.1';
+    implementation 'com.google.firebase:firebase-inappmessaging-display-ktx:20.3.1'
     
     // Adds libraries defining annotations to only the compile classpath.
     compileOnly 'com.google.dagger:dagger:2.45'
