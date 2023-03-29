@@ -25,13 +25,13 @@
         android:icon="@drawable/ic_navigate_before"
         android:orderInCategory="100"
         android:title="@string/action_before"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_next_semester"
         android:icon="@drawable/ic_navigate_next"
         android:orderInCategory="100"
         android:title="@string/action_next"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
 </menu>
