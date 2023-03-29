@@ -129,7 +129,7 @@ public class CanteenMenuView extends LinearLayout {
      */
     private void populateMenuDaysList(@NonNull List<CanteenMenuDayVo> menuDaysList) {
         //if non-empty, populate view
-        if(menuDaysList != null && !menuDaysList.isEmpty()) {
+        if(/* menuDaysList != null && (always true) */!menuDaysList.isEmpty()) {
             mMenuDaysListView.setVisibility(VISIBLE);
 
             mErrorText.setVisibility(GONE);
