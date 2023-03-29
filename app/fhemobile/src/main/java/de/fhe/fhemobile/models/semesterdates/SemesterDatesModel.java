@@ -28,6 +28,9 @@ import de.fhe.fhemobile.vos.semesterdates.SemesterVo;
  */
 public final class SemesterDatesModel extends EventDispatcher {
 
+    static final String SEMESTER_TYPE_WS = "WS";
+    static final String SEMESTER_TYPE_SS = "SS";
+
     private SemesterDatesModel() {
     }
 
@@ -106,16 +109,16 @@ public final class SemesterDatesModel extends EventDispatcher {
 
         if (now.before(calWsHolidayStart)) {
             currentYear = calWsHolidayStart.get(Calendar.YEAR);
-            semesterType = "WS";
+            semesterType = SEMESTER_TYPE_WS;
         } else if (now.after(calWsHolidayStart) && now.before(calSsHolidayStart)) {
             currentYear = calSsHolidayStart.get(Calendar.YEAR);
-            semesterType = "SS";
+            semesterType = SEMESTER_TYPE_SS;
         } else {
             currentYear = calSsHolidayStart.get(Calendar.YEAR) + 1;
-            semesterType = "WS";
+            semesterType = SEMESTER_TYPE_WS;
         }
 
-        if (currentYear != null && semesterType != null) {
+        if (/* ___always true___ currentYear != null && */ /* semesterType != null __always true */ true ) {
 
             //set chosen semester to current
             for (int i = 0; i < mSemesterVos.length; i++) {
