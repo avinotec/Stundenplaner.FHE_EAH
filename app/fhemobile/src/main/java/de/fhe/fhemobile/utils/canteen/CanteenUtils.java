@@ -61,37 +61,4 @@ public final class CanteenUtils {
         return result;
     }
 
-    /**
-     * Group CanteenFoodItems per day and store each day in a {@link CanteenMenuDayVo}
-     * @param _Items Array of {@link CanteenDishVo} objects, sorted by date
-     * @return list of {@link CanteenMenuDayVo} objects
-     */
-    public static List<CanteenMenuDayVo> groupPerDay(final CanteenDishVo[] _Items) {
-
-        final List<CanteenMenuDayVo> result = new ArrayList<>();
-
-        //helpers and flags for for-loop
-        List<CanteenDishVo> itemsOfSameDate = new ArrayList<CanteenDishVo>();
-        long lastDate = _Items[0].getDate();
-        String lastDateString = _Items[0].getDateString();
-
-        for (final CanteenDishVo canteenFoodItem : _Items) {
-
-            final long currentDate = canteenFoodItem.getDate();
-            //if current item belongs to different date than item before,
-            // then all items for the last date are collected and can be stored in a CanteenMenuDayVo
-            if (currentDate != lastDate) {
-                result.add(new CanteenMenuDayVo(itemsOfSameDate, lastDateString));
-                lastDate = currentDate;
-                lastDateString = canteenFoodItem.getDateString();
-                itemsOfSameDate = new ArrayList<>();
-            }
-            itemsOfSameDate.add(canteenFoodItem);
-        }
-
-        result.add(new CanteenMenuDayVo(itemsOfSameDate, lastDateString));
-
-        return result;
-    }
-
 }
