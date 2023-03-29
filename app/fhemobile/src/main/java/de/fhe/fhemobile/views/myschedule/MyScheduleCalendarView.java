@@ -123,16 +123,18 @@ public class MyScheduleCalendarView extends LinearLayout {
     }
 
 
-    /**
-     * View scrolls to today
-     * //outdated: My Schedule Calendar list was changed to not displaying past days
-     */
-    public void jumpToToday(){
-        final int currentDayIndex = MyScheduleModel.getInstance().getMyScheduleCalendarAdapter().getPositionOfFirstEventToday();
-        if(currentDayIndex >= 0){
-            mCalendarListView.setSelection(currentDayIndex);
-        }
-    }
+// --Commented out by Inspection START (29.03.2023 02:22):
+//    /**
+//     * View scrolls to today
+//     * //outdated: My Schedule Calendar list was changed to not displaying past days
+//     */
+//    public void jumpToToday(){
+//        final int currentDayIndex = MyScheduleModel.getInstance().getMyScheduleCalendarAdapter().getPositionOfFirstEventToday();
+//        if(currentDayIndex >= 0){
+//            mCalendarListView.setSelection(currentDayIndex);
+//        }
+//    }
+// --Commented out by Inspection STOP (29.03.2023 02:22)
 
     /**
      * Sets view to show if the event list is empty
