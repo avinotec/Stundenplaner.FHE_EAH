@@ -72,7 +72,8 @@
             <ImageView
                 android:id="@+id/imageview_floorplan"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:contentDescription="TODO" />
 
         </RelativeLayout>
 
@@ -90,7 +91,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:orientation="vertical"
             android:gravity="center|top"
             android:layout_weight="1">
