@@ -208,11 +208,11 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                                 if(mCalendarSelectionPref.getEntry().equals(getResources().getString(R.string.myschedule_calsync_calendar_name))){
                                     CalendarSynchronizationTask.stopPeriodicSynchronizing();
                                     mCalendarSyncSwitchPref.setChecked(false);
+                                    mCalendarSelectionPref.setSummary(R.string.myschedule_pref_choose_calendar_summary);
                                 }
 
                                 CalendarModel.getInstance().deleteLocalCalendar();
                                 mDeleteCalendarPref.setVisible(false);
-                                mCalendarSelectionPref.setSummary(R.string.myschedule_pref_choose_calendar_summary);
                             }
                         })
                         .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
