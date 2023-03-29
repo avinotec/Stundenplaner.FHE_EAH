@@ -31,9 +31,11 @@ public class SimpleEvent implements Event {
         return type;
     }
 
-    public void setType(final String type) {
-        this.type = type;
-    }
+// --Commented out by Inspection START (29.03.2023 02:26):
+//    public void setType(final String type) {
+//        this.type = type;
+//    }
+// --Commented out by Inspection STOP (29.03.2023 02:26)
 
     @Override
     public Object getSource() {
