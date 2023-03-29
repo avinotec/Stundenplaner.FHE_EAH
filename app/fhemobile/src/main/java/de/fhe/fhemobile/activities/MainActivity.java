@@ -66,10 +66,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         setContentView(R.layout.activity_main);
 
         /* Fix: No Network Security Config specified, using platform default - Android Log */
-        if (android.os.Build.VERSION.SDK_INT > 9) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         final Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if (mToolbar != null) setSupportActionBar(mToolbar);
