@@ -276,7 +276,7 @@ public final class MyScheduleUtils {
 		String localEventsJson = gson.toJson(localEventSeries.getEvents());
 		@NonNls final String fetchedEventsJson = gson.toJson(fetchedEventSeries.getEvents());
 		//remove change marks from local json to enable comparison with fetched json
-		localEventsJson = localEventsJson.replaceAll("\"typesOfChanges\":\\[(\"[A-Z]+,?\")+\\]","\"typesOfChanges\":[]");
+		localEventsJson = localEventsJson.replaceAll("\"typesOfChanges\":\\[(\"[A-Z]+,?\")+]","\"typesOfChanges\":[]");
 		if(localEventsJson.equals(fetchedEventsJson)) {
 			Log.d(TAG, "Detection of my schedule changes skipped because events are equal");
 			return;
@@ -421,7 +421,7 @@ public final class MyScheduleUtils {
 		}
 
 		//add new event sets
-		if (eventSetsAdded != null && !eventSetsAdded.isEmpty()) {
+		if ( /* _always true___ eventSetsAdded != null && */ !eventSetsAdded.isEmpty()) {
 			for (final String eventSetId : eventSetsAdded) {
 				final MyScheduleEventSetVo eventSet = fetchedEventSetsMap.get(eventSetId);
 				final List<MyScheduleEventVo> eventListToAdd = new ArrayList<>();
