@@ -40,6 +40,7 @@ import com.google.common.collect.Iterables;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.models.myschedule.CalendarModel;
@@ -238,6 +239,10 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                 else {
                     //toggle synchronisation
                     if(syncEnabled) {
+                        //if debugging: sync immediately when sync button is enabled
+                        if(BuildConfig.DEBUG){
+                            new CalendarSynchronizationTask().run();
+                        }
                         CalendarSynchronizationTask.startPeriodicSynchronizing();
                     } else {
                         CalendarSynchronizationTask.stopPeriodicSynchronizing();

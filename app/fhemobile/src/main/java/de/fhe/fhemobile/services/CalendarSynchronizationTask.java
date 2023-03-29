@@ -18,14 +18,13 @@ package de.fhe.fhemobile.services;
 
 import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.models.myschedule.CalendarModel;
-import de.fhe.fhemobile.models.myschedule.MyScheduleModel;
-import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
+import de.fhe.fhemobile.utils.Utils;
 
 /**
  * {@link Runnable} for syncing My Schedule to a calendar
@@ -64,6 +63,9 @@ public class CalendarSynchronizationTask implements Runnable {
     @Override
     public void run() {
         Log.i(TAG, "Started CalendarSynchronizationTask.run()");
+        if(BuildConfig.DEBUG){
+            Utils.showToast("Kalendersynchronisation gestartet");
+        }
 
         CalendarModel.getInstance().syncMySchedule();
     }
