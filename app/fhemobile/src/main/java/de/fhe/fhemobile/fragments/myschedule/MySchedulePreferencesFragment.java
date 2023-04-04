@@ -212,7 +212,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                                 }
 
                                 CalendarModel.getInstance().deleteLocalCalendar();
-                                mDeleteCalendarPref.setVisible(false);
+                                mDeleteCalendarPref.setEnabled(false);
                             }
                         })
                         .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
@@ -258,7 +258,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         // initialize some values
         //only set to visible if there is a local calendar that can be deleted
         //TODO alle Kalender löschen können
-        mDeleteCalendarPref.setVisible(false);
+        mDeleteCalendarPref.setEnabled(false);
 
         //if a calendar is already chosen
         if(mCalendarSelectionPref.getValue() != null && !mCalendarSelectionPref.getValue().equals("")){
@@ -304,7 +304,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         if(CalendarModel.getInstance().getLocalCalendarId() == null){
             availableCalendars.put(getResources().getString(R.string.myschedule_create_local_calendar), CALENDAR_ID_RESERVED_LOCAL_CALENDAR);
         } else {
-            mDeleteCalendarPref.setVisible(true);
+            mDeleteCalendarPref.setEnabled(true);
         }
 
         //the human-readable entries to be shown in the list
