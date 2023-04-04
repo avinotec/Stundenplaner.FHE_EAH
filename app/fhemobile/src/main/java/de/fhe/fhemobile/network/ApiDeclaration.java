@@ -62,11 +62,11 @@ public interface ApiDeclaration {
 	@GET(Endpoints.WEATHER)
 	Call<WeatherResponse> fetchWeather();
 
-	@GET(Endpoints.TIMETABLE)
-	Call<TimetableDialogResponse> fetchStudyProgramData();
+	@GET(Endpoints.STUDYPROGRAMS)
+	Call<TimetableDialogResponse> fetchStudyPrograms();
 
-	@GET(Endpoints.TIMETABLE_EVENTS + "{" + Endpoints.PARAM_STUDYGROUP_ID + "}/detail")
-	Call<Map<String, TimetableWeekVo>> fetchTimetableEvents(@Path(Endpoints.PARAM_STUDYGROUP_ID) String _StudyGroupId);
+	@GET(Endpoints.TIMETABLE + "{" + Endpoints.PARAM_STUDYGROUP_ID + "}/detail")
+	Call<Map<String, TimetableWeekVo>> fetchTimetable(@Path(Endpoints.PARAM_STUDYGROUP_ID) String _StudyGroupId);
 
 	@GET(Endpoints.MY_SCHEDULE + "{" + Endpoints.PARAM_SEMESTER_ID + "}")
 	Call<Map<String, MyScheduleEventSetVo>> fetchSemesterTimetable(@Path(Endpoints.PARAM_SEMESTER_ID) String _SemesterId);

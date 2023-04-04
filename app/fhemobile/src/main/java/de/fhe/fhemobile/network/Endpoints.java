@@ -66,10 +66,10 @@ public final class Endpoints {
     public static final String PHONEBOOK            = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/persons";  //not working
     //public static final String IMPRINT            = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/impress";
     public static final String WEATHER              = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/weather";
-    //public static final String TIMETABLE            = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/timetable";
-    public static final String TIMETABLE            = "api/mobileapp/v1/studentset/list";
-    //public static final String TIMETABLE_EVENTS     = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/timetable/events";
-    public static final String TIMETABLE_EVENTS     = "api/mobileapp/v1/studentset/";
+    //public static final String STUDYPROGRAMS            = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/timetable";
+    public static final String STUDYPROGRAMS = "api/mobileapp/v1/studentset/list";
+    //public static final String TIMETABLE     = "api/" + SiteEndpoints.SITE_PATH_PARAM + "/timetable/events";
+    public static final String TIMETABLE = "api/mobileapp/v1/studentset/";
     public static final String MY_SCHEDULE          = "api/mobileapp/v1/pos/";
     public static final String MODULE               = "api/mobileapp/v1/module/";
 

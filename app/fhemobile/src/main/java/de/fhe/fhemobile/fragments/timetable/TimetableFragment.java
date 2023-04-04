@@ -140,7 +140,7 @@ public class TimetableFragment extends FeatureFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		NetworkHandler.getInstance().fetchTimetableEvents(mChosenTimetableId, mCallback);
+		NetworkHandler.getInstance().fetchTimetable(mChosenTimetableId, mCallback);
 //		todo: for debugging response = null
 //		NetworkHandler.getInstance().fetchTimetableEvents("53B3DB05F11C6EA417AA82B3DA33991B", mCallback);
 

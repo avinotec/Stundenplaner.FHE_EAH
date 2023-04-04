@@ -418,27 +418,29 @@ public final class NetworkHandler {
 
 	// ---------------------------------- TIMETABLE -----------------------------------------------------
 	/**
+	 * Fetch a list of study programs and their semesters
 	 * @param _Callback
 	 */
 	public void fetchStudyPrograms(final Callback<TimetableDialogResponse> _Callback) {
 		Assert.assertNotNull(mApiEah);
 
-		mApiEah.fetchStudyProgramData().enqueue(_Callback);
+		mApiEah.fetchStudyPrograms().enqueue(_Callback);
 	}
 
 	/**
-	 * @param _StudyGroupId
+	 * Fetch timetable of the given study group
+	 * @param _StudyGroupId Id of the study group
 	 * @param _Callback
 	 */
-	public void fetchTimetableEvents(final String _StudyGroupId,
-	                                 final Callback<Map<String, TimetableWeekVo>> _Callback) {
+	public void fetchTimetable(final String _StudyGroupId,
+							   final Callback<Map<String, TimetableWeekVo>> _Callback) {
 		Assert.assertNotNull(mApiEah);
 		if(_StudyGroupId == null){
 			Log.e(TAG, "StudyGroupId is null. Cannot fetch semester timetable.");
 			return;
 		}
 
-		mApiEah.fetchTimetableEvents(_StudyGroupId).enqueue(_Callback);
+		mApiEah.fetchTimetable(_StudyGroupId).enqueue(_Callback);
 	}
 
 	// ---------------------------------- MY SCHEDULE ---------------------------------------------
