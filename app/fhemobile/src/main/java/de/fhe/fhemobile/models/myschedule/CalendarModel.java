@@ -37,6 +37,7 @@ import java.util.Map;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.services.CalendarSynchronizationTask;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.myschedule.TimetableChangeType;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
@@ -360,6 +361,27 @@ public class CalendarModel {
 
         PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
                 .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "").apply();
+
+    }
+
+    /**
+     * Delete the calendar with the given id
+     */
+    public void deleteCalendar(long calId){
+        Uri uri = ContentUris.withAppendedId(Calendars.CONTENT_URI, calId);
+
+        Main.getAppContext().getContentResolver().delete(uri, null, null);
+        String calendarChosenForSync = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "");
+
+        //if the calendar chosen for synchronization is deleted, stop synchronizing My Schedule
+        if(calendarChosenForSync.equals(calId)){
+            CalendarSynchronizationTask.stopPeriodicSynchronizing();
+            unlinkAllCalendarEventsAndMyScheduleEvents();
+            PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
+                    .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "").apply();
+        }
+
 
     }
 

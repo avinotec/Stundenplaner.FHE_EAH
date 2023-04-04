@@ -129,29 +129,36 @@
     <string name="myschedule_pref_fcm_summary">Notify about timetable changes and added exams</string>
     <string name="myschedule_pref_fcm_error">No permission to receive push notifications</string>
     <string name="myschedule_pref_category_calsync">Calendar Synchronization</string>
-    <string name="myschedule_pref_delete_calendar" translatable="false">prefDeleteCalendar</string>
+    <string name="myschedule_pref_calsync_no_permission" translatable="false">no_calendar_permission</string>
     <string name="myschedule_pref_choose_calendar_title">Select calendar</string>
     <string name="myschedule_pref_choose_calendar_summary">Select a calendar to synchronize to</string>
-    <string name="myschedule_pref_delete_calendar_title">Delete local calendar</string>
-    <string name="myschedule_pref_delete_calendar_summary">Delete local calendar \"My Schedule\"</string>
+    <string name="myschedule_pref_delete_local_calendar_title">Delete local calendar</string>
+    <string name="myschedule_pref_delete_local_calendar" translatable="false">prefDeleteLocalCalendar</string>
+    <string name="myschedule_pref_delete_local_calendar_summary">Delete local calendar \"My Schedule\"</string>
     <string name="myschedule_pref_calsync_title">Synchronize</string>
     <string name="myschedule_pref_calsync_summary">Sync My Schedule to the chosen calendar</string>
     <string name="myschedule_calsync_warning">You need to select a calendar first!</string>
     <string name="myschedule_calsync_calendar_name">My Schedule</string>
-    <string name="myschedule_delete_calendar_error">No local calendar found to delete</string>
     <string name="myschedule_create_local_calendar">Create new local calendar</string>
+    <string name="myschedule_delete_calendar_error">No local calendar found to delete</string>
     <string name="myschedule_calsync_event_dropped_tag">[Dropped]</string>
     <string name="myschedule_calsync_error">No calendar permission</string>
+    <string name="myschedule_pref_delete_cal" translatable="false">prefDeleteCal</string>
+    <string name="myschedule_pref_delete_cal_no_permission" translatable="false">prefDeleteCalNoPermission</string>
+    <string name="myschedule_pref_category_delete_cal">Delete calendar</string>
+    <string name="myschedule_pref_title_delete_cal">Delete a calendar</string>
+    <string name="myschedule_pref_summary_delete_cal">Choose a calendar on this phone you want to delete.</string>
 
-    <string name="dialog_delete_cal_title">Delete local calendar</string>
-    <string name="dialog_delete_cal_message">Do you want to delete the calendar \"My Schedule\"?</string>
+    <string name="dialog_delete_local_cal_title">Delete local calendar</string>
+    <string name="dialog_delete_local_cal_message">Do you want to delete the calendar \"My Schedule\"?</string>
+    <string name="dialog_delete_cal_title">Delete calendar</string>
+    <string name="dialog_delete_cal_message">Do you really want to delete the calendar \"%1$s\"?</string>
     <string name="dialog_delete_cal_confirm">Delete</string>
 
-<!--    shared preference keys -->
+    <!--    shared preference keys -->
     <string name="sp_myschedule_enable_fcm" translatable="false">enable_fcm</string>
     <string name="sp_myschedule_enable_calsync" translatable="false">enable_calsync</string>
     <string name="sp_myschedule_calendar_to_sync" translatable="false">chosen_cal_for_calsync</string>
-    <string name="sp_myschedule_calendar_no_permission" translatable="false">no_calendar_permission</string>
 
 
     <string name="imprint_data_protection_link" translatable="false"><a href="https://www.eah-jena.de/datenschutz">Data protection</a></string>
