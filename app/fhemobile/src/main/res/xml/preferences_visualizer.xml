@@ -27,9 +27,11 @@
             android:title="@string/myschedule_pref_addcourse_title"
             app:fragment="de.fhe.fhemobile.fragments.myschedule.MyScheduleDialogFragment"
             android:summary="@string/myschedule_pref_addcourse_summary"/>
+
         <Preference
             android:title="@string/myschedule_pref_overview_title"
             app:fragment="de.fhe.fhemobile.fragments.myschedule.MyScheduleOverviewFragment"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -49,7 +51,7 @@
         android:title="@string/myschedule_pref_category_calsync">
 
         <Preference
-            android:key="@string/sp_myschedule_calendar_no_permission"
+            android:key="@string/myschedule_pref_calsync_no_permission"
             android:title="@string/myschedule_pref_choose_calendar_title"
             android:summary="@string/myschedule_pref_choose_calendar_summary" />
 
@@ -60,9 +62,9 @@
 
 
         <Preference
-            android:key="@string/myschedule_pref_delete_calendar"
-            android:title="@string/myschedule_pref_delete_calendar_title"
-            android:summary="@string/myschedule_pref_delete_calendar_summary"/>
+            android:key="@string/myschedule_pref_delete_local_calendar"
+            android:title="@string/myschedule_pref_delete_local_calendar_title"
+            android:summary="@string/myschedule_pref_delete_local_calendar_summary"/>
 
         <!-- Note: always use SwitchPreferenceCompat (not SwitchPreference)
          to ensure the switch to always look the same, independent of android version -->
@@ -70,6 +72,21 @@
             android:key="@string/sp_myschedule_enable_calsync"
             android:title="@string/myschedule_pref_calsync_title"
             android:summary="@string/myschedule_pref_calsync_summary"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/myschedule_pref_category_delete_cal">
+
+        <Preference
+            android:key="@string/myschedule_pref_delete_cal_no_permission"
+            android:title="@string/myschedule_pref_title_delete_cal"
+            android:summary="@string/myschedule_pref_summary_delete_cal"/>
+
+        <ListPreference
+            android:key="@string/myschedule_pref_delete_cal"
+            android:title="@string/myschedule_pref_title_delete_cal"
+            android:summary="@string/myschedule_pref_summary_delete_cal"/>
 
     </PreferenceCategory>
 
