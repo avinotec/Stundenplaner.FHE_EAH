@@ -258,9 +258,18 @@ public class CalendarModel {
         //insert event
         final ContentResolver cr = Main.getAppContext().getContentResolver();
         final Uri eventUri = cr.insert(Events.CONTENT_URI, values);
-        final long eventId = Long.parseLong(eventUri.getLastPathSegment());
-        scheduleEvent.setCalEventId(eventId);
-        scheduleEvent.setChangedSinceLastCalSync(false);
+        final String lastPathSegment = eventUri.getLastPathSegment();
+        final long eventId ;
+        if (lastPathSegment != null) {
+            eventId = Long.parseLong(lastPathSegment);
+            scheduleEvent.setCalEventId(eventId);
+            scheduleEvent.setChangedSinceLastCalSync(false);
+        }
+        else {
+            // TODO check if this is a valid
+            //eventId = 0;
+            Log.e( TAG, "E22189 eventid is not created. FATAL ERROR, calendar entry not inserted.", new Exception("E22189 eventid is not created. FATAL ERROR, calendar entry not inserted."));
+        }
     }
 
     private void updateCalendarEntry(final MyScheduleEventVo scheduleEvent){
