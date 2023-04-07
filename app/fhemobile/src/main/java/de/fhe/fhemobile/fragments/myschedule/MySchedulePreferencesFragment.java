@@ -225,7 +225,8 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                             }
                         }).show();
 
-                return false;
+                //return true to state click event as processed
+                return true;
             }
         });
 
@@ -253,7 +254,9 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                         CalendarSynchronizationTask.stopPeriodicSynchronizing();
                     }
                 }
-                return false;
+
+                //return true to state click event as processed
+                return true;
             }
         });
 
