@@ -32,6 +32,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
+import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
 
@@ -44,6 +45,7 @@ import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.models.myschedule.CalendarModel;
 import de.fhe.fhemobile.services.CalendarSynchronizationBackgroundTask;
+import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.Utils;
 
 public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
@@ -75,10 +77,17 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
         addPreferencesFromResource(R.xml.preferences_visualizer);
-
         initializePushNotificationsCategory();
-        initializeCalendarSynchronizationCategory();
-        initializeDeleteCalendarCategory();
+
+        if(Define.ENABLE_CALENDAR_SYNC){
+            initializeCalendarSynchronizationCategory();
+            initializeDeleteCalendarCategory();
+        } else {
+            PreferenceCategory deleteCalCategory = (PreferenceCategory) findPreference("deleteCalendarCategory");
+            deleteCalCategory.setVisible(false);
+            PreferenceCategory calSyncCategory = (PreferenceCategory) findPreference("calSyncCategory");
+            calSyncCategory.setVisible(false);
+        }
     }
 
 

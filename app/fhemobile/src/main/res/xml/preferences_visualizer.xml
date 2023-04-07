@@ -48,6 +48,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="calSyncCategory"
         android:title="@string/myschedule_pref_category_calsync">
 
         <Preference
@@ -76,6 +77,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="deleteCalendarCategory"
         android:title="@string/myschedule_pref_category_delete_cal">
 
         <Preference
