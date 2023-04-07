@@ -290,18 +290,19 @@ public final class MyScheduleUtils {
 		final Set<String> eventSetsDeleted = Sets.difference(
 				localEventSeries.getEventSetIds(), fetchedEventSeries.getEventSetIds());
 
-		//detect changed events + update deleted and changed events
-		final Map<String, List<MyScheduleEventVo>> eventsByEventSetToBeUpdated = groupByEventSet(localEventSeries.getEvents());
+		//detect changed and deleted events
+		// then update changed event properties and mark deleted events as deleted
+		final Map<String, List<MyScheduleEventVo>> eventsToBeUpdatedByEventSet = groupByEventSet(localEventSeries.getEvents());
 
-		for (final Map.Entry<String, List<MyScheduleEventVo>> localEventSetEntry : eventsByEventSetToBeUpdated.entrySet()) {
+		for (final Map.Entry<String, List<MyScheduleEventVo>> localEventSetEntry : eventsToBeUpdatedByEventSet.entrySet()) {
 
-			//set events deleted
+			//DELETED EVENT SETS: set events from deleted event sets to "deleted"
 			if (eventSetsDeleted.contains(localEventSetEntry.getKey())) {
 				for (final MyScheduleEventVo deletedEvent : localEventSetEntry.getValue()) {
 					deletedEvent.addChange(TimetableChangeType.DELETION);
 				}
 			}
-			//DETECT CHANGED EVENTS PROPERTIES - compare local and fetched events
+			//DETECT CHANGED EVENTS PROPERTIES AND EVENTS DELETED WITHIN AN EVENT SET - compare local and fetched events
 			else {
 				if(fetchedEventSetsMap == null || fetchedEventSetsMap.size() == 0) break;
 				final MyScheduleEventSetVo fetchedEventSet = fetchedEventSetsMap.get(localEventSetEntry.getKey());
@@ -323,6 +324,7 @@ public final class MyScheduleUtils {
 						final MyScheduleEventVo localEvent = localEventSetEntry.getValue().get(i);
 						MyScheduleEventDateVo fetchedEvent = null;
 
+						//get fetched event to compare
 						if (i < fetchedEventDates.size()) {
 							fetchedEvent = fetchedEventDates.get(i);
 						}
@@ -341,9 +343,14 @@ public final class MyScheduleUtils {
 					}
 				}
 				//FIND ADDED EVENTS
-				else if (fetchedEventDates.size() > localEventSetEntry.getValue().size()) {
+				//note: "if" instead of "else if" needed for event sets that contain deleted and time-edited events
+				// (this case already occurred, all events of the event set had been deleted except one
+				// but this one simultaneously had been shifted by 15 min. To not loose the event completely
+				// and to avoid the assert in line 383 to fail,
+				// this if loop needs to run in order to detect the shifted event as added.)
+				if (fetchedEventDates.size() > localEventSetEntry.getValue().size()) {
 
-					//note: the workflow fails if eventsets contain added and time-edited events.
+					//note: the workflow fails if an event set contains added and time-edited events.
 					// According to the Stundenplanung, this case is not supposed to occur.
 
 					//detect added events in fetchedEventSet
@@ -437,17 +444,17 @@ public final class MyScheduleUtils {
 					eventToAdd.addChange(TimetableChangeType.ADDITION);
 					eventListToAdd.add(eventToAdd);
 				}
-				eventsByEventSetToBeUpdated.put(eventSetId, eventListToAdd);
+				eventsToBeUpdatedByEventSet.put(eventSetId, eventListToAdd);
 			}
 		}
 
 		//flatten updated event list
 		final List<MyScheduleEventVo> updatedEvents = new ArrayList<>();
-		for (final List<MyScheduleEventVo> events : eventsByEventSetToBeUpdated.values()) {
+		for (final List<MyScheduleEventVo> events : eventsToBeUpdatedByEventSet.values()) {
 			updatedEvents.addAll(events);
 		}
 		//set updated events
-		localEventSeries.setEvents(updatedEvents, eventsByEventSetToBeUpdated.keySet());
+		localEventSeries.setEvents(updatedEvents, eventsToBeUpdatedByEventSet.keySet());
 	}
 
 }
