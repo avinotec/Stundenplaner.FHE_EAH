@@ -58,8 +58,8 @@ public class FetchMyScheduleBackgroundTask implements Runnable {
     }
 
     /**
-     * Construct a new {@link FetchMyScheduleBackgroundTask} that fetches my schedule.
-     * The tasks gets scheduled for one immediate execution.
+     * Construct a new {@link FetchMyScheduleBackgroundTask} that fetches My Schedule.
+     * The task gets scheduled for one immediate execution.
      */
     public static void fetch(){
         Main.scheduledExecutorService.schedule(new FetchMyScheduleBackgroundTask(), 0, TimeUnit.SECONDS);
