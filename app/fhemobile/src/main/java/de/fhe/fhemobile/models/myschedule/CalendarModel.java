@@ -120,6 +120,9 @@ public class CalendarModel {
         return ourInstance;
     }
 
+    private CalendarModel() {
+    }
+
     /**
      * Get all calenders of the user (google calendar, exchange calendar, local calendar, ...)
      * @return A map with the calendar id for each calendar name
@@ -206,8 +209,8 @@ public class CalendarModel {
     /**
      * Delete all calendar entries belonging to a subscribed event series
      */
-    public void deleteAllMyScheduleCalendarEntries(){
-        for(MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
+    public static void deleteAllMyScheduleCalendarEntries(){
+        for(final MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
             deleteCalendarEntries(eventSeries);
         }
     }
@@ -216,8 +219,8 @@ public class CalendarModel {
      * Delete calendar entries belonging to the given event series
      * @param eventSeries The event series
      */
-    public void deleteCalendarEntries(MyScheduleEventSeriesVo eventSeries){
-        for(MyScheduleEventVo event : eventSeries.getEvents()){
+    public static final void deleteCalendarEntries(final MyScheduleEventSeriesVo eventSeries){
+        for(final MyScheduleEventVo event : eventSeries.getEvents()){
             //eventId can be null if the calendar has not been synchronized since subscribing this event series
             if(event.getCalEventId() != null){
                 deleteCalendarEntry(event);
@@ -225,8 +228,11 @@ public class CalendarModel {
         }
     }
 
-    public void syncMySchedule(){
-        for(MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
+    /**
+     *
+     */
+    public static void syncMySchedule(){
+        for(final MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
             syncEventSeries(eventSeries);
         }
 
@@ -237,7 +243,7 @@ public class CalendarModel {
      * Create or update the events of the corresponding event series
      * @param eventSeries
      */
-    private void syncEventSeries(final MyScheduleEventSeriesVo eventSeries){
+    private static void syncEventSeries(final MyScheduleEventSeriesVo eventSeries){
 
         for(final MyScheduleEventVo eventVo : eventSeries.getEvents()){
             if(eventVo.changedSinceLastCalSync()){
@@ -257,7 +263,7 @@ public class CalendarModel {
     /**
      * Creates an event in calendar
      */
-    private void createCalendarEntry(final MyScheduleEventVo scheduleEvent){
+    private static void createCalendarEntry(final MyScheduleEventVo scheduleEvent){
 
         final String chosenCalId = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
                 .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "");
@@ -268,25 +274,26 @@ public class CalendarModel {
         //insert event
         final ContentResolver cr = Main.getAppContext().getContentResolver();
         final Uri eventUri = cr.insert(Events.CONTENT_URI, values);
-        final String lastPathSegment = eventUri.getLastPathSegment();
-        final long eventId ;
-        if (lastPathSegment != null) {
-            eventId = Long.parseLong(lastPathSegment);
-            scheduleEvent.setCalEventId(eventId);
-            scheduleEvent.setChangedSinceLastCalSync(false);
+        if (eventUri != null) {
+            final String lastPathSegment = eventUri.getLastPathSegment();
+
+            if (lastPathSegment != null) {
+                final long eventId = Long.parseLong(lastPathSegment);
+                scheduleEvent.setCalEventId(eventId);
+                scheduleEvent.setChangedSinceLastCalSync(false);
+                return;
+            }
         }
-        else {
-            // TODO check if this is a valid
-            //eventId = 0;
-            Log.e( TAG, "E22189 eventid is not created. FATAL ERROR, calendar entry not inserted.", new Exception("E22189 eventid is not created. FATAL ERROR, calendar entry not inserted."));
-        }
+        // TODO check if this is a valid
+        //eventId = 0;
+        Log.e( TAG, "E22189 eventid is not created. FATAL ERROR, calendar entry not inserted.", new Exception("E22189 eventid is not created. FATAL ERROR, calendar entry not inserted."));
     }
 
     /**
      * Update the calendar entry belonging to the given event
      * @param scheduleEvent The event from My Schedule
      */
-    private void updateCalendarEntry(final MyScheduleEventVo scheduleEvent){
+    private static void updateCalendarEntry(final MyScheduleEventVo scheduleEvent){
         final long calEventId = scheduleEvent.getCalEventId();
 
         final ContentValues values = getCalendarEntryValues(scheduleEvent);
@@ -305,7 +312,7 @@ public class CalendarModel {
      * @return An instance of {@link ContentValues}
      */
     @NonNull
-    private ContentValues getCalendarEntryValues(MyScheduleEventVo scheduleEvent) {
+    private static ContentValues getCalendarEntryValues(MyScheduleEventVo scheduleEvent) {
         final String chosenCalId = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
                 .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "");
 
@@ -333,7 +340,7 @@ public class CalendarModel {
      * Delete the calendar entry belonging to the given schedule event
      * @param scheduleEvent The event from My Schedule
      */
-    private void deleteCalendarEntry(final MyScheduleEventVo scheduleEvent){
+    private static final void deleteCalendarEntry(final MyScheduleEventVo scheduleEvent){
         final long calEventId = scheduleEvent.getCalEventId();
 
         //delete event
@@ -381,7 +388,7 @@ public class CalendarModel {
     /**
      * Delete local calendar
      */
-    public void deleteLocalCalendar(){
+    public static final void deleteLocalCalendar(){
         final Long localCalendarID = getLocalCalendarId();
 
         if (localCalendarID == null) {
@@ -407,11 +414,11 @@ public class CalendarModel {
     /**
      * Delete the calendar with the given id
      */
-    public void deleteCalendar(long calId){
-        Uri uri = ContentUris.withAppendedId(Calendars.CONTENT_URI, calId);
+    public final static void deleteCalendar(long calId){
+        final Uri uri = ContentUris.withAppendedId(Calendars.CONTENT_URI, calId);
 
         Main.getAppContext().getContentResolver().delete(uri, null, null);
-        String calendarChosenForSync = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+        final String calendarChosenForSync = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
                 .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "");
 
         //if the calendar chosen for synchronization is deleted, stop synchronizing My Schedule
@@ -433,7 +440,7 @@ public class CalendarModel {
      * @param accountType
      * @return
      */
-    private static Uri asSyncAdapter(Uri uri, String account, String accountType) {
+    private static Uri asSyncAdapter( final Uri uri, final String account, final String accountType) {
         return uri.buildUpon()
                 .appendQueryParameter(android.provider.CalendarContract.CALLER_IS_SYNCADAPTER, "true")
                 .appendQueryParameter(Calendars.ACCOUNT_NAME, account)
@@ -445,9 +452,9 @@ public class CalendarModel {
      * Remove all calendar event ids stored in {@link MyScheduleEventVo}s
      * and mark as "needed to be synchronized in a future synchronisation"
      */
-    private void unlinkAllCalendarEventsAndMyScheduleEvents(){
-        for(MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
-            for(MyScheduleEventVo event : eventSeries.getEvents()){
+    private static final void unlinkAllCalendarEventsAndMyScheduleEvents(){
+        for(final MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
+            for(final MyScheduleEventVo event : eventSeries.getEvents()){
                 event.setCalEventId(null);
                 // set mChangedSinceLastCalSync to true to mark event as "to synchronize"
                 // in the next future synchronisation run
