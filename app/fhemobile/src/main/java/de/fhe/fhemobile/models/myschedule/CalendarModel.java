@@ -29,6 +29,7 @@ import android.provider.CalendarContract.*;
 import android.util.Log;
 
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
@@ -246,15 +247,8 @@ public class CalendarModel {
         final String chosenCalId = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
                 .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "");
 
-        final ContentValues values = new ContentValues();
+        final ContentValues values = getCalendarEntryValues(scheduleEvent);
         values.put(Events.CALENDAR_ID, chosenCalId);
-        values.put(Events.TITLE, scheduleEvent.getTitle());
-        values.put(Events.DTSTART, scheduleEvent.getStartDateTimeInSec()*1000); //time in milliseconds
-        values.put(Events.DTEND, scheduleEvent.getEndDateTimeInSec()*1000);
-        values.put(Events.EVENT_LOCATION, scheduleEvent.getLocationListAsString());
-        values.put(Events.DESCRIPTION, scheduleEvent.getLecturerListAsString()+", Sets: "+ scheduleEvent.getLocationListAsString());
-        // set timezone to Germany
-        values.put(Events.EVENT_TIMEZONE, "Europe/Brussels");
 
         //insert event
         final ContentResolver cr = Main.getAppContext().getContentResolver();
@@ -273,28 +267,14 @@ public class CalendarModel {
         }
     }
 
+    /**
+     * Update the calendar entry belonging to the given event
+     * @param scheduleEvent The event from My Schedule
+     */
     private void updateCalendarEntry(final MyScheduleEventVo scheduleEvent){
         final long calEventId = scheduleEvent.getCalEventId();
 
-        String eventTitle = scheduleEvent.getTitle();
-        //mark event as deleted
-        if(scheduleEvent.getTypesOfChanges().contains(TimetableChangeType.DELETION)){
-            eventTitle = Main.getAppContext().getString(R.string.myschedule_calsync_event_dropped_tag) + eventTitle;
-        }
-
-        final String chosenCalId = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
-                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "");
-
-        final ContentValues values = new ContentValues();
-        values.put(Events.CALENDAR_ID, chosenCalId);
-        values.put(Events.TITLE, eventTitle);
-        values.put(Events.DTSTART, scheduleEvent.getStartDateTimeInSec());
-        values.put(Events.DTEND, scheduleEvent.getEndDateTimeInSec());
-        values.put(Events.EVENT_LOCATION, scheduleEvent.getLocationListAsString());
-        values.put(Events.DESCRIPTION, scheduleEvent.getLecturerListAsString()+", Sets: "+scheduleEvent.getLocationListAsString());
-        values.put(Events.EVENT_COLOR, ContextCompat.getColor(Main.getAppContext(), R.color.primary_color));
-        // set timezone to Germany
-        values.put(Events.EVENT_TIMEZONE, "Europe/Brussels");
+        final ContentValues values = getCalendarEntryValues(scheduleEvent);
 
         //insert event
         final Uri updateUri = ContentUris.withAppendedId(Events.CONTENT_URI, calEventId);
@@ -304,6 +284,40 @@ public class CalendarModel {
         scheduleEvent.setChangedSinceLastCalSync(false);
     }
 
+    /**
+     * Get the {@link ContentValues} for a calendar entry representing the given My Schedule Event
+     * @param scheduleEvent The event from My Schedule
+     * @return An instance of {@link ContentValues}
+     */
+    @NonNull
+    private ContentValues getCalendarEntryValues(MyScheduleEventVo scheduleEvent) {
+        final String chosenCalId = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "");
+
+        //get event title
+        String eventTitle = scheduleEvent.getTitle();
+        if(scheduleEvent.getTypesOfChanges().contains(TimetableChangeType.DELETION)){
+            //mark event as deleted
+            eventTitle = Main.getAppContext().getString(R.string.myschedule_calsync_event_dropped_tag) + eventTitle;
+        }
+
+        final ContentValues values = new ContentValues();
+        values.put(Events.CALENDAR_ID, chosenCalId);
+        values.put(Events.TITLE, eventTitle);
+        values.put(Events.DTSTART, scheduleEvent.getStartDateTimeInSec()*1000); //time in milliseconds
+        values.put(Events.DTEND, scheduleEvent.getEndDateTimeInSec()*1000);
+        values.put(Events.EVENT_LOCATION, scheduleEvent.getLocationListAsString());
+        values.put(Events.DESCRIPTION, scheduleEvent.getLecturerListAsString()+", Sets: "+ scheduleEvent.getLocationListAsString());
+        values.put(Events.EVENT_COLOR, ContextCompat.getColor(Main.getAppContext(), R.color.primary_color));
+        // set timezone to Germany
+        values.put(Events.EVENT_TIMEZONE, "Europe/Brussels");
+        return values;
+    }
+
+    /**
+     * Delete the calendar entry belonging to the given schedule event
+     * @param scheduleEvent The event from My Schedule
+     */
     private void deleteCalendarEntry(final MyScheduleEventVo scheduleEvent){
         final long calEventId = scheduleEvent.getCalEventId();
 
