@@ -128,6 +128,7 @@
     <string name="myschedule_pref_fcm_title">Push Notifications</string>
     <string name="myschedule_pref_fcm_summary">Notify about timetable changes and added exams</string>
     <string name="myschedule_pref_fcm_error">No permission to receive push notifications</string>
+    <string name="myschedule_calsync_finished">Calendar synchronized.</string>
     <string name="myschedule_pref_category_calsync">Calendar Synchronization</string>
     <string name="myschedule_pref_calsync_no_permission" translatable="false">no_calendar_permission</string>
     <string name="myschedule_pref_choose_calendar_title">Select calendar</string>
@@ -154,6 +155,11 @@
     <string name="dialog_delete_cal_title">Delete calendar</string>
     <string name="dialog_delete_cal_message">Do you really want to delete the calendar \"%1$s\"?</string>
     <string name="dialog_delete_cal_confirm">Delete</string>
+
+    <string name="dialog_delete_calendar_entries_title">Delete calendar entries</string>
+    <string name="dialog_delete_calendar_entries_message">Calendar synchronization stopped.\nDo you want to delete all My Schedule events from the chosen calendar?</string>
+    <string name="dialog_delete_calendar_entries_confirm">Delete Events</string>
+    <string name="dialog_no">No</string>
 
     <!--    shared preference keys -->
     <string name="sp_myschedule_enable_fcm" translatable="false">enable_fcm</string>

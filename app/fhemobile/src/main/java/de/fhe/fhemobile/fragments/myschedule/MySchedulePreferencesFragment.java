@@ -43,7 +43,7 @@ import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.models.myschedule.CalendarModel;
-import de.fhe.fhemobile.services.CalendarSynchronizationTask;
+import de.fhe.fhemobile.services.CalendarSynchronizationBackgroundTask;
 import de.fhe.fhemobile.utils.Utils;
 
 public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
@@ -209,7 +209,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                                 // but then goes back on the decision and chooses another calendar,
                                 // this results in a local calendar being created but not currently chosen for synchronization)
                                 if(mCalendarSelectionPref.getEntry().equals(getResources().getString(R.string.myschedule_calsync_calendar_name))){
-                                    CalendarSynchronizationTask.stopPeriodicSynchronizing();
+                                    CalendarSynchronizationBackgroundTask.stopPeriodicSynchronizing();
                                     mCalendarSyncSwitchPref.setChecked(false);
                                     mCalendarSelectionPref.setSummary(R.string.myschedule_pref_choose_calendar_summary);
                                 }
@@ -247,11 +247,16 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                     if(syncEnabled) {
                         //if debugging: sync immediately when sync button is enabled
                         if(BuildConfig.DEBUG){
-                            new CalendarSynchronizationTask().run();
+                            //todo: no good way, but works
+                            new CalendarSynchronizationBackgroundTask().run();
+                            //correct but does not work
+//                            CalendarSynchronizationBackgroundTask.sync();
                         }
-                        CalendarSynchronizationTask.startPeriodicSynchronizing();
+                        //todo: scheduling does not work
+                        CalendarSynchronizationBackgroundTask.startPeriodicSynchronizing();
                     } else {
-                        CalendarSynchronizationTask.stopPeriodicSynchronizing();
+                        CalendarSynchronizationBackgroundTask.stopPeriodicSynchronizing();
+                        askWhetherToDeleteCalendarEntries();
                     }
                 }
 
@@ -272,7 +277,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         }
         //no calendar chosen
         else {
-            CalendarSynchronizationTask.stopPeriodicSynchronizing();
+            CalendarSynchronizationBackgroundTask.stopPeriodicSynchronizing();
             mCalendarSyncSwitchPref.setChecked(false);
         }
 
@@ -398,6 +403,26 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
             i++;
         }
         mDeleteCalendarPref.setEntryValues(values);
+    }
+
+    private void askWhetherToDeleteCalendarEntries(){
+        new AlertDialog.Builder(getContext())
+                .setTitle(R.string.dialog_delete_calendar_entries_title)
+                .setMessage(R.string.dialog_delete_calendar_entries_message)
+                .setPositiveButton(R.string.dialog_delete_calendar_entries_confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        CalendarModel.getInstance().deleteAllMyScheduleCalendarEntries();
+                    }
+                })
+                .setNegativeButton(R.string.dialog_no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //dialog is closed
+                    }
+                })
+                .show();
+
     }
 
     private boolean isCalendarPermissionGranted() {

@@ -115,7 +115,6 @@
     <string name="deleteTimetableMessageOptional">Das Semester ist zu Ende. Soll dein Stundenplan geleert werden?</string>
     <string name="deleteTimetableMessageForced">Ein neues Semester hat begonnen. Dein Stundenplan muss geleert werden.</string>
     <string name="deleteTimetableConfirm">Leeren</string>
-    <string name="dialog_cancel">Abbrechen</string>
 
     <string name="fcm_change_title">Stundenplanänderung</string>
     <string name="fcm_timetablechange_message_part1">hat sich geändert.</string>
@@ -130,6 +129,7 @@
     <string name="myschedule_pref_fcm_title">Push-Benachrichtigungen</string>
     <string name="myschedule_pref_fcm_summary">Benachrichtige mich bei Stundenplanänderungen und hinzugefügten Prüfungen</string>
     <string name="myschedule_pref_fcm_error">Keine Berechtigung zum Empfangen von Push-Benachrichtigungen</string>
+    <string name="myschedule_calsync_finished">Kalender synchronisiert.</string>
     <string name="myschedule_pref_category_calsync">Kalendersynchronisation</string>
     <string name="myschedule_pref_choose_calendar_title">Kalendar wählen</string>
     <string name="myschedule_pref_choose_calendar_summary">Wähle einen Kalender, in den synchronisiert werden soll</string>
@@ -147,11 +147,18 @@
     <string name="myschedule_pref_title_delete_cal">Einen Kalender löschen</string>
     <string name="myschedule_pref_summary_delete_cal">Wähle einen Kalender auf diesem Handy, den du löschen willst.</string>
 
+
     <string name="dialog_delete_local_cal_title">Lokalen Kalender löschen</string>
     <string name="dialog_delete_local_cal_message">Möchtest du den Kalender \"Mein Stundenplan\" löschen?</string>
     <string name="dialog_delete_cal_title">Kalender löschen</string>
     <string name="dialog_delete_cal_message">Möchtest du den Kalender \"%1$s\" wirklich löschen?</string>
     <string name="dialog_delete_cal_confirm">Löschen</string>
+    <string name="dialog_cancel">Abbrechen</string>
+
+    <string name="dialog_delete_calendar_entries_title">Kalendereinträge löschen</string>
+    <string name="dialog_delete_calendar_entries_message">Kalendersynchronisation wird gestoppt.\nMöchtest du alle Stundenplan-Einträge aus dem gewählten Kalender löschen?</string>
+    <string name="dialog_delete_calendar_entries_confirm">Einträge löschen</string>
+    <string name="dialog_no">Nein</string>
 
 
     <string name="notification_error_ssl_cert_invalid">Es ist ein Zertifikat-Fehler aufgetreten. Möchtest du die Seite trotzdem öffnen?</string>

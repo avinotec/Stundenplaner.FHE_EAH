@@ -38,7 +38,7 @@ import java.util.Map;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.services.CalendarSynchronizationTask;
+import de.fhe.fhemobile.services.CalendarSynchronizationBackgroundTask;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.myschedule.TimetableChangeType;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
@@ -203,9 +203,22 @@ public class CalendarModel {
         return null;
     }
 
+    /**
+     * Delete all calendar entries belonging to a subscribed event series
+     */
+    public void deleteAllMyScheduleCalendarEntries(){
+        for(MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
+            deleteCalendarEntries(eventSeries);
+        }
+    }
+
+    /**
+     * Delete calendar entries belonging to the given event series
+     * @param eventSeries The event series
+     */
     public void deleteCalendarEntries(MyScheduleEventSeriesVo eventSeries){
         for(MyScheduleEventVo event : eventSeries.getEvents()){
-            //eventId can be null if the calendar has not been synchronized since subscribing this eventSeries
+            //eventId can be null if the calendar has not been synchronized since subscribing this event series
             if(event.getCalEventId() != null){
                 deleteCalendarEntry(event);
             }
@@ -216,6 +229,8 @@ public class CalendarModel {
         for(MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
             syncEventSeries(eventSeries);
         }
+
+        Utils.showToast(R.string.myschedule_calsync_finished);
     }
 
     /**
@@ -325,6 +340,8 @@ public class CalendarModel {
         final Uri updateUri = ContentUris.withAppendedId(Events.CONTENT_URI, calEventId);
         final ContentResolver cr = Main.getAppContext().getContentResolver();
         cr.delete(updateUri, null, null);
+        scheduleEvent.setCalEventId(null);
+        scheduleEvent.setChangedSinceLastCalSync(true);
     }
 
 
@@ -399,7 +416,7 @@ public class CalendarModel {
 
         //if the calendar chosen for synchronization is deleted, stop synchronizing My Schedule
         if(calendarChosenForSync.equals(calId)){
-            CalendarSynchronizationTask.stopPeriodicSynchronizing();
+            CalendarSynchronizationBackgroundTask.stopPeriodicSynchronizing();
             unlinkAllCalendarEventsAndMyScheduleEvents();
             PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
                     .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "").apply();

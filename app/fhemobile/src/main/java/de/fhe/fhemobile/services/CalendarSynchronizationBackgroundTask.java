@@ -31,23 +31,23 @@ import de.fhe.fhemobile.utils.Utils;
  *
  * Created by Nadja - 16.02.2023
  */
-public class CalendarSynchronizationTask implements Runnable {
+public class CalendarSynchronizationBackgroundTask implements Runnable {
 
-    private static final String TAG = CalendarSynchronizationTask.class.getSimpleName();
+    private static final String TAG = CalendarSynchronizationBackgroundTask.class.getSimpleName();
 
     /**
-     * Construct a new {@link CalendarSynchronizationTask}
+     * Construct a new {@link CalendarSynchronizationBackgroundTask}
      * that synchronizes My Schedule with the users calendar every 10 min.
      */
     public static void startPeriodicSynchronizing(){
         if(mScheduledFuture == null){
             mScheduledFuture = Main.scheduledExecutorService.scheduleWithFixedDelay(
-                    new CalendarSynchronizationTask(),0,10, TimeUnit.MINUTES);
+                    new CalendarSynchronizationBackgroundTask(),0,10, TimeUnit.MINUTES);
         }
     }
 
     /**
-     * Stop the {@link CalendarSynchronizationTask} that periodically synchronizes my schedule
+     * Stop the {@link CalendarSynchronizationBackgroundTask} that periodically synchronizes my schedule
      * after it finished the current run.
      */
     public static void stopPeriodicSynchronizing(){
@@ -59,12 +59,20 @@ public class CalendarSynchronizationTask implements Runnable {
         }
     }
 
+    /**
+     * Construct a new {@link CalendarSynchronizationBackgroundTask} that synchronizes My Schedule.
+     * The task gets scheduled for one immediate execution.
+     */
+    public static void sync(){
+        Main.scheduledExecutorService.schedule(new CalendarSynchronizationBackgroundTask(),0, TimeUnit.SECONDS);
+    }
+
 
     @Override
     public void run() {
-        Log.i(TAG, "Started CalendarSynchronizationTask.run()");
+        Log.i(TAG, "Started CalendarSynchronizationBackgroundTask.run()");
         if(BuildConfig.DEBUG){
-            Utils.showToast("Kalendersynchronisation gestartet");
+            Utils.showToast("Debug Info: Kalendersynchronisation gestartet");
         }
 
         CalendarModel.getInstance().syncMySchedule();
