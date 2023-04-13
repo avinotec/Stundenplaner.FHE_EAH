@@ -70,6 +70,8 @@ public final class MyScheduleUtils {
 	 * @return The time in correct long. Null, if parsing failed.
 	 */
 	public static Long convertEahApiTimeToUtc(long time){
+		//!!!NOTE: do not debug timezones in the emulator - it's a mess, it is never set as you expected
+
 		//convert long to string
 		final SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ROOT);
 		//magic trick no. 1
@@ -78,8 +80,6 @@ public final class MyScheduleUtils {
 		String germanDateString = sdf1.format(time * 1000);
 
 		//magic trick no. 2
-		//note: do not reuse sdf1 with setting its timezone to Berlin,
-		// it is somehow resulting in the timezone being set to Pacific Daylight Time (PDT)
 		final SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.GERMANY);
 		try {
 			Date correctDate = sdf2.parse(germanDateString);
