@@ -266,12 +266,8 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                     if (syncEnabled) {
                         //if debugging: sync immediately when sync button is enabled
                         if (BuildConfig.DEBUG) {
-                            //todo: no good way, but works
-                            new CalendarSynchronizationBackgroundTask().run();
-                            //correct but does not work
-//                            CalendarSynchronizationBackgroundTask.sync();
+                            CalendarSynchronizationBackgroundTask.sync();
                         }
-                        //todo: scheduling does not work
                         CalendarSynchronizationBackgroundTask.startPeriodicSynchronizing();
                     } else {
                         CalendarSynchronizationBackgroundTask.stopPeriodicSynchronizing();

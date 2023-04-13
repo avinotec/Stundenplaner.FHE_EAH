@@ -317,9 +317,10 @@ public class CalendarModel {
      * Synchronize every event series of the calendar synchronisation to the chosen calendar
      */
     public static void syncMySchedule(){
-        if(BuildConfig.DEBUG){
-            Utils.showToast("Debug Info: Kalendersynchronisation gestartet");
-        }
+        //todo: you cannot show toasts from an non-UI thread -> this fails when method is called from within CalendarSynchronizationTask
+//        if(BuildConfig.DEBUG){
+//            Utils.showToast("Debug Info: Kalendersynchronisation gestartet");
+//        }
         Log.i(TAG, "Started synchronizing My Schedule");
 
         for(final MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
@@ -327,7 +328,8 @@ public class CalendarModel {
         }
 
         Log.i(TAG, "Finished synchronizing My Schedule");
-        Utils.showToast(R.string.myschedule_calsync_finished);
+        //todo
+//        Utils.showToast(R.string.myschedule_calsync_finished);
     }
 
     /**
