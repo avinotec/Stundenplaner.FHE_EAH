@@ -36,6 +36,7 @@ import androidx.preference.PreferenceManager;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.services.CalendarSynchronizationBackgroundTask;
@@ -228,130 +229,6 @@ public class CalendarModel {
         }
     }
 
-    /**
-     *
-     */
-    public static void syncMySchedule(){
-        for(final MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
-            syncEventSeries(eventSeries);
-        }
-
-        Utils.showToast(R.string.myschedule_calsync_finished);
-    }
-
-    /**
-     * Create or update the events of the corresponding event series
-     * @param eventSeries
-     */
-    private static void syncEventSeries(final MyScheduleEventSeriesVo eventSeries){
-
-        for(final MyScheduleEventVo eventVo : eventSeries.getEvents()){
-            if(eventVo.changedSinceLastCalSync()){
-
-                //create calendar entry
-                if (eventVo.getCalEventId() == null){
-                    createCalendarEntry(eventVo);
-                }
-                //update calendar entry
-                else {
-                    updateCalendarEntry(eventVo);
-                }
-            }
-        }
-    }
-
-    /**
-     * Creates an event in calendar
-     */
-    private static void createCalendarEntry(final MyScheduleEventVo scheduleEvent){
-
-        final String chosenCalId = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
-                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_id), "");
-
-        final ContentValues values = getCalendarEntryValues(scheduleEvent);
-        values.put(Events.CALENDAR_ID, chosenCalId);
-
-        //insert event
-        final ContentResolver cr = Main.getAppContext().getContentResolver();
-        final Uri eventUri = cr.insert(Events.CONTENT_URI, values);
-        if (eventUri != null) {
-            final String lastPathSegment = eventUri.getLastPathSegment();
-
-            if (lastPathSegment != null) {
-                final long eventId = Long.parseLong(lastPathSegment);
-                scheduleEvent.setCalEventId(eventId);
-                scheduleEvent.setChangedSinceLastCalSync(false);
-                return;
-            }
-        }
-        // TODO check if this is a valid
-        //eventId = 0;
-        Log.e( TAG, "E22189 eventid is not created. FATAL ERROR, calendar entry not inserted.", new Exception("E22189 eventid is not created. FATAL ERROR, calendar entry not inserted."));
-    }
-
-    /**
-     * Update the calendar entry belonging to the given event
-     * @param scheduleEvent The event from My Schedule
-     */
-    private static void updateCalendarEntry(final MyScheduleEventVo scheduleEvent){
-        final long calEventId = scheduleEvent.getCalEventId();
-
-        final ContentValues values = getCalendarEntryValues(scheduleEvent);
-
-        //insert event
-        final Uri updateUri = ContentUris.withAppendedId(Events.CONTENT_URI, calEventId);
-        final ContentResolver cr = Main.getAppContext().getContentResolver();
-        cr.update(updateUri, values, null, null);
-
-        scheduleEvent.setChangedSinceLastCalSync(false);
-    }
-
-    /**
-     * Get the {@link ContentValues} for a calendar entry representing the given My Schedule Event
-     * @param scheduleEvent The event from My Schedule
-     * @return An instance of {@link ContentValues}
-     */
-    @NonNull
-    private static ContentValues getCalendarEntryValues(MyScheduleEventVo scheduleEvent) {
-        final String chosenCalId = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
-                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_id), "");
-
-        //get event title
-        String eventTitle = scheduleEvent.getTitle();
-        if(scheduleEvent.getTypesOfChanges().contains(TimetableChangeType.DELETION)){
-            //mark event as deleted
-            eventTitle = Main.getAppContext().getString(R.string.myschedule_calsync_event_dropped_tag) + eventTitle;
-        }
-
-        final ContentValues values = new ContentValues();
-        values.put(Events.CALENDAR_ID, chosenCalId);
-        values.put(Events.TITLE, eventTitle);
-        values.put(Events.DTSTART, scheduleEvent.getStartDateTimeInSec()*1000); //time in milliseconds
-        values.put(Events.DTEND, scheduleEvent.getEndDateTimeInSec()*1000);
-        values.put(Events.EVENT_LOCATION, scheduleEvent.getLocationListAsString());
-        values.put(Events.DESCRIPTION, scheduleEvent.getLecturerListAsString()+", Sets: "+ scheduleEvent.getLocationListAsString());
-        values.put(Events.EVENT_COLOR, ContextCompat.getColor(Main.getAppContext(), R.color.primary_color));
-        // set timezone to Germany
-        values.put(Events.EVENT_TIMEZONE, "Europe/Brussels");
-        return values;
-    }
-
-    /**
-     * Delete the calendar entry belonging to the given schedule event
-     * @param scheduleEvent The event from My Schedule
-     */
-    private static final void deleteCalendarEntry(final MyScheduleEventVo scheduleEvent){
-        final long calEventId = scheduleEvent.getCalEventId();
-
-        //delete event
-        final Uri updateUri = ContentUris.withAppendedId(Events.CONTENT_URI, calEventId);
-        final ContentResolver cr = Main.getAppContext().getContentResolver();
-        cr.delete(updateUri, null, null);
-        scheduleEvent.setCalEventId(null);
-        scheduleEvent.setChangedSinceLastCalSync(true);
-    }
-
-
     public final static String createLocalCalendar(){
         /* If an application needs to create a local calendar, it can do this by performing the
         calendar insertion as a sync adapter, using an ACCOUNT_TYPE of ACCOUNT_TYPE_LOCAL.
@@ -426,7 +303,7 @@ public class CalendarModel {
                 .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_id), "");
 
         //if the calendar chosen for synchronization is deleted, stop synchronizing My Schedule
-        if(calendarChosenForSync.equals(calId)){
+        if(calendarChosenForSync.equals(String.valueOf(calId))){
             CalendarSynchronizationBackgroundTask.stopPeriodicSynchronizing();
             unlinkAllCalendarEventsAndMyScheduleEvents();
             PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
@@ -434,9 +311,149 @@ public class CalendarModel {
             PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
                     .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), "").apply();
         }
-
-
     }
+
+    /**
+     * Synchronize every event series of the calendar synchronisation to the chosen calendar
+     */
+    public static void syncMySchedule(){
+        if(BuildConfig.DEBUG){
+            Utils.showToast("Debug Info: Kalendersynchronisation gestartet");
+        }
+        Log.i(TAG, "Started synchronizing My Schedule");
+
+        for(final MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
+            syncEventSeries(eventSeries);
+        }
+
+        Log.i(TAG, "Finished synchronizing My Schedule");
+        Utils.showToast(R.string.myschedule_calsync_finished);
+    }
+
+    /**
+     * Create or update the events of the corresponding event series
+     * @param eventSeries
+     */
+    private static void syncEventSeries(final MyScheduleEventSeriesVo eventSeries){
+
+        //reduce loading from shared preferences to avoid the thread getting overloaded
+        String calId = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_id), null);
+
+        //sync all events of the series
+        for(final MyScheduleEventVo eventVo : eventSeries.getEvents()){
+            if(eventVo.changedSinceLastCalSync()){
+
+                //create calendar entry
+                if (eventVo.getCalEventId() == null){
+                    createCalendarEntry(eventVo, calId);
+                }
+                //update calendar entry
+                else {
+                    updateCalendarEntry(eventVo);
+                }
+            }
+        }
+    }
+
+    /**
+     * Create an calendar event in the given calendar
+     * @param scheduleEvent The corresponding event in My Schedule
+     * @param calId The calendar id
+     */
+    private final static void createCalendarEntry(final MyScheduleEventVo scheduleEvent, final String calId){
+        final ContentValues values = getCalendarEntryValues(scheduleEvent, calId);
+
+        //insert event
+        final ContentResolver cr = Main.getAppContext().getContentResolver();
+        final Uri eventUri = cr.insert(Events.CONTENT_URI, values);
+        if (eventUri != null) {
+            final String lastPathSegment = eventUri.getLastPathSegment();
+
+            if (lastPathSegment != null) {
+                final long eventId = Long.parseLong(lastPathSegment);
+                scheduleEvent.setCalEventId(eventId);
+                scheduleEvent.setChangedSinceLastCalSync(false);
+                return;
+            }
+        }
+        // TODO check if this is a valid
+        //eventId = 0;
+        Log.e( TAG, "E22189 eventid is not created. FATAL ERROR, calendar entry not inserted.", new Exception("E22189 eventid is not created. FATAL ERROR, calendar entry not inserted."));
+    }
+
+    /**
+     * Update the calendar entry belonging to the given event in the given calendar
+     * @param scheduleEvent The corresponding event in My Schedule
+     */
+    private static void updateCalendarEntry(final MyScheduleEventVo scheduleEvent){
+        final long calEventId = scheduleEvent.getCalEventId();
+
+        final ContentValues values = getCalendarEntryValues(scheduleEvent);
+
+        //insert event
+        final Uri updateUri = ContentUris.withAppendedId(Events.CONTENT_URI, calEventId);
+        final ContentResolver cr = Main.getAppContext().getContentResolver();
+        cr.update(updateUri, values, null, null);
+
+        scheduleEvent.setChangedSinceLastCalSync(false);
+    }
+
+    /**
+     * Get the {@link ContentValues} for a calendar entry representing the given My Schedule Event
+     * @param scheduleEvent The event from My Schedule
+     * @return An instance of {@link ContentValues}
+     */
+    @NonNull
+    private static ContentValues getCalendarEntryValues(final MyScheduleEventVo scheduleEvent) {
+        //get event title
+        String eventTitle = scheduleEvent.getTitle();
+        if(scheduleEvent.getTypesOfChanges().contains(TimetableChangeType.DELETION)){
+            //mark event as deleted
+            eventTitle = Main.getAppContext().getString(R.string.myschedule_calsync_event_dropped_tag) + eventTitle;
+        }
+
+        final ContentValues values = new ContentValues();
+        values.put(Events.TITLE, eventTitle);
+        values.put(Events.DTSTART, scheduleEvent.getStartDateTimeInSec()*1000); //time in milliseconds
+        values.put(Events.DTEND, scheduleEvent.getEndDateTimeInSec()*1000);
+        values.put(Events.EVENT_LOCATION, scheduleEvent.getLocationListAsString());
+        values.put(Events.DESCRIPTION, scheduleEvent.getLecturerListAsString()+", Sets: "+ scheduleEvent.getLocationListAsString());
+        values.put(Events.EVENT_COLOR, ContextCompat.getColor(Main.getAppContext(), R.color.primary_color));
+        // set timezone to Germany
+        values.put(Events.EVENT_TIMEZONE, "Europe/Brussels");
+        return values;
+    }
+
+    /**
+     * Get the {@link ContentValues} for a calendar entry representing the given My Schedule Event
+     * @param scheduleEvent The event from My Schedule
+     * @param calId The id of the target calendar
+     * @return An instance of {@link ContentValues}
+     */
+    @NonNull
+    private static ContentValues getCalendarEntryValues(final MyScheduleEventVo scheduleEvent, final String calId) {
+        ContentValues values = getCalendarEntryValues(scheduleEvent);
+        values.put(Events.CALENDAR_ID, calId);
+        return values;
+    }
+
+
+        /**
+         * Delete the calendar entry belonging to the given schedule event
+         * @param scheduleEvent The event from My Schedule
+         */
+    private final static void deleteCalendarEntry(final MyScheduleEventVo scheduleEvent){
+        final long calEventId = scheduleEvent.getCalEventId();
+
+        //delete event
+        final Uri updateUri = ContentUris.withAppendedId(Events.CONTENT_URI, calEventId);
+        final ContentResolver cr = Main.getAppContext().getContentResolver();
+        cr.delete(updateUri, null, null);
+        scheduleEvent.setCalEventId(null);
+        scheduleEvent.setChangedSinceLastCalSync(true);
+    }
+
 
 
     /**
@@ -458,7 +475,7 @@ public class CalendarModel {
      * Remove all calendar event ids stored in {@link MyScheduleEventVo}s
      * and mark as "needed to be synchronized in a future synchronisation"
      */
-    private static final void unlinkAllCalendarEventsAndMyScheduleEvents(){
+    private static void unlinkAllCalendarEventsAndMyScheduleEvents(){
         for(final MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
             for(final MyScheduleEventVo event : eventSeries.getEvents()){
                 event.setCalEventId(null);
@@ -468,6 +485,5 @@ public class CalendarModel {
             }
         }
     }
-
 
 }
