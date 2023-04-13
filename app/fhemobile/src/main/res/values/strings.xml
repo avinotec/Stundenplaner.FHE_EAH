@@ -131,7 +131,7 @@
     <string name="myschedule_calsync_finished">Calendar synchronized.</string>
     <string name="myschedule_pref_category_calsync">Calendar Synchronization</string>
     <string name="myschedule_pref_calsync_no_permission" translatable="false">no_calendar_permission</string>
-    <string name="myschedule_pref_choose_calendar_title">Select calendar</string>
+    <string name="myschedule_pref_choose_calendar_title">Choose calendar</string>
     <string name="myschedule_pref_choose_calendar_summary">Select a calendar to synchronize to</string>
     <string name="myschedule_pref_delete_local_calendar_title">Delete local calendar</string>
     <string name="myschedule_pref_delete_local_calendar" translatable="false">prefDeleteLocalCalendar</string>
@@ -148,7 +148,7 @@
     <string name="myschedule_pref_delete_cal_no_permission" translatable="false">prefDeleteCalNoPermission</string>
     <string name="myschedule_pref_category_delete_cal">Delete calendar</string>
     <string name="myschedule_pref_title_delete_cal">Delete a calendar</string>
-    <string name="myschedule_pref_summary_delete_cal">Choose a calendar on this phone you want to delete.</string>
+    <string name="myschedule_pref_summary_delete_cal">Choose a calendar on this phone you want to delete</string>
 
     <string name="dialog_delete_local_cal_title">Delete local calendar</string>
     <string name="dialog_delete_local_cal_message">Do you want to delete the calendar \"My Schedule\"?</string>
