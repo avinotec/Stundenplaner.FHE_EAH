@@ -34,6 +34,7 @@ import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreferenceCompat;
 
 import com.google.common.collect.Iterables;
@@ -58,14 +59,14 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
      *
      * @return A new instance of fragment {@link MySchedulePreferencesFragment}.
      */
-    public static MySchedulePreferencesFragment newInstance(){
+    public static MySchedulePreferencesFragment newInstance() {
         final MySchedulePreferencesFragment fragment = new MySchedulePreferencesFragment();
         final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public MySchedulePreferencesFragment(){
+    public MySchedulePreferencesFragment() {
         // Required empty public constructor
     }
 
@@ -79,7 +80,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         addPreferencesFromResource(R.xml.preferences_visualizer);
         initializePushNotificationsCategory();
 
-        if(Define.ENABLE_CALENDAR_SYNC){
+        if (Define.ENABLE_CALENDAR_SYNC) {
             initializeCalendarSynchronizationCategory();
             initializeDeleteCalendarCategory();
         } else {
@@ -91,7 +92,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
     }
 
 
-    private void initializePushNotificationsCategory(){
+    private void initializePushNotificationsCategory() {
         SwitchPreferenceCompat notificationPref = (SwitchPreferenceCompat) findPreference(getResources().getString(R.string.sp_myschedule_enable_fcm));
         //workaround to enable push notifications by default:
         // the preference is set to false in XML to avoid push notifications being enabled
@@ -100,7 +101,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         // because this code is run before the user can access any fragment with an add-course-to-my-schedule-option
         notificationPref.setChecked(true);
 
-        if (!isNotificationPermissionGranted()){
+        if (!isNotificationPermissionGranted()) {
             notificationPref.setChecked(false);
         }
 
@@ -115,7 +116,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         notificationPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(@NonNull Preference preference) {
-                if(!isNotificationPermissionGranted()){
+                if (!isNotificationPermissionGranted()) {
                     requestNotificationPermission();
                 }
                 return true;
@@ -131,7 +132,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         // thus it stays empty till opened again if permissions needed to be requested first
         mCalendarSelectionNoPermissionPref = findPreference(getResources().getString(R.string.myschedule_pref_calsync_no_permission));
         //list of calendars to choose from
-        mCalendarSelectionPref = findPreference(getResources().getString(R.string.sp_myschedule_calendar_to_sync));
+        mCalendarSelectionPref = findPreference(getResources().getString(R.string.sp_myschedule_calendar_to_sync_id));
         //"button" to delete the created local calendar
         mDeleteLocalCalendarPref = findPreference(getResources().getString(R.string.myschedule_pref_delete_local_calendar));
         mCalendarSyncSwitchPref = findPreference(getResources().getString(R.string.sp_myschedule_enable_calsync));
@@ -161,7 +162,9 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
             }
         });
 
-        //create local calendar when "create local calendar" is selected as calendar
+        //Set behaviour on when preference value is changed
+        // (create local calendar when "create local calendar" is selected as calendar,
+        // store name of the selected calendar in parallel - preference only stores calendar id)
         mCalendarSelectionPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             /**
              * Called when a Preference has been changed by the user.
@@ -173,28 +176,35 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
                 //no calendar selected
-                if("".equals((String) newValue)){
+                if ("".equals((String) newValue)) {
                     mCalendarSelectionPref.setSummary(R.string.myschedule_pref_choose_calendar_summary);
+                    PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
+                            .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), "").apply();
                     return true;
                 }
                 //"create new local calendar" is chosen
-                else if ((""+CALENDAR_ID_RESERVED_LOCAL_CALENDAR).equals((String) newValue)){
+                else if (("" + CALENDAR_ID_RESERVED_LOCAL_CALENDAR).equals((String) newValue)) {
                     //create local calendar and get its id
-                    String calId = CalendarModel.getInstance().createLocalCalendar();
+                    String calId = CalendarModel.createLocalCalendar();
                     //update the list preference entries
                     // (the entry "create local calendar" with value CREATE_NEW_LOCAL_CALENDAR ("-1") is going to be replaced
                     // by the name of the local calendar and its calendar id as values)
                     populateCalendarSelectionList();
                     //set the chosen calendar top the local calendar id
                     mCalendarSelectionPref.setValue(calId);
-                    mCalendarSelectionPref.setSummary(getResources().getString(R.string.myschedule_calsync_calendar_name));
+                    String localCalendarName = getResources().getString(R.string.myschedule_calsync_local_calendar_name);
+                    PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
+                            .putString(getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), localCalendarName).apply();
+                    mCalendarSelectionPref.setSummary(localCalendarName);
                     //return false to prevent the value being updated to CREATE_NEW_LOCAL_CALENDAR ("-1") instead of the calId
                     return false;
                 }
                 //calendar chosen
                 else {
-                    //set summary and value to chosen calendar
+                    //set summary, selected calendar name and value to chosen calendar
                     mCalendarSelectionPref.setSummary(mCalendarSelectionPref.getEntry());
+                    PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
+                            .putString(getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), mCalendarSelectionPref.getEntry().toString()).apply();
                     return true;
                 }
             }
@@ -217,13 +227,13 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                                 // (this case occurs when the user first selects "create local calendar"
                                 // but then goes back on the decision and chooses another calendar,
                                 // this results in a local calendar being created but not currently chosen for synchronization)
-                                if(mCalendarSelectionPref.getEntry().equals(getResources().getString(R.string.myschedule_calsync_calendar_name))){
+                                if (getResources().getString(R.string.myschedule_calsync_local_calendar_name).equals(mCalendarSelectionPref.getEntry())) {
                                     CalendarSynchronizationBackgroundTask.stopPeriodicSynchronizing();
                                     mCalendarSyncSwitchPref.setChecked(false);
                                     mCalendarSelectionPref.setSummary(R.string.myschedule_pref_choose_calendar_summary);
                                 }
 
-                                CalendarModel.getInstance().deleteLocalCalendar();
+                                CalendarModel.deleteLocalCalendar();
                                 mDeleteLocalCalendarPref.setEnabled(false);
                             }
                         })
@@ -246,16 +256,16 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                 final boolean syncEnabled = ((SwitchPreferenceCompat) preference).isChecked();
 
                 //no calendar chosen
-                if(mCalendarSelectionPref.getValue() == null){
+                if (mCalendarSelectionPref.getValue() == null) {
                     mCalendarSyncSwitchPref.setChecked(false);
                     Utils.showToast(R.string.myschedule_calsync_warning);
                 }
                 //calendar chosen
                 else {
                     //toggle synchronisation
-                    if(syncEnabled) {
+                    if (syncEnabled) {
                         //if debugging: sync immediately when sync button is enabled
-                        if(BuildConfig.DEBUG){
+                        if (BuildConfig.DEBUG) {
                             //todo: no good way, but works
                             new CalendarSynchronizationBackgroundTask().run();
                             //correct but does not work
@@ -280,9 +290,15 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         mDeleteLocalCalendarPref.setEnabled(false);
 
         //if a calendar is already chosen
-        if(mCalendarSelectionPref.getValue() != null && !mCalendarSelectionPref.getValue().equals("")){
-            populateCalendarSelectionList();
-            mCalendarSelectionPref.setSummary(mCalendarSelectionPref.getEntry());
+        if (mCalendarSelectionPref.getValue() != null && !mCalendarSelectionPref.getValue().equals("")) {
+//            populateCalendarSelectionList();
+            String chosenCalName = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+                    .getString(getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), getResources().getString(R.string.myschedule_pref_choose_calendar_summary));
+            mCalendarSelectionPref.setSummary(chosenCalName);
+            //enable deleting local calendar
+            if(chosenCalName.equals(getResources().getString(R.string.myschedule_calsync_local_calendar_name))){
+                mDeleteLocalCalendarPref.setEnabled(true);
+            }
         }
         //no calendar chosen
         else {
@@ -291,7 +307,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         }
 
         //if calendar permission is not granted
-        if(!isCalendarPermissionGranted()){
+        if (!isCalendarPermissionGranted()) {
             //use helper preference that will only launch the permission request
             // without displaying an dialog with an empty calendar list
             mCalendarSelectionNoPermissionPref.setVisible(true);
@@ -308,7 +324,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         }
     }
 
-    private void initializeDeleteCalendarCategory(){
+    private void initializeDeleteCalendarCategory() {
         mDeleteCalendarPref = findPreference(getResources().getString(R.string.myschedule_pref_delete_cal));
         mDeleteCalendarNoPermissionPref = findPreference(getResources().getString(R.string.myschedule_pref_delete_cal_no_permission));
 
@@ -340,7 +356,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                         .setPositiveButton(R.string.dialog_delete_cal_confirm, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                CalendarModel.getInstance().deleteCalendar(Long.valueOf((String)newValue));
+                                CalendarModel.getInstance().deleteCalendar(Long.valueOf((String) newValue));
                             }
                         })
                         .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
@@ -357,7 +373,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         });
 
         //if calendar permission is not granted
-        if(!isCalendarPermissionGranted()){
+        if (!isCalendarPermissionGranted()) {
             //use helper preference that will only launch the permission request
             // without displaying an dialog with an empty calendar list
             mDeleteCalendarNoPermissionPref.setVisible(true);
@@ -375,11 +391,11 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
     /**
      * Set calendar options (displayed name and value/id saved to shared preferences) for calendar synchronization
      */
-    private void populateCalendarSelectionList(){
-        Map<String, Long> availableCalendars = CalendarModel.getInstance().getCalendars();
+    private void populateCalendarSelectionList() {
+        Map<String, Long> availableCalendars = CalendarModel.getCalendars();
 
         //option to create a new local calendar
-        if(CalendarModel.getInstance().getLocalCalendarId() == null){
+        if (CalendarModel.getInstance().getLocalCalendarId() == null) {
             availableCalendars.put(getResources().getString(R.string.myschedule_create_local_calendar), CALENDAR_ID_RESERVED_LOCAL_CALENDAR);
         } else {
             mDeleteLocalCalendarPref.setEnabled(true);
@@ -390,38 +406,39 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         //array to find the value to save for a preference when an entry from entries is selected
         CharSequence[] values = new CharSequence[availableCalendars.values().size()];
         int i = 0;
-        for(Long calId : availableCalendars.values()){
+        for (Long calId : availableCalendars.values()) {
             values[i] = String.valueOf(calId);
             i++;
         }
         mCalendarSelectionPref.setEntryValues(values);
     }
+
     /**
      * Set calendar options (displayed name and value/id saved to shared preferences) for deleting calendars
      */
-    private void populateDeleteCalendarList(){
-        Map<String, Long> availableCalendars = CalendarModel.getInstance().getCalendars();
+    private void populateDeleteCalendarList() {
+        Map<String, Long> availableCalendars = CalendarModel.getCalendars();
 
         //the human-readable entries to be shown in the list
         mDeleteCalendarPref.setEntries(Iterables.toArray(availableCalendars.keySet(), String.class));
         //array to find the value to save for a preference when an entry from entries is selected
         CharSequence[] values = new CharSequence[availableCalendars.values().size()];
         int i = 0;
-        for(Long calId : availableCalendars.values()){
+        for (Long calId : availableCalendars.values()) {
             values[i] = String.valueOf(calId);
             i++;
         }
         mDeleteCalendarPref.setEntryValues(values);
     }
 
-    private void askWhetherToDeleteCalendarEntries(){
+    private void askWhetherToDeleteCalendarEntries() {
         new AlertDialog.Builder(getContext())
                 .setTitle(R.string.dialog_delete_calendar_entries_title)
                 .setMessage(R.string.dialog_delete_calendar_entries_message)
                 .setPositiveButton(R.string.dialog_delete_calendar_entries_confirm, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        CalendarModel.getInstance().deleteAllMyScheduleCalendarEntries();
+                        CalendarModel.deleteAllMyScheduleCalendarEntries();
                     }
                 })
                 .setNegativeButton(R.string.dialog_no, new DialogInterface.OnClickListener() {
@@ -454,7 +471,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
          * POST_NOTIFICATIONS Berechtigung. Ihre App muss jedoch auch die Laufzeitversion dieser
          * Berechtigung über die Konstante android.permission.POST_NOTIFICATIONS anfordern.
          */
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             return ContextCompat.checkSelfPermission(Main.getAppContext(), Manifest.permission.POST_NOTIFICATIONS)
                     == PackageManager.PERMISSION_GRANTED;
         } else {

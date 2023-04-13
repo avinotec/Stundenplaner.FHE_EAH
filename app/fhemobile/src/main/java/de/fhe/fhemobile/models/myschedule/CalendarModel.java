@@ -53,7 +53,7 @@ public class CalendarModel {
 
     private static final String TAG = CalendarModel.class.getSimpleName();
 
-    private final static String localCalendarName = Main.getAppContext().getString(R.string.myschedule_calsync_calendar_name);
+    private final static String localCalendarName = Main.getAppContext().getString(R.string.myschedule_calsync_local_calendar_name);
     private final static String localCalendarAccount = Main.getAppContext().getString(R.string.app_name);
     private final static String localCalendarAccountType = ACCOUNT_TYPE_LOCAL;
 
@@ -266,7 +266,7 @@ public class CalendarModel {
     private static void createCalendarEntry(final MyScheduleEventVo scheduleEvent){
 
         final String chosenCalId = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
-                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "");
+                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_id), "");
 
         final ContentValues values = getCalendarEntryValues(scheduleEvent);
         values.put(Events.CALENDAR_ID, chosenCalId);
@@ -314,7 +314,7 @@ public class CalendarModel {
     @NonNull
     private static ContentValues getCalendarEntryValues(MyScheduleEventVo scheduleEvent) {
         final String chosenCalId = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
-                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "");
+                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_id), "");
 
         //get event title
         String eventTitle = scheduleEvent.getTitle();
@@ -379,7 +379,9 @@ public class CalendarModel {
         if(uri != null){
             final String calId = uri.getLastPathSegment();
             PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
-                    .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), calId).apply();
+                    .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_id), calId).apply();
+            PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
+                    .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), localCalendarName).apply();
             return calId;
         }
         return null;
@@ -407,7 +409,9 @@ public class CalendarModel {
         unlinkAllCalendarEventsAndMyScheduleEvents();
 
         PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
-                .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "").apply();
+                .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_id), "").apply();
+        PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
+                .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), "").apply();
 
     }
 
@@ -419,14 +423,16 @@ public class CalendarModel {
 
         Main.getAppContext().getContentResolver().delete(uri, null, null);
         final String calendarChosenForSync = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
-                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "");
+                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_id), "");
 
         //if the calendar chosen for synchronization is deleted, stop synchronizing My Schedule
         if(calendarChosenForSync.equals(calId)){
             CalendarSynchronizationBackgroundTask.stopPeriodicSynchronizing();
             unlinkAllCalendarEventsAndMyScheduleEvents();
             PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
-                    .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync), "").apply();
+                    .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_id), "").apply();
+            PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
+                    .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), "").apply();
         }
 
 

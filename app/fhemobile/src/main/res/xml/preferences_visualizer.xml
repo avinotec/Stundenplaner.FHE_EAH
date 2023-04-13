@@ -57,7 +57,7 @@
             android:summary="@string/myschedule_pref_choose_calendar_summary" />
 
         <ListPreference
-            android:key="@string/sp_myschedule_calendar_to_sync"
+            android:key="@string/sp_myschedule_calendar_to_sync_id"
             android:title="@string/myschedule_pref_choose_calendar_title"
             android:summary="@string/myschedule_pref_choose_calendar_summary"/>
 

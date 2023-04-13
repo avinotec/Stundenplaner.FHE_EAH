@@ -138,7 +138,7 @@
     <string name="myschedule_pref_calsync_title">Synchronisieren</string>
     <string name="myschedule_pref_calsync_summary">Mein Stundenplan in den gewählten Kalender synchronisieren</string>
     <string name="myschedule_calsync_warning">Du musst erst einen Kalender auswählen!</string>
-    <string name="myschedule_calsync_calendar_name">Mein Stundenplan</string>
+    <string name="myschedule_calsync_local_calendar_name">Mein Stundenplan</string>
     <string name="myschedule_create_local_calendar">Neuen lokalen Kalender erstellen</string>
     <string name="myschedule_delete_calendar_error">Es wurde kein lokaler Kalendar zum Löschen gefunden.</string>
     <string name="myschedule_calsync_event_dropped_tag">[Entfällt]</string>
