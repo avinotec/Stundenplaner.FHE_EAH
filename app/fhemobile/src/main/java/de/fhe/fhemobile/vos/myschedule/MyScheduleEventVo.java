@@ -33,10 +33,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import java.util.TimeZone;
 
 import de.fhe.fhemobile.comparator.LecturerComparator;
 import de.fhe.fhemobile.comparator.TimetableLocationComparator;
+import de.fhe.fhemobile.utils.myschedule.MyScheduleUtils;
 import de.fhe.fhemobile.utils.myschedule.TimetableChangeType;
 import de.fhe.fhemobile.utils.timetable.TimetableUtils;
 import de.fhe.fhemobile.vos.timetable.LecturerVo;
@@ -57,8 +57,8 @@ public class MyScheduleEventVo implements Parcelable {
                              final List<TimetableLocationVo> locationList){
         mTitle = title;
         mEventSetId = eventSetId;
-        mStartDateTime = startDateTime;
-        mEndDateTime = endDateTime;
+        mGermanStartDateTime = startDateTime;
+        mGermanEndDateTime = endDateTime;
         mLecturerList = lecturerList;
         mLocationList = locationList;
     }
@@ -73,8 +73,8 @@ public class MyScheduleEventVo implements Parcelable {
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(mTitle);
         dest.writeString(mEventSetId);
-        dest.writeLong(mStartDateTime);
-        dest.writeLong(mEndDateTime);
+        dest.writeLong(mGermanStartDateTime);
+        dest.writeLong(mGermanEndDateTime);
         dest.writeList(mLecturerList);
         dest.writeList(mLocationList);
         dest.writeArray(typesOfChanges.toArray());
@@ -85,8 +85,8 @@ public class MyScheduleEventVo implements Parcelable {
     MyScheduleEventVo(final Parcel in) {
         this.mTitle = in.readString();
         this.mEventSetId = in.readString();
-        this.mStartDateTime = in.readLong();
-        this.mEndDateTime = in.readLong();
+        this.mGermanStartDateTime = in.readLong();
+        this.mGermanEndDateTime = in.readLong();
         in.readList(mLecturerList , LecturerVo.class.getClassLoader());
         in.readList(mLocationList, TimetableLocationVo.class.getClassLoader());
         typesOfChanges = new HashSet(Arrays.asList(in.readArray(TimetableChangeType.class.getClassLoader())));
@@ -120,34 +120,31 @@ public class MyScheduleEventVo implements Parcelable {
         return cutStudyProgramPrefix(mTitle);
     }
 
-    /**
-     * Get start date time in seconds, time zone offset included.
-     * (attention: Do not use this long to create a {@link Date} instance, use getStartDate instead)
-     * @return The start date time as long
-     */
-    public long getStartDateTimeInSec() {
-        return mStartDateTime;
+    public Long getStartTime(){
+        return MyScheduleUtils.convertEahApiTimeToUtc(mGermanStartDateTime);
     }
 
-    /**
-     * Get end date time in seconds, time zone offset included.
-     * (attention: Do not use this long to create a {@link Date} instance, use getStartDate instead)
-     * @return The end date time as long
-     */
-    public long getEndDateTimeInSec() {
-        return mEndDateTime;
+    public Long getEndTime(){
+        return MyScheduleUtils.convertEahApiTimeToUtc(mGermanEndDateTime);
     }
 
-    public Date getStartDateWithTime(){
+    public Date getStartDate(){
+        return new Date(getStartTime());
+    }
+
+    public Date getEndDate(){
+        return new Date(getEndTime());
+    }
+
+    public Date getGermanStartDate(){
         //convert to milliseconds
-        final Date startDateTime = new Date( mStartDateTime * 1000 );
+        final Date startDateTime = new Date( mGermanStartDateTime * 1000 );
         return startDateTime;
-
     }
 
-    public Date getEndDateWithTime(){
+    public Date getGermanEndDate(){
         //convert from seconds to milliseconds,
-        final Date endDateTime = new Date( mEndDateTime * 1000);
+        final Date endDateTime = new Date( mGermanEndDateTime * 1000);
         return endDateTime;
     }
 
@@ -158,9 +155,7 @@ public class MyScheduleEventVo implements Parcelable {
      */
     public String getStartTimeString(){
         final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ROOT);
-        // this is the magic thing to advise the SimpleDateFormat to do nothing with the Timezones
-        sdf.setTimeZone( TimeZone.getTimeZone("UTC") );
-        return sdf.format(getStartDateWithTime());
+        return sdf.format(getStartDate());
     }
 
     /**
@@ -170,9 +165,7 @@ public class MyScheduleEventVo implements Parcelable {
      */
     public String getEndTimeString() {
         final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ROOT);
-        // this is the magic thing to advise the SimpleDateFormat to do nothing with the Timezones
-        sdf.setTimeZone( TimeZone.getTimeZone("UTC") );
-        return sdf.format(getEndDateWithTime());
+        return sdf.format(getEndDate());
     }
 
     public String getEventSetId() { return mEventSetId; }
@@ -207,7 +200,7 @@ public class MyScheduleEventVo implements Parcelable {
     }
 
     public String getWeekDayName(){
-        return TimetableUtils.getWeekDayName(getStartDateWithTime());
+        return TimetableUtils.getWeekDayName(getGermanStartDate());
     }
 
     /**
@@ -215,7 +208,7 @@ public class MyScheduleEventVo implements Parcelable {
      * @return
      */
     public String getWeekDayShort(){
-        return new SimpleDateFormat("E" ).format(getStartDateWithTime());
+        return new SimpleDateFormat("E" ).format(getGermanStartDate());
     }
 
     /**
@@ -260,11 +253,11 @@ public class MyScheduleEventVo implements Parcelable {
     }
 
     public void setStartDateTimeInSec(final long mStartDateTime) {
-        this.mStartDateTime = mStartDateTime;
+        this.mGermanStartDateTime = mStartDateTime;
     }
 
     public void setEndDateTimeInSec(final long mEndDateTime) {
-        this.mEndDateTime = mEndDateTime;
+        this.mGermanEndDateTime = mEndDateTime;
     }
 
     public void setLecturerList(final List<LecturerVo> lecturerList) {
@@ -294,10 +287,10 @@ public class MyScheduleEventVo implements Parcelable {
     private String mEventSetId;
 
     @SerializedName("startDateTime")
-    private long mStartDateTime;
+    private long mGermanStartDateTime;
 
     @SerializedName("endDateTime")
-    private long mEndDateTime;
+    private long mGermanEndDateTime;
 
     @SerializedName("lecturer")
     private List<LecturerVo> mLecturerList = new ArrayList<>();

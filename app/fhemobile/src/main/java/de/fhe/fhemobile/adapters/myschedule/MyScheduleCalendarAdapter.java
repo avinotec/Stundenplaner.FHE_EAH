@@ -60,9 +60,8 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 		//add items to mItems, ignore past days
 		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd");
 		for (MyScheduleEventVo item : items) {
-			Date startDateWithTime = item.getStartDateWithTime();
-			if (sdfDate.format(startDateWithTime).equals(sdfDate.format(new Date()))
-					|| startDateWithTime.compareTo(new Date()) > 0) {
+			//if event start is today or in the future
+			if (new TimeIgnoringDateComparator().compare(item.getStartDate(), new Date()) >= 0) {
 				mItems.add(item);
 			}
 		}
@@ -136,17 +135,16 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 		// then do not add header again (set invisible)
 		final TextView weekdayHeader = (TextView) convertView.findViewById(R.id.tv_item_header_default_day);
 		if(position == 0 || new TimeIgnoringDateComparator()
-				.compare(currentItem.getStartDateWithTime(), mItems.get(position - 1).getStartDateWithTime()) != 0){
+				.compare(currentItem.getStartDate(), new Date(mItems.get(position - 1).getStartTime())) != 0){
 
 			String weekDay = currentItem.getWeekDayName();
-			final Date df = currentItem.getStartDateWithTime();
 			//if necessary, add "today" in brackets to mark today's day
-			if(new TimeIgnoringDateComparator().compare(df, new Date()) == 0){
+			if(new TimeIgnoringDateComparator().compare(currentItem.getStartDate(), new Date()) == 0){
 				final String today = Main.getAppContext().getString(R.string.today);
 				final String weekDayName = currentItem.getWeekDayName();
 				weekDay = "(" + today + ") "+ weekDayName ;
 			}
-			weekDay += ", " + new SimpleDateFormat("dd.MM.yy", Locale.ROOT ).format(currentItem.getStartDateWithTime());
+			weekDay += ", " + new SimpleDateFormat("dd.MM.yy", Locale.ROOT ).format(currentItem.getStartTime());
 			weekdayHeader.setText(weekDay);
 			weekdayHeader.setVisibility(View.VISIBLE);
 
@@ -238,14 +236,14 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 
 			try {
 				//course starts now or in the future
-				if(eventVo.getStartDateWithTime().compareTo(now) >= 0) {
+				if(eventVo.getStartTime() >= now.getTime()) {
 
 					//if event has not finished yet
-					if(eventVo.getEndDateWithTime().compareTo(now) >= 0) {
+					if(eventVo.getEndTime() >= now.getTime()) {
 
-						//update, if event startTime is earlier than event found before
-						if(k == null || eventVo.getStartDateTimeInSec() < k){
-							k = eventVo.getStartDateTimeInSec();
+						//update, if event starts earlier than the event found before
+						if(k == null || eventVo.getStartTime() < k){
+							k = eventVo.getStartTime();
 							posToday = mItems.indexOf(eventVo);
 						}
 					}

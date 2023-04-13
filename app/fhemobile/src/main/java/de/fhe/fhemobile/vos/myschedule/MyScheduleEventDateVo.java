@@ -7,6 +7,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
+import de.fhe.fhemobile.utils.myschedule.MyScheduleUtils;
+
 public class MyScheduleEventDateVo implements Parcelable{
 
     public MyScheduleEventDateVo() {
@@ -40,21 +42,19 @@ public class MyScheduleEventDateVo implements Parcelable{
     };
 
     /**
-     * Get start date time in seconds
-     * (attention: needs to be multiplied by 1000 when used to create a {@link Date})
-     * @return
+     * Get start date time
+     * @return Start date tim as long
      */
-    public long getStartDateTimeInSec() {
-        return mStartDateTime;
+    public long getStartTime() {
+        return MyScheduleUtils.convertEahApiTimeToUtc(mStartDateTime);
     }
 
     /**
-     * Get end date time in seconds
-     * (attention: needs to be multiplied by 1000 when used to create a {@link Date})
-     * @return
+     * Get end date time
+     * @return End date time as long
      */
-    public long getEndDateTimeInSec() {
-        return mEndDateTime;
+    public long getEndTime() {
+        return MyScheduleUtils.convertEahApiTimeToUtc(mEndDateTime);
     }
 
     public Date getStartDateTime() {

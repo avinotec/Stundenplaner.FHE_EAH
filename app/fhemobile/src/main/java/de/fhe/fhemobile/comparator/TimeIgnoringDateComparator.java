@@ -22,6 +22,14 @@ import java.util.Date;
 
 public class TimeIgnoringDateComparator implements Comparator<Date> {
 
+    /**
+     * Compares date d1 with date d2
+     * @param d1 the first object to be compared.
+     * @param d2 the second object to be compared.
+     * @return 0, if d1 is the same day as d2.
+     *          A number < 0, if d1 is before d2.
+     *          A number > 0, if d1 is after d2.
+     */
     @Override
     public int compare(final Date d1, final Date d2) {
         final Calendar c1 = Calendar.getInstance();

@@ -8,6 +8,6 @@ public class MyScheduleEventDateComparator implements Comparator<MyScheduleEvent
 
     @Override
     public int compare(final MyScheduleEventDateVo o1, final MyScheduleEventDateVo o2) {
-        return Long.compare(o1.getStartDateTimeInSec(), o2.getStartDateTimeInSec());
+        return Long.compare(o1.getStartTime(), o2.getStartTime());
     }
 }

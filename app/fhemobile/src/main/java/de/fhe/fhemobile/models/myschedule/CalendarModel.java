@@ -36,7 +36,6 @@ import androidx.preference.PreferenceManager;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.services.CalendarSynchronizationBackgroundTask;
@@ -417,8 +416,8 @@ public class CalendarModel {
 
         final ContentValues values = new ContentValues();
         values.put(Events.TITLE, eventTitle);
-        values.put(Events.DTSTART, scheduleEvent.getStartDateTimeInSec()*1000); //time in milliseconds
-        values.put(Events.DTEND, scheduleEvent.getEndDateTimeInSec()*1000);
+        values.put(Events.DTSTART, scheduleEvent.getStartTime());
+        values.put(Events.DTEND, scheduleEvent.getEndTime());
         values.put(Events.EVENT_LOCATION, scheduleEvent.getLocationListAsString());
         values.put(Events.DESCRIPTION, scheduleEvent.getLecturerListAsString()+", Sets: "+ scheduleEvent.getLocationListAsString());
         values.put(Events.EVENT_COLOR, ContextCompat.getColor(Main.getAppContext(), R.color.primary_color));

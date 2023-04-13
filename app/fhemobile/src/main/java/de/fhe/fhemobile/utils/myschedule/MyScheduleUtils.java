@@ -25,13 +25,18 @@ import com.google.gson.Gson;
 import org.jetbrains.annotations.NonNls;
 import org.junit.Assert;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
@@ -56,6 +61,33 @@ public final class MyScheduleUtils {
 	 * Utility class, no constructor
 	 */
 	private MyScheduleUtils() {
+	}
+
+	/**
+	 * Convert the time in long shifted by timezone offset (fetched from the EAH Api)
+	 * to the correct time long in UTC
+	 * @param time The incorrect time in long
+	 * @return The time in correct long. Null, if parsing failed.
+	 */
+	public static Long convertEahApiTimeToUtc(long time){
+		//convert long to string
+		final SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ROOT);
+		//magic trick no. 1
+		sdf1.setTimeZone(TimeZone.getTimeZone("UTC"));
+		// date string in german time
+		String germanDateString = sdf1.format(time * 1000);
+
+		//magic trick no. 2
+		//note: do not reuse sdf1 with setting its timezone to Berlin,
+		// it is somehow resulting in the timezone being set to Pacific Daylight Time (PDT)
+		final SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.GERMANY);
+		try {
+			Date correctDate = sdf2.parse(germanDateString);
+			return correctDate.getTime();
+		} catch (ParseException ex){
+			Log.e(TAG, "Failed to parse date string", ex);
+			return null;
+		}
 	}
 
 	/**
@@ -122,8 +154,8 @@ public final class MyScheduleUtils {
 				final MyScheduleEventVo event = new MyScheduleEventVo(
 						eventSet.getTitle(),
 						eventSet.getId(),
-						eventDate.getStartDateTimeInSec(),
-						eventDate.getEndDateTimeInSec(),
+						eventDate.getStartTime(),
+						eventDate.getEndTime(),
 						eventSet.getLecturerList(),
 						eventSet.getLocationList());
 				eventsToAdd.add(event);
@@ -330,8 +362,8 @@ public final class MyScheduleUtils {
 						}
 
 						if (fetchedEvent == null
-								|| fetchedEvent.getStartDateTimeInSec() != localEvent.getStartDateTimeInSec()
-								|| fetchedEvent.getEndDateTimeInSec() != localEvent.getEndDateTimeInSec()) {
+								|| fetchedEvent.getStartTime() != localEvent.getStartTime()
+								|| fetchedEvent.getEndTime() != localEvent.getEndTime()) {
 							//mark as deleted and temporarily save to deletedEvents
 							localEvent.addChange(TimetableChangeType.DELETION);
 							deletedEvents.add(localEvent);
@@ -363,14 +395,14 @@ public final class MyScheduleUtils {
 						}
 
 						if (localEvent == null
-								|| fetchedEvent.getStartDateTimeInSec() != localEvent.getStartDateTimeInSec()
-								|| fetchedEvent.getEndDateTimeInSec() != localEvent.getEndDateTimeInSec()) {
+								|| fetchedEvent.getStartTime() != localEvent.getStartTime()
+								|| fetchedEvent.getEndTime() != localEvent.getEndTime()) {
 							//add new event
 							final MyScheduleEventVo newEvent = new MyScheduleEventVo(
 									fetchedEventSet.getTitle(),
 									fetchedEventSet.getId(),
-									fetchedEvent.getStartDateTimeInSec(),
-									fetchedEvent.getEndDateTimeInSec(),
+									fetchedEvent.getStartTime(),
+									fetchedEvent.getEndTime(),
 									fetchedEventSet.getLecturerList(),
 									fetchedEventSet.getLocationList());
 							newEvent.addChange(TimetableChangeType.ADDITION);
@@ -395,14 +427,14 @@ public final class MyScheduleUtils {
 						}
 
 						//start date time changed
-						if (fetchedEvent.getStartDateTimeInSec() != localEvent.getStartDateTimeInSec()) {
+						if (fetchedEvent.getStartTime() != localEvent.getStartTime()) {
 							localEvent.addChange(TimetableChangeType.EDIT_TIME);
-							localEvent.setStartDateTimeInSec(fetchedEvent.getStartDateTimeInSec());
+							localEvent.setStartDateTimeInSec(fetchedEvent.getStartTime());
 						}
 						//end date changed
-						if (fetchedEvent.getEndDateTimeInSec() != localEvent.getEndDateTimeInSec()) {
+						if (fetchedEvent.getEndTime() != localEvent.getEndTime()) {
 							localEvent.addChange(TimetableChangeType.EDIT_TIME);
-							localEvent.setEndDateTimeInSec(fetchedEvent.getEndDateTimeInSec());
+							localEvent.setEndDateTimeInSec(fetchedEvent.getEndTime());
 						}
 						//location changed
 						if (!fetchedEventSet.getLocationList().equals(localEvent.getLocationList())) {
@@ -437,8 +469,8 @@ public final class MyScheduleUtils {
 					final MyScheduleEventVo eventToAdd = new MyScheduleEventVo(
 							eventSet.getTitle(),
 							eventSet.getId(),
-							addedEventDate.getStartDateTimeInSec(),
-							addedEventDate.getEndDateTimeInSec(),
+							addedEventDate.getStartTime(),
+							addedEventDate.getEndTime(),
 							eventSet.getLecturerList(),
 							eventSet.getLocationList());
 					eventToAdd.addChange(TimetableChangeType.ADDITION);
