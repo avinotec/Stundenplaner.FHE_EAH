@@ -130,7 +130,7 @@ public class MyScheduleModel extends EventDispatcher {
      * @param unsubscribedEventSeries
      */
     public void removeFromSubscribedEventSeriesAndUpdateAdapters(final MyScheduleEventSeriesVo unsubscribedEventSeries){
-        CalendarModel.getInstance().deleteCalendarEntries(unsubscribedEventSeries);
+        CalendarModel.deleteCalendarEntries(unsubscribedEventSeries);
 
         unsubscribedEventSeries.setSubscribed(false);
         subscribedEventSeries.remove(unsubscribedEventSeries.getTitle());

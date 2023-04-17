@@ -25,7 +25,6 @@ import android.content.ContentValues;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Looper;
 import android.provider.CalendarContract.*;
 import android.util.Log;
 
@@ -36,10 +35,11 @@ import androidx.preference.PreferenceManager;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Handler;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.events.CalendarSyncEvent;
+import de.fhe.fhemobile.events.EventDispatcher;
 import de.fhe.fhemobile.services.CalendarSynchronizationBackgroundTask;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.myschedule.TimetableChangeType;
@@ -50,7 +50,7 @@ import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
  *
  * created by Nadja - 03/2023
  */
-public class CalendarModel {
+public class CalendarModel extends EventDispatcher {
     //Android Developer Tutorial: https://developer.android.com/guide/topics/providers/calendar-provider
 
     private static final String TAG = CalendarModel.class.getSimpleName();
@@ -95,24 +95,6 @@ public class CalendarModel {
         static final int OWNER_ACCOUNT_INDEX = 3;
     }
 
-    private final static class CalendarEventProjection {
-
-        // Projection array.
-        // Creating indices for this array instead of doing dynamic lookups improves performance.
-        static final String[] PROJECTION = new String[]{
-                Instances.EVENT_ID,      // 0
-                Instances.TITLE,         // 1
-                Instances.BEGIN,         // 2
-                Instances.END            // 3
-        };
-        // The indices for the projection array above.
-        static final int ID_INDEX = 0;
-        static final int TITLE_INDEX = 1;
-        static final int BEGIN_INDEX = 2;
-        static final int END_INDEX = 3;
-    }
-
-
     //----------------------------------------------------------------------------------------------
 
     public final static CalendarModel getInstance() {
@@ -123,6 +105,10 @@ public class CalendarModel {
     }
 
     private CalendarModel() {
+    }
+
+    public void notifyChange(final String type) {
+        dispatchEvent(new CalendarSyncEvent(type));
     }
 
     /**
@@ -284,13 +270,6 @@ public class CalendarModel {
                 .build();
 
         Main.getAppContext().getContentResolver().delete(calendarToRemoveUri, null, null);
-        unlinkAllCalendarEventsAndMyScheduleEvents();
-
-        PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
-                .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_id), "").apply();
-        PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
-                .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), "").apply();
-
     }
 
     /**
@@ -300,18 +279,20 @@ public class CalendarModel {
         final Uri uri = ContentUris.withAppendedId(Calendars.CONTENT_URI, calId);
 
         Main.getAppContext().getContentResolver().delete(uri, null, null);
-        final String calendarChosenForSync = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
-                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_id), "");
+    }
 
-        //if the calendar chosen for synchronization is deleted, stop synchronizing My Schedule
-        if(calendarChosenForSync.equals(String.valueOf(calId))){
-            CalendarSynchronizationBackgroundTask.stopPeriodicSynchronizing();
-            unlinkAllCalendarEventsAndMyScheduleEvents();
-            PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
-                    .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_id), "").apply();
-            PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
-                    .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), "").apply();
-        }
+    /**
+     * If the chosen calendar is deleted, stop calendar synchronization,
+     * remove the stored calendar entry id from all my schedule events
+     * and empty calendar id and name in the shared preferences
+     */
+    public static void chosenCalendarIsDeleted(){
+        CalendarSynchronizationBackgroundTask.stopPeriodicSynchronizing();
+        unlinkAllCalendarEventsAndMyScheduleEvents();
+        PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
+                .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_id), "").apply();
+        PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
+                .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), "").apply();
     }
 
     /**
