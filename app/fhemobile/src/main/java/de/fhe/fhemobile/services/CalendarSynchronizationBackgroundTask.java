@@ -71,6 +71,9 @@ public class CalendarSynchronizationBackgroundTask implements Runnable {
     @Override
     public void run() {
         Log.i(TAG, "Started CalendarSynchronizationBackgroundTask.run()");
+        if(BuildConfig.DEBUG){
+            Utils.showToastFromBackgroundTask("Debug Info: Kalendersynchronisation gestartet");
+        }
 
         CalendarModel.syncMySchedule();
     }

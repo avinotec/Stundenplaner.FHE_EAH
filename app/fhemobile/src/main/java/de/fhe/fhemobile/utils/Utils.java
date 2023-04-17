@@ -17,6 +17,8 @@
 package de.fhe.fhemobile.utils;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -117,6 +119,24 @@ public final class Utils {
      */
     public static void showToast(final Context _Context, final String _Text) {
         Toast.makeText(_Context, _Text, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void showToastFromBackgroundTask(final String _Text){
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                Utils.showToast( _Text);
+            }
+        });
+    }
+
+    public static void showToastFromBackgroundTask(@StringRes final int _ResId){
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                Utils.showToast( _ResId);
+            }
+        });
     }
 
 

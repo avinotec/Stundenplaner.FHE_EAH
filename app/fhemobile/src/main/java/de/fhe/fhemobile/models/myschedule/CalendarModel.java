@@ -25,6 +25,7 @@ import android.content.ContentValues;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Looper;
 import android.provider.CalendarContract.*;
 import android.util.Log;
 
@@ -35,6 +36,7 @@ import androidx.preference.PreferenceManager;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Handler;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
@@ -316,10 +318,6 @@ public class CalendarModel {
      * Synchronize every event series of the calendar synchronisation to the chosen calendar
      */
     public static void syncMySchedule(){
-        //todo: you cannot show toasts from an non-UI thread -> this fails when method is called from within CalendarSynchronizationTask
-//        if(BuildConfig.DEBUG){
-//            Utils.showToast("Debug Info: Kalendersynchronisation gestartet");
-//        }
         Log.i(TAG, "Started synchronizing My Schedule");
 
         for(final MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
@@ -327,8 +325,7 @@ public class CalendarModel {
         }
 
         Log.i(TAG, "Finished synchronizing My Schedule");
-        //todo
-//        Utils.showToast(R.string.myschedule_calsync_finished);
+        Utils.showToastFromBackgroundTask(R.string.myschedule_calsync_finished);
     }
 
     /**
