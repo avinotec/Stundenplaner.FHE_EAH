@@ -44,7 +44,7 @@ public class NewsCategoriesView extends FrameLayout {
         mContext = context;
         mModel = NewsModel.getInstance();
 
-        mModel.addListener(NewsModel.ChangeEvent.RECEIVED_CATEGORY_ITEMS, mCategoryItemsListener);
+        mModel.addListener(NewsModel.NewsChangeEvent.RECEIVED_CATEGORY_ITEMS, mCategoryItemsListener);
     }
 
     public void initializeView(final ViewListener _Listener) {
@@ -52,7 +52,7 @@ public class NewsCategoriesView extends FrameLayout {
     }
 
     public void destroy() {
-        mModel.removeListener(NewsModel.ChangeEvent.RECEIVED_CATEGORY_ITEMS, mCategoryItemsListener);
+        mModel.removeListener(NewsModel.NewsChangeEvent.RECEIVED_CATEGORY_ITEMS, mCategoryItemsListener);
 
         mViewListener = null;
         mCategoryItemsListener = null;

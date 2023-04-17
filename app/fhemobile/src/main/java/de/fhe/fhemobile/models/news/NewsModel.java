@@ -27,13 +27,13 @@ import de.fhe.fhemobile.vos.news.NewsItemVo;
  */
 public final class NewsModel extends EventDispatcher {
 
-    public static class ChangeEvent extends SimpleEvent {
+    public static class NewsChangeEvent extends SimpleEvent {
         public static final String RECEIVED_NEWS = "receivedNews";
         public static final String RECEIVED_EMPTY_NEWS = "receivedEmptyNews";
 
         public static final String RECEIVED_CATEGORY_ITEMS = "receivedCategoryItems";
 
-        public ChangeEvent(final String type) {
+        public NewsChangeEvent(final String type) {
             super(type);
         }
     }
@@ -46,10 +46,10 @@ public final class NewsModel extends EventDispatcher {
         mNewsItems = _NewsItems;
         
         if(mNewsItems != null && mNewsItems.length > 0) {
-            notifyChange(ChangeEvent.RECEIVED_NEWS);
+            notifyChange(NewsChangeEvent.RECEIVED_NEWS);
         }
         else {
-            notifyChange(ChangeEvent.RECEIVED_EMPTY_NEWS);
+            notifyChange(NewsChangeEvent.RECEIVED_EMPTY_NEWS);
         }
     }
 
@@ -69,7 +69,7 @@ public final class NewsModel extends EventDispatcher {
 
         mCategoryItems = _CategoryItems;
 
-        notifyChange(ChangeEvent.RECEIVED_CATEGORY_ITEMS);
+        notifyChange(NewsChangeEvent.RECEIVED_CATEGORY_ITEMS);
     }
 
     public Integer getChosenNewsItemPosition() {
@@ -91,7 +91,7 @@ public final class NewsModel extends EventDispatcher {
     }
 
     private void notifyChange(final String type) {
-        dispatchEvent(new ChangeEvent(type));
+        dispatchEvent(new NewsChangeEvent(type));
     }
 
     private static NewsModel ourInstance;

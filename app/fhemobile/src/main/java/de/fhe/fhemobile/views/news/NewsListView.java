@@ -70,14 +70,14 @@ public class NewsListView extends LinearLayout {
     }
 
     public void registerModelListener() {
-        mModel.addListener(NewsModel.ChangeEvent.RECEIVED_NEWS, mReceivedNewsListener);
-        mModel.addListener(NewsModel.ChangeEvent.RECEIVED_EMPTY_NEWS, mReceivedEmptyNewsListener);
+        mModel.addListener(NewsModel.NewsChangeEvent.RECEIVED_NEWS, mReceivedNewsListener);
+        mModel.addListener(NewsModel.NewsChangeEvent.RECEIVED_EMPTY_NEWS, mReceivedEmptyNewsListener);
 
     }
 
     public void deregisterModelListener() {
-        mModel.removeListener(NewsModel.ChangeEvent.RECEIVED_NEWS, mReceivedNewsListener);
-        mModel.removeListener(NewsModel.ChangeEvent.RECEIVED_EMPTY_NEWS, mReceivedEmptyNewsListener);
+        mModel.removeListener(NewsModel.NewsChangeEvent.RECEIVED_NEWS, mReceivedNewsListener);
+        mModel.removeListener(NewsModel.NewsChangeEvent.RECEIVED_EMPTY_NEWS, mReceivedEmptyNewsListener);
     }
 
     void initializeAdapter() {
