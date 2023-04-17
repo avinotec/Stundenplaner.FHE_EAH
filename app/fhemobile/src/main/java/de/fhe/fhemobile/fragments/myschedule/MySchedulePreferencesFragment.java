@@ -209,16 +209,18 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                 //"create new local calendar" is chosen
                 else if (("" + CALENDAR_ID_RESERVED_LOCAL_CALENDAR).equals((String) newValue)) {
                     //create local calendar and get its id
-                    String calId = CalendarModel.createLocalCalendar();
+                    final String calId = CalendarModel.createLocalCalendar();
                     //update the list preference entries
                     // (the entry "create local calendar" with value CREATE_NEW_LOCAL_CALENDAR ("-1") is going to be replaced
                     // by the name of the local calendar and its calendar id as values)
                     populateCalendarSelectionList();
                     //set the chosen calendar top the local calendar id
                     mCalendarSelectionPref.setValue(calId);
-                    String localCalendarName = getResources().getString(R.string.myschedule_calsync_local_calendar_name);
-                    PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
-                            .putString(getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), localCalendarName).apply();
+                    final String localCalendarName = getResources().getString(R.string.myschedule_calsync_local_calendar_name);
+                    PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+                            .edit()
+                            .putString(getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), localCalendarName)
+                            .apply();
                     mCalendarSelectionPref.setSummary(localCalendarName);
                     //return false to prevent the value being updated to CREATE_NEW_LOCAL_CALENDAR ("-1") instead of the calId
                     return false;
@@ -226,9 +228,19 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                 //calendar chosen
                 else {
                     //set summary, selected calendar name and value to chosen calendar
-                    mCalendarSelectionPref.setSummary(mCalendarSelectionPref.getEntry());
-                    PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
-                            .putString(getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), mCalendarSelectionPref.getEntry().toString()).apply();
+                    // prevent nothing is chosen
+                    final CharSequence calendarEntry = mCalendarSelectionPref.getEntry();
+                    if ( calendarEntry != null ) {
+                        mCalendarSelectionPref.setSummary(calendarEntry);
+
+                        final String calendarEntryString = calendarEntry.toString();
+                        if (calendarEntryString != null ) {
+                            PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+                                    .edit()
+                                    .putString( getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), calendarEntryString )
+                                    .apply();
+                        }
+                    }
                     return true;
                 }
             }
