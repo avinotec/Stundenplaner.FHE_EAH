@@ -51,14 +51,14 @@ public class MyScheduleEventVo implements Parcelable {
 
     public MyScheduleEventVo(final String title,
                              final String eventSetId,
-                             final long startDateTime,
-                             final long endDateTime,
+                             final long germanStartTime,
+                             final long germanEndTime,
                              final List<LecturerVo> lecturerList,
                              final List<TimetableLocationVo> locationList){
         mTitle = title;
         mEventSetId = eventSetId;
-        mGermanStartDateTime = startDateTime;
-        mGermanEndDateTime = endDateTime;
+        mGermanStartDateTime = germanStartTime;
+        mGermanEndDateTime = germanEndTime;
         mLecturerList = lecturerList;
         mLocationList = locationList;
     }
@@ -136,18 +136,6 @@ public class MyScheduleEventVo implements Parcelable {
         return new Date(getEndTime());
     }
 
-    public Date getGermanStartDate(){
-        //convert to milliseconds
-        final Date startDateTime = new Date( mGermanStartDateTime * 1000 );
-        return startDateTime;
-    }
-
-    public Date getGermanEndDate(){
-        //convert from seconds to milliseconds,
-        final Date endDateTime = new Date( mGermanEndDateTime * 1000);
-        return endDateTime;
-    }
-
     /**
      * Get time of day the event is starting
      *
@@ -200,7 +188,7 @@ public class MyScheduleEventVo implements Parcelable {
     }
 
     public String getWeekDayName(){
-        return TimetableUtils.getWeekDayName(getGermanStartDate());
+        return TimetableUtils.getWeekDayName(getStartDate());
     }
 
     /**
@@ -208,7 +196,7 @@ public class MyScheduleEventVo implements Parcelable {
      * @return
      */
     public String getWeekDayShort(){
-        return new SimpleDateFormat("E" ).format(getGermanStartDate());
+        return new SimpleDateFormat("E").format(getStartDate());
     }
 
     /**

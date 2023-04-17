@@ -21,13 +21,13 @@ public class MyScheduleEventDateVo implements Parcelable{
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeLong(mStartDateTime);
-        dest.writeLong(mEndDateTime);
+        dest.writeLong(mGermanStartDateTime);
+        dest.writeLong(mGermanEndDateTime);
     }
 
     MyScheduleEventDateVo(final Parcel in) {
-        this.mStartDateTime = in.readLong();
-        this.mEndDateTime = in.readLong();
+        this.mGermanStartDateTime = in.readLong();
+        this.mGermanEndDateTime = in.readLong();
     }
 
 
@@ -46,7 +46,7 @@ public class MyScheduleEventDateVo implements Parcelable{
      * @return Start date tim as long
      */
     public long getStartTime() {
-        return MyScheduleUtils.convertEahApiTimeToUtc(mStartDateTime);
+        return MyScheduleUtils.convertEahApiTimeToUtc(mGermanStartDateTime);
     }
 
     /**
@@ -54,25 +54,38 @@ public class MyScheduleEventDateVo implements Parcelable{
      * @return End date time as long
      */
     public long getEndTime() {
-        return MyScheduleUtils.convertEahApiTimeToUtc(mEndDateTime);
+        return MyScheduleUtils.convertEahApiTimeToUtc(mGermanEndDateTime);
     }
 
-    public Date getStartDateTime() {
-        return new Date(mStartDateTime * 1000);
+    /**
+     * Get german start time in long in seconds
+     * (note: do not use this except for constructors)
+     * @return
+     */
+    public long getGermanStartTime() {
+        return mGermanStartDateTime;
     }
 
-    public Date getEndDateTime() {
-        return new Date(mEndDateTime * 1000);
+    /**
+     * Get german end time in long in seconds
+     * (note: do not use this except for constructors)
+     * @return
+     */
+    public long getGermanEndTime() {
+        return mGermanEndDateTime;
     }
 
-    /* not used
-    public String getStartDateTimeAsString() {
-        return new Date(mStartDateTime * 1000).toString();
-    } */
+    public Date getGermanStartDate() {
+        return new Date(mGermanStartDateTime * 1000);
+    }
+
+    public Date getGermanEndDate() {
+        return new Date(mGermanEndDateTime * 1000);
+    }
 
     @SerializedName("StartDateTime")
-    private long mStartDateTime;
+    private long mGermanStartDateTime;
 
     @SerializedName("EndDateTime")
-    private long mEndDateTime;
+    private long mGermanEndDateTime;
 }

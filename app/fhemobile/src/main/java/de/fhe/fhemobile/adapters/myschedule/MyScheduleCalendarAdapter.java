@@ -144,7 +144,7 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 				final String weekDayName = currentItem.getWeekDayName();
 				weekDay = "(" + today + ") "+ weekDayName ;
 			}
-			weekDay += ", " + new SimpleDateFormat("dd.MM.yy", Locale.ROOT ).format(currentItem.getStartTime());
+			weekDay += ", " + new SimpleDateFormat("dd.MM.yy", Locale.ROOT).format(currentItem.getStartTime());
 			weekdayHeader.setText(weekDay);
 			weekdayHeader.setVisibility(View.VISIBLE);
 

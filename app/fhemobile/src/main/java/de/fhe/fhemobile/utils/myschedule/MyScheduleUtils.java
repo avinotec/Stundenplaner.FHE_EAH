@@ -151,13 +151,7 @@ public final class MyScheduleUtils {
 			for (final MyScheduleEventDateVo eventDate : eventSet.getEventDates()) {
 
 				//new EventVo
-				final MyScheduleEventVo event = new MyScheduleEventVo(
-						eventSet.getTitle(),
-						eventSet.getId(),
-						eventDate.getStartTime(),
-						eventDate.getEndTime(),
-						eventSet.getLecturerList(),
-						eventSet.getLocationList());
+				final MyScheduleEventVo event = createEventVo(eventDate, eventSet);
 				eventsToAdd.add(event);
 			}
 
@@ -398,13 +392,7 @@ public final class MyScheduleUtils {
 								|| fetchedEvent.getStartTime() != localEvent.getStartTime()
 								|| fetchedEvent.getEndTime() != localEvent.getEndTime()) {
 							//add new event
-							final MyScheduleEventVo newEvent = new MyScheduleEventVo(
-									fetchedEventSet.getTitle(),
-									fetchedEventSet.getId(),
-									fetchedEvent.getStartTime(),
-									fetchedEvent.getEndTime(),
-									fetchedEventSet.getLecturerList(),
-									fetchedEventSet.getLocationList());
+							final MyScheduleEventVo newEvent = createEventVo(fetchedEvent, fetchedEventSet);
 							newEvent.addChange(TimetableChangeType.ADDITION);
 							localEventSetEntry.getValue().add(i, newEvent);
 						}
@@ -466,13 +454,7 @@ public final class MyScheduleUtils {
 				final List<MyScheduleEventVo> eventListToAdd = new ArrayList<>();
 
 				for (final MyScheduleEventDateVo addedEventDate : eventSet.getEventDates()) {
-					final MyScheduleEventVo eventToAdd = new MyScheduleEventVo(
-							eventSet.getTitle(),
-							eventSet.getId(),
-							addedEventDate.getStartTime(),
-							addedEventDate.getEndTime(),
-							eventSet.getLecturerList(),
-							eventSet.getLocationList());
+					final MyScheduleEventVo eventToAdd = createEventVo(addedEventDate, eventSet);
 					eventToAdd.addChange(TimetableChangeType.ADDITION);
 					eventListToAdd.add(eventToAdd);
 				}
@@ -489,4 +471,23 @@ public final class MyScheduleUtils {
 		localEventSeries.setEvents(updatedEvents, eventsToBeUpdatedByEventSet.keySet());
 	}
 
+	/**
+	 * Construct a new {@link MyScheduleEventVo} from the given {@link MyScheduleEventDateVo}
+	 * and {@link MyScheduleEventSetVo}
+	 *
+	 * @param eventDate A {@link MyScheduleEventDateVo}
+	 * @param eventSet The {@link MyScheduleEventSetVo} the eventDate belongs to
+	 * @return The constructed {@link MyScheduleEventVo}
+	 */
+	public static MyScheduleEventVo createEventVo(final MyScheduleEventDateVo eventDate,
+												  final MyScheduleEventSetVo eventSet){
+
+		return new MyScheduleEventVo(
+				eventSet.getTitle(),
+				eventSet.getId(),
+				eventDate.getGermanStartTime(),
+				eventDate.getGermanEndTime(),
+				eventSet.getLecturerList(),
+				eventSet.getLocationList());
+	}
 }
