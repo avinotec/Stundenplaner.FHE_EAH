@@ -23,12 +23,13 @@ import java.util.concurrent.TimeUnit;
 
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
+import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.models.myschedule.CalendarModel;
 import de.fhe.fhemobile.utils.Utils;
 
 /**
  * {@link Runnable} for syncing My Schedule to a calendar
- *
+ * <p>
  * Created by Nadja - 16.02.2023
  */
 public class CalendarSynchronizationBackgroundTask implements Runnable {
@@ -39,10 +40,10 @@ public class CalendarSynchronizationBackgroundTask implements Runnable {
      * Construct a new {@link CalendarSynchronizationBackgroundTask}
      * that synchronizes My Schedule with the users calendar every 10 min.
      */
-    public static void startPeriodicSynchronizing(){
-        if(mScheduledFuture == null){
+    public static void startPeriodicSynchronizing() {
+        if (mScheduledFuture == null) {
             mScheduledFuture = Main.scheduledExecutorService.scheduleWithFixedDelay(
-                    new CalendarSynchronizationBackgroundTask(),0,10, TimeUnit.MINUTES);
+                    new CalendarSynchronizationBackgroundTask(), 0, 10, TimeUnit.MINUTES);
         }
     }
 
@@ -50,12 +51,12 @@ public class CalendarSynchronizationBackgroundTask implements Runnable {
      * Stop the {@link CalendarSynchronizationBackgroundTask} that periodically synchronizes my schedule
      * after it finished the current run.
      */
-    public static void stopPeriodicSynchronizing(){
+    public static void stopPeriodicSynchronizing() {
         //mScheduledFuture.isCancelled() necessary to check because calling cancel() on a futures
         // that has been already canceled causes a SocketException
-        if(mScheduledFuture != null && !mScheduledFuture.isCancelled()){
+        if (mScheduledFuture != null && !mScheduledFuture.isCancelled()) {
             Main.scheduledExecutorService.schedule(
-                    () -> mScheduledFuture.cancel(true),0, TimeUnit.SECONDS);
+                    () -> mScheduledFuture.cancel(true), 0, TimeUnit.SECONDS);
         }
     }
 
@@ -63,19 +64,18 @@ public class CalendarSynchronizationBackgroundTask implements Runnable {
      * Construct a new {@link CalendarSynchronizationBackgroundTask} that synchronizes My Schedule.
      * The task gets scheduled for one immediate execution.
      */
-    public static void sync(){
-        Main.scheduledExecutorService.schedule(new CalendarSynchronizationBackgroundTask(),0, TimeUnit.SECONDS);
+    public static void sync() {
+        Main.scheduledExecutorService.schedule(new CalendarSynchronizationBackgroundTask(), 0, TimeUnit.SECONDS);
     }
 
 
     @Override
     public void run() {
         Log.i(TAG, "Started CalendarSynchronizationBackgroundTask.run()");
-        if(BuildConfig.DEBUG){
-            Utils.showToastFromBackgroundTask("Debug Info: Kalendersynchronisation gestartet");
-        }
 
+        Utils.showToastFromBackgroundTask(R.string.myschedule_calsync_started);
         CalendarModel.syncMySchedule();
+        Utils.showToastFromBackgroundTask(R.string.myschedule_calsync_finished);
     }
 
     private static ScheduledFuture mScheduledFuture;

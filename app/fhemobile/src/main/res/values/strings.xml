@@ -128,6 +128,7 @@
     <string name="myschedule_pref_fcm_title">Push Notifications</string>
     <string name="myschedule_pref_fcm_summary">Notify about timetable changes and added exams</string>
     <string name="myschedule_pref_fcm_error">No permission to receive push notifications</string>
+    <string name="myschedule_calsync_started">Started synchronizing. This can take a few minutes.</string>
     <string name="myschedule_calsync_finished">Calendar synchronized.</string>
     <string name="myschedule_pref_category_calsync">Calendar Synchronization</string>
     <string name="myschedule_pref_calsync_no_permission" translatable="false">no_calendar_permission</string>

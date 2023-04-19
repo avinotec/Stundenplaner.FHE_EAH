@@ -129,6 +129,7 @@
     <string name="myschedule_pref_fcm_title">Push-Benachrichtigungen</string>
     <string name="myschedule_pref_fcm_summary">Benachrichtige mich bei Stundenplanänderungen und hinzugefügten Prüfungen</string>
     <string name="myschedule_pref_fcm_error">Keine Berechtigung zum Empfangen von Push-Benachrichtigungen</string>
+    <string name="myschedule_calsync_started">Synchronisation gestartet. Dies kann einige Minuten dauern.</string>
     <string name="myschedule_calsync_finished">Kalender synchronisiert.</string>
     <string name="myschedule_pref_category_calsync">Kalendersynchronisation</string>
     <string name="myschedule_pref_choose_calendar_title">Kalendar wählen</string>

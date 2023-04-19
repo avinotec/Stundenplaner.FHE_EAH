@@ -306,7 +306,6 @@ public class CalendarModel extends EventDispatcher {
         }
 
         Log.i(TAG, "Finished synchronizing My Schedule");
-        Utils.showToastFromBackgroundTask(R.string.myschedule_calsync_finished);
     }
 
     /**
