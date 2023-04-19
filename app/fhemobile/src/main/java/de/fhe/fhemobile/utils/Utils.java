@@ -139,6 +139,14 @@ public final class Utils {
         });
     }
 
+    /**
+     * Show toast for 3.5s instead of only 2s
+     * @param _ResId
+     */
+    public static void showToastLong(@StringRes final int _ResId){
+        Toast.makeText(Main.getAppContext(), _ResId, Toast.LENGTH_LONG).show();
+    }
+
 
 	// Der Stundenplan liefert Zeitangaben in Sekunden seit 1970. Das wird auch "Epoch (Unix) Time" genannt.
 	// Die EAH API liefert den Zeitstempel für eine Vorlesung in dieser Sekundenzahl aus.

@@ -23,6 +23,7 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -55,6 +56,7 @@ import de.fhe.fhemobile.utils.Utils;
 public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
 
     final long CALENDAR_ID_RESERVED_LOCAL_CALENDAR = -1L;
+    private static final String TAG = MySchedulePreferencesFragment.class.getSimpleName();
 
     /**
      * Use this factory method to create a new instance of
@@ -199,12 +201,20 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
              */
             @Override
             public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
-                //no calendar selected
+                //NO CALENDAR SELECTED (Auswahl wird aufgehoben)
                 if ("".equals((String) newValue)) {
                     mCalendarSelectionPref.setSummary(R.string.myschedule_pref_choose_calendar_summary);
                     PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
                             .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), "").apply();
                     return true;
+                }
+                //CALENDAR SELECTED
+                //another calendar has been chosen before and synchronization is activated
+                else if(mCalendarSelectionPref.getEntry() != null && !"".equals(mCalendarSelectionPref.getEntry().toString())
+                        && mCalendarSyncSwitchPref.isChecked()){
+                    //show warning that calendar selection cannot be changed while sync is on
+                    Utils.showToastLong(R.string.myschedule_pref_choose_calendar_warning);
+                    return false;
                 }
                 //"create new local calendar" is chosen
                 else if (("" + CALENDAR_ID_RESERVED_LOCAL_CALENDAR).equals((String) newValue)) {
@@ -226,22 +236,21 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                     return false;
                 }
                 //calendar chosen
-                else {
+                // do not set value if entry (name of the chosen calendar) is empty
+                else if(mCalendarSelectionPref.getEntry() != null){
                     //set summary, selected calendar name and value to chosen calendar
-                    // prevent nothing is chosen
                     final CharSequence calendarEntry = mCalendarSelectionPref.getEntry();
-                    if ( calendarEntry != null ) {
-                        mCalendarSelectionPref.setSummary(calendarEntry);
+                    mCalendarSelectionPref.setSummary(calendarEntry);
 
-                        final String calendarEntryString = calendarEntry.toString();
-                        if (calendarEntryString != null ) {
-                            PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
-                                    .edit()
-                                    .putString( getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), calendarEntryString )
-                                    .apply();
-                        }
-                    }
+                    final String calendarEntryString = calendarEntry.toString();
+                    PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+                            .edit()
+                            .putString(getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), calendarEntryString)
+                            .apply();
                     return true;
+                } else {
+                    Log.w(TAG, "mCalendarSelectionPref onPrefenceChange: calendar selection is changed but getEntry() is null");
+                    return false;
                 }
             }
         });

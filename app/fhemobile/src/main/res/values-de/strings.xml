@@ -133,6 +133,7 @@
     <string name="myschedule_pref_category_calsync">Kalendersynchronisation</string>
     <string name="myschedule_pref_choose_calendar_title">Kalendar wählen</string>
     <string name="myschedule_pref_choose_calendar_summary">Wähle einen Kalender, in den synchronisiert werden soll</string>
+    <string name="myschedule_pref_choose_calendar_warning">Kalender ändern nur bei ausgeschalteter Synchronisation möglich!</string>
     <string name="myschedule_pref_delete_local_calendar_title">Lokalen Kalender löschen</string>
     <string name="myschedule_pref_delete_local_calendar_summary">Löscht den lokalen Kalender \"Mein Stundenplan\"</string>
     <string name="myschedule_pref_calsync_title">Synchronisieren</string>

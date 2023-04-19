@@ -133,6 +133,7 @@
     <string name="myschedule_pref_calsync_no_permission" translatable="false">no_calendar_permission</string>
     <string name="myschedule_pref_choose_calendar_title">Choose calendar</string>
     <string name="myschedule_pref_choose_calendar_summary">Select a calendar to synchronize to</string>
+    <string name="myschedule_pref_choose_calendar_warning">Changing calendar selection only possible while synchronization is off!</string>
     <string name="myschedule_pref_delete_local_calendar_title">Delete local calendar</string>
     <string name="myschedule_pref_delete_local_calendar" translatable="false">prefDeleteLocalCalendar</string>
     <string name="myschedule_pref_delete_local_calendar_summary">Delete local calendar \"My Schedule\"</string>
