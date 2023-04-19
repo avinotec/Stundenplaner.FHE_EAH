@@ -65,6 +65,7 @@ public class CalendarSynchronizationBackgroundTask implements Runnable {
      * The task gets scheduled for one immediate execution.
      */
     public static void sync() {
+        Utils.showToastFromBackgroundTask("DEBUG Info: Single calendar synchronization task started ");
         Main.scheduledExecutorService.schedule(new CalendarSynchronizationBackgroundTask(), 0, TimeUnit.SECONDS);
     }
 
@@ -73,7 +74,6 @@ public class CalendarSynchronizationBackgroundTask implements Runnable {
     public void run() {
         Log.i(TAG, "Started CalendarSynchronizationBackgroundTask.run()");
 
-        Utils.showToastFromBackgroundTask(R.string.myschedule_calsync_started);
         CalendarModel.syncMySchedule();
         Utils.showToastFromBackgroundTask(R.string.myschedule_calsync_finished);
     }

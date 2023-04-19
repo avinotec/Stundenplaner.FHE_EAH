@@ -136,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                 PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
                 .getBoolean(getResources().getString(R.string.sp_myschedule_enable_calsync), false)){
 
-            Utils.showToastLong(R.string.myschedule_calsync_started);
             CalendarSynchronizationBackgroundTask.startPeriodicSynchronizing();
         }
 
