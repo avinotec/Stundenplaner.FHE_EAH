@@ -129,8 +129,6 @@
     <string name="myschedule_pref_fcm_title">Push-Benachrichtigungen</string>
     <string name="myschedule_pref_fcm_summary">Benachrichtige mich bei Stundenplanänderungen und hinzugefügten Prüfungen</string>
     <string name="myschedule_pref_fcm_error">Keine Berechtigung zum Empfangen von Push-Benachrichtigungen</string>
-    <string name="myschedule_calsync_started">Synchronisation gestartet. Dies kann einige Minuten dauern.</string>
-    <string name="myschedule_calsync_finished">Kalender synchronisiert.</string>
     <string name="myschedule_pref_category_calsync">Kalendersynchronisation</string>
     <string name="myschedule_pref_choose_calendar_title">Kalendar wählen</string>
     <string name="myschedule_pref_choose_calendar_summary">Wähle einen Kalender, in den synchronisiert werden soll</string>
@@ -139,7 +137,10 @@
     <string name="myschedule_pref_delete_local_calendar_summary">Löscht den lokalen Kalender \"Mein Stundenplan\"</string>
     <string name="myschedule_pref_calsync_title">Synchronisieren</string>
     <string name="myschedule_pref_calsync_summary">Mein Stundenplan in den gewählten Kalender synchronisieren</string>
-    <string name="myschedule_calsync_warning">Du musst erst einen Kalender auswählen!</string>
+    <string name="myschedule_calsync_warning_no_cal_chosen">Du musst erst einen Kalender auswählen!</string>
+    <string name="myschedule_calsync_warning_sync_running">Kalender wird gerade synchronisiert. Synchronisation kann währenddessen nicht ausgeschaltet werden!</string>
+    <string name="myschedule_calsync_started">Synchronisation gestartet. Dies kann einige Minuten dauern.</string>
+    <string name="myschedule_calsync_finished">Kalender synchronisiert.</string>
     <string name="myschedule_calsync_local_calendar_name">Mein Stundenplan</string>
     <string name="myschedule_create_local_calendar">Neuen lokalen Kalender erstellen</string>
     <string name="myschedule_delete_calendar_error">Es wurde kein lokaler Kalendar zum Löschen gefunden.</string>

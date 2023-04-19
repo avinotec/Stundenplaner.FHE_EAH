@@ -295,17 +295,23 @@ public class CalendarModel extends EventDispatcher {
                 .putString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), "").apply();
     }
 
+    public static boolean isSynchronizationRunning() {
+        return synchronizationRunning;
+    }
+
     /**
      * Synchronize every event series of the calendar synchronisation to the chosen calendar
      */
     public static synchronized void syncMySchedule(){
         Log.i(TAG, "Started synchronizing My Schedule");
+        synchronizationRunning = true;
 
         for(final MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
             syncEventSeries(eventSeries);
         }
 
         Log.i(TAG, "Finished synchronizing My Schedule");
+        synchronizationRunning = false;
     }
 
     /**
@@ -464,4 +470,12 @@ public class CalendarModel extends EventDispatcher {
         }
     }
 
+    /*
+     *  From java 5 after a change in Java memory model reads and writes are atomic for all
+     *  variables declared using the volatile keyword (including long and double variables) and
+     *  simple atomic variable access is more efficient instead of accessing these variables
+     *  via synchronized java code.
+     */
+    //store status of synchronization to refuse disabling synchronisation while it is running
+    private static volatile boolean synchronizationRunning = false;
 }

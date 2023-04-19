@@ -275,11 +275,12 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                 //no calendar chosen
                 if (mCalendarSelectionPref.getValue() == null) {
                     mCalendarSyncSwitchPref.setChecked(false);
-                    Utils.showToast(R.string.myschedule_calsync_warning);
+                    Utils.showToast(R.string.myschedule_calsync_warning_no_cal_chosen);
                 }
                 //calendar chosen
                 else {
                     //toggle synchronisation
+                    //sync got enabled
                     if (syncEnabled) {
                         //if debugging: sync immediately when sync button is enabled
                         if (BuildConfig.DEBUG) {
@@ -287,9 +288,17 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                         }
                         Utils.showToastLong(R.string.myschedule_calsync_started);
                         CalendarSynchronizationBackgroundTask.startPeriodicSynchronizing();
-                    } else {
-                        CalendarSynchronizationBackgroundTask.stopPeriodicSynchronizing();
-                        askWhetherToDeleteCalendarEntries();
+                    }
+                    //sync got disabled
+                    else {
+                        //if synchronization is currently running, refuse turning off sync
+                        if(!CalendarModel.isSynchronizationRunning()) {
+                            CalendarSynchronizationBackgroundTask.stopPeriodicSynchronizing();
+                            askWhetherToDeleteCalendarEntries();
+                        } else {
+                            mCalendarSyncSwitchPref.setChecked(true);
+                            Utils.showToastLong(R.string.myschedule_calsync_warning_sync_running);
+                        }
                     }
                 }
 
@@ -457,7 +466,9 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                     public void onClick(DialogInterface dialog, int which) {
                         //dialog is closed
                     }
-                }).show();
+                })
+                .setCancelable(false)
+                .show();
     }
 
     private void showDeleteCalendarDialog(String calendarId) {
@@ -486,6 +497,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                         //dialog is closed
                     }
                 })
+                .setCancelable(false)
                 .show();
     }
 
@@ -505,6 +517,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                         //dialog is closed
                     }
                 })
+                .setCancelable(false)
                 .show();
 
     }

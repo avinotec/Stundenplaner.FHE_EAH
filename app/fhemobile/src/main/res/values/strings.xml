@@ -128,8 +128,6 @@
     <string name="myschedule_pref_fcm_title">Push Notifications</string>
     <string name="myschedule_pref_fcm_summary">Notify about timetable changes and added exams</string>
     <string name="myschedule_pref_fcm_error">No permission to receive push notifications</string>
-    <string name="myschedule_calsync_started">Started synchronizing. This can take a few minutes.</string>
-    <string name="myschedule_calsync_finished">Calendar synchronized.</string>
     <string name="myschedule_pref_category_calsync">Calendar Synchronization</string>
     <string name="myschedule_pref_calsync_no_permission" translatable="false">no_calendar_permission</string>
     <string name="myschedule_pref_choose_calendar_title">Choose calendar</string>
@@ -140,7 +138,10 @@
     <string name="myschedule_pref_delete_local_calendar_summary">Delete local calendar \"My Schedule\"</string>
     <string name="myschedule_pref_calsync_title">Synchronize</string>
     <string name="myschedule_pref_calsync_summary">Sync My Schedule to the chosen calendar</string>
-    <string name="myschedule_calsync_warning">You need to select a calendar first!</string>
+    <string name="myschedule_calsync_warning_no_cal_chosen">You need to select a calendar first!</string>
+    <string name="myschedule_calsync_warning_sync_running"> Synchronisation cannot be turned off while calendar is being synchronized!</string>
+    <string name="myschedule_calsync_started">Started synchronizing. This can take a few minutes.</string>
+    <string name="myschedule_calsync_finished">Calendar synchronized.</string>
     <string name="myschedule_calsync_local_calendar_name">My Schedule</string>
     <string name="myschedule_create_local_calendar">Create new local calendar</string>
     <string name="myschedule_delete_calendar_error">No local calendar found to delete</string>
