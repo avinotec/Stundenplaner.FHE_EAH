@@ -298,7 +298,7 @@ public class CalendarModel extends EventDispatcher {
     /**
      * Synchronize every event series of the calendar synchronisation to the chosen calendar
      */
-    public static void syncMySchedule(){
+    public static synchronized void syncMySchedule(){
         Log.i(TAG, "Started synchronizing My Schedule");
 
         for(final MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
