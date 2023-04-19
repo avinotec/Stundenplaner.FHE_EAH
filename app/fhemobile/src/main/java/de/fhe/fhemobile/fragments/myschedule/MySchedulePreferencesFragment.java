@@ -434,13 +434,16 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                 .setPositiveButton(R.string.dialog_delete_cal_confirm, new DialogInterface.OnClickListener() {
 
                     public void onClick(final DialogInterface dialog, final int which) {
-                        //if the calendar to delete, is the one chosen for calendar synchronization,
-                        // then stop synchronization
-                        // (this case is false when the user first selects "create local calendar"
+                        //note: access preferences instead of using mCalendarSelectionPref.getEntry() here.
+                        // It is null when the preference's dialog has not been opened yet, and thus entry values are not initialized.
+                        String localCalendarName = getResources().getString(R.string.myschedule_calsync_local_calendar_name);
+                        String chosenCalendarName = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+                                .getString(getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), "");
+                        //if the calendar to delete is the one chosen for calendar synchronization, then stop synchronization
+                        // (this is not the case when the user first selects "create local calendar"
                         // but then goes back on the decision and chooses another calendar,
                         // this results in a local calendar being created but not currently chosen for synchronization)
-                        if (mCalendarSelectionPref.getEntry() != null &&
-                            getResources().getString(R.string.myschedule_calsync_local_calendar_name).equals(mCalendarSelectionPref.getEntry().toString())) {
+                        if (localCalendarName.equals(chosenCalendarName)) {
                             CalendarModel.getInstance().notifyChange(CalendarSyncEvent.CHOSEN_CALENDAR_DELETED);
                         }
 
