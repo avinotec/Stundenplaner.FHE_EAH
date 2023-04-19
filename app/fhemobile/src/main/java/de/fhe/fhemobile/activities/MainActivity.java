@@ -49,6 +49,8 @@ import de.fhe.fhemobile.fragments.imprint.ImprintFragment;
 import de.fhe.fhemobile.fragments.joboffers.JobOffersFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdates.SemesterDatesWebViewFragment;
+import de.fhe.fhemobile.models.myschedule.CalendarModel;
+import de.fhe.fhemobile.services.CalendarSynchronizationBackgroundTask;
 import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.Utils;
@@ -129,6 +131,13 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                             Log.d(TAG, "Firebase Token: " + token);
                         }
                     });
+        }
+        if (//if calendar synchronization enabled
+                PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+                .getBoolean(getResources().getString(R.string.sp_myschedule_enable_calsync), false)){
+
+            Utils.showToastLong(R.string.myschedule_calsync_started);
+            CalendarSynchronizationBackgroundTask.startPeriodicSynchronizing();
         }
 
     }
