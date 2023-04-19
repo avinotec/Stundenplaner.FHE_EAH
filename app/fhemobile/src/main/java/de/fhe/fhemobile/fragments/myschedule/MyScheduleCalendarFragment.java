@@ -228,6 +228,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 								MyScheduleModel.getInstance().clearSubscribedEventSeriesAndUpdateAdapters();
 							}
 						})
+						.setCancelable(false)
 						.setIcon(android.R.drawable.ic_dialog_alert);
 				if(userCanRefuse) {
 					dialogBuilder.setMessage(R.string.deleteTimetableMessageOptional);
