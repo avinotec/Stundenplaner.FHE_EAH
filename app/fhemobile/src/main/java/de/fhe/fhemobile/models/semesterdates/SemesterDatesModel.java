@@ -104,7 +104,7 @@ public final class SemesterDatesModel extends EventDispatcher {
 
 
         //find current semester
-        Integer currentYear;
+        int currentYear;
         String semesterType;
 
         if (now.before(calWsHolidayStart)) {
@@ -125,7 +125,7 @@ public final class SemesterDatesModel extends EventDispatcher {
                 final String semesterName = mSemesterVos[i].getName(); //e.g. WS 2022/2023 or SS 2022
 
                 // if semester name is "SS currentYear"
-                if (semesterName.endsWith(currentYear.toString())
+                if (semesterName.endsWith(Integer.toString(currentYear))
                         && semesterName.startsWith(semesterType)) {
                     setChosenSemester(i);
                 }
