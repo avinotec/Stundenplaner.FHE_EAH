@@ -51,12 +51,14 @@ public class NewsCategoriesView extends FrameLayout {
         mViewListener = _Listener;
     }
 
-    public void destroy() {
-        mModel.removeListener(NewsModel.NewsChangeEvent.RECEIVED_CATEGORY_ITEMS, mCategoryItemsListener);
-
-        mViewListener = null;
-        mCategoryItemsListener = null;
-    }
+// --Commented out by Inspection START (23.04.2023 15:11):
+//    public void destroy() {
+//        mModel.removeListener(NewsModel.NewsChangeEvent.RECEIVED_CATEGORY_ITEMS, mCategoryItemsListener);
+//
+//        mViewListener = null;
+//        mCategoryItemsListener = null;
+//    }
+// --Commented out by Inspection STOP (23.04.2023 15:11)
 
     public void initContent() {
         mAdapter = new NewsCategoryAdapter(mContext, mModel.getCategoryItems());

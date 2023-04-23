@@ -21,8 +21,10 @@ package de.fhe.fhemobile.vos.maps;
  */
 public class MapVo {
 
-    public MapVo() {
-    }
+// --Commented out by Inspection START (23.04.2023 15:10):
+//    public MapVo() {
+//    }
+// --Commented out by Inspection STOP (23.04.2023 15:10)
 
     /**
      * Map Value Object
@@ -42,9 +44,11 @@ public class MapVo {
         return mNameID;
     }
 
-    public void setNameID(final int _nameID) {
-        mNameID = _nameID;
-    }
+// --Commented out by Inspection START (23.04.2023 15:10):
+//    public void setNameID(final int _nameID) {
+//        mNameID = _nameID;
+//    }
+// --Commented out by Inspection STOP (23.04.2023 15:10)
 
     public String getImageUrl() {
         return mImageUrl;

@@ -57,12 +57,15 @@ public class CanteenSettingsView extends FrameLayout {
         mCanteenViewListener = _Listener;
     }
 
-    public void destroy() {
-        mCanteenModel.removeListener(CanteenChangeEvent.RECEIVED_CANTEENS, mCanteenSelectedListener);
-
-        mCanteenViewListener = null;
-        mCanteenSelectedListener = null;
-    }
+//    TODO destroy() never gets called. So the intended actions never happen.
+// --Commented out by Inspection START (23.04.2023 15:05):
+//        public void destroy() {
+//        mCanteenModel.removeListener(CanteenChangeEvent.RECEIVED_CANTEENS, mCanteenSelectedListener);
+//
+//        mCanteenViewListener = null;
+//        mCanteenSelectedListener = null;
+//    }
+// --Commented out by Inspection STOP (23.04.2023 15:05)
 
     /**
      * Set adapter and OnItemClickListener of canteen list view,

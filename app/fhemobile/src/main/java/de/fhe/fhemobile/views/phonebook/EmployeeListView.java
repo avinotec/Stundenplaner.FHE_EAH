@@ -56,12 +56,14 @@ public class EmployeeListView extends FrameLayout {
         mList.setOnItemClickListener(mListClickListener);
     }
 
-    public void destroy() {
-        mViewListener   = null;
-        mModel          = null;
-        mList           = null;
-        mContext        = null;
-    }
+// --Commented out by Inspection START (23.04.2023 15:06):
+//    public void destroy() {
+//        mViewListener   = null;
+//        mModel          = null;
+//        mList           = null;
+//        mContext        = null;
+//    }
+// --Commented out by Inspection STOP (23.04.2023 15:06)
 
     /**
      * Finalize inflating a view from XML.  This is called as the last phase

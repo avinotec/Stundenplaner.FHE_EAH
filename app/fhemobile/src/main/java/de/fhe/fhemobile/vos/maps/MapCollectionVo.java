@@ -37,17 +37,21 @@ public class MapCollectionVo {
         return mNameID;
     }
 
-    public void setNameID(final int _stringID) {
-        mNameID = _stringID;
-    }
+// --Commented out by Inspection START (23.04.2023 15:08):
+//    public void setNameID(final int _stringID) {
+//        mNameID = _stringID;
+//    }
+// --Commented out by Inspection STOP (23.04.2023 15:08)
 
     public List<MapVo> getMaps() {
         return mMaps;
     }
 
-    public void setMaps(final List<MapVo> _maps) {
-        mMaps = _maps;
-    }
+// --Commented out by Inspection START (23.04.2023 15:08):
+//    public void setMaps(final List<MapVo> _maps) {
+//        mMaps = _maps;
+//    }
+// --Commented out by Inspection STOP (23.04.2023 15:08)
 
     private int mNameID;
     private List<MapVo> mMaps;

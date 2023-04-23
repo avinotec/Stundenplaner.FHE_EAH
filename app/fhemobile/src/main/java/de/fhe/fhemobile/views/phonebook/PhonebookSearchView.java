@@ -52,15 +52,17 @@ public class PhonebookSearchView extends FrameLayout {
         mModel.addListener(PhonebookModel.ChangeEvent.EMPLOYEES_EMPTY, mFoundNoEmployeesListener);
     }
 
-    /**
-     * Remove the listener from the model
-     */
-    public void destroy() {
-        mViewListener = null;
-
-        mModel.removeListener(PhonebookModel.ChangeEvent.EMPLOYEES_EMPTY, mFoundNoEmployeesListener);
-        mModel.removeListener(PhonebookModel.ChangeEvent.EMPLOYEES_SAVED, mFoundEmployeesListener);
-    }
+// --Commented out by Inspection START (23.04.2023 15:12):
+//    /**
+//     * Remove the listener from the model
+//     */
+//    public void destroy() {
+//        mViewListener = null;
+//
+//        mModel.removeListener(PhonebookModel.ChangeEvent.EMPLOYEES_EMPTY, mFoundNoEmployeesListener);
+//        mModel.removeListener(PhonebookModel.ChangeEvent.EMPLOYEES_SAVED, mFoundEmployeesListener);
+//    }
+// --Commented out by Inspection STOP (23.04.2023 15:12)
 
     @Override
     protected void onFinishInflate() {
