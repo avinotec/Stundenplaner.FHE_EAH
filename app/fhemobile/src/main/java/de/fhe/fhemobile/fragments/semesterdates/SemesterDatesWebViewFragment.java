@@ -41,8 +41,6 @@ import de.fhe.fhemobile.views.semesterdates.SemesterDatesWebView;
  */
 public class SemesterDatesWebViewFragment extends FeatureFragment {
 
-    private SemesterDatesWebView mView;
-
     public SemesterDatesWebViewFragment() {
         // Required empty public constructor
     }
@@ -58,7 +56,7 @@ public class SemesterDatesWebViewFragment extends FeatureFragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (SemesterDatesWebView) inflater.inflate(R.layout.fragment_semesterdates_webview, container, false);
+        SemesterDatesWebView mView = (SemesterDatesWebView) inflater.inflate(R.layout.fragment_semesterdates_webview, container, false);
         return mView;
     }
 

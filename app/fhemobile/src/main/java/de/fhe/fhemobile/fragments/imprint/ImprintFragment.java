@@ -54,7 +54,7 @@ public class ImprintFragment extends FeatureFragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (ImprintView) inflater.inflate(R.layout.fragment_imprint, container, false);
+        ImprintView mView = (ImprintView) inflater.inflate(R.layout.fragment_imprint, container, false);
         return mView;
     }
 
@@ -91,5 +91,4 @@ public class ImprintFragment extends FeatureFragment {
     }
 
 
-    private ImprintView mView;
 }

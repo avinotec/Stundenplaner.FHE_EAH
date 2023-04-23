@@ -49,7 +49,7 @@ public class PhonebookSearchFragment extends FeatureFragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (PhonebookSearchView) inflater.inflate(R.layout.fragment_phonebook_search, container, false);
+        PhonebookSearchView mView = (PhonebookSearchView) inflater.inflate(R.layout.fragment_phonebook_search, container, false);
         mView.initializeView(mViewListener);
         return mView;
     }
@@ -67,5 +67,4 @@ public class PhonebookSearchFragment extends FeatureFragment {
     };
 
 
-    private PhonebookSearchView mView;
 }

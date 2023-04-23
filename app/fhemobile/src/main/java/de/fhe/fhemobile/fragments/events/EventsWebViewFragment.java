@@ -56,7 +56,7 @@ public class EventsWebViewFragment extends FeatureFragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (EventsWebView) inflater.inflate(R.layout.fragment_events_webview, container, false);
+        EventsWebView mView = (EventsWebView) inflater.inflate(R.layout.fragment_events_webview, container, false);
         return mView;
     }
 
@@ -93,5 +93,4 @@ public class EventsWebViewFragment extends FeatureFragment {
     }
 
 
-    private EventsWebView mView;
 }

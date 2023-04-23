@@ -86,8 +86,8 @@ public class NavigationDialogFragment extends FeatureFragment {
                              final Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        mView = (NavigationDialogView) inflater.inflate(R.layout.fragment_navigation_dialog,
-                container,false);
+        NavigationDialogView mView = (NavigationDialogView) inflater.inflate(R.layout.fragment_navigation_dialog,
+                container, false);
 
         mView.initializeView(getChildFragmentManager(), getLifecycle());
 
@@ -117,5 +117,4 @@ public class NavigationDialogFragment extends FeatureFragment {
         });
     }
 
-    private NavigationDialogView mView;
 }

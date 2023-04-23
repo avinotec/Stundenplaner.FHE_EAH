@@ -18,8 +18,6 @@ public class EventsWebView extends FrameLayout {
 
     private final Context mContext;
 
-    private WebView mWebView;
-
     public EventsWebView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
@@ -30,7 +28,7 @@ public class EventsWebView extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mWebView = (WebView) findViewById(R.id.eventsWebView);
+        WebView mWebView = (WebView) findViewById(R.id.eventsWebView);
         //wird der WebViewClient nicht geaendert, kann die Seite nicht geladen werden, da die Webview
         mWebView.setWebViewClient(new SSLTolerantWebViewClient(mContext));
         //Ohne JavascriptEnabled laesst sich das WebView nicht scrollen.

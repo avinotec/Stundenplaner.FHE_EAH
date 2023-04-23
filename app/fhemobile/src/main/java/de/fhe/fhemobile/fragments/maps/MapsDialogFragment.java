@@ -58,7 +58,7 @@ public class MapsDialogFragment extends FeatureFragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (MapsDialogView) inflater.inflate(R.layout.fragment_maps_dialog, container, false);
+        MapsDialogView mView = (MapsDialogView) inflater.inflate(R.layout.fragment_maps_dialog, container, false);
 
         mView.initializeView(mViewListener);
 
@@ -97,5 +97,4 @@ public class MapsDialogFragment extends FeatureFragment {
         }
     };
 
-    private MapsDialogView mView;
 }

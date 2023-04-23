@@ -49,7 +49,7 @@ public class EmployeeInformationFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (EmployeeInformationView) inflater.inflate(R.layout.fragment_employee_information, container, false);
+        EmployeeInformationView mView = (EmployeeInformationView) inflater.inflate(R.layout.fragment_employee_information, container, false);
         mView.initializeView(mViewListener);
 
         mView.populateView(mEmployee);
@@ -82,7 +82,6 @@ public class EmployeeInformationFragment extends Fragment {
         }
     };
 
-    private EmployeeInformationView mView;
     EmployeeVo mEmployee;
 
 }

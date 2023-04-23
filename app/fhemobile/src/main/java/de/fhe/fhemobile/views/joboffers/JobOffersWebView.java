@@ -28,7 +28,6 @@ import de.fhe.fhemobile.views.SSLTolerantWebViewClient;
 public class JobOffersWebView extends FrameLayout {
 
     private final Context mContext;
-    private WebView mWebView;
 
     public  JobOffersWebView(final Context context, final AttributeSet attrs){
         super(context, attrs);
@@ -39,7 +38,7 @@ public class JobOffersWebView extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mWebView = (WebView) findViewById(R.id.webview_joboffers);
+        WebView mWebView = (WebView) findViewById(R.id.webview_joboffers);
         //if the WebViewClient is not changed, the website is not able to load
         mWebView.setWebViewClient(new SSLTolerantWebViewClient(mContext));
         //JavaScript needs to be enabled to work properly

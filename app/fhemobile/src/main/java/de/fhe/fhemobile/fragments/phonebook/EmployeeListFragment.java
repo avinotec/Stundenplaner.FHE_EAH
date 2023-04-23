@@ -62,7 +62,7 @@ public class EmployeeListFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (EmployeeListView) inflater.inflate(R.layout.fragment_employee_list, container, false);
+        EmployeeListView mView = (EmployeeListView) inflater.inflate(R.layout.fragment_employee_list, container, false);
         mView.initializeView(mViewListener);
         return mView;
     }
@@ -92,7 +92,5 @@ public class EmployeeListFragment extends Fragment {
     };
 
     EmployeeListCallbacks mCallbacks;
-
-    private EmployeeListView mView;
 
 }

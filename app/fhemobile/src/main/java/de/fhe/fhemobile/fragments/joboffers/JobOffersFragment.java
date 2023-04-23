@@ -39,8 +39,6 @@ import de.fhe.fhemobile.views.joboffers.JobOffersWebView;
  */
 public class JobOffersFragment extends FeatureFragment {
 
-    private JobOffersWebView mView;
-
     public JobOffersFragment(){
         // Required empty public constructor
     }
@@ -61,7 +59,7 @@ public class JobOffersFragment extends FeatureFragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         //Inflate the layout for this fragment
-        mView = (JobOffersWebView) inflater.inflate(R.layout.fragment_joboffers_webview, container, false);
+        JobOffersWebView mView = (JobOffersWebView) inflater.inflate(R.layout.fragment_joboffers_webview, container, false);
         return mView;
     }
 

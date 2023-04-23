@@ -41,8 +41,6 @@ import de.fhe.fhemobile.views.news.NewsWebView;
  */
 public class NewsWebViewFragment extends FeatureFragment {
 
-    private NewsWebView mView;
-
     public NewsWebViewFragment() {
         // Required empty public constructor
     }
@@ -58,7 +56,7 @@ public class NewsWebViewFragment extends FeatureFragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (NewsWebView) inflater.inflate(R.layout.fragment_news_webview, container, false);
+        NewsWebView mView = (NewsWebView) inflater.inflate(R.layout.fragment_news_webview, container, false);
         return mView;
     }
 

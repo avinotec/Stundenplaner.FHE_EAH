@@ -51,7 +51,7 @@ public class CanteenSettingsFragment extends FeatureFragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = (CanteenSettingsView) inflater.inflate(R.layout.fragment_canteen_settings, container, false);
+        CanteenSettingsView mView = (CanteenSettingsView) inflater.inflate(R.layout.fragment_canteen_settings, container, false);
         mView.initializeView(mViewListener);
 
         if(CanteenModel.getInstance().getCanteens() == null) {
@@ -71,7 +71,5 @@ public class CanteenSettingsFragment extends FeatureFragment {
             UserSettings.getInstance().addOrRemoveFromSelectedCanteens(_CanteenId);
         }
     };
-
-    private CanteenSettingsView mView;
 
 }
