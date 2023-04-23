@@ -67,7 +67,7 @@ public final class MyScheduleUtils {
 	 * Convert the time in long shifted by timezone offset (fetched from the EAH Api)
 	 * to the correct time long in UTC
 	 * @param time The incorrect time in long
-	 * @return The time in correct long. Null, if parsing failed.
+	 * @return The time in correct long. null, if parsing failed.
 	 */
 	public static Long convertEahApiTimeToUtc(long time){
 		//!!!NOTE: do not debug timezones in the emulator - it's a mess, it is never set as you expected
@@ -84,7 +84,7 @@ public final class MyScheduleUtils {
 		try {
 			Date correctDate = sdf2.parse(germanDateString);
 			return correctDate.getTime();
-		} catch (ParseException ex){
+		} catch (final ParseException ex){
 			Log.e(TAG, "Failed to parse date string", ex);
 			return null;
 		}
