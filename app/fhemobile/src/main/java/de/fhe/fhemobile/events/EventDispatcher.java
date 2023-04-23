@@ -27,7 +27,7 @@ public class EventDispatcher implements Dispatcher {
 	private static final String TAG = EventDispatcher.class.getSimpleName();
 	
 	private final HashMap<String, CopyOnWriteArrayList<EventListener>> listenerMap;
-	private Dispatcher target;
+	private final Dispatcher target;
 	
 	protected EventDispatcher() {
 		this(null);
@@ -87,11 +87,12 @@ public class EventDispatcher implements Dispatcher {
 			listener.onEvent(event);
 		}
 	}
-	
-	public void dispose() {
-		synchronized (listenerMap) {
-			listenerMap.clear();
-		}
-		target = null;
-	}
+
+	//not used
+	//public void dispose() {
+	//	synchronized (listenerMap) {
+	//		listenerMap.clear();
+	//	}
+	//	target = null;
+	//}
 }
