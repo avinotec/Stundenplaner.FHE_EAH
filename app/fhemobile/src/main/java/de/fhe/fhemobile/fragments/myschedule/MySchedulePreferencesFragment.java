@@ -523,10 +523,11 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
     }
 
     private boolean isCalendarPermissionGranted() {
-        return ContextCompat.checkSelfPermission(Main.getAppContext(),
-                Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(Main.getAppContext(),
+        final boolean bReadPermissionGranted = ContextCompat.checkSelfPermission(Main.getAppContext(),
+                Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED;
+        final boolean bWritePermissionGranted = ContextCompat.checkSelfPermission(Main.getAppContext(),
                 Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED;
+        return bReadPermissionGranted && bWritePermissionGranted;
     }
 
     private void requestCalendarPermission() {
