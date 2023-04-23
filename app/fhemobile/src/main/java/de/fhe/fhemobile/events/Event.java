@@ -19,6 +19,6 @@ package de.fhe.fhemobile.events;
 public interface Event {
 	
 	String getType();
-	// --Commented out by Inspection (23.04.2023 15:07):Object getSource();
+	Object getSource();
 	void setSource(Object source);
 }
