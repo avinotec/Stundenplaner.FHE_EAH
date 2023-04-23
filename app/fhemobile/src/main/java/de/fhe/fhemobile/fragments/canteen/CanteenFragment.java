@@ -32,6 +32,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 
+import java.util.Objects;
+
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.SettingsActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
@@ -91,7 +93,7 @@ public class CanteenFragment extends FeatureFragment {
                 if (menuItem.getItemId() == R.id.action_settings_canteen) {
                     final Intent intent = new Intent(activity, SettingsActivity.class);
                     intent.putExtra(SettingsActivity.EXTRA_SETTINGS_ID, Features.FeatureId.CANTEEN);
-                    activity.startActivity(intent);
+                    Objects.requireNonNull(activity).startActivity(intent);
                     return true;
                 }
 
