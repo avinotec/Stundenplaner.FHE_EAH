@@ -19,7 +19,7 @@ package de.fhe.fhemobile.events;
 public class SimpleEvent implements Event {
 
 	protected Object source;
-	private String type;
+	private final String type;
 
 
 	public SimpleEvent(final String type) {
