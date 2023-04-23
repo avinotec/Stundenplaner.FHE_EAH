@@ -49,7 +49,6 @@ import de.fhe.fhemobile.fragments.imprint.ImprintFragment;
 import de.fhe.fhemobile.fragments.joboffers.JobOffersFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdates.SemesterDatesWebViewFragment;
-import de.fhe.fhemobile.models.myschedule.CalendarModel;
 import de.fhe.fhemobile.services.CalendarSynchronizationBackgroundTask;
 import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.utils.Define;
