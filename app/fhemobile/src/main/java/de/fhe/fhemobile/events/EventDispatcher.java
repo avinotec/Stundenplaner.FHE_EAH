@@ -27,14 +27,11 @@ public class EventDispatcher implements Dispatcher {
 	private static final String TAG = EventDispatcher.class.getSimpleName();
 	
 	private final HashMap<String, CopyOnWriteArrayList<EventListener>> listenerMap;
-	private final Dispatcher target;
+	//MS private final Dispatcher target;
 	
 	protected EventDispatcher() {
-		this(null);
-	}
-	private EventDispatcher(final Dispatcher target) {
 		listenerMap = new HashMap<String, CopyOnWriteArrayList<EventListener>>();
-		this.target = (target != null) ? target : this;
+		//MS this.target = this;
 	}
 	
 	@Override
@@ -77,7 +74,8 @@ public class EventDispatcher implements Dispatcher {
 			return;
 		}
 		final String type = event.getType();
-		event.setSource(target);
+		//MS event.setSource(target);
+		event.setSource(this);
 		final CopyOnWriteArrayList<EventListener> list;
 		synchronized (listenerMap) {
 			list = listenerMap.get(type);
@@ -93,6 +91,6 @@ public class EventDispatcher implements Dispatcher {
 	//	synchronized (listenerMap) {
 	//		listenerMap.clear();
 	//	}
-	//	target = null;
+	//	MS target = null;
 	//}
 }
