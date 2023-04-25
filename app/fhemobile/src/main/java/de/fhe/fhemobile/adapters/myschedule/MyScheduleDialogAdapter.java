@@ -11,8 +11,8 @@ public class MyScheduleDialogAdapter extends AbstractMyScheduleAdapter {
 
     private static final String TAG = MyScheduleDialogAdapter.class.getSimpleName();
 
-    public MyScheduleDialogAdapter(final Context context) {
-        super(context);
+    public MyScheduleDialogAdapter() {
+        super();
         setRoomVisible(false);
     }
 

@@ -90,7 +90,7 @@ public class MyScheduleDialogFragment extends DialogFragment {
         mChosenStudyProgram = null;
         mChosenSemester = null;
 
-        mListAdapter = new MyScheduleDialogAdapter(getContext());
+        mListAdapter = new MyScheduleDialogAdapter();
     }
 
     // resize the dialog to fit to the full display

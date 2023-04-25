@@ -49,10 +49,10 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 	public MyScheduleCalendarAdapter() {
 	}
 
-	public MyScheduleCalendarAdapter(final List<MyScheduleEventVo> items){
-		setItems(items);
-	}
-
+	/**
+	 * Set items and notify that data set changed
+	 * @param items
+	 */
 	public void setItems(final List<MyScheduleEventVo> items){
 		if(items == null) return;
 
@@ -65,6 +65,7 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 				mItems.add(item);
 			}
 		}
+		this.notifyDataSetChanged();
 	}
 
 

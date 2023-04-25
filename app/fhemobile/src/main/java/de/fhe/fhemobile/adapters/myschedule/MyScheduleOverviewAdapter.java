@@ -28,9 +28,8 @@ public class MyScheduleOverviewAdapter extends AbstractMyScheduleAdapter {
 
     private static final String TAG = MyScheduleOverviewAdapter.class.getSimpleName();
 
-    public MyScheduleOverviewAdapter(final Context context, final List<MyScheduleEventSeriesVo> _items) {
-        super(context);
-        setItems(_items);
+    public MyScheduleOverviewAdapter(){
+        super();
         setRoomVisible(true);
     }
 

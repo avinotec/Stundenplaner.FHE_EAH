@@ -39,6 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.utils.myschedule.TimetableChangeType;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
@@ -57,15 +58,17 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
     @NonNls
     static private final String HTML_FONT_BOLD_END = "</b></font>";
 
-    protected final Context mContext;
     protected List<MyScheduleEventSeriesVo> mItems;
     boolean roomVisible = false;
 
 
-    public AbstractMyScheduleAdapter(final Context context) {
-        this.mContext = context;
+    public AbstractMyScheduleAdapter() {
     }
 
+    /**
+     * Set items of the adapter and notify that the data set changed
+     * @param mItems
+     */
     public void setItems(final List<MyScheduleEventSeriesVo> mItems) {
         this.mItems = mItems;
         this.notifyDataSetChanged();
@@ -131,7 +134,7 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).
+            convertView = LayoutInflater.from(Main.getAppContext()).
                     inflate(R.layout.item_myschedule_eventseries, parent, false);
         }
 
@@ -249,7 +252,7 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
 
     void setAndAddEventDataTextViews(final MyScheduleEventVo _Event,
                                      final LinearLayout _LayoutAllEvents){
-        final TextView dateAndRoomTextView = new TextView(mContext);
+        final TextView dateAndRoomTextView = new TextView(Main.getAppContext());
         final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         params.setMargins(0,5,5,10);
         dateAndRoomTextView.setLayoutParams(params);
