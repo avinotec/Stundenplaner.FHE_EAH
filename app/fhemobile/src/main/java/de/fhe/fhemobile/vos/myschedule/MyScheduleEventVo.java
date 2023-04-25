@@ -121,11 +121,17 @@ public class MyScheduleEventVo implements Parcelable {
     }
 
     public Long getStartTime(){
-        return MyScheduleUtils.convertEahApiTimeToUtc(mGermanStartDateTime);
+        if(mStartTime == null){
+            mStartTime = MyScheduleUtils.convertEahApiTimeToUtc(mGermanStartDateTime);
+        }
+        return mStartTime;
     }
 
     public Long getEndTime(){
-        return MyScheduleUtils.convertEahApiTimeToUtc(mGermanEndDateTime);
+        if(mEndTime == null) {
+            mEndTime = MyScheduleUtils.convertEahApiTimeToUtc(mGermanEndDateTime);
+        }
+        return mEndTime;
     }
 
     public Date getStartDate(){
@@ -295,4 +301,7 @@ public class MyScheduleEventVo implements Parcelable {
     @SerializedName("calendarEventId")
     private Long mCalEventId = null;
 
+
+    private Long mStartTime;
+    private Long mEndTime;
 }

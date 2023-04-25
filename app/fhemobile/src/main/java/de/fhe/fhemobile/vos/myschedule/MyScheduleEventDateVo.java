@@ -46,7 +46,10 @@ public class MyScheduleEventDateVo implements Parcelable{
      * @return Start date tim as long
      */
     public long getStartTime() {
-        return MyScheduleUtils.convertEahApiTimeToUtc(mGermanStartDateTime);
+        if(mStartTime == null){
+            mStartTime = MyScheduleUtils.convertEahApiTimeToUtc(mGermanStartDateTime);
+        }
+        return mStartTime;
     }
 
     /**
@@ -54,7 +57,10 @@ public class MyScheduleEventDateVo implements Parcelable{
      * @return End date time as long
      */
     public long getEndTime() {
-        return MyScheduleUtils.convertEahApiTimeToUtc(mGermanEndDateTime);
+        if(mEndTime == null){
+            mEndTime = MyScheduleUtils.convertEahApiTimeToUtc(mGermanEndDateTime);
+        }
+        return mEndTime;
     }
 
     /**
@@ -88,4 +94,8 @@ public class MyScheduleEventDateVo implements Parcelable{
 
     @SerializedName("EndDateTime")
     private long mGermanEndDateTime;
+
+    private Long mStartTime;
+    private Long mEndTime;
+
 }
