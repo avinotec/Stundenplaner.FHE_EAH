@@ -201,6 +201,10 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
              */
             @Override
             public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
+
+//                CharSequence entry = mCalendarSelectionPref.getEntry();
+//                CharSequence entry1 = mCalendarSelectionPref.getEntries()[mCalendarSelectionPref.findIndexOfValue((String) newValue)];
+//                String entryString = entry != null ? mCalendarSelectionPref.getEntry().toString() : "bla";
                 //NO CALENDAR SELECTED (Auswahl wird aufgehoben)
                 if ("".equals((String) newValue)) {
                     mCalendarSelectionPref.setSummary(R.string.myschedule_pref_choose_calendar_summary);
@@ -236,10 +240,9 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                     return false;
                 }
                 //calendar chosen
-                // do not set value if entry (name of the chosen calendar) is empty
-                else if(mCalendarSelectionPref.getEntry() != null){
+                else {
                     //set summary, selected calendar name and value to chosen calendar
-                    final CharSequence calendarEntry = mCalendarSelectionPref.getEntry();
+                    final CharSequence calendarEntry = mCalendarSelectionPref.getEntries()[mCalendarSelectionPref.findIndexOfValue((String) newValue)];
                     mCalendarSelectionPref.setSummary(calendarEntry);
 
                     final String calendarEntryString = calendarEntry.toString();
@@ -248,9 +251,6 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                             .putString(getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), calendarEntryString)
                             .apply();
                     return true;
-                } else {
-                    Log.w(TAG, "mCalendarSelectionPref onPrefenceChange: calendar selection is changed but getEntry() is null");
-                    return false;
                 }
             }
         });
