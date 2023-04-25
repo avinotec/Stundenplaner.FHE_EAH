@@ -201,10 +201,10 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
              */
             @Override
             public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
+                //note: mCalendarSelectionPref.getEntry() cannot be used to get the calendar name (= entry) of the newValue.
+                //Use instead mCalendarSelectionPref.getEntries()[mCalendarSelectionPref.findIndexOfValue((String) newValue)]
 
-//                CharSequence entry = mCalendarSelectionPref.getEntry();
-//                CharSequence entry1 = mCalendarSelectionPref.getEntries()[mCalendarSelectionPref.findIndexOfValue((String) newValue)];
-//                String entryString = entry != null ? mCalendarSelectionPref.getEntry().toString() : "bla";
+
                 //NO CALENDAR SELECTED (Auswahl wird aufgehoben)
                 if ("".equals((String) newValue)) {
                     mCalendarSelectionPref.setSummary(R.string.myschedule_pref_choose_calendar_summary);
