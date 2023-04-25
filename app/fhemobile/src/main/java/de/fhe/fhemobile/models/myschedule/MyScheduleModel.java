@@ -64,13 +64,12 @@ public class MyScheduleModel extends EventDispatcher {
     /* Utility classes have all fields and methods declared as static.
     Creating private constructors in utility classes prevents them from being accidentally instantiated. */
     private MyScheduleModel(){
+        initModel();
     }
 
     public static MyScheduleModel getInstance() {
         if(ourInstance == null) {
             ourInstance = new MyScheduleModel();
-            ourInstance.initModel();
-
         }
         return ourInstance;
     }
@@ -90,21 +89,19 @@ public class MyScheduleModel extends EventDispatcher {
             final Type listType = new TypeToken<ArrayList<MyScheduleEventSeriesVo>>(){}.getType();
             ArrayList<MyScheduleEventSeriesVo> list = gson.fromJson(json, listType);
             for(MyScheduleEventSeriesVo eventSeriesVo : list){
-                ourInstance.addToSubscribedEventSeries(eventSeriesVo);
+                this.addToSubscribedEventSeries(eventSeriesVo);
             }
         }
         final long lastUpdated = sharedPreferences.getLong(Define.MySchedule.PREF_DATA_LAST_UPDATED,  -1);
-        if(lastUpdated != -1) ourInstance.lastUpdateSubscribedEventSeries = new Date(lastUpdated);
+        if(lastUpdated != -1) this.lastUpdateSubscribedEventSeries = new Date(lastUpdated);
 
         if (BuildConfig.DEBUG) {
-            Assert.assertNotNull("onCreate(): subscribed eventseries is not initialized", ourInstance.subscribedEventSeries);
+            Assert.assertNotNull("onCreate(): subscribed eventseries is not initialized", this.subscribedEventSeries);
         }
 
         //adapters
-        ourInstance.setMyScheduleCalendarAdapter(new MyScheduleCalendarAdapter(
-                ourInstance.getEventsOfAllSubscribedEventSeries()));
-        ourInstance.setMyScheduleOverviewAdapter(new MyScheduleOverviewAdapter(
-                Main.getAppContext(), ourInstance.getSortedSubscribedEventSeries()));
+        myScheduleCalendarAdapter.setItems(this.getEventsOfAllSubscribedEventSeries());
+        myScheduleOverviewAdapter.setItems(this.getSortedSubscribedEventSeries());
     }
 
     /**
@@ -120,9 +117,7 @@ public class MyScheduleModel extends EventDispatcher {
         saveSubscribedEventSeriesToSharedPreferences();
 
         myScheduleCalendarAdapter.setItems(getInstance().getEventsOfAllSubscribedEventSeries());
-        myScheduleCalendarAdapter.notifyDataSetChanged();
         myScheduleOverviewAdapter.setItems(getInstance().getSortedSubscribedEventSeries());
-        myScheduleOverviewAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -137,9 +132,7 @@ public class MyScheduleModel extends EventDispatcher {
         saveSubscribedEventSeriesToSharedPreferences();
 
         myScheduleCalendarAdapter.setItems(getInstance().getEventsOfAllSubscribedEventSeries());
-        myScheduleCalendarAdapter.notifyDataSetChanged();
         myScheduleOverviewAdapter.setItems(getInstance().getSortedSubscribedEventSeries());
-        myScheduleOverviewAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -164,15 +157,11 @@ public class MyScheduleModel extends EventDispatcher {
             }
         }
         setLastUpdateSubscribedEventSeries(new Date());
-        //todo
-//        MyScheduleCalendarView.setLastUpdatedTextView();
 
         saveSubscribedEventSeriesToSharedPreferences();
 
-        myScheduleCalendarAdapter.setItems(getInstance().getEventsOfAllSubscribedEventSeries());
-        myScheduleCalendarAdapter.notifyDataSetChanged();
-        myScheduleOverviewAdapter.setItems(getInstance().getSortedSubscribedEventSeries());
-        myScheduleOverviewAdapter.notifyDataSetChanged();
+        myScheduleCalendarAdapter.setItems(getEventsOfAllSubscribedEventSeries());
+        myScheduleOverviewAdapter.setItems(getSortedSubscribedEventSeries());
         notifyChange(MyScheduleChangeEvent.MYSCHEDULE_UPDATED);
     }
 
@@ -183,9 +172,7 @@ public class MyScheduleModel extends EventDispatcher {
         saveSubscribedEventSeriesToSharedPreferences();
 
         myScheduleCalendarAdapter.setItems(getInstance().getEventsOfAllSubscribedEventSeries());
-        myScheduleCalendarAdapter.notifyDataSetChanged();
         myScheduleOverviewAdapter.setItems(getInstance().getSortedSubscribedEventSeries());
-        myScheduleOverviewAdapter.notifyDataSetChanged();
         notifyChange(MyScheduleChangeEvent.MYSCHEDULE_UPDATED);
     }
 
@@ -281,26 +268,20 @@ public class MyScheduleModel extends EventDispatcher {
         dispatchEvent(new MyScheduleChangeEvent(type));
     }
 
-    public MyScheduleCalendarAdapter getMyScheduleCalendarAdapter() {
+    public static MyScheduleCalendarAdapter getMyScheduleCalendarAdapter() {
         return myScheduleCalendarAdapter;
     }
 
-    public MyScheduleOverviewAdapter getMyScheduleOverviewAdapter() {
+    public static MyScheduleOverviewAdapter getMyScheduleOverviewAdapter() {
         return myScheduleOverviewAdapter;
-    }
-
-    private void setMyScheduleCalendarAdapter(MyScheduleCalendarAdapter myScheduleCalendarAdapter) {
-        this.myScheduleCalendarAdapter = myScheduleCalendarAdapter;
-    }
-
-    private void setMyScheduleOverviewAdapter(MyScheduleOverviewAdapter myScheduleOverviewAdapter) {
-        this.myScheduleOverviewAdapter = myScheduleOverviewAdapter;
     }
 
     private static MyScheduleModel ourInstance;
 
-    private MyScheduleCalendarAdapter myScheduleCalendarAdapter;
-    private MyScheduleOverviewAdapter myScheduleOverviewAdapter;
+    //These adapters need to be static and initialized to avoid crashing when a view (from the UI thread!)
+    // requests the adapter to set for the list view while the model is still initializing in the main thread.
+    private static final MyScheduleCalendarAdapter myScheduleCalendarAdapter = new MyScheduleCalendarAdapter();
+    private static final MyScheduleOverviewAdapter myScheduleOverviewAdapter = new MyScheduleOverviewAdapter();
 
     public final HashMap<String, MyScheduleEventSeriesVo> subscribedEventSeries = new HashMap<>();
     public Date lastUpdateSubscribedEventSeries;

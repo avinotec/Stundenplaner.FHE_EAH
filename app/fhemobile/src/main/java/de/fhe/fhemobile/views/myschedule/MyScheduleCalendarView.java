@@ -82,7 +82,7 @@ public class MyScheduleCalendarView extends LinearLayout {
         super.onFinishInflate();
 
         mCalendarListView = findViewById(R.id.lv_myschedule_calendar_courses);
-        mCalendarListView.setAdapter(MyScheduleModel.getInstance().getMyScheduleCalendarAdapter());
+        mCalendarListView.setAdapter(MyScheduleModel.getMyScheduleCalendarAdapter());
 
         mLastUpdatedTextView = findViewById(R.id.tv_myschedule_calendar_last_updated);
         if(!Define.ENABLE_MYSCHEDULE_UPDATING){

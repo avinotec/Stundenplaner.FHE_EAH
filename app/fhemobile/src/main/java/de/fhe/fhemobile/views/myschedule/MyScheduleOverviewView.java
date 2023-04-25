@@ -65,7 +65,7 @@ public class MyScheduleOverviewView extends LinearLayout {
 
 
         mCourseListView = (ListView) findViewById(R.id.lv_myschedule_overview);
-        mCourseListView.setAdapter(MyScheduleModel.getInstance().getMyScheduleOverviewAdapter());
+        mCourseListView.setAdapter(MyScheduleModel.getMyScheduleOverviewAdapter());
     }
 
     /**
