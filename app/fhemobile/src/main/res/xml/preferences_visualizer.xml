@@ -63,9 +63,9 @@
 
 
         <Preference
-            android:key="@string/myschedule_pref_delete_local_calendar"
-            android:title="@string/myschedule_pref_delete_local_calendar_title"
-            android:summary="@string/myschedule_pref_delete_local_calendar_summary"/>
+            android:key="@string/myschedule_pref_delete_calendar_entries"
+            android:title="@string/myschedule_pref_delete_calendar_entries_title"
+            android:summary="@string/myschedule_pref_delete_calendar_entries_summary"/>
 
         <!-- Note: always use SwitchPreferenceCompat (not SwitchPreference)
          to ensure the switch to always look the same, independent of android version -->

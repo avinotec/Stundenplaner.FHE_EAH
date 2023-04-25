@@ -133,9 +133,10 @@
     <string name="myschedule_pref_choose_calendar_title">Choose calendar</string>
     <string name="myschedule_pref_choose_calendar_summary">Select a calendar to synchronize to</string>
     <string name="myschedule_pref_choose_calendar_warning">Changing calendar selection only possible while synchronization is off!</string>
-    <string name="myschedule_pref_delete_local_calendar_title">Delete local calendar</string>
-    <string name="myschedule_pref_delete_local_calendar" translatable="false">prefDeleteLocalCalendar</string>
-    <string name="myschedule_pref_delete_local_calendar_summary">Delete local calendar \"My Schedule\"</string>
+    <string name="myschedule_pref_delete_calendar_entries_title">Delete calendar entries</string>
+    <string name="myschedule_pref_delete_calendar_entries" translatable="false">prefDeleteCalendarEntries</string>
+    <string name="myschedule_pref_delete_calendar_entries_summary">Delete the My Schedule events from the chosen calendar</string>
+    <string name="myschedule_delete_calendar_entries_warning">Please, stop synchronization first.</string>
     <string name="myschedule_pref_calsync_title">Synchronize</string>
     <string name="myschedule_pref_calsync_summary">Sync My Schedule to the chosen calendar</string>
     <string name="myschedule_calsync_warning_no_cal_chosen">You need to select a calendar first!</string>
@@ -160,7 +161,7 @@
     <string name="dialog_delete_cal_confirm">Delete</string>
 
     <string name="dialog_delete_calendar_entries_title">Delete calendar entries</string>
-    <string name="dialog_delete_calendar_entries_message">Calendar synchronization stopped.\nDo you want to delete all My Schedule events from the chosen calendar?</string>
+    <string name="dialog_delete_calendar_entries_message">Do you want to delete all My Schedule events from the chosen calendar?</string>
     <string name="dialog_delete_calendar_entries_confirm">Delete Events</string>
     <string name="dialog_no">No</string>
 

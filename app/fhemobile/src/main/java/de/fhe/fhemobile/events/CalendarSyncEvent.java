@@ -23,7 +23,6 @@ package de.fhe.fhemobile.events;
 public class CalendarSyncEvent extends SimpleEvent{
 
     public static final String CHOSEN_CALENDAR_DELETED = "chosenCalendarDeleted";
-    public static final String LOCAL_CALENDAR_DELETED = "localCalendarDeleted";
 
     public CalendarSyncEvent(String type) {
         super(type);

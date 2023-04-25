@@ -23,7 +23,6 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -102,9 +101,6 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         CalendarModel.getInstance().addListener(
                 CalendarSyncEvent.CHOSEN_CALENDAR_DELETED,
                 mChosenCalendarDeletedEventListener);
-        CalendarModel.getInstance().addListener(
-                CalendarSyncEvent.LOCAL_CALENDAR_DELETED,
-                mLocalCalendarDeletedEventListener);
     }
 
     @Override
@@ -113,9 +109,6 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         CalendarModel.getInstance().removeListener(
                 CalendarSyncEvent.CHOSEN_CALENDAR_DELETED,
                 mChosenCalendarDeletedEventListener);
-        CalendarModel.getInstance().removeListener(
-                CalendarSyncEvent.LOCAL_CALENDAR_DELETED,
-                mLocalCalendarDeletedEventListener);
     }
 
     private void initializePushNotificationsCategory() {
@@ -160,7 +153,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         //list of calendars to choose from
         mCalendarSelectionPref = findPreference(getResources().getString(R.string.sp_myschedule_calendar_to_sync_id));
         //"button" to delete the created local calendar
-        mDeleteLocalCalendarPref = findPreference(getResources().getString(R.string.myschedule_pref_delete_local_calendar));
+        mDeleteCalendarEntriesPref = findPreference(getResources().getString(R.string.myschedule_pref_delete_calendar_entries));
         mCalendarSyncSwitchPref = findPreference(getResources().getString(R.string.sp_myschedule_enable_calsync));
 
         mCalendarSelectionNoPermissionPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -257,10 +250,15 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
 
 
         //delete local calendar preference
-        mDeleteLocalCalendarPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        mDeleteCalendarEntriesPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(@NonNull Preference preference) {
-                showDeleteLocalCalendarDialog();
+                //refuse deleting calendar entries while sync is on
+                if(mCalendarSyncSwitchPref.isChecked()){
+                    Utils.showToast(R.string.myschedule_delete_calendar_entries_warning);
+                } else {
+                    showDeleteCalendarEntriesDialog();
+                }
                 //return true to state click event as processed
                 return true;
             }
@@ -294,7 +292,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                         //if synchronization is currently running, refuse turning off sync
                         if(!CalendarModel.isSynchronizationRunning()) {
                             CalendarSynchronizationBackgroundTask.stopPeriodicSynchronizing();
-                            askWhetherToDeleteCalendarEntries();
+                            showDeleteCalendarEntriesDialog();
                         } else {
                             mCalendarSyncSwitchPref.setChecked(true);
                             Utils.showToastLong(R.string.myschedule_calsync_warning_sync_running);
@@ -309,17 +307,15 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
 
 
         //INITIALIZE CALENDAR PREFERENCES VALUES
-        //only set to visible if there is a local calendar that can be deleted
-        mDeleteLocalCalendarPref.setEnabled(false);
+        //only set to visible if a calendar is chosen
+        mDeleteCalendarEntriesPref.setEnabled(false);
         //if a calendar is already chosen
         if (mCalendarSelectionPref.getValue() != null && !mCalendarSelectionPref.getValue().equals("")) {
             String chosenCalName = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
                     .getString(getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), getResources().getString(R.string.myschedule_pref_choose_calendar_summary));
             mCalendarSelectionPref.setSummary(chosenCalName);
-            //enable deleting local calendar
-            if(chosenCalName.equals(getResources().getString(R.string.myschedule_calsync_local_calendar_name))){
-                mDeleteLocalCalendarPref.setEnabled(true);
-            }
+            //enable deleting calendar entries
+            mDeleteCalendarEntriesPref.setEnabled(true);
         }
         //no calendar chosen
         else {
@@ -404,7 +400,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         if (CalendarModel.getLocalCalendarId() == null) {
             availableCalendars.put(getResources().getString(R.string.myschedule_create_local_calendar), CALENDAR_ID_RESERVED_LOCAL_CALENDAR);
         } else {
-            mDeleteLocalCalendarPref.setEnabled(true);
+            mDeleteCalendarEntriesPref.setEnabled(true);
         }
 
         //the human-readable entries to be shown in the list
@@ -437,39 +433,6 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         mDeleteCalendarPref.setEntryValues(values);
     }
 
-    private void showDeleteLocalCalendarDialog() {
-        new AlertDialog.Builder(getContext())
-                .setTitle(R.string.dialog_delete_local_cal_title)
-                .setMessage(R.string.dialog_delete_local_cal_message)
-                .setPositiveButton(R.string.dialog_delete_cal_confirm, new DialogInterface.OnClickListener() {
-
-                    public void onClick(final DialogInterface dialog, final int which) {
-                        //note: access preferences instead of using mCalendarSelectionPref.getEntry() here.
-                        // It is null when the preference's dialog has not been opened yet, and thus entry values are not initialized.
-                        String localCalendarName = getResources().getString(R.string.myschedule_calsync_local_calendar_name);
-                        String chosenCalendarName = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
-                                .getString(getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), "");
-                        //if the calendar to delete is the one chosen for calendar synchronization, then stop synchronization
-                        // (this is not the case when the user first selects "create local calendar"
-                        // but then goes back on the decision and chooses another calendar,
-                        // this results in a local calendar being created but not currently chosen for synchronization)
-                        if (localCalendarName.equals(chosenCalendarName)) {
-                            CalendarModel.getInstance().notifyChange(CalendarSyncEvent.CHOSEN_CALENDAR_DELETED);
-                        }
-
-                        CalendarModel.deleteLocalCalendar();
-                        CalendarModel.getInstance().notifyChange(CalendarSyncEvent.LOCAL_CALENDAR_DELETED);
-                    }
-                })
-                .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //dialog is closed
-                    }
-                })
-                .setCancelable(false)
-                .show();
-    }
 
     private void showDeleteCalendarDialog(String calendarId) {
         String calendarName = String.valueOf(mDeleteCalendarPref.getEntries()[mDeleteCalendarPref.findIndexOfValue(calendarId)]);
@@ -481,11 +444,6 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                     public void onClick(DialogInterface dialog, int which) {
                         if (calendarId.equals(mCalendarSelectionPref.getValue())) {
                             CalendarModel.getInstance().notifyChange(CalendarSyncEvent.CHOSEN_CALENDAR_DELETED);
-                        }
-
-                        Long localCalId = CalendarModel.getLocalCalendarId();
-                        if(localCalId != null && Long.parseLong(calendarId) == localCalId){
-                            CalendarModel.getInstance().notifyChange(CalendarSyncEvent.LOCAL_CALENDAR_DELETED);
                         }
 
                         CalendarModel.deleteCalendar(Long.parseLong(calendarId));
@@ -501,7 +459,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                 .show();
     }
 
-    private void askWhetherToDeleteCalendarEntries() {
+    private void showDeleteCalendarEntriesDialog() {
         new AlertDialog.Builder(getContext())
                 .setTitle(R.string.dialog_delete_calendar_entries_title)
                 .setMessage(R.string.dialog_delete_calendar_entries_message)
@@ -606,16 +564,10 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
             mCalendarSelectionPref.setSummary(R.string.myschedule_pref_choose_calendar_summary);
         }
     };
-    private final EventListener mLocalCalendarDeletedEventListener = new EventListener(){
-        @Override
-        public void onEvent(Event event) {
-            mDeleteLocalCalendarPref.setEnabled(false);
-        }
-    };
 
     Preference              mCalendarSelectionNoPermissionPref;
     ListPreference          mCalendarSelectionPref;
-    Preference              mDeleteLocalCalendarPref;
+    Preference              mDeleteCalendarEntriesPref;
     SwitchPreferenceCompat  mCalendarSyncSwitchPref;
     Preference              mDeleteCalendarNoPermissionPref;
     ListPreference          mDeleteCalendarPref;
