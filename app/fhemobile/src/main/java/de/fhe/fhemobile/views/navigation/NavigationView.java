@@ -38,12 +38,12 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
 import de.fhe.fhemobile.models.navigation.Cell;
 import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
-import de.fhe.fhemobile.vos.navigation.RoomVo;
-import de.fhe.fhemobile.vos.navigation.Complex;
 import de.fhe.fhemobile.utils.navigation.BuildingFloorKey;
+import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
+import de.fhe.fhemobile.vos.navigation.Complex;
+import de.fhe.fhemobile.vos.navigation.RoomVo;
 
 
 /**

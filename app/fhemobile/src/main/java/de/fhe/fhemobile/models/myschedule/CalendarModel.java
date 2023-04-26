@@ -25,9 +25,9 @@ import android.content.ContentValues;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.CalendarContract.*;
+import android.provider.CalendarContract.Calendars;
+import android.provider.CalendarContract.Events;
 import android.util.Log;
-
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;

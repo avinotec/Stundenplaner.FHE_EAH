@@ -17,9 +17,9 @@
 package de.fhe.fhemobile.fragments;
 
 import androidx.annotation.StringRes;
-import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 /**
  * Created by paul on 18.03.15.

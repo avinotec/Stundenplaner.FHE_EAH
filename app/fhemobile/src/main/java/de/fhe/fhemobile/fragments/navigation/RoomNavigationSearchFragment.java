@@ -27,12 +27,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.views.navigation.SearchView;
-import de.fhe.fhemobile.vos.navigation.BuildingVo;
-import de.fhe.fhemobile.vos.navigation.RoomVo;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.navigation.JSONHandler;
 import de.fhe.fhemobile.views.navigation.RoomSearchView;
+import de.fhe.fhemobile.views.navigation.SearchView;
+import de.fhe.fhemobile.vos.navigation.BuildingVo;
+import de.fhe.fhemobile.vos.navigation.RoomVo;
 
 /**
  * A simple {@link Fragment} subclass.

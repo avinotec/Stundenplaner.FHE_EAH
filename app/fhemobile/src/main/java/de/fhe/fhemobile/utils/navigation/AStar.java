@@ -30,11 +30,11 @@ import java.util.LinkedHashMap;
 import java.util.Objects;
 import java.util.PriorityQueue;
 
-import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
 import de.fhe.fhemobile.models.navigation.Cell;
+import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
+import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
 import de.fhe.fhemobile.vos.navigation.Complex;
 import de.fhe.fhemobile.vos.navigation.FloorConnectionVo;
-import de.fhe.fhemobile.models.navigation.FloorConnectionCell;
 
 /**
  * Class for route calculation at a single floor using the A* algorithm;

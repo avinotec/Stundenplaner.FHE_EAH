@@ -11,11 +11,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.utils.navigation.JSONHandler;
+import de.fhe.fhemobile.views.navigation.PersonSearchView;
 import de.fhe.fhemobile.views.navigation.SearchView;
 import de.fhe.fhemobile.vos.navigation.PersonVo;
 import de.fhe.fhemobile.vos.navigation.RoomVo;
-import de.fhe.fhemobile.utils.navigation.JSONHandler;
-import de.fhe.fhemobile.views.navigation.PersonSearchView;
 
 /**
  * A simple {@link Fragment} subclass.

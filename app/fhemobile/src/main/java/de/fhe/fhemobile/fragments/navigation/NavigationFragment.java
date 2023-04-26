@@ -44,15 +44,15 @@ import java.util.LinkedHashMap;
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.utils.navigation.NavigationUtils;
-import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
 import de.fhe.fhemobile.models.navigation.Cell;
-import de.fhe.fhemobile.vos.navigation.FloorConnectionVo;
-import de.fhe.fhemobile.vos.navigation.RoomVo;
 import de.fhe.fhemobile.models.navigation.RouteCalculator;
 import de.fhe.fhemobile.utils.navigation.BuildingFloorKey;
 import de.fhe.fhemobile.utils.navigation.FloorPlanIterator;
+import de.fhe.fhemobile.utils.navigation.NavigationUtils;
 import de.fhe.fhemobile.views.navigation.NavigationView;
+import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
+import de.fhe.fhemobile.vos.navigation.FloorConnectionVo;
+import de.fhe.fhemobile.vos.navigation.RoomVo;
 
 /**
  *  Fragment for showing navigation route

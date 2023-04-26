@@ -41,8 +41,6 @@ import androidx.core.view.MenuProvider;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import java.util.Objects;
-
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.drawer.DrawerAdapter;
 import de.fhe.fhemobile.utils.Utils;

@@ -31,10 +31,10 @@ import java.util.List;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.myschedule.MyScheduleDialogAdapter;
 import de.fhe.fhemobile.comparator.StudyProgramComparator;
-import de.fhe.fhemobile.vos.timetable.TimetableStudyProgramVo;
 import de.fhe.fhemobile.vos.timetable.TimetableSemesterVo;
-import de.fhe.fhemobile.widgets.picker.StudyProgramPicker;
+import de.fhe.fhemobile.vos.timetable.TimetableStudyProgramVo;
 import de.fhe.fhemobile.widgets.picker.SemesterPicker;
+import de.fhe.fhemobile.widgets.picker.StudyProgramPicker;
 import de.fhe.fhemobile.widgets.picker.base.OnItemChosenListener;
 
 

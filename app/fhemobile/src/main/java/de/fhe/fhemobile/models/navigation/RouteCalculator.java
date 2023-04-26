@@ -30,8 +30,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import de.fhe.fhemobile.utils.navigation.AStar;
-import de.fhe.fhemobile.utils.navigation.JSONHandler;
 import de.fhe.fhemobile.utils.navigation.BuildingFloorKey;
+import de.fhe.fhemobile.utils.navigation.JSONHandler;
 import de.fhe.fhemobile.vos.navigation.BuildingExitVo;
 import de.fhe.fhemobile.vos.navigation.Complex;
 import de.fhe.fhemobile.vos.navigation.FloorConnectionVo;

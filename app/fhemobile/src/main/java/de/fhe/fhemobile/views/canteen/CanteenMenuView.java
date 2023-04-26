@@ -45,10 +45,10 @@ import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.headerlistview.HeaderListView;
 import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
 import de.fhe.fhemobile.vos.canteen.CanteenMenuDayVo;
+import de.fhe.fhemobile.widgets.stickyHeaderList.CanteenImageRowItem;
 import de.fhe.fhemobile.widgets.stickyHeaderList.CanteenRowItem;
 import de.fhe.fhemobile.widgets.stickyHeaderList.DefaultHeaderItem;
 import de.fhe.fhemobile.widgets.stickyHeaderList.IHeaderItem;
-import de.fhe.fhemobile.widgets.stickyHeaderList.CanteenImageRowItem;
 import de.fhe.fhemobile.widgets.stickyHeaderList.IRowItem;
 
 /**
