@@ -19,7 +19,6 @@ package de.fhe.fhemobile.adapters.myschedule;
 import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.getEventSeriesBaseTitle;
 import static de.fhe.fhemobile.utils.timetable.TimetableUtils.cutStudyProgramPrefix;
 
-import android.content.Context;
 import android.graphics.Paint;
 import android.text.Html;
 import android.view.LayoutInflater;
