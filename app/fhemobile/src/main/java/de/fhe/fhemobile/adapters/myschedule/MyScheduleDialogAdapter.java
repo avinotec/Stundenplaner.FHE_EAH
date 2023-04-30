@@ -1,6 +1,5 @@
 package de.fhe.fhemobile.adapters.myschedule;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 

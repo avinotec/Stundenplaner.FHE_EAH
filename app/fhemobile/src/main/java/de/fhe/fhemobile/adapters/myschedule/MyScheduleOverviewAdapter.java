@@ -16,10 +16,8 @@
  */
 package de.fhe.fhemobile.adapters.myschedule;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.Button;
-import java.util.List;
 
 import de.fhe.fhemobile.models.myschedule.MyScheduleModel;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
