@@ -58,7 +58,7 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 
 		mItems = new ArrayList<>();
 		//add items to mItems, ignore past days
-		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd");
+		//not used: SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd");
 		for (MyScheduleEventVo item : items) {
 			//if event start is today or in the future
 			if (new TimeIgnoringDateComparator().compare(item.getStartDate(), new Date()) >= 0) {
@@ -187,7 +187,7 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 				case ADDITION:
 					//set text bold
 					for (final TextView v : eventViews) {
-						if(v.getTypeface() != null && v.getTypeface().equals(Typeface.ITALIC)){
+						if((v.getTypeface() != null) && v.getTypeface().equals(Typeface.ITALIC)){
 							v.setTypeface(null, Typeface.BOLD_ITALIC);
 						} else {
 							v.setTypeface(null, Typeface.BOLD);
