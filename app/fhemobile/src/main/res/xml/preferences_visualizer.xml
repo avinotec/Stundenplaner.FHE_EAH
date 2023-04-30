@@ -62,6 +62,10 @@
             android:summary="@string/myschedule_pref_choose_calendar_summary"/>
 
 
+        <SwitchPreferenceCompat
+            android:key="@string/sp_myschedule_enable_calsync"
+            android:summary="@string/myschedule_pref_calsync_summary"
+            android:title="@string/myschedule_pref_calsync_title" />
         <Preference
             android:key="@string/myschedule_pref_delete_calendar_entries"
             android:title="@string/myschedule_pref_delete_calendar_entries_title"
@@ -69,10 +73,6 @@
 
         <!-- Note: always use SwitchPreferenceCompat (not SwitchPreference)
          to ensure the switch to always look the same, independent of android version -->
-        <SwitchPreferenceCompat
-            android:key="@string/sp_myschedule_enable_calsync"
-            android:title="@string/myschedule_pref_calsync_title"
-            android:summary="@string/myschedule_pref_calsync_summary"/>
 
     </PreferenceCategory>
 

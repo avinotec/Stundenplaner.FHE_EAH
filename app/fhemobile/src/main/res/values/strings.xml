@@ -121,8 +121,8 @@
     <string name="fcm_examadded_message_part1">Exam added for</string>
 
     <string name="myschedule_pref_category_mycourses">My Courses</string>
-    <string name="myschedule_pref_overview_title">My Schedule (Overview)</string>
-    <string name="myschedule_pref_addcourse_title">Add course</string>
+    <string name="myschedule_pref_overview_title">My Schedule (Overview) &#x2026;</string>
+    <string name="myschedule_pref_addcourse_title">Add course &#x2026;</string>
     <string name="myschedule_pref_addcourse_summary">Add courses to your schedule</string>
     <string name="myschedule_pref_category_fcm">Notifications</string>
     <string name="myschedule_pref_fcm_title">Push Notifications</string>
@@ -130,10 +130,10 @@
     <string name="myschedule_pref_fcm_error">No permission to receive push notifications</string>
     <string name="myschedule_pref_category_calsync">Calendar Synchronization</string>
     <string name="myschedule_pref_calsync_no_permission" translatable="false">no_calendar_permission</string>
-    <string name="myschedule_pref_choose_calendar_title">Choose calendar</string>
+    <string name="myschedule_pref_choose_calendar_title">Choose calendar &#x2026;</string>
     <string name="myschedule_pref_choose_calendar_summary">Select a calendar to synchronize to</string>
     <string name="myschedule_pref_choose_calendar_warning">Changing calendar selection only possible while synchronization is off!</string>
-    <string name="myschedule_pref_delete_calendar_entries_title">Delete calendar entries</string>
+    <string name="myschedule_pref_delete_calendar_entries_title">Delete calendar entries &#x2026;</string>
     <string name="myschedule_pref_delete_calendar_entries" translatable="false">prefDeleteCalendarEntries</string>
     <string name="myschedule_pref_delete_calendar_entries_summary">Delete the My Schedule events from the chosen calendar</string>
     <string name="myschedule_delete_calendar_entries_warning">Please, stop synchronization first.</string>
@@ -151,7 +151,7 @@
     <string name="myschedule_pref_delete_cal" translatable="false">prefDeleteCal</string>
     <string name="myschedule_pref_delete_cal_no_permission" translatable="false">prefDeleteCalNoPermission</string>
     <string name="myschedule_pref_category_delete_cal">Delete calendar</string>
-    <string name="myschedule_pref_title_delete_cal">Delete a calendar</string>
+    <string name="myschedule_pref_title_delete_cal">Delete a calendar &#x2026;</string>
     <string name="myschedule_pref_summary_delete_cal">Choose a calendar on this phone you want to delete</string>
 
     <string name="dialog_delete_local_cal_title">Delete local calendar</string>

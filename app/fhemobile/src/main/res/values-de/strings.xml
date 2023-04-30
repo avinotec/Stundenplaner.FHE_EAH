@@ -122,18 +122,18 @@
     <string name="fcm_examadded_message_part1">Prüfung hinzugefügt für</string>
 
     <string name="myschedule_pref_category_mycourses">Meine Kurse</string>
-    <string name="myschedule_pref_overview_title">Mein Stundenplan (Übersicht)</string>
-    <string name="myschedule_pref_addcourse_title">Kurs hinzufügen</string>
+    <string name="myschedule_pref_overview_title">Mein Stundenplan (Übersicht) &#x2026;</string>
+    <string name="myschedule_pref_addcourse_title">Kurs hinzufügen &#x2026;</string>
     <string name="myschedule_pref_addcourse_summary">Füge Kurse zu deinem Stundenplan hinzu</string>
     <string name="myschedule_pref_category_fcm">Benachrichtigungen</string>
     <string name="myschedule_pref_fcm_title">Push-Benachrichtigungen</string>
     <string name="myschedule_pref_fcm_summary">Benachrichtige mich bei Stundenplanänderungen und hinzugefügten Prüfungen</string>
     <string name="myschedule_pref_fcm_error">Keine Berechtigung zum Empfangen von Push-Benachrichtigungen</string>
     <string name="myschedule_pref_category_calsync">Kalendersynchronisation</string>
-    <string name="myschedule_pref_choose_calendar_title">Kalendar wählen</string>
+    <string name="myschedule_pref_choose_calendar_title">Kalender wählen &#x2026;</string>
     <string name="myschedule_pref_choose_calendar_summary">Wähle einen Kalender, in den synchronisiert werden soll</string>
     <string name="myschedule_pref_choose_calendar_warning">Kalender ändern nur bei ausgeschalteter Synchronisation möglich!</string>
-    <string name="myschedule_pref_delete_calendar_entries_title">Kalendereinträge löschen</string>
+    <string name="myschedule_pref_delete_calendar_entries_title">Kalendereinträge löschen &#x2026;</string>
     <string name="myschedule_pref_delete_calendar_entries_summary">Löscht die Stundenplan-Veranstaltungen aus dem gewählten Kalender </string>
     <string name="myschedule_delete_calendar_entries_warning">Bitte stoppe erst die Synchronisation.</string>
     <string name="myschedule_pref_calsync_title">Synchronisieren</string>
@@ -143,16 +143,16 @@
     <string name="myschedule_calsync_started">Synchronisation gestartet. Dies kann einige Minuten dauern.</string>
     <string name="myschedule_calsync_finished">Kalender synchronisiert.</string>
     <string name="myschedule_calsync_local_calendar_name">Mein Stundenplan</string>
-    <string name="myschedule_create_local_calendar">Neuen lokalen Kalender erstellen</string>
-    <string name="myschedule_delete_calendar_error">Es wurde kein lokaler Kalendar zum Löschen gefunden.</string>
+    <string name="myschedule_create_local_calendar">Neuen lokalen Kalender \"Mein Stundenplan\" erstellen</string>
+    <string name="myschedule_delete_calendar_error">Es wurde kein lokaler Kalender \"Mein Stundenplan\" zum Löschen gefunden.</string>
     <string name="myschedule_calsync_event_dropped_tag">[Entfällt]</string>
     <string name="myschedule_calsync_error">Keine Kalender-Berechtigung</string>
     <string name="myschedule_pref_category_delete_cal">Kalender löschen</string>
-    <string name="myschedule_pref_title_delete_cal">Einen Kalender löschen</string>
+    <string name="myschedule_pref_title_delete_cal">Einen Kalender löschen &#x2026;</string>
     <string name="myschedule_pref_summary_delete_cal">Wähle einen Kalender auf diesem Handy, den du löschen willst</string>
 
 
-    <string name="dialog_delete_local_cal_title">Lokalen Kalender löschen</string>
+    <string name="dialog_delete_local_cal_title">Lokalen Kalender \"Mein Stundenplan\" löschen</string>
     <string name="dialog_delete_local_cal_message">Möchtest du den Kalender \"Mein Stundenplan\" löschen?</string>
     <string name="dialog_delete_cal_title">Kalender löschen</string>
     <string name="dialog_delete_cal_message">Möchtest du den Kalender \"%1$s\" wirklich löschen?</string>
