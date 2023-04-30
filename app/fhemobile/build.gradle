@@ -326,12 +326,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-inappmessaging-display-ktx:20.3.1'
     
     // Adds libraries defining annotations to only the compile classpath.
-    compileOnly 'com.google.dagger:dagger:2.45'
+    compileOnly 'com.google.dagger:dagger:2.46'
     // Adds the annotation processor dependency to the annotation processor classpath.
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.45'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.46'
     
     //implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
-    implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.8.20'))
+    implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.8.21'))
 }
 
 configurations.all {
