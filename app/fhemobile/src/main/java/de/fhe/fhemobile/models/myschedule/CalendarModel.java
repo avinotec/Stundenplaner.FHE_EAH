@@ -41,7 +41,6 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.events.CalendarSyncEvent;
 import de.fhe.fhemobile.events.EventDispatcher;
 import de.fhe.fhemobile.services.CalendarSynchronizationBackgroundTask;
-import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.myschedule.TimetableChangeType;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
@@ -251,26 +250,28 @@ public class CalendarModel extends EventDispatcher {
         return null;
     }
 
-    /**
-     * Delete local calendar
-     */
-    public static final void deleteLocalCalendar(){
-        final Long localCalendarID = getLocalCalendarId();
-
-        if (localCalendarID == null) {
-            Utils.showToast(R.string.myschedule_delete_calendar_error);
-            return;
-        }
-
-        final Uri.Builder builder = Calendars.CONTENT_URI.buildUpon();
-        final Uri calendarToRemoveUri = builder.appendPath(localCalendarID.toString())
-                .appendQueryParameter(android.provider.CalendarContract.CALLER_IS_SYNCADAPTER, "true")
-                .appendQueryParameter(Calendars.ACCOUNT_NAME, localCalendarAccount)
-                .appendQueryParameter(Calendars.ACCOUNT_TYPE, localCalendarAccountType)
-                .build();
-
-        Main.getAppContext().getContentResolver().delete(calendarToRemoveUri, null, null);
-    }
+// --Commented out by Inspection START (26.04.2023 14:20):
+//    /**
+//     * Delete local calendar
+//     */
+//    public static final void deleteLocalCalendar(){
+//        final Long localCalendarID = getLocalCalendarId();
+//
+//        if (localCalendarID == null) {
+//            Utils.showToast(R.string.myschedule_delete_calendar_error);
+//            return;
+//        }
+//
+//        final Uri.Builder builder = Calendars.CONTENT_URI.buildUpon();
+//        final Uri calendarToRemoveUri = builder.appendPath(localCalendarID.toString())
+//                .appendQueryParameter(android.provider.CalendarContract.CALLER_IS_SYNCADAPTER, "true")
+//                .appendQueryParameter(Calendars.ACCOUNT_NAME, localCalendarAccount)
+//                .appendQueryParameter(Calendars.ACCOUNT_TYPE, localCalendarAccountType)
+//                .build();
+//
+//        Main.getAppContext().getContentResolver().delete(calendarToRemoveUri, null, null);
+//    }
+// --Commented out by Inspection STOP (26.04.2023 14:20)
 
     /**
      * Delete the calendar with the given id
