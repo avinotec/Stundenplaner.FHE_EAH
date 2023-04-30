@@ -81,7 +81,7 @@ public class NewsCategoriesView extends FrameLayout {
         }
     };
 
-    private EventListener mCategoryItemsListener = new EventListener() {
+    private final EventListener mCategoryItemsListener = new EventListener() {
         @Override
         public void onEvent(final Event event) {
             initContent();

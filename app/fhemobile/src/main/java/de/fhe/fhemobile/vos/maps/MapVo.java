@@ -60,6 +60,6 @@ public class MapVo {
 //    }
 // --Commented out by Inspection STOP (02.11.2021 17:09)
 
-    private int mNameID;
-    private String mImageUrl;
+    private final int mNameID;
+    private final String mImageUrl;
 }

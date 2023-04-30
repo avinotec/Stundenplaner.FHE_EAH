@@ -90,10 +90,10 @@ public class EmployeeListView extends FrameLayout {
         }
     };
 
-    private Context         mContext;
+    private final Context         mContext;
     ViewListener    mViewListener;
 
-    private PhonebookModel  mModel;
+    private final PhonebookModel  mModel;
 
     private ListView        mList;
 

@@ -53,6 +53,6 @@ public class MapCollectionVo {
 //    }
 // --Commented out by Inspection STOP (23.04.2023 15:08)
 
-    private int mNameID;
-    private List<MapVo> mMaps;
+    private final int mNameID;
+    private final List<MapVo> mMaps;
 }

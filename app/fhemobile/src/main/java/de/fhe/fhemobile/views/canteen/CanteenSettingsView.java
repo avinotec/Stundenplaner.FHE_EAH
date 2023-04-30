@@ -106,7 +106,7 @@ public class CanteenSettingsView extends FrameLayout {
     /**
      * Listener for {@link CanteenChangeEvent#RECEIVED_CANTEENS}
      */
-    private EventListener mCanteenSelectedListener = new EventListener() {
+    private final EventListener mCanteenSelectedListener = new EventListener() {
         @Override
         public void onEvent(final Event event) {
             initCanteenSelectionListView();
