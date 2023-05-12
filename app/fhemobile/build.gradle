@@ -44,7 +44,7 @@ android {
      * This property is optional because the plugin uses a recommended version of
      * the build tools by default.
      */
-    buildToolsVersion '34.0.0 rc3'
+    buildToolsVersion '34.0.0 rc4'
 
     compileOptions {
         // Error: Invoke-customs are only supported starting with Android O (--min-api 26)
@@ -67,8 +67,8 @@ android {
     defaultConfig {
         minSdk 21
         targetSdk 33
-        versionCode = 47
-        versionName = '4.0.1'
+        versionCode = 48
+        versionName = '4.0.2'
 
         resConfigs "de", "en", "notnight"
         multiDexEnabled false
@@ -235,7 +235,9 @@ android {
 	// Lint found fatal errors while assembling a release target
 	lint {
 		abortOnError false
+        showAll true
 	}
+    
     namespace 'de.fhe.fhemobile'
     
     dependenciesInfo {
@@ -302,7 +304,7 @@ dependencies {
     implementation 'junit:junit:4.13.2'
     //implementation 'androidx.test:rules:1.5.0'
     
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.google.android.material:material:1.9.0'
 
     // Adds libraries defining annotations to only the compile classpath.
     //compileOnly 'com.google.dagger:dagger:2.29.1'
@@ -315,15 +317,15 @@ dependencies {
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
     
     // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:31.5.0')
+    implementation platform('com.google.firebase:firebase-bom:32.0.0')
     // Add the dependencies for the Crashlytics and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-messaging:23.1.2'
-    implementation 'com.google.firebase:firebase-inappmessaging-display:20.3.1'
-	implementation 'com.google.firebase:firebase-crashlytics:18.3.6'
+    implementation 'com.google.firebase:firebase-inappmessaging-display:20.3.2'
+	implementation 'com.google.firebase:firebase-crashlytics:18.3.7'
     
     implementation 'com.google.gms:google-services:4.3.15'
-    implementation 'com.google.firebase:firebase-inappmessaging-display-ktx:20.3.1'
+    implementation 'com.google.firebase:firebase-inappmessaging-display-ktx:20.3.2'
     
     // Adds libraries defining annotations to only the compile classpath.
     compileOnly 'com.google.dagger:dagger:2.46'
