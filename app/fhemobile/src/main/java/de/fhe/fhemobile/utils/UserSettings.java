@@ -92,12 +92,18 @@ public final class UserSettings {
             if(canteen == null) {
                 if(BuildConfig.DEBUG) Assert.assertNotNull(canteen);
                 Log.e(TAG, "CanteenVo in selectedCanteens is null");
+                continue;
             }
             ids.add(canteen.getCanteenId());
         }
         return ids;
     }
 
+    /**
+     *
+     * @param canteenId
+     * @return null if not found, or CanteenVo if found
+     */
     public CanteenVo getSelectedCanteen(final String canteenId){
         if(BuildConfig.DEBUG) Assert.assertNotNull(mSelectedCanteens);
 

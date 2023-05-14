@@ -45,6 +45,7 @@ import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.utils.headerlistview.HeaderListView;
 import de.fhe.fhemobile.vos.canteen.CanteenDishVo;
 import de.fhe.fhemobile.vos.canteen.CanteenMenuDayVo;
+import de.fhe.fhemobile.vos.canteen.CanteenVo;
 import de.fhe.fhemobile.widgets.stickyHeaderList.CanteenImageRowItem;
 import de.fhe.fhemobile.widgets.stickyHeaderList.CanteenRowItem;
 import de.fhe.fhemobile.widgets.stickyHeaderList.DefaultHeaderItem;
@@ -77,7 +78,10 @@ public class CanteenMenuView extends LinearLayout {
 
     public void initializeView(final String _CanteenId){
         mCanteenId = _CanteenId;
-        mCanteenNameText.setText(UserSettings.getInstance().getSelectedCanteen(mCanteenId).getCanteenName());
+        final CanteenVo selectedCanteen = UserSettings.getInstance().getSelectedCanteen(mCanteenId);
+        if (selectedCanteen == null)
+            return;
+        mCanteenNameText.setText(selectedCanteen.getCanteenName());
 
         mErrorText.setVisibility(VISIBLE);
         initMenuDaysList();

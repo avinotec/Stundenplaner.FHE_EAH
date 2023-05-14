@@ -22,6 +22,8 @@ package de.fhe.fhemobile.models.settings;
  */
 public final class UserDefaults {
 
+	public static final String DEFAULT_CANTEEN_ID = "58";
+
     public static final String DEFAULT_CANTEEN_SELECTION =
             "[{\"id\":\"58\",\"name\":\"Mensa Carl-Zeiss-Promenade\"}," +    //$NON-NLS
             "{\"id\":\"61\",\"name\":\"Cafeteria EAH\"}]";                   //$NON-NLS

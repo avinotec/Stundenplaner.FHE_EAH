@@ -29,6 +29,7 @@ import org.junit.Assert;
 import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.models.settings.UserDefaults;
 import de.fhe.fhemobile.views.canteen.CanteenMenuView;
 
 /**
@@ -63,6 +64,8 @@ public class CanteenMenuFragment extends FeatureFragment {
 
         if (BuildConfig.DEBUG) Assert.assertNotNull(getArguments());
         this.mCanteenId = getArguments().getString(PARAM_CANTEEN_ID);
+        if (this.mCanteenId == null)
+            mCanteenId = UserDefaults.DEFAULT_CANTEEN_ID;
     }
 
     @Override
@@ -73,6 +76,9 @@ public class CanteenMenuFragment extends FeatureFragment {
         mView = (CanteenMenuView) inflater.inflate(R.layout.fragment_canteen_menu, container, false);
 
         if(BuildConfig.DEBUG) Assert.assertNotNull(mCanteenId);
+        if ( mCanteenId == null )
+            mCanteenId = UserDefaults.DEFAULT_CANTEEN_ID;
+
         mView.initializeView(mCanteenId);
 
         return mView;
@@ -92,6 +98,6 @@ public class CanteenMenuFragment extends FeatureFragment {
 
 
     private CanteenMenuView mView;
-    private String mCanteenId;
+    private String mCanteenId = UserDefaults.DEFAULT_CANTEEN_ID;
 
 }

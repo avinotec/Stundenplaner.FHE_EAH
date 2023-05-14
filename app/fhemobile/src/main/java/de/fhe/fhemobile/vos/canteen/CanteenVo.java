@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import de.fhe.fhemobile.models.settings.UserDefaults;
+
 /**
  * Value object for a canteen
  */
@@ -17,6 +19,10 @@ public final class CanteenVo implements Parcelable {
         return mCanteenId;
     }
 
+    /**
+     *
+     * @return String Canteen name
+     */
     public String getCanteenName() {
         return mCanteenName;
     }
@@ -52,10 +58,10 @@ public final class CanteenVo implements Parcelable {
 
 
     @SerializedName("id")
-    private String mCanteenId;
+    private String mCanteenId = UserDefaults.DEFAULT_CANTEEN_ID;
 
     @SerializedName("name")
-    private String mCanteenName;
+    private String mCanteenName = "";
 
     /*
     attributes delivered but not needed/used:
