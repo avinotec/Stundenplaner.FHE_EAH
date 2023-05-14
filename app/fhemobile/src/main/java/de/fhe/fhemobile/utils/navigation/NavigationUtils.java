@@ -134,19 +134,24 @@ public final class NavigationUtils {
                 break;
 	        default:                // nehmen wir einfach mal so
             case "00":
+	        case "0":
                 floorAsInteger = 0;
                 break;
             case "01":
+	        case "1":
                 floorAsInteger = 1;
                 break;
             case "02":
+	        case "2":
                 floorAsInteger = 2;
                 break;
             case "03":
+	        case "3":
                 floorAsInteger = 3;
                 break;
             case "3Z":
             case "04":
+	        case "4":
                 floorAsInteger = 4;
                 break;
         }

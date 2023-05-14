@@ -58,14 +58,16 @@ public class BuildingFloorKey implements Comparable {
     /**
      *
      * @param other object to compare with
-     * @return boolean
+     * @return boolean true, if the content of the object is equal
      */
     @Override
     public boolean equals(final Object other) {
         if (!(other instanceof BuildingFloorKey))
             return false;
         final BuildingFloorKey that = (BuildingFloorKey) other;
-        return ( (cell.getFloorInt() == that.cell.getFloorInt()) && (cell.getComplex() == that.cell.getComplex()) );
+        final boolean b = (cell.getFloorInt() == that.cell.getFloorInt());
+        final boolean c = (cell.getComplex() == that.cell.getComplex());
+        return ( b && c);
     }
 
     /**
