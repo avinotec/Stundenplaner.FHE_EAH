@@ -69,7 +69,8 @@
                         android:hint="@string/phonebook_firstname"
                         android:textColor="@color/primary_color"
                         android:autofillHints=""
-                        android:layout_marginStart="5dp" />
+                        android:layout_marginStart="5dp"
+                        tools:ignore="TextFields" />
                     
                 </de.fhe.fhemobile.widgets.FloatLabelLayout>
 
