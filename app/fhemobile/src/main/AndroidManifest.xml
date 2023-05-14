@@ -74,7 +74,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         android:networkSecurityConfig="@xml/network_security_config"
-        tools:ignore="UnusedAttribute">
+        tools:ignore="UnusedAttribute"
+        android:enableOnBackInvokedCallback="true"
+        >
 
         <!-- note: screenOrientation=unspecified means using the sensor but respecting rotation lock,
                     screenOrientation=fullSensor uses the sensor ignoring the device's rotation lock status -->
