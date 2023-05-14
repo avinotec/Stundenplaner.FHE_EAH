@@ -114,12 +114,20 @@ public final class MapsModel {
         building5Maps.add(new MapVo(R.string.building_05_floor_03,  BUILDING_05_FLOOR_03 +".png"));
         building5Maps.add(new MapVo(R.string.building_05_floor_3Z,  BUILDING_05_FLOOR_3Z +".png"));
         final MapCollectionVo building5 = new MapCollectionVo(R.string.building_05, building5Maps);
-
+        // -----------------------------------------------------------------------------------------
+/*
+TODO Haus 6
+        final List<MapVo> building6Maps = new ArrayList<>();
+        building5Maps.add(new MapVo(R.string.building_06_floor_ground,  BUILDING_06_GROUND+".png"));
+        building5Maps.add(new MapVo(R.string.building_06_floor_ug2,  BUILDING_06_FLOOR_UG2+".png"));
+        building5Maps.add(new MapVo(R.string.building_06_floor_ug1,  BUILDING_06_FLOOR_UG1+".png"));
+*/
 
         mMaps.add(campusOverview);
         mMaps.add(building321);
         mMaps.add(building4);
         mMaps.add(building5);
+        //mMaps.add(building6); TODO Haus 6
     }
 
 }
