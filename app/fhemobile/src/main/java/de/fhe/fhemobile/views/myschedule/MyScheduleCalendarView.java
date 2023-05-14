@@ -45,6 +45,11 @@ public class MyScheduleCalendarView extends LinearLayout {
     private static TextView mLastUpdatedTextView;
 
 
+
+    private ListView mCalendarListView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+
+
     /**
      * Set (or update) the text view displaying the date the schedule has been last updated
      */
@@ -159,8 +164,5 @@ public class MyScheduleCalendarView extends LinearLayout {
         }
     };
 
-
-    private ListView mCalendarListView;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
 
 }
