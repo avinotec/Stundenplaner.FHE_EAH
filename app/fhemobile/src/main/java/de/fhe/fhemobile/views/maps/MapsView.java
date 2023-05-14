@@ -18,6 +18,7 @@ package de.fhe.fhemobile.views.maps;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 
@@ -49,6 +50,16 @@ public class MapsView extends FrameLayout {
         mMapView.getSettings().setLoadWithOverviewMode(true);
         mMapView.getSettings().setUseWideViewPort(true);
 //        mMapView.getSettings().setDisplayZoomControls(false);
+
+        //TODO MS experimental
+        mMapView.getSettings().setJavaScriptEnabled(true);
+        mMapView.getSettings().setAllowFileAccess(true);
+        mMapView.getSettings().setPluginState(WebSettings.PluginState.ON);
+        mMapView.getSettings().setDomStorageEnabled(true);
+        mMapView.getSettings().setAllowContentAccess(true);
+        mMapView.getSettings().setAllowFileAccessFromFileURLs(true);
+        mMapView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+
         mMapView.loadDataWithBaseURL("file:///android_asset/floorplan_images/", htmlData, "text/html", "UTF-8", "");
     }
 

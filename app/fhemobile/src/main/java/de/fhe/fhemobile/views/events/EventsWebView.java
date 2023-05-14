@@ -3,6 +3,7 @@ package de.fhe.fhemobile.views.events;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 
@@ -28,12 +29,23 @@ public class EventsWebView extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        WebView mWebView = (WebView) findViewById(R.id.eventsWebView);
+        final WebView mWebView = (WebView) findViewById(R.id.eventsWebView);
         //wird der WebViewClient nicht geaendert, kann die Seite nicht geladen werden, da die Webview
         mWebView.setWebViewClient(new SSLTolerantWebViewClient(mContext));
         //Ohne JavascriptEnabled laesst sich das WebView nicht scrollen.
         mWebView.getSettings().setJavaScriptEnabled(true);
+
+        //MS experimental
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setAllowFileAccess(true);
+        mWebView.getSettings().setPluginState(WebSettings.PluginState.ON);
+        mWebView.getSettings().setDomStorageEnabled(true);
+        mWebView.getSettings().setAllowContentAccess(true);
+        mWebView.getSettings().setAllowFileAccessFromFileURLs(true);
+        mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+
         mWebView.loadUrl(Endpoints.EVENTS_ENDPOINT);
+
 
     }
 }

@@ -18,6 +18,7 @@ package de.fhe.fhemobile.views.news;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 
@@ -47,6 +48,16 @@ public class NewsWebView extends FrameLayout {
         mWebView.setWebViewClient(new SSLTolerantWebViewClient(mContext));
         //JavaScripted needs to be enabled
         mWebView.getSettings().setJavaScriptEnabled(true);
+
+        //TODO MS experimental
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setAllowFileAccess(true);
+        mWebView.getSettings().setPluginState(WebSettings.PluginState.ON);
+        mWebView.getSettings().setDomStorageEnabled(true);
+        mWebView.getSettings().setAllowContentAccess(true);
+        mWebView.getSettings().setAllowFileAccessFromFileURLs(true);
+        mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+
         mWebView.loadUrl(Endpoints.NEWS_ENDPOINT);
 
     }
