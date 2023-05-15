@@ -178,7 +178,7 @@ public class MyScheduleModel extends EventDispatcher {
 
     public void saveSubscribedEventSeriesToSharedPreferences() {
         final Gson gson = new Gson();
-        final String json = correctUmlauts(gson.toJson(getInstance().getSortedSubscribedEventSeries(), ArrayList.class));
+        final String json = correctUmlauts(gson.toJson(getSortedSubscribedEventSeries(), ArrayList.class));
         final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences(SP_MYSCHEDULE, Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(PREF_SUBSCRIBED_EVENTSERIES, json);

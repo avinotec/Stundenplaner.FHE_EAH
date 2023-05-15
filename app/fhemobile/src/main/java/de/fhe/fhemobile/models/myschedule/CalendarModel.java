@@ -213,6 +213,8 @@ public class CalendarModel extends EventDispatcher {
                 deleteCalendarEntry(event);
             }
         }
+        //empty calendar entry ids in shared preferences
+        MyScheduleModel.getInstance().saveSubscribedEventSeriesToSharedPreferences();
     }
 
     public final static String createLocalCalendar(){
@@ -307,9 +309,19 @@ public class CalendarModel extends EventDispatcher {
         Log.i(TAG, "Started synchronizing My Schedule");
         synchronizationRunning = true;
 
-        for(final MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
-            syncEventSeries(eventSeries);
+        //reduce loading from shared preferences to avoid the thread getting overloaded
+        String calId = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_id), null);
+        if(calId == null){
+            Log.e(TAG, "Chosen calendar is null, unable to synchronizes calendar.");
+            return;
         }
+        //sync
+        for(final MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
+            syncEventSeries(eventSeries, calId);
+        }
+        //save calendar entry ids to shared preferences
+        MyScheduleModel.getInstance().saveSubscribedEventSeriesToSharedPreferences();
 
         Log.i(TAG, "Finished synchronizing My Schedule");
         synchronizationRunning = false;
@@ -317,13 +329,10 @@ public class CalendarModel extends EventDispatcher {
 
     /**
      * Create or update the events of the corresponding event series
-     * @param eventSeries
+     * @param eventSeries The {@link MyScheduleEventSeriesVo}
+     * @param calId The id of the calendar to sync to
      */
-    private static void syncEventSeries(final MyScheduleEventSeriesVo eventSeries){
-
-        //reduce loading from shared preferences to avoid the thread getting overloaded
-        String calId = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
-                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_id), null);
+    private static void syncEventSeries(final MyScheduleEventSeriesVo eventSeries, final String calId){
 
         //sync all events of the series
         for(final MyScheduleEventVo eventVo : eventSeries.getEvents()){
@@ -469,6 +478,8 @@ public class CalendarModel extends EventDispatcher {
                 event.setChangedSinceLastCalSync(true);
             }
         }
+        //empty calendar entry ids in shared preferences
+        MyScheduleModel.getInstance().saveSubscribedEventSeriesToSharedPreferences();
     }
 
     /*
