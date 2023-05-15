@@ -280,10 +280,6 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                     //toggle synchronisation
                     //sync got enabled
                     if (syncEnabled) {
-                        //if debugging: sync immediately when sync button is enabled
-                        if (BuildConfig.DEBUG) {
-                            CalendarSynchronizationBackgroundTask.sync();
-                        }
                         Utils.showToastLong(R.string.myschedule_calsync_started);
                         CalendarSynchronizationBackgroundTask.startPeriodicSynchronizing();
                     }
