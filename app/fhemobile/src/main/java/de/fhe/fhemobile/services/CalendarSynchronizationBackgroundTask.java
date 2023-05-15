@@ -38,8 +38,11 @@ public class CalendarSynchronizationBackgroundTask implements Runnable {
     /**
      * Construct a new {@link CalendarSynchronizationBackgroundTask}
      * that synchronizes My Schedule with the users calendar every 10 min.
+     * @param showToast Boolean, whether to show a toast when synchronization is finished
      */
-    public static void startPeriodicSynchronizing() {
+    public static void startPeriodicSynchronizing(boolean showToast) {
+        showSyncFinishedToast = showToast;
+
         if (mScheduledFuture == null) {
             mScheduledFuture = Main.scheduledExecutorService.scheduleWithFixedDelay(
                     new CalendarSynchronizationBackgroundTask(), 0, 10, TimeUnit.MINUTES);
@@ -74,8 +77,15 @@ public class CalendarSynchronizationBackgroundTask implements Runnable {
         Log.i(TAG, "Started CalendarSynchronizationBackgroundTask.run()");
 
         CalendarModel.syncMySchedule();
-        Utils.showToastFromBackgroundTask(R.string.myschedule_calsync_finished);
+
+        //show sync finished toast when switch gets enabled,
+        // do not show when the scheduled period is triggering task execution
+        if(showSyncFinishedToast){
+            Utils.showToastFromBackgroundTask(R.string.myschedule_calsync_finished);
+            showSyncFinishedToast = false;
+        }
     }
 
+    private static boolean showSyncFinishedToast = false;
     private static ScheduledFuture mScheduledFuture;
 }

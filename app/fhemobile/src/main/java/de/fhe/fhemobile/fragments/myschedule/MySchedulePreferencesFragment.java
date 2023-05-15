@@ -281,7 +281,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                     //sync got enabled
                     if (syncEnabled) {
                         Utils.showToastLong(R.string.myschedule_calsync_started);
-                        CalendarSynchronizationBackgroundTask.startPeriodicSynchronizing();
+                        CalendarSynchronizationBackgroundTask.startPeriodicSynchronizing(true);
                     }
                     //sync got disabled
                     else {
