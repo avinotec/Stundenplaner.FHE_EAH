@@ -65,9 +65,9 @@ public class BuildingFloorKey implements Comparable {
         if (!(other instanceof BuildingFloorKey))
             return false;
         final BuildingFloorKey that = (BuildingFloorKey) other;
-        final boolean b = (cell.getFloorInt() == that.cell.getFloorInt());
+        final boolean f = (cell.getFloorInt() == that.cell.getFloorInt());
         final boolean c = (cell.getComplex() == that.cell.getComplex());
-        return ( b && c);
+        return (f && c);
     }
 
     /**
