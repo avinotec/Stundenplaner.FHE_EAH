@@ -118,9 +118,9 @@ public final class MapsModel {
 /*
 TODO Haus 6
         final List<MapVo> building6Maps = new ArrayList<>();
-        building5Maps.add(new MapVo(R.string.building_06_floor_ground,  BUILDING_06_GROUND+".png"));
-        building5Maps.add(new MapVo(R.string.building_06_floor_ug2,  BUILDING_06_FLOOR_UG2+".png"));
-        building5Maps.add(new MapVo(R.string.building_06_floor_ug1,  BUILDING_06_FLOOR_UG1+".png"));
+        building6Maps.add(new MapVo(R.string.building_06_floor_ground,  BUILDING_06_GROUND+".png"));
+        building6Maps.add(new MapVo(R.string.building_06_floor_ug2,  BUILDING_06_FLOOR_UG2+".png"));
+        building6Maps.add(new MapVo(R.string.building_06_floor_ug1,  BUILDING_06_FLOOR_UG1+".png"));
 */
 
         mMaps.add(campusOverview);

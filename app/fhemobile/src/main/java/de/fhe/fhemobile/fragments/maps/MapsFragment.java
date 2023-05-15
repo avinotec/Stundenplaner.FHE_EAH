@@ -88,7 +88,7 @@ public class MapsFragment extends Fragment {
                 case R.string.building_05:
                     mCurrentMapIndex = 3; //Erdgeschoss
                 case R.string.building_06:
-                    mCurrentMapIndex = 1; //Untergeschoss TODO check Untergeschoss
+                    mCurrentMapIndex = 1; //Untergeschoss TODO check if Untergeschoss is entry
 
             }
         }
