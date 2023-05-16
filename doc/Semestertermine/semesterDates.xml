@@ -5,138 +5,6 @@
 <semesterList>
 <!-- note: name needs to be in format "SS 20XX" or "WS 20XX/20XY" because values are parsed in SemesterDatesModel -->
 
-    <semester name="SS 2022"
-              longName="Sommersemester 2022">
-
-        <courseTimes>
-
-            <date name="Semesterbeginn"
-                  date="01.04.2022"/>
-
-            <period name="Vorlesungszeitraum"
-                    begin="04.04.2022"
-                    end="16.07.2022"/>
-
-            <period name="Prüfungszeitraum"
-                    begin="18.07.2022"
-                    end="06.08.2022"/>
-
-        </courseTimes>
-
-        <holidays>
-
-            <period name="Ostern + Anreistag"
-                    begin="15.04.2022"
-                    end="19.04.2022"/>
-
-            <period name="Himmelfahrt + Brückentage"
-                    begin="26.05.2022"
-                    end="28.05.2022"/>
-
-            <period name="Pfingsten + Anreisetag"
-                    begin="04.06.2022"
-                    end="07.06.2022"/>
-        </holidays>
-
-        <importantDates>
-
-            <date name="Einführung für das Erstsemester (Bachelor und Master)"
-                  date="04.04.2022"/>
-
-            <period name="Bewerbungszeitraum Bachelor (zulassungsbeschränkt) zum WS 2022/23"
-                    begin="01.06.2022"
-                    end="15.07.2022"/>
-
-            <period name="Bewerbungszeitraum Bachelor (kein NC) zum WS 2022/23"
-                    begin="01.06.2022"
-                    end="31.08.2022"/>
-
-            <period name="Bewerbungszeitraum Master zum WS 2022/23 (je nach Studiengang)"
-                    begin="01.06.2022"
-                    end="15.07./15.09.2022"/>
-
-            <period name="Rückmeldung zum WS 2022/23"
-                    begin="01.06.2022"
-                    end="31.07.2022"/>
-
-            <date name="Hochschulinformationstag"
-                  date="09.04.2022"/>
-
-            <date name="Masterinfotag"
-                  date="22.06.2022"/>
-
-
-        </importantDates>
-
-    </semester>
-
-    <semester name="WS 2022/2023"
-              longName="Wintersemester 2022/23">
-
-        <courseTimes>
-
-            <date name="Semesterbeginn"
-                  date="01.10.2022"/>
-
-            <period name="Vorlesungszeitraum"
-                    begin="10.10.2022"
-                    end="04.02.2023"/>
-
-            <period name="Prüfungszeitraum"
-                    begin="06.02.2023"
-                    end="25.02.2023"/>
-
-        </courseTimes>
-
-        <holidays>
-
-            <date name="Reformationstag"
-                  date="31.10.2022"/>
-
-            <period name="Weihnachten und Neujahr"
-                    begin="19.12.2022"
-                    end="31.12.2022"/>
-
-            <date name="Anreisetag"
-                  date="02.01.2023"/>
-
-        </holidays>
-
-        <importantDates>
-
-            <date name="Einführung für das Erstsemester (Bachelor)"
-                  date="ab 04.10.2022"/>
-
-            <date name="Einführung für das Erstsemester (Master)"
-                  date="10.10.2022"/>
-
-            <date name="Feierliche Immatrikulation"
-                  date="27.10.2022 (voraussichtlich)"/>
-
-            <period name="Schnupperstudium"
-                    begin="25.10.2022"
-                    end="27.10.2022"/>
-
-            <period name="Bewerbungszeitraum Bachelor (zulassungsbeschränkt) zum SS 2023"
-                    begin="01.12.2022"
-                    end="15.01.2023"/>
-
-            <period name="Bewerbungszeitraum Bachelor (kein NC) zum SS 2023"
-                    begin="01.12.2022"
-                    end="28.02.2023"/>
-
-            <period name="Bewerbungszeitraum Master zum SS 2023"
-                    begin="01.12.2022"
-                    end="15.02.2023"/>
-
-            <period name="Rückmeldung zum SS 2023"
-                    begin="06.01.2023"
-                    end="28.02.2023"/>
-
-        </importantDates>
-
-    </semester>
-
     <semester name="SS 2023"
               longName="Sommersemester 2023">
 
@@ -200,6 +68,72 @@
             <date name="Masterinfotag"
                   date="21.06.2023"/>
 
+
+        </importantDates>
+
+    </semester>
+
+
+    <semester name="WS 2023/2024"
+              longName="Wintersemester 2023/24">
+
+        <courseTimes>
+
+            <date name="Semesterbeginn"
+                  date="01.10.2023"/>
+
+            <period name="Vorlesungszeitraum"
+                    begin="16.10.2023"
+                    end="10.02.2024"/>
+
+            <period name="Prüfungszeitraum"
+                    begin="12.02.2024"
+                    end="02.03.2024"/>
+
+        </courseTimes>
+
+        <holidays>
+
+            <period name="Brückentag + Reformationstag"
+                  begin="30.10.2023"
+                  end="31.10.2023"/>
+
+            <period name="Weihnachten und Neujahr"
+                    begin="25.12.2023"
+                    end="05.01.2024"/>
+
+        </holidays>
+
+        <importantDates>
+
+            <date name="Einführung für das Erstsemester (Bachelor)"
+                  date="ab 09.10.2023"/>
+
+            <date name="Einführung für das Erstsemester (Master)"
+                  date="16.10.2023"/>
+
+            <date name="Feierliche Immatrikulation"
+                  date="01.11.2023"/>
+
+            <period name="Schnupperstudium"
+                    begin="24.10.2023"
+                    end="26.10.2023"/>
+
+            <period name="Bewerbungszeitraum Bachelor (zulassungsbeschränkt) zum SS 2024"
+                    begin="01.12.2023"
+                    end="15.01.2024"/>
+
+            <period name="Bewerbungszeitraum Bachelor (kein NC) zum SS 2024"
+                    begin="01.12.2023"
+                    end="28.02.2024"/>
+
+            <period name="Bewerbungszeitraum Master zum SS 2024"
+                    begin="01.12.2032"
+                    end="15.02.2024"/>
+
+            <period name="Rückmeldung zum SS 2024"
+                    begin="06.01.2024"
+                    end="28.02.2024"/>
 
         </importantDates>
 
