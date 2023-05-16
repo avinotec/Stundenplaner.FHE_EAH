@@ -279,9 +279,21 @@ public class CalendarModel extends EventDispatcher {
      * Delete the calendar with the given id
      */
     public final static void deleteCalendar(long calId){
-        final Uri uri = ContentUris.withAppendedId(Calendars.CONTENT_URI, calId);
+        final Uri uri;
 
-        Main.getAppContext().getContentResolver().delete(uri, null, null);
+        // falls aus der Nummer kein String gebaut werden kann oder etwas anderes schief geht.
+        try {
+             uri = ContentUris.withAppendedId(Calendars.CONTENT_URI, calId);
+        }
+        catch ( final Exception e )
+        {
+            // nothing to do
+            return;
+        }
+        // gibt es eine URI und ist sie gefüllt?
+        if ( uri != null && !uri.toString().isEmpty() ) {
+            Main.getAppContext().getContentResolver().delete(uri, null, null);
+        }
     }
 
     /**
