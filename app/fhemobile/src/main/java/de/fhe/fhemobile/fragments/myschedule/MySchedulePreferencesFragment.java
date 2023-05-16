@@ -41,7 +41,6 @@ import com.google.common.collect.Iterables;
 
 import java.util.Map;
 
-import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.events.CalendarSyncEvent;
@@ -555,7 +554,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
     private final EventListener mChosenCalendarDeletedEventListener = new EventListener(){
         @Override
         public void onEvent(Event event) {
-            CalendarModel.chosenCalendarIsDeleted();
+            CalendarModel.handleChosenCalendarIsDeleted();
             mCalendarSyncSwitchPref.setChecked(false);
             mCalendarSelectionPref.setSummary(R.string.myschedule_pref_choose_calendar_summary);
         }
