@@ -196,7 +196,7 @@ public class CalendarModel extends EventDispatcher {
     /**
      * Delete all calendar entries belonging to a subscribed event series
      */
-    public static void deleteAllMyScheduleCalendarEntries(){
+    public static final void deleteAllMyScheduleCalendarEntries(){
         for(final MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
             deleteCalendarEntries(eventSeries);
         }
@@ -252,29 +252,6 @@ public class CalendarModel extends EventDispatcher {
         return null;
     }
 
-// --Commented out by Inspection START (26.04.2023 14:20):
-//    /**
-//     * Delete local calendar
-//     */
-//    public static final void deleteLocalCalendar(){
-//        final Long localCalendarID = getLocalCalendarId();
-//
-//        if (localCalendarID == null) {
-//            Utils.showToast(R.string.myschedule_delete_calendar_error);
-//            return;
-//        }
-//
-//        final Uri.Builder builder = Calendars.CONTENT_URI.buildUpon();
-//        final Uri calendarToRemoveUri = builder.appendPath(localCalendarID.toString())
-//                .appendQueryParameter(android.provider.CalendarContract.CALLER_IS_SYNCADAPTER, "true")
-//                .appendQueryParameter(Calendars.ACCOUNT_NAME, localCalendarAccount)
-//                .appendQueryParameter(Calendars.ACCOUNT_TYPE, localCalendarAccountType)
-//                .build();
-//
-//        Main.getAppContext().getContentResolver().delete(calendarToRemoveUri, null, null);
-//    }
-// --Commented out by Inspection STOP (26.04.2023 14:20)
-
     /**
      * Delete the calendar with the given id
      */
@@ -301,7 +278,7 @@ public class CalendarModel extends EventDispatcher {
      * remove the stored calendar entry id from all my schedule events
      * and empty calendar id and name in the shared preferences
      */
-    public static void chosenCalendarIsDeleted(){
+    public static void handleChosenCalendarIsDeleted(){
         CalendarSynchronizationBackgroundTask.stopPeriodicSynchronizing();
         unlinkAllCalendarEventsAndMyScheduleEvents();
         PreferenceManager.getDefaultSharedPreferences(Main.getAppContext()).edit()
@@ -397,7 +374,7 @@ public class CalendarModel extends EventDispatcher {
 
         final ContentValues values = getCalendarEntryValues(scheduleEvent);
 
-        //insert event
+        //update event
         final Uri updateUri = ContentUris.withAppendedId(Events.CONTENT_URI, calEventId);
         final ContentResolver cr = Main.getAppContext().getContentResolver();
         cr.update(updateUri, values, null, null);
