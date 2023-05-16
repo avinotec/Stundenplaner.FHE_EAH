@@ -67,8 +67,8 @@ android {
     defaultConfig {
         minSdk 21
         targetSdk 33
-        versionCode = 48
-        versionName = '4.0.2'
+        versionCode = 49
+        versionName = '4.0.3'
 
         resConfigs "de", "en", "notnight"
         multiDexEnabled false
