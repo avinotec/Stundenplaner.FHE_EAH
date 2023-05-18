@@ -371,8 +371,8 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
 
         //if calendar permission is not granted
         if (!isCalendarPermissionGranted()) {
-            //use helper preference that will only launch the permission request
-            // without displaying an dialog with an empty calendar list
+            //use helper preference that will launch the permission request
+            // instead of displaying an dialog with an empty calendar list
             mDeleteCalendarNoPermissionPref.setVisible(true);
             mDeleteCalendarPref.setVisible(false);
         }
