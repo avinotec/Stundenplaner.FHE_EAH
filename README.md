@@ -20,7 +20,8 @@ Sprachen in der App: Deutsch, Englisch
 ## Beschreibung der Features, aktueller Stand, Hinweise
 #### Stundenplan
   - Abruf des allgemeinen Stundenplans für ein spezifisches Semester in einem Studiengang
-  - https://stundenplanung.eah-jena.de/api Die Schnittstelle mit Erklärungen
+  - detaillierte Informationen unter https://github.com/avinotec/Stundenplaner.FHE_EAH/wiki
+  
 
 - https://stundenplanung.eah-jena.de/api/mobileapp/v1/activity/{id}
 - https://stundenplanung.eah-jena.de/api/mobileapp/v1/module
