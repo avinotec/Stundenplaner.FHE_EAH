@@ -72,16 +72,20 @@ def generateJson(csv_reader, building, floor):
                 exitTo = []
                 #use this exit when changing buildings
                 if(building == "01" and x == 40 and y == 19): exitTo = ["05"]
-                elif(building == "03" and x == 13 and y == 2): exitTo = ["04"]
+                elif(building == "03" and x == 13 and y == 2): exitTo = ["04", "06"]
                 elif(building == "04" and x == 23 and y == 19): exitTo = ["03", "05"]
-                elif(building == "05" and x == 24 and y == 5): exitTo = ["03", "04"]
+                elif(building == "04" and x == 9 and y == 20): exitTo = ["06"]
+                elif(building == "05" and x == 24 and y == 5): exitTo = ["03", "04", "06"]
+                elif(building == "06" and x== 27 and y == 22): exitTo = ["03", "04", "05"]
 
                 entryFrom = []
                 #use this entry when changing buildings
                 # only one specific entry for each building to simplify
-                if(building == "04" and x == 9 and y == 20): entryFrom = ["03", "05"] 
-                elif(building == "02" and x == 33 and y == 10): entryFrom = ["04", "05"]
-                elif(building == "05" and x == 24 and y == 5): entryFrom = ["03", "04"]
+                if(building == "04" and x == 9 and y == 20): entryFrom = ["03", "05", "06"] 
+                elif(building == "03" and x == 13 and y == 2): entryFrom = ["04", "06"]
+                elif(building == "01" and x == 40 and y == 19): entryFrom = ["05"]
+                elif(building == "05" and x == 24 and y == 5): entryFrom = ["03", "04", "06"]
+                elif(building == "06" and x== 27 and y == 22): entryFrom = ["03", "04", "05"]
 
                 exit = {"building": building, "floor": floornumber,
                         "xCoordinate": x, "yCoordinate": y,
@@ -96,7 +100,7 @@ def generateJson(csv_reader, building, floor):
         y = y + 1    
     
     #save walkable cells to json for this building and floor
-    if (building == '04') or (building == '05'):
+    if (building == '04') or (building == '05') or (building == '06'):
         with open('json/building_'+ building +'_floor_'+ floor + '.json', 'w') as f:
             json.dump(walkable_cells, f)
     #write json in tmp folder to merge building 3, 2 and 1
@@ -115,7 +119,7 @@ exits = []
 
 #read in csv files
 for file_name in os.listdir(fp_csv_folder):
-    if re.match(r'cellplan_0[12345]-((0[01234])|ug1|ug2|3Z)\.CSV', file_name): #check correct file name pattern
+    if re.match(r'cellplan_0[123456]-((0[01234])|ug1|ug2|3Z)\.CSV', file_name): #check correct file name pattern
         #todo check if ug_level 1 and ug_level 2 are read in
         print(file_name)
         #get building and floor
