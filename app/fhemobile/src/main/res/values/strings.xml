@@ -181,7 +181,7 @@
     <string name="title_scanner_activity">Scanner</string>
     <string name="title_navigation_activity">Navigation</string>
     <string name="select_from_spinner">Please select</string>
-    <string name="room_not_found">Room not found!</string>
+    <string name="error_navigation_room_not_found">Room not found!</string>
     <string name="building_03_02_01">Building 3, 2, 1</string>
     <string name="building_04">Building 4</string>
     <string name="building_05">Building 5</string>
@@ -221,7 +221,6 @@
     <string name="navigation_dialog_floor">Floor</string>
     <string name="navigation_dialog_room">Room</string>
     <string name="navigation_input_start_hint">room number (xx.xx.xx)</string>
-    <string name="error_message_room_input">Room not found!</string>
     <string name="text_view_button_destination_location">Your destination:</string>
     <string name="btn_location_qr_code">QR-Code</string>
     <string name="navigation_button_prev_plan">Previous Map</string>

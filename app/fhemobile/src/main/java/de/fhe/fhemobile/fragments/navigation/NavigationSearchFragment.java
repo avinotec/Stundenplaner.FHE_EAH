@@ -64,10 +64,7 @@ public abstract class NavigationSearchFragment extends FeatureFragment {
                 final String result = bundle.getString(KEY_SCANNED_ROOM);
                 Log.d(TAG, "scanned QR code received in NavigationSearchFragment: "+result);
 
-                mStartRoom = validateAndGetRoom(result);
-                getSearchView().setStartInputText(mStartRoom.getRoomName());
-                getSearchView().invalidate();
-
+                validateInputAndSetStartRoom(result);
             }
         });
     }
@@ -189,13 +186,18 @@ public abstract class NavigationSearchFragment extends FeatureFragment {
         }
     }
 
+    /**
+     * Parse the input string, run necessarry correction and search for the corresponding {@link RoomVo}
+     * @param inputRoom The input string
+     * @return The found {@link RoomVo}. Null, if nothing found.
+     */
     static RoomVo validateAndGetRoom(String inputRoom) {
         RoomVo roomFound = null;
 
         //a room number has been entered
         if (inputRoom != null && !inputRoom.isEmpty()) {
 
-            //reminder: there is an exception from room format xx.xx.xx -> 05.3Z.xxx
+            //reminder: there is an exceptional room format xx.xx.xx -> 05.3Z.xxx
 
             //if room number has been entered without separating dots
             //xxxxxx (e.g. 030333) or xxxxxxx (e.g. 05.3Z.203) or xx-xxx (e.g. 04.-1.10)
@@ -229,6 +231,7 @@ public abstract class NavigationSearchFragment extends FeatureFragment {
                 if (room.getRoomName().equals(inputRoom)) {
                     roomFound = room;
                 }
+                //todo: warum machen wir das statt einfach "room not found" anzuzeigen?
                 //if no room has been found then search for a close one
                 //check if room is in same building on same floor
                 else if (room.getBuilding().equals(inputArray[0])
@@ -244,7 +247,7 @@ public abstract class NavigationSearchFragment extends FeatureFragment {
                         inputRoomNumber = 1;
                         roomNumber = 1;
                     }
-                    final int roomDiff = Math.abs( roomNumber - inputRoomNumber);
+                    final int roomDiff = Math.abs(roomNumber - inputRoomNumber);
 
                     //if room is closer than room found before
                     if(roomFound == null){
@@ -257,11 +260,14 @@ public abstract class NavigationSearchFragment extends FeatureFragment {
             }
         }
 
+        if(roomFound == null){
+            showRoomNotFoundErrorToast();
+        }
         return roomFound;
     }
 
     protected static void showRoomNotFoundErrorToast() {
-        Utils.showToast(R.string.room_not_found);
+        Utils.showToast(R.string.error_navigation_room_not_found);
     }
 
 }
