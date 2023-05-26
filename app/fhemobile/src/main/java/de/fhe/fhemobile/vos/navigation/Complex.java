@@ -20,15 +20,16 @@ package de.fhe.fhemobile.vos.navigation;
 import androidx.annotation.NonNull;
 
 /**
- * Complex for RouteCalculator
- * merges buildings 3, 2 and 1 to COMPLEX_321
+ * Complex for RouteCalculator.
+ * Buildings 3, 2 and 1 are merged to COMPLEX_321
  */
 public enum Complex {
 
     //order important, sorted from west to east
     COMPLEX_4,
     COMPLEX_321,
-    COMPLEX_5;
+    COMPLEX_5,
+    COMPLEX_6;
 
     public static Complex getEnum(final String building) {
         switch (building) {
@@ -40,6 +41,8 @@ public enum Complex {
                 return COMPLEX_4;
             case "05":
                 return COMPLEX_5;
+            case "06":
+                return COMPLEX_6;
             default:
                 return null;
         }
@@ -55,6 +58,8 @@ public enum Complex {
                 return "04";
             case COMPLEX_5:
                 return "05";
+            case COMPLEX_6:
+                return "06";
             default:
                 return "";
         }

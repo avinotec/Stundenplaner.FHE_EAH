@@ -100,6 +100,7 @@ public class RoomNavigationSearchFragment extends NavigationSearchFragment {
             buildings.add(new BuildingVo("02"));
             buildings.add(new BuildingVo("04"));
             buildings.add(new BuildingVo("05"));
+            buildings.add(new BuildingVo("06"));
         }
         ((RoomSearchView) mView).setBuildingItems(buildings);
     }
