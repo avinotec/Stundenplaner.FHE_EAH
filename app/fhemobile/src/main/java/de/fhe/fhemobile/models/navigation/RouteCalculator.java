@@ -197,7 +197,7 @@ public class RouteCalculator {
             if(startComplex == Complex.COMPLEX_321
                     || destinationComplex == Complex.COMPLEX_321){
                 floorGrids.put(Complex.COMPLEX_321, new HashMap<>());
-
+                //building 3,2,1 has floors numbering from -1 to 4
                 for(int i = -1; i <= 4; i++){
                     floorGrids.get(Complex.COMPLEX_321).put(i, buildFloorGrid(Complex.COMPLEX_321, i));
                 }
@@ -205,7 +205,7 @@ public class RouteCalculator {
             if(startComplex == Complex.COMPLEX_4
                     || destinationComplex == Complex.COMPLEX_4){
                 floorGrids.put(Complex.COMPLEX_4, new HashMap<>());
-
+                //building 4 has floors numbering from -1 to 3
                 for(int i = -1; i <= 3; i++){
                     floorGrids.get(Complex.COMPLEX_4).put(i, buildFloorGrid(Complex.COMPLEX_4, i));
 
@@ -214,11 +214,17 @@ public class RouteCalculator {
             if(startComplex == Complex.COMPLEX_5
                     || destinationComplex == Complex.COMPLEX_5){
                 floorGrids.put(Complex.COMPLEX_5, new HashMap<>());
-
+                //building 5 has floors numbering from -2 to 4
                 //floorInt = 4 is floor 3Z
                 for(int i = -2; i <= 4; i++){
                     floorGrids.get(Complex.COMPLEX_5).put(i, buildFloorGrid(Complex.COMPLEX_5, i));
                 }
+            }
+            if(startComplex == Complex.COMPLEX_6
+                    || destinationComplex == Complex.COMPLEX_6){
+                floorGrids.put(Complex.COMPLEX_6, new HashMap<>());
+                //building 6 has only floor -1
+                floorGrids.get(Complex.COMPLEX_6).put(-1, buildFloorGrid(Complex.COMPLEX_6, -1));
             }
         } catch (final RuntimeException e) {
             Log.e(TAG, "error building floor grids", e);

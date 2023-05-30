@@ -19,8 +19,8 @@ package de.fhe.fhemobile.vos.navigation;
 
 
 /**
- * Class for distinguishing between names of buildings (03, 02, 01, 04, 05) and
- * buildings considered as one unit (3-2-1, 4, 5)
+ * Class for distinguishing between names of buildings (03, 02, 01, 04, 05, 06) and
+ * buildings considered as one unit (3-2-1, 4, 5, 6)
  * needed for route calculation
  */
 public class BuildingVo {

@@ -110,7 +110,7 @@ public class Cell {
     }
 
     /**
-     * Get the building of this {@link Cell} ("01", "02", "03", "04", "05").
+     * Get the building of this {@link Cell} ("01", "02", "03", "04", "05", "06").
      * Note that building 3, 2 and 1 are considered as different buildings but the same {@link Complex}
      * @return The building name of this cell
      */

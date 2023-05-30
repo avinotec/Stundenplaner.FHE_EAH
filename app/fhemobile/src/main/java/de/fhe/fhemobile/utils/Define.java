@@ -86,6 +86,8 @@ public final class Define {
         public static final String BUILDING_05_FLOOR_03 = "building_05_floor_03";   //$NON-NLS
         public static final String BUILDING_05_FLOOR_3Z = "building_05_floor_3Z";   //$NON-NLS
         public static final String BUILDING_05_GROUND = "building_05_ground";   //$NON-NLS
+        public static final String BUILDING_06_GROUND = "building_06_ground";   //$NON-NLS
+        public static final String BUILDING_06_FLOOR_UG1 = "building_06_floor_ug1";   //$NON-NLS
     }
 
 

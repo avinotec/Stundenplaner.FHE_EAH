@@ -38,6 +38,8 @@ import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_FLOOR_3Z;
 import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_FLOOR_UG1;
 import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_FLOOR_UG2;
 import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_05_GROUND;
+import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_06_FLOOR_UG1;
+import static de.fhe.fhemobile.utils.Define.Maps.BUILDING_06_GROUND;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,7 +107,7 @@ public final class MapsModel {
         // -----------------------------------------------------------------------------------------
 
         final List<MapVo> building5Maps = new ArrayList<>();
-        building5Maps.add(new MapVo(R.string.building_05_floor_ground,  BUILDING_05_GROUND+".png"));
+        building5Maps.add(new MapVo(R.string.building_05_ground,  BUILDING_05_GROUND+".png"));
         building5Maps.add(new MapVo(R.string.building_05_floor_ug2,  BUILDING_05_FLOOR_UG2+".png"));
         building5Maps.add(new MapVo(R.string.building_05_floor_ug1,  BUILDING_05_FLOOR_UG1+".png"));
         building5Maps.add(new MapVo(R.string.building_05_floor_00,  BUILDING_05_FLOOR_00+".png"));
@@ -114,20 +116,20 @@ public final class MapsModel {
         building5Maps.add(new MapVo(R.string.building_05_floor_03,  BUILDING_05_FLOOR_03 +".png"));
         building5Maps.add(new MapVo(R.string.building_05_floor_3Z,  BUILDING_05_FLOOR_3Z +".png"));
         final MapCollectionVo building5 = new MapCollectionVo(R.string.building_05, building5Maps);
+
         // -----------------------------------------------------------------------------------------
-/*
-TODO Haus 6
+
         final List<MapVo> building6Maps = new ArrayList<>();
-        building6Maps.add(new MapVo(R.string.building_06_floor_ground,  BUILDING_06_GROUND+".png"));
-        building6Maps.add(new MapVo(R.string.building_06_floor_ug2,  BUILDING_06_FLOOR_UG2+".png"));
+        building6Maps.add(new MapVo(R.string.building_06_ground,  BUILDING_06_GROUND+".png"));
         building6Maps.add(new MapVo(R.string.building_06_floor_ug1,  BUILDING_06_FLOOR_UG1+".png"));
-*/
+        final MapCollectionVo building6 = new MapCollectionVo(R.string.building_06, building6Maps);
+
 
         mMaps.add(campusOverview);
         mMaps.add(building321);
         mMaps.add(building4);
         mMaps.add(building5);
-        //mMaps.add(building6); TODO Haus 6
+        mMaps.add(building6);
     }
 
 }
