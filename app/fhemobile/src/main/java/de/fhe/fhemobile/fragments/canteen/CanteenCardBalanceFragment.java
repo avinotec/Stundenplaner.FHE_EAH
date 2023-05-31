@@ -25,12 +25,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.heinrichreimer.canteenbalance.cardreader.CardBalance;
-
-
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.CardBalance;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.services.CardBalanceReceiver;
+import de.fhe.fhemobile.canteencardbalance.CardBalanceReceiver;
 import de.fhe.fhemobile.views.canteen.CanteenCardBalanceView;
 
 /**

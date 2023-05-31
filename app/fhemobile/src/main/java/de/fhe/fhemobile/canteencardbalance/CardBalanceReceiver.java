@@ -14,15 +14,17 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package de.fhe.fhemobile.services;
+package de.fhe.fhemobile.canteencardbalance;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
-import com.heinrichreimer.canteenbalance.app.AbstractCardBalanceReceiver;
-import com.heinrichreimer.canteenbalance.cardreader.CardBalance;
 
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.CardBalance;
 import de.fhe.fhemobile.utils.Utils;
 
 /**
@@ -30,9 +32,19 @@ import de.fhe.fhemobile.utils.Utils;
  *
  * Created by Nadja - 05/2023
  */
-public class CardBalanceReceiver extends AbstractCardBalanceReceiver {
+public class CardBalanceReceiver extends BroadcastReceiver {
 
     @Override
+    public final void onReceive(Context context, Intent intent) {
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            CardBalance balance = CardBalance.fromBundle(extras);
+            if (balance != null) {
+                onReceiveCardBalance(context, balance);
+            }
+        }
+    }
+
     protected void onReceiveCardBalance(Context context, CardBalance balance) {
         Log.d("CardBalanceReceiver", balance.getBalance());
         Utils.showToast(balance.getBalance() + " €");
