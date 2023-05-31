@@ -18,6 +18,9 @@ package de.fhe.fhemobile.activities;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -42,6 +45,9 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.CardBalance;
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.InterCardReader;
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesFireException;
 import de.fhe.fhemobile.fragments.DrawerFragment;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
@@ -276,6 +282,30 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
+
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            try {
+                CardBalance balance = InterCardReader.getInstance().readTag(tag);
+                if (balance != null) {
+                    Log.d(TAG, balance.toString());
+
+                    Intent broadcast = new Intent(CardBalance.ACTION_CARD_BALANCE);
+                    broadcast.putExtras(balance.toBundle());
+                    Log.d(TAG, "NFC TAG: "+tag);
+                    sendBroadcast(broadcast);
+                }
+            } catch (DesFireException ignored) {
+                // Card is not supported
+            }
+        }
+
+        finish();
+    }
 
     // #############################################################################################
 
