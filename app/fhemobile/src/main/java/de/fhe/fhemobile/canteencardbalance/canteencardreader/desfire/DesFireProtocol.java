@@ -28,12 +28,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.util.ArrayUtils;
-import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.util.DesfireUtils;
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.util.DesFireUtils;
 
 /**
- * Class for communication with MIFARE DESFire NFC chips
+ * Class holding properties for reading data from MIFARE DESFire NFC chip technology
  */
-public class DesfireProtocol {
+public class DesFireProtocol {
     /* Commands */
     private static final byte GET_ADDITIONAL_FRAME = (byte) 0xAF;
     private static final byte SELECT_APPLICATION = (byte) 0x5A;
@@ -48,11 +48,11 @@ public class DesfireProtocol {
 
     private final IsoDep mTagTech;
 
-    public DesfireProtocol(IsoDep tagTech) {
+    public DesFireProtocol(IsoDep tagTech) {
         mTagTech = tagTech;
     }
 
-    public void selectApp(int appId) throws DesfireException {
+    public void selectApp(int appId) throws DesFireException {
         byte[] appIdBuff = new byte[3];
         appIdBuff[0] = (byte) ((appId & 0xFF0000) >> 16);
         appIdBuff[1] = (byte) ((appId & 0xFF00) >> 8);
@@ -61,13 +61,13 @@ public class DesfireProtocol {
         sendRequest(SELECT_APPLICATION, appIdBuff);
     }
 
-    public DesfireFileSettings getFileSettings(int fileNo) throws DesfireException {
+    public DesFireFileSettings getFileSettings(int fileNo) throws DesFireException {
         byte[] data;
         data = sendRequest(GET_FILE_SETTINGS, new byte[]{(byte) fileNo});
-        return DesfireFileSettings.create(data);
+        return DesFireFileSettings.create(data);
     }
 
-    public byte[] readFile(int fileNo) throws DesfireException {
+    public byte[] readFile(int fileNo) throws DesFireException {
         return sendRequest(READ_DATA, new byte[]{
                 (byte) fileNo,
                 (byte) 0x0, (byte) 0x0, (byte) 0x0,
@@ -75,28 +75,28 @@ public class DesfireProtocol {
         });
     }
 
-    public int readValue(int fileNum) throws DesfireException {
+    public int readValue(int fileNum) throws DesFireException {
         byte[] buf = sendRequest(READ_VALUE, new byte[]{
                 (byte) fileNum
         });
         ArrayUtils.reverse(buf);
-        return DesfireUtils.byteArrayToInt(buf);
+        return DesFireUtils.byteArrayToInt(buf);
     }
 
 
-    private byte[] sendRequest(byte command, byte[] parameters) throws DesfireException {
+    private byte[] sendRequest(byte command, byte[] parameters) throws DesFireException {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
 
         byte[] recvBuffer;
         try {
             recvBuffer = mTagTech.transceive(wrapMessage(command, parameters));
         } catch (IOException e) {
-            throw new DesfireException(e);
+            throw new DesFireException(e);
         }
 
         while (true) {
             if (recvBuffer[recvBuffer.length - 2] != (byte) 0x91)
-                throw new DesfireException("Invalid response");
+                throw new DesFireException("Invalid response");
 
             output.write(recvBuffer, 0, recvBuffer.length - 2);
 
@@ -108,21 +108,21 @@ public class DesfireProtocol {
                 try {
                     recvBuffer = mTagTech.transceive(wrapMessage(GET_ADDITIONAL_FRAME, null));
                 } catch (IOException e) {
-                    throw new DesfireException(e);
+                    throw new DesFireException(e);
                 }
             }
             else if (status == PERMISSION_DENIED) {
-                throw new DesfireException("Permission denied");
+                throw new DesFireException("Permission denied");
             }
             else {
-                throw new DesfireException("Unknown status code: " + Integer.toHexString(status & 0xFF));
+                throw new DesFireException("Unknown status code: " + Integer.toHexString(status & 0xFF));
             }
         }
 
         return output.toByteArray();
     }
 
-    private byte[] wrapMessage(byte command, byte[] parameters) throws DesfireException {
+    private byte[] wrapMessage(byte command, byte[] parameters) throws DesFireException {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
         stream.write((byte) 0x90);
@@ -134,7 +134,7 @@ public class DesfireProtocol {
             try {
                 stream.write(parameters);
             } catch (IOException e) {
-                throw new DesfireException(e);
+                throw new DesFireException(e);
             }
         }
         stream.write((byte) 0x00);

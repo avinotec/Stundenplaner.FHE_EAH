@@ -28,10 +28,10 @@ import android.nfc.tech.IsoDep;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesfireException;
-import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesfireFileSettings;
-import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesfireProtocol;
-import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.util.DesfireUtils;
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesFireException;
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesFireFileSettings;
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesFireProtocol;
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.util.DesFireUtils;
 
 /**
  * Reader for cards of the type InterCard
@@ -57,20 +57,20 @@ public class InterCardReader {
 	 *
 	 * @param card The card to read
 	 * @return Card's data, null if unsupported.
-	 * @throws DesfireException Communication error
+	 * @throws DesFireException Communication error
 	 */
-	public CardBalance readCard(DesfireProtocol card) throws DesfireException {
+	public CardBalance readCard(DesFireProtocol card) throws DesFireException {
 
 		final int appId = 0x5F8415;
 		final int fileId = 1;
 		// Selecting app and file
-		DesfireFileSettings settings = DesfireUtils.selectAppFile(card, appId, fileId);
+		DesFireFileSettings settings = DesFireUtils.selectAppFile(card, appId, fileId);
 
-		if (settings instanceof DesfireFileSettings.ValueDesfireFileSettings) {
+		if (settings instanceof DesFireFileSettings.ValueDesFireFileSettings) {
 			// Found value file
 
             // Last transaction in tenths of Euro cents
-			int lastTransactionTenthsOfCents = ((DesfireFileSettings.ValueDesfireFileSettings) settings).value;
+			int lastTransactionTenthsOfCents = ((DesFireFileSettings.ValueDesFireFileSettings) settings).value;
 
             // Last transaction in Euro
             BigDecimal lastTransaction = new BigDecimal(lastTransactionTenthsOfCents)
@@ -98,7 +98,7 @@ public class InterCardReader {
 		}
 	}
 
-	public CardBalance readTag(Tag tag) throws DesfireException {
+	public CardBalance readTag(Tag tag) throws DesFireException {
 		// Loading tag
 		IsoDep tech = IsoDep.get(tag);
 
@@ -111,7 +111,7 @@ public class InterCardReader {
 		}
 
 		try {
-			DesfireProtocol desfireTag = new DesfireProtocol(tech);
+			DesFireProtocol desfireTag = new DesFireProtocol(tech);
 
 
 			//Android has a Bug on Devices using a Broadcom NFC chip. See
