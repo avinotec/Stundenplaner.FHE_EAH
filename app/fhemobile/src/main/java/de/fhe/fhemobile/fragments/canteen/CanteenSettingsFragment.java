@@ -24,6 +24,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.FragmentManager;
+
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
@@ -59,6 +61,15 @@ public class CanteenSettingsFragment extends FeatureFragment {
         } else {
             mView.initCanteenSelectionListView();
         }
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        mView.setCanteenCardBalanceBtnListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                manager.beginTransaction()
+                        .replace(R.id.container_secondary_activity, CanteenCardBalanceFragment.newInstance())
+                        .commit();
+            }
+        });
 
         return mView;
     }

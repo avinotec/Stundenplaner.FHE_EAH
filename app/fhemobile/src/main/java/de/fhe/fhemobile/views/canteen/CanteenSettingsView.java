@@ -20,8 +20,11 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+
+import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 
@@ -38,7 +41,7 @@ import de.fhe.fhemobile.vos.canteen.CanteenVo;
  * Created by paul on 12.02.14
  * Edited by Nadja - 04/2022
  */
-public class CanteenSettingsView extends FrameLayout {
+public class CanteenSettingsView extends LinearLayout {
 
     @FunctionalInterface
     public interface ViewListener {
@@ -86,6 +89,11 @@ public class CanteenSettingsView extends FrameLayout {
         }
     }
 
+    public void setCanteenCardBalanceBtnListener(OnClickListener listener){
+        mCanteenCardBalanceBtn.setOnClickListener(listener);
+
+    }
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -93,6 +101,7 @@ public class CanteenSettingsView extends FrameLayout {
         mCanteenListView = (ListView) findViewById(R.id.lv_canteen_choice);
         mCanteenListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
+        mCanteenCardBalanceBtn = findViewById(R.id.btn_canteen_settings_cardbalance);
     }
 
     private final AdapterView.OnItemClickListener mCanteenSelectListener = new AdapterView.OnItemClickListener() {
@@ -116,9 +125,11 @@ public class CanteenSettingsView extends FrameLayout {
     private final Context           mContext;
     private final CanteenModel      mCanteenModel;
 
-    ViewListener            mCanteenViewListener;
+    ViewListener                    mCanteenViewListener;
 
-    ListView                mCanteenListView;
+    private ListView                mCanteenListView;
+    private Button                  mCanteenCardBalanceBtn;
+    private FragmentManager mFragmentManager;
 
 
 }

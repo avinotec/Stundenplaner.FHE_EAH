@@ -25,9 +25,16 @@
     <ListView
         android:id="@+id/lv_canteen_choice"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:footerDividersEnabled="false"
         android:choiceMode="singleChoice"
+        android:visibility="gone"
         />
+
+    <Button
+        android:id="@+id/btn_canteen_settings_cardbalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="check card balance"/>
 
 </de.fhe.fhemobile.views.canteen.CanteenSettingsView>
