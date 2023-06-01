@@ -32,6 +32,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
 import org.junit.Assert;
 
@@ -40,10 +41,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.myschedule.MyScheduleDialogAdapter;
 import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
 import de.fhe.fhemobile.network.NetworkHandler;
+import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.utils.ApiErrorUtils;
 import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.views.myschedule.MyScheduleDialogView;
@@ -128,7 +131,16 @@ public class MyScheduleDialogFragment extends DialogFragment {
         NetworkHandler.getInstance().fetchStudyPrograms(mFetchStudyProgramDataCallback);
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
 
+        if(//if push notifications enabled
+                PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+                        .getBoolean(getResources().getString(R.string.sp_myschedule_enable_fcm), false)){
+            PushNotificationService.registerSubscribedEventSeries();
+        }
+    }
 
     private final MyScheduleDialogView.IViewListener mViewListener = new MyScheduleDialogView.IViewListener() {
 
