@@ -178,7 +178,6 @@
     <string name="title_scanner_activity">Scanner</string>
     <string name="title_navigation_activity">Navigation</string>
     <string name="error_navigation_room_not_found">Raum nicht gefunden!</string>
-    <string name="select_from_spinner">Bitte wählen</string>
     <string name="building_03_02_01">Haus 3, 2, 1</string>
     <string name="building_04">Haus 4</string>
     <string name="building_05">Haus 5</string>
@@ -209,10 +208,7 @@
     <string name="navigation_dialog_headline_destination">Wähle dein Ziel.</string>
     <string name="navigation_dialog_empty_building">Hier gibt es keine Räume.</string>
     <string name="navigation_dialog_headline_start">Gib deine aktuelle Position ein.</string>
-    <string name="navigation_dialog_button_qr">QR-Code scannen</string>
-    <string name="button_location_text">Suchen</string>
     <string name="navigation_input_start_hint">Raumnummer (xx.xx.xx)</string>
-    <string name="text_view_button_destination_location">Dein Ziel:</string>
     <string name="btn_location_qr_code">QR-Code</string>
     <string name="tablayout_tabtext_roomsearch">Raumsuche</string>
     <string name="tablayout_tabtext_personsearch">Personensuche</string>

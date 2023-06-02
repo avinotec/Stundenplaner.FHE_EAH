@@ -43,7 +43,7 @@ public final class CanteenUtils {
 
         long lastDate = _Items[0].getDate();
         String lastDateString = _Items[0].getDateString();
-        List<CanteenDishVo> tempItems = new ArrayList<CanteenDishVo>();
+        List<CanteenDishVo> tempItems = new ArrayList<>();
 
         for (final CanteenDishVo item : _Items) {
             final long currentDate = item.getDate();

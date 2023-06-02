@@ -52,10 +52,6 @@ public class EmployeeListFragment extends Fragment {
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //TODO: Save instance list
-
-//        if (getArguments() != null) {
-//
-//        }
     }
 
     @Override

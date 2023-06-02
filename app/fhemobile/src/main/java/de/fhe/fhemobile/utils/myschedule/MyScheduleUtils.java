@@ -215,7 +215,7 @@ public final class MyScheduleUtils {
 			if (eventVosMap.containsKey(eventVo.getEventSetId())) {
 				eventVosMap.get(eventVo.getEventSetId()).add(eventVo);
 			} else {
-				final ArrayList<MyScheduleEventVo> toAdd = new ArrayList<MyScheduleEventVo>();
+				final ArrayList<MyScheduleEventVo> toAdd = new ArrayList<>();
 				toAdd.add(eventVo);
 				eventVosMap.put(eventVo.getEventSetId(), toAdd);
 			}

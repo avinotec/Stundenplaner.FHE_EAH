@@ -48,6 +48,7 @@ import de.fhe.fhemobile.events.Event;
 import de.fhe.fhemobile.events.EventListener;
 import de.fhe.fhemobile.models.myschedule.CalendarModel;
 import de.fhe.fhemobile.services.CalendarSynchronizationBackgroundTask;
+import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.Utils;
 
@@ -92,6 +93,17 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
             PreferenceCategory calSyncCategory = (PreferenceCategory) findPreference("calSyncCategory");
             calSyncCategory.setVisible(false);
         }
+
+
+        SwitchPreferenceCompat notificationPref = (SwitchPreferenceCompat) findPreference(getResources().getString(R.string.sp_myschedule_enable_fcm));
+        notificationPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
+
+                PushNotificationService.registerSubscribedEventSeries();
+                return true;
+            }
+        });
     }
 
     @Override
@@ -206,8 +218,8 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                 }
                 //CALENDAR SELECTED
                 //another calendar has been chosen before and synchronization is activated
-                else if(mCalendarSelectionPref.getEntry() != null && !"".equals(mCalendarSelectionPref.getEntry().toString())
-                        && mCalendarSyncSwitchPref.isChecked()){
+                else if (mCalendarSelectionPref.getEntry() != null && !"".equals(mCalendarSelectionPref.getEntry().toString())
+                        && mCalendarSyncSwitchPref.isChecked()) {
                     //show warning that calendar selection cannot be changed while sync is on
                     Utils.showToastLong(R.string.myschedule_pref_choose_calendar_warning);
                     return false;
@@ -253,7 +265,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceClick(@NonNull Preference preference) {
                 //refuse deleting calendar entries while sync is on
-                if(mCalendarSyncSwitchPref.isChecked()){
+                if (mCalendarSyncSwitchPref.isChecked()) {
                     Utils.showToast(R.string.myschedule_delete_calendar_entries_warning);
                 } else {
                     showDeleteCalendarEntriesDialog();
@@ -285,7 +297,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                     //sync got disabled
                     else {
                         //if synchronization is currently running, refuse turning off sync
-                        if(!CalendarModel.isSynchronizationRunning()) {
+                        if (!CalendarModel.isSynchronizationRunning()) {
                             CalendarSynchronizationBackgroundTask.stopPeriodicSynchronizing();
                             showDeleteCalendarEntriesDialog();
                         } else {
@@ -539,6 +551,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                     }
                 }
             });
+
     private final ActivityResultLauncher<String> requestNotificationPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                 SwitchPreferenceCompat notificationPref = (SwitchPreferenceCompat) findPreference(getResources().getString(R.string.sp_myschedule_enable_fcm));
@@ -551,7 +564,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                 }
             });
 
-    private final EventListener mChosenCalendarDeletedEventListener = new EventListener(){
+    private final EventListener mChosenCalendarDeletedEventListener = new EventListener() {
         @Override
         public void onEvent(Event event) {
             CalendarModel.handleChosenCalendarIsDeleted();
@@ -560,10 +573,10 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         }
     };
 
-    Preference              mCalendarSelectionNoPermissionPref;
-    ListPreference          mCalendarSelectionPref;
-    Preference              mDeleteCalendarEntriesPref;
-    SwitchPreferenceCompat  mCalendarSyncSwitchPref;
-    Preference              mDeleteCalendarNoPermissionPref;
-    ListPreference          mDeleteCalendarPref;
+    Preference mCalendarSelectionNoPermissionPref;
+    ListPreference mCalendarSelectionPref;
+    Preference mDeleteCalendarEntriesPref;
+    SwitchPreferenceCompat mCalendarSyncSwitchPref;
+    Preference mDeleteCalendarNoPermissionPref;
+    ListPreference mDeleteCalendarPref;
 }

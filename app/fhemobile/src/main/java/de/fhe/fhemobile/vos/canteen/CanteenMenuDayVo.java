@@ -84,6 +84,6 @@ public class CanteenMenuDayVo implements Parcelable {
 
 
 
-    private List<CanteenDishVo> mDishes = new ArrayList<CanteenDishVo>();
+    private List<CanteenDishVo> mDishes = new ArrayList<>();
     private final String mDate;
 }

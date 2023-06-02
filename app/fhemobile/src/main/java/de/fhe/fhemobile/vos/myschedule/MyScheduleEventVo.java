@@ -199,7 +199,7 @@ public class MyScheduleEventVo implements Parcelable {
 
     /**
      * Get abbreviation of week day, e.g. "Mo"
-     * @return
+     * @return Short form tof the event's week day as String
      */
     public String getWeekDayShort(){
         return new SimpleDateFormat("E").format(getStartDate());
@@ -207,7 +207,7 @@ public class MyScheduleEventVo implements Parcelable {
 
     /**
      * Return lecturer list, sorted by id
-     * @return
+     * @return List of {@link LecturerVo}s
      */
     public List<LecturerVo> getLecturerList() {
         //sorting needed to enable proper comparison via "equals"
