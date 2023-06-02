@@ -128,6 +128,12 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                             PushNotificationService.setFcmToken(token);
 
                             Log.d(TAG, "Firebase Token: " + token);
+
+                            //register user at server for subscribed event series
+                            //note: this was introduced to ensure registration even when the user has never opened
+                            //      My Schedule Dialog or Overview which can happen in SS23 because of the registration
+                            //      was missed in My Schedule Dialog for some time
+                            PushNotificationService.registerSubscribedEventSeries();
                         }
                     });
         }
