@@ -81,6 +81,6 @@ public final class PhonebookModel extends EventDispatcher {
 
     private static PhonebookModel ourInstance;
 
-    private ArrayList<EmployeeVo> mFoundEmployees = new ArrayList<EmployeeVo>();
+    private ArrayList<EmployeeVo> mFoundEmployees = new ArrayList<>();
 
 }

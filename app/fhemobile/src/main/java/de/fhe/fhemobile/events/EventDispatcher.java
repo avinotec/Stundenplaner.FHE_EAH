@@ -39,7 +39,7 @@ public class EventDispatcher implements Dispatcher {
 		synchronized (listenerMap) {
 			CopyOnWriteArrayList<EventListener> list = listenerMap.get(type);
 			if (list == null) {
-				list = new CopyOnWriteArrayList<EventListener>();
+				list = new CopyOnWriteArrayList<>();
 				listenerMap.put(type, list);
 			}
 			list.add(listener);
@@ -85,12 +85,4 @@ public class EventDispatcher implements Dispatcher {
 			listener.onEvent(event);
 		}
 	}
-
-	//not used
-	//public void dispose() {
-	//	synchronized (listenerMap) {
-	//		listenerMap.clear();
-	//	}
-	//	MS target = null;
-	//}
 }

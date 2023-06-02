@@ -138,12 +138,12 @@ public class SemesterVo implements Parcelable {
     private String mLongName;
 
     @SerializedName("courseTimes")
-    private List<SemesterPeriodOrDateVo> mCourseTimes = new ArrayList<SemesterPeriodOrDateVo>();
+    private List<SemesterPeriodOrDateVo> mCourseTimes = new ArrayList<>();
 
     @SerializedName("holidays")
-    private List<SemesterPeriodOrDateVo> mHolidays = new ArrayList<SemesterPeriodOrDateVo>();
+    private List<SemesterPeriodOrDateVo> mHolidays = new ArrayList<>();
 
     @SerializedName("importantDates")
-    private List<SemesterPeriodOrDateVo> mImportantDates = new ArrayList<SemesterPeriodOrDateVo>();
+    private List<SemesterPeriodOrDateVo> mImportantDates = new ArrayList<>();
 
 }

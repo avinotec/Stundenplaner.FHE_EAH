@@ -52,8 +52,6 @@
                 android:id="@+id/tv_item_event_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
                 android:gravity="center"
                 android:text="Title"
                 android:textColor="@color/primary_light"

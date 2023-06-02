@@ -96,7 +96,7 @@ public class CalendarModel extends EventDispatcher {
 
     //----------------------------------------------------------------------------------------------
 
-    public final static CalendarModel getInstance() {
+    public static CalendarModel getInstance() {
         if(ourInstance == null) {
             ourInstance = new CalendarModel();
         }
@@ -196,7 +196,7 @@ public class CalendarModel extends EventDispatcher {
     /**
      * Delete all calendar entries belonging to a subscribed event series
      */
-    public static final void deleteAllMyScheduleCalendarEntries(){
+    public static void deleteAllMyScheduleCalendarEntries(){
         for(final MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
             deleteCalendarEntries(eventSeries);
         }
@@ -206,7 +206,7 @@ public class CalendarModel extends EventDispatcher {
      * Delete calendar entries belonging to the given event series
      * @param eventSeries The event series
      */
-    public static final void deleteCalendarEntries(final MyScheduleEventSeriesVo eventSeries){
+    public static void deleteCalendarEntries(final MyScheduleEventSeriesVo eventSeries){
         for(final MyScheduleEventVo event : eventSeries.getEvents()){
             //eventId can be null if the calendar has not been synchronized since subscribing this event series
             if(event.getCalEventId() != null){
@@ -217,7 +217,7 @@ public class CalendarModel extends EventDispatcher {
         MyScheduleModel.getInstance().saveSubscribedEventSeriesToSharedPreferences();
     }
 
-    public final static String createLocalCalendar(){
+    public  static String createLocalCalendar(){
         /* If an application needs to create a local calendar, it can do this by performing the
         calendar insertion as a sync adapter, using an ACCOUNT_TYPE of ACCOUNT_TYPE_LOCAL.
         ACCOUNT_TYPE_LOCAL is a special account type for calendars that are not associated with a
@@ -255,7 +255,7 @@ public class CalendarModel extends EventDispatcher {
     /**
      * Delete the calendar with the given id
      */
-    public final static void deleteCalendar(long calId){
+    public static void deleteCalendar(long calId){
         final Uri uri;
 
         // falls aus der Nummer kein String gebaut werden kann oder etwas anderes schief geht.
@@ -344,7 +344,7 @@ public class CalendarModel extends EventDispatcher {
      * @param scheduleEvent The corresponding event in My Schedule
      * @param calId The calendar id
      */
-    private final static void createCalendarEntry(final MyScheduleEventVo scheduleEvent, final String calId){
+    private static void createCalendarEntry(final MyScheduleEventVo scheduleEvent, final String calId){
         final ContentValues values = getCalendarEntryValues(scheduleEvent, calId);
 
         //insert event
@@ -426,7 +426,7 @@ public class CalendarModel extends EventDispatcher {
          * Delete the calendar entry belonging to the given schedule event
          * @param scheduleEvent The event from My Schedule
          */
-    private final static void deleteCalendarEntry(final MyScheduleEventVo scheduleEvent){
+    private static void deleteCalendarEntry(final MyScheduleEventVo scheduleEvent){
         final long calEventId = scheduleEvent.getCalEventId();
 
         //delete event

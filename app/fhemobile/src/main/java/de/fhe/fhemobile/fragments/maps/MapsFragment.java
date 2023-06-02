@@ -17,6 +17,7 @@
 
 package de.fhe.fhemobile.fragments.maps;
 
+import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -64,6 +65,7 @@ public class MapsFragment extends Fragment {
         return fragment;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,8 +77,7 @@ public class MapsFragment extends Fragment {
 
         if (savedInstanceState != null) {
             mCurrentMapIndex = savedInstanceState.getInt(SAV_MAP_INDEX);
-        }
-        else {
+        } else {
             //set mCurrentMapIndex to where building is usually entered
             switch(mMap.getNameID()){
                 case R.string.building_03_02_01:
@@ -87,9 +88,9 @@ public class MapsFragment extends Fragment {
                     break;
                 case R.string.building_05:
                     mCurrentMapIndex = 3; //Erdgeschoss
+                    break;
                 case R.string.building_06:
-                    mCurrentMapIndex = 1; //Untergeschoss TODO check if Untergeschoss is entry
-
+                    mCurrentMapIndex = 1; //Untergeschoss
             }
         }
 
