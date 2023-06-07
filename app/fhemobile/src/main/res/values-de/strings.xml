@@ -209,7 +209,6 @@
     <string name="navigation_dialog_empty_building">Hier gibt es keine Räume.</string>
     <string name="navigation_dialog_headline_start">Gib deine aktuelle Position ein.</string>
     <string name="navigation_input_start_hint">Raumnummer (xx.xx.xx)</string>
-    <string name="btn_location_qr_code">QR-Code</string>
     <string name="tablayout_tabtext_roomsearch">Raumsuche</string>
     <string name="tablayout_tabtext_personsearch">Personensuche</string>
     <string name="navigation_dialog_building">Haus</string>
