@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
+import android.util.Log;
 import android.view.Menu;
 import android.webkit.WebView;
 
@@ -117,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                 }
         }
         if (//if push notifications enabled
-                PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+               PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
                         .getBoolean(getResources().getString(R.string.sp_myschedule_enable_fcm), false)){
             //code from Firebase Documentation
             FirebaseMessaging.getInstance().getToken()
@@ -134,6 +135,12 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                             PushNotificationService.setFcmToken(token);
 
                             Log.d(TAG, "Firebase Token: " + token);
+
+                            //register user at server for subscribed event series
+                            //note: this was introduced to ensure registration even when the user has never opened
+                            //      My Schedule Dialog or Overview which can happen in SS23 because of the registration
+                            //      was missed in My Schedule Dialog for some time
+                            PushNotificationService.registerSubscribedEventSeries();
                         }
                     });
         }

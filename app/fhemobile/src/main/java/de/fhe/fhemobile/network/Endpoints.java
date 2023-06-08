@@ -22,9 +22,6 @@ package de.fhe.fhemobile.network;
 public final class Endpoints {
 
     public static final String LIVE_URL             = "http://app.fh-erfurt.de:8080";
-    //public static final String LIVE_URL             = "http://193.174.232.89:8080";
-    //public static final String LOCAL_URL            = "http://192.168.1.102:8080";
-    //public static final String SIMON_LOCAL_URL      = "http://10.12.24.58:8000";
 
     public static final String BASE_URL             = LIVE_URL;
     public static final String BASE_URL_EAH         = "https://stundenplanung.eah-jena.de/";
