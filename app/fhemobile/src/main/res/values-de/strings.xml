@@ -173,7 +173,7 @@
     <string name="canteen_food_no_data_available">Keine Daten verfügbar.\n Versuche es später nochmal.</string>
     <string name="canteen_no_canteens_selected">Wähle bitte erst eine oder mehrere Mensen in den Einstellungen aus.</string>
     <string name="canteen_update_failed">Menü konnte nicht aktualisiert werden.</string>
-    <string name="canteen_card_balance_status">Dein Mensa-Guthaben: %1$s € (%2$s)</string>
+    <string name="canteen_card_balance_status">Dein Mensa-Guthaben: %1$s € (Stand: %2$s)</string>
     <string name="canteen_card_error">Karte wurde entfernt bevor Daten gelesen werden konnten!</string>
 
     <!--    Campus Navigation -->
