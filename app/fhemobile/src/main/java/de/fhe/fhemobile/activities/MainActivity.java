@@ -51,11 +51,13 @@ import de.fhe.fhemobile.canteencardbalance.canteencardreader.InterCardReader;
 import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesFireException;
 import de.fhe.fhemobile.fragments.DrawerFragment;
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.fragments.canteen.CanteenFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
 import de.fhe.fhemobile.fragments.imprint.ImprintFragment;
 import de.fhe.fhemobile.fragments.joboffers.JobOffersFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdates.SemesterDatesWebViewFragment;
+import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.services.CalendarSynchronizationBackgroundTask;
 import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.utils.Define;
@@ -294,21 +296,21 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         super.onNewIntent(intent);
 
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
-
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             try {
                 CardBalance balance = InterCardReader.getInstance().readTag(tag);
                 if (balance != null) {
-                    Log.d(TAG, balance.toString());
+                    Log.d(TAG, "Read canteen card balance: " + balance.toString());
 
-                    Intent broadcast = new Intent(CardBalance.ACTION_CARD_BALANCE);
-                    broadcast.putExtras(balance.toBundle());
-                    Log.d(TAG, "NFC TAG: "+tag);
-                    sendBroadcast(broadcast);
+                    CanteenModel.getInstance().setCanteenCardBalance(balance);
+                } else {
+                    Log.w(TAG, "Read canteen card balance is null");
                 }
             } catch (DesFireException ignored) {
                 // Card is not supported
             }
+            //todo: not working
+            changeFragment(CanteenFragment.newInstance(), false, TAG);
         }
 
         finish();

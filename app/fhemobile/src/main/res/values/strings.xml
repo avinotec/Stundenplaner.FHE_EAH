@@ -93,10 +93,13 @@
 
     <string name="professor">Professor</string>
     <string name="role">Role</string>
+
+    <!-- Canteen-->
     <string name="canteen_food_no_data_available">No data available.\n Retry later.</string>
     <string name="loading">Loading…</string>
     <string name="canteen_no_canteens_selected">Please select one or more canteens under settings first.</string>
     <string name="canteen_update_failed">Could not update menu.</string>
+    <string name="canteen_card_balance_status">Your canteen balance: %1$s € (%2$s)</string>
 
     <!-- My Schedule -->
     <string name="myschedule_dialog_headline">Please select study program and semester.</string>

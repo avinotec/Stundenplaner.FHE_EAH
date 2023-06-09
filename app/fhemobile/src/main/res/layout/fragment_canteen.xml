@@ -55,6 +55,7 @@
 
 
     <TextView
+        android:id="@+id/tv_canteen_card_balance"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:textColor="#ffffff"

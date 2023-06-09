@@ -169,12 +169,13 @@
     <string name="ssl_error_cancel">Abbrechen</string>
     <string name="ssl_error_continue">Fortfahren</string>
 
-
+    <!--  Canteen  -->
     <string name="canteen_food_no_data_available">Keine Daten verfügbar.\n Versuche es später nochmal.</string>
     <string name="canteen_no_canteens_selected">Wähle bitte erst eine oder mehrere Mensen in den Einstellungen aus.</string>
     <string name="canteen_update_failed">Menü konnte nicht aktualisiert werden.</string>
+    <string name="canteen_card_balance_status">Dein Mensa-Guthaben: %1$s € (%2$s)</string>
 
-    <!--    Campus Navigation-->
+    <!--    Campus Navigation -->
     <string name="title_scanner_activity">Scanner</string>
     <string name="title_navigation_activity">Navigation</string>
     <string name="error_navigation_room_not_found">Raum nicht gefunden!</string>
@@ -209,7 +210,6 @@
     <string name="navigation_dialog_empty_building">Hier gibt es keine Räume.</string>
     <string name="navigation_dialog_headline_start">Gib deine aktuelle Position ein.</string>
     <string name="navigation_input_start_hint">Raumnummer (xx.xx.xx)</string>
-    <string name="btn_location_qr_code">QR-Code</string>
     <string name="tablayout_tabtext_roomsearch">Raumsuche</string>
     <string name="tablayout_tabtext_personsearch">Personensuche</string>
     <string name="navigation_dialog_building">Haus</string>

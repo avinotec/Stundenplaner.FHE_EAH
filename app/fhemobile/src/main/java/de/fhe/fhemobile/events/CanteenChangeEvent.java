@@ -22,6 +22,7 @@ public class CanteenChangeEvent extends SimpleEvent {
     public static final String RECEIVED_CANTEENS = "receivedCanteens";
     public static final String RECEIVED_CANTEEN_MENU = "receivedCanteenMenu";
     public static final String RECEIVED_All_CANTEEN_MENUS = "receivedAllCanteenMenus";
+    public static final String RECEIVED_CANTEEN_CARD_BALANCE = "receivedCanteenCardBalance";
 
 
     public CanteenChangeEvent(final String type) {

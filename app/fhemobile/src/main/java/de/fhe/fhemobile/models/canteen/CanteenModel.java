@@ -17,8 +17,9 @@
 package de.fhe.fhemobile.models.canteen;
 
 import static de.fhe.fhemobile.Main.getAppContext;
-import static de.fhe.fhemobile.utils.Define.Canteen.CANTEEN;
+import static de.fhe.fhemobile.utils.Define.Canteen.SP_KEY_CANTEEN;
 import static de.fhe.fhemobile.utils.Define.Canteen.SP_CANTEEN;
+import static de.fhe.fhemobile.utils.Define.Canteen.SP_KEY_CANTEEN_CARD;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -31,6 +32,8 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.List;
 
+import de.fhe.fhemobile.Main;
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.CardBalance;
 import de.fhe.fhemobile.events.CanteenChangeEvent;
 import de.fhe.fhemobile.events.EventDispatcher;
 import de.fhe.fhemobile.network.NetworkHandler;
@@ -55,6 +58,11 @@ public final class CanteenModel extends EventDispatcher {
     public static CanteenModel getInstance() {
         if(ourInstance == null) {
             ourInstance = new CanteenModel();
+
+            final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences(SP_CANTEEN, Context.MODE_PRIVATE);
+            CardBalance balance = new Gson().fromJson(sharedPreferences.getString(SP_KEY_CANTEEN_CARD, ""), CardBalance.class);
+            ourInstance.setCanteenCardBalance(balance);
+
         }
         return ourInstance;
     }
@@ -80,7 +88,7 @@ public final class CanteenModel extends EventDispatcher {
             final String json = gson.toJson(mMenuDays);
             final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences(SP_CANTEEN, Context.MODE_PRIVATE);
             final SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(CANTEEN + canteenId, json);
+            editor.putString(SP_KEY_CANTEEN + canteenId, json);
             editor.apply();
         }
 
@@ -126,9 +134,29 @@ public final class CanteenModel extends EventDispatcher {
 
     public void setCanteens(final CanteenVo[] mCanteenChoiceItems) {
         this.mCanteens = mCanteenChoiceItems;
-        notifyChange(de.fhe.fhemobile.events.CanteenChangeEvent.RECEIVED_CANTEENS);
+        notifyChange(CanteenChangeEvent.RECEIVED_CANTEENS);
     }
 
+    public CardBalance getCanteenCardBalance() {
+        return mCanteenCardBalance;
+    }
+
+    /**
+     * Set canteen card balance in the {@link CanteenModel},
+     * notify listeners to update the corresponding text views
+     * and save the card balance to shared preferences
+     * @param cardBalance The {@link CardBalance} to set
+     */
+    public void setCanteenCardBalance(CardBalance cardBalance) {
+        this.mCanteenCardBalance = cardBalance;
+        //notify listeners
+        notifyChange(CanteenChangeEvent.RECEIVED_CANTEEN_CARD_BALANCE);
+
+        //store canteen card balance in shared preferences
+        final SharedPreferences.Editor editor = Main.getAppContext().getSharedPreferences(SP_CANTEEN, Context.MODE_PRIVATE).edit();
+        editor.putString(SP_KEY_CANTEEN_CARD, new Gson().toJson(mCanteenCardBalance));
+        editor.apply();
+    }
 
     public void notifyChange(final String type) {
         dispatchEvent(new CanteenChangeEvent(type));
@@ -140,4 +168,6 @@ public final class CanteenModel extends EventDispatcher {
 
     private final HashMap<String, List<CanteenMenuDayVo>> mMenus = new HashMap<>();
     private CanteenVo[] mCanteens;
+
+    private CardBalance mCanteenCardBalance;
 }

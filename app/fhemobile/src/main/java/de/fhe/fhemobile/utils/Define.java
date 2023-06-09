@@ -41,6 +41,7 @@ public final class Define {
 
         public static final String KEY_BALANCE = "CardBalance.BALANCE";
         public static final String KEY_LAST_TRANSACTION = "CardBalance.LAST_TRANSACTION";
+        public static final String KEY_DATE_OF_STATUS = "CardBalance.DATE";
     }
 
     public static final class News {

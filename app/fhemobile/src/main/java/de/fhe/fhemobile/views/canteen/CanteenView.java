@@ -26,8 +26,12 @@ import androidx.lifecycle.Lifecycle;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.adapters.canteen.CanteenPagerAdapter;
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.CardBalance;
 import de.fhe.fhemobile.events.CanteenChangeEvent;
 import de.fhe.fhemobile.events.Event;
 import de.fhe.fhemobile.events.EventListener;
@@ -50,8 +54,8 @@ public class CanteenView extends LinearLayout {
         super.onFinishInflate();
 
         mNoCanteensSelectedText = (TextView) findViewById(R.id.tv_canteen_no_canteens_selected);
-
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_canteen);
+        mCanteenCardBalanceText = (TextView) findViewById(R.id.tv_canteen_card_balance);
     }
 
     public void initializeView(final FragmentManager _Manager, final Lifecycle _Lifecycle){
@@ -68,18 +72,22 @@ public class CanteenView extends LinearLayout {
             mSwipeRefreshLayout.setRefreshing(true);
             NetworkHandler.getInstance().fetchCanteenMenus();
         });
+
+        setCanteenCardBalanceView();
     }
 
     public void registerModelListener() {
         CanteenModel.getInstance().addListener(
                 CanteenChangeEvent.RECEIVED_All_CANTEEN_MENUS,
                 mReceivedAllCanteenMenusEventListener);
+        CanteenModel.getInstance().addListener(CanteenChangeEvent.RECEIVED_CANTEENS, mReceivedCanteenCardBalanceListener);
     }
 
     public void deregisterModelListener() {
         CanteenModel.getInstance().removeListener(
                 CanteenChangeEvent.RECEIVED_All_CANTEEN_MENUS,
                 mReceivedAllCanteenMenusEventListener);
+        CanteenModel.getInstance().removeListener(CanteenChangeEvent.RECEIVED_CANTEENS, mReceivedCanteenCardBalanceListener);
     }
 
     /**
@@ -89,6 +97,23 @@ public class CanteenView extends LinearLayout {
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
+    private void setCanteenCardBalanceView(){
+        String text;
+
+        CardBalance balance = CanteenModel.getInstance().getCanteenCardBalance();
+        if(balance != null){
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy", Locale.ROOT);
+            String dateOfStatus = balance.getDateOfStatus() != null ?
+                    sdf.format(balance.getDateOfStatus()) : NO_CANTEEN_BALANCE_DATE_TEXT;
+            text = getResources().getString(R.string.canteen_card_balance_status, balance.getBalance(), dateOfStatus);
+
+         } else {
+            text = getResources().getString(R.string.canteen_card_balance_status, NO_BALANCE_TEXT, NO_CANTEEN_BALANCE_DATE_TEXT);
+        }
+
+        mCanteenCardBalanceText.setText(text);
+    }
+
     private final EventListener mReceivedAllCanteenMenusEventListener = new EventListener() {
         @Override
         public void onEvent(Event event) {
@@ -96,7 +121,19 @@ public class CanteenView extends LinearLayout {
         }
     };
 
-    TextView mNoCanteensSelectedText;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+
+    private final EventListener mReceivedCanteenCardBalanceListener = new EventListener() {
+        @Override
+        public void onEvent(Event event) {
+            setCanteenCardBalanceView();
+        }
+    };
+
+    private TextView            mNoCanteensSelectedText;
+    private SwipeRefreshLayout  mSwipeRefreshLayout;
+    private TextView            mCanteenCardBalanceText;
+
+    private static String NO_BALANCE_TEXT = "--,--";
+    private static String NO_CANTEEN_BALANCE_DATE_TEXT = "__.__.__";
 
 }
