@@ -20,11 +20,9 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 
@@ -89,19 +87,12 @@ public class CanteenSettingsView extends LinearLayout {
         }
     }
 
-    public void setCanteenCardBalanceBtnListener(OnClickListener listener){
-        mCanteenCardBalanceBtn.setOnClickListener(listener);
-
-    }
-
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
 
         mCanteenListView = (ListView) findViewById(R.id.lv_canteen_choice);
         mCanteenListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-
-        mCanteenCardBalanceBtn = findViewById(R.id.btn_canteen_settings_cardbalance);
     }
 
     private final AdapterView.OnItemClickListener mCanteenSelectListener = new AdapterView.OnItemClickListener() {
@@ -128,8 +119,6 @@ public class CanteenSettingsView extends LinearLayout {
     ViewListener                    mCanteenViewListener;
 
     private ListView                mCanteenListView;
-    private Button                  mCanteenCardBalanceBtn;
-    private FragmentManager mFragmentManager;
 
 
 }

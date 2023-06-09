@@ -26,11 +26,6 @@ import com.google.gson.annotations.SerializedName;
  */
 public class CanteenDishVo implements Parcelable {
 
-// --Commented out by Inspection START (02.11.2021 17:19):
-//    public CanteenDishVo() {
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:19)
-
     public CanteenDishVo(final String mTitle, final String mDescription, final String mIngredients, final String mPrice, final long mDate,
                          final String mDateString, final String mCanteenName, final Integer mCanteenId) {
         this.mTitle         = mTitle;
@@ -100,88 +95,21 @@ public class CanteenDishVo implements Parcelable {
         return mTitle;
     }
 
-// --Commented out by Inspection START (02.11.2021 17:19):
-//    public void setTitle(String mTitle) {
-//        this.mTitle = mTitle;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:19)
-
     public String getDescription() {
         return mDescription;
     }
-
-// --Commented out by Inspection START (02.11.2021 17:18):
-//    public void setDescription(String mDescription) {
-//        this.mDescription = mDescription;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:18)
-
-// --Commented out by Inspection START (02.11.2021 17:19):
-//    public String getIngredients() {
-//        return mIngredients;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:19)
-
-// --Commented out by Inspection START (02.11.2021 17:18):
-//    public void setIngredients(String mIngredients) {
-//        this.mIngredients = mIngredients;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:18)
 
     public String getPrice() {
         return mPrice;
     }
 
-// --Commented out by Inspection START (02.11.2021 17:18):
-//    public void setPrice(String mPrice) {
-//        this.mPrice = mPrice;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:18)
-
     public long getDate() {
         return mDate;
     }
 
-// --Commented out by Inspection START (02.11.2021 17:18):
-//    public void setDate(long mDate) {
-//        this.mDate = mDate;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:18)
-
     public String getDateString() {
         return mDateString;
     }
-
-// --Commented out by Inspection START (02.11.2021 17:18):
-//    public void setDateString(String mDateString) {
-//        this.mDateString = mDateString;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:18)
-
-// --Commented out by Inspection START (02.11.2021 17:19):
-//    public String getMensaName() {
-//        return mCanteenName;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:19)
-
-// --Commented out by Inspection START (02.11.2021 17:18):
-//    public void setMensaName(String mCanteenName) {
-//        this.mCanteenName = mCanteenName;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:18)
-
-// --Commented out by Inspection START (02.11.2021 17:19):
-//    public Integer getMensaId() {
-//        return mCanteenId;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:19)
-
-// --Commented out by Inspection START (02.11.2021 17:18):
-//    public void setMensaId(Integer mCanteenId) {
-//        this.mCanteenId = mCanteenId;
-//    }
-// --Commented out by Inspection STOP (02.11.2021 17:18)
-
 
     //********************************************************************************************
     @SerializedName("title")
