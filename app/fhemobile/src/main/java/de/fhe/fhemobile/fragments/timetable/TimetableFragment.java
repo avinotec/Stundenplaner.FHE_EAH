@@ -75,7 +75,7 @@ public class TimetableFragment extends FeatureFragment {
 	public static TimetableFragment newInstance(String timeTableId){
 		final TimetableFragment fragment = new TimetableFragment();
 		final Bundle args = new Bundle();
-		args.putString(Define.Timetable.PARAM_TIMETABLE_ID, timeTableId);
+		args.putString(Define.Timetable.KEY_TIMETABLE_ID, timeTableId);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -89,7 +89,7 @@ public class TimetableFragment extends FeatureFragment {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments() != null) {
-			mChosenTimetableId = getArguments().getString(Define.Timetable.PARAM_TIMETABLE_ID);
+			mChosenTimetableId = getArguments().getString(Define.Timetable.KEY_TIMETABLE_ID);
 		}
 	}
 

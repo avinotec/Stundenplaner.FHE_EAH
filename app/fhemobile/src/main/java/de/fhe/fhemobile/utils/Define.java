@@ -36,7 +36,11 @@ public final class Define {
         static final String PREF_SELECTED_CANTEENS = "selectedCanteens";      // $NON-NLS
 
         public static final String SP_CANTEEN = "spCanteen";
-        public static final String CANTEEN = "canteen";
+        public static final String SP_KEY_CANTEEN = "canteen";
+        public static final String SP_KEY_CANTEEN_CARD = "spCanteenCardBalance";
+
+        public static final String KEY_BALANCE = "CardBalance.BALANCE";
+        public static final String KEY_LAST_TRANSACTION = "CardBalance.LAST_TRANSACTION";
     }
 
     public static final class News {
@@ -45,12 +49,13 @@ public final class Define {
 
     //created by Nadja 11.03.2022
     public static final class Timetable {
-        public static final String PARAM_TIMETABLE_ID = "paramTimeTableId";            // $NON-NLS
+        public static final String KEY_TIMETABLE_ID = "paramTimeTableId";            // $NON-NLS
 
         public static final String SP_TIMETABLE = "spTimeTable"; //$NON-NLS
         public static final String SP_TIMETABLE_SETTINGS = "spTimeTableFavourit";         // $NON-NLS
         public static final String PREF_CHOSEN_TIMETABLE_ID = "prefChosenTimeTableId";    // $NON-NLS
-        public static final String PARAM_TIMETABLE_WEEK = "paramTimeTableWeek";            // $NON-NLS
+
+        public static final String KEY_TIMETABLE_WEEK = "paramTimeTableWeek";            // $NON-NLS
 
     }
 
@@ -124,13 +129,13 @@ public final class Define {
         public static final long[] VIBRATION_PATTERN = {1000, 500, 1000, 0};
 
         //the following fields need to be synchronized with the backend (php and database)
-        public static final String PARAM_UNDEFINED = "0";
-        public static final String PARAM_TIMETABLE_CHANGED = "1";
-        public static final String PARAM_EXAM_ADDED = "2";
+        public static final String VALUE_UNDEFINED = "0";
+        public static final String VALUE_TIMETABLE_CHANGED = "1";
+        public static final String VALUE_EXAM_ADDED = "2";
 
-        public static final String PARAM_ANDROID = "0";
-        public static final String PARAM_LANG_DE = "DE";
-        public static final String PARAM_LANG_EN = "EN";
+        public static final String VALUE_ANDROID = "0";
+        public static final String VALUE_LANG_DE = "DE";
+        public static final String VALUE_LANG_EN = "EN";
     }
 
 
