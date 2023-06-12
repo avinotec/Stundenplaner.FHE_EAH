@@ -168,8 +168,15 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 		mTitle = in.readString();
 		in.readList(mStudyGroups, TimetableStudyGroupVo.class.getClassLoader());
 		mModuleId = in.readString();
-		mEventSetIds = new HashSet(Arrays.asList(in.readArray(String.class.getClassLoader())));
-		in.readList(mEvents, MyScheduleEventDateVo.class.getClassLoader());
+
+		//TODO was passiert hier?
+		final ClassLoader classLoader = String.class.getClassLoader();
+		final Object[] array = in.readArray(classLoader);
+		mEventSetIds = new HashSet(Arrays.asList(array));
+
+		final ClassLoader classLoader1 = MyScheduleEventDateVo.class.getClassLoader();
+		in.readList(mEvents, classLoader1);
+
 		subscribed = in.readByte() != 0;
 	}
 
