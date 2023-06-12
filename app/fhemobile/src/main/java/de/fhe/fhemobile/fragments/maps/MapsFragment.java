@@ -91,6 +91,7 @@ public class MapsFragment extends Fragment {
                     break;
                 case R.string.building_06:
                     mCurrentMapIndex = 1; //Untergeschoss
+                    break;
             }
         }
 
