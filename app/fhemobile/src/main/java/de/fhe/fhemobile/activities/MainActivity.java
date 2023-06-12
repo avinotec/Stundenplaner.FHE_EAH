@@ -25,7 +25,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
-import android.util.Log;
 import android.view.Menu;
 import android.webkit.WebView;
 
@@ -171,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             mCurrentFragmentId = id;
 
             mTitle           = FeatureProvider.getFeatureTitle(id);
-            mCurrentFragment = FeatureFragmentFactory.getFeaturedFragment(id);
+            mCurrentFragment = FeatureFragmentFactory.getFeatureFragment(id);
 
             fragmentManager.beginTransaction()
                     .replace(R.id.container, mCurrentFragment)
@@ -198,19 +197,19 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
      *
      * @param _Fragment the new fragment
      * @param _AddToBackStack if false, then the fragment gets destroyed when removed/replaced sometime
-     * @param _Tag tag of the new fragment
      */
-    public void changeFragment(final FeatureFragment _Fragment, final boolean _AddToBackStack, final String _Tag) {
-
+    public void changeFragment(final FeatureFragment _Fragment, final boolean _AddToBackStack) {
         mCurrentFragment = _Fragment;
+        //tag of the new fragment to later find the fragment by tag
+        String tag = mCurrentFragment.getFeatureTag();
 
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, _Fragment, _Tag);
+        transaction.replace(R.id.container, _Fragment, tag);
 
 //        transaction.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.abc_fade_in, R.anim.abc_fade_out);
 
         if (_AddToBackStack) {
-            transaction.addToBackStack(_Tag);
+            transaction.addToBackStack(tag);
         }
 
         transaction.commit();
@@ -310,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                 // Card is not supported
             }
             //todo: not working
-            changeFragment(CanteenFragment.newInstance(), false, TAG);
+            changeFragment(CanteenFragment.newInstance(), false);
         }
 
         finish();

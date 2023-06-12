@@ -55,7 +55,7 @@ public class NavigationScannerFragment extends FeatureFragment implements ZXingS
     private boolean mAutoFocus = true;
 
     public NavigationScannerFragment() {
-        // Required empty public constructor
+        super(TAG);
     }
 
 

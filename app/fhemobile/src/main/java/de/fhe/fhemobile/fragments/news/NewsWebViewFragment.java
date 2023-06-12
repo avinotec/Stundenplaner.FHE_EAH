@@ -41,8 +41,10 @@ import de.fhe.fhemobile.views.news.NewsWebView;
  */
 public class NewsWebViewFragment extends FeatureFragment {
 
+    public static final String TAG = NewsWebViewFragment.class.getSimpleName();
+
     public NewsWebViewFragment() {
-        // Required empty public constructor
+        super(TAG);
     }
 
     public static NewsWebViewFragment newInstance() {

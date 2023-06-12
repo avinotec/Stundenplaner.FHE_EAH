@@ -76,7 +76,7 @@ public class TimetableDialogFragment extends FeatureFragment {
     }
 
     public TimetableDialogFragment() {
-        // Required empty public constructor
+        super(TAG);
     }
 
     @Override
@@ -129,8 +129,7 @@ public class TimetableDialogFragment extends FeatureFragment {
     }
 
     void proceedToTimetable(final String _TimetableId) {
-        ((MainActivity) getActivity()).changeFragment(TimetableFragment.newInstance(_TimetableId),
-                true, TimetableFragment.TAG);
+        ((MainActivity) getActivity()).changeFragment(TimetableFragment.newInstance(_TimetableId), true);
     }
 
     private final TimetableDialogView.IViewListener mViewListener = new TimetableDialogView.IViewListener() {

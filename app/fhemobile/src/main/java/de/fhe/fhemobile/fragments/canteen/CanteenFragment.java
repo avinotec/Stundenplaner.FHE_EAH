@@ -49,7 +49,7 @@ public class CanteenFragment extends FeatureFragment {
     private static final String TAG = CanteenFragment.class.getSimpleName();
 
     public CanteenFragment(){
-        // Required empty public constructor
+        super(TAG);
     }
 
     public static CanteenFragment newInstance(){

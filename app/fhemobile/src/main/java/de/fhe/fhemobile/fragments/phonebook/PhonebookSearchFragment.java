@@ -35,7 +35,7 @@ public class PhonebookSearchFragment extends FeatureFragment {
     private static final String TAG = PhonebookSearchFragment.class.getSimpleName();
 
     public PhonebookSearchFragment() {
-        // Required empty public constructor
+        super(TAG);
     }
 
     public static PhonebookSearchFragment newInstance() {

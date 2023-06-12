@@ -39,8 +39,10 @@ import de.fhe.fhemobile.views.imprint.ImprintView;
 
 public class ImprintFragment extends FeatureFragment {
 
+    public static final String TAG = ImprintFragment.class.getSimpleName();
+
     public ImprintFragment() {
-        // Required empty public constructor
+        super(TAG);
     }
 
     public static ImprintFragment newInstance() {

@@ -41,8 +41,10 @@ import de.fhe.fhemobile.views.semesterdates.SemesterDatesWebView;
  */
 public class SemesterDatesWebViewFragment extends FeatureFragment {
 
+    public static final String TAG = SemesterDatesWebViewFragment.class.getSimpleName();
+
     public SemesterDatesWebViewFragment() {
-        // Required empty public constructor
+        super(TAG);
     }
 
     public static SemesterDatesWebViewFragment newInstance() {

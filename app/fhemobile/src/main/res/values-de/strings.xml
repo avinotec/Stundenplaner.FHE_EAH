@@ -26,15 +26,15 @@
     <string name="action_before">Vorheriges</string>
     <string name="action_next">Nächstes</string>
     <string name="drawer_news">News und Wetter</string>
-    <string name="drawer_canteen" >Mensa</string>
-    <string name="drawer_persons" >Personen</string>
-    <string name="drawer_semesterdates" >Semestertermine</string>
-    <string name="drawer_campus" >Campusplan</string>
-    <string name="drawer_imprint" >Impressum</string>
-    <string name="drawer_timetable" >Stundenplan</string>
-    <string name="drawer_myschedule" >Mein Stundenplan</string>
-    <string name="drawer_events" >Veranstaltungskalender</string>
-    <string name="drawer_navigation" >Campusnavigation</string>
+    <string name="drawer_canteen">Mensa</string>
+    <string name="drawer_persons">Personen</string>
+    <string name="drawer_semesterdates">Semestertermine</string>
+    <string name="drawer_campus">Campusplan</string>
+    <string name="drawer_imprint">Impressum</string>
+    <string name="drawer_timetable">Stundenplan</string>
+    <string name="drawer_myschedule">Mein Stundenplan</string>
+    <string name="drawer_events">Veranstaltungskalender</string>
+    <string name="drawer_navigation">Campusnavigation</string>
     <string name="drawer_joboffers">Stellenangebote</string>
 
     <string name="reallyClose">Zum Verlassen erneut Zurück drücken</string>

@@ -41,8 +41,10 @@ import de.fhe.fhemobile.views.events.EventsWebView;
  */
 public class EventsWebViewFragment extends FeatureFragment {
 
+    public static final String TAG = EventsWebViewFragment.class.getSimpleName();
+
     public EventsWebViewFragment() {
-        // Required empty public constructor
+        super(TAG);
     }
 
     public static de.fhe.fhemobile.fragments.events.EventsWebViewFragment newInstance() {

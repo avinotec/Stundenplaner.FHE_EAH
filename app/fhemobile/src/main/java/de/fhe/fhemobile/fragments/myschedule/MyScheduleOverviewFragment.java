@@ -58,7 +58,7 @@ public class MyScheduleOverviewFragment extends FeatureFragment {
 	}
 
 	public MyScheduleOverviewFragment() {
-		// Required empty public constructor
+		super(TAG);
 	}
 
 

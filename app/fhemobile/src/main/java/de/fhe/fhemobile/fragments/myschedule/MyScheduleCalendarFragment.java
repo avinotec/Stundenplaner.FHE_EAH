@@ -70,7 +70,7 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 	}
 
 	public MyScheduleCalendarFragment() {
-		// Required empty public constructor
+		super(TAG);
 	}
 
 

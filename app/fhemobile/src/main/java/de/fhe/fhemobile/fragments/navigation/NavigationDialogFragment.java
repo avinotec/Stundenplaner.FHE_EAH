@@ -50,7 +50,7 @@ public class NavigationDialogFragment extends FeatureFragment {
     static final String TAG = NavigationDialogFragment.class.getSimpleName();
 
     public NavigationDialogFragment(){
-        // Required empty public constructor
+        super(TAG);
     }
 
     public static NavigationDialogFragment newInstance(){

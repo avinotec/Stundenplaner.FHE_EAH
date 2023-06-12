@@ -82,7 +82,7 @@ public class TimetableFragment extends FeatureFragment {
 
 
 	public TimetableFragment() {
-		// Required empty public constructor
+		super(TAG);
 	}
 
 	@Override
@@ -127,8 +127,7 @@ public class TimetableFragment extends FeatureFragment {
 				if (menuItem.getItemId() == R.id.action_reset_selection) {
 
 					TimetableSettings.saveTimetableSelection(null);
-					((MainActivity) activity).changeFragment(TimetableDialogFragment.newInstance(),
-							false, TimetableDialogFragment.TAG);
+					((MainActivity) activity).changeFragment(TimetableDialogFragment.newInstance(), false);
 					return true;
 				}
 

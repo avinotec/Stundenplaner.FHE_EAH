@@ -43,8 +43,14 @@ public abstract class NavigationSearchFragment extends FeatureFragment {
     protected RoomVo mDestRoom;
     protected RoomVo mStartRoom;
 
+    /**
+     * Construct a new {@link NavigationSearchFragment} instance
+     * @param prefTag The tag used to store shared preferences in
+     *                ({@link NavigationSearchFragment#PREFS_NAVIGATION_PERSON_CHOICE}
+     *                or {@link NavigationSearchFragment#PREFS_NAVIGATION_ROOM_CHOICE}
+     */
     public NavigationSearchFragment(final String prefTag) {
-        // Required empty public constructor
+        super(TAG);
         PREFS_NAVIGATION = prefTag;
     }
 
@@ -119,7 +125,7 @@ public abstract class NavigationSearchFragment extends FeatureFragment {
 
         //note: Scanner is not added to back stack
         ((MainActivity) getActivity()).changeFragment(
-                NavigationScannerFragment.newInstance(), true, NavigationScannerFragment.TAG);
+                NavigationScannerFragment.newInstance(), true);
 
     }
 
@@ -133,8 +139,7 @@ public abstract class NavigationSearchFragment extends FeatureFragment {
         if(mDestRoom != null){
             if(validateInputAndSetStartRoom(getSearchView().getStartInputText())){
                 ((MainActivity) getActivity()).changeFragment(
-                        NavigationFragment.newInstance(mStartRoom, mDestRoom),
-                        true, NavigationFragment.TAG);
+                        NavigationFragment.newInstance(mStartRoom, mDestRoom), true);
 
                 mDestRoom = null;
                 mStartRoom = null;

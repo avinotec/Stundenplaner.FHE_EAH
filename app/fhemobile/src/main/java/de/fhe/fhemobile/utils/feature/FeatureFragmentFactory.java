@@ -40,7 +40,7 @@ public final class FeatureFragmentFactory {
 	private FeatureFragmentFactory() {
 	}
 
-	public static FeatureFragment getFeaturedFragment(final int _FeatureId) {
+	public static FeatureFragment getFeatureFragment(final int _FeatureId) {
         final FeatureFragment fragment;
 
         switch (_FeatureId) {

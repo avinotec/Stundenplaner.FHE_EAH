@@ -35,7 +35,7 @@ public class CanteenSettingsFragment extends FeatureFragment {
     public static final String TAG = CanteenSettingsFragment.class.getSimpleName();
 
     public CanteenSettingsFragment() {
-        // Required empty public constructor
+        super(TAG);
     }
 
     public static CanteenSettingsFragment newInstance() {
