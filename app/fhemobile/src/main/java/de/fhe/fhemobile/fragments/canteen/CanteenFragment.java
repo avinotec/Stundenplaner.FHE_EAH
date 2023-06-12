@@ -108,13 +108,6 @@ public class CanteenFragment extends FeatureFragment {
     }
 
     @Override
-    public void onRestoreActionBar(final ActionBar _ActionBar) {
-        super.onRestoreActionBar(_ActionBar);
-
-        _ActionBar.setTitle(R.string.drawer_canteen);
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         mView.registerModelListener();

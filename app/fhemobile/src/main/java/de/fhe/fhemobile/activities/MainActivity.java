@@ -83,7 +83,9 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         
         mDrawerFragment = (DrawerFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
+        if(mTitle == null){
+            mTitle = getTitle();
+        }
 
 
         // Set up the drawer.
