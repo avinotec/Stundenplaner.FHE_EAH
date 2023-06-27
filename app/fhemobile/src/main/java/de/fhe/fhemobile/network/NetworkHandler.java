@@ -17,7 +17,7 @@
 package de.fhe.fhemobile.network;
 
 import static de.fhe.fhemobile.Main.getAppContext;
-import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.getUpdatedEventSeries;
+import static de.fhe.fhemobile.utils.myschedule.TimetableChangeDetectionUtils.getUpdatedEventSeries;
 import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.groupByModuleId;
 
 import android.util.Log;

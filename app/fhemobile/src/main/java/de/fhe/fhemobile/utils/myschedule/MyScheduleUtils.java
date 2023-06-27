@@ -19,10 +19,6 @@ package de.fhe.fhemobile.utils.myschedule;
 
 import android.util.Log;
 
-import com.google.common.collect.Sets;
-import com.google.gson.Gson;
-
-import org.jetbrains.annotations.NonNls;
 import org.junit.Assert;
 
 import java.text.ParseException;
@@ -35,16 +31,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.TimeZone;
 
 import de.fhe.fhemobile.BuildConfig;
-import de.fhe.fhemobile.Main;
-import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.comparator.EventSeriesTitleComparator;
 import de.fhe.fhemobile.comparator.MyScheduleEventComparator;
-import de.fhe.fhemobile.comparator.MyScheduleEventDateComparator;
-import de.fhe.fhemobile.utils.Utils;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventDateVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSetVo;
@@ -56,6 +46,16 @@ import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
 public final class MyScheduleUtils {
 
 	private static final String TAG = MyScheduleUtils.class.getSimpleName();
+
+	/**
+	 * Regex for the entry number of an event title, e.g. ".1" at WI/WIEC(BA)Mathe/Ü/01.1
+	 * */
+	private static final String regexEventEntryNumber = "\\.\\d+"; //$NON-NLS
+	/**
+	 * Regex for the event set number of an event title,
+	 * e.g. "01" in WI/WIEC(BA)Mathe/Ü/01 or "01_02" in WI/WIEC(BA)Mathe/Ü/01_02
+	 * */
+	private static final String regexEventSetNumber = "\\d\\d[_\\d\\d]*"; //$NON-NLS
 
 	/**
 	 * Utility class, no constructor
@@ -105,7 +105,7 @@ public final class MyScheduleUtils {
 		}
 		//cut away all ".d" (where d stands for any digit)
 		//example: WI/WIEC(BA)Mathe/Ü/01.1 -> WI/WIEC(BA)Mathe/Ü/01
-		return title.replaceAll("\\.\\d+$", "");
+		return title.replaceAll(regexEventEntryNumber + "$", "");
 	}
 
 	/**
@@ -120,19 +120,7 @@ public final class MyScheduleUtils {
 			return "";
 		}
 
-		return title.replaceAll("/\\d\\d$", "");
-	}
-
-	/**
-	 * The given {@link MyScheduleEventSeriesVo} is identified as exam
-	 * when its base title ends with APL, PL, mdl. Prfg.,Wdh.-Prfg., Wdh.-APL
-	 * @param eventSeries The {@link MyScheduleEventSeriesVo} to check
-	 * @return True if the event series is identified as exam
-	 */
-	public static boolean isExam(MyScheduleEventSeriesVo eventSeries){
-		//example: "BT/MT/WT(BA)Biomat./APL/01" -> base title "BT/MT/WT(BA)Biomat./APL" ends with an exam ending
-	 	//noinspection HardCodedStringLiteral
-		return getEventSeriesBaseTitle(eventSeries.getTitle()).matches(".*(PL)|(Prfg\\.)");
+		return title.replaceAll("/"+regexEventSetNumber+"$", "");
 	}
 
 	/**
@@ -208,6 +196,11 @@ public final class MyScheduleUtils {
 		return modules;
 	}
 
+	/**
+	 * Group the {@link MyScheduleEventVo}s by event set
+	 * @param eventVos The list of {@link MyScheduleEventVo}s
+	 * @return The resulting Map containing a list of {@link MyScheduleEventVo}s for each event set
+	 */
 	public static Map<String, List<MyScheduleEventVo>> groupByEventSet(final List<MyScheduleEventVo> eventVos) {
 		final Map<String, List<MyScheduleEventVo>> eventVosMap = new HashMap<>();
 
@@ -229,247 +222,6 @@ public final class MyScheduleUtils {
 		return eventVosMap;
 	}
 
-	/**
-	 * Compare local and fetched events to detect changes
-	 *  @param localEventSeriesSubList A subset of the subscribedEventSeries
-	 *                           containing event series that belong to the same module,
-	 *                           sorted by eventseries title
-	 * @param fetchedEventSetsMap The fetched {@link MyScheduleEventSetVo}s
-	 *                               corresponding to the given subset of eventseries,
-	 * @return List of updated the subscribedEventSeries
-	 */
-	public static List<MyScheduleEventSeriesVo> getUpdatedEventSeries(
-			final Map<String, MyScheduleEventSeriesVo> localEventSeriesSubList,
-			final Map<String, MyScheduleEventSetVo> fetchedEventSetsMap) {
-
-		final ArrayList<MyScheduleEventSeriesVo> eventSeriesToAdd = new ArrayList<>();
-
-		//get fetchedEventSeries from fetched event sets
-		final List<MyScheduleEventSeriesVo> fetchedEventSeriesVos = groupByEventTitle(fetchedEventSetsMap);
-
-		//examine fetched EventSeriesVos for changes, deleted and added events
-		for (final MyScheduleEventSeriesVo fetchedEventSeries : fetchedEventSeriesVos) {
-
-			final MyScheduleEventSeriesVo localEventSeries = localEventSeriesSubList.get(fetchedEventSeries.getTitle());
-			if (localEventSeries != null){
-				detectChangesAndUpdateLocal(localEventSeries, fetchedEventSeries, fetchedEventSetsMap);
-			} else {
-				//if event series corresponds to a new exam (no matter which group), then always add
-				if(isExam(fetchedEventSeries)){
-					//set every event in the exam series as "added"
-					for (final MyScheduleEventVo eventVo : fetchedEventSeries.getEvents()) {
-						eventVo.addChange(TimetableChangeType.ADDITION);
-					}
-					//add exam as subscribed eventseries
-					fetchedEventSeries.setSubscribed(true);
-					eventSeriesToAdd.add(fetchedEventSeries);
-					//inform user that exam has been added
-					showExamAddedToast(fetchedEventSeries.getTitle());
-				}
-			}
-		}
-
-		final List<MyScheduleEventSeriesVo> updatedEventSeriesList = new ArrayList<>(localEventSeriesSubList.values());
-		Collections.sort(updatedEventSeriesList, new EventSeriesTitleComparator());
-		for (final MyScheduleEventSeriesVo eventSeries : updatedEventSeriesList){
-			Collections.sort(eventSeries.getEvents(), new MyScheduleEventComparator());
-		}
-		updatedEventSeriesList.addAll(eventSeriesToAdd);
-		return updatedEventSeriesList;
-	}
-
-	/**
-	 *
-	 * @param examTitle
-	 */
-	private static void showExamAddedToast(final String examTitle){
-		Utils.showToast(Main.getAppContext().getString(R.string.exam_added) + ":\n"+ examTitle);
-	}
-
-	/**
-	 * Detect deleted, added and changed event sets and event properties
-	 * @param localEventSeries The local event series
-	 * @param fetchedEventSeries The fetched event series to update the local with
-	 * @param fetchedEventSetsMap The map of fetched event sets (to detect added event sets and changes event properties)
-	 */
-	private static void detectChangesAndUpdateLocal(
-			final MyScheduleEventSeriesVo localEventSeries,
-			final MyScheduleEventSeriesVo fetchedEventSeries,
-			final Map<String, MyScheduleEventSetVo> fetchedEventSetsMap){
-
-		//skip change detection if events of the event series' are equal
-		final Gson gson = new Gson();
-		String localEventsJson = gson.toJson(localEventSeries.getEvents());
-		@NonNls final String fetchedEventsJson = gson.toJson(fetchedEventSeries.getEvents());
-		//remove change marks from local json to enable comparison with fetched json
-		localEventsJson = localEventsJson.replaceAll("\"typesOfChanges\":\\[(\"[A-Z]+,?\")+]","\"typesOfChanges\":[]");
-		if(localEventsJson.equals(fetchedEventsJson)) {
-			Log.d(TAG, "Detection of my schedule changes skipped because events are equal");
-			return;
-		}
-
-		//detect added event sets
-		final Set<String> eventSetsAdded = Sets.difference(
-				fetchedEventSeries.getEventSetIds(), localEventSeries.getEventSetIds());
-
-		//detect deleted event sets
-		final Set<String> eventSetsDeleted = Sets.difference(
-				localEventSeries.getEventSetIds(), fetchedEventSeries.getEventSetIds());
-
-		//detect changed and deleted events
-		// then update changed event properties and mark deleted events as deleted
-		final Map<String, List<MyScheduleEventVo>> eventsToBeUpdatedByEventSet = groupByEventSet(localEventSeries.getEvents());
-
-		for (final Map.Entry<String, List<MyScheduleEventVo>> localEventSetEntry : eventsToBeUpdatedByEventSet.entrySet()) {
-
-			//DELETED EVENT SETS: set events from deleted event sets to "deleted"
-			if (eventSetsDeleted.contains(localEventSetEntry.getKey())) {
-				for (final MyScheduleEventVo deletedEvent : localEventSetEntry.getValue()) {
-					deletedEvent.addChange(TimetableChangeType.DELETION);
-				}
-			}
-			//DETECT CHANGED EVENTS PROPERTIES AND EVENTS DELETED WITHIN AN EVENT SET - compare local and fetched events
-			else {
-				if(fetchedEventSetsMap == null || fetchedEventSetsMap.size() == 0) break;
-				final MyScheduleEventSetVo fetchedEventSet = fetchedEventSetsMap.get(localEventSetEntry.getKey());
-				//fetchedEventSet != null because it would be contained in eventSetsDeleted otherwise
-				if (BuildConfig.DEBUG) Assert.assertNotNull(fetchedEventSet);
-
-				final List<MyScheduleEventDateVo> fetchedEventDates = fetchedEventSet.getEventDates();
-				//fetchedEventDates != null because getEventDates returns an empty ArrayList at least
-				if (BuildConfig.DEBUG) Assert.assertNotNull(fetchedEventDates);
-
-				final List<MyScheduleEventVo> deletedEvents = new ArrayList<>();
-				Collections.sort(fetchedEventDates, new MyScheduleEventDateComparator());
-
-				//FIND DELETED EVENTS
-				if (fetchedEventDates.size() < localEventSetEntry.getValue().size()) {
-
-					//detect deleted events by screening localEvent
-					for (int i = 0; i < localEventSetEntry.getValue().size(); i++) {
-						final MyScheduleEventVo localEvent = localEventSetEntry.getValue().get(i);
-						MyScheduleEventDateVo fetchedEvent = null;
-
-						//get fetched event to compare
-						if (i < fetchedEventDates.size()) {
-							fetchedEvent = fetchedEventDates.get(i);
-						}
-
-						if (fetchedEvent == null
-								|| fetchedEvent.getStartTime() != localEvent.getStartTime()
-								|| fetchedEvent.getEndTime() != localEvent.getEndTime()) {
-							//mark as deleted and temporarily save to deletedEvents
-							localEvent.addChange(TimetableChangeType.DELETION);
-							deletedEvents.add(localEvent);
-							localEventSetEntry.getValue().remove(localEvent);
-
-							//reset counter to make the current fetchedEvent being compared to the next localEvent
-							i--;
-						}
-					}
-				}
-				//FIND ADDED EVENTS
-				//note: "if" instead of "else if" needed for event sets that contain deleted and time-edited events
-				// (this case already occurred, all events of the event set had been deleted except one
-				// but this one simultaneously had been shifted by 15 min. To not loose the event completely
-				// and to avoid the assert in line 383 to fail,
-				// this if loop needs to run in order to detect the shifted event as added.)
-				if (fetchedEventDates.size() > localEventSetEntry.getValue().size()) {
-
-					//note: the workflow fails if an event set contains added and time-edited events.
-					// According to the Stundenplanung, this case is not supposed to occur.
-
-					//detect added events in fetchedEventSet
-					for (int i = 0; i < fetchedEventDates.size(); i++) {
-						final MyScheduleEventDateVo fetchedEvent = fetchedEventDates.get(i);
-						MyScheduleEventVo localEvent = null;
-
-						if (i < localEventSetEntry.getValue().size()) {
-							localEvent = localEventSetEntry.getValue().get(i);
-						}
-
-						if (localEvent == null
-								|| fetchedEvent.getStartTime() != localEvent.getStartTime()
-								|| fetchedEvent.getEndTime() != localEvent.getEndTime()) {
-							//add new event
-							final MyScheduleEventVo newEvent = createEventVo(fetchedEvent, fetchedEventSet);
-							newEvent.addChange(TimetableChangeType.ADDITION);
-							localEventSetEntry.getValue().add(i, newEvent);
-						}
-					}
-				}
-				//If fetchedEventSet size == localEventSet size (note: localEventSet is cleaned from deleted and increased by added events),
-				// we assume that we can compare events at the same positions to detect changed properties
-				if (BuildConfig.DEBUG && false) {
-					Assert.assertEquals(localEventSetEntry.getValue().size(), fetchedEventSet.getEventDates().size());
-				}
-
-				if (localEventSetEntry.getValue().size() == fetchedEventSet.getEventDates().size()) {
-					//check for changed property values
-					for (int k = 0; k < localEventSetEntry.getValue().size(); k++) {
-						final MyScheduleEventDateVo fetchedEvent = fetchedEventSet.getEventDates().get(k);
-						final MyScheduleEventVo localEvent = localEventSetEntry.getValue().get(k);
-
-						if (localEvent.getTypesOfChanges().contains(TimetableChangeType.ADDITION)) {
-							continue;
-						}
-
-						//start date time changed
-						if (fetchedEvent.getStartTime() != localEvent.getStartTime()) {
-							localEvent.addChange(TimetableChangeType.EDIT_TIME);
-							localEvent.setStartDateTimeInSec(fetchedEvent.getStartTime());
-						}
-						//end date changed
-						if (fetchedEvent.getEndTime() != localEvent.getEndTime()) {
-							localEvent.addChange(TimetableChangeType.EDIT_TIME);
-							localEvent.setEndDateTimeInSec(fetchedEvent.getEndTime());
-						}
-						//location changed
-						if (!fetchedEventSet.getLocationList().equals(localEvent.getLocationList())) {
-							localEvent.addChange(TimetableChangeType.EDIT_LOCATION);
-							localEvent.setLocationList(fetchedEventSet.getLocationList());
-						}
-						//lecturer changed
-						if (!fetchedEventSet.getLecturerList().equals(localEvent.getLecturerList())) {
-							localEvent.addChange(TimetableChangeType.EDIT_LECTURER);
-							localEvent.setLecturerList(fetchedEventSet.getLecturerList());
-						}
-						//title has been updated
-						if (!fetchedEventSet.getTitle().equals(localEvent.getTitle())) {
-							//note: we don't want to mark this change
-							localEvent.setTitle(fetchedEventSet.getTitle());
-						}
-					}
-				}
-				//add deleted events for documentation
-				localEventSetEntry.getValue().addAll(deletedEvents);
-
-			}
-		}
-
-		//add new event sets
-		if ( /* _always true___ eventSetsAdded != null && */ !eventSetsAdded.isEmpty()) {
-			for (final String eventSetId : eventSetsAdded) {
-				final MyScheduleEventSetVo eventSet = fetchedEventSetsMap.get(eventSetId);
-				final List<MyScheduleEventVo> eventListToAdd = new ArrayList<>();
-
-				for (final MyScheduleEventDateVo addedEventDate : eventSet.getEventDates()) {
-					final MyScheduleEventVo eventToAdd = createEventVo(addedEventDate, eventSet);
-					eventToAdd.addChange(TimetableChangeType.ADDITION);
-					eventListToAdd.add(eventToAdd);
-				}
-				eventsToBeUpdatedByEventSet.put(eventSetId, eventListToAdd);
-			}
-		}
-
-		//flatten updated event list
-		final List<MyScheduleEventVo> updatedEvents = new ArrayList<>();
-		for (final List<MyScheduleEventVo> events : eventsToBeUpdatedByEventSet.values()) {
-			updatedEvents.addAll(events);
-		}
-		//set updated events
-		localEventSeries.setEvents(updatedEvents, eventsToBeUpdatedByEventSet.keySet());
-	}
 
 	/**
 	 * Construct a new {@link MyScheduleEventVo} from the given {@link MyScheduleEventDateVo}
@@ -489,5 +241,18 @@ public final class MyScheduleUtils {
 				eventDate.getGermanEndTime(),
 				eventSet.getLecturerList(),
 				eventSet.getLocationList());
+	}
+
+
+	/**
+	 * The given {@link MyScheduleEventSeriesVo} is identified as exam
+	 * when its base title ends with APL, PL, mdl. Prfg.,Wdh.-Prfg., Wdh.-APL
+	 * @param eventSeries The {@link MyScheduleEventSeriesVo} to check
+	 * @return True if the event series is identified as exam
+	 */
+	public static boolean isExam(MyScheduleEventSeriesVo eventSeries){
+		//example: "BT/MT/WT(BA)Biomat./APL/01" -> base title "BT/MT/WT(BA)Biomat./APL" ends with an exam ending
+		//noinspection HardCodedStringLiteral
+		return getEventSeriesBaseTitle(eventSeries.getTitle()).matches(".*(PL)|(Prfg\\.)");
 	}
 }

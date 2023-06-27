@@ -38,7 +38,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import de.fhe.fhemobile.utils.myschedule.MyScheduleUtils;
+import de.fhe.fhemobile.utils.myschedule.TimetableChangeDetectionUtils;
 import de.fhe.fhemobile.vos.myschedule.ModuleVo;
 import de.fhe.fhemobile.vos.myschedule.MyScheduleEventSeriesVo;
 
@@ -92,7 +92,7 @@ public class MyScheduleChangesTest {
 
         //ACT
         List<MyScheduleEventSeriesVo> updatedEventSeriesVos =
-                MyScheduleUtils.getUpdatedEventSeries(modules.get("12345"), mModule.getEventSets());
+                TimetableChangeDetectionUtils.getUpdatedEventSeries(modules.get("12345"), mModule.getEventSets());
 
         //ASSERT
         Gson gson = new Gson();
