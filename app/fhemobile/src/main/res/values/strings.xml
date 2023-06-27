@@ -100,6 +100,7 @@
     <string name="canteen_no_canteens_selected">Please select one or more canteens under settings first.</string>
     <string name="canteen_update_failed">Could not update menu.</string>
     <string name="canteen_card_balance_status">Your thoska balance: %1$s € (status: %2$s)</string>
+    <string name="canteen_card_balance_toast">Your thoska balance: %1$s €</string>
     <string name="canteen_card_error">Card removed before data could be read!</string>
 
     <!-- My Schedule -->

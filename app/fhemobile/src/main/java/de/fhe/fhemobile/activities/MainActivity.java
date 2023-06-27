@@ -304,17 +304,15 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                     Log.d(TAG, "Read canteen card balance: " + balance.toString());
 
                     CanteenModel.getInstance().setCanteenCardBalance(balance);
+
+                    Utils.showToast(getResources().getString(R.string.canteen_card_balance_toast, balance.getBalance()));
                 } else {
                     Log.w(TAG, "Read canteen card balance is null");
                 }
             } catch (DesFireException ignored) {
                 // Card is not supported
             }
-            //todo: not working because An activity will always be paused before receiving a new intent
-            changeFragment(CanteenFragment.newInstance(), false);
         }
-
-        finish();
     }
 
     // #############################################################################################
