@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
         final Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if (mToolbar != null) setSupportActionBar(mToolbar);
-        
+
         mDrawerFragment = (DrawerFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.navigation_drawer);
         if(mTitle == null){
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                 }
         }
         if (//if push notifications enabled
-               PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+                PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
                         .getBoolean(getResources().getString(R.string.sp_myschedule_enable_fcm), false)){
             //code from Firebase Documentation
             FirebaseMessaging.getInstance().getToken()
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         }
         if (//if calendar synchronization enabled
                 PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
-                .getBoolean(getResources().getString(R.string.sp_myschedule_enable_calsync), false)){
+                        .getBoolean(getResources().getString(R.string.sp_myschedule_enable_calsync), false)){
 
             CalendarSynchronizationBackgroundTask.startPeriodicSynchronizing(false);
         }
@@ -225,13 +225,13 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             //check if currentFragment contains a webview
             if(mCurrentFragment instanceof NewsWebViewFragment){
                 webview = ((NewsWebViewFragment) mCurrentFragment).getWebView();
-            }else if( mCurrentFragment instanceof SemesterDatesWebViewFragment){
+            } else if( mCurrentFragment instanceof SemesterDatesWebViewFragment){
                 webview = ((SemesterDatesWebViewFragment) mCurrentFragment).getWebView();
-            }else if (mCurrentFragment instanceof ImprintFragment){
+            } else if (mCurrentFragment instanceof ImprintFragment){
                 webview = ((ImprintFragment) mCurrentFragment).getWebView();
-            }else if(mCurrentFragment instanceof EventsWebViewFragment){
+            } else if (mCurrentFragment instanceof EventsWebViewFragment){
                 webview = ((EventsWebViewFragment) mCurrentFragment).getWebView();
-            }else if(mCurrentFragment instanceof JobOffersFragment){
+            } else if (mCurrentFragment instanceof JobOffersFragment){
                 webview = ((JobOffersFragment) mCurrentFragment).getWebView();
             }
             if(webview != null && webview.canGoBack()){
@@ -264,11 +264,11 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     }
 
     /**
-    Hier wird dafuer gesorgt, dass wenn in der Root-Activity der Back-Button gedrückt wird, erst beim 2. Mal Back-Button die App geschlossen wird.
-    Die Variable backPressedTwice wird beim ersten Betätigen gesetzt und es wird ein Thread verzögert gestartet. In dem Thread wird die Variable
-    wieder zurückgesetzt. Nur wenn "backPressedTwice" gesetzt ist, und der Back-Button ein zweites Mal betätigt wird, wird die App beendet.
-    APP_CLOSING_DOUBLECLICK_DELAY_TIME (Standard 2000 ms)
-    */
+     Hier wird dafuer gesorgt, dass wenn in der Root-Activity der Back-Button gedrückt wird, erst beim 2. Mal Back-Button die App geschlossen wird.
+     Die Variable backPressedTwice wird beim ersten Betätigen gesetzt und es wird ein Thread verzögert gestartet. In dem Thread wird die Variable
+     wieder zurückgesetzt. Nur wenn "backPressedTwice" gesetzt ist, und der Back-Button ein zweites Mal betätigt wird, wird die App beendet.
+     APP_CLOSING_DOUBLECLICK_DELAY_TIME (Standard 2000 ms)
+     */
     boolean backPressedTwice = false;
     private final Handler mHandler = new Handler();
 
@@ -310,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             } catch (DesFireException ignored) {
                 // Card is not supported
             }
-            //todo: not working
+            //todo: not working because An activity will always be paused before receiving a new intent
             changeFragment(CanteenFragment.newInstance(), false);
         }
 
