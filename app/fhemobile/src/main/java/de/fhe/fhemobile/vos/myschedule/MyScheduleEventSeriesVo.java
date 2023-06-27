@@ -169,10 +169,9 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 		in.readList(mStudyGroups, TimetableStudyGroupVo.class.getClassLoader());
 		mModuleId = in.readString();
 
-		//TODO was passiert hier?
-		final ClassLoader classLoader = String.class.getClassLoader();
-		final Object[] array = in.readArray(classLoader);
-		mEventSetIds = new HashSet(Arrays.asList(array));
+		//read mEventSetIds that has been serialized as string array
+		final Object[] eventSetIdsArray = in.readArray(String.class.getClassLoader());
+		mEventSetIds = new HashSet(Arrays.asList(eventSetIdsArray));
 
 		final ClassLoader classLoader1 = MyScheduleEventDateVo.class.getClassLoader();
 		in.readList(mEvents, classLoader1);
@@ -190,6 +189,7 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 		dest.writeString(mTitle);
 		dest.writeList(mStudyGroups);
 		dest.writeString(mModuleId);
+		//mEventSetIds need to be serialized as array because there is no writeSet()
 		dest.writeArray(mEventSetIds.toArray());
 		dest.writeList(mEvents);
 		dest.writeByte((byte) (subscribed ? 1 : 0));
