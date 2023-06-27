@@ -96,7 +96,10 @@ public class TimetableChangeDetectionUtils {
         //DETECT zusammengelegte Veranstaltungsreihen
         Set<String> setOfEventSeriesTitles = localEventSeriesSubList.keySet();
         Set<MyScheduleEventSeriesVo> combinedEventSeries = detectAndGetCombinedEventSeries(setOfEventSeriesTitles, fetchedEventSeriesVos);
-        eventSeriesToAdd.addAll(combinedEventSeries);
+        if(!combinedEventSeries.isEmpty()){
+            eventSeriesToAdd.addAll(combinedEventSeries);
+            showCombinedEventSeriesAddedToast();
+        }
 
         //COLLECT UPDATES in updatedEventSeriesList
         //add updated local event series'
@@ -333,5 +336,12 @@ public class TimetableChangeDetectionUtils {
      */
     private static void showExamAddedToast(final String examTitle){
         Utils.showToast(Main.getAppContext().getString(R.string.exam_added) + ":\n"+ examTitle);
+    }
+
+    /**
+     * Show toast that one or more combined event series have been added automatically
+     */
+    private static void showCombinedEventSeriesAddedToast(){
+        Utils.showToast("bla"); //todo: write string
     }
 }
