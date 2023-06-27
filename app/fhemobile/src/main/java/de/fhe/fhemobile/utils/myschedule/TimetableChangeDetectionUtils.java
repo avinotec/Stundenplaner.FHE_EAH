@@ -27,6 +27,7 @@ import org.junit.Assert;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -56,9 +57,9 @@ public class TimetableChangeDetectionUtils {
      * Compare local and fetched events to detect changes
      *  @param localEventSeriesSubList A subset of the subscribedEventSeries
      *                           containing event series that belong to the same module,
-     *                           sorted by eventseries title
+     *                           sorted by event series title
      * @param fetchedEventSetsMap The fetched {@link MyScheduleEventSetVo}s
-     *                               corresponding to the given subset of eventseries,
+     *                               corresponding to the given subset of event series,
      * @return List of updated the subscribedEventSeries
      */
     public static List<MyScheduleEventSeriesVo> getUpdatedEventSeries(
@@ -91,19 +92,27 @@ public class TimetableChangeDetectionUtils {
                 }
             }
         }
-        //sort events and event series in updated list
+
+        //DETECT zusammengelegte Veranstaltungsreihen
+        Set<String> setOfEventSeriesTitles = localEventSeriesSubList.keySet();
+        Set<MyScheduleEventSeriesVo> combinedEventSeries = detectAndGetCombinedEventSeries(setOfEventSeriesTitles, fetchedEventSeriesVos);
+        eventSeriesToAdd.addAll(combinedEventSeries);
+
+        //COLLECT UPDATES in updatedEventSeriesList
+        //add updated local event series'
         final List<MyScheduleEventSeriesVo> updatedEventSeriesList = new ArrayList<>(localEventSeriesSubList.values());
         Collections.sort(updatedEventSeriesList, new EventSeriesTitleComparator());
         for (final MyScheduleEventSeriesVo eventSeries : updatedEventSeriesList){
             Collections.sort(eventSeries.getEvents(), new MyScheduleEventComparator());
         }
-        //add added event series
+        //add added/new event series'
         updatedEventSeriesList.addAll(eventSeriesToAdd);
         return updatedEventSeriesList;
     }
 
     /**
-     * Detect deleted, added and changed event sets and event properties
+     * Detect deleted, added and changed event sets and event properties,
+     * and update localEventSeries inplace
      * @param localEventSeries The local event series
      * @param fetchedEventSeries The fetched event series to update the local with
      * @param fetchedEventSetsMap The map of fetched event sets (to detect added event sets and changes event properties)
@@ -285,6 +294,37 @@ public class TimetableChangeDetectionUtils {
         }
         //set updated events
         localEventSeries.setEvents(updatedEvents, eventsToBeUpdatedByEventSet.keySet());
+    }
+
+    /**
+     * Detect event series' that resulted from merging multiple event series
+     * and return a list of those event series' where at least one of their joining event series' is subscribed by the user
+     * @param localEventSeriesTitles
+     * @param fetchedEventSeriesVos
+     * @return
+     */
+    private static Set<MyScheduleEventSeriesVo> detectAndGetCombinedEventSeries(
+            Set<String> localEventSeriesTitles,
+            List<MyScheduleEventSeriesVo> fetchedEventSeriesVos){
+
+        Set<MyScheduleEventSeriesVo> result = new HashSet<>();
+
+        for(MyScheduleEventSeriesVo fetchedEventSeries : fetchedEventSeriesVos){
+            //if fetchedEventSeries is a combined event series
+            if(MyScheduleUtils.isCombinedEventSeries(fetchedEventSeries)){
+
+                for(String localEventSeriesTitle : localEventSeriesTitles){
+                    //local/subscribed event series is contained in the combined event series
+                    if(MyScheduleUtils.containedInCombinedEventSeries(
+                            localEventSeriesTitle, fetchedEventSeries.getTitle())){
+
+                        result.add(fetchedEventSeries);
+                    }
+                }
+            }
+        }
+
+        return result;
     }
 
     /**
