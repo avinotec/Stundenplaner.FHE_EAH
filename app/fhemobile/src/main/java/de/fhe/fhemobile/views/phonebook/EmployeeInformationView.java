@@ -95,8 +95,6 @@ public class EmployeeInformationView extends FrameLayout {
         }
     };
 
-    // --Commented out by Inspection (02.11.2021 16:50):private final Context mContext;
-
     ViewListener mViewListener;
 
     private TextView mName;

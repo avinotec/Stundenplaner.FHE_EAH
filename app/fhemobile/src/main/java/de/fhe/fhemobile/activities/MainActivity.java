@@ -319,22 +319,16 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            //try
-            {
-                CardBalance balance = InterCardReader.getInstance().readTag(tag);
-                if (balance != null) {
-                    Log.d(TAG, "Read canteen card balance: " + balance.toString());
+            CardBalance balance = InterCardReader.getInstance().readTag(tag);
+            if (balance != null) {
+                Log.d(TAG, "Read canteen card balance: " + balance.toString());
 
-                    CanteenModel.getInstance().setCanteenCardBalance(balance);
+                CanteenModel.getInstance().setCanteenCardBalance(balance);
 
-                    Utils.showToast(getResources().getString(R.string.canteen_card_balance_toast, balance.getBalance()));
-                } else {
-                    Log.w(TAG, "Read canteen card balance is null");
-                }
+                Utils.showToast(getResources().getString(R.string.canteen_card_balance_toast, balance.getBalance()));
+            } else {
+                Log.w(TAG, "Read canteen card balance is null");
             }
-            //catch (DesFireException ignored) {
-                // Card is not supported
-            //}
         }
     }
 
