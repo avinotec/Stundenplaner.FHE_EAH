@@ -42,9 +42,10 @@ import de.fhe.fhemobile.views.semesterdates.SemesterDatesView;
 
 public class SemesterDatesFragment extends FeatureFragment {
 
+    public static final String TAG = SemesterDatesFragment.class.getSimpleName();
 
     public SemesterDatesFragment() {
-        // Required empty public constructor
+        super(TAG);
     }
 
     public static SemesterDatesFragment newInstance() {

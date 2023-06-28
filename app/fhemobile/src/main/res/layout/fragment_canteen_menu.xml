@@ -28,12 +28,11 @@
 	   android:layout_width="match_parent"
 	   android:layout_height="wrap_content"
 	   android:textColor="@color/canteen_text_color"
-	   android:background="@color/canteen_text_background"
 	   android:fontFamily="@font/roboto_condensed_bold"
 	   android:textSize="18sp"
 	   android:textAllCaps="true"
 	   android:gravity="center"
-	   android:padding="3dp"
+	   android:padding="12dp"
 	   android:textIsSelectable="false" />
 
     <TextView

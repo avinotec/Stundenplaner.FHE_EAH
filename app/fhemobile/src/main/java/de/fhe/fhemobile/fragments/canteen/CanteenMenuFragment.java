@@ -43,7 +43,7 @@ public class CanteenMenuFragment extends FeatureFragment {
 
 
     public CanteenMenuFragment(){
-        // Required empty public constructor
+        super(TAG);
     }
 
     /**

@@ -26,15 +26,15 @@
     <string name="action_before">Vorheriges</string>
     <string name="action_next">Nächstes</string>
     <string name="drawer_news">News und Wetter</string>
-    <string name="drawer_canteen" >Mensa</string>
-    <string name="drawer_persons" >Personen</string>
-    <string name="drawer_semesterdates" >Semestertermine</string>
-    <string name="drawer_campus" >Campusplan</string>
-    <string name="drawer_imprint" >Impressum</string>
-    <string name="drawer_timetable" >Stundenplan</string>
-    <string name="drawer_myschedule" >Mein Stundenplan</string>
-    <string name="drawer_events" >Veranstaltungskalender</string>
-    <string name="drawer_navigation" >Campusnavigation</string>
+    <string name="drawer_canteen">Mensa</string>
+    <string name="drawer_persons">Personen</string>
+    <string name="drawer_semesterdates">Semestertermine</string>
+    <string name="drawer_campus">Campusplan</string>
+    <string name="drawer_imprint">Impressum</string>
+    <string name="drawer_timetable">Stundenplan</string>
+    <string name="drawer_myschedule">Mein Stundenplan</string>
+    <string name="drawer_events">Veranstaltungskalender</string>
+    <string name="drawer_navigation">Campusnavigation</string>
     <string name="drawer_joboffers">Stellenangebote</string>
 
     <string name="reallyClose">Zum Verlassen erneut Zurück drücken</string>
@@ -169,12 +169,15 @@
     <string name="ssl_error_cancel">Abbrechen</string>
     <string name="ssl_error_continue">Fortfahren</string>
 
-
+    <!--  Canteen  -->
     <string name="canteen_food_no_data_available">Keine Daten verfügbar.\n Versuche es später nochmal.</string>
     <string name="canteen_no_canteens_selected">Wähle bitte erst eine oder mehrere Mensen in den Einstellungen aus.</string>
     <string name="canteen_update_failed">Menü konnte nicht aktualisiert werden.</string>
+    <string name="canteen_card_balance_status">Dein thoska-Guthaben: %1$s € (Stand: %2$s)</string>
+    <string name="canteen_card_balance_toast">Dein thoska-Guthaben: %1$s €</string>
+    <string name="canteen_card_error">Karte wurde entfernt bevor Daten gelesen werden konnten!</string>
 
-    <!--    Campus Navigation-->
+    <!--    Campus Navigation -->
     <string name="title_scanner_activity">Scanner</string>
     <string name="title_navigation_activity">Navigation</string>
     <string name="error_navigation_room_not_found">Raum nicht gefunden!</string>

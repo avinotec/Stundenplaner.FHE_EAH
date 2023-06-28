@@ -44,8 +44,10 @@ import de.fhe.fhemobile.views.news.NewsListView;
 
 public class NewsListFragment extends FeatureFragment {
 
+    public static final String TAG = NewsListFragment.class.getSimpleName();
+
     public NewsListFragment() {
-        // Required empty public constructor
+        super(TAG);
     }
 
     public static NewsListFragment newInstance() {

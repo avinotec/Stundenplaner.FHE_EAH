@@ -43,8 +43,10 @@ import de.fhe.fhemobile.views.maps.MapsDialogView;
  */
 public class MapsDialogFragment extends FeatureFragment {
 
+    public static final String TAG = MapsDialogFragment.class.getSimpleName();
+
     public MapsDialogFragment() {
-        // Required empty public constructor
+        super(TAG);
     }
 
     public static MapsDialogFragment newInstance() {

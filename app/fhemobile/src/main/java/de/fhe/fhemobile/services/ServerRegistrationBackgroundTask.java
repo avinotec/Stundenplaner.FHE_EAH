@@ -82,12 +82,12 @@ public class ServerRegistrationBackgroundTask implements Runnable {
 		//add params
 		String data = null;
 		try {
-			data = encodeAsParam("os", Define.PushNotifications.PARAM_ANDROID);                          //NON-NLS
+			data = encodeAsParam("os", Define.PushNotifications.VALUE_ANDROID);                          //NON-NLS
 			data += encodeAsParam("fcm_token", fcmToken);                                             //NON-NLS
 			if("de".equals(Locale.getDefault().getLanguage())){                                     //NON-NLS
-				data += encodeAsParam("language", Define.PushNotifications.PARAM_LANG_DE);  //NON-NLS
+				data += encodeAsParam("language", Define.PushNotifications.VALUE_LANG_DE);  //NON-NLS
 			} else {
-				data += encodeAsParam("language", Define.PushNotifications.PARAM_LANG_EN);  //NON-NLS
+				data += encodeAsParam("language", Define.PushNotifications.VALUE_LANG_EN);  //NON-NLS
 			}
 			for(final MyScheduleEventSeriesVo eventSeriesVo : subscribedEventSeriesVos){
 				data += encodeAsParam("eventseries_names[]", eventSeriesVo.getTitle()); //NON-NLS

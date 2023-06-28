@@ -24,13 +24,13 @@ package de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.util;
 
 import androidx.annotation.Nullable;
 
-import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesfireException;
-import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesfireFileSettings;
-import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesfireProtocol;
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesFireException;
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesFireFileSettings;
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesFireProtocol;
 
-public class DesfireUtils {
+public class DesFireUtils {
 
-    private DesfireUtils() {
+    private DesFireUtils() {
     }
 
     public static int byteArrayToInt(byte[] b) {
@@ -58,15 +58,15 @@ public class DesfireUtils {
     }
 
     @Nullable
-    public static DesfireFileSettings selectAppFile(DesfireProtocol tag, int appID, int fileID) {
+    public static DesFireFileSettings selectAppFile(DesFireProtocol tag, int appID, int fileID) {
         try {
             tag.selectApp(appID);
-        } catch (DesfireException e) {
+        } catch (DesFireException e) {
             return null;
         }
         try {
             return tag.getFileSettings(fileID);
-        } catch (DesfireException e) {
+        } catch (DesFireException e) {
             return null;
         }
     }

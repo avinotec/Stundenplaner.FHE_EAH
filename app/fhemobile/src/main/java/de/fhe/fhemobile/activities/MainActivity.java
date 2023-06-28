@@ -18,6 +18,9 @@ package de.fhe.fhemobile.activities;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -42,13 +45,18 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.CardBalance;
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.InterCardReader;
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesFireException;
 import de.fhe.fhemobile.fragments.DrawerFragment;
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.fragments.canteen.CanteenFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
 import de.fhe.fhemobile.fragments.imprint.ImprintFragment;
 import de.fhe.fhemobile.fragments.joboffers.JobOffersFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdates.SemesterDatesWebViewFragment;
+import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.services.CalendarSynchronizationBackgroundTask;
 import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.utils.Define;
@@ -72,10 +80,12 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
         final Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if (mToolbar != null) setSupportActionBar(mToolbar);
-        
+
         mDrawerFragment = (DrawerFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
+        if(mTitle == null){
+            mTitle = getTitle();
+        }
 
 
         // Set up the drawer.
@@ -111,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
                 }
         }
         if (//if push notifications enabled
-               PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+                PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
                         .getBoolean(getResources().getString(R.string.sp_myschedule_enable_fcm), false)){
             //code from Firebase Documentation
             FirebaseMessaging.getInstance().getToken()
@@ -139,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         }
         if (//if calendar synchronization enabled
                 PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
-                .getBoolean(getResources().getString(R.string.sp_myschedule_enable_calsync), false)){
+                        .getBoolean(getResources().getString(R.string.sp_myschedule_enable_calsync), false)){
 
             CalendarSynchronizationBackgroundTask.startPeriodicSynchronizing(false);
         }
@@ -162,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             mCurrentFragmentId = id;
 
             mTitle           = FeatureProvider.getFeatureTitle(id);
-            mCurrentFragment = FeatureFragmentFactory.getFeaturedFragment(id);
+            mCurrentFragment = FeatureFragmentFactory.getFeatureFragment(id);
 
             fragmentManager.beginTransaction()
                     .replace(R.id.container, mCurrentFragment)
@@ -189,19 +199,19 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
      *
      * @param _Fragment the new fragment
      * @param _AddToBackStack if false, then the fragment gets destroyed when removed/replaced sometime
-     * @param _Tag tag of the new fragment
      */
-    public void changeFragment(final FeatureFragment _Fragment, final boolean _AddToBackStack, final String _Tag) {
-
+    public void changeFragment(final FeatureFragment _Fragment, final boolean _AddToBackStack) {
         mCurrentFragment = _Fragment;
+        //tag of the new fragment to later find the fragment by tag
+        String tag = mCurrentFragment.getFeatureTag();
 
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, _Fragment, _Tag);
+        transaction.replace(R.id.container, _Fragment, tag);
 
 //        transaction.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.abc_fade_in, R.anim.abc_fade_out);
 
         if (_AddToBackStack) {
-            transaction.addToBackStack(_Tag);
+            transaction.addToBackStack(tag);
         }
 
         transaction.commit();
@@ -215,13 +225,13 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             //check if currentFragment contains a webview
             if(mCurrentFragment instanceof NewsWebViewFragment){
                 webview = ((NewsWebViewFragment) mCurrentFragment).getWebView();
-            }else if( mCurrentFragment instanceof SemesterDatesWebViewFragment){
+            } else if( mCurrentFragment instanceof SemesterDatesWebViewFragment){
                 webview = ((SemesterDatesWebViewFragment) mCurrentFragment).getWebView();
-            }else if (mCurrentFragment instanceof ImprintFragment){
+            } else if (mCurrentFragment instanceof ImprintFragment){
                 webview = ((ImprintFragment) mCurrentFragment).getWebView();
-            }else if(mCurrentFragment instanceof EventsWebViewFragment){
+            } else if (mCurrentFragment instanceof EventsWebViewFragment){
                 webview = ((EventsWebViewFragment) mCurrentFragment).getWebView();
-            }else if(mCurrentFragment instanceof JobOffersFragment){
+            } else if (mCurrentFragment instanceof JobOffersFragment){
                 webview = ((JobOffersFragment) mCurrentFragment).getWebView();
             }
             if(webview != null && webview.canGoBack()){
@@ -254,11 +264,11 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     }
 
     /**
-    Hier wird dafuer gesorgt, dass wenn in der Root-Activity der Back-Button gedrückt wird, erst beim 2. Mal Back-Button die App geschlossen wird.
-    Die Variable backPressedTwice wird beim ersten Betätigen gesetzt und es wird ein Thread verzögert gestartet. In dem Thread wird die Variable
-    wieder zurückgesetzt. Nur wenn "backPressedTwice" gesetzt ist, und der Back-Button ein zweites Mal betätigt wird, wird die App beendet.
-    APP_CLOSING_DOUBLECLICK_DELAY_TIME (Standard 2000 ms)
-    */
+     Hier wird dafuer gesorgt, dass wenn in der Root-Activity der Back-Button gedrückt wird, erst beim 2. Mal Back-Button die App geschlossen wird.
+     Die Variable backPressedTwice wird beim ersten Betätigen gesetzt und es wird ein Thread verzögert gestartet. In dem Thread wird die Variable
+     wieder zurückgesetzt. Nur wenn "backPressedTwice" gesetzt ist, und der Back-Button ein zweites Mal betätigt wird, wird die App beendet.
+     APP_CLOSING_DOUBLECLICK_DELAY_TIME (Standard 2000 ms)
+     */
     boolean backPressedTwice = false;
     private final Handler mHandler = new Handler();
 
@@ -282,6 +292,28 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            try {
+                CardBalance balance = InterCardReader.getInstance().readTag(tag);
+                if (balance != null) {
+                    Log.d(TAG, "Read canteen card balance: " + balance.toString());
+
+                    CanteenModel.getInstance().setCanteenCardBalance(balance);
+
+                    Utils.showToast(getResources().getString(R.string.canteen_card_balance_toast, balance.getBalance()));
+                } else {
+                    Log.w(TAG, "Read canteen card balance is null");
+                }
+            } catch (DesFireException ignored) {
+                // Card is not supported
+            }
+        }
+    }
 
     // #############################################################################################
 

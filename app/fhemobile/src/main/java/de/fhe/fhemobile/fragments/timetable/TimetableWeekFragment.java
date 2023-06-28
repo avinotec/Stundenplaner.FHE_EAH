@@ -48,7 +48,7 @@ public class TimetableWeekFragment extends Fragment {
     public static TimetableWeekFragment newInstance(final TimetableWeekVo _Week) {
         final TimetableWeekFragment fragment = new TimetableWeekFragment();
         final Bundle args = new Bundle();
-        args.putParcelable(Define.Timetable.PARAM_TIMETABLE_WEEK, _Week);
+        args.putParcelable(Define.Timetable.KEY_TIMETABLE_WEEK, _Week);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,7 +58,7 @@ public class TimetableWeekFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mWeek = getArguments().getParcelable(Define.Timetable.PARAM_TIMETABLE_WEEK);
+            mWeek = getArguments().getParcelable(Define.Timetable.KEY_TIMETABLE_WEEK);
         }
     }
 

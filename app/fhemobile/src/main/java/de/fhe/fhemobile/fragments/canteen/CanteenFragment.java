@@ -49,7 +49,7 @@ public class CanteenFragment extends FeatureFragment {
     private static final String TAG = CanteenFragment.class.getSimpleName();
 
     public CanteenFragment(){
-        // Required empty public constructor
+        super(TAG);
     }
 
     public static CanteenFragment newInstance(){
@@ -105,13 +105,6 @@ public class CanteenFragment extends FeatureFragment {
                 return false;
             }
         });
-    }
-
-    @Override
-    public void onRestoreActionBar(final ActionBar _ActionBar) {
-        super.onRestoreActionBar(_ActionBar);
-
-        _ActionBar.setTitle(R.string.drawer_canteen);
     }
 
     @Override

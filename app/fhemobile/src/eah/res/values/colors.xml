@@ -58,6 +58,8 @@
     <!--Canteen-->
     <color name="canteen_text_color">@color/primary_color</color>
     <color name="canteen_text_background">#20009990</color>
+
+    <color name="color_emphasize_1">#34495B</color>
     
     <!--Navigation Dialog-->
     

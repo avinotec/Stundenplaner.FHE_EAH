@@ -26,6 +26,19 @@ import androidx.fragment.app.Fragment;
  */
 public abstract class FeatureFragment extends Fragment {
 
+    protected String mFeatureTag;
+
+    /**
+     * Tag of the fragment by which it can be found and which is used for logging
+     * @param tag The fragment's tag
+     */
+    public FeatureFragment(String tag) {
+        this.mFeatureTag = tag;
+    }
+
+    public String getFeatureTag() {
+        return mFeatureTag;
+    }
 
     public void onRestoreActionBar(final ActionBar _ActionBar) {
 

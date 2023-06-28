@@ -23,15 +23,15 @@
 package de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire;
 
 /**
- * Exception class for errors related to communication with the MIFARE DESFire NFC chip
+ * Exception class for errors related to reading the MIFARE DESFire NFC tag
  */
-public class DesfireException extends Exception {
+public class DesFireException extends Exception {
 
-    DesfireException(String message) {
+    DesFireException(String message) {
         super(message);
     }
 
-    DesfireException(Throwable cause) {
+    DesFireException(Throwable cause) {
         super(cause);
     }
 }

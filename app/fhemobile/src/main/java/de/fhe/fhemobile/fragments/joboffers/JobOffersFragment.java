@@ -39,8 +39,10 @@ import de.fhe.fhemobile.views.joboffers.JobOffersWebView;
  */
 public class JobOffersFragment extends FeatureFragment {
 
+    public static final String TAG = JobOffersFragment.class.getSimpleName();
+
     public JobOffersFragment(){
-        // Required empty public constructor
+        super(TAG);
     }
 
     public static JobOffersFragment newInstance(){

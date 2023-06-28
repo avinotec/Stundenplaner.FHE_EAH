@@ -17,7 +17,7 @@
 package de.fhe.fhemobile.views.canteen;
 
 import static de.fhe.fhemobile.Main.getAppContext;
-import static de.fhe.fhemobile.utils.Define.Canteen.CANTEEN;
+import static de.fhe.fhemobile.utils.Define.Canteen.SP_KEY_CANTEEN;
 import static de.fhe.fhemobile.utils.Define.Canteen.SP_CANTEEN;
 
 import android.content.Context;
@@ -170,7 +170,7 @@ public class CanteenMenuView extends LinearLayout {
     private List<CanteenMenuDayVo> getCanteenMenuDaysFromSharedPreferences() {
         List<CanteenMenuDayVo> menuDaysList = new ArrayList<>();
         final SharedPreferences sharedPreferences = getAppContext().getSharedPreferences(SP_CANTEEN, Context.MODE_PRIVATE);
-        final String json = sharedPreferences.getString(CANTEEN + mCanteenId, "");
+        final String json = sharedPreferences.getString(SP_KEY_CANTEEN + mCanteenId, "");
         final Gson gson = new Gson();
         if(!json.isEmpty()){
             final Type listType = new TypeToken<ArrayList<CanteenMenuDayVo>>(){}.getType();
@@ -192,11 +192,11 @@ public class CanteenMenuView extends LinearLayout {
         }
     };
 
-    private String mCanteenId;
+    private String          mCanteenId;
 
-    private HeaderListView mMenuDaysListView;
-    private TextView mCanteenNameText;
+    private HeaderListView  mMenuDaysListView;
+    private TextView        mCanteenNameText;
 
-    TextView mErrorText;
+    TextView                mErrorText;
 
 }

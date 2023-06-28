@@ -89,7 +89,7 @@ public class NavigationFragment extends FeatureFragment {
 
 
     public NavigationFragment(){
-        // Required empty public constructor
+        super(TAG);
     }
 
     public static NavigationFragment newInstance(final RoomVo _startRoom, final RoomVo _destRoom) {

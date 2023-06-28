@@ -24,19 +24,25 @@ package de.fhe.fhemobile.canteencardbalance.canteencardreader;
 
 import android.nfc.Tag;
 import android.nfc.tech.IsoDep;
+import android.util.Log;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Date;
 
-import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesfireException;
-import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesfireFileSettings;
-import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesfireProtocol;
-import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.util.DesfireUtils;
+import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesFireException;
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesFireFileSettings;
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesFireProtocol;
+import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.util.DesFireUtils;
+import de.fhe.fhemobile.utils.Utils;
 
 /**
  * Reader for cards of the type InterCard
  */
 public class InterCardReader {
+
+	static final String TAG = InterCardReader.class.getSimpleName();
 
 	private static InterCardReader instance;
 	private static final BigDecimal THOUSAND = new BigDecimal(1000);
@@ -57,20 +63,20 @@ public class InterCardReader {
 	 *
 	 * @param card The card to read
 	 * @return Card's data, null if unsupported.
-	 * @throws DesfireException Communication error
+	 * @throws DesFireException Communication error
 	 */
-	public CardBalance readCard(DesfireProtocol card) throws DesfireException {
+	public CardBalance readCard(DesFireProtocol card) throws DesFireException {
 
 		final int appId = 0x5F8415;
 		final int fileId = 1;
 		// Selecting app and file
-		DesfireFileSettings settings = DesfireUtils.selectAppFile(card, appId, fileId);
+		DesFireFileSettings settings = DesFireUtils.selectAppFile(card, appId, fileId);
 
-		if (settings instanceof DesfireFileSettings.ValueDesfireFileSettings) {
+		if (settings instanceof DesFireFileSettings.ValueDesFireFileSettings) {
 			// Found value file
 
             // Last transaction in tenths of Euro cents
-			int lastTransactionTenthsOfCents = ((DesfireFileSettings.ValueDesfireFileSettings) settings).value;
+			int lastTransactionTenthsOfCents = ((DesFireFileSettings.ValueDesFireFileSettings) settings).value;
 
             // Last transaction in Euro
             BigDecimal lastTransaction = new BigDecimal(lastTransactionTenthsOfCents)
@@ -86,7 +92,7 @@ public class InterCardReader {
 						.divide(THOUSAND, 4, BigDecimal.ROUND_HALF_UP);
 
 
-				return new CardBalance(balance, lastTransaction);
+				return new CardBalance(balance, lastTransaction, new Date());
 			} catch (Exception e) {
 				return null;
 			}
@@ -98,26 +104,29 @@ public class InterCardReader {
 		}
 	}
 
-	public CardBalance readTag(Tag tag) throws DesfireException {
+	public CardBalance readTag(Tag tag) throws DesFireException {
 		// Loading tag
 		IsoDep tech = IsoDep.get(tag);
 
 		try {
 			tech.connect();
 		} catch (IOException e) {
-			//Tag was removed. We fail silently.
-			e.printStackTrace();
+			//Tag was removed
+			Log.e(TAG, "Canteen card was removed before reading NFC Tag.", e);
+			Utils.showToastLong(R.string.canteen_card_error);
+
 			return null;
 		}
 
 		try {
-			DesfireProtocol desfireTag = new DesfireProtocol(tech);
+			DesFireProtocol desfireTag = new DesFireProtocol(tech);
+			return InterCardReader.getInstance().readCard(desfireTag);
 
-
+// Note from Nadja: This bug report is from 2013. Maybe it is outdated now.
 			//Android has a Bug on Devices using a Broadcom NFC chip. See
 			// http://code.google.com/p/android/issues/detail?id=58773
-			//A Workaround is to connected to the tag, issue a dummy operation and then reconnect...
-			try {
+			//A Workaround is to connect to the tag, issue a dummy operation and then reconnect...
+/*			try {
 				desfireTag.selectApp(0);
 			} catch (ArrayIndexOutOfBoundsException e) {
 				//Exception occurs because the actual response is shorter than the error response
@@ -126,10 +135,10 @@ public class InterCardReader {
 			tech.close();
 			tech.connect();
 
-			return InterCardReader.getInstance().readCard(desfireTag);
+			return InterCardReader.getInstance().readCard(desfireTag);*/
 
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			//This can only happen on tag close. we ignore this.
 			e.printStackTrace();
 			return null;

@@ -17,8 +17,6 @@
 
 package de.fhe.fhemobile.fragments.canteen;
 
-
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +35,7 @@ public class CanteenSettingsFragment extends FeatureFragment {
     public static final String TAG = CanteenSettingsFragment.class.getSimpleName();
 
     public CanteenSettingsFragment() {
-        // Required empty public constructor
+        super(TAG);
     }
 
     public static CanteenSettingsFragment newInstance() {
@@ -59,7 +57,6 @@ public class CanteenSettingsFragment extends FeatureFragment {
         } else {
             mView.initCanteenSelectionListView();
         }
-
         return mView;
     }
 

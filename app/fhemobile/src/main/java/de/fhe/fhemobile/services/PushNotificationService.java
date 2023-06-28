@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2014-2022 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
+ *  Copyright (c) 2022-2023 Fachhochschule Erfurt, Ernst-Abbe-Hochschule Jena
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -17,8 +17,8 @@
 package de.fhe.fhemobile.services;
 
 import static android.app.PendingIntent.FLAG_IMMUTABLE;
-import static de.fhe.fhemobile.utils.Define.PushNotifications.PARAM_EXAM_ADDED;
-import static de.fhe.fhemobile.utils.Define.PushNotifications.PARAM_TIMETABLE_CHANGED;
+import static de.fhe.fhemobile.utils.Define.PushNotifications.VALUE_EXAM_ADDED;
+import static de.fhe.fhemobile.utils.Define.PushNotifications.VALUE_TIMETABLE_CHANGED;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -70,7 +70,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 
         if(remoteMessage.getData().containsKey("type") && remoteMessage.getData().containsKey("subject")){
             String type = remoteMessage.getData().get("type");
-            if (PARAM_TIMETABLE_CHANGED.equals(type)) {
+            if (VALUE_TIMETABLE_CHANGED.equals(type)) {
 
                 final String message = remoteMessage.getData().get("subject") + " " + Main.getAppContext().getString(R.string.fcm_timetablechange_message_part1);
                 final String messageLong = message + " " + Main.getAppContext().getString(R.string.fcm_message_part2);
@@ -80,7 +80,7 @@ public class PushNotificationService extends FirebaseMessagingService {
                         message,
                         messageLong);
 
-            } else if (PARAM_EXAM_ADDED.equals(type)) {
+            } else if (VALUE_EXAM_ADDED.equals(type)) {
                 final String message = Main.getAppContext().getString(R.string.fcm_examadded_message_part1) + " " + remoteMessage.getData().get("subject") + ".";
                 final String messageLong = message + " " + Main.getAppContext().getString(R.string.fcm_message_part2);
 

@@ -23,19 +23,25 @@
 package de.fhe.fhemobile.canteencardbalance.canteencardreader;
 
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Date;
 import java.util.Locale;
 
-public class CardBalance {
-    private static final String KEY_BALANCE =
-            "com.heinrichreimer.canteenbalance.cardreader.CardBalance.BALANCE"; //todo: ersetzen?
-    private static final String KEY_LAST_TRANSACTION =
-            "com.heinrichreimer.canteenbalance.cardreader.CardBalance.LAST_TRANSACTION";
+import de.fhe.fhemobile.utils.Define;
+
+public class CardBalance implements Parcelable {
+
+    private static String CURRENCY = "€";
+
 
     private static final DecimalFormat GERMAN_NUMBER_FORMAT =
             (DecimalFormat) NumberFormat.getInstance(Locale.GERMAN);
@@ -45,36 +51,23 @@ public class CardBalance {
         GERMAN_NUMBER_FORMAT.setMaximumFractionDigits(2);
     }
 
-    private static String CURRENCY = "€";
 
-    public static final String ACTION_CARD_BALANCE =
-            "com.heinrichreimer.canteenbalance.action.CARD_BALANCE"; //todo: ersetzen?
-
-    /**
-     * Current balance on card in Euros or any other currency.
-     */
-    private BigDecimal balance;
-    /**
-     * Last transaction in Euros or any other currency, null if not supported by card.
-     */
-    private BigDecimal lastTransaction;
-
-    public CardBalance() {
-    }
-
-    CardBalance(BigDecimal balance, BigDecimal lastTransaction) {
-        this.balance = balance;
-        this.lastTransaction = lastTransaction;
+    CardBalance(BigDecimal balance, BigDecimal lastTransaction, Date dateOfStatus) {
+        this.mBalance = balance;
+        this.mLastTransaction = lastTransaction;
+        this.mDateOfStatus = dateOfStatus;
     }
 
     @Nullable
     public static CardBalance fromBundle(Bundle in) {
-        Serializable balance = in.getSerializable(KEY_BALANCE);
-        Serializable lastTransaction = in.getSerializable(KEY_LAST_TRANSACTION);
+        Serializable balance = in.getSerializable(Define.Canteen.KEY_BALANCE);
+        Serializable lastTransaction = in.getSerializable(Define.Canteen.KEY_LAST_TRANSACTION);
+        Long dateOfStatus = in.getLong(Define.Canteen.KEY_DATE_OF_STATUS);
         if (!(balance instanceof BigDecimal && lastTransaction instanceof BigDecimal)) {
             return null;
         }
-        return new CardBalance((BigDecimal) balance, (BigDecimal) lastTransaction);
+        return new CardBalance((BigDecimal) balance, (BigDecimal) lastTransaction,
+                dateOfStatus != null ? new Date(dateOfStatus) : null);
     }
 
     public static void setCurrency(String currency) {
@@ -85,28 +78,89 @@ public class CardBalance {
         return CardBalance.CURRENCY;
     }
 
+    /**
+     * Get the mBalance in format xx,xx
+     * @return
+     */
     public String getBalance() {
-        return GERMAN_NUMBER_FORMAT.format(balance);
+        return GERMAN_NUMBER_FORMAT.format(mBalance);
     }
 
+    /**
+     * Get the amount of the last transaction
+     * @return
+     */
     public String getLastTransaction() {
-        return lastTransaction == null ? "" : GERMAN_NUMBER_FORMAT.format(lastTransaction);
+        return mLastTransaction == null ? "" : GERMAN_NUMBER_FORMAT.format(mLastTransaction);
     }
 
     public boolean isLastTransactionSupported() {
-        return lastTransaction != null;
+        return mLastTransaction != null;
     }
+
+    public Date getDateOfStatus() {
+        return mDateOfStatus;
+    }
+
 
     @Override
     public String toString() {
-        return "Card balance: " + getBalance() +
+        return "Card mBalance: " + getBalance() +
                 "€ (Last transaction: " + getLastTransaction() + "€)";
     }
 
     public Bundle toBundle() {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(KEY_BALANCE, balance);
-        bundle.putSerializable(KEY_LAST_TRANSACTION, lastTransaction);
+        bundle.putSerializable(Define.Canteen.KEY_BALANCE, mBalance);
+        bundle.putSerializable(Define.Canteen.KEY_LAST_TRANSACTION, mLastTransaction);
+        bundle.putLong(Define.Canteen.KEY_DATE_OF_STATUS, mDateOfStatus.getTime());
         return bundle;
     }
+
+    // ---------------------- PARCELABLE ----------------------------------------
+
+    public CardBalance(Parcel _In){
+        mBalance = (BigDecimal) _In.readSerializable();
+        mLastTransaction = (BigDecimal) _In.readSerializable();
+        mDateOfStatus = new Date(_In.readLong());
+    }
+
+    public  static final Parcelable.Creator<CardBalance> CREATOR
+            = new Creator<CardBalance>() {
+        @Override
+        public CardBalance createFromParcel(Parcel source) {
+            return new CardBalance(source);
+        }
+
+        @Override
+        public CardBalance[] newArray(int size) {
+            return new CardBalance[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeSerializable(mBalance);
+        dest.writeSerializable(mLastTransaction);
+        dest.writeLong(mDateOfStatus.getTime());
+    }
+
+    // ---------------------- END PARCELABLE ----------------------------------------
+
+
+    /** Current mBalance on card in Euros or any other currency. */
+    private BigDecimal mBalance;
+
+    /**  Amount of the last transaction in Euros or any other currency, null if not supported by card. */
+    private BigDecimal mLastTransaction;
+
+    /**
+     * Time of when the balance was read
+     */
+    private Date mDateOfStatus;
 }

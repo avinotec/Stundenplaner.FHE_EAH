@@ -53,6 +53,10 @@
 
     <!-- uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/ -->
 
+    <!--    for scanning canteen card-->
+    <uses-permission android:name="android.permission.NFC"/>
+    <uses-feature android:name="android.hardware.nfc" android:required="false"/>
+
 	<supports-screens
 		android:anyDensity="true"
 		android:largeScreens="true"
@@ -115,6 +119,14 @@
                     android:host="www.eah-jena.de"
                     android:pathPrefix="/app" />
             </intent-filter>
+            <!--  intent filter for detection of a canteen card via NFC-->
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data
+                android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/nfc_tech_filter" />
         </activity>
 
         <activity
