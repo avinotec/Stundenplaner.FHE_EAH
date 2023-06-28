@@ -65,7 +65,7 @@ public class InterCardReader {
 	 * @return Card's data, null if unsupported.
 	 * @throws DesFireException Communication error
 	 */
-	public CardBalance readCard(DesFireProtocol card) throws DesFireException {
+	public CardBalance readCard(DesFireProtocol card) /*TODO never thrown: throws DesFireException */ {
 
 		final int appId = 0x5F8415;
 		final int fileId = 1;
@@ -104,7 +104,7 @@ public class InterCardReader {
 		}
 	}
 
-	public CardBalance readTag(Tag tag) throws DesFireException {
+	public CardBalance readTag(Tag tag) /*TODO: never thrown throws DesFireException */ {
 		// Loading tag
 		IsoDep tech = IsoDep.get(tag);
 
