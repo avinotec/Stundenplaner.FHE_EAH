@@ -28,6 +28,7 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 
 import de.fhe.fhemobile.R;
@@ -80,7 +81,7 @@ public class InterCardReader {
 
             // Last transaction in Euro
             BigDecimal lastTransaction = new BigDecimal(lastTransactionTenthsOfCents)
-                    .divide(THOUSAND, 4, BigDecimal.ROUND_HALF_UP);
+                    .divide(THOUSAND, 4, RoundingMode.ROUND_HALF_UP);
 
 			// Reading value
 			try {
@@ -89,7 +90,7 @@ public class InterCardReader {
 
 				// Balance in Euro
 				BigDecimal balance = new BigDecimal(balanceTenthsOfCents)
-						.divide(THOUSAND, 4, BigDecimal.ROUND_HALF_UP);
+						.divide(THOUSAND, 4, RoundingMode.HALF_UP);
 
 
 				return new CardBalance(balance, lastTransaction, new Date());
