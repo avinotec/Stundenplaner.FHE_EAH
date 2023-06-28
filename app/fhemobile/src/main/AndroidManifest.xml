@@ -55,7 +55,7 @@
 
     <!--    for scanning canteen card-->
     <uses-permission android:name="android.permission.NFC"/>
-    <uses-feature android:name="android.hardware.nfc" android:required="true"/>
+    <uses-feature android:name="android.hardware.nfc" android:required="false"/>
 
 	<supports-screens
 		android:anyDensity="true"
