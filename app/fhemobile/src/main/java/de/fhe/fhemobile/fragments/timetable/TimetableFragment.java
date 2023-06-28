@@ -149,7 +149,7 @@ public class TimetableFragment extends FeatureFragment {
 		@Override
 		public void onResponse(@NonNull final Call<Map<String, TimetableWeekVo>> call, final Response<Map<String, TimetableWeekVo>> response) {
 			if(response.isSuccessful()){
-				final ArrayList<TimetableWeekVo> weekVos = new ArrayList(response.body().values());
+				final ArrayList<TimetableWeekVo> weekVos = new ArrayList<TimetableWeekVo>(response.body().values());
 				mView.setPagerItems(weekVos);
 
 				if(TimetableSettings.getTimetableSelection() != null){

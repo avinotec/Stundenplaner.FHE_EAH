@@ -133,7 +133,7 @@ public class CanteenView extends LinearLayout {
     private SwipeRefreshLayout  mSwipeRefreshLayout;
     private TextView            mCanteenCardBalanceText;
 
-    private static String NO_BALANCE_TEXT = "--,--";
-    private static String NO_CANTEEN_BALANCE_DATE_TEXT = "__.__.__";
+    private static final String NO_BALANCE_TEXT = "--,--";
+    private static final String NO_CANTEEN_BALANCE_DATE_TEXT = "__.__.__";
 
 }

@@ -32,7 +32,7 @@ public class TimetableDialogResponse {
     }
 
     public ArrayList<TimetableStudyProgramVo> getStudyProgramsAsList() {
-        return new ArrayList(mStudyPrograms.values());
+        return new ArrayList<TimetableStudyProgramVo>(mStudyPrograms.values());
     }
 
     public Map<String, TimetableStudyProgramVo> getStudyPrograms() {
