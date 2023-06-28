@@ -57,7 +57,9 @@ public final class MyScheduleUtils {
 	 * Regex for the event set number of an event title,
 	 * e.g. "01" in WI/WIEC(BA)Mathe/Ü/01 or "01_02" in WI/WIEC(BA)Mathe/Ü/01_02
 	 * */
-	private static final String regexEventSetNumber = "\\d\\d(_\\d\\d)*"; //$NON-NLS
+	private static final String regexEventSetNumber = "\\d\\d(?:_\\d\\d)*"; //$NON-NLS
+	//"(?:X)" stands for a non-capturing group with pattern X
+	private static final String regexCombinedEventSetNumber = "\\d\\d(?:_\\d\\d)+"; //$NON-NLS
 	private static final Pattern patternEventSetNumber = Pattern.compile("/" + regexEventSetNumber + "$");
 
 	/**
@@ -266,13 +268,13 @@ public final class MyScheduleUtils {
 	 */
 	public static boolean isCombinedEventSeries(MyScheduleEventSeriesVo eventSeries){
 		//e.g. true for WI/WIEC(BA)Mathe/Ü/01_02, false for WI/WIEC(BA)Mathe/Ü/01
-		return getEventSeriesName(eventSeries.getTitle()).matches("\\d\\d(_\\d\\d)+$");
+		return eventSeries.getTitle().matches(".*/" + regexCombinedEventSetNumber + "$");
 	}
 
 	/**
 	 * Check whether the single event series is one of the events series that has been merged into the combined event series.
-	 * @param singleEventSeries The single event series
-	 * @param combinedEventSeries The event series that resulted from merging multiple event series,
+	 * @param singleEventSeries The title of the single event series
+	 * @param combinedEventSeries The title of the event series that resulted from merging multiple event series,
 	 *                            e.g. putting together two event sets for a practise series.
 	 * @return True, if the single event series is part of the combined event series
 	 */
@@ -280,11 +282,6 @@ public final class MyScheduleUtils {
 
 		//check if both titles belong to the same study program, subject and event type e.g. WI/WIEC(BA)Mathe/Ü
 		if(getEventSeriesBaseTitle(singleEventSeries).equals(getEventSeriesBaseTitle(combinedEventSeries))){
-
-			//strip event entry number
-			singleEventSeries = singleEventSeries.replaceAll(regexEventEntryNumber + "$", "");
-			combinedEventSeries = combinedEventSeries.replaceAll(regexEventEntryNumber + "$", "");
-
 
 			Matcher matcherSingle = patternEventSetNumber.matcher(singleEventSeries);
 			Matcher matcherCombined = patternEventSetNumber.matcher(combinedEventSeries);
