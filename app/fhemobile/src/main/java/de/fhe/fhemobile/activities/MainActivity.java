@@ -17,10 +17,13 @@
 package de.fhe.fhemobile.activities;
 
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
+import android.nfc.tech.IsoDep;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -50,7 +53,6 @@ import de.fhe.fhemobile.canteencardbalance.canteencardreader.InterCardReader;
 import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesFireException;
 import de.fhe.fhemobile.fragments.DrawerFragment;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.fragments.canteen.CanteenFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
 import de.fhe.fhemobile.fragments.imprint.ImprintFragment;
 import de.fhe.fhemobile.fragments.joboffers.JobOffersFragment;
@@ -154,6 +156,16 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             CalendarSynchronizationBackgroundTask.startPeriodicSynchronizing(false);
         }
 
+        //NFC
+        // Use the foreground dispatch system to allow an activity to intercept an intent
+        // and claim priority over other activities that handle the same intent.
+        nfcPendingIntent = PendingIntent.getActivity(
+                this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
+                PendingIntent.FLAG_MUTABLE);
+        IntentFilter intentFilter = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
+        intentFiltersArray = new IntentFilter[]{intentFilter,};
+        techListsArray = new String[][]{new String[]{IsoDep.class.getName()}};
+
     }
 
     @Override
@@ -161,6 +173,15 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         super.onResume();
 
         restoreActionBar();
+        //nfc foreground dispatch system
+        NfcAdapter.getDefaultAdapter(this).enableForegroundDispatch(this, nfcPendingIntent, intentFiltersArray, techListsArray);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //nfc foreground dispatch system
+        NfcAdapter.getDefaultAdapter(this).disableForegroundDispatch(this);
     }
 
     @Override
@@ -328,4 +349,8 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     private CharSequence    mTitle;
     private int             mCurrentFragmentId = -1;
     private FeatureFragment mCurrentFragment;
+
+    private IntentFilter[] intentFiltersArray;
+    private String[][] techListsArray;
+    PendingIntent nfcPendingIntent;
 }
