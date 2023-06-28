@@ -81,7 +81,7 @@ public class InterCardReader {
 
             // Last transaction in Euro
             BigDecimal lastTransaction = new BigDecimal(lastTransactionTenthsOfCents)
-                    .divide(THOUSAND, 4, RoundingMode.ROUND_HALF_UP);
+                    .divide(THOUSAND, 4, RoundingMode.HALF_UP);
 
 			// Reading value
 			try {
