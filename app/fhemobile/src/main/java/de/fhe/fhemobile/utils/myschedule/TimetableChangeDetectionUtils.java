@@ -97,6 +97,7 @@ public class TimetableChangeDetectionUtils {
         Set<String> setOfEventSeriesTitles = localEventSeriesSubList.keySet();
         Set<MyScheduleEventSeriesVo> combinedEventSeries = detectAndGetCombinedEventSeries(setOfEventSeriesTitles, fetchedEventSeriesVos);
         if(!combinedEventSeries.isEmpty()){
+            //todo: only add if combined event series is not already subscribed
             eventSeriesToAdd.addAll(combinedEventSeries);
             showCombinedEventSeriesAddedToast();
         }
