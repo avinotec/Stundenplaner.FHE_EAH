@@ -40,9 +40,7 @@ import de.fhe.fhemobile.utils.Define;
 
 public class CardBalance implements Parcelable {
 
-    private static String CURRENCY = "€";
-
-
+    private final static String CURRENCY = "€";
     private static final DecimalFormat GERMAN_NUMBER_FORMAT =
             (DecimalFormat) NumberFormat.getInstance(Locale.GERMAN);
 
@@ -52,7 +50,7 @@ public class CardBalance implements Parcelable {
     }
 
 
-    CardBalance(BigDecimal balance, BigDecimal lastTransaction, Date dateOfStatus) {
+    CardBalance(final BigDecimal balance, final BigDecimal lastTransaction, final Date dateOfStatus) {
         this.mBalance = balance;
         this.mLastTransaction = lastTransaction;
         this.mDateOfStatus = dateOfStatus;
@@ -60,9 +58,9 @@ public class CardBalance implements Parcelable {
 
     @Nullable
     public static CardBalance fromBundle(Bundle in) {
-        Serializable balance = in.getSerializable(Define.Canteen.KEY_BALANCE);
-        Serializable lastTransaction = in.getSerializable(Define.Canteen.KEY_LAST_TRANSACTION);
-        Long dateOfStatus = in.getLong(Define.Canteen.KEY_DATE_OF_STATUS);
+        final Serializable balance = in.getSerializable(Define.Canteen.KEY_BALANCE);
+        final Serializable lastTransaction = in.getSerializable(Define.Canteen.KEY_LAST_TRANSACTION);
+        final Long dateOfStatus = in.getLong(Define.Canteen.KEY_DATE_OF_STATUS);
         if (!(balance instanceof BigDecimal && lastTransaction instanceof BigDecimal)) {
             return null;
         }
@@ -70,13 +68,9 @@ public class CardBalance implements Parcelable {
                 dateOfStatus != null ? new Date(dateOfStatus) : null);
     }
 
-    public static void setCurrency(String currency) {
-        CardBalance.CURRENCY = currency;
-    }
+    //unused public static void setCurrency(String currency) { CardBalance.CURRENCY = currency; }
 
-    public static String getCurrency() {
-        return CardBalance.CURRENCY;
-    }
+    //unused public static String getCurrency() { return CardBalance.CURRENCY; }
 
     /**
      * Get the mBalance in format xx,xx
@@ -103,6 +97,7 @@ public class CardBalance implements Parcelable {
     }
 
 
+    @NonNull
     @Override
     public String toString() {
         return "Card mBalance: " + getBalance() +

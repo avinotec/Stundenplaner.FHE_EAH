@@ -83,13 +83,13 @@ public abstract class DesFireFileSettings implements Parcelable {
             source.readByteArray(accessRights);
 
             if (fileType == STANDARD_DATA_FILE || fileType == BACKUP_DATA_FILE) {
-                int fileSize = source.readInt();
+                final int fileSize = source.readInt();
                 return new StandardDesFireFileSettings(fileType, commSetting, accessRights, fileSize);
             }
             else if (fileType == LINEAR_RECORD_FILE || fileType == CYCLIC_RECORD_FILE) {
-                int recordSize = source.readInt();
-                int maxRecords = source.readInt();
-                int curRecords = source.readInt();
+                final int recordSize = source.readInt();
+                final int maxRecords = source.readInt();
+                final int curRecords = source.readInt();
                 return new RecordDesFireFileSettings(fileType, commSetting, accessRights, recordSize, maxRecords, curRecords);
             }
             else {
