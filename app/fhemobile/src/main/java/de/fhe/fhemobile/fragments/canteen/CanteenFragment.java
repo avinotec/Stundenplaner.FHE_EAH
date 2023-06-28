@@ -28,7 +28,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 
