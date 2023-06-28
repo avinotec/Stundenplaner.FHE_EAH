@@ -54,7 +54,7 @@ public class MyScheduleEventSetVo {
 
 	public String getTitle() { return mTitle; }
 
-	public void setTitle(final String title) { this.mTitle = title; }
+	// --Commented out by Inspection (28.06.2023 17:20):public void setTitle(final String title) { this.mTitle = title; }
 
 	public List<MyScheduleEventDateVo> getEventDates() { return new ArrayList<>(mEventDates.values()); }
 
@@ -76,8 +76,10 @@ public class MyScheduleEventSetVo {
 	@SerializedName("moduleId")
 	private String mModuleId;
 
-	@SerializedName("moduleName")
-	private String mModuleName;
+// --Commented out by Inspection START (28.06.2023 17:20):
+//	@SerializedName("moduleName")
+//	private String mModuleName;
+// --Commented out by Inspection STOP (28.06.2023 17:20)
 
 	@SerializedName("dataStudentset")
 	private final Map<String, TimetableStudyGroupVo> mStudyGroups = new HashMap<>();
