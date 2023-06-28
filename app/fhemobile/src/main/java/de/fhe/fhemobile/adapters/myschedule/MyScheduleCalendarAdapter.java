@@ -221,12 +221,12 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 	}
 
 
-	/**
+	// Method unused because function in app became obsolete (past events are not displayed anymore)
+/*	*//**
 	 * Iterate over item list of the adapter till start time of an event is after now,
 	 * return the index of the previous event.
 	 * @return The position of the first event with today's date
-	 */
-	//TODO 
+	 *//*
 	public final int getPositionOfFirstEventToday(){
 		//iteration variables
 		int posToday = -1;
@@ -256,7 +256,7 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 			}
 		}
 		return posToday;
-	}
+	}*/
 
 
 	private List<MyScheduleEventVo> mItems;
