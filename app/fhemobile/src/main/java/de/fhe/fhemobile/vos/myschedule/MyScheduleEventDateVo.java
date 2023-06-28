@@ -44,7 +44,7 @@ public class MyScheduleEventDateVo implements Parcelable{
      * @return Start date tim as long
      */
     public long getStartTime() {
-        if(mStartTime == null){
+        if(mStartTime == 0){
             mStartTime = MyScheduleUtils.convertEahApiTimeToUtc(mGermanStartDateTime);
         }
         return mStartTime;
@@ -55,7 +55,7 @@ public class MyScheduleEventDateVo implements Parcelable{
      * @return End date time as long
      */
     public long getEndTime() {
-        if(mEndTime == null){
+        if(mEndTime == 0){
             mEndTime = MyScheduleUtils.convertEahApiTimeToUtc(mGermanEndDateTime);
         }
         return mEndTime;
