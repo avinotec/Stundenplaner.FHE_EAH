@@ -76,6 +76,7 @@ public class MyScheduleEventSetVo {
 	@SerializedName("moduleId")
 	private String mModuleId;
 
+	//unused but maybe helpful when debugging
 	@SerializedName("moduleName")
 	private String mModuleName;
 
