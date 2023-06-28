@@ -22,7 +22,7 @@ package de.fhe.fhemobile.utils.feature;
 public final class Features {
 
     public static boolean NEWS            = false;
-    public static boolean PHONEBOOK       = false;
+    // --Commented out by Inspection (28.06.2023 16:37):public static boolean PHONEBOOK       = false;
     public static boolean CANTEEN         = false;
     public static boolean MAPS            = false;
     public static boolean SEMESTER_DATES = false;

@@ -29,17 +29,21 @@ public class DrawerItem {
         return mId;
     }
 
-    public void setId(final int _id) {
-        mId = _id;
-    }
+// --Commented out by Inspection START (28.06.2023 16:36):
+//    public void setId(final int _id) {
+//        mId = _id;
+//    }
+// --Commented out by Inspection STOP (28.06.2023 16:36)
 
     public String getText() {
         return mText;
     }
 
-    public void setText(final String _text) {
-        mText = _text;
-    }
+// --Commented out by Inspection START (28.06.2023 16:36):
+//    public void setText(final String _text) {
+//        mText = _text;
+//    }
+// --Commented out by Inspection STOP (28.06.2023 16:36)
 
     private int    mId;
     private String mText;

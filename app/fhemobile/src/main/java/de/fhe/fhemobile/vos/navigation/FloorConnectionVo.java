@@ -43,10 +43,12 @@ public class FloorConnectionVo {
         this.typeOfFloorConnection = type;
     }
 
-    //Getter
-    public String getTypeOfFloorConnection() {
-        return typeOfFloorConnection;
-    }
+// --Commented out by Inspection START (28.06.2023 16:37):
+//    //Getter
+//    public String getTypeOfFloorConnection() {
+//        return typeOfFloorConnection;
+//    }
+// --Commented out by Inspection STOP (28.06.2023 16:37)
 
     public ArrayList<FloorConnectionCell> getConnectedCells() {
         return connectedCells;
