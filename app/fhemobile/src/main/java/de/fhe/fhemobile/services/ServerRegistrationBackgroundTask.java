@@ -76,6 +76,7 @@ public class ServerRegistrationBackgroundTask implements Runnable {
 			url = new URL(URL_REGISTER_PUSH_NOTIFICATIONS_EAH); // Debug: ( + "&debug=true")
 		} catch (final MalformedURLException e) {
 			Log.e(TAG, "URL ist nicht URL-konform: " + URL_REGISTER_PUSH_NOTIFICATIONS_EAH, e);     //NON-NLS
+			return;
 		}
 
 		// https://wi-srv7.wi.eah-jena.de/api/fcm_register_user.php?&os=android&language=DE&fcm_token=token0815&eventseries_names=[]&debug=1&nonsense=nonsense
