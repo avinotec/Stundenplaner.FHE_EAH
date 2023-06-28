@@ -5,8 +5,6 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
-
 import de.fhe.fhemobile.utils.myschedule.MyScheduleUtils;
 
 public class MyScheduleEventDateVo implements Parcelable{
@@ -81,13 +79,17 @@ public class MyScheduleEventDateVo implements Parcelable{
         return mGermanEndDateTime;
     }
 
-    public Date getGermanStartDate() {
-        return new Date(mGermanStartDateTime * 1000);
-    }
+// --Commented out by Inspection START (28.06.2023 17:19):
+//    public Date getGermanStartDate() {
+//        return new Date(mGermanStartDateTime * 1000);
+//    }
+// --Commented out by Inspection STOP (28.06.2023 17:19)
 
-    public Date getGermanEndDate() {
-        return new Date(mGermanEndDateTime * 1000);
-    }
+// --Commented out by Inspection START (28.06.2023 17:19):
+//    public Date getGermanEndDate() {
+//        return new Date(mGermanEndDateTime * 1000);
+//    }
+// --Commented out by Inspection STOP (28.06.2023 17:19)
 
     @SerializedName("StartDateTime")
     private long mGermanStartDateTime;
@@ -95,7 +97,7 @@ public class MyScheduleEventDateVo implements Parcelable{
     @SerializedName("EndDateTime")
     private long mGermanEndDateTime;
 
-    private Long mStartTime;
-    private Long mEndTime;
+    private long mStartTime;
+    private long mEndTime;
 
 }
