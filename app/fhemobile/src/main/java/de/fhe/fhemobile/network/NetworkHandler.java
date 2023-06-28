@@ -493,8 +493,9 @@ public final class NetworkHandler {
 					@Override
 					public void onResponse(@NonNull final Call<ModuleVo> call, @NonNull final Response<ModuleVo> response) {
 
+						//response successful
 						if (response.isSuccessful()) {
-							try{
+							try {
 								updatedEventSeriesList.addAll(
 										getUpdatedEventSeries(module.getValue(), response.body().getEventSets()));
 							} catch (NullPointerException e){
@@ -504,12 +505,15 @@ public final class NetworkHandler {
 								//add old event series' to prevent them from getting lost
 								updatedEventSeriesList.addAll(module.getValue().values());
 							}
-						} else {
+						}
+						//response not successful
+						else {
 							final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
 							ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE5);
 							//add old event series' to prevent them from getting lost
 							updatedEventSeriesList.addAll(module.getValue().values());
 						}
+
 						// we received an answer, anyhow, so we decrease the outstanding requests counter
 						requestCounterMySchedule--;
 						if(requestCounterMySchedule <= 0){

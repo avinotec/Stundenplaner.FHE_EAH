@@ -20,6 +20,7 @@ import static de.fhe.fhemobile.Main.getAppContext;
 import static de.fhe.fhemobile.utils.Define.MySchedule.PREF_SUBSCRIBED_EVENTSERIES;
 import static de.fhe.fhemobile.utils.Define.MySchedule.SP_MYSCHEDULE;
 import static de.fhe.fhemobile.utils.Utils.correctUmlauts;
+import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.isCombinedEventSeries;
 import static de.fhe.fhemobile.utils.myschedule.MyScheduleUtils.isExam;
 
 import android.content.Context;
@@ -146,9 +147,10 @@ public class MyScheduleModel extends EventDispatcher {
             if(getInstance().containedInSubscribedEventSeries(series)){
                 //update subscribed event series
                 subscribedEventSeries.put(series.getTitle(), series);
-            } else if(isExam(series)){
+            } else if(isExam(series) || isCombinedEventSeries(series)){
                 //add to subscribed event series
-                //set subscribed -> needed for the case that an exam is being deleted by the user while fetching my schedule is adding it
+                //set subscribed -> needed for the case that an exam or combined event series is
+                // being deleted by the user while fetching my schedule is adding it
                 series.setSubscribed(true);
                 subscribedEventSeries.put(series.getTitle(), series);
             } else {
