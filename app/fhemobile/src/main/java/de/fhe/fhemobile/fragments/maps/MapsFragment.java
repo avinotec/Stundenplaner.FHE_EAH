@@ -78,6 +78,27 @@ public class MapsFragment extends Fragment {
         if (savedInstanceState != null) {
             mCurrentMapIndex = savedInstanceState.getInt(SAV_MAP_INDEX);
         } else {
+
+            //TODO ab Gradle 8.2 in Verbindung mit android.nonFinalResIds=false lässt es sich nicht mehr compilieren. Die Ressource IDs sind nicht mehr konstant
+            // wir müssen so in etwa das umbauen: String myString = getResources().getString(R.string.my_string);
+            // eventuell machen wir einfach unsere eigenen IDs
+
+            /*
+            android.nonFinalResIds=true
+            // Erhalte den Namen der Karte als String aus den Ressourcen
+            String mapName = getResources().getString(mMap.getNameID());
+
+            // Setze mCurrentMapIndex basierend auf dem Namen der Karte
+            if (mapName.equals(getString(R.string.building_03_02_01))) {
+                mCurrentMapIndex = 2; // Erdgeschoss
+            } else if (mapName.equals(getString(R.string.building_04))) {
+                mCurrentMapIndex = 1; // Untergeschoss
+            } else if (mapName.equals(getString(R.string.building_05))) {
+                mCurrentMapIndex = 3; // Erdgeschoss
+            } else if (mapName.equals(getString(R.string.building_06))) {
+                mCurrentMapIndex = 1; // Untergeschoss
+            } */
+
             //set mCurrentMapIndex to where building is usually entered
             switch(mMap.getNameID()){
                 case R.string.building_03_02_01:
@@ -93,6 +114,9 @@ public class MapsFragment extends Fragment {
                     mCurrentMapIndex = 1; //Untergeschoss
                     break;
             }
+
+            String myString = getResources().getString(R.string.my_string);
+
         }
 
     }
