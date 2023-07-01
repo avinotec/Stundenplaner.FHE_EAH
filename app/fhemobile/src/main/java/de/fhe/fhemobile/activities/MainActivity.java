@@ -50,7 +50,6 @@ import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.canteencardbalance.canteencardreader.CardBalance;
 import de.fhe.fhemobile.canteencardbalance.canteencardreader.InterCardReader;
-import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesFireException;
 import de.fhe.fhemobile.fragments.DrawerFragment;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.fragments.events.EventsWebViewFragment;
@@ -156,15 +155,20 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             CalendarSynchronizationBackgroundTask.startPeriodicSynchronizing(false);
         }
 
-        //NFC
-        // Use the foreground dispatch system to allow an activity to intercept an intent
-        // and claim priority over other activities that handle the same intent.
-        nfcPendingIntent = PendingIntent.getActivity(
-                this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
-                PendingIntent.FLAG_MUTABLE);
-        IntentFilter intentFilter = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
-        intentFiltersArray = new IntentFilter[]{intentFilter,};
-        techListsArray = new String[][]{new String[]{IsoDep.class.getName()}};
+        try {
+            //NFC
+            // Use the foreground dispatch system to allow an activity to intercept an intent
+            // and claim priority over other activities that handle the same intent.
+            nfcPendingIntent = PendingIntent.getActivity(
+                    this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
+                    PendingIntent.FLAG_MUTABLE);
+            IntentFilter intentFilter = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
+            intentFiltersArray = new IntentFilter[]{intentFilter,};
+            techListsArray = new String[][]{new String[]{IsoDep.class.getName()}};
+        } catch ( final Exception e )
+        {
+            Log.d( TAG, "NfcAdapter: Problem mit den NfcAdapter. Wird ignoriert.");
+        }
 
     }
 
@@ -173,15 +177,31 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         super.onResume();
 
         restoreActionBar();
-        //nfc foreground dispatch system
-        NfcAdapter.getDefaultAdapter(this).enableForegroundDispatch(this, nfcPendingIntent, intentFiltersArray, techListsArray);
-    }
+        try {
+            //nfc foreground dispatch system
+            final NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+            if (nfcAdapter != null)
+                nfcAdapter.enableForegroundDispatch(this, nfcPendingIntent, intentFiltersArray, techListsArray);
+        }
+        catch ( final Exception e )
+        {
+            Log.d( TAG, "NfcAdapter: Problem mit den NfcAdapter. Wird ignoriert.");
+        }
+}
 
     @Override
     protected void onPause() {
         super.onPause();
-        //nfc foreground dispatch system
-        NfcAdapter.getDefaultAdapter(this).disableForegroundDispatch(this);
+        try {
+            //nfc foreground dispatch system
+            final NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+            if (nfcAdapter != null)
+                nfcAdapter.disableForegroundDispatch(this);
+        } catch ( final Exception e )
+        {
+            Log.d( TAG, "NfcAdapter: Problem mit den NfcAdapter. Wird ignoriert.");
+        }
+
     }
 
     @Override
