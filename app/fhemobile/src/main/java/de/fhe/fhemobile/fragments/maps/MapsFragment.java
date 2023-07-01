@@ -84,7 +84,7 @@ public class MapsFragment extends Fragment {
             // eventuell machen wir einfach unsere eigenen IDs
 
             /*
-            android.nonFinalResIds=true
+            android.nonFinalResIds=true */
             // Erhalte den Namen der Karte als String aus den Ressourcen
             String mapName = getResources().getString(mMap.getNameID());
 
@@ -97,8 +97,8 @@ public class MapsFragment extends Fragment {
                 mCurrentMapIndex = 3; // Erdgeschoss
             } else if (mapName.equals(getString(R.string.building_06))) {
                 mCurrentMapIndex = 1; // Untergeschoss
-            } */
-
+            }
+/*
             //set mCurrentMapIndex to where building is usually entered
             switch(mMap.getNameID()){
                 case R.string.building_03_02_01:
@@ -114,9 +114,7 @@ public class MapsFragment extends Fragment {
                     mCurrentMapIndex = 1; //Untergeschoss
                     break;
             }
-
-            String myString = getResources().getString(R.string.my_string);
-
+*/
         }
 
     }
