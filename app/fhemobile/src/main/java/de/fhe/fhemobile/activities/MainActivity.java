@@ -165,9 +165,9 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             IntentFilter intentFilter = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
             intentFiltersArray = new IntentFilter[]{intentFilter,};
             techListsArray = new String[][]{new String[]{IsoDep.class.getName()}};
-        } catch ( final Exception e )
-        {
-            Log.d( TAG, "NfcAdapter: Problem mit den NfcAdapter. Wird ignoriert.");
+
+        } catch(final Exception e) {
+            Log.d(TAG, "NfcAdapter: Problem mit den NfcAdapter. Wird ignoriert.");
         }
 
     }

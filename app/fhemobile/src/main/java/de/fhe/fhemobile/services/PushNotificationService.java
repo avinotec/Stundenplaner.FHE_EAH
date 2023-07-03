@@ -150,9 +150,9 @@ public class PushNotificationService extends FirebaseMessagingService {
     public static void registerSubscribedEventSeries() {
         if (fcmToken != null) {
             Main.executorService.execute(new ServerRegistrationBackgroundTask(fcmToken, MyScheduleModel.getInstance().getSubscribedEventSeries()));
-        }
-        else
+        } else {
             Log.d(TAG, "fcmToken ist nicht verfügbar.");
+        }
     }
 
     /**
