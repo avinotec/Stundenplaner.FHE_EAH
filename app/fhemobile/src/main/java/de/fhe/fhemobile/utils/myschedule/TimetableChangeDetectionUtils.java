@@ -336,13 +336,13 @@ public class TimetableChangeDetectionUtils {
      * @param examTitle The title of the exam
      */
     private static void showExamAddedToast(final String examTitle){
-        Utils.showToast(Main.getAppContext().getString(R.string.exam_added) + ":\n"+ examTitle);
+        Utils.showToast(Main.getAppContext().getString(R.string.toast_exam_added) + ":\n"+ examTitle);
     }
 
     /**
      * Show toast that one or more merged event series have been added automatically
      */
     private static void showMergedEventSeriesAddedToast(){
-        Utils.showToast("bla"); //todo: write string
+        Utils.showToastLong(R.string.toast_merged_event_series_added);
     }
 }

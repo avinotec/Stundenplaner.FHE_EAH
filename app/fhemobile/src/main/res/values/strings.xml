@@ -42,7 +42,6 @@
     <string name="internal_problems">internal problems</string>
     <string name="error">Error</string>
     <string name="no_data_available">No data available</string>
-    <string name="exam_added">Exam added</string>
 
     <string name="phonebook_firstname">First name</string>
     <string name="phonebook_lastname">Last name</string>
@@ -158,6 +157,9 @@
     <string name="myschedule_pref_category_delete_cal">Delete calendar</string>
     <string name="myschedule_pref_title_delete_cal">Delete a calendar &#x2026;</string>
     <string name="myschedule_pref_summary_delete_cal">Choose a calendar on this phone you want to delete</string>
+
+    <string name="toast_exam_added">Exam added</string>
+    <string name="toast_merged_event_series_added">Some event series got merged. The new series was added to your schedule.</string>
 
     <string name="dialog_delete_local_cal_title">Delete local calendar</string>
     <string name="dialog_delete_local_cal_message">Do you want to delete the calendar \"My Schedule\"?</string>
