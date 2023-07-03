@@ -27,7 +27,7 @@ import org.junit.Assert;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -95,11 +95,10 @@ public class TimetableChangeDetectionUtils {
 
         //DETECT zusammengelegte Veranstaltungsreihen
         Set<String> setOfEventSeriesTitles = localEventSeriesSubList.keySet();
-        Set<MyScheduleEventSeriesVo> combinedEventSeries = detectAndGetCombinedEventSeries(setOfEventSeriesTitles, fetchedEventSeriesVos);
-        if(!combinedEventSeries.isEmpty()){
-            //todo: only add if combined event series is not already subscribed
-            eventSeriesToAdd.addAll(combinedEventSeries);
-            showCombinedEventSeriesAddedToast();
+        Map<String, MyScheduleEventSeriesVo> mergedEventSeries = getMergedEventSeriesNeededToBeSubscribed(setOfEventSeriesTitles, fetchedEventSeriesVos);
+        if(!mergedEventSeries.isEmpty()){
+            eventSeriesToAdd.addAll(mergedEventSeries.values());
+            showMergedEventSeriesAddedToast();
         }
 
         //COLLECT UPDATES in updatedEventSeriesList
@@ -301,28 +300,29 @@ public class TimetableChangeDetectionUtils {
     }
 
     /**
-     * Detect event series' that resulted from merging multiple event series
-     * and return a list of those event series' where at least one of their joining event series' is subscribed by the user
-     * @param localEventSeriesTitles
-     * @param fetchedEventSeriesVos
-     * @return
+     * Detect unsubscribed event series' that have been created by merging multiple event series
+     * and whose merged event series' contain at least one series subscribed by the user
+     * @param localEventSeriesTitles A set of titles of local subscribed event series
+     * @param fetchedEventSeriesVos A list of fetched {@link MyScheduleEventSeriesVo}s
+     * @return A map containing all merged event series' the user should subscribe, by event series title
      */
-    private static Set<MyScheduleEventSeriesVo> detectAndGetCombinedEventSeries(
+    private static Map<String, MyScheduleEventSeriesVo> getMergedEventSeriesNeededToBeSubscribed(
             Set<String> localEventSeriesTitles,
             List<MyScheduleEventSeriesVo> fetchedEventSeriesVos){
 
-        Set<MyScheduleEventSeriesVo> result = new HashSet<>();
+        Map<String, MyScheduleEventSeriesVo> result = new HashMap<>();
 
         for(MyScheduleEventSeriesVo fetchedEventSeries : fetchedEventSeriesVos){
-            //if fetchedEventSeries is a combined event series
-            if(MyScheduleUtils.isCombinedEventSeries(fetchedEventSeries)){
+            //if fetchedEventSeries is a merged event series and not subscribed yet
+            if(MyScheduleUtils.isMergedEventSeries(fetchedEventSeries)
+                    && !localEventSeriesTitles.contains(fetchedEventSeries.getTitle())){
 
                 for(String localEventSeriesTitle : localEventSeriesTitles){
-                    //local/subscribed event series is contained in the combined event series
-                    if(MyScheduleUtils.containedInCombinedEventSeries(
-                            localEventSeriesTitle, fetchedEventSeries.getTitle())){
+                    //The local/subscribed event series is contained in the merged event series
+                    // and the user is not subscribing it yet
+                    if(MyScheduleUtils.containedInMergedEventSeries(localEventSeriesTitle, fetchedEventSeries.getTitle())){
 
-                        result.add(fetchedEventSeries);
+                        result.put(fetchedEventSeries.getTitle(), fetchedEventSeries);
                     }
                 }
             }
@@ -340,9 +340,9 @@ public class TimetableChangeDetectionUtils {
     }
 
     /**
-     * Show toast that one or more combined event series have been added automatically
+     * Show toast that one or more merged event series have been added automatically
      */
-    private static void showCombinedEventSeriesAddedToast(){
+    private static void showMergedEventSeriesAddedToast(){
         Utils.showToast("bla"); //todo: write string
     }
 }

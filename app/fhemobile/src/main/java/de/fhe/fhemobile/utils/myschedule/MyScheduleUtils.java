@@ -59,7 +59,7 @@ public final class MyScheduleUtils {
 	 * */
 	private static final String regexEventSetNumber = "\\d\\d(?:_\\d\\d)*"; //$NON-NLS
 	//"(?:X)" stands for a non-capturing group with pattern X
-	private static final String regexCombinedEventSetNumber = "\\d\\d(?:_\\d\\d)+"; //$NON-NLS
+	private static final String regexMergedEventSetNumber = "\\d\\d(?:_\\d\\d)+"; //$NON-NLS
 	private static final Pattern patternEventSetNumber = Pattern.compile("/" + regexEventSetNumber + "$");
 
 	/**
@@ -262,37 +262,37 @@ public final class MyScheduleUtils {
 	}
 
 	/**
-	 * The given {@link MyScheduleEventSeriesVo} is a combined event series
+	 * The given {@link MyScheduleEventSeriesVo} is a merged event series
 	 * @param eventSeries The {@link MyScheduleEventSeriesVo} to check
 	 * @return True if the given event series resulted from merging multiple event series
 	 */
-	public static boolean isCombinedEventSeries(MyScheduleEventSeriesVo eventSeries){
+	public static boolean isMergedEventSeries(MyScheduleEventSeriesVo eventSeries){
 		//e.g. true for WI/WIEC(BA)Mathe/Ü/01_02, false for WI/WIEC(BA)Mathe/Ü/01
-		return eventSeries.getTitle().matches(".*/" + regexCombinedEventSetNumber + "$");
+		return eventSeries.getTitle().matches(".*/" + regexMergedEventSetNumber + "$");
 	}
 
 	/**
-	 * Check whether the single event series is one of the events series that has been merged into the combined event series.
+	 * Check whether the single event series is one of the events series that has been merged into the merged event series.
 	 * @param singleEventSeries The title of the single event series
-	 * @param combinedEventSeries The title of the event series that resulted from merging multiple event series,
+	 * @param mergedEventSeries The title of the event series that has been created by merging multiple event series,
 	 *                            e.g. putting together two event sets for a practise series.
-	 * @return True, if the single event series is part of the combined event series
+	 * @return True, if the single event series is part of the merged event series
 	 */
-	public static boolean containedInCombinedEventSeries(String singleEventSeries, String combinedEventSeries){
+	public static boolean containedInMergedEventSeries(String singleEventSeries, String mergedEventSeries){
 
 		//check if both titles belong to the same study program, subject and event type e.g. WI/WIEC(BA)Mathe/Ü
-		if(getEventSeriesBaseTitle(singleEventSeries).equals(getEventSeriesBaseTitle(combinedEventSeries))){
+		if(getEventSeriesBaseTitle(singleEventSeries).equals(getEventSeriesBaseTitle(mergedEventSeries))){
 
 			Matcher matcherSingle = patternEventSetNumber.matcher(singleEventSeries);
-			Matcher matcherCombined = patternEventSetNumber.matcher(combinedEventSeries);
+			Matcher matcherMerged = patternEventSetNumber.matcher(mergedEventSeries);
 
 			//occurrences/event set numbers for both event series were found
-			if(matcherSingle.find() && matcherCombined.find()){
+			if(matcherSingle.find() && matcherMerged.find()){
 				String eventSetSingle = matcherSingle.group(0);
-				String eventSetsCombined = matcherCombined.group(0);
+				String eventSetsMerged = matcherMerged.group(0);
 
-				if(eventSetsCombined.contains(eventSetSingle)){
-					//combined event series contains event set number of the single event series
+				if(eventSetsMerged.contains(eventSetSingle)){
+					//merged event series contains event set number of the single event series
 					return true;
 				}
 			}
