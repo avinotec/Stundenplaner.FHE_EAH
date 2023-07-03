@@ -18,7 +18,6 @@ package de.fhe.fhemobile.views.maps;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 
@@ -54,7 +53,7 @@ public class MapsView extends FrameLayout {
         //TODO MS experimental
         mMapView.getSettings().setJavaScriptEnabled(true);
         mMapView.getSettings().setAllowFileAccess(true);
-        mMapView.getSettings().setPluginState(WebSettings.PluginState.ON);
+        //deprecated mMapView.getSettings().setPluginState(WebSettings.PluginState.ON);
         mMapView.getSettings().setDomStorageEnabled(true);
         mMapView.getSettings().setAllowContentAccess(true);
         mMapView.getSettings().setAllowFileAccessFromFileURLs(true);

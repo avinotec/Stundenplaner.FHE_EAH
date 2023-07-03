@@ -3,7 +3,6 @@ package de.fhe.fhemobile.views.events;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 
@@ -38,7 +37,7 @@ public class EventsWebView extends FrameLayout {
         //MS experimental
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setAllowFileAccess(true);
-        mWebView.getSettings().setPluginState(WebSettings.PluginState.ON);
+        //Deprecated mWebView.getSettings().setPluginState(WebSettings.PluginState.ON);
         mWebView.getSettings().setDomStorageEnabled(true);
         mWebView.getSettings().setAllowContentAccess(true);
         mWebView.getSettings().setAllowFileAccessFromFileURLs(true);
