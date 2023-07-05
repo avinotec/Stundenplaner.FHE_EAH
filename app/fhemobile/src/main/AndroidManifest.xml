@@ -123,6 +123,12 @@
             <intent-filter>
                 <action android:name="android.nfc.action.TECH_DISCOVERED" />
                 <category android:name="android.intent.category.DEFAULT" />
+
+                <!-- data
+                    android:scheme="cardreader"
+                    android:host="XXX"
+                    android:pathPrefix="/mobile" / -->
+
             </intent-filter>
             <meta-data
                 android:name="android.nfc.action.TECH_DISCOVERED"
@@ -189,7 +195,8 @@
 
         <service
             android:name=".services.PushNotificationService"
-            android:exported="false">
+            android:exported="false"
+            android:enabled="true">
             <!-- android:permission="TODO" -->
 
             <intent-filter>
