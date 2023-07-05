@@ -101,6 +101,15 @@
     <string name="canteen_card_balance_status">Your thoska balance: %1$s € (status: %2$s)</string>
     <string name="canteen_card_balance_toast">Your thoska balance: %1$s €</string>
     <string name="canteen_card_error">Card removed before data could be read!</string>
+    <string name="canteen_card_info_title">Read thoska balance</string>
+    <string name="canteen_card_info_text">
+        First, make sure that NFC is enabled on your device.
+        \n\n
+        To read the balance from your thoska, place the thoska on the back of your device.
+        Depending on the model, the NFC sensor is located in the upper, middle or lower part.
+        \n\n
+        Wait until your thoska is detected. If you need to select the Stundenplan-App to continue,
+        do not remove the thoska before selecting the app.</string>
 
     <!-- My Schedule -->
     <string name="myschedule_dialog_headline">Please select study program and semester.</string>

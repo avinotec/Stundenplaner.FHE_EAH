@@ -65,6 +65,8 @@
         android:padding="4dp"
         android:textSize="15sp"
         android:textIsSelectable="false"
-        android:text="Dein Mensa-Guthaben: __.__€ (--.--.--)"/>
+        android:text="@string/canteen_card_balance_status"
+        android:drawableEnd="@drawable/ic_help_outline"
+        android:drawablePadding="5dp"/>
 
 </de.fhe.fhemobile.views.canteen.CanteenView>

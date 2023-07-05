@@ -178,6 +178,15 @@
     <string name="canteen_card_balance_status">Dein thoska-Guthaben: %1$s € (Stand: %2$s)</string>
     <string name="canteen_card_balance_toast">Dein thoska-Guthaben: %1$s €</string>
     <string name="canteen_card_error">Karte wurde entfernt bevor Daten gelesen werden konnten!</string>
+    <string name="canteen_card_info_title">Thoska-Guthaben auslesen</string>
+    <string name="canteen_card_info_text">
+        Stelle zuerst sicher, dass NFC auf deinem Gerät aktiviert ist.
+        \n\n
+        Um das Guthaben auf deiner thoska auszulesen, platziere die Thoska an der Rückseite deines Geräts.
+        Der NFC-Sensor befindet sich modellabhängig im oberen, mittleren oder unteren Teil.
+        \n\n
+        Warte bis deine thoska erkannt wird. Falls du die Stundenplan-App zum Fortfahren auswählen
+        musst, entferne die thoska erst nachdem du die App ausgewählt hast. </string>
 
     <!--    Campus Navigation -->
     <string name="title_scanner_activity">Scanner</string>

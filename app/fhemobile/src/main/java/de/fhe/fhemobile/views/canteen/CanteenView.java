@@ -16,8 +16,10 @@
  */
 package de.fhe.fhemobile.views.canteen;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -74,6 +76,8 @@ public class CanteenView extends LinearLayout {
         });
 
         setCanteenCardBalanceView();
+
+        mCanteenCardBalanceText.setOnClickListener(mOnClickListenerCanteenCardBalance);
     }
 
     public void registerModelListener() {
@@ -126,6 +130,17 @@ public class CanteenView extends LinearLayout {
         @Override
         public void onEvent(Event event) {
             setCanteenCardBalanceView();
+        }
+    };
+
+    private final OnClickListener mOnClickListenerCanteenCardBalance = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            new AlertDialog.Builder(getContext())
+                    .setIcon(R.drawable.ic_help_filled)
+                    .setTitle(R.string.canteen_card_info_title)
+                    .setMessage(getResources().getString(R.string.canteen_card_info_text))
+                    .show();
         }
     };
 
