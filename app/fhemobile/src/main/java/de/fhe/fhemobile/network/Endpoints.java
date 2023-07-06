@@ -56,15 +56,15 @@ public final class Endpoints {
     //                                           Endpoints
     // ---------------------------------------------------------------------------------------------
 
-    public static final String RSS                  = "api/" + "eah" + "/news";
-    public static final String CANTEEN              = "api/" + "eah" + "/canteens";
-    public static final String SEMESTER             = "api/" + "eah" + "/semester"; //semester dates
-    public static final String PHONEBOOK            = "api/" + "eah" + "/persons";  //not working
-    //public static final String IMPRINT            = "api/" + "eah" + "/impress";
-    public static final String WEATHER              = "api/" + "eah" + "/weather";
-    //public static final String STUDYPROGRAMS            = "api/" + "eah" + "/timetable";
+    public static final String RSS                  = "api/eah/news";
+    public static final String CANTEEN              = "api/eah/canteens";
+    public static final String SEMESTER             = "api/eah/semester"; //semester dates
+    public static final String PHONEBOOK            = "api/eah/persons";  //not working
+    //public static final String IMPRINT            = "api/eah/impress";
+    public static final String WEATHER              = "api/eah/weather";
+    //public static final String STUDYPROGRAMS            = "api/eah/timetable";
     public static final String STUDYPROGRAMS = "api/mobileapp/v1/studentset/list";
-    //public static final String TIMETABLE     = "api/" + "eah" + "/timetable/events";
+    //public static final String TIMETABLE     = "api/eah/timetable/events";
     public static final String TIMETABLE = "api/mobileapp/v1/studentset/";
     public static final String MY_SCHEDULE          = "api/mobileapp/v1/pos/";
     public static final String MODULE               = "api/mobileapp/v1/module/";
