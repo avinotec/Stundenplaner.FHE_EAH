@@ -51,23 +51,6 @@ public class CardBalance implements Parcelable {
         this.mDateOfStatus = dateOfStatus;
     }
 
-// --Commented out by Inspection START (28.06.2023 16:34):
-//    @Nullable
-//    public static CardBalance fromBundle(Bundle in) {
-//        final Serializable balance = in.getSerializable(Define.Canteen.KEY_BALANCE);
-//        final Serializable lastTransaction = in.getSerializable(Define.Canteen.KEY_LAST_TRANSACTION);
-//        final Long dateOfStatus = in.getLong(Define.Canteen.KEY_DATE_OF_STATUS);
-//        if (!(balance instanceof BigDecimal && lastTransaction instanceof BigDecimal)) {
-//            return null;
-//        }
-//        return new CardBalance((BigDecimal) balance, (BigDecimal) lastTransaction,
-//                dateOfStatus != null ? new Date(dateOfStatus) : null);
-//    }
-// --Commented out by Inspection STOP (28.06.2023 16:34)
-
-    //unused public static void setCurrency(String currency) { CardBalance.CURRENCY = currency; }
-
-    //unused public static String getCurrency() { return CardBalance.CURRENCY; }
 
     /**
      * Get the mBalance in format xx,xx
@@ -85,11 +68,6 @@ public class CardBalance implements Parcelable {
         return mLastTransaction == null ? "" : GERMAN_NUMBER_FORMAT.format(mLastTransaction);
     }
 
-// --Commented out by Inspection START (28.06.2023 16:34):
-//    public boolean isLastTransactionSupported() {
-//        return mLastTransaction != null;
-//    }
-// --Commented out by Inspection STOP (28.06.2023 16:34)
 
     public Date getDateOfStatus() {
         return mDateOfStatus;
@@ -103,15 +81,6 @@ public class CardBalance implements Parcelable {
                 "€ (Last transaction: " + getLastTransaction() + "€)";
     }
 
-// --Commented out by Inspection START (28.06.2023 16:34):
-//    public Bundle toBundle() {
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable(Define.Canteen.KEY_BALANCE, mBalance);
-//        bundle.putSerializable(Define.Canteen.KEY_LAST_TRANSACTION, mLastTransaction);
-//        bundle.putLong(Define.Canteen.KEY_DATE_OF_STATUS, mDateOfStatus.getTime());
-//        return bundle;
-//    }
-// --Commented out by Inspection STOP (28.06.2023 16:34)
 
     // ---------------------- PARCELABLE ----------------------------------------
 
