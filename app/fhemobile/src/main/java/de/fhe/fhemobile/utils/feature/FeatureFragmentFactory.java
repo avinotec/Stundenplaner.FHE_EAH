@@ -24,10 +24,8 @@ import de.fhe.fhemobile.fragments.joboffers.JobOffersFragment;
 import de.fhe.fhemobile.fragments.maps.MapsDialogFragment;
 import de.fhe.fhemobile.fragments.myschedule.MyScheduleCalendarFragment;
 import de.fhe.fhemobile.fragments.navigation.NavigationDialogFragment;
-import de.fhe.fhemobile.fragments.news.NewsListFragment;
 import de.fhe.fhemobile.fragments.news.NewsWebViewFragment;
 import de.fhe.fhemobile.fragments.semesterdates.SemesterDatesFragment;
-import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.timetable.TimetableFragmentsFactory;
 
 /**
@@ -54,9 +52,7 @@ public final class FeatureFragmentFactory {
             //case Features.FeatureId.PHONEBOOK:       fragment = PhonebookSearchFragment.newInstance();   break;
             case Features.FeatureId.JOBOFFERS:      fragment = JobOffersFragment.newInstance();            break; //added by Nadja on 30.03.2022
             case Features.FeatureId.IMPRINT:        fragment = ImprintFragment.newInstance();            break;
-            case Features.FeatureId.NEWS:
-                NewsWebViewFragment.newInstance(); //display as Webview - Nadja 6.9.21
-                break;
+            case Features.FeatureId.NEWS:           fragment = NewsWebViewFragment.newInstance(); break ;//display as Webview - Nadja 6.9.21
             case Features.FeatureId.TIMETABLE:
             default:                                fragment = TimetableFragmentsFactory.getFragment();
 
