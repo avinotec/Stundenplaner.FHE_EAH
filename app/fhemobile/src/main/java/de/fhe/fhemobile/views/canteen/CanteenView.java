@@ -16,8 +16,12 @@
  */
 package de.fhe.fhemobile.views.canteen;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -55,7 +59,7 @@ public class CanteenView extends LinearLayout {
 
         mNoCanteensSelectedText = (TextView) findViewById(R.id.tv_canteen_no_canteens_selected);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_canteen);
-        mCanteenCardBalanceText = (TextView) findViewById(R.id.tv_canteen_card_balance);
+        mCanteenCardBalanceTextView = (TextView) findViewById(R.id.tv_canteen_card_balance);
     }
 
     public void initializeView(final FragmentManager _Manager, final Lifecycle _Lifecycle){
@@ -63,7 +67,7 @@ public class CanteenView extends LinearLayout {
         if(!UserSettings.getInstance().getSelectedCanteenIds().isEmpty()){
             final ViewPager2 viewPager = findViewById(R.id.viewpager_canteen);
             viewPager.setAdapter(new CanteenPagerAdapter(_Manager, _Lifecycle));
-        } else{
+        } else {
             mNoCanteensSelectedText.setVisibility(VISIBLE);
         }
 
@@ -73,21 +77,25 @@ public class CanteenView extends LinearLayout {
             NetworkHandler.getInstance().fetchCanteenMenus();
         });
 
+        //canteen card balance
         setCanteenCardBalanceView();
+        mCanteenCardBalanceTextView.setOnClickListener(mOnClickListenerCanteenCardBalance);
+
+        //not: do not put it in register/unregisterModelListener
+        // because when the event is thrown the activity is paused at this time und the listener would be unregistered otherwise
+        CanteenModel.getInstance().addListener(CanteenChangeEvent.RECEIVED_CANTEEN_CARD_BALANCE, mReceivedCanteenCardBalanceListener);
     }
 
     public void registerModelListener() {
         CanteenModel.getInstance().addListener(
                 CanteenChangeEvent.RECEIVED_All_CANTEEN_MENUS,
                 mReceivedAllCanteenMenusEventListener);
-        CanteenModel.getInstance().addListener(CanteenChangeEvent.RECEIVED_CANTEENS, mReceivedCanteenCardBalanceListener);
     }
 
     public void deregisterModelListener() {
         CanteenModel.getInstance().removeListener(
                 CanteenChangeEvent.RECEIVED_All_CANTEEN_MENUS,
                 mReceivedAllCanteenMenusEventListener);
-        CanteenModel.getInstance().removeListener(CanteenChangeEvent.RECEIVED_CANTEENS, mReceivedCanteenCardBalanceListener);
     }
 
     /**
@@ -106,12 +114,11 @@ public class CanteenView extends LinearLayout {
             String dateOfStatus = balance.getDateOfStatus() != null ?
                     sdf.format(balance.getDateOfStatus()) : NO_CANTEEN_BALANCE_DATE_TEXT;
             text = getResources().getString(R.string.canteen_card_balance_status, balance.getBalance(), dateOfStatus);
-
          } else {
             text = getResources().getString(R.string.canteen_card_balance_status, NO_BALANCE_TEXT, NO_CANTEEN_BALANCE_DATE_TEXT);
         }
 
-        mCanteenCardBalanceText.setText(text);
+        mCanteenCardBalanceTextView.setText(text);
     }
 
     private final EventListener mReceivedAllCanteenMenusEventListener = new EventListener() {
@@ -129,9 +136,20 @@ public class CanteenView extends LinearLayout {
         }
     };
 
+    private final OnClickListener mOnClickListenerCanteenCardBalance = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            new AlertDialog.Builder(getContext())
+                    .setIcon(R.drawable.ic_help_filled)
+                    .setTitle(R.string.canteen_card_info_title)
+                    .setMessage(getResources().getString(R.string.canteen_card_info_text))
+                    .show();
+        }
+    };
+
     private TextView            mNoCanteensSelectedText;
     private SwipeRefreshLayout  mSwipeRefreshLayout;
-    private TextView            mCanteenCardBalanceText;
+    private TextView            mCanteenCardBalanceTextView;
 
     private static final String NO_BALANCE_TEXT = "--,--";
     private static final String NO_CANTEEN_BALANCE_DATE_TEXT = "__.__.__";
