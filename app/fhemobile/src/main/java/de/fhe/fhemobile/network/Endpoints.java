@@ -21,11 +21,8 @@ package de.fhe.fhemobile.network;
  */
 public final class Endpoints {
 
-    public static final String LIVE_URL             = "http://app.fh-erfurt.de:8080";
-
-    public static final String BASE_URL             = LIVE_URL;
+    public static final String BASE_URL_FHE_SERVER = "http://app.fh-erfurt.de:8080/fheapp/";
     public static final String BASE_URL_EAH         = "https://stundenplanung.eah-jena.de/";
-    public static final String APP_NAME             = "/fheapp/";
 
     //public static final String IMPRINT_ENDPOINT = "https://www.eah-jena.de/impressum"; //URL fixed - Nadja 3.9.21
     public static final String IMPRINT_ENDPOINT = "https://www.eah-jena.de/impressum#c4092"; //URL fixed - Nadja 3.9.21

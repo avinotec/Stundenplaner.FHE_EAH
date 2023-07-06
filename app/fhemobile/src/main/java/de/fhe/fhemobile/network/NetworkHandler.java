@@ -112,7 +112,7 @@ public final class NetworkHandler {
 				.build();
 
 		final Retrofit mRestAdapter = new Retrofit.Builder()
-				.baseUrl(Endpoints.BASE_URL + Endpoints.APP_NAME)
+				.baseUrl(Endpoints.BASE_URL_FHE_SERVER)
 				.client(client)
 				.addConverterFactory(GsonConverterFactory.create(gson))
 				//.setConverter(new GsonConverter(gson))
