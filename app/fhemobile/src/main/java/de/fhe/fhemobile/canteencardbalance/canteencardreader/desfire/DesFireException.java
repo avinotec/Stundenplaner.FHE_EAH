@@ -27,11 +27,11 @@ package de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire;
  */
 public class DesFireException extends Exception {
 
-    DesFireException(String message) {
+    public DesFireException(String message) {
         super(message);
     }
 
-    DesFireException(Throwable cause) {
+    public DesFireException(Throwable cause) {
         super(cause);
     }
 }

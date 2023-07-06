@@ -107,6 +107,9 @@ public class InterCardReader {
 	public CardBalance readTag(Tag tag) {
 		// Loading tag
 		IsoDep tech = IsoDep.get(tag);
+		/* Returns null if IsoDep was not enumerated in getTechList(). This indicates the tag does not support ISO-DEP. */
+		if ( tech == null )
+			return null;
 
 		try {
 			tech.connect();
@@ -119,8 +122,16 @@ public class InterCardReader {
 		}
 
 		try {
-			DesFireProtocol desfireTag = new DesFireProtocol(tech);
-			return InterCardReader.getInstance().readCard(desfireTag);
+			final DesFireProtocol desfireTag = new DesFireProtocol(tech);
+			if ( desfireTag == null )
+				throw new DesFireException("Fehler beim Lesen der Karte.");
+
+			final CardBalance cardBalance = InterCardReader.getInstance().readCard(desfireTag);
+
+			tech.close();
+
+			return cardBalance;
+
 
 // Note from Nadja: This bug report is from 2013. Maybe it is outdated now.
 			//Android has a Bug on Devices using a Broadcom NFC chip. See
@@ -140,14 +151,13 @@ public class InterCardReader {
 
 		} catch (Exception e) {
 			//This can only happen on tag close. we ignore this.
-			e.printStackTrace();
+			Log.e(TAG, "E2012 Lesefehler");
 			return null;
 		} finally {
-			if (tech.isConnected())
 				try {
 					tech.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					;
 				}
 		}
 
