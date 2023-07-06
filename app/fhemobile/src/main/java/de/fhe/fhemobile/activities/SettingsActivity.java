@@ -24,8 +24,6 @@ import androidx.annotation.NonNull;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.fragments.canteen.CanteenSettingsFragment;
 import de.fhe.fhemobile.fragments.myschedule.MySchedulePreferencesFragment;
-import de.fhe.fhemobile.fragments.news.NewsCategoriesFragment;
-import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.Features;
 
 public class SettingsActivity extends SecondaryActivity {
@@ -48,11 +46,12 @@ public class SettingsActivity extends SecondaryActivity {
     public void loadFragments(final int _Id) {
         switch(_Id) {
 
-            case Features.FeatureId.NEWS:
-                if(Define.ENABLE_V1_NEWS){
-                    setFragment(NewsCategoriesFragment.newInstance());
-                }
-                break;
+//TODO prüfen
+//            case Features.FeatureId.NEWS:
+//                if(Define.ENABLE_V1_NEWS){
+//                    setFragment(NewsCategoriesFragment.newInstance());
+//                }
+//                break;
 
             case Features.FeatureId.CANTEEN:
                 setFragment(CanteenSettingsFragment.newInstance());

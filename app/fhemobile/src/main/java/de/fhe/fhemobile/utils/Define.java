@@ -28,8 +28,6 @@ public final class Define {
     //switches for certain features
     public static final boolean ENABLE_MYSCHEDULE_UPDATING = true;
     public static final boolean ENABLE_CALENDAR_SYNC = true;
-    //enable feature news (the original one, not the temporary webview solution)
-    public static final boolean ENABLE_V1_NEWS = false;
 
     //created by Nadja 11.03.2022
     public static final class Canteen {
@@ -45,6 +43,7 @@ public final class Define {
     }
 
     public static final class News {
+        //TODO rauswerfen :-)
         static final String PREF_CHOSEN_NEWS_CATEGORY = "chosenNewsCategory"; // $NON-NLS
     }
 
