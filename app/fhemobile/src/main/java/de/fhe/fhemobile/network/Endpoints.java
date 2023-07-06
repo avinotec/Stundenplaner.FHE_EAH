@@ -24,13 +24,11 @@ public final class Endpoints {
     public static final String BASE_URL_FHE_SERVER = "http://app.fh-erfurt.de:8080/fheapp/";
     public static final String BASE_URL_EAH         = "https://stundenplanung.eah-jena.de/";
 
-    //public static final String IMPRINT_ENDPOINT = "https://www.eah-jena.de/impressum"; //URL fixed - Nadja 3.9.21
-    public static final String IMPRINT_ENDPOINT = "https://www.eah-jena.de/impressum#c4092"; //URL fixed - Nadja 3.9.21
     //Links for displaying as WebViews - Nadja 6.9.21
     //public static final String NEWS_ENDPOINT = "https://www.eah-jena.de/hochschule/nachrichten";
     public static final String NEWS_ENDPOINT = "https://www.eah-jena.de/hochschule/nachrichten#c10903";
     public static final String SEMESTERDATES_ENDPOINT = "https://www.eah-jena.de/hochschule/semestertermine";
-    public static final String EVENTS_ENDPOINT = "https://www.eah-jena.de/veranstaltungskalender";
+    public static final String EVENTS_ENDPOINT = "https://www.eah-jena.de/veranstaltungskalender#c7547";
     public static final String JOBOFFERS_ENDPOINT = "https://stellenticket.eah-jena.de/de/offers/fulltextsearch/EAH-Jena/#Inhalt";
 
 
@@ -40,18 +38,6 @@ public final class Endpoints {
     // https://wi-srv7.wi.eah-jena.de/api/fcm_register_user.php?
     public static final String URL_REGISTER_PUSH_NOTIFICATIONS_EAH = APP_SERVER_EAH + "fcm_register_user.php?";
 
-    /* Example
-        http://193.174.232.89:8080/fheapp/api/eah/timetable
-
-        news:
-        http://193.174.232.89:8080/fheapp/api/eah/news/
-        http://193.174.232.89:8080/fheapp/api/eah/news/0    <-- kaputt
-        http://193.174.232.89:8080/fheapp/api/eah/news/1
-        http://193.174.232.89:8080/fheapp/api/eah/news/2
-
-    *
-    * */
-
     // ---------------------------------------------------------------------------------------------
     //                                           Endpoints
     // ---------------------------------------------------------------------------------------------
@@ -60,7 +46,10 @@ public final class Endpoints {
     public static final String CANTEEN              = "api/eah/canteens";
     public static final String SEMESTER             = "api/eah/semester"; //semester dates
     public static final String PHONEBOOK            = "api/eah/persons";  //not working
-    //public static final String IMPRINT            = "api/eah/impress";
+    //public static final String IMPRINT            = "api/eah/impress";    old, deprecated
+    //public static final String IMPRINT_ENDPOINT = "https://www.eah-jena.de/impressum"; //URL fixed - Nadja 3.9.21
+    public static final String IMPRINT_ENDPOINT = "https://www.eah-jena.de/impressum#c4092"; //URL fixed - Nadja 3.9.21
+
     public static final String WEATHER              = "api/eah/weather";
     //public static final String STUDYPROGRAMS            = "api/eah/timetable";
     public static final String STUDYPROGRAMS = "api/mobileapp/v1/studentset/list";
