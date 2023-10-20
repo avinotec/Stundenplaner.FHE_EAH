@@ -105,8 +105,7 @@ public class CanteenSettingsAdapter extends BaseAdapter {
             viewHolder.mCanteenNameView = (CheckedTextView) convertView.findViewById(R.id.tv_canteen_choice_item);
 
             convertView.setTag(viewHolder);
-        }
-        else {
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 

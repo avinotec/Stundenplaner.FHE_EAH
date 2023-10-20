@@ -34,6 +34,9 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.preference.PreferenceManager;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -149,10 +152,37 @@ public class PushNotificationService extends FirebaseMessagingService {
      */
     public static void registerSubscribedEventSeries() {
         if (fcmToken != null) {
-            Main.executorService.execute(new ServerRegistrationBackgroundTask(fcmToken, MyScheduleModel.getInstance().getSubscribedEventSeries()));
+            sendRegistrationToServer(MyScheduleModel.getInstance().getSubscribedEventSeries());
         } else {
-            Log.d(TAG, "fcmToken ist nicht verfügbar.");
+            Log.d(TAG, "fcmToken is null. Start requesting a token.");
+
+            FirebaseMessaging.getInstance().getToken()
+                    .addOnCompleteListener(new OnCompleteListener<String>() {
+                        @Override
+                        public void onComplete(@NonNull final Task<String> task) {
+                            if (!task.isSuccessful()) {
+                                Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                                return;
+                            }
+
+                            // Get new FCM registration token
+                            final String token = task.getResult();
+                            PushNotificationService.setFcmToken(token);
+
+                            Log.d(TAG, "Firebase Token: " + token);
+
+                            //register user at server for subscribed event series
+                            sendRegistrationToServer(MyScheduleModel.getInstance().getSubscribedEventSeries());
+                        }
+                    });
         }
+    }
+
+    /**
+     * Send empty subscription list for the current {@link PushNotificationService#fcmToken}
+     */
+    public static void deregisterSubscribedEventSeries() {
+        sendRegistrationToServer(new ArrayList<>());
     }
 
     /**

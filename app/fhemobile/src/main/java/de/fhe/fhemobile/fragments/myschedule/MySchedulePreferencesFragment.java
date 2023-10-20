@@ -100,7 +100,14 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
 
-                PushNotificationService.registerSubscribedEventSeries();
+                //notifications enabled
+                if((boolean) newValue){
+                    PushNotificationService.registerSubscribedEventSeries();
+                }
+                //notifications disabled
+                else {
+                    PushNotificationService.deregisterSubscribedEventSeries();
+                }
                 return true;
             }
         });

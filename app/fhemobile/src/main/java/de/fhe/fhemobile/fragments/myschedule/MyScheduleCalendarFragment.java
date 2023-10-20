@@ -37,6 +37,7 @@ import androidx.annotation.Nullable;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.FragmentActivity;
+import androidx.preference.PreferenceManager;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -48,6 +49,7 @@ import de.fhe.fhemobile.activities.SettingsActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.models.myschedule.MyScheduleModel;
 import de.fhe.fhemobile.services.FetchMyScheduleBackgroundTask;
+import de.fhe.fhemobile.services.PushNotificationService;
 import de.fhe.fhemobile.utils.Define;
 import de.fhe.fhemobile.utils.feature.Features;
 import de.fhe.fhemobile.views.myschedule.MyScheduleCalendarView;
@@ -226,6 +228,12 @@ public class MyScheduleCalendarFragment extends FeatureFragment {
 
 							public void onClick(final DialogInterface dialog, final int which) {
 								MyScheduleModel.getInstance().clearSubscribedEventSeriesAndUpdateAdapters();
+
+								if (//if push notifications enabled
+										PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+												.getBoolean(getResources().getString(R.string.sp_myschedule_enable_fcm), false)) {
+									PushNotificationService.deregisterSubscribedEventSeries();
+								}
 							}
 						})
 						.setCancelable(false)
