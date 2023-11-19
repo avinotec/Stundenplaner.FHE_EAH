@@ -67,13 +67,15 @@ public class DesFireProtocol {
         return DesFireFileSettings.create(data);
     }
 
-    public byte[] readFile(final int fileNo) throws DesFireException {
-        return sendRequest(READ_DATA, new byte[]{
-                (byte) fileNo,
-                (byte) 0x0, (byte) 0x0, (byte) 0x0,
-                (byte) 0x0, (byte) 0x0, (byte) 0x0
-        });
-    }
+// --Commented out by Inspection START (19.11.2023 23:30):
+//    public byte[] readFile(final int fileNo) throws DesFireException {
+//        return sendRequest(READ_DATA, new byte[]{
+//                (byte) fileNo,
+//                (byte) 0x0, (byte) 0x0, (byte) 0x0,
+//                (byte) 0x0, (byte) 0x0, (byte) 0x0
+//        });
+//    }
+// --Commented out by Inspection STOP (19.11.2023 23:30)
 
     public int readValue(final int fileNum) throws DesFireException {
         final byte[] buf = sendRequest(READ_VALUE, new byte[]{
