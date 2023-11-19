@@ -66,15 +66,4 @@ public class Main extends Application {
         return mAppContext;
     }
 
-    /* minSDK now >= 21. Runtime Library is no longer DEX
-    //MS 201908 Multidex apk introduced
-    // Or if you do override the Application class but it's not possible to change the base class,
-    // then you can instead override the attachBaseContext() method and call MultiDex.install(this) to enable multidex:
-    @Override
-    protected void attachBaseContext(final Context base) {
-        super.attachBaseContext(base);
-        androidx.multidex.MultiDex.install(this);
-    }
-*/
-
 }
