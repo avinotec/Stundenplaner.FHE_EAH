@@ -28,23 +28,12 @@ apply plugin: 'com.android.application'
  * build options.
  */
 android {
-	compileSdk 33
-	
-	/**
+    compileSdk 34
+    /**
      * compileSdkVersion specifies the Android API level Gradle should use to
      * compile your app. This means your app can use the API features included in
      * this API level and lower.
      */
-	
-	/**
-     * buildToolsVersion specifies the version of the SDK build tools, command-line
-     * utilities, and compiler that Gradle should use to build your app. You need to
-     * download the build tools using the SDK Manager.
-     *
-     * This property is optional because the plugin uses a recommended version of
-     * the build tools by default.
-     */
-    buildToolsVersion '34.0.0'
 
     compileOptions {
         // Error: Invoke-customs are only supported starting with Android O (--min-api 26)
@@ -66,13 +55,11 @@ android {
      */
     defaultConfig {
         minSdk 21
-        targetSdk 33
+        targetSdk 34
         versionCode = 52
         versionName = '4.4'
         resourceConfigurations += ['de', 'en', 'notnight']
 
-        multiDexEnabled false
-    
         // For Testing
         //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         
