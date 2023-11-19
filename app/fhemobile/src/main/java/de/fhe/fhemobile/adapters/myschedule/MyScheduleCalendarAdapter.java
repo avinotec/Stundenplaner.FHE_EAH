@@ -18,7 +18,6 @@ package de.fhe.fhemobile.adapters.myschedule;
 
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
