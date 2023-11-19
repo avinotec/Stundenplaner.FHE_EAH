@@ -56,8 +56,8 @@ android {
         applicationId 'de.eahjena.stundenplan'
         minSdk 21
         targetSdk 34
-        versionCode = 54
-        versionName = '4.6'
+        versionCode = 55
+        versionName = '4.6.1'
         // Keeps language resources for only the locales specified below.
         resourceConfigurations += ['de', 'en', 'notnight']
 
@@ -278,7 +278,7 @@ dependencies {
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
     
     // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:32.1.1')
+    implementation platform('com.google.firebase:firebase-bom:32.5.0')
     // Add the dependencies for the Crashlytics and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-messaging:23.3.1'
