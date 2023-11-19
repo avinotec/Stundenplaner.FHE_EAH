@@ -99,7 +99,7 @@ android {
             dimension 'version'
     
             // Debug App
-            buildConfigField "boolean", "ALLOW_INVALID_CERTIFICATE", "true"
+            buildConfigField 'boolean', 'ALLOW_INVALID_CERTIFICATE', 'true'
     
         }
         fhe {
@@ -173,8 +173,8 @@ android {
             //schöneren APK Namen
             //archivesBaseName = "Stundenplan"
             // damit wir die debug Version parallel zu der release Version installieren können
-            applicationIdSuffix ".debug"
-            versionNameSuffix "-dev"
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-dev'
             //Disable Crashlytics for your debug builds
             //If you don't need to run a Crashlytics report, speed up your debug builds by disabling the plugin as follows:
             ext.enableCrashlytics = false
