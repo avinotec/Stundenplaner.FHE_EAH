@@ -41,19 +41,19 @@ public class BuildingFloorKey implements Comparable {
      *
      * @return
      */
-    public Complex getComplex() { return cell.getComplex(); }
+    public final Complex getComplex() { return cell.getComplex(); }
 
     /**
      *
      * @return
      */
-    public int getFloorInt() { return cell.getFloorInt(); }
+    public final int getFloorInt() { return cell.getFloorInt(); }
 
     /**
      *
      * @return
      */
-    public String getFloorString() { return NavigationUtils.floorIntToString(cell.getComplex(), cell.getFloorInt());  }
+    public final String getFloorString() { return NavigationUtils.floorIntToString(cell.getComplex(), cell.getFloorInt());  }
 
     /**
      *
@@ -61,7 +61,7 @@ public class BuildingFloorKey implements Comparable {
      * @return boolean true, if the content of the object is equal
      */
     @Override
-    public boolean equals(final Object other) {
+    public final boolean equals(final Object other) {
         if (!(other instanceof BuildingFloorKey))
             return false;
         final BuildingFloorKey that = (BuildingFloorKey) other;
@@ -75,7 +75,7 @@ public class BuildingFloorKey implements Comparable {
      * @return
      */
     @Override
-    public int hashCode() { return Arrays.hashCode(new Object[]{cell.getComplex(), cell.getFloorInt()}); }
+    public final int hashCode() { return Arrays.hashCode(new Object[]{cell.getComplex(), cell.getFloorInt()}); }
 
     /**
      * Returns > 0 if this is bigger than other object o,
@@ -86,7 +86,7 @@ public class BuildingFloorKey implements Comparable {
      * @return
      */
     @Override
-    public int compareTo(final Object o) {
+    public final int compareTo(final Object o) {
         final BuildingFloorKey otherKey = (BuildingFloorKey) o;
         //gleiches Gebäude, gleiche Etage
         if (this.equals(otherKey))

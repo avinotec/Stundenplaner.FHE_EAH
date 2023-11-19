@@ -89,7 +89,7 @@ public final class ApiErrorUtils {
             final String message = Main.getAppContext().getString(R.string.error) + " "
                     + internalErrorCode + details;
             Utils.showToast(message);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.e(TAG, "Problem showing Error Toast", e);
             showErrorToast(internalErrorCode);
         }

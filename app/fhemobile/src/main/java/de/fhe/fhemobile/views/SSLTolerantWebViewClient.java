@@ -32,7 +32,7 @@ import de.fhe.fhemobile.R;
 public class SSLTolerantWebViewClient extends WebViewClient {
 
 	private static final String TAG = SSLTolerantWebViewClient.class.getSimpleName();
-	final private Context context;
+	private final Context context;
 
 	public SSLTolerantWebViewClient(final Context context){
 		this.context = context;

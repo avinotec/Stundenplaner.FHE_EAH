@@ -65,7 +65,7 @@ public class InterCardReader {
 	 * @param card The card to read
 	 * @return Card's data, null if unsupported.
 	 */
-	public CardBalance readCard(DesFireProtocol card) {
+	public static CardBalance readCard(DesFireProtocol card) {
 
 		final int appId = 0x5F8415;
 		final int fileId = 1;
@@ -104,7 +104,7 @@ public class InterCardReader {
 		}
 	}
 
-	public CardBalance readTag(Tag tag) {
+	public static CardBalance readTag(Tag tag) {
 		// Loading tag
 		IsoDep tech = IsoDep.get(tag);
 		/* Returns null if IsoDep was not enumerated in getTechList(). This indicates the tag does not support ISO-DEP. */
@@ -126,7 +126,7 @@ public class InterCardReader {
 			if ( desfireTag == null )
 				throw new DesFireException("Fehler beim Lesen der Karte.");
 
-			final CardBalance cardBalance = InterCardReader.getInstance().readCard(desfireTag);
+			final CardBalance cardBalance = InterCardReader.readCard(desfireTag);
 
 			tech.close();
 

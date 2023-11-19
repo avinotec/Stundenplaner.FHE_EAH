@@ -54,9 +54,9 @@ public class CalendarModel extends EventDispatcher {
 
     private static final String TAG = CalendarModel.class.getSimpleName();
 
-    private final static String localCalendarName = Main.getAppContext().getString(R.string.myschedule_calsync_local_calendar_name);
-    private final static String localCalendarAccount = Main.getAppContext().getString(R.string.app_name);
-    private final static String localCalendarAccountType = ACCOUNT_TYPE_LOCAL;
+    private static final String localCalendarName = Main.getAppContext().getString(R.string.myschedule_calsync_local_calendar_name);
+    private static final String localCalendarAccount = Main.getAppContext().getString(R.string.app_name);
+    private static final String localCalendarAccountType = ACCOUNT_TYPE_LOCAL;
 
     // singleton
     private static CalendarModel ourInstance;
@@ -64,11 +64,11 @@ public class CalendarModel extends EventDispatcher {
 
     //----------------------------------------------------------------------------------------------
 
-    private final static class CalendarProjection {
+    private static final class CalendarProjection {
 
         // Projection array.
         // Creating indices for this array instead of doing dynamic lookups improves performance.
-        static final String[] PROJECTION = new String[]{
+        static final String[] PROJECTION = {
                 Calendars._ID,                           // 0
                 Calendars.ACCOUNT_NAME,                  // 1
                 Calendars.CALENDAR_DISPLAY_NAME,         // 2       The display name of the calendar. Column name.
@@ -106,7 +106,7 @@ public class CalendarModel extends EventDispatcher {
     private CalendarModel() {
     }
 
-    public void notifyChange(final String type) {
+    public final void notifyChange(final String type) {
         dispatchEvent(new CalendarSyncEvent(type));
     }
 
@@ -157,7 +157,7 @@ public class CalendarModel extends EventDispatcher {
                 + Calendars.ACCOUNT_NAME + " = ?) AND ("
                 + Calendars.ACCOUNT_TYPE + " = ?)"
                 + ")";
-        final String[] selectionArgs = new String[]{
+        final String[] selectionArgs = {
                 localCalendarName,
                 localCalendarAccount,
                 localCalendarAccountType};
@@ -255,7 +255,7 @@ public class CalendarModel extends EventDispatcher {
     /**
      * Delete the calendar with the given id
      */
-    public static void deleteCalendar(long calId){
+    public static void deleteCalendar(final long calId){
         final Uri uri;
 
         // falls aus der Nummer kein String gebaut werden kann oder etwas anderes schief geht.
@@ -294,26 +294,28 @@ public class CalendarModel extends EventDispatcher {
     /**
      * Synchronize every event series of the calendar synchronisation to the chosen calendar
      */
-    public static synchronized void syncMySchedule(){
-        Log.i(TAG, "Started synchronizing My Schedule");
-        synchronizationRunning = true;
+    public static void syncMySchedule() {
+        synchronized (CalendarModel.class) {
+            Log.i(TAG, "Started synchronizing My Schedule");
+            synchronizationRunning = true;
 
-        //reduce loading from shared preferences to avoid the thread getting overloaded
-        String calId = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
-                .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_id), null);
-        if(calId == null){
-            Log.e(TAG, "Chosen calendar is null, unable to synchronizes calendar.");
-            return;
-        }
-        //sync
-        for(final MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()){
-            syncEventSeries(eventSeries, calId);
-        }
-        //save calendar entry ids to shared preferences
-        MyScheduleModel.getInstance().saveSubscribedEventSeriesToSharedPreferences();
+            //reduce loading from shared preferences to avoid the thread getting overloaded
+            final String calId = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+                    .getString(Main.getAppContext().getResources().getString(R.string.sp_myschedule_calendar_to_sync_id), null);
+            if (calId == null) {
+                Log.e(TAG, "Chosen calendar is null, unable to synchronizes calendar.");
+                return;
+            }
+            //sync
+            for (final MyScheduleEventSeriesVo eventSeries : MyScheduleModel.getInstance().getSubscribedEventSeries()) {
+                syncEventSeries(eventSeries, calId);
+            }
+            //save calendar entry ids to shared preferences
+            MyScheduleModel.getInstance().saveSubscribedEventSeriesToSharedPreferences();
 
-        Log.i(TAG, "Finished synchronizing My Schedule");
-        synchronizationRunning = false;
+            Log.i(TAG, "Finished synchronizing My Schedule");
+            synchronizationRunning = false;
+        }
     }
 
     /**
@@ -416,7 +418,7 @@ public class CalendarModel extends EventDispatcher {
      */
     @NonNull
     private static ContentValues getCalendarEntryValues(final MyScheduleEventVo scheduleEvent, final String calId) {
-        ContentValues values = getCalendarEntryValues(scheduleEvent);
+        final ContentValues values = getCalendarEntryValues(scheduleEvent);
         values.put(Events.CALENDAR_ID, calId);
         return values;
     }

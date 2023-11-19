@@ -68,7 +68,7 @@ public class CanteenMenuView extends LinearLayout {
     }
 
     @Override
-    protected void onFinishInflate() {
+    protected final void onFinishInflate() {
         super.onFinishInflate();
 
         mErrorText          = (TextView)        findViewById(R.id.tv_canteen_error);
@@ -76,7 +76,7 @@ public class CanteenMenuView extends LinearLayout {
         mCanteenNameText    = (TextView)        findViewById(R.id.tv_canteen_title);
     }
 
-    public void initializeView(final String _CanteenId){
+    public final void initializeView(final String _CanteenId){
         mCanteenId = _CanteenId;
         final CanteenVo selectedCanteen = UserSettings.getInstance().getSelectedCanteen(mCanteenId);
         if (selectedCanteen == null)
@@ -87,13 +87,13 @@ public class CanteenMenuView extends LinearLayout {
         initMenuDaysList();
     }
 
-    public void registerModelListener() {
+    public final void registerModelListener() {
         CanteenModel.getInstance().addListener(
                 CanteenChangeEvent.getReceivedCanteenMenuEventWithCanteenId(mCanteenId),
                 mReceivedCanteenMenuEventListener);
     }
 
-    public void deregisterModelListener() {
+    public final void deregisterModelListener() {
         CanteenModel.getInstance().removeListener(
                 CanteenChangeEvent.getReceivedCanteenMenuEventWithCanteenId(mCanteenId),
                 mReceivedCanteenMenuEventListener);
@@ -102,8 +102,8 @@ public class CanteenMenuView extends LinearLayout {
     /**
      * Initial population of menu days list with list loaded from shared preferences
      */
-    public void initMenuDaysList(){
-        List<CanteenMenuDayVo> menuDaysList = getCanteenMenuDaysFromSharedPreferences();
+    public final void initMenuDaysList(){
+        final List<CanteenMenuDayVo> menuDaysList = getCanteenMenuDaysFromSharedPreferences();
         populateMenuDaysList(menuDaysList);
     }
 
@@ -112,7 +112,7 @@ public class CanteenMenuView extends LinearLayout {
      * If menu is not empty, use the list of {@link CanteenMenuDayVo}s to populate listview,
      * otherwise show an error text.
      */
-    public void populateMenuDaysList(){
+    public final void populateMenuDaysList(){
         List<CanteenMenuDayVo> menuDaysList = CanteenModel.getInstance().getMenu(mCanteenId);
 
         //if menu empty, load from shared preferences
@@ -129,7 +129,7 @@ public class CanteenMenuView extends LinearLayout {
      *
      * @param menuDaysList List of {@link CanteenMenuDayVo}
      */
-    private void populateMenuDaysList(List<CanteenMenuDayVo> menuDaysList) {
+    private void populateMenuDaysList(final List<CanteenMenuDayVo> menuDaysList) {
         //if non-empty, populate view
         if(menuDaysList != null && !menuDaysList.isEmpty()) {
             mMenuDaysListView.setVisibility(VISIBLE);

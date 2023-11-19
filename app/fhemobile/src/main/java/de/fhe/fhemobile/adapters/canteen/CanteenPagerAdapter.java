@@ -29,12 +29,12 @@ public class CanteenPagerAdapter extends FragmentStateAdapter {
 
     @NonNull
     @Override
-    public Fragment createFragment(final int position) {
+    public final Fragment createFragment(final int position) {
         return fragments.get(position);
     }
 
     @Override
-    public int getItemCount() {
+    public final int getItemCount() {
         return fragments.size();
     }
 

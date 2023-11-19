@@ -48,12 +48,12 @@ public class DesFireProtocol {
 
     private final IsoDep mTagTech;
 
-    public DesFireProtocol(IsoDep tagTech) {
+    public DesFireProtocol(final IsoDep tagTech) {
         mTagTech = tagTech;
     }
 
-    public void selectApp(int appId) throws DesFireException {
-        byte[] appIdBuff = new byte[3];
+    public void selectApp(final int appId) throws DesFireException {
+        final byte[] appIdBuff = new byte[3];
         appIdBuff[0] = (byte) ((appId & 0xFF0000) >> 16);
         appIdBuff[1] = (byte) ((appId & 0xFF00) >> 8);
         appIdBuff[2] = (byte) (appId & 0xFF);
@@ -61,13 +61,13 @@ public class DesFireProtocol {
         sendRequest(SELECT_APPLICATION, appIdBuff);
     }
 
-    public DesFireFileSettings getFileSettings(int fileNo) throws DesFireException {
-        byte[] data;
+    public DesFireFileSettings getFileSettings(final int fileNo) throws DesFireException {
+        final byte[] data;
         data = sendRequest(GET_FILE_SETTINGS, new byte[]{(byte) fileNo});
         return DesFireFileSettings.create(data);
     }
 
-    public byte[] readFile(int fileNo) throws DesFireException {
+    public byte[] readFile(final int fileNo) throws DesFireException {
         return sendRequest(READ_DATA, new byte[]{
                 (byte) fileNo,
                 (byte) 0x0, (byte) 0x0, (byte) 0x0,
@@ -75,8 +75,8 @@ public class DesFireProtocol {
         });
     }
 
-    public int readValue(int fileNum) throws DesFireException {
-        byte[] buf = sendRequest(READ_VALUE, new byte[]{
+    public int readValue(final int fileNum) throws DesFireException {
+        final byte[] buf = sendRequest(READ_VALUE, new byte[]{
                 (byte) fileNum
         });
         ArrayUtils.reverse(buf);
@@ -84,13 +84,13 @@ public class DesFireProtocol {
     }
 
 
-    private byte[] sendRequest(byte command, byte[] parameters) throws DesFireException {
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
+    private byte[] sendRequest(final byte command, final byte[] parameters) throws DesFireException {
+        final ByteArrayOutputStream output = new ByteArrayOutputStream();
 
         byte[] recvBuffer;
         try {
             recvBuffer = mTagTech.transceive(wrapMessage(command, parameters));
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new DesFireException(e);
         }
 
@@ -100,14 +100,14 @@ public class DesFireProtocol {
 
             output.write(recvBuffer, 0, recvBuffer.length - 2);
 
-            byte status = recvBuffer[recvBuffer.length - 1];
+            final byte status = recvBuffer[recvBuffer.length - 1];
             if (status == OPERATION_OK) {
                 break;
             }
             else if (status == ADDITIONAL_FRAME) {
                 try {
                     recvBuffer = mTagTech.transceive(wrapMessage(GET_ADDITIONAL_FRAME, null));
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     throw new DesFireException(e);
                 }
             }
@@ -122,8 +122,8 @@ public class DesFireProtocol {
         return output.toByteArray();
     }
 
-    private byte[] wrapMessage(byte command, byte[] parameters) throws DesFireException {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+    private static byte[] wrapMessage(final byte command, final byte[] parameters) throws DesFireException {
+        final ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
         stream.write((byte) 0x90);
         stream.write(command);
@@ -133,7 +133,7 @@ public class DesFireProtocol {
             stream.write((byte) parameters.length);
             try {
                 stream.write(parameters);
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 throw new DesFireException(e);
             }
         }

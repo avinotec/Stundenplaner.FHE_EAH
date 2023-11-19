@@ -16,11 +16,9 @@
  */
 package de.fhe.fhemobile.views.canteen;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -106,12 +104,12 @@ public class CanteenView extends LinearLayout {
     }
 
     private void setCanteenCardBalanceView(){
-        String text;
+        final String text;
 
-        CardBalance balance = CanteenModel.getInstance().getCanteenCardBalance();
+        final CardBalance balance = CanteenModel.getInstance().getCanteenCardBalance();
         if(balance != null){
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy", Locale.ROOT);
-            String dateOfStatus = balance.getDateOfStatus() != null ?
+            final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy", Locale.ROOT);
+            final String dateOfStatus = balance.getDateOfStatus() != null ?
                     sdf.format(balance.getDateOfStatus()) : NO_CANTEEN_BALANCE_DATE_TEXT;
             text = getResources().getString(R.string.canteen_card_balance_status, balance.getBalance(), dateOfStatus);
          } else {
@@ -123,7 +121,7 @@ public class CanteenView extends LinearLayout {
 
     private final EventListener mReceivedAllCanteenMenusEventListener = new EventListener() {
         @Override
-        public void onEvent(Event event) {
+        public void onEvent(final Event event) {
             stopRefreshingAnimation();
         }
     };
@@ -131,14 +129,14 @@ public class CanteenView extends LinearLayout {
 
     private final EventListener mReceivedCanteenCardBalanceListener = new EventListener() {
         @Override
-        public void onEvent(Event event) {
+        public void onEvent(final Event event) {
             setCanteenCardBalanceView();
         }
     };
 
     private final OnClickListener mOnClickListenerCanteenCardBalance = new OnClickListener() {
         @Override
-        public void onClick(View v) {
+        public void onClick(final View v) {
             new AlertDialog.Builder(getContext())
                     .setIcon(R.drawable.ic_help_filled)
                     .setTitle(R.string.canteen_card_info_title)

@@ -10,7 +10,7 @@ public class ApiErrorResponse {
 //    }
 // --Commented out by Inspection STOP (29.03.2023 02:13)
 
-    public int getId(){
+    public final int getId(){
         return id;
     }
 

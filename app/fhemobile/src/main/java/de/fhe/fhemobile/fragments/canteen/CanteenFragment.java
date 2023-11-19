@@ -59,7 +59,7 @@ public class CanteenFragment extends FeatureFragment {
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
+    public final View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 
         NetworkHandler.getInstance().fetchCanteenMenus();
 
@@ -71,7 +71,7 @@ public class CanteenFragment extends FeatureFragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public final void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
@@ -107,13 +107,13 @@ public class CanteenFragment extends FeatureFragment {
     }
 
     @Override
-    public void onResume() {
+    public final void onResume() {
         super.onResume();
         mView.registerModelListener();
     }
 
     @Override
-    public void onPause() {
+    public final void onPause() {
         super.onPause();
         mView.deregisterModelListener();
     }

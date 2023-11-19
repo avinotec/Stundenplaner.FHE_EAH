@@ -46,7 +46,7 @@ public class CanteenMenuDayVo implements Parcelable {
      * by the Parcelable.
      */
     @Override
-    public int describeContents() {
+    public final int describeContents() {
         return 0;
     }
 
@@ -58,7 +58,7 @@ public class CanteenMenuDayVo implements Parcelable {
      *              May be 0 or {@link #PARCELABLE_WRITE_RETURN_VALUE}.
      */
     @Override
-    public void writeToParcel(final Parcel dest, final int flags) {
+    public final void writeToParcel(final Parcel dest, final int flags) {
         dest.writeTypedList(mDishes);
         dest.writeString(mDate);
     }
@@ -74,11 +74,11 @@ public class CanteenMenuDayVo implements Parcelable {
         }
     };
 
-    public List<CanteenDishVo> getItems() {
+    public final List<CanteenDishVo> getItems() {
         return mDishes;
     }
 
-    public String getHeadline() {
+    public final String getHeadline() {
         return mDate;
     }
 

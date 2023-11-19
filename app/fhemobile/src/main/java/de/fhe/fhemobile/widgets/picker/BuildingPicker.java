@@ -33,7 +33,7 @@ public class BuildingPicker extends IdPicker {
 
     public BuildingPicker(final Context context, final AttributeSet attrs) { super(context, attrs); }
 
-    public void setItems(final List<BuildingVo> _items){
+    public final void setItems(final List<BuildingVo> _items){
         mItems = _items;
         if(mItems == null){
             throw new AssertionError("BuildingVo items cannot be null!");
@@ -41,17 +41,17 @@ public class BuildingPicker extends IdPicker {
     }
 
     @Override
-    protected String getId(final int _Position) {
+    protected final String getId(final int _Position) {
         return mItems.get(_Position).getId();
     }
 
     @Override
-    protected String getName(final int _Position) {
+    protected final String getName(final int _Position) {
         return mItems.get(_Position).getBuilding();
     }
 
     @Override
-    protected int getCount() {
+    protected final int getCount() {
         return mItems.size();
     }
 

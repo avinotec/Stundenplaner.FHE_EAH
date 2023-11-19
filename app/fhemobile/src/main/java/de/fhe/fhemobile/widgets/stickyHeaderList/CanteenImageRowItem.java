@@ -33,12 +33,12 @@ public class CanteenImageRowItem extends IRowItem {
     }
 
     @Override
-    public int getViewType() {
+    public final int getViewType() {
         return EItemType.CANTEEN_IMAGE.ordinal();
     }
 
     @Override
-    public View getView(final LayoutInflater _inflater, View _convertView, final ViewGroup _parent) {
+    public final View getView(final LayoutInflater _inflater, View _convertView, final ViewGroup _parent) {
         final ViewHolder holder;
         if (_convertView == null) {
             holder = new ViewHolder();

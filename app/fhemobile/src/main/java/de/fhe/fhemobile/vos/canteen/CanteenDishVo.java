@@ -57,7 +57,7 @@ public class CanteenDishVo implements Parcelable {
      * by the Parcelable.
      */
     @Override
-    public int describeContents() {
+    public final int describeContents() {
         return 0;
     }
 
@@ -69,7 +69,7 @@ public class CanteenDishVo implements Parcelable {
      *              May be 0 or {@link #PARCELABLE_WRITE_RETURN_VALUE}.
      */
     @Override
-    public void writeToParcel(final Parcel dest, final int flags) {
+    public final void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(mTitle);
         dest.writeString(mDescription);
         dest.writeString(mIngredients);
@@ -91,23 +91,23 @@ public class CanteenDishVo implements Parcelable {
         }
     };
 
-    public String getTitle() {
+    public final String getTitle() {
         return mTitle;
     }
 
-    public String getDescription() {
+    public final String getDescription() {
         return mDescription;
     }
 
-    public String getPrice() {
+    public final String getPrice() {
         return mPrice;
     }
 
-    public long getDate() {
+    public final long getDate() {
         return mDate;
     }
 
-    public String getDateString() {
+    public final String getDateString() {
         return mDateString;
     }
 

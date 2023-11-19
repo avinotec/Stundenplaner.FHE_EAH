@@ -60,7 +60,7 @@ public final class CanteenModel extends EventDispatcher {
             ourInstance = new CanteenModel();
 
             final SharedPreferences sharedPreferences = Main.getAppContext().getSharedPreferences(SP_CANTEEN, Context.MODE_PRIVATE);
-            CardBalance balance = new Gson().fromJson(sharedPreferences.getString(SP_KEY_CANTEEN_CARD, ""), CardBalance.class);
+            final CardBalance balance = new Gson().fromJson(sharedPreferences.getString(SP_KEY_CANTEEN_CARD, ""), CardBalance.class);
             ourInstance.setCanteenCardBalance(balance);
 
         }
@@ -147,7 +147,7 @@ public final class CanteenModel extends EventDispatcher {
      * and save the card balance to shared preferences
      * @param cardBalance The {@link CardBalance} to set
      */
-    public void setCanteenCardBalance(CardBalance cardBalance) {
+    public void setCanteenCardBalance(final CardBalance cardBalance) {
         this.mCanteenCardBalance = cardBalance;
         //notify listeners
         notifyChange(CanteenChangeEvent.RECEIVED_CANTEEN_CARD_BALANCE);

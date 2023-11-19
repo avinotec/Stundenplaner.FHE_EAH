@@ -53,7 +53,7 @@ public class MyScheduleCalendarView extends LinearLayout {
     /**
      * Set (or update) the text view displaying the date the schedule has been last updated
      */
-    public void setLastUpdatedTextView(){
+    public static void setLastUpdatedTextView(){
 
         //don't do any timezone magic here (like in MySchedule Events)
         // because Main.getLastUpdateSubscribedEventSeries() is an accurately generated date object
@@ -107,7 +107,7 @@ public class MyScheduleCalendarView extends LinearLayout {
         //refresh gesture
         if(Define.ENABLE_MYSCHEDULE_UPDATING){
             mSwipeRefreshLayout.setOnRefreshListener(() -> {
-                if(MyScheduleModel.getInstance().getSubscribedEventSeries().size() > 0){
+                if(!MyScheduleModel.getInstance().getSubscribedEventSeries().isEmpty()){
                     mSwipeRefreshLayout.setRefreshing(true);
                     FetchMyScheduleBackgroundTask.fetch();
                 } else {

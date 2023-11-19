@@ -24,7 +24,7 @@ public class CalendarSyncEvent extends SimpleEvent{
 
     public static final String CHOSEN_CALENDAR_DELETED = "chosenCalendarDeleted";
 
-    public CalendarSyncEvent(String type) {
+    public CalendarSyncEvent(final String type) {
         super(type);
     }
 }

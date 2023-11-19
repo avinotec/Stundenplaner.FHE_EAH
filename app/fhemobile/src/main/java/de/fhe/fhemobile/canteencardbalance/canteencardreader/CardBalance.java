@@ -84,7 +84,7 @@ public class CardBalance implements Parcelable {
 
     // ---------------------- PARCELABLE ----------------------------------------
 
-    public CardBalance(Parcel _In){
+    public CardBalance(final Parcel _In){
         mBalance = (BigDecimal) _In.readSerializable();
         mLastTransaction = (BigDecimal) _In.readSerializable();
         mDateOfStatus = new Date(_In.readLong());
@@ -93,12 +93,12 @@ public class CardBalance implements Parcelable {
     public  static final Parcelable.Creator<CardBalance> CREATOR
             = new Creator<CardBalance>() {
         @Override
-        public CardBalance createFromParcel(Parcel source) {
+        public CardBalance createFromParcel(final Parcel source) {
             return new CardBalance(source);
         }
 
         @Override
-        public CardBalance[] newArray(int size) {
+        public CardBalance[] newArray(final int size) {
             return new CardBalance[size];
         }
     };
@@ -109,7 +109,7 @@ public class CardBalance implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
+    public void writeToParcel(@NonNull final Parcel dest, final int flags) {
         dest.writeSerializable(mBalance);
         dest.writeSerializable(mLastTransaction);
         dest.writeLong(mDateOfStatus.getTime());

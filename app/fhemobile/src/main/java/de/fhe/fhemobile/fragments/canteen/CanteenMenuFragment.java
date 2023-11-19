@@ -59,7 +59,7 @@ public class CanteenMenuFragment extends FeatureFragment {
     }
 
     @Override
-    public void onCreate(@Nullable final Bundle savedInstanceState) {
+    public final void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (BuildConfig.DEBUG) Assert.assertNotNull(getArguments());
@@ -69,8 +69,8 @@ public class CanteenMenuFragment extends FeatureFragment {
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-                             final Bundle savedInstanceState) {
+    public final View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                                   final Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
         mView = (CanteenMenuView) inflater.inflate(R.layout.fragment_canteen_menu, container, false);
@@ -85,13 +85,13 @@ public class CanteenMenuFragment extends FeatureFragment {
     }
 
     @Override
-    public void onResume() {
+    public final void onResume() {
         super.onResume();
         mView.registerModelListener();
     }
 
     @Override
-    public void onPause() {
+    public final void onPause() {
         super.onPause();
         mView.deregisterModelListener();
     }

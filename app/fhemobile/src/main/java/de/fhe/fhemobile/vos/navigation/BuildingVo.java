@@ -46,7 +46,7 @@ public class BuildingVo {
      * Get the complex ({@link Complex}) the building belongs to (BUILDING_4, BUILDING_5, BUILDING_321)
      * @return complex
      */
-    public Complex getComplex() {
+    public final Complex getComplex() {
         return mComplex;
     }
 
@@ -54,7 +54,7 @@ public class BuildingVo {
      * Returns the String of the building ("01", "02", ...)
      * @return building as String
      */
-    public String getBuilding() {
+    public final String getBuilding() {
         return mBuilding;
     }
 
@@ -63,5 +63,5 @@ public class BuildingVo {
      * Returns ID of the building which equals the string (e.g. "-1", "01", "04, ...)
      * @return id of the building
      */
-    public String getId(){ return mBuilding;}
+    public final String getId(){ return mBuilding;}
 }

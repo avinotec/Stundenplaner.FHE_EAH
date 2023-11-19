@@ -59,7 +59,7 @@ public class BuildingExitVo extends Cell {
         }
     }
 
-    public ArrayList<Complex> getExitTo(){ return exitTo;  }
+    public final ArrayList<Complex> getExitTo(){ return exitTo;  }
 
-    public ArrayList<Complex> getEntryFrom(){ return entryFrom; }
+    public final ArrayList<Complex> getEntryFrom(){ return entryFrom; }
 }

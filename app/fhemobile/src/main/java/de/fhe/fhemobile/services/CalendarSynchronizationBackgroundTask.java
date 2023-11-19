@@ -40,7 +40,7 @@ public class CalendarSynchronizationBackgroundTask implements Runnable {
      * that synchronizes My Schedule with the users calendar every 10 min.
      * @param showToast Boolean, whether to show a toast when synchronization is finished
      */
-    public static void startPeriodicSynchronizing(boolean showToast) {
+    public static void startPeriodicSynchronizing(final boolean showToast) {
         showSyncFinishedToast = showToast;
 
         if (mScheduledFuture == null) {
@@ -73,7 +73,7 @@ public class CalendarSynchronizationBackgroundTask implements Runnable {
 
 
     @Override
-    public void run() {
+    public final void run() {
         Log.i(TAG, "Started CalendarSynchronizationBackgroundTask.run()");
 
         CalendarModel.syncMySchedule();

@@ -53,9 +53,9 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
 
     private static final String TAG = AbstractMyScheduleAdapter.class.getSimpleName();
     @NonNls
-    static private final String HTML_FONT_BOLD_START = "<font><b>";
+    private static final String HTML_FONT_BOLD_START = "<font><b>";
     @NonNls
-    static private final String HTML_FONT_BOLD_END = "</b></font>";
+    private static final String HTML_FONT_BOLD_END = "</b></font>";
 
     protected List<MyScheduleEventSeriesVo> mItems;
     boolean roomVisible = false;
@@ -68,12 +68,12 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
      * Set items of the adapter and notify that the data set changed
      * @param mItems
      */
-    public void setItems(final List<MyScheduleEventSeriesVo> mItems) {
+    public final void setItems(final List<MyScheduleEventSeriesVo> mItems) {
         this.mItems = mItems;
         this.notifyDataSetChanged();
     }
 
-    public void setRoomVisible(final boolean visible){
+    public final void setRoomVisible(final boolean visible){
         roomVisible = visible;
     }
 
@@ -83,7 +83,7 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
      * @return Count of items.
      */
     @Override
-    public int getCount() {
+    public final int getCount() {
         return mItems != null ? mItems.size() : 0;
     }
 
@@ -95,7 +95,7 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
      * @return The data at the specified position.
      */
     @Override
-    public Object getItem(final int position) {
+    public final Object getItem(final int position) {
         if(mItems != null) return mItems.get(position);
         else return null;
     }
@@ -107,7 +107,7 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
      * @return The id of the item at the specified position.
      */
     @Override
-    public long getItemId(final int position) {
+    public final long getItemId(final int position) {
         return position;
     }
 
@@ -130,7 +130,7 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
      * @return A View corresponding to the data at the specified position.
      */
     @Override
-    public View getView(final int position, View convertView, final ViewGroup parent) {
+    public final View getView(final int position, View convertView, final ViewGroup parent) {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(Main.getAppContext()).
@@ -224,7 +224,7 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
         }
 
         @Override
-        public void onClick(final View view) {
+        public final void onClick(final View v) {
             //remove all previously added textviews of event series to avoid duplicates
             final LinearLayout layoutAllEvents = convertView.findViewById(R.id.layout_myschedule_eventseries_events);
             final int layoutAllEventsSize = layoutAllEvents.getChildCount();
@@ -249,8 +249,8 @@ public abstract class AbstractMyScheduleAdapter extends BaseAdapter {
         }
     }
 
-    void setAndAddEventDataTextViews(final MyScheduleEventVo _Event,
-                                     final LinearLayout _LayoutAllEvents){
+    final void setAndAddEventDataTextViews(final MyScheduleEventVo _Event,
+                                           final LinearLayout _LayoutAllEvents){
         final TextView dateAndRoomTextView = new TextView(Main.getAppContext());
         final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         params.setMargins(0,5,5,10);

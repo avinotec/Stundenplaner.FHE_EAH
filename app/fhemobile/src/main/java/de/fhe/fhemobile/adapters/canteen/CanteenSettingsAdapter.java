@@ -46,7 +46,7 @@ public class CanteenSettingsAdapter extends BaseAdapter {
      * @return Count of items.
      */
     @Override
-    public int getCount() {
+    public final int getCount() {
         return mItems.length;
     }
 
@@ -58,7 +58,7 @@ public class CanteenSettingsAdapter extends BaseAdapter {
      * @return The data at the specified position.
      */
     @Override
-    public Object getItem(final int position) {
+    public final Object getItem(final int position) {
         return mItems[position];
     }
 
@@ -69,7 +69,7 @@ public class CanteenSettingsAdapter extends BaseAdapter {
      * @return The id of the item at the specified position.
      */
     @Override
-    public long getItemId(final int position) {
+    public final long getItemId(final int position) {
         return Long.parseLong(mItems[position].getCanteenId());
     }
 
@@ -92,7 +92,7 @@ public class CanteenSettingsAdapter extends BaseAdapter {
      * @return A View corresponding to the data at the specified position.
      */
     @Override
-    public View getView(final int position, View convertView, final ViewGroup parent) {
+    public final View getView(final int position, View convertView, final ViewGroup parent) {
 
         final LayoutInflater inflater =
                 (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

@@ -33,40 +33,40 @@ public class DesFireUtils {
     private DesFireUtils() {
     }
 
-    public static int byteArrayToInt(byte[] b) {
+    public static int byteArrayToInt(final byte[] b) {
         return byteArrayToInt(b, 0);
     }
 
-    private static int byteArrayToInt(byte[] b, int offset) {
+    private static int byteArrayToInt(final byte[] b, final int offset) {
         return byteArrayToInt(b, offset, b.length);
     }
 
-    private static int byteArrayToInt(byte[] b, int offset, int length) {
+    private static int byteArrayToInt(final byte[] b, final int offset, final int length) {
         return (int) byteArrayToLong(b, offset, length);
     }
 
-    private static long byteArrayToLong(byte[] b, int offset, int length) {
+    private static long byteArrayToLong(final byte[] b, final int offset, final int length) {
         if (b.length < length)
             throw new IllegalArgumentException("length must be less than or equal to b.length");
 
         long value = 0;
         for (int i = 0; i < length; i++) {
-            int shift = (length - 1 - i) * 8;
+            final int shift = (length - 1 - i) * 8;
             value += (long) (b[i + offset] & 0x000000FF) << shift;
         }
         return value;
     }
 
     @Nullable
-    public static DesFireFileSettings selectAppFile(DesFireProtocol tag, int appID, int fileID) {
+    public static DesFireFileSettings selectAppFile(final DesFireProtocol tag, final int appID, final int fileID) {
         try {
             tag.selectApp(appID);
-        } catch (DesFireException e) {
+        } catch (final DesFireException e) {
             return null;
         }
         try {
             return tag.getFileSettings(fileID);
-        } catch (DesFireException e) {
+        } catch (final DesFireException e) {
             return null;
         }
     }
