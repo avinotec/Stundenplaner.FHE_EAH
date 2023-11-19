@@ -36,14 +36,8 @@ android {
      */
 
     compileOptions {
-        // Error: Invoke-customs are only supported starting with Android O (--min-api 26)
-        // solution: Java 8
-        // Attention: desktop adds '' arround the string. Remove them
-        //Dieser bekackte String gegenüber 1.8 bewirkt, dass die seltsamen Kotlin Fehler (Ab AndroidStudio 3.5) bei Release/APK ausbleiben
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-        //sourceCompatibility '16'
-        //targetCompatibility '16'
     }
 
 
@@ -86,7 +80,7 @@ android {
      * If you declare product flavors, you must also declare flavor dimensions
      * and assign each flavor to a flavor dimension.
      */
-    flavorDimensions "version"
+    flavorDimensions 'version'
     productFlavors {
 
         /**
@@ -97,7 +91,7 @@ android {
         eah {
             /* applicationId 'de.fhe.eahmobile' alte ID*/
             applicationId 'de.eahjena.stundenplan'
-            dimension "version"
+            dimension 'version'
     
             // Debug App
             buildConfigField "boolean", "ALLOW_INVALID_CERTIFICATE", "true"
@@ -105,7 +99,7 @@ android {
         }
         fhe {
             applicationId "de.fhe.fhemobile"
-            dimension "version"
+            dimension 'version'
         }
     }
     
