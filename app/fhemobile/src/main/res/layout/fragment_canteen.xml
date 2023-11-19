@@ -18,6 +18,7 @@
 
 <de.fhe.fhemobile.views.canteen.CanteenView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -66,7 +67,7 @@
         android:textSize="15sp"
         android:textIsSelectable="false"
         android:text="@string/canteen_card_balance_status"
-        android:drawableEnd="@drawable/ic_help_outline"
-        android:drawablePadding="5dp"/>
+        android:drawablePadding="5dp"
+        app:drawableEndCompat="@drawable/ic_help_outline" />
 
 </de.fhe.fhemobile.views.canteen.CanteenView>
