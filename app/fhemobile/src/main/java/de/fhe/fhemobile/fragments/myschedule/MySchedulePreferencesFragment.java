@@ -225,7 +225,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                 }
                 //CALENDAR SELECTED
                 //another calendar has been chosen before and synchronization is activated
-                else if (mCalendarSelectionPref.getEntry() != null && !"".equals(mCalendarSelectionPref.getEntry().toString())
+                else if (mCalendarSelectionPref.getEntry() != null && !mCalendarSelectionPref.getEntry().toString().isEmpty()
                         && mCalendarSyncSwitchPref.isChecked()) {
                     //show warning that calendar selection cannot be changed while sync is on
                     Utils.showToastLong(R.string.myschedule_pref_choose_calendar_warning);
@@ -324,7 +324,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         //only set to visible if a calendar is chosen
         mDeleteCalendarEntriesPref.setEnabled(false);
         //if a calendar is already chosen
-        if (mCalendarSelectionPref.getValue() != null && !mCalendarSelectionPref.getValue().equals("")) {
+        if (mCalendarSelectionPref.getValue() != null && !mCalendarSelectionPref.getValue().isEmpty()) {
             String chosenCalName = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
                     .getString(getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), getResources().getString(R.string.myschedule_pref_choose_calendar_summary));
             mCalendarSelectionPref.setSummary(chosenCalName);
@@ -494,7 +494,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
 
     }
 
-    private boolean isCalendarPermissionGranted() {
+    private static boolean isCalendarPermissionGranted() {
         final boolean bReadPermissionGranted = ContextCompat.checkSelfPermission(Main.getAppContext(),
                 Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED;
         final boolean bWritePermissionGranted = ContextCompat.checkSelfPermission(Main.getAppContext(),
@@ -508,7 +508,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                 Manifest.permission.WRITE_CALENDAR});
     }
 
-    private boolean isNotificationPermissionGranted() {
+    private static boolean isNotificationPermissionGranted() {
         /*
          * Ab Android Level 33:
          * Standardmäßig enthält das FCM SDK (Version 23.0.6 oder höher) die im Manifest definierte
