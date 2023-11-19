@@ -74,7 +74,7 @@ public final class MyScheduleUtils {
 	 * @param time The incorrect time in long
 	 * @return The time in correct long. null, if parsing failed.
 	 */
-	public static Long convertEahApiTimeToUtc(long time){
+	public static Long convertEahApiTimeToUtc(final long time){
 		//!!!NOTE: do not debug timezones in the emulator - it's a mess, it is never set as you expected
 
 		//convert long to string
@@ -82,12 +82,12 @@ public final class MyScheduleUtils {
 		//magic trick no. 1
 		sdf1.setTimeZone(TimeZone.getTimeZone("UTC"));
 		// date string in german time
-		String germanDateString = sdf1.format(time * 1000);
+		final String germanDateString = sdf1.format(time * 1000);
 
 		//magic trick no. 2
 		final SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.GERMANY);
 		try {
-			Date correctDate = sdf2.parse(germanDateString);
+			final Date correctDate = sdf2.parse(germanDateString);
 			return correctDate.getTime();
 		} catch (final ParseException ex){
 			Log.e(TAG, "Failed to parse date string", ex);
@@ -255,7 +255,7 @@ public final class MyScheduleUtils {
 	 * @param eventSeries The {@link MyScheduleEventSeriesVo} to check
 	 * @return True if the event series is identified as exam
 	 */
-	public static boolean isExam(MyScheduleEventSeriesVo eventSeries){
+	public static boolean isExam(final MyScheduleEventSeriesVo eventSeries){
 		//example: "BT/MT/WT(BA)Biomat./APL/01" -> base title "BT/MT/WT(BA)Biomat./APL" ends with an exam ending
 		//noinspection HardCodedStringLiteral
 		return getEventSeriesBaseTitle(eventSeries.getTitle()).matches(".*(PL)|(Prfg\\.)");
@@ -266,7 +266,7 @@ public final class MyScheduleUtils {
 	 * @param eventSeries The {@link MyScheduleEventSeriesVo} to check
 	 * @return True if the given event series resulted from merging multiple event series
 	 */
-	public static boolean isMergedEventSeries(MyScheduleEventSeriesVo eventSeries){
+	public static boolean isMergedEventSeries(final MyScheduleEventSeriesVo eventSeries){
 		//e.g. true for WI/WIEC(BA)Mathe/Ü/01_02, false for WI/WIEC(BA)Mathe/Ü/01
 		return eventSeries.getTitle().matches(".*/" + regexMergedEventSetNumber + "$");
 	}
@@ -278,18 +278,18 @@ public final class MyScheduleUtils {
 	 *                            e.g. putting together two event sets for a practise series.
 	 * @return True, if the single event series is part of the merged event series
 	 */
-	public static boolean containedInMergedEventSeries(String singleEventSeries, String mergedEventSeries){
+	public static boolean containedInMergedEventSeries(final String singleEventSeries, final String mergedEventSeries){
 
 		//check if both titles belong to the same study program, subject and event type e.g. WI/WIEC(BA)Mathe/Ü
 		if(getEventSeriesBaseTitle(singleEventSeries).equals(getEventSeriesBaseTitle(mergedEventSeries))){
 
-			Matcher matcherSingle = patternEventSetNumber.matcher(singleEventSeries);
-			Matcher matcherMerged = patternEventSetNumber.matcher(mergedEventSeries);
+			final Matcher matcherSingle = patternEventSetNumber.matcher(singleEventSeries);
+			final Matcher matcherMerged = patternEventSetNumber.matcher(mergedEventSeries);
 
 			//occurrences/event set numbers for both event series were found
 			if(matcherSingle.find() && matcherMerged.find()){
-				String eventSetSingle = matcherSingle.group(0);
-				String eventSetsMerged = matcherMerged.group(0);
+				final String eventSetSingle = matcherSingle.group(0);
+				final String eventSetsMerged = matcherMerged.group(0);
 
 				if(eventSetsMerged.contains(eventSetSingle)){
 					//merged event series contains event set number of the single event series

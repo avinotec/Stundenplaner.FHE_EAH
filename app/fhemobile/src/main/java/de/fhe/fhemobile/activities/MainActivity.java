@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
         setContentView(R.layout.activity_main);
 
         /* Fix: No Network Security Config specified, using platform default - Android Log */
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        final StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
         final Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
             nfcPendingIntent = PendingIntent.getActivity(
                     this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
                     PendingIntent.FLAG_MUTABLE);
-            IntentFilter intentFilter = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
+            final IntentFilter intentFilter = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
             intentFiltersArray = new IntentFilter[]{intentFilter,};
             techListsArray = new String[][]{new String[]{IsoDep.class.getName()}};
 
@@ -218,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     public void changeFragment(final FeatureFragment _Fragment, final boolean _AddToBackStack) {
         mCurrentFragment = _Fragment;
         //tag of the new fragment to later find the fragment by tag
-        String tag = mCurrentFragment.getFeatureTag();
+        final String tag = mCurrentFragment.getFeatureTag();
 
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, _Fragment, tag);
@@ -308,12 +308,12 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
+    protected void onNewIntent(final Intent intent) {
         super.onNewIntent(intent);
 
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
-            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            CardBalance balance = InterCardReader.readTag(tag);
+            final Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            final CardBalance balance = InterCardReader.readTag(tag);
             if (balance != null) {
                 Log.d(TAG, "Read canteen card balance: " + balance.toString());
 

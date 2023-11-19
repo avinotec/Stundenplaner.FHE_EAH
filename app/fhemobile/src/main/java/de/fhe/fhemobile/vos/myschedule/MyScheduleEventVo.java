@@ -266,11 +266,11 @@ public class MyScheduleEventVo implements Parcelable {
         this.mTitle = title;
     }
 
-    public void setCalEventId(Long newValue) {
+    public void setCalEventId(final Long newValue) {
         this.mCalEventId = newValue;
     }
 
-    public void setChangedSinceLastCalSync(boolean newValue) {
+    public void setChangedSinceLastCalSync(final boolean newValue) {
         this.mChangedSinceLastCalSync = newValue;
     }
 

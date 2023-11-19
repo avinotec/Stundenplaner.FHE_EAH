@@ -57,7 +57,7 @@ import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
  *
  * created by Nadja - 15.02.2023
  */
-public class MyScheduleModel extends EventDispatcher {
+public final class MyScheduleModel extends EventDispatcher {
 
     private static final String TAG = MyScheduleModel.class.getSimpleName();
 
@@ -88,8 +88,8 @@ public class MyScheduleModel extends EventDispatcher {
         if (!json.isEmpty() && !"null".equals(json)) { //NON-NLS
             final Gson gson = new Gson();
             final Type listType = new TypeToken<ArrayList<MyScheduleEventSeriesVo>>(){}.getType();
-            ArrayList<MyScheduleEventSeriesVo> list = gson.fromJson(json, listType);
-            for(MyScheduleEventSeriesVo eventSeriesVo : list){
+            final ArrayList<MyScheduleEventSeriesVo> list = gson.fromJson(json, listType);
+            for(final MyScheduleEventSeriesVo eventSeriesVo : list){
                 this.addToSubscribedEventSeries(eventSeriesVo);
             }
         }
@@ -142,7 +142,7 @@ public class MyScheduleModel extends EventDispatcher {
      */
     public void updateSubscribedEventSeriesAndAdapters(final List<MyScheduleEventSeriesVo> updatedSubscribedEventSeries){
 
-        for(MyScheduleEventSeriesVo series : updatedSubscribedEventSeries){
+        for(final MyScheduleEventSeriesVo series : updatedSubscribedEventSeries){
 
             if(getInstance().containedInSubscribedEventSeries(series)){
                 //update subscribed event series
@@ -197,7 +197,7 @@ public class MyScheduleModel extends EventDispatcher {
      * @return List of {@link MyScheduleEventVo}s
      */
     public List<MyScheduleEventSeriesVo> getSortedSubscribedEventSeries(){
-        List<MyScheduleEventSeriesVo> list = new ArrayList<>(subscribedEventSeries.values());
+        final List<MyScheduleEventSeriesVo> list = new ArrayList<>(subscribedEventSeries.values());
         Collections.sort(list, new EventSeriesTitleComparator());
         return list;
     }
@@ -215,7 +215,7 @@ public class MyScheduleModel extends EventDispatcher {
      * @param eventSeries
      * @return
      */
-    public boolean containedInSubscribedEventSeries(MyScheduleEventSeriesVo eventSeries){
+    public boolean containedInSubscribedEventSeries(final MyScheduleEventSeriesVo eventSeries){
         return subscribedEventSeries.containsKey(eventSeries.getTitle());
     }
 
@@ -256,7 +256,7 @@ public class MyScheduleModel extends EventDispatcher {
      * Add given {@link MyScheduleEventSeriesVo} to subscriptions
      * @param seriesVo
      */
-    public void addToSubscribedEventSeries(MyScheduleEventSeriesVo seriesVo){
+    public void addToSubscribedEventSeries(final MyScheduleEventSeriesVo seriesVo){
         //set subscribed -> needed for the case that an exam is being deleted by the user while fetching my schedule is adding it
         seriesVo.setSubscribed(true);
         subscribedEventSeries.put(seriesVo.getTitle(), seriesVo);

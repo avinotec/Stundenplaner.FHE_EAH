@@ -20,7 +20,7 @@ package de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.util;
 /**
  * A subset of Apache Commons Lang's ArrayUtils.java
  */
-public class ArrayUtils {
+public final class ArrayUtils {
 
     private ArrayUtils() {
     }

@@ -49,7 +49,7 @@ import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
  *
  * Created by Nadja - 27.06.2023
  */
-public class TimetableChangeDetectionUtils {
+public final class TimetableChangeDetectionUtils {
 
     private static final String TAG = TimetableChangeDetectionUtils.class.getSimpleName();
 
@@ -94,8 +94,8 @@ public class TimetableChangeDetectionUtils {
         }
 
         //DETECT zusammengelegte Veranstaltungsreihen
-        Set<String> setOfEventSeriesTitles = localEventSeriesSubList.keySet();
-        Map<String, MyScheduleEventSeriesVo> mergedEventSeries = getMergedEventSeriesNeededToBeSubscribed(setOfEventSeriesTitles, fetchedEventSeriesVos);
+        final Set<String> setOfEventSeriesTitles = localEventSeriesSubList.keySet();
+        final Map<String, MyScheduleEventSeriesVo> mergedEventSeries = getMergedEventSeriesNeededToBeSubscribed(setOfEventSeriesTitles, fetchedEventSeriesVos);
         if(!mergedEventSeries.isEmpty()){
             eventSeriesToAdd.addAll(mergedEventSeries.values());
             showMergedEventSeriesAddedToast();
@@ -228,9 +228,9 @@ public class TimetableChangeDetectionUtils {
                 }
                 //If fetchedEventSet size == localEventSet size (note: localEventSet is cleaned from deleted and increased by added events),
                 // we assume that we can compare events at the same positions to detect changed properties
-                if (BuildConfig.DEBUG && false) {
-                    Assert.assertEquals(localEventSetEntry.getValue().size(), fetchedEventSet.getEventDates().size());
-                }
+                //if (BuildConfig.DEBUG && false) {
+                //    Assert.assertEquals(localEventSetEntry.getValue().size(), fetchedEventSet.getEventDates().size());
+                //}
 
                 if (localEventSetEntry.getValue().size() == fetchedEventSet.getEventDates().size()) {
                     //check for changed property values
@@ -307,17 +307,17 @@ public class TimetableChangeDetectionUtils {
      * @return A map containing all merged event series' the user should subscribe, by event series title
      */
     private static Map<String, MyScheduleEventSeriesVo> getMergedEventSeriesNeededToBeSubscribed(
-            Set<String> localEventSeriesTitles,
-            List<MyScheduleEventSeriesVo> fetchedEventSeriesVos){
+            final Set<String> localEventSeriesTitles,
+            final List<MyScheduleEventSeriesVo> fetchedEventSeriesVos){
 
-        Map<String, MyScheduleEventSeriesVo> result = new HashMap<>();
+        final Map<String, MyScheduleEventSeriesVo> result = new HashMap<>();
 
-        for(MyScheduleEventSeriesVo fetchedEventSeries : fetchedEventSeriesVos){
+        for(final MyScheduleEventSeriesVo fetchedEventSeries : fetchedEventSeriesVos){
             //if fetchedEventSeries is a merged event series and not subscribed yet
             if(MyScheduleUtils.isMergedEventSeries(fetchedEventSeries)
                     && !localEventSeriesTitles.contains(fetchedEventSeries.getTitle())){
 
-                for(String localEventSeriesTitle : localEventSeriesTitles){
+                for(final String localEventSeriesTitle : localEventSeriesTitles){
                     //The local/subscribed event series is contained in the merged event series
                     // and the user is not subscribing it yet
                     if(MyScheduleUtils.containedInMergedEventSeries(localEventSeriesTitle, fetchedEventSeries.getTitle())){

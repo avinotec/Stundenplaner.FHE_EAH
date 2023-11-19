@@ -104,8 +104,8 @@ public final class SemesterDatesModel extends EventDispatcher {
 
 
         //find current semester
-        int currentYear;
-        String semesterType;
+        final int currentYear;
+        final String semesterType;
 
         if (now.before(calWsHolidayStart)) {
             currentYear = calWsHolidayStart.get(Calendar.YEAR);

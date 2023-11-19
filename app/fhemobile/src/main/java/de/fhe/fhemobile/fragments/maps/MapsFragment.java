@@ -86,7 +86,7 @@ public class MapsFragment extends Fragment {
             /*
             android.nonFinalResIds=true */
             // Erhalte den Namen der Karte als String aus den Ressourcen
-            String mapName = getResources().getString(mMap.getNameID());
+            final String mapName = getResources().getString(mMap.getNameID());
 
             // Setze mCurrentMapIndex basierend auf dem Namen der Karte
             if (mapName.equals(getString(R.string.building_03_02_01))) {
@@ -145,7 +145,7 @@ public class MapsFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()

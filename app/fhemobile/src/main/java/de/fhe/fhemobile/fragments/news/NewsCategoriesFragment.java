@@ -49,7 +49,7 @@ public class NewsCategoriesFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        NewsCategoriesView mView = (NewsCategoriesView) inflater.inflate(R.layout.fragment_news_categories, container, false);
+        final NewsCategoriesView mView = (NewsCategoriesView) inflater.inflate(R.layout.fragment_news_categories, container, false);
         mView.initializeView(mViewsListener);
 
         if(NewsModel.getInstance().getCategoryItems() == null) {

@@ -13,7 +13,7 @@ import de.fhe.fhemobile.vos.timetable.LecturerVo;
 public class LecturerComparator implements Comparator<LecturerVo> {
 
     @Override
-    public int compare(LecturerVo l0, LecturerVo l1) {
+    public int compare(final LecturerVo l0, final LecturerVo l1) {
         return l0.getId().compareTo(l1.getId());
     }
 }

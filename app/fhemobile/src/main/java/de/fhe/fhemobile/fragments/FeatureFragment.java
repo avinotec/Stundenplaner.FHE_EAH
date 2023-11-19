@@ -32,7 +32,7 @@ public abstract class FeatureFragment extends Fragment {
      * Tag of the fragment by which it can be found and which is used for logging
      * @param tag The fragment's tag
      */
-    public FeatureFragment(String tag) {
+    public FeatureFragment(final String tag) {
         this.mFeatureTag = tag;
     }
 

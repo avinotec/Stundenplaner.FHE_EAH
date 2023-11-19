@@ -44,7 +44,7 @@ public class SemesterDatesWebView extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        WebView mWebView = (WebView) findViewById(R.id.semesterDatesWebView);
+        final WebView mWebView = (WebView) findViewById(R.id.semesterDatesWebView);
         //wird der WebViewClient nicht geaendert, kann die Seite nicht geladen werden, da die Webview
         mWebView.setWebViewClient(new SSLTolerantWebViewClient(mContext));
         //Ohne JavascriptEnabled laesst sich das WebView nicht scrollen.

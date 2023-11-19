@@ -72,7 +72,7 @@ public class TimetableFragment extends FeatureFragment {
 
 	public static final String TAG = TimetableFragment.class.getSimpleName();
 
-	public static TimetableFragment newInstance(String timeTableId){
+	public static TimetableFragment newInstance(final String timeTableId){
 		final TimetableFragment fragment = new TimetableFragment();
 		final Bundle args = new Bundle();
 		args.putString(Define.Timetable.KEY_TIMETABLE_ID, timeTableId);
@@ -104,7 +104,7 @@ public class TimetableFragment extends FeatureFragment {
 	}
 
 	@Override
-	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+	public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
 		//replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()

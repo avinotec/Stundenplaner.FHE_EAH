@@ -55,7 +55,7 @@ public class NewsSingleViewFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        NewsSingleView mView = (NewsSingleView) inflater.inflate(R.layout.fragment_news_single, container, false);
+        final NewsSingleView mView = (NewsSingleView) inflater.inflate(R.layout.fragment_news_single, container, false);
 
         mView.setTitle(mNewsItem.getTitle());
         mView.setText(mNewsItem.getEncoded());

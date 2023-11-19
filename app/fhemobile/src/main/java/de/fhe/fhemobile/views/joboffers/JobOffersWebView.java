@@ -38,7 +38,7 @@ public class JobOffersWebView extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        WebView mWebView = (WebView) findViewById(R.id.webview_joboffers);
+        final WebView mWebView = (WebView) findViewById(R.id.webview_joboffers);
         //if the WebViewClient is not changed, the website is not able to load
         mWebView.setWebViewClient(new SSLTolerantWebViewClient(mContext));
         //JavaScript needs to be enabled to work properly

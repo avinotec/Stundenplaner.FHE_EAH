@@ -158,7 +158,7 @@ public class MyScheduleCalendarView extends LinearLayout {
 
     private final EventListener mUpdatedMyScheduleEventListener = new EventListener() {
         @Override
-        public void onEvent(Event event) {
+        public void onEvent(final Event event) {
             setLastUpdatedTextView();
             stopRefreshingAnimation();
         }

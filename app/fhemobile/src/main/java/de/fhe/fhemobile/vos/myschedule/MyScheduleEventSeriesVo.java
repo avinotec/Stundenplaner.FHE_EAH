@@ -150,10 +150,10 @@ public class MyScheduleEventSeriesVo implements Parcelable{
 	 * @return
 	 */
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (!(o instanceof MyScheduleEventSeriesVo)) return false;
-		MyScheduleEventSeriesVo that = (MyScheduleEventSeriesVo) o;
+		final MyScheduleEventSeriesVo that = (MyScheduleEventSeriesVo) o;
 		return mTitle.equals(that.mTitle) && Objects.equals(mStudyGroups, that.mStudyGroups) && mModuleId.equals(that.mModuleId) && Objects.equals(mEventSetIds, that.mEventSetIds) && Objects.equals(mEvents, that.mEvents);
 	}
 

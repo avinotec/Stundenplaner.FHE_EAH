@@ -49,7 +49,7 @@ import de.fhe.fhemobile.vos.myschedule.MyScheduleEventVo;
  *
  * created by Nadja - 03/2023
  */
-public class CalendarModel extends EventDispatcher {
+public final class CalendarModel extends EventDispatcher {
     //Android Developer Tutorial: https://developer.android.com/guide/topics/providers/calendar-provider
 
     private static final String TAG = CalendarModel.class.getSimpleName();

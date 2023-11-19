@@ -41,7 +41,7 @@ import de.fhe.fhemobile.utils.Utils;
 /**
  * Reader for cards of the type InterCard
  */
-public class InterCardReader {
+public final class InterCardReader {
 
 	static final String TAG = InterCardReader.class.getSimpleName();
 
@@ -65,35 +65,35 @@ public class InterCardReader {
 	 * @param card The card to read
 	 * @return Card's data, null if unsupported.
 	 */
-	public static CardBalance readCard(DesFireProtocol card) {
+	public static CardBalance readCard(final DesFireProtocol card) {
 
 		final int appId = 0x5F8415;
 		final int fileId = 1;
 		// Selecting app and file
-		DesFireFileSettings settings = DesFireUtils.selectAppFile(card, appId, fileId);
+		final DesFireFileSettings settings = DesFireUtils.selectAppFile(card, appId, fileId);
 
 		if (settings instanceof DesFireFileSettings.ValueDesFireFileSettings) {
 			// Found value file
 
             // Last transaction in tenths of Euro cents
-			int lastTransactionTenthsOfCents = ((DesFireFileSettings.ValueDesFireFileSettings) settings).value;
+			final int lastTransactionTenthsOfCents = ((DesFireFileSettings.ValueDesFireFileSettings) settings).value;
 
             // Last transaction in Euro
-            BigDecimal lastTransaction = new BigDecimal(lastTransactionTenthsOfCents)
+            final BigDecimal lastTransaction = new BigDecimal(lastTransactionTenthsOfCents)
                     .divide(THOUSAND, 4, RoundingMode.HALF_UP);
 
 			// Reading value
 			try {
 				// Balance in tenths of Euro cents
-				int balanceTenthsOfCents = card.readValue(fileId);
+				final int balanceTenthsOfCents = card.readValue(fileId);
 
 				// Balance in Euro
-				BigDecimal balance = new BigDecimal(balanceTenthsOfCents)
+				final BigDecimal balance = new BigDecimal(balanceTenthsOfCents)
 						.divide(THOUSAND, 4, RoundingMode.HALF_UP);
 
 
 				return new CardBalance(balance, lastTransaction, new Date());
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				return null;
 			}
 
@@ -104,16 +104,16 @@ public class InterCardReader {
 		}
 	}
 
-	public static CardBalance readTag(Tag tag) {
+	public static CardBalance readTag(final Tag tag) {
 		// Loading tag
-		IsoDep tech = IsoDep.get(tag);
+		final IsoDep tech = IsoDep.get(tag);
 		/* Returns null if IsoDep was not enumerated in getTechList(). This indicates the tag does not support ISO-DEP. */
 		if ( tech == null )
 			return null;
 
 		try {
 			tech.connect();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			//Tag was removed
 			Log.e(TAG, "Canteen card was removed before reading NFC Tag.", e);
 			Utils.showToastLong(R.string.canteen_card_error);
@@ -149,14 +149,14 @@ public class InterCardReader {
 			return InterCardReader.getInstance().readCard(desfireTag);*/
 
 
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			//This can only happen on tag close. we ignore this.
 			Log.e(TAG, "E2012 Lesefehler");
 			return null;
 		} finally {
 				try {
 					tech.close();
-				} catch (IOException e) {
+				} catch (final IOException e) {
 					;
 				}
 		}

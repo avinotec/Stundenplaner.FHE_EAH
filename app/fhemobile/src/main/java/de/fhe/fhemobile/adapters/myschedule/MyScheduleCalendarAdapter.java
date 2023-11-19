@@ -58,7 +58,7 @@ public class MyScheduleCalendarAdapter extends BaseAdapter {
 		mItems = new ArrayList<>();
 		//add items to mItems, ignore past days
 		//not used: SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd");
-		for (MyScheduleEventVo item : items) {
+		for (final MyScheduleEventVo item : items) {
 			//if event start is today or in the future
 			if (new TimeIgnoringDateComparator().compare(item.getStartDate(), new Date()) >= 0) {
 				mItems.add(item);

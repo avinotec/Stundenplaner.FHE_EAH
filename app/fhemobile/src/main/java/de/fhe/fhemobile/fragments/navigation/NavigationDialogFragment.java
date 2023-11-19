@@ -86,7 +86,7 @@ public class NavigationDialogFragment extends FeatureFragment {
                              final Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        NavigationDialogView mView = (NavigationDialogView) inflater.inflate(R.layout.fragment_navigation_dialog,
+        final NavigationDialogView mView = (NavigationDialogView) inflater.inflate(R.layout.fragment_navigation_dialog,
                 container, false);
 
         mView.initializeView(getChildFragmentManager(), getLifecycle());
@@ -95,7 +95,7 @@ public class NavigationDialogFragment extends FeatureFragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()

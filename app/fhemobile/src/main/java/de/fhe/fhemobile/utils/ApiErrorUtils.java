@@ -33,7 +33,7 @@ public final class ApiErrorUtils {
 
     private static final String TAG = ApiErrorUtils.class.getSimpleName();
 
-    public static class ApiErrorCode {
+    public static final class ApiErrorCode {
 
         public static final String TIMETABLE_FRAGMENT_CODE1 = "4001";
         public static final String TIMETABLE_FRAGMENT_CODE2 = "4002";

@@ -42,7 +42,7 @@ public class NewsWebView extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        WebView mWebView = (WebView) findViewById(R.id.webview_news);
+        final WebView mWebView = (WebView) findViewById(R.id.webview_news);
         //wird der WebViewClient nicht geaendert, kann die Seite nicht geladen werden, da die Webview
         mWebView.setWebViewClient(new SSLTolerantWebViewClient(mContext));
         //JavaScripted needs to be enabled

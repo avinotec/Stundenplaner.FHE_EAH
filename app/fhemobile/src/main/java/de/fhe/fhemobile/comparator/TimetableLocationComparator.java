@@ -13,7 +13,7 @@ import de.fhe.fhemobile.vos.timetable.TimetableLocationVo;
 public class TimetableLocationComparator implements Comparator<TimetableLocationVo> {
 
     @Override
-    public int compare(TimetableLocationVo t0, TimetableLocationVo t1) {
+    public int compare(final TimetableLocationVo t0, final TimetableLocationVo t1) {
         return t0.getId().compareTo(t1.getId());
     }
 }

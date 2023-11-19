@@ -72,7 +72,7 @@ public class PushNotificationService extends FirebaseMessagingService {
         messages. For more see: https://firebase.google.com/docs/cloud-messaging/concept-options */
 
         if(remoteMessage.getData().containsKey("type") && remoteMessage.getData().containsKey("subject")){
-            String type = remoteMessage.getData().get("type");
+            final String type = remoteMessage.getData().get("type");
             if (VALUE_TIMETABLE_CHANGED.equals(type)) {
 
                 final String message = remoteMessage.getData().get("subject") + " " + Main.getAppContext().getString(R.string.fcm_timetablechange_message_part1);

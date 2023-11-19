@@ -386,7 +386,7 @@ public final class NetworkHandler {
 					//UnknownHostException -> no internet connection,
 					// SocketTimeoutException -> read or connection timed out,
 					// EOFException -> timed out network requests can return an improper end of file
-					boolean isCertainExc = (t instanceof UnknownHostException || t instanceof SocketTimeoutException || t instanceof EOFException);
+					final boolean isCertainExc = (t instanceof UnknownHostException || t instanceof SocketTimeoutException || t instanceof EOFException);
 					//connectionFailedErrorThrown -> prevent showing error toast for every canteen
 					if(!connectionFailedErrorThrown || !isCertainExc) {
 						ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE9);
@@ -498,7 +498,7 @@ public final class NetworkHandler {
 							try {
 								updatedEventSeriesList.addAll(
 										getUpdatedEventSeries(module.getValue(), response.body().getEventSets()));
-							} catch (NullPointerException e){
+							} catch (final NullPointerException e){
 								Log.e(TAG, "Exception while updating module "+module.getKey(), e);
 								final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
 								ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.MYSCHEDULE_UTILS_CODE1);
@@ -527,7 +527,7 @@ public final class NetworkHandler {
 						//UnknownHostException -> no internet connection,
 						// SocketTimeoutException -> read or connection timed out,
 						// EOFException -> timed out network requests can return an improper end of file
-						boolean isCertainExc = (t instanceof UnknownHostException || t instanceof SocketTimeoutException || t instanceof EOFException);
+						final boolean isCertainExc = (t instanceof UnknownHostException || t instanceof SocketTimeoutException || t instanceof EOFException);
 						//connectionFailedErrorThrown -> prevent showing error toast for every module
 						if(!connectionFailedErrorThrown || !isCertainExc){
 							ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE6);

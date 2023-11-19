@@ -28,7 +28,7 @@ import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesFireExce
 import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesFireFileSettings;
 import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.DesFireProtocol;
 
-public class DesFireUtils {
+public final class DesFireUtils {
 
     private DesFireUtils() {
     }

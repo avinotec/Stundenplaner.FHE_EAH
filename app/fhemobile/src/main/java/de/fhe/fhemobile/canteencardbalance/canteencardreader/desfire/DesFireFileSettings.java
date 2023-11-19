@@ -32,6 +32,7 @@ import de.fhe.fhemobile.canteencardbalance.canteencardreader.desfire.util.DesFir
 
 /**
  * Class holding properties for reading NFC Tags with MIFARE DESFire technology
+ * @noinspection ALL
  */
 public abstract class DesFireFileSettings implements Parcelable {
     private final byte fileType;

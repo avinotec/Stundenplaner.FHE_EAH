@@ -58,12 +58,12 @@ public class EventsWebViewFragment extends FeatureFragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        EventsWebView mView = (EventsWebView) inflater.inflate(R.layout.fragment_events_webview, container, false);
+        final EventsWebView mView = (EventsWebView) inflater.inflate(R.layout.fragment_events_webview, container, false);
         return mView;
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()

@@ -60,7 +60,7 @@ public class MapsDialogFragment extends FeatureFragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        MapsDialogView mView = (MapsDialogView) inflater.inflate(R.layout.fragment_maps_dialog, container, false);
+        final MapsDialogView mView = (MapsDialogView) inflater.inflate(R.layout.fragment_maps_dialog, container, false);
 
         mView.initializeView(mViewListener);
 
@@ -68,7 +68,7 @@ public class MapsDialogFragment extends FeatureFragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
