@@ -282,11 +282,11 @@ dependencies {
     // Add the dependencies for the Crashlytics and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-messaging:23.1.2'
-    implementation 'com.google.firebase:firebase-inappmessaging-display:20.3.2'
+    implementation 'com.google.firebase:firebase-inappmessaging-display:20.4.0'
 	implementation 'com.google.firebase:firebase-crashlytics:18.5.1'
     
     implementation 'com.google.gms:google-services:4.3.15'
-    implementation 'com.google.firebase:firebase-inappmessaging-display-ktx:20.3.2'
+    implementation 'com.google.firebase:firebase-inappmessaging-display-ktx:20.4.0'
     
     // Adds libraries defining annotations to only the compile classpath.
     compileOnly 'com.google.dagger:dagger:2.48.1'
