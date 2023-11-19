@@ -158,7 +158,7 @@ public class TimetableChangeDetectionUtils {
             }
             //DETECT CHANGED EVENT PROPERTIES AND EVENTS DELETED WITHIN AN EVENT SET - compare local and fetched events
             else {
-                if(fetchedEventSetsMap == null || fetchedEventSetsMap.size() == 0) break;
+                if(fetchedEventSetsMap == null || fetchedEventSetsMap.isEmpty()) break;
                 final MyScheduleEventSetVo fetchedEventSet = fetchedEventSetsMap.get(localEventSetEntry.getKey());
                 //fetchedEventSet != null because it would be contained in eventSetsDeleted otherwise
                 if (BuildConfig.DEBUG) Assert.assertNotNull(fetchedEventSet);
