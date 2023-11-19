@@ -31,7 +31,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.webkit.WebView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -42,9 +41,6 @@ import androidx.preference.PreferenceManager;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
@@ -317,7 +313,7 @@ public class MainActivity extends AppCompatActivity implements DrawerFragment.Na
 
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            CardBalance balance = InterCardReader.getInstance().readTag(tag);
+            CardBalance balance = InterCardReader.readTag(tag);
             if (balance != null) {
                 Log.d(TAG, "Read canteen card balance: " + balance.toString());
 
