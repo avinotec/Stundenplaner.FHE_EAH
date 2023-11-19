@@ -118,7 +118,7 @@ public final class SemesterDatesModel extends EventDispatcher {
             semesterType = SEMESTER_TYPE_WS;
         }
 
-        if (/* ___always true___ currentYear != null && */ /* semesterType != null __always true */ true ) {
+        //if (/* ___always true___ currentYear != null && */ /* semesterType != null __always true */ true ) {
 
             //set chosen semester to current
             for (int i = 0; i < mSemesterVos.length; i++) {
@@ -130,7 +130,7 @@ public final class SemesterDatesModel extends EventDispatcher {
                     setChosenSemester(i);
                 }
             }
-        }
+        //}
     }
 
     private void notifyChange(final String type) {
