@@ -40,9 +40,9 @@ android {
 
     compileOptions {
         java {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
     }
 
 
@@ -53,10 +53,12 @@ android {
      * these values for different versions of your app.
      */
     defaultConfig {
+        applicationId 'de.eahjena.stundenplan'
         minSdk 21
         targetSdk 34
         versionCode = 54
         versionName = '4.6'
+        // Keeps language resources for only the locales specified below.
         resourceConfigurations += ['de', 'en', 'notnight']
 
         // For Testing
