@@ -39,8 +39,11 @@ import androidx.preference.SwitchPreferenceCompat;
 
 import com.google.common.collect.Iterables;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.util.Map;
 
+import de.fhe.fhemobile.BuildConfig;
 import de.fhe.fhemobile.Main;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.events.CalendarSyncEvent;
@@ -75,12 +78,12 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public final void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
+    public final void onCreatePreferences(@Nullable final Bundle savedInstanceState, @Nullable final String rootKey) {
         addPreferencesFromResource(R.xml.preferences_visualizer);
         initializePushNotificationsCategory();
 
@@ -88,17 +91,19 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
             initializeCalendarSynchronizationCategory();
             initializeDeleteCalendarCategory();
         } else {
-            PreferenceCategory deleteCalCategory = (PreferenceCategory) findPreference("deleteCalendarCategory");
+            final PreferenceCategory deleteCalCategory = (PreferenceCategory) findPreference("deleteCalendarCategory");
+            if (BuildConfig.DEBUG) assert deleteCalCategory != null;
             deleteCalCategory.setVisible(false);
-            PreferenceCategory calSyncCategory = (PreferenceCategory) findPreference("calSyncCategory");
+            final PreferenceCategory calSyncCategory = (PreferenceCategory) findPreference("calSyncCategory");
+            if (BuildConfig.DEBUG) assert calSyncCategory != null;
             calSyncCategory.setVisible(false);
         }
 
 
-        SwitchPreferenceCompat notificationPref = (SwitchPreferenceCompat) findPreference(getResources().getString(R.string.sp_myschedule_enable_fcm));
+        final SwitchPreferenceCompat notificationPref = (SwitchPreferenceCompat) findPreference(getResources().getString(R.string.sp_myschedule_enable_fcm));
         notificationPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
-            public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
+            public boolean onPreferenceChange(@NonNull final Preference preference, final Object newValue) {
 
                 //notifications enabled
                 if((boolean) newValue){
@@ -114,7 +119,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
     }
 
     @Override
-    public void onResume() {
+    public final void onResume() {
         super.onResume();
         CalendarModel.getInstance().addListener(
                 CalendarSyncEvent.CHOSEN_CALENDAR_DELETED,
@@ -122,7 +127,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
     }
 
     @Override
-    public void onPause() {
+    public final void onPause() {
         super.onPause();
         CalendarModel.getInstance().removeListener(
                 CalendarSyncEvent.CHOSEN_CALENDAR_DELETED,
@@ -130,7 +135,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
     }
 
     private void initializePushNotificationsCategory() {
-        SwitchPreferenceCompat notificationPref = (SwitchPreferenceCompat) findPreference(getResources().getString(R.string.sp_myschedule_enable_fcm));
+        final SwitchPreferenceCompat notificationPref = (SwitchPreferenceCompat) findPreference(getResources().getString(R.string.sp_myschedule_enable_fcm));
         //workaround to enable push notifications by default:
         // the preference is set to false in XML to avoid push notifications being enabled
         // before the permission at api level 33 could be granted;
@@ -144,7 +149,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
 
         notificationPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
-            public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
+            public boolean onPreferenceChange(@NonNull final Preference preference, final Object newValue) {
                 //do not set preference value when permission is not granted
                 return isNotificationPermissionGranted();
             }
@@ -152,7 +157,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
 
         notificationPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
-            public boolean onPreferenceClick(@NonNull Preference preference) {
+            public boolean onPreferenceClick(@NonNull final Preference preference) {
                 if (!isNotificationPermissionGranted()) {
                     requestNotificationPermission();
                 }
@@ -176,7 +181,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
 
         mCalendarSelectionNoPermissionPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
-            public boolean onPreferenceClick(@NonNull Preference preference) {
+            public boolean onPreferenceClick(@NonNull final Preference preference) {
                 requestCalendarPermission();
                 return true;
             }
@@ -193,7 +198,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
              * @return True if the click was handled.
              */
             @Override
-            public boolean onPreferenceClick(@NonNull Preference preference) {
+            public boolean onPreferenceClick(@NonNull final Preference preference) {
                 populateCalendarSelectionList();
                 return true;
             }
@@ -211,7 +216,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
              * @return True to update the state of the Preference with the new value.
              */
             @Override
-            public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
+            public boolean onPreferenceChange(@NonNull final Preference preference, final Object newValue) {
                 //note: mCalendarSelectionPref.getEntry() cannot be used to get the calendar name (= entry) of the newValue.
                 //Use instead mCalendarSelectionPref.getEntries()[mCalendarSelectionPref.findIndexOfValue((String) newValue)]
 
@@ -270,7 +275,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         //delete local calendar preference
         mDeleteCalendarEntriesPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
-            public boolean onPreferenceClick(@NonNull Preference preference) {
+            public boolean onPreferenceClick(@NonNull final Preference preference) {
                 //refuse deleting calendar entries while sync is on
                 if (mCalendarSyncSwitchPref.isChecked()) {
                     Utils.showToast(R.string.myschedule_delete_calendar_entries_warning);
@@ -285,7 +290,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         // toggle calendar synchronisation
         mCalendarSyncSwitchPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
-            public boolean onPreferenceClick(@NonNull Preference preference) {
+            public boolean onPreferenceClick(@NonNull final Preference preference) {
                 final boolean syncEnabled = ((SwitchPreferenceCompat) preference).isChecked();
 
                 //no calendar chosen
@@ -325,7 +330,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         mDeleteCalendarEntriesPref.setEnabled(false);
         //if a calendar is already chosen
         if (mCalendarSelectionPref.getValue() != null && !mCalendarSelectionPref.getValue().isEmpty()) {
-            String chosenCalName = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
+            final String chosenCalName = PreferenceManager.getDefaultSharedPreferences(Main.getAppContext())
                     .getString(getResources().getString(R.string.sp_myschedule_calendar_to_sync_name), getResources().getString(R.string.myschedule_pref_choose_calendar_summary));
             mCalendarSelectionPref.setSummary(chosenCalName);
             //enable deleting calendar entries
@@ -365,14 +370,14 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
 
         mDeleteCalendarNoPermissionPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
-            public boolean onPreferenceClick(@NonNull Preference preference) {
+            public boolean onPreferenceClick(@NonNull final Preference preference) {
                 requestCalendarPermission();
                 return true;
             }
         });
         mDeleteCalendarPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
-            public boolean onPreferenceClick(@NonNull Preference preference) {
+            public boolean onPreferenceClick(@NonNull final Preference preference) {
                 populateDeleteCalendarList();
                 return true;
             }
@@ -380,7 +385,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
 
         mDeleteCalendarPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
-            public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
+            public boolean onPreferenceChange(@NonNull final Preference preference, final Object newValue) {
                 showDeleteCalendarDialog((String) newValue);
 
                 //value of the preference is not set
@@ -407,8 +412,8 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
     /**
      * Set calendar options (displayed name and value/id saved to shared preferences) for calendar synchronization
      */
-    private void populateCalendarSelectionList() {
-        Map<String, Long> availableCalendars = CalendarModel.getCalendars();
+    final void populateCalendarSelectionList() {
+        final Map<String, Long> availableCalendars = CalendarModel.getCalendars();
 
         //option to create a new local calendar
         if (CalendarModel.getLocalCalendarId() == null) {
@@ -420,9 +425,9 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         //the human-readable entries to be shown in the list
         mCalendarSelectionPref.setEntries(Iterables.toArray(availableCalendars.keySet(), String.class));
         //array to find the value to save for a preference when an entry from entries is selected
-        CharSequence[] values = new CharSequence[availableCalendars.values().size()];
+        final CharSequence[] values = new CharSequence[availableCalendars.values().size()];
         int i = 0;
-        for (Long calId : availableCalendars.values()) {
+        for (final Long calId : availableCalendars.values()) {
             values[i] = String.valueOf(calId);
             i++;
         }
@@ -432,15 +437,15 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
     /**
      * Set calendar options (displayed name and value/id saved to shared preferences) for deleting calendars
      */
-    private void populateDeleteCalendarList() {
-        Map<String, Long> availableCalendars = CalendarModel.getCalendars();
+    final void populateDeleteCalendarList() {
+        final Map<String, Long> availableCalendars = CalendarModel.getCalendars();
 
         //the human-readable entries to be shown in the list
         mDeleteCalendarPref.setEntries(Iterables.toArray(availableCalendars.keySet(), String.class));
         //array to find the value to save for a preference when an entry from entries is selected
-        CharSequence[] values = new CharSequence[availableCalendars.values().size()];
+        final CharSequence[] values = new CharSequence[availableCalendars.values().size()];
         int i = 0;
-        for (Long calId : availableCalendars.values()) {
+        for (final Long calId : availableCalendars.values()) {
             values[i] = String.valueOf(calId);
             i++;
         }
@@ -448,14 +453,14 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
     }
 
 
-    private void showDeleteCalendarDialog(String calendarId) {
-        String calendarName = String.valueOf(mDeleteCalendarPref.getEntries()[mDeleteCalendarPref.findIndexOfValue(calendarId)]);
+    final void showDeleteCalendarDialog(@NonNls final String calendarId) {
+        final String calendarName = String.valueOf(mDeleteCalendarPref.getEntries()[mDeleteCalendarPref.findIndexOfValue(calendarId)]);
         new AlertDialog.Builder(getContext())
                 .setTitle(R.string.dialog_delete_cal_title)
                 .setMessage(getResources().getString(R.string.dialog_delete_cal_message, calendarName))
                 .setPositiveButton(R.string.dialog_delete_cal_confirm, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(final DialogInterface dialog, final int which) {
                         if (calendarId.equals(mCalendarSelectionPref.getValue())) {
                             CalendarModel.getInstance().notifyChange(CalendarSyncEvent.CHOSEN_CALENDAR_DELETED);
                         }
@@ -465,7 +470,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                 })
                 .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(final DialogInterface dialog, final int which) {
                         //dialog is closed
                     }
                 })
@@ -473,19 +478,19 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
                 .show();
     }
 
-    private void showDeleteCalendarEntriesDialog() {
+    final void showDeleteCalendarEntriesDialog() {
         new AlertDialog.Builder(getContext())
                 .setTitle(R.string.dialog_delete_calendar_entries_title)
                 .setMessage(R.string.dialog_delete_calendar_entries_message)
                 .setPositiveButton(R.string.dialog_delete_calendar_entries_confirm, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(final DialogInterface dialog, final int which) {
                         CalendarModel.deleteAllMyScheduleCalendarEntries();
                     }
                 })
                 .setNegativeButton(R.string.dialog_no, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(final DialogInterface dialog, final int which) {
                         //dialog is closed
                     }
                 })
@@ -502,13 +507,13 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         return bReadPermissionGranted && bWritePermissionGranted;
     }
 
-    private void requestCalendarPermission() {
+    final void requestCalendarPermission() {
         requestCalendarPermissionLauncher.launch(new String[]{
                 Manifest.permission.READ_CALENDAR,
                 Manifest.permission.WRITE_CALENDAR});
     }
 
-    private static boolean isNotificationPermissionGranted() {
+    static boolean isNotificationPermissionGranted() {
         /*
          * Ab Android Level 33:
          * Standardmäßig enthält das FCM SDK (Version 23.0.6 oder höher) die im Manifest definierte
@@ -523,7 +528,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
         }
     }
 
-    private void requestNotificationPermission() {
+    final void requestNotificationPermission() {
         if (ContextCompat.checkSelfPermission(Main.getAppContext(), Manifest.permission.POST_NOTIFICATIONS) !=
                 PackageManager.PERMISSION_GRANTED) {
 
@@ -538,10 +543,10 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
      * system permissions dialog. Save the return value, an instance of
      * ActivityResultLauncher, as an instance variable.
      */
-    private final ActivityResultLauncher requestCalendarPermissionLauncher =
+    private final ActivityResultLauncher<String[]> requestCalendarPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>() {
                 @Override
-                public void onActivityResult(Map<String, Boolean> result) {
+                public void onActivityResult(final Map<String, Boolean> result) {
                     //permissions are granted
                     final boolean denied = result.containsValue(Boolean.FALSE);
                     if (!denied) {
@@ -573,7 +578,7 @@ public class MySchedulePreferencesFragment extends PreferenceFragmentCompat {
 
     private final EventListener mChosenCalendarDeletedEventListener = new EventListener() {
         @Override
-        public void onEvent(Event event) {
+        public void onEvent(final Event event) {
             CalendarModel.handleChosenCalendarIsDeleted();
             mCalendarSyncSwitchPref.setChecked(false);
             mCalendarSelectionPref.setSummary(R.string.myschedule_pref_choose_calendar_summary);
