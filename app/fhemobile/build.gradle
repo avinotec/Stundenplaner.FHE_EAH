@@ -220,7 +220,7 @@ dependencies {
     //implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     //new gesture actions
-    implementation 'androidx.activity:activity:1.7.2'
+    implementation 'androidx.activity:activity:1.8.1'
     
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
 	implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -235,7 +235,7 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     //Settings
-    implementation 'androidx.preference:preference:1.2.0'
+    implementation 'androidx.preference:preference:1.2.1'
     
     
     // ------------ okhttp ------------------------
@@ -272,8 +272,8 @@ dependencies {
     
     implementation 'com.google.android.material:material:1.9.0'
 
-    implementation 'androidx.navigation:navigation-fragment:2.6.0'
-    implementation 'androidx.navigation:navigation-ui:2.6.0'
+    implementation 'androidx.navigation:navigation-fragment:2.7.5'
+    implementation 'androidx.navigation:navigation-ui:2.7.5'
     //Barcode scanner
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
     
@@ -289,9 +289,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-inappmessaging-display-ktx:20.3.2'
     
     // Adds libraries defining annotations to only the compile classpath.
-    compileOnly 'com.google.dagger:dagger:2.46.1'
+    compileOnly 'com.google.dagger:dagger:2.48.1'
     // Adds the annotation processor dependency to the annotation processor classpath.
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.46.1'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.48.1'
     
     //implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
     implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.9.0'))
