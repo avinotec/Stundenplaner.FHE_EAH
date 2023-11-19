@@ -21,7 +21,9 @@
  * Android-specific build options.
  */
 //file:noinspection HardCodedStringLiteral
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+}
 
 /**
  * The android block is where you configure all your Android-specific
@@ -34,10 +36,13 @@ android {
      * compile your app. This means your app can use the API features included in
      * this API level and lower.
      */
+    namespace 'de.eahjena.stundenplan'
 
     compileOptions {
+        java {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
     }
 
 
@@ -50,8 +55,8 @@ android {
     defaultConfig {
         minSdk 21
         targetSdk 34
-        versionCode = 52
-        versionName = '4.4'
+        versionCode = 53
+        versionName = '4.5'
         resourceConfigurations += ['de', 'en', 'notnight']
 
         // For Testing
@@ -161,8 +166,7 @@ android {
             //schöneren APK Namen
             //archivesBaseName = "Stundenplan"
             //If you don't need to run a Crashlytics report, speed up your debug builds by disabling the plugin as follows:
-            //ext.enableCrashlytics = false
-
+            ext.enableCrashlytics = true
         }
         debug {
             debuggable true
@@ -203,7 +207,6 @@ android {
 	}
     
     namespace 'de.fhe.fhemobile'
-    
     dependenciesInfo {
         includeInApk true
         includeInBundle true
@@ -225,7 +228,6 @@ dependencies {
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
 	implementation 'androidx.appcompat:appcompat:1.6.1'
     //implementation "com.viewpagerindicator:library:2.4.1@aar.jar"
-    //implementation 'com.darwinsys:hirondelle-date4j:1.5.1'            DateTime object, exchanged with deprecated Date class :-(
 
     //implementation 'com.github.applidium:HeaderListView:'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -260,10 +262,6 @@ dependencies {
     
     
     implementation 'com.google.firebase:firebase-analytics:21.3.0'
-    implementation 'com.google.firebase:firebase-messaging:23.1.2'
-
-
-
 
     // Testing-only dependencies
     //testImplementation 'junit:junit:4.+'
@@ -297,7 +295,7 @@ dependencies {
     implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.9.0'))
 }
 
-configurations.all {
+configurations.configureEach {
     // instead of adding all the excludes per module, and MS did no longer figure out this XML Parser stuff,
     // we can exclude this Android mess from here for all configurations
     //disadvantage: Source Code compatibility muss auf Java 8 / 1.8 angehoben werden.
