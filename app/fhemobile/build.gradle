@@ -56,8 +56,8 @@ android {
         applicationId 'de.eahjena.stundenplan'
         minSdk 21
         targetSdk 34
-        versionCode = 55
-        versionName = '4.6.1'
+        versionCode = 56
+        versionName = '4.7'
         // Keeps language resources for only the locales specified below.
         resourceConfigurations += ['de', 'en', 'notnight']
 
@@ -73,7 +73,6 @@ android {
     }
     
     
-    // nötig ab AS 3 damit Flavors gehen
     /**
      * The productFlavors block is where you can configure multiple product flavors.
      * This allows you to create different versions of your app that can
@@ -96,21 +95,20 @@ android {
          * defined by the package attribute in the main/AndroidManifest.xml file.
          */
         eah {
+            dimension 'version'
             /* applicationId 'de.fhe.eahmobile' alte ID*/
             applicationId 'de.eahjena.stundenplan'
-            dimension 'version'
     
             // Debug App
             buildConfigField 'boolean', 'ALLOW_INVALID_CERTIFICATE', 'true'
     
         }
         fhe {
-            applicationId "de.fhe.fhemobile"
             dimension 'version'
+            applicationId 'de.fhe.fhemobile'
         }
     }
     
-
     signingConfigs {
         release {
             //storeFile file('D:\\Projekt\\Mobile.AndroidStudio\\VideoChat2\\doc\\cert\\Keystore')
@@ -163,7 +161,6 @@ android {
             //pseudoLocalesEnabled true     MS
             pseudoLocalesEnabled false
             renderscriptOptimLevel = 3
-    
     
             //schöneren APK Namen
             //archivesBaseName = "Stundenplan"
@@ -308,10 +305,10 @@ configurations.configureEach {
     //Duplicate class org.xmlpull.mxp1.MXParser found in modules xpp3-1.1.4c.jar (xpp3:xpp3:1.1.4c) and xpp3_min-1.1.4c.jar (xpp3:xpp3_min:1.1.4c)
     //Duplicate class org.xmlpull.v1.XmlPullParserFactory found in modules kxml2-2.3.0.jar (net.sf.kxml:kxml2:2.3.0) and xpp3-1.1.4c.jar (xpp3:xpp3:1.1.4c)
     //Duplicate class org.xmlpull.v1.XmlSerializer found in modules kxml2-2.3.0.jar (net.sf.kxml:kxml2:2.3.0) and xpp3-1.1.4c.jar (xpp3:xpp3:1.1.4c)
-//    exclude group: 'net.sf.kxml', module: 'kxml2'
+    exclude group: 'net.sf.kxml', module: 'kxml2'
     // exclude all from xpp3. Not only xpp3 or xpp3_min. '' is a wildcard
-//    exclude group: 'xpp3', module: ''
-
+	exclude group: 'xpp3', module: 'xpp3'
+	exclude group: 'xpp3', module: 'xpp3_min'
 
     exclude group: 'com.android.support', module: ''
     
