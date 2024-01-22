@@ -71,8 +71,12 @@ android {
         you can specify those languages using the resConfig property. Any resources for languages not specified are removed.
          */
     }
-    
-    
+
+    buildFeatures {
+        viewBinding true
+        buildConfig true
+    }
+
     /**
      * The productFlavors block is where you can configure multiple product flavors.
      * This allows you to create different versions of your app that can
@@ -194,8 +198,8 @@ android {
             //exclude 'META-INF/NOTICE.txt'
             //exclude 'META-INF/notice.txt'
             //exclude 'META-INF/ASL2.0'
-            exclude("META-INF/*.kotlin_module")
-            resources.excludes.add("META-INF/*")
+            exclude('META-INF/*.kotlin_module')
+            resources.excludes.add('META-INF/*')
         }
 	}
 	
@@ -222,7 +226,7 @@ dependencies {
     //implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     //new gesture actions
-    implementation 'androidx.activity:activity:1.8.1'
+    implementation 'androidx.activity:activity:1.8.2'
     
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
 	implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -260,38 +264,45 @@ dependencies {
     // ------------ okhttp ------------------------
     
     
-    implementation 'com.google.firebase:firebase-analytics:21.3.0'
+    implementation 'com.google.firebase:firebase-analytics:21.5.0'
 
     // Testing-only dependencies
     //testImplementation 'junit:junit:4.+'
     implementation 'junit:junit:4.13.2'
     //implementation 'androidx.test:rules:1.5.0'
     
-    implementation 'com.google.android.material:material:1.10.0'
+    implementation 'com.google.android.material:material:1.11.0'
 
-    implementation 'androidx.navigation:navigation-fragment:2.7.5'
-    implementation 'androidx.navigation:navigation-ui:2.7.5'
+    implementation 'androidx.navigation:navigation-fragment:2.7.6'
+    implementation 'androidx.navigation:navigation-ui:2.7.6'
     //Barcode scanner
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
-    
+
+//    implementation ('com.google.firebase:firebase-config:21.6.0',{
+//       // protobuf-lite that firebase-config and Tink depends on.
+//        exclude group: 'com.google.protobuf',module: 'protobuf-javalite'
+//        exclude group: 'com.google.protobuf',module: 'protobuf-lite'
+//    })
+
     // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:32.5.0')
+    implementation platform('com.google.firebase:firebase-bom:32.6.0',{  exclude group: 'com.google.protobuf',module: 'protobuf-javalite' exclude group: 'com.google.protobuf',module: 'protobuf-lite' })
     // Add the dependencies for the Crashlytics and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation 'com.google.firebase:firebase-messaging:23.3.1'
-    implementation 'com.google.firebase:firebase-inappmessaging-display:20.4.0'
-	implementation 'com.google.firebase:firebase-crashlytics:18.5.1'
+    implementation platform('com.google.firebase:firebase-messaging:23.3.1')
+    implementation platform('com.google.firebase:firebase-inappmessaging-display:20.4.0')
+	implementation platform('com.google.firebase:firebase-crashlytics:18.6.0')
     
-    implementation 'com.google.gms:google-services:4.3.15'
-    implementation 'com.google.firebase:firebase-inappmessaging-display-ktx:20.4.0'
+    implementation 'com.google.gms:google-services:4.4.0'
+    implementation platform('com.google.firebase:firebase-inappmessaging-display-ktx:20.4.0')
     
     // Adds libraries defining annotations to only the compile classpath.
-    compileOnly 'com.google.dagger:dagger:2.48.1'
+    compileOnly 'com.google.dagger:dagger:2.50'
     // Adds the annotation processor dependency to the annotation processor classpath.
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.48.1'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.50'
     
     //implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
     implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.9.0'))
+
 }
 
 configurations.configureEach {
