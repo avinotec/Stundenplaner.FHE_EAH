@@ -16,4 +16,29 @@
  */
 //file:noinspection HardCodedStringLiteral
 
+
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        //jcenter()
+        //201908 MS: somewhere read, that google sometimes is older and needs updates directly through maven
+        maven { url 'https://dl.bintray.com/populov/maven' }
+        maven { url 'https://maven.google.com' }
+        maven { url 'https://jitpack.io' }
+        // Smack
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+        mavenLocal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = "EAH Stundenplan"
 include ':fhemobile'

@@ -23,6 +23,16 @@
 //file:noinspection HardCodedStringLiteral
 plugins {
     id 'com.android.application'
+	// Add the Google services Gradle plugin
+	id 'com.google.gms.google-services'
+	// Add the Crashlytics Gradle plugin
+	id 'com.google.firebase.crashlytics'
+}
+
+base {
+	//sch�neren APK Namen
+	archivesName = "VideoChatApp"
+
 }
 
 /**
@@ -39,13 +49,17 @@ android {
     namespace 'de.eahjena.stundenplan'
 
     compileOptions {
-        java {
-            sourceCompatibility JavaVersion.VERSION_1_8
-            targetCompatibility JavaVersion.VERSION_1_8
-        }
-    }
+		// Error: Invoke-customs are only supported starting with Android O (--min-api 26)
+		// solution: Java 8
+		// Attention: desktop adds '' arround the string. Remove them
+		//Dieser bekackte String gegen�ber 1.8 bewirkt, dass die seltsamen Kotlin Fehler (Ab AndroidStudio 3.5) bei Release/APK ausbleiben
 
+		//--> Java sourceCompatibility JavaVersion.VERSION_1_8
+		//--> Java targetCompatibility JavaVersion.VERSION_1_8
 
+		// Flag to enable support for the new language APIs, AndroidStudio 4
+		//coreLibraryDesugaringEnabled true
+	}
     /**
      * The defaultConfig block encapsulates default settings and entries for all
      * build variants, and can override some attributes in main/AndroidManifest.xml
@@ -58,8 +72,6 @@ android {
         targetSdk 34
         versionCode = 56
         versionName = '4.7'
-        // Keeps language resources for only the locales specified below.
-        resourceConfigurations += ['de', 'en', 'notnight']
 
         // For Testing
         //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -70,6 +82,9 @@ android {
         app is translated to the same languages or not. If you'd like to keep only the languages that your app officially supports,
         you can specify those languages using the resConfig property. Any resources for languages not specified are removed.
          */
+		// Keeps language resources for only the locales specified below.
+		//resourceConfigurations += ['de', 'en', 'notnight']
+		resourceConfigurations = ['de', 'en', 'notnight','notround']
     }
 
     buildFeatures {
@@ -77,6 +92,8 @@ android {
         buildConfig true
     }
 
+
+	// n�tig ab AS 3 damit Flavors gehen
     /**
      * The productFlavors block is where you can configure multiple product flavors.
      * This allows you to create different versions of your app that can
@@ -125,7 +142,7 @@ android {
         debug {
             // Ein fester debug keystore damit, wenn man mit verschiedenen Rechnern arbeitet, die APK updaten kann.
             // Der debug.keystore liegt im Projekt unter /app/debug.keystore und kann auch ausgetauscht werden.
-            //storeFile file('debug.keystore')
+            storeFile file('debug.keystore')
             storePassword 'android'
         }
     }
@@ -144,7 +161,6 @@ android {
          * shrinking, using minifyEnabled, and specifies the Proguard settings file.
          */
         release {
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.txt', 'proguard-project.txt'
             // Enables code shrinking, obfuscation, and optimization for only
             // your project's release build type.
             //TODO
@@ -158,7 +174,9 @@ android {
             // Includes the default ProGuard rules files that are packaged with
             // the Android Gradle plugin. To learn more, go to the section about
             // R8 configuration files.
-            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt', 'proguard-project.txt'
+
+			proguardFiles(getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-project.txt')
+			//proguardFiles ( getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt' )
             debuggable false
             jniDebuggable false
             signingConfig signingConfigs.release
@@ -166,16 +184,12 @@ android {
             pseudoLocalesEnabled false
             renderscriptOptimLevel = 3
     
-            //schöneren APK Namen
-            //archivesBaseName = "Stundenplan"
             //If you don't need to run a Crashlytics report, speed up your debug builds by disabling the plugin as follows:
-            ext.enableCrashlytics = true
+			ext.enableCrashlytics = true
         }
         debug {
             debuggable true
-            //schöneren APK Namen
-            //archivesBaseName = "Stundenplan"
-            // damit wir die debug Version parallel zu der release Version installieren können
+			// damit wir die debug Version parallel zu der release Version installieren k�nnen
             applicationIdSuffix '.debug'
             versionNameSuffix '-dev'
             //Disable Crashlytics for your debug builds
@@ -185,24 +199,17 @@ android {
     }
 	packagingOptions {
 		resources {
-			//excludes += ['junit/runner/logo.gif', 'LICENSE-junit.txt']
-            exclude 'LICENCE.txt'
-            exclude 'junit/runner/smalllogo.gif'
-            exclude 'junit/runner/logo.gif'
-            exclude 'LICENSE-junit.txt'
-            //exclude 'META-INF/DEPENDENCIES'
-            //exclude 'META-INF/LICENSE'
-            //exclude 'META-INF/LICENSE.txt'
-            //exclude 'META-INF/license.txt'
-            //exclude 'META-INF/NOTICE'
-            //exclude 'META-INF/NOTICE.txt'
-            //exclude 'META-INF/notice.txt'
-            //exclude 'META-INF/ASL2.0'
-            exclude('META-INF/*.kotlin_module')
+			resources.excludes += 'LICENCE.txt'
+			resources.excludes += 'LICENSE-junit.txt'
+			resources.excludes += 'okhttp3/internal/publicsuffix/publicsuffixes.gz'
+			resources.excludes += 'plugin.xml'
+			//resources.excludes += ''
+			//resources.excludes += ''
+			//resources.excludes += ''
             resources.excludes.add('META-INF/*')
+			resources.excludes.add('junit/*')
         }
 	}
-	
 	// Lint found fatal errors while assembling a release target
 	lint {
 		abortOnError false
@@ -217,37 +224,45 @@ android {
     
 }
 
+java {
+	/* sourceCompatibility JavaVersion.VERSION_1_8 */
+	/* targetCompatibility JavaVersion.VERSION_1_8 */
+}
+
+
 /**
  * The dependencies block in the module-level build configuration file
  * specifies dependencies required to build only the module itself.
  * To learn more, go to Add build dependencies.
  */
 dependencies {
-    //implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+	implementation 'androidx.appcompat:appcompat:1.6.1'
+	implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+	implementation 'androidx.navigation:navigation-fragment:2.7.7'
+	implementation 'androidx.navigation:navigation-ui:2.7.7'
+
     //new gesture actions
     implementation 'androidx.activity:activity:1.8.2'
-    
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
-	implementation 'androidx.appcompat:appcompat:1.6.1'
-    //implementation "com.viewpagerindicator:library:2.4.1@aar.jar"
-
-    //implementation 'com.github.applidium:HeaderListView:'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     //Swipe to refresh
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-
     //Settings
     implementation 'androidx.preference:preference:1.2.1'
     
+	implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+	implementation 'androidx.annotation:annotation:1.7.1'
+
     
     // ------------ okhttp ------------------------
     //The OkHttp 3.12.x branch supports Android 2.3+ (API level 9+) and Java 7+. These platforms lack
     // support for **TLS 1.2** and should not be used. But because upgrading is difficult, we will backport
     // critical fixes to the 3.12.x branch through December 31, 2021.
-    implementation('com.squareup.okhttp3:okhttp:5.0.0-alpha.8')
+    implementation('com.squareup.okhttp3:okhttp:5.0.0-alpha.12')
     // define a BOM and its version
     //implementation(platform("com.squareup.okhttp3:okhttp-bom:3.12.0"))
     //implementation("com.squareup.okhttp3:logging-interceptor")
@@ -264,55 +279,53 @@ dependencies {
     // ------------ okhttp ------------------------
     
     
-    implementation 'com.google.firebase:firebase-analytics:21.5.0'
+    implementation 'com.google.firebase:firebase-analytics:21.5.1'
 
     // Testing-only dependencies
-    //testImplementation 'junit:junit:4.+'
+	//testImplementation 'junit:junit:4.13.2'
     implementation 'junit:junit:4.13.2'
-    //implementation 'androidx.test:rules:1.5.0'
+	//androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+	//androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     
-    implementation 'com.google.android.material:material:1.11.0'
+	//retrieving images
+	implementation 'com.squareup.picasso:picasso:2.71828'
 
-    implementation 'androidx.navigation:navigation-fragment:2.7.6'
-    implementation 'androidx.navigation:navigation-ui:2.7.6'
     //Barcode scanner
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
 
-//    implementation ('com.google.firebase:firebase-config:21.6.0',{
-//       // protobuf-lite that firebase-config and Tink depends on.
-//        exclude group: 'com.google.protobuf',module: 'protobuf-javalite'
-//        exclude group: 'com.google.protobuf',module: 'protobuf-lite'
-//    })
-
-    // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:32.6.0',{  exclude group: 'com.google.protobuf',module: 'protobuf-javalite' exclude group: 'com.google.protobuf',module: 'protobuf-lite' })
     // Add the dependencies for the Crashlytics and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation platform('com.google.firebase:firebase-messaging:23.3.1')
-    implementation platform('com.google.firebase:firebase-inappmessaging-display:20.4.0')
-	implementation platform('com.google.firebase:firebase-crashlytics:18.6.0')
-    
-    implementation 'com.google.gms:google-services:4.4.0'
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:32.7.3')
+    implementation 'com.google.firebase:firebase-messaging:23.4.1'
+    implementation 'com.google.firebase:firebase-inappmessaging-display:20.4.0'
+	implementation 'com.google.firebase:firebase-crashlytics:18.6.2'
+    // Add the dependency for the Firebase SDK for Google Analytics
+    implementation 'com.google.firebase:firebase-analytics:21.5.1'
+
+    implementation 'com.google.gms:google-services:4.4.1'
     implementation platform('com.google.firebase:firebase-inappmessaging-display-ktx:20.4.0')
     
     // Adds libraries defining annotations to only the compile classpath.
-    compileOnly 'com.google.dagger:dagger:2.50'
+    compileOnly 'com.google.dagger:dagger:2.51'
     // Adds the annotation processor dependency to the annotation processor classpath.
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.50'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.51'
     
     //implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
-    implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.9.0'))
+    implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.9.22'))
 
+
+	// release version braucht einen simple logger
+	implementation 'org.slf4j:slf4j-simple:2.0.12'
+
+	implementation 'com.github.bumptech.glide:glide:4.16.0'
+	annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
+	implementation 'com.github.bumptech.glide:okhttp3-integration:4.16.0'
 }
 
 configurations.configureEach {
-    // instead of adding all the excludes per module, and MS did no longer figure out this XML Parser stuff,
-    // we can exclude this Android mess from here for all configurations
-    //disadvantage: Source Code compatibility muss auf Java 8 / 1.8 angehoben werden.
-    //
     // https://github.com/x-stream/xstream/issues/117
     // Duplicate classes in xpp3_min and xmlpull #117
-
     //Duplicate class org.xmlpull.mxp1.MXParser found in modules xpp3-1.1.4c.jar (xpp3:xpp3:1.1.4c) and xpp3_min-1.1.4c.jar (xpp3:xpp3_min:1.1.4c)
     //Duplicate class org.xmlpull.v1.XmlPullParserFactory found in modules kxml2-2.3.0.jar (net.sf.kxml:kxml2:2.3.0) and xpp3-1.1.4c.jar (xpp3:xpp3:1.1.4c)
     //Duplicate class org.xmlpull.v1.XmlSerializer found in modules kxml2-2.3.0.jar (net.sf.kxml:kxml2:2.3.0) and xpp3-1.1.4c.jar (xpp3:xpp3:1.1.4c)
@@ -321,12 +334,17 @@ configurations.configureEach {
 	exclude group: 'xpp3', module: 'xpp3'
 	exclude group: 'xpp3', module: 'xpp3_min'
 
+	// exclude old depencendies on pre-AndroidX dependencies
     exclude group: 'com.android.support', module: ''
     
     // Compile SDK 33
     exclude group: 'androidx.lifecycle', module: 'lifecycle-viewmodel-ktx'
     
+
+	//exclude group: 'org.bouncycastle', module: ''
+
 }
+
 
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.google.gms.google-services'

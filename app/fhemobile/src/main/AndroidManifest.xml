@@ -15,9 +15,8 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ~
   -->
-
 <manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:installLocation="auto" >
 
@@ -42,6 +41,8 @@
         android:required="false"/>
     <uses-permission android:name="android.permission.WRITE_CALENDAR" android:required="false"/>
     <uses-permission android:name="android.permission.READ_CALENDAR" android:required="false"/>
+
+    	<!-- other permissions are imported via brand-specific AndroidManifest.xml -->
 
     <!-- for Firebase/Google-Play-Services -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -78,15 +79,24 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         android:networkSecurityConfig="@xml/network_security_config"
-        tools:ignore="UnusedAttribute"
-        android:enableOnBackInvokedCallback="true"
-        >
-
+        android:dataExtractionRules="@xml/data_extraction_rules"
+		tools:ignore="UnusedAttribute"
+        android:enableOnBackInvokedCallback="true">
+        <!-- remove Emoji2 from TextViews -->
+		<provider
+			android:name="androidx.startup.InitializationProvider"
+			android:authorities="${applicationId}.androidx-startup"
+			android:exported="false"
+			tools:node="merge" >
+            <meta-data
+                android:name="androidx.emoji2.text.EmojiCompatInitializer" tools:node="remove" />
+		</provider>
         <!-- note: screenOrientation=unspecified means using the sensor but respecting rotation lock,
                     screenOrientation=fullSensor uses the sensor ignoring the device's rotation lock status -->
         <activity
             android:name=".activities.MainActivity"
             android:screenOrientation="unspecified"
+            android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustPan"
             android:launchMode="singleTask"
             android:exported="true">
@@ -94,8 +104,7 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter
-                android:autoVerify="true">
+            <intent-filter android:autoVerify="true">
                 <!-- Android App Links, available on Android 6.0 (API level 23) and higher, are web links that use the HTTP and HTTPS schemes and contain the autoVerify attribute. This attribute allows your app to designate itself as the default handler of a given type of link. So when the user clicks on an Android App Link, your app opens immediately if it's installed—the disambiguation dialog doesn't appear. -->
                 <!-- start this app when clicking on a link like: www.eah-jena.de/app -->
                 <action android:name="android.intent.action.VIEW" />
@@ -103,21 +112,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:scheme="http"
-                    android:host="www.eah-jena.de"
-                    android:pathPrefix="/app" />
-            </intent-filter>
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:scheme="https"
-                    android:host="www.eah-jena.de"
-                    android:pathPrefix="/app" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="www.eah-jena.de" />
+                <data android:pathPrefix="/app" />
             </intent-filter>
             <!--  intent filter for detection of a canteen card via NFC-->
             <intent-filter>
@@ -139,7 +137,10 @@
             android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".activities.MainActivity"
-            android:screenOrientation="unspecified">
+            android:screenOrientation="unspecified"
+
+     android:exported="false" 
+>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.fhe.fhemobile.activities.MainActivity" />
@@ -148,7 +149,9 @@
             android:name=".activities.news.NewsSingleActivity"
             android:label="@string/title_activity_news_single"
             android:parentActivityName=".activities.MainActivity"
-            android:screenOrientation="unspecified">
+            android:screenOrientation="unspecified"
+     android:exported="false" 
+>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.fhe.fhemobile.activities.MainActivity" />
@@ -157,7 +160,9 @@
             android:name=".activities.phonebook.EmployeeInformationActivity"
             android:label="@string/title_activity_employee_information"
             android:parentActivityName=".activities.MainActivity"
-            android:screenOrientation="unspecified">
+            android:screenOrientation="unspecified"
+     android:exported="false" 
+>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.fhe.fhemobile.activities.MainActivity" />

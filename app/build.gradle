@@ -30,10 +30,8 @@ buildscript {
 	/**
 	 * The repositories block configures the repositories Gradle uses to
 	 * search or download the dependencies. Gradle pre-configures support for remote
-	 * repositories such as JCenter, Maven Central, and Ivy. You can also use local
-	 * repositories or define your own remote repositories. The code below defines
-	 * JCenter as the repository Gradle should use to look for its dependencies.
-	 *
+	 * repositories such as Maven Central, and Ivy. You can also use local
+	 * repositories or define your own remote repositories.
 	 * New projects created using Android Studio 3.0 and higher also include
 	 * Google's Maven repository.
 	 */
@@ -57,9 +55,19 @@ buildscript {
 	 */
 	dependencies {
 		classpath 'com.android.tools.build:gradle:8.2.1'
+		//classpath 'com.google.android.gms:google-services:4.4.0'
 		classpath 'com.google.gms:google-services:4.4.0'
+
 		classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.9'
 	}
+}
+
+plugins {
+	id 'com.android.application' version '8.2.1' apply false
+	// Add the dependency for the Google services Gradle plugin
+	id 'com.google.gms.google-services' version '4.4.0' apply false
+	// Add the dependency for the Crashlytics Gradle plugin
+	id 'com.google.firebase.crashlytics' version '2.9.9' apply false
 }
 
 /**
@@ -72,31 +80,12 @@ buildscript {
  */
 allprojects {
 	repositories {
-		//jcenter()
-		google()
-		//201908 MS: somewhere read, that google sometimes is older and needs updates directly through maven
-		maven { url 'https://dl.bintray.com/populov/maven' }
-		maven { url 'https://maven.google.com' }
-		maven { url 'https://jitpack.io' }
-		// Smack
-		//maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-		mavenCentral()
-		mavenLocal()
 	}
 	
 }
-
-// This block encapsulates custom properties and makes them available to all
-// modules in the project.
-//ext {
-// The following are only a few examples of the types of properties you can define.
-//    compileSdkVersion = 31
-// You can also create properties to specify versions for dependencies.
-// Having consistent versions between modules can avoid conflicts with behavior.
-//    supportLibVersion = "32.0.0"
-//}
 
 
 tasks.register('clean', Delete) {
 	delete rootProject.buildDir
 }
+

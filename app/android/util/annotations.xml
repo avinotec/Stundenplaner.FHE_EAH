@@ -2,4 +2,7 @@
 	<item name='android.util.Log'>
 		<annotation name='org.jetbrains.annotations.NonNls' />
 	</item>
+    <item name='android.util.Log int d(java.lang.String, java.lang.String) 1'>
+        <annotation name='org.jetbrains.annotations.NonNls' />
+    </item>
 </root>
