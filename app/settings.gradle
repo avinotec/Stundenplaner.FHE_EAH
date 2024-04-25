@@ -40,5 +40,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "EAH Stundenplan"
+rootProject.name = 'EAH Stundenplan'
 include ':fhemobile'
