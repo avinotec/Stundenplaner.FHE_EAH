@@ -33,6 +33,9 @@ public final class ApiErrorUtils {
 
     private static final String TAG = ApiErrorUtils.class.getSimpleName();
 
+    private ApiErrorUtils() {
+    }
+
     public static final class ApiErrorCode {
 
         public static final String TIMETABLE_FRAGMENT_CODE1 = "4001";
@@ -58,6 +61,9 @@ public final class ApiErrorUtils {
         public static final String NETWORK_HANDLER_CODE10 = "4019";
         public static final String NETWORK_HANDLER_CODE11 = "4020";
         public static final String NETWORK_HANDLER_CODE12 = "4021";
+
+        private ApiErrorCode() {
+        }
     }
 
     public static ApiErrorResponse getApiErrorResponse(final Response response) {

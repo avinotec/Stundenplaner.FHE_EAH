@@ -36,6 +36,9 @@ public final class Define {
         public static final String SP_CANTEEN = "spCanteen";
         public static final String SP_KEY_CANTEEN = "canteen";
         public static final String SP_KEY_CANTEEN_CARD = "spCanteenCardBalance";
+
+        private Canteen() {
+        }
     }
 
     public static final class News {
@@ -132,6 +135,9 @@ public final class Define {
         public static final String VALUE_ANDROID = "0";
         public static final String VALUE_LANG_DE = "DE";
         public static final String VALUE_LANG_EN = "EN";
+
+        private PushNotifications() {
+        }
     }
 
 

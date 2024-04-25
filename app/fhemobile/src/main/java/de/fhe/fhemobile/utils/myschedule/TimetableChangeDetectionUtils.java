@@ -53,6 +53,9 @@ public final class TimetableChangeDetectionUtils {
 
     private static final String TAG = TimetableChangeDetectionUtils.class.getSimpleName();
 
+    private TimetableChangeDetectionUtils() {
+    }
+
     /**
      * Compare local and fetched events to detect changes
      *  @param localEventSeriesSubList A subset of the subscribedEventSeries
