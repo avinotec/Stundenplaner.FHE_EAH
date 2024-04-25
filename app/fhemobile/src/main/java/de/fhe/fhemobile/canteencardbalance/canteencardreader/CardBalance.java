@@ -119,13 +119,13 @@ public class CardBalance implements Parcelable {
 
 
     /** Current mBalance on card in Euros or any other currency. */
-    private BigDecimal mBalance;
+    private final BigDecimal mBalance;
 
     /**  Amount of the last transaction in Euros or any other currency, null if not supported by card. */
-    private BigDecimal mLastTransaction;
+    private final BigDecimal mLastTransaction;
 
     /**
      * Time of when the balance was read
      */
-    private Date mDateOfStatus;
+    private final Date mDateOfStatus;
 }

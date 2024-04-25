@@ -278,7 +278,7 @@ public class MyScheduleEventVo implements Parcelable {
     private String mTitle;
 
     @SerializedName("activityId")
-    private String mEventSetId;
+    private final String mEventSetId;
 
     @SerializedName("startDateTime")
     private long mGermanStartDateTime;

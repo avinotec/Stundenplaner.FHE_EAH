@@ -45,6 +45,6 @@ public class DrawerItem {
 //    }
 // --Commented out by Inspection STOP (28.06.2023 16:36)
 
-    private int    mId;
-    private String mText;
+    private final int    mId;
+    private final String mText;
 }

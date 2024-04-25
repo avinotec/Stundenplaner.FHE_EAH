@@ -52,7 +52,7 @@ public class NavigationScannerFragment extends FeatureFragment implements ZXingS
     public static final String TAG = NavigationScannerFragment.class.getSimpleName();
 
     private ZXingScannerView mScannerView;
-    private boolean mAutoFocus = true;
+    private final boolean mAutoFocus = true;
 
     public NavigationScannerFragment() {
         super(TAG);
