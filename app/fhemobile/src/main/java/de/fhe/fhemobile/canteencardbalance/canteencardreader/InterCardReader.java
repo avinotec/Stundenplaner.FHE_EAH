@@ -40,6 +40,7 @@ import de.fhe.fhemobile.utils.Utils;
 
 /**
  * Reader for cards of the type InterCard
+ * @noinspection UtilityClassWithoutPrivateConstructor
  */
 public final class InterCardReader {
 
