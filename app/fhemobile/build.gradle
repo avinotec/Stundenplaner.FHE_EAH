@@ -23,16 +23,17 @@
 //file:noinspection HardCodedStringLiteral
 plugins {
     id 'com.android.application'
-	// Add the Google services Gradle plugin
-	id 'com.google.gms.google-services'
-	// Add the Crashlytics Gradle plugin
-	id 'com.google.firebase.crashlytics'
+    // Add the Google services Gradle plugin
+    id 'com.google.gms.google-services'
+    // Add the Crashlytics Gradle plugin
+    id 'com.google.firebase.crashlytics'
+    // This is needed work with OpenAPI spec files to generate models, methods and API clients
+    id "org.openapi.generator" version "7.5.0"
 }
 
 base {
-	//sch�neren APK Namen
-	archivesName = 'VideoChatApp'
-
+    //sch�neren APK Namen
+    archivesName = "VideoChatApp"
 }
 
 /**
@@ -49,17 +50,17 @@ android {
     namespace 'de.eahjena.stundenplan'
 
     compileOptions {
-		// Error: Invoke-customs are only supported starting with Android O (--min-api 26)
-		// solution: Java 8
-		// Attention: desktop adds '' arround the string. Remove them
-		//Dieser bekackte String gegen�ber 1.8 bewirkt, dass die seltsamen Kotlin Fehler (Ab AndroidStudio 3.5) bei Release/APK ausbleiben
+        // Error: Invoke-customs are only supported starting with Android O (--min-api 26)
+        // solution: Java 8
+        // Attention: desktop adds '' arround the string. Remove them
+        //Dieser bekackte String gegen�ber 1.8 bewirkt, dass die seltsamen Kotlin Fehler (Ab AndroidStudio 3.5) bei Release/APK ausbleiben
 
-		//--> Java sourceCompatibility JavaVersion.VERSION_1_8
-		//--> Java targetCompatibility JavaVersion.VERSION_1_8
+        //--> Java sourceCompatibility JavaVersion.VERSION_1_8
+        //--> Java targetCompatibility JavaVersion.VERSION_1_8
 
-		// Flag to enable support for the new language APIs, AndroidStudio 4
-		//coreLibraryDesugaringEnabled true
-	}
+        // Flag to enable support for the new language APIs, AndroidStudio 4
+        //coreLibraryDesugaringEnabled true
+    }
     /**
      * The defaultConfig block encapsulates default settings and entries for all
      * build variants, and can override some attributes in main/AndroidManifest.xml
@@ -75,16 +76,16 @@ android {
 
         // For Testing
         //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        
+
         /*
         For example, if you are using a library that includes language resources (such as AppCompat or Google Play Services),
         then your APK includes all translated language strings for the messages in those libraries whether the rest of your
         app is translated to the same languages or not. If you'd like to keep only the languages that your app officially supports,
         you can specify those languages using the resConfig property. Any resources for languages not specified are removed.
          */
-		// Keeps language resources for only the locales specified below.
-		//resourceConfigurations += ['de', 'en', 'notnight']
-		resourceConfigurations = ['de', 'en', 'notnight','notround']
+        // Keeps language resources for only the locales specified below.
+        //resourceConfigurations += ['de', 'en', 'notnight']
+        resourceConfigurations = ['de', 'en', 'notnight', 'notround']
     }
 
     buildFeatures {
@@ -119,17 +120,17 @@ android {
             dimension 'version'
             /* applicationId 'de.fhe.eahmobile' alte ID*/
             applicationId 'de.eahjena.stundenplan'
-    
+
             // Debug App
             buildConfigField 'boolean', 'ALLOW_INVALID_CERTIFICATE', 'true'
-    
+
         }
         fhe {
             dimension 'version'
             applicationId 'de.fhe.fhemobile'
         }
     }
-    
+
     signingConfigs {
         release {
             //storeFile file('D:\\Projekt\\Mobile.AndroidStudio\\VideoChat2\\doc\\cert\\Keystore')
@@ -137,12 +138,12 @@ android {
             storePassword 'EAHJena2019Stundenplan'
             keyAlias 'EAHStundenplan'
             keyPassword 'EAHJena2019Stundenplan'
-	        storeFile file('D:\\Projekt\\Mobile.AndroidStudio\\Stundenplaner.FHE_EAH.2019\\doc\\EAHKeystore')
+            // storeFile file('D:\\Projekt\\Mobile.AndroidStudio\\Stundenplaner.FHE_EAH.2019\\doc\\EAHKeystore')
         }
         debug {
             // Ein fester debug keystore damit, wenn man mit verschiedenen Rechnern arbeitet, die APK updaten kann.
             // Der debug.keystore liegt im Projekt unter /app/debug.keystore und kann auch ausgetauscht werden.
-            storeFile file('debug.keystore')
+            // storeFile file('debug.keystore')
             storePassword 'android'
         }
     }
@@ -170,26 +171,26 @@ android {
             // Android Gradle plugin.
             //TODO requires code shrinking, too
             //shrinkResources true
-    
+
             // Includes the default ProGuard rules files that are packaged with
             // the Android Gradle plugin. To learn more, go to the section about
             // R8 configuration files.
 
-			proguardFiles(getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-project.txt')
-			//proguardFiles ( getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt' )
+            proguardFiles(getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-project.txt')
+            //proguardFiles ( getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt' )
             debuggable false
             jniDebuggable false
             signingConfig signingConfigs.release
             //pseudoLocalesEnabled true     MS
             pseudoLocalesEnabled false
             renderscriptOptimLevel = 3
-    
+
             //If you don't need to run a Crashlytics report, speed up your debug builds by disabling the plugin as follows:
-			ext.enableCrashlytics = true
+            ext.enableCrashlytics = true
         }
         debug {
             debuggable true
-			// damit wir die debug Version parallel zu der release Version installieren k�nnen
+            // damit wir die debug Version parallel zu der release Version installieren k�nnen
             applicationIdSuffix '.debug'
             versionNameSuffix '-dev'
             //Disable Crashlytics for your debug builds
@@ -197,36 +198,36 @@ android {
             ext.enableCrashlytics = false
         }
     }
-	packagingOptions {
-		resources {
-			resources.excludes += 'LICENCE.txt'
-			resources.excludes += 'LICENSE-junit.txt'
-			resources.excludes += 'okhttp3/internal/publicsuffix/publicsuffixes.gz'
-			resources.excludes += 'plugin.xml'
-			//resources.excludes += ''
-			//resources.excludes += ''
-			//resources.excludes += ''
+    packagingOptions {
+        resources {
+            resources.excludes += 'LICENCE.txt'
+            resources.excludes += 'LICENSE-junit.txt'
+            resources.excludes += 'okhttp3/internal/publicsuffix/publicsuffixes.gz'
+            resources.excludes += 'plugin.xml'
+            //resources.excludes += ''
+            //resources.excludes += ''
+            //resources.excludes += ''
             resources.excludes.add('META-INF/*')
-			resources.excludes.add('junit/*')
+            resources.excludes.add('junit/*')
         }
-	}
-	// Lint found fatal errors while assembling a release target
-	lint {
-		abortOnError false
+    }
+    // Lint found fatal errors while assembling a release target
+    lint {
+        abortOnError false
         showAll true
-	}
-    
+    }
+
     namespace 'de.fhe.fhemobile'
     dependenciesInfo {
         includeInApk true
         includeInBundle true
     }
-    
+
 }
 
 java {
-	/* sourceCompatibility JavaVersion.VERSION_1_8 */
-	/* targetCompatibility JavaVersion.VERSION_1_8 */
+    /* sourceCompatibility JavaVersion.VERSION_1_8 */
+    /* targetCompatibility JavaVersion.VERSION_1_8 */
 }
 
 
@@ -237,42 +238,40 @@ java {
  */
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-	implementation 'androidx.appcompat:appcompat:1.6.1'
-	implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-	implementation 'androidx.navigation:navigation-fragment:2.7.7'
-	implementation 'androidx.navigation:navigation-ui:2.7.7'
+    implementation 'androidx.navigation:navigation-fragment:2.7.7'
+    implementation 'androidx.navigation:navigation-ui:2.7.7'
 
     //new gesture actions
     implementation 'androidx.activity:activity:1.9.0'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
 
     //Swipe to refresh
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     //Settings
     implementation 'androidx.preference:preference:1.2.1'
-    
-	implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-	implementation 'androidx.annotation:annotation:1.7.1'
 
-    
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.annotation:annotation:1.7.1'
+
+
     // ------------ okhttp ------------------------
     //The OkHttp 3.12.x branch supports Android 2.3+ (API level 9+) and Java 7+. These platforms lack
     // support for **TLS 1.2** and should not be used. But because upgrading is difficult, we will backport
     // critical fixes to the 3.12.x branch through December 31, 2021.
-    implementation('com.squareup.okhttp3:okhttp:5.0.0-alpha.14')
+    implementation('com.squareup.okhttp3:okhttp:5.0.0-alpha.12')
     // define a BOM and its version
     //implementation(platform("com.squareup.okhttp3:okhttp-bom:3.12.0"))
     //implementation("com.squareup.okhttp3:logging-interceptor")
-    
+
     // OkHttp works on Android 5.0+ (API level 21+) and Java 8+.        <------ we run at SDK16
     // The latest release is available on Maven Central.
     //implementation("com.squareup.okhttp3:okhttp:4.9.3")
     // define a BOM and its version
     //implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.0"))
-    
+
     // define any required OkHttp artifacts without version
     //implementation('com.squareup.okhttp3:okhttp')
     //implementation("com.squareup.okhttp3:logging-interceptor")
@@ -282,13 +281,13 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:21.6.2'
 
     // Testing-only dependencies
-	//testImplementation 'junit:junit:4.13.2'
+    //testImplementation 'junit:junit:4.13.2'
     implementation 'junit:junit:4.13.2'
-	//androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-	//androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    
-	//retrieving images
-	implementation 'com.squareup.picasso:picasso:2.71828'
+    //androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    //androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    //retrieving images
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
     //Barcode scanner
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
@@ -318,9 +317,25 @@ dependencies {
 	// release version braucht einen simple logger
 	implementation 'org.slf4j:slf4j-simple:2.0.13'
 
-	implementation 'com.github.bumptech.glide:glide:4.16.0'
-	annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
-	implementation 'com.github.bumptech.glide:okhttp3-integration:4.16.0'
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
+    implementation 'com.github.bumptech.glide:okhttp3-integration:4.16.0'
+    /**
+     * The following block is needed for openApiGenerate's output to work.
+     * There should be a Gradle (and POM) file which lists the dependencies
+     * needed if it differs in different configs.
+     */
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.11.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.3'
+
+    implementation 'jakarta.annotation:jakarta.annotation-api:1.3.5'
+    implementation 'io.gsonfire:gson-fire:1.9.0'
+
+    implementation("org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.1") {
+        exclude group: 'org.apache.oltu.oauth2', module: 'org.apache.oltu.oauth2.common'
+    }
 }
 
 configurations.configureEach {
@@ -331,20 +346,52 @@ configurations.configureEach {
     //Duplicate class org.xmlpull.v1.XmlSerializer found in modules kxml2-2.3.0.jar (net.sf.kxml:kxml2:2.3.0) and xpp3-1.1.4c.jar (xpp3:xpp3:1.1.4c)
     exclude group: 'net.sf.kxml', module: 'kxml2'
     // exclude all from xpp3. Not only xpp3 or xpp3_min. '' is a wildcard
-	exclude group: 'xpp3', module: 'xpp3'
-	exclude group: 'xpp3', module: 'xpp3_min'
+    exclude group: 'xpp3', module: 'xpp3'
+    exclude group: 'xpp3', module: 'xpp3_min'
 
-	// exclude old depencendies on pre-AndroidX dependencies
+    // exclude old depencendies on pre-AndroidX dependencies
     exclude group: 'com.android.support', module: ''
-    
+
     // Compile SDK 33
     exclude group: 'androidx.lifecycle', module: 'lifecycle-viewmodel-ktx'
-    
 
-	//exclude group: 'org.bouncycastle', module: ''
+
+    //exclude group: 'org.bouncycastle', module: ''
 
 }
 
 
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.google.gms.google-services'
+
+def openApiSpecInputFile = "$rootDir/fhemobile/src/main/java/de/fhe/fhemobile/openapi/openapi-spec.json"
+def openApiOutputPath = project.layout.buildDirectory.dir("openapi-generated").get().asFile.path
+
+openApiGenerate {
+    generatorName.set("java")
+    library = "retrofit2"
+    inputSpec.set(openApiSpecInputFile)
+    outputDir = openApiOutputPath
+    skipValidateSpec = true
+}
+
+/**
+ * openApiGenerate will run before any build
+ */
+tasks.preBuild {
+    dependsOn("openApiGenerate")
+}
+
+/**
+ * To use files generated by openAPIGenerate,
+ * these must be added to the sourceSets so that they are known in the project.
+ */
+android {
+    sourceSets {
+        main {
+            java {
+                srcDir(openApiOutputPath + "/src/main/java")
+            }
+        }
+    }
+}
