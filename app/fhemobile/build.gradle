@@ -86,6 +86,14 @@ android {
         // Keeps language resources for only the locales specified below.
         //resourceConfigurations += ['de', 'en', 'notnight']
         resourceConfigurations = ['de', 'en', 'notnight', 'notround']
+
+        Properties properties = new Properties()
+
+        if (rootProject.file("local.properties").exists()) {
+            properties.load(rootProject.file("local.properties").newDataInputStream())
+
+            buildConfigField("String", "MOSES_API_KEY", properties.getProperty("MOSES_API_KEY"))
+        }
     }
 
     buildFeatures {
@@ -364,15 +372,16 @@ configurations.configureEach {
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.google.gms.google-services'
 
-def openApiSpecInputFile = "$rootDir/fhemobile/src/main/java/de/fhe/fhemobile/openapi/openapi-spec.json"
-def openApiOutputPath = project.layout.buildDirectory.dir("openapi-generated").get().asFile.path
+def openApiSpecInputFile =
+    "$rootDir/fhemobile/src/main/java/de/fhe/fhemobile/openapi/openapi-moses-eah.yaml"
+def openApiOutputPath =
+    project.layout.buildDirectory.dir("openapi-generated").get().asFile.path
 
 openApiGenerate {
     generatorName.set("java")
     library = "retrofit2"
     inputSpec.set(openApiSpecInputFile)
     outputDir = openApiOutputPath
-    skipValidateSpec = true
 }
 
 /**
