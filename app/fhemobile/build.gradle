@@ -32,8 +32,8 @@ plugins {
 }
 
 base {
-    //sch�neren APK Namen
-    archivesName = "VideoChatApp"
+    //schoeneren APK Namen
+    archivesName = "EAHStundenplanApp"
 }
 
 /**
@@ -269,7 +269,7 @@ dependencies {
     //The OkHttp 3.12.x branch supports Android 2.3+ (API level 9+) and Java 7+. These platforms lack
     // support for **TLS 1.2** and should not be used. But because upgrading is difficult, we will backport
     // critical fixes to the 3.12.x branch through December 31, 2021.
-    implementation('com.squareup.okhttp3:okhttp:5.0.0-alpha.12')
+    implementation('com.squareup.okhttp3:okhttp:5.0.0-alpha.14')
     // define a BOM and its version
     //implementation(platform("com.squareup.okhttp3:okhttp-bom:3.12.0"))
     //implementation("com.squareup.okhttp3:logging-interceptor")
@@ -336,12 +336,13 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.11.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.11.0'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.3'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.0'
 
-    implementation 'jakarta.annotation:jakarta.annotation-api:1.3.5'
+    implementation 'jakarta.annotation:jakarta.annotation-api:1.3.5' // DO NOT BUMP
     implementation 'io.gsonfire:gson-fire:1.9.0'
 
-    implementation("org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.1") {
+    // DO NOT BUMP
+    implementation('org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.1') {
         exclude group: 'org.apache.oltu.oauth2', module: 'org.apache.oltu.oauth2.common'
     }
 }
@@ -382,6 +383,7 @@ openApiGenerate {
     library = "retrofit2"
     inputSpec.set(openApiSpecInputFile)
     outputDir = openApiOutputPath
+    skipValidateSpec = true
 }
 
 /**
