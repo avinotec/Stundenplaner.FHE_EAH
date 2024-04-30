@@ -40,6 +40,8 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import de.fhe.fhemobile.R;
+import de.fhe.fhemobile.api.CalVeranstaltungsApi;
+import de.fhe.fhemobile.api.MosesApi;
 import de.fhe.fhemobile.events.CanteenChangeEvent;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.models.myschedule.MyScheduleModel;
@@ -86,6 +88,7 @@ public final class NetworkHandler {
 
 	private ApiDeclaration mApiErfurt = null;
 	private ApiDeclaration mApiEah = null;
+	public CalVeranstaltungsApi calVeranstaltungsApi;
 
 	/**
 	 * Private constructor
@@ -134,6 +137,8 @@ public final class NetworkHandler {
 		Assert.assertNotNull(mApiEah);
 		Assert.assertNotNull(mRestAdapterEah);
 
+		final MosesApi mosesApi = new MosesApi();
+		calVeranstaltungsApi = new CalVeranstaltungsApi(mosesApi.getApiClient());
 	}
 
 	/**

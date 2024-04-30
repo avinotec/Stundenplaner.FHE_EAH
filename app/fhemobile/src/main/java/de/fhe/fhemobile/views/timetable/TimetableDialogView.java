@@ -31,6 +31,8 @@ import java.util.List;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.comparator.StudyProgramComparator;
+import de.fhe.fhemobile.api.CalVeranstaltungsApi;
+import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.vos.timetable.TimetableSemesterVo;
 import de.fhe.fhemobile.vos.timetable.TimetableStudyGroupVo;
 import de.fhe.fhemobile.vos.timetable.TimetableStudyProgramVo;
@@ -72,6 +74,7 @@ public class TimetableDialogView extends LinearLayout {
 
         mSearchButton.setOnClickListener(mSearchClickListener);
         toggleButtonEnabled(false);
+        mTestButton.setOnClickListener(mTestClickHandler);
     }
 
     public void setStudyProgramItems(final ArrayList<TimetableStudyProgramVo> _Items) {
@@ -112,14 +115,6 @@ public class TimetableDialogView extends LinearLayout {
 
     public void toggleButtonEnabled(final boolean _Enabled) {
         mSearchButton.setEnabled(_Enabled);
-        if(_Enabled){
-            mSearchButton.setTextColor(getResources().getColor(R.color.primary_button));
-            mSearchButton.setBackgroundResource(R.drawable.buttonshape);
-        }
-        else{
-            mSearchButton.setTextColor(getResources().getColor(R.color.primary_button_deactivated));
-            mSearchButton.setBackgroundResource(R.drawable.buttonshape_disabled);
-        }
     }
 
     @Override
@@ -127,13 +122,14 @@ public class TimetableDialogView extends LinearLayout {
         super.onFinishInflate();
 
         //Study Program
-        mStudyProgramPicker2 = (StudyProgramPicker) findViewById(R.id.picker_timetable_studyprogram);
+        mStudyProgramPicker2 = findViewById(R.id.picker_timetable_studyprogram);
         //Semester
-        mSemesterPicker    = (SemesterPicker)    findViewById(R.id.picker_timetable_semester);
+        mSemesterPicker    = findViewById(R.id.picker_timetable_semester);
         //Set
-        mStudyGroupPicker   = (StudyGroupPicker)  findViewById(R.id.picker_timetable_studygroup);
-        mSaveChoiceButton   = (SwitchCompat)      findViewById(R.id.btn_timetable_savechoice);
-        mSearchButton       = (Button)            findViewById(R.id.btn_timetable_search);
+        mStudyGroupPicker = findViewById(R.id.picker_timetable_studygroup);
+        mSaveChoiceButton = findViewById(R.id.btn_timetable_savechoice);
+        mSearchButton = findViewById(R.id.btn_timetable_search);
+        mTestButton = findViewById(R.id.btn_request);
     }
 
     private final OnItemChosenListener mStudyProgramListener = new OnItemChosenListener() {
@@ -172,6 +168,16 @@ public class TimetableDialogView extends LinearLayout {
         }
     };
 
+    private final OnClickListener mTestClickHandler = new OnClickListener() {
+        @Override
+        public void onClick(final View v) {
+            if (mViewListener != null) {
+                CalVeranstaltungsApi api = NetworkHandler.getInstance().calVeranstaltungsApi;
+                api.gV();
+            }
+        }
+    };
+
     public interface IViewListener {
         void onStudyProgramChosen(String _StudyCourseId);
         void onSemesterChosen(String _SemesterId);
@@ -179,13 +185,13 @@ public class TimetableDialogView extends LinearLayout {
         void onSearchClicked();
     }
 
-    IViewListener       mViewListener;
+    IViewListener mViewListener;
 
     private StudyProgramPicker mStudyProgramPicker2;
-    private SemesterPicker      mSemesterPicker;
-    private StudyGroupPicker    mStudyGroupPicker;
+    private SemesterPicker mSemesterPicker;
+    private StudyGroupPicker mStudyGroupPicker;
 
-    private SwitchCompat      mSaveChoiceButton;
-    private Button            mSearchButton;
-
+    private SwitchCompat mSaveChoiceButton;
+    private Button mSearchButton;
+    private Button mTestButton;
 }
