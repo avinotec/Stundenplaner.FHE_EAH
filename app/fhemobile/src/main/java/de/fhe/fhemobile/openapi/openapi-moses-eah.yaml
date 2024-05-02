@@ -97,7 +97,7 @@ components:
         id:
           minimum: 1
           type: integer
-          description: Datenbank-ID in Moses,
+          description: Datenbank-ID in Moses
           format: int32
         name:
           type: string
@@ -188,6 +188,139 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/calVeranstaltung"
+    studiengang:
+      required:
+        - id
+      type: object,
+      properties:
+        id:
+          minimum: 1
+          type: integer
+          description: Datenbank-ID in Moses
+          format: int32
+        eidFromImport:
+          type: string
+          description: "Extern-ID, wird beim Import aus anderen Systemen gesetzt. Muss keine Zahl sein, da intern als Zeichenkette gespeichert."
+        name:
+          type: string
+          description: "Name: Beste menschenlesbare Darstellung des Objekts."
+        kurzname:
+          type: string
+          description: "Wenn es einen abgekürzten Namen gibt, wird dieser hier zurückgegeben. Ansonsten wird der normale Name zurückgegeben."
+        mosesTypeCode:
+          type: string
+          enum:
+            - "studiengang"
+          description: ""
+        endpointPath:
+          type: string
+          enum:
+            - "/studiengang"
+          description: ""
+        visible:
+          type: boolean
+        studiengangart:
+          type: object
+          properties:
+            id:
+              minimum: 1
+              type: integer
+              description: Datenbank-ID in Moses
+              format: int32
+            eidFromImport:
+              type: string
+              description: "Extern-ID, wird beim Import aus anderen Systemen gesetzt. Muss keine Zahl sein, da intern als Zeichenkette gespeichert."
+            name:
+              type: string
+              description: "Name: Beste menschenlesbare Darstellung des Objekts."
+            mosesTypeCode:
+              type: string
+              enum:
+                - "studiengangart"
+              description: ""
+            endpointPath:
+              type: string
+              enum:
+                - "/studiengangart"
+              description: ""
+        makroturnus:
+          type: object
+          properties:
+            id:
+              minimum: 1
+              type: integer
+              description: Datenbank-ID in Moses
+              format: int32
+            eidFromImport:
+              type: string
+              description: "Extern-ID, wird beim Import aus anderen Systemen gesetzt. Muss keine Zahl sein, da intern als Zeichenkette gespeichert."
+            name:
+              type: string
+              description: "Name: Beste menschenlesbare Darstellung des Objekts."
+            mosesTypeCode:
+              type: string
+              enum:
+                - "semesterturnus"
+              description: ""
+            endpointPath:
+              type: string
+              enum:
+                - "/makroturnus"
+              description: ""
+        organisationseinheit:
+          $ref: "#/components/schemas/organisationseinheit"
+        stupoList:
+          type: array
+          items:
+            properties:
+              id:
+                minimum: 1
+                type: integer
+                description: Datenbank-ID in Moses
+                format: int32
+              eidFromImport:
+                type: string
+                description: "Extern-ID, wird beim Import aus anderen Systemen gesetzt. Muss keine Zahl sein, da intern als Zeichenkette gespeichert."
+              name:
+                type: string
+                description: "Name: Beste menschenlesbare Darstellung des Objekts."
+              kurzname:
+                type: string
+                description: "Wenn es einen abgekürzten Namen gibt, wird dieser hier zurückgegeben. Ansonsten wird der normale Name zurückgegeben."
+              mosesTypeCode:
+                type: string
+                enum:
+                  - "stupo"
+                description: ""
+              endpointPath:
+                type: string
+                enum:
+                  - "/stupo"
+                description: ""
+        studiengangTitelList:
+          type: array
+    studiengangReponse:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+          minimum: 1
+          description: Die Gesamtzahl der Seiten mit Studiengängen
+        pageNumber:
+          type: integer
+          format: int32
+          minimum: 1
+          description: Die aktuelle Seitennummer
+        pageSize:
+          type: integer
+          format: int32
+          minimum: 1
+          description: Die Anzahl der Studiengänge pro Seite
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/studiengang"
 
   securitySchemes:
     ApiKeyAuth:
@@ -195,6 +328,7 @@ components:
       in: header
       name: Authorization
       description: API-Schlüssel für den Zugriff auf die Stundenplan-API.
+
   parameters:
     pageNumber:
       in: query
@@ -203,21 +337,30 @@ components:
       schema:
         type: integer
         minimum: 1
+    pageSize:
+      in: query
+      name: pageSize
+      schema:
+        maximum: 100000
+        minimum: 1
+        type: integer
+        format: int32
+        default: 50
 
 security:
   - ApiKeyAuth: []
 
 paths:
   /calveranstaltung:
+    parameters:
+      - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/pageSize'
     get:
       operationId: "v1_calveranstaltung_getAll"
       summary: Alle Veranstaltungen abrufen
       tags:
         - Veranstaltung
-      parameters:
-        - $ref: '#/components/parameters/pageNumber'
-      security:
-        - ApiKeyAuth: []
+
       responses:
         '200':
           description: Erfolgreiche Abfrage der Veranstaltungen
@@ -225,5 +368,23 @@ paths:
             application/json:
               schema:
                  $ref: '#/components/schemas/calVeranstaltungReponse'
+        default:
+          description: Unexpected error
+  /studiengang:
+    parameters:
+      - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/pageSize'
+    get:
+      operationId: "v1_studiengang_getAll"
+      summary: Suche und Informationen zu Studiengängen
+      tags:
+        - Studiengang
+      responses:
+        '200':
+          description: Erfolgreiche Abfrage der Studiengänge
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/studiengangReponse'
         default:
           description: Unexpected error
