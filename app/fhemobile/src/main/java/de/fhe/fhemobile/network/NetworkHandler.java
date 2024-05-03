@@ -28,6 +28,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.junit.Assert;
+import org.openapitools.client.ApiClient;
 
 import java.io.EOFException;
 import java.io.File;
@@ -40,7 +41,8 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.api.CalVeranstaltungsApi;
+import de.fhe.fhemobile.api.MosesCalVeranstaltungApi;
+import de.fhe.fhemobile.api.MosesStudiengangApi;
 import de.fhe.fhemobile.api.MosesApi;
 import de.fhe.fhemobile.events.CanteenChangeEvent;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
@@ -88,7 +90,13 @@ public final class NetworkHandler {
 
 	private ApiDeclaration mApiErfurt = null;
 	private ApiDeclaration mApiEah = null;
-	public CalVeranstaltungsApi calVeranstaltungsApi;
+	/**
+	 * Moses API related classes, client, methods
+	 */
+	public MosesApi mosesApi = new MosesApi();
+	public ApiClient mosesApiClient = mosesApi.getApiClient();
+	public MosesCalVeranstaltungApi mosesCalVeranstaltungApi = new MosesCalVeranstaltungApi(mosesApiClient);
+	public MosesStudiengangApi mosesStudiengangApi = new MosesStudiengangApi(mosesApiClient);
 
 	/**
 	 * Private constructor
@@ -136,9 +144,6 @@ public final class NetworkHandler {
 		Assert.assertNotNull(mRestAdapter);
 		Assert.assertNotNull(mApiEah);
 		Assert.assertNotNull(mRestAdapterEah);
-
-		final MosesApi mosesApi = new MosesApi();
-		calVeranstaltungsApi = new CalVeranstaltungsApi(mosesApi.getApiClient());
 	}
 
 	/**
@@ -175,7 +180,7 @@ public final class NetworkHandler {
 					final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
 					ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE1);
 				}
-			}
+            }
 
 			/**
 			 *
@@ -213,7 +218,7 @@ public final class NetworkHandler {
 					final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
 					ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE2);
 				}
-			}
+            }
 
 			/**
 			 *
@@ -275,7 +280,7 @@ public final class NetworkHandler {
 							NewsModel.getInstance().setNewsItems(newsItemVos);
 
 						}
-					}
+                    }
 
 					/**
 					 *
@@ -312,7 +317,7 @@ public final class NetworkHandler {
 					final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
 					ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE4);
 				}
-			}
+            }
 
 			/**
 			 *
@@ -345,7 +350,7 @@ public final class NetworkHandler {
 					final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
 					ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.NETWORK_HANDLER_CODE3);
 				}
-			}
+            }
 
 			@Override
 			public void onFailure(@NonNull final Call<CanteenVo[]> call, @NonNull final Throwable t) {
@@ -384,7 +389,7 @@ public final class NetworkHandler {
 					if(requestCounterCanteenMenus <= 0){
 						CanteenModel.getInstance().notifyChange(CanteenChangeEvent.RECEIVED_All_CANTEEN_MENUS);
 					}
-				}
+                }
 
 				@Override
 				public void onFailure(@NonNull final Call<CanteenDishVo[]> call, @NonNull final Throwable t) {
@@ -525,7 +530,7 @@ public final class NetworkHandler {
 							// last request received, so proceed, finally
 							MyScheduleModel.getInstance().updateSubscribedEventSeriesAndAdapters(updatedEventSeriesList);
 						}
-					}
+                    }
 
 					@Override
 					public void onFailure(@NonNull final Call<ModuleVo> call, @NonNull final Throwable t) {

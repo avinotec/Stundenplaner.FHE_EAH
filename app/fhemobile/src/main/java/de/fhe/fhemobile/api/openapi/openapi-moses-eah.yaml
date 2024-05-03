@@ -321,6 +321,13 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/studiengang"
+    studiengangByIdReponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/studiengang"
 
   securitySchemes:
     ApiKeyAuth:
@@ -370,6 +377,7 @@ paths:
                  $ref: '#/components/schemas/calVeranstaltungReponse'
         default:
           description: Unexpected error
+
   /studiengang:
     parameters:
       - $ref: '#/components/parameters/pageNumber'
@@ -388,3 +396,42 @@ paths:
                 $ref: '#/components/schemas/studiengangReponse'
         default:
           description: Unexpected error
+  /studiengang/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+    get:
+      operationId: "v1_studiengang_{id}_getById"
+      summary: ""
+      tags:
+        - Studiengang
+      responses:
+        '200':
+          description: Erfolgreiche Abfrage eines Studiengangs per ID/eId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/studiengangByIdReponse'
+  /studiengang/eid/{eidFromImport}:
+    parameters:
+      - name: eidFromImport
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      operationId: "v1_studiengang_getByEid"
+      summary: ""
+      tags:
+        - Studiengang
+      responses:
+        '200':
+          description: Erfolgreiche Abfrage eines Studiengangs per ID/eId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/studiengangByIdReponse'

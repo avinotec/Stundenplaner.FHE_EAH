@@ -36,6 +36,10 @@ public class MosesApi {
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
                 .protocols(Arrays.asList(Protocol.HTTP_2, Protocol.HTTP_1_1))
+                /*
+                 * The following interceptor adds the "Authorization" header and an api key
+                 * which are needed for the Moses API endpoints to work.
+                 */
                 .addInterceptor(chain -> {
                     Request original = chain.request();
                     Request request = original.newBuilder()

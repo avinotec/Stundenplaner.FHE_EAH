@@ -374,7 +374,7 @@ apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.google.gms.google-services'
 
 def openApiSpecInputFile =
-    "$rootDir/fhemobile/src/main/java/de/fhe/fhemobile/openapi/openapi-moses-eah.yaml"
+    "$rootDir/fhemobile/src/main/java/de/fhe/fhemobile/api/openapi/openapi-moses-eah.yaml"
 def openApiOutputPath =
     project.layout.buildDirectory.dir("openapi-generated").get().asFile.path
 
@@ -383,7 +383,6 @@ openApiGenerate {
     library = "retrofit2"
     inputSpec.set(openApiSpecInputFile)
     outputDir = openApiOutputPath
-    skipValidateSpec = true
 }
 
 /**

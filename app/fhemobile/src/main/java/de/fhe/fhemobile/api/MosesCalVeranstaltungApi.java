@@ -14,16 +14,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CalVeranstaltungsApi {
+public class MosesCalVeranstaltungApi {
     private final VeranstaltungApi veranstaltungApiService;
 
-    public CalVeranstaltungsApi(ApiClient apiClient) {
+    public MosesCalVeranstaltungApi(ApiClient apiClient) {
         this.veranstaltungApiService = apiClient.createService(VeranstaltungApi.class);
     }
 
     public void gV() {
         veranstaltungApiService
-                .v1CalveranstaltungGetAll(null)
+                .v1CalveranstaltungGetAll(null, null)
                 .enqueue(calResponseCallback);
     }
 
