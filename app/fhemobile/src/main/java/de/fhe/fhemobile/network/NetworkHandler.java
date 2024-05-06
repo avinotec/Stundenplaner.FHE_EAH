@@ -44,6 +44,7 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.api.MosesCalVeranstaltungApi;
 import de.fhe.fhemobile.api.MosesStudiengangApi;
 import de.fhe.fhemobile.api.MosesApi;
+import de.fhe.fhemobile.api.MosesStupoApi;
 import de.fhe.fhemobile.events.CanteenChangeEvent;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.models.myschedule.MyScheduleModel;
@@ -97,6 +98,7 @@ public final class NetworkHandler {
 	public ApiClient mosesApiClient = mosesApi.getApiClient();
 	public MosesCalVeranstaltungApi mosesCalVeranstaltungApi = new MosesCalVeranstaltungApi(mosesApiClient);
 	public MosesStudiengangApi mosesStudiengangApi = new MosesStudiengangApi(mosesApiClient);
+	public MosesStupoApi mosesStupoApi = new MosesStupoApi(mosesApiClient);
 
 	/**
 	 * Private constructor

@@ -16,6 +16,8 @@ tags:
     description: Informationen zu einem Studiengang oder dessen Prüfungsordnung
   - name: Veranstaltung
     description: Veranstaltungen, Verlaufspläne und Fachsemesterzuordnungen
+  - name: Studien- und Prüfungsordnung
+    description: Studien- und Prüfungsordnung
 
 components:
   schemas:
@@ -25,7 +27,7 @@ components:
     lvVorlage:
       required:
         - id
-      type: object,
+      type: object
       properties:
         id:
           type: integer
@@ -38,12 +40,12 @@ components:
     organisationseinheit:
       required:
         - id
-      type: object,
+      type: object
       properties:
         id:
           minimum: 1
-          type: integer,
-          description: Datenbank-ID in Moses,
+          type: integer
+          description: Datenbank-ID in Moses
           format: int32
         eidFromImport:
           type: string
@@ -73,8 +75,8 @@ components:
       properties:
         id:
           minimum: 1
-          type: integer,
-          description: Datenbank-ID in Moses,
+          type: integer
+          description: Datenbank-ID in Moses
           format: int32
         eidFromImport:
           type: string
@@ -92,7 +94,7 @@ components:
     calVeranstaltung:
       required:
         -  id
-      type: object,
+      type: object
       properties:
         id:
           minimum: 1
@@ -103,7 +105,7 @@ components:
           type: string
           description: "Name: Beste menschenlesbare Darstellung des Objekts."
         kurzname:
-          type: string,
+          type: string
           description: "Wenn es einen abgekürzten Namen gibt, wird dieser hier zurückgegeben. Ansonsten wird der normale Name zurückgegeben."
         mosesTypeCode:
           type: string
@@ -147,7 +149,7 @@ components:
             id:
               minimum: 1
               type: integer
-              description: Datenbank-ID in Moses,
+              description: Datenbank-ID in Moses
               format: int32
             eidFromImport:
               type: string
@@ -191,7 +193,7 @@ components:
     studiengang:
       required:
         - id
-      type: object,
+      type: object
       properties:
         id:
           minimum: 1
@@ -328,7 +330,93 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/studiengang"
-
+    stupo:
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          minimum: 1
+          type: integer
+          description: Datenbank-ID in Moses
+          format: int32
+        eidFromImport:
+          type: string
+          description: "Extern-ID, wird beim Import aus anderen Systemen gesetzt. Muss keine Zahl sein, da intern als Zeichenkette gespeichert."
+        name:
+          type: string
+          description: "Name: Beste menschenlesbare Darstellung des Objekts."
+        kurzname:
+          type: string
+          description: "Wenn es einen abgekürzten Namen gibt, wird dieser hier zurückgegeben. Ansonsten wird der normale Name zurückgegeben."
+        mosesTypeCode:
+          type: string
+          enum:
+            - "stupo"
+          description: ""
+        endpointPath:
+          type: string
+          enum:
+            - "/stupo"
+          description: ""
+        ausgelaufen:
+          type: boolean
+        ausland:
+          type: string
+        beschreibung:
+          type: string
+        gueltigkeitStartdatum:
+          type: string
+          format: date
+        inhalt:
+          type: string
+        jahr:
+          type: integer
+          format: int32
+        kompetenzen:
+          type: string
+        numerusclausus:
+          type: boolean
+        perspektiven:
+          type: string
+        praktika:
+          type: string
+        studiengang:
+          $ref: "#/components/schemas/studiengang"
+        typkuerzel:
+          type: string
+          enum:
+            - "PO"
+        typname:
+          type: string
+          enum:
+            - "Prüfungsordnung"
+        verlauf:
+          type: string
+        vertiefungsrichtungList:
+          type: array
+          items:
+            $ref: "#/components/schemas/entity"
+        visible:
+          type: boolean
+        voraussetzungen:
+          type: string
+        zusatzinfos:
+          type: string
+    stupoReponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/stupo"
+    stupoByIdReponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/stupo"
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
@@ -435,3 +523,72 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/studiengangByIdReponse'
+  /stupo:
+    parameters:
+      - name: idlist
+        in: query
+        description: "A comma-separated list of URL-encoded EIDs. Each EID should be URL-encoded using percent-encoding."
+        schema:
+          type: array
+          items:
+            type: string
+        example: "The EID \",!ö\" should be given as such \"%2C%21%C3%B6\". Hence the EID-list ,!ö, ,!ö becomes %2C%21%C3%B6, %2C%21%C3%B6"
+      - name: eidlist
+        in: query
+        schema:
+          type: string
+      - name: name
+        in: query
+        schema:
+          type: string
+    get:
+      operationId: "v1_stupo_getAll"
+      summary: ""
+      tags:
+        - "Studien- und Prüfungsordnung"
+      responses:
+        '200':
+          description: Erfolgreiche Abfrage der Prüfungsordnungen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stupoReponse'
+        default:
+          description: Unexpected error
+  /stupo/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+    get:
+      operationId: "v1_stupo_getById"
+      summary: ""
+      responses:
+        '200':
+          description: Erfolgreiche Abfrage eines Studiengangs per ID/eId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stupoByIdReponse'
+  /stupo/eid/{eidFromImport}:
+    parameters:
+      - name: eidFromImport
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      operationId: "v1_stupo_getByEid"
+      summary: ""
+      tags:
+        - "Studien- und Prüfungsordnung"
+      responses:
+        '200':
+          description: Erfolgreiche Abfrage einer Studienordnung per ID/eId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stupoByIdReponse'
