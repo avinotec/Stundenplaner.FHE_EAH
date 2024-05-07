@@ -417,6 +417,116 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/stupo"
+    fachsemester:
+      required:
+        - fachsemester
+        - id
+      type: object
+      properties:
+        id:
+          minimum: 1
+          type: integer
+          description: Datenbank-ID in Moses
+          format: int32
+        eidFromImport:
+          type: string
+          description: "Extern-ID, wird beim Import aus anderen Systemen gesetzt. Muss keine Zahl sein, da intern als Zeichenkette gespeichert."
+        mosesTypeCode:
+          type: string
+          enum:
+            - "verlaufsplaneintrag"
+          description: ""
+        endpointPath:
+          type: string
+          enum:
+            - "/fachsemesterzuordnung"
+          description: ""
+        lvVorlage:
+          type: object
+          properties:
+            id:
+              minimum: 1
+              type: integer
+              description: Datenbank-ID in Moses
+              format: int32
+            eidFromImport:
+              type: string
+              description: "Extern-ID, wird beim Import aus anderen Systemen gesetzt. Muss keine Zahl sein, da intern als Zeichenkette gespeichert."
+            name:
+              type: string
+              description: "Name: Beste menschenlesbare Darstellung des Objekts."
+            mosesTypeCode:
+              type: string
+              enum:
+                - "veranstaltungsvorlage"
+              description: ""
+            endpointPath:
+              type: string
+              enum:
+                - "/lvvorlage"
+              description: ""
+        metakursGruppe:
+          type: object
+          properties:
+            id:
+              minimum: 1
+              type: integer
+              description: Datenbank-ID in Moses
+              format: int32
+            eidFromImport:
+              type: string
+              description: "Extern-ID, wird beim Import aus anderen Systemen gesetzt. Muss keine Zahl sein, da intern als Zeichenkette gespeichert."
+            name:
+              type: string
+              description: "Name: Beste menschenlesbare Darstellung des Objekts."
+            mosesTypeCode:
+              type: string
+              enum:
+                - "stupo"
+              description: ""
+            endpointPath:
+              type: string
+              enum:
+                - "/stupo"
+              description: ""
+        semesterTyp:
+          type: string
+          enum:
+            - WINTER
+            - SOMMER
+        fachsemester:
+          type: integer
+          format: int32
+    fachsemesterResponse:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+          minimum: 1
+          description: Die Gesamtzahl der Seiten mit Fachsemestern
+        pageNumber:
+          type: integer
+          format: int32
+          minimum: 1
+          description: Die aktuelle Seitennummer
+        pageSize:
+          type: integer
+          format: int32
+          minimum: 1
+          description: Die Anzahl der Fachsemester pro Seite
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/fachsemester"
+    fachsemesterByIdResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/fachsemester"
+
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
@@ -592,3 +702,94 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/stupoByIdReponse'
+  /fachsemesterzuordnung:
+    parameters:
+      - name: stupoId
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: lvvId
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: vertiefungsrichtungId
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: idlist
+        in: query
+        description: "A comma-separated list of URL-encoded EIDs. Each EID should be URL-encoded using percent-encoding."
+        schema:
+          type: array
+          items:
+            type: string
+          example: "The EID \",!ö\" should be given as such \"%2C%21%C3%B6\". Hence the EID-list ,!ö, ,!ö becomes %2C%21%C3%B6, %2C%21%C3%B6"
+      - name: eidlist
+        in: query
+        schema:
+          type: string
+      - name: name
+        in: query
+        schema:
+          type: string
+    get:
+      operationId: "v1_fachsemesterzuordnung_getAll"
+      summary: ""
+      tags:
+        - Fachsemesterzuordnung
+      responses:
+        '200':
+          description: Erfolgreiche Abfrage der Fachsemester
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fachsemesterResponse'
+        default:
+          description: Unexpected error
+  /fachsemesterzuordnung/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+    get:
+      operationId: "v1_fachsemesterzuordnung_{id}_getById"
+      summary: ""
+      tags:
+        - Fachsemesterzuordnung
+      responses:
+        '200':
+          description: Erfolgreiche Abfrage der Fachsemester
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fachsemesterByIdResponse'
+        default:
+          description: Unexpected error
+  /fachsemesterzuordnung/eid/{eidFromImport}:
+    parameters:
+      - name: eidFromImport
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+    get:
+      operationId: "v1_fachsemesterzuordnung_getByEid"
+      summary: ""
+      tags:
+        - Fachsemesterzuordnung
+      responses:
+        '200':
+          description: Erfolgreiche Abfrage eines Fachsemesters mit E-ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fachsemesterByIdResponse'
+        default:
+          description: Unexpected error
