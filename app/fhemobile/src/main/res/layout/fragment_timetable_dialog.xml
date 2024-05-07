@@ -90,10 +90,17 @@
                     android:layout_marginTop="30dp"
                     android:layout_gravity="center_horizontal"
                     android:text="@string/timetable_button"
-                    android:textColor="@color/drawer_item_text"
+                    android:textColor="@color/drawer_item_text" />
+
+                <Button
+                    android:id="@+id/btn_request"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
                     android:background="@drawable/buttonshape"
-                    android:enabled="false"
-                    />
+                    android:text="Request Tony"
+                    android:textColor="@color/drawer_item_text" />
 
                 <ProgressBar
                     style="?android:attr/progressBarStyleLarge"

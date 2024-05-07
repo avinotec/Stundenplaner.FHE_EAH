@@ -86,6 +86,14 @@ android {
         // Keeps language resources for only the locales specified below.
         //resourceConfigurations += ['de', 'en', 'notnight']
         resourceConfigurations = ['de', 'en', 'notnight', 'notround']
+
+        Properties properties = new Properties()
+
+        if (rootProject.file("local.properties").exists()) {
+            properties.load(rootProject.file("local.properties").newDataInputStream())
+
+            buildConfigField("String", "MOSES_API_KEY", properties.getProperty("MOSES_API_KEY"))
+        }
     }
 
     buildFeatures {
@@ -330,10 +338,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-scalars:2.11.0'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.0'
 
-    implementation 'jakarta.annotation:jakarta.annotation-api:3.0.0'
+    implementation 'jakarta.annotation:jakarta.annotation-api:1.3.5' // DO NOT BUMP
     implementation 'io.gsonfire:gson-fire:1.9.0'
 
-    implementation('org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.2') {
+    // DO NOT BUMP
+    implementation('org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.1') {
         exclude group: 'org.apache.oltu.oauth2', module: 'org.apache.oltu.oauth2.common'
     }
 }
@@ -364,15 +373,16 @@ configurations.configureEach {
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.google.gms.google-services'
 
-def openApiSpecInputFile = "$rootDir/fhemobile/src/main/java/de/fhe/fhemobile/openapi/openapi-spec.json"
-def openApiOutputPath = project.layout.buildDirectory.dir("openapi-generated").get().asFile.path
+def openApiSpecInputFile =
+    "$rootDir/fhemobile/src/main/java/de/fhe/fhemobile/api/openapi/openapi-moses-eah.yaml"
+def openApiOutputPath =
+    project.layout.buildDirectory.dir("openapi-generated").get().asFile.path
 
 openApiGenerate {
     generatorName.set("java")
     library = "retrofit2"
     inputSpec.set(openApiSpecInputFile)
     outputDir = openApiOutputPath
-    skipValidateSpec = true
 }
 
 /**

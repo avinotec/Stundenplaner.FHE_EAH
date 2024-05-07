@@ -18,12 +18,162 @@ tags:
     description: Veranstaltungen, Verlaufspläne und Fachsemesterzuordnungen
 
 components:
+  schemas:
+    ###
+    # Schemas to be used inside other schemas
+    ###
+    lvVorlage:
+      required:
+        - id
+      type: object,
+      properties:
+        id:
+          type: integer
+          format: int32
+        endpointPath:
+            type: string
+            enum:
+              - "/lvvorlage",
+            description: ""
+    organisationseinheit:
+      required:
+        - id
+      type: object,
+      properties:
+        id:
+          minimum: 1
+          type: integer,
+          description: Datenbank-ID in Moses,
+          format: int32
+        eidFromImport:
+          type: string
+          description: "Extern-ID, wird beim Import aus anderen Systemen gesetzt. Muss keine Zahl sein, da intern als Zeichenkette gespeichert."
+        name:
+          type: string
+          description: "Name: Beste menschenlesbare Darstellung des Objekts."
+        kurzname:
+          type: string
+          description: "Wenn es einen abgekürzten Namen gibt, wird dieser hier zurückgegeben. Ansonsten wird der normale Name zurückgegeben."
+        mosesTypeCode:
+          type: string
+          enum:
+            - "oe",
+          description: ""
+        endpointPath:
+          type: string
+          enum:
+            - "/organisationseinheit",
+          description: ""
+    buchungsgruppe:
+      type: object
+    semester:
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          minimum: 1
+          type: integer,
+          description: Datenbank-ID in Moses,
+          format: int32
+        eidFromImport:
+          type: string
+          description: "Extern-ID, wird beim Import aus anderen Systemen gesetzt. Muss keine Zahl sein, da intern als Zeichenkette gespeichert."
+        endpointPath:
+          type: string
+          enum:
+            - "/semester",
+          description: ""
+    entity:
+      type: object
+    ###
+    # Main schemas to be used as return types
+    ###
+    calVeranstaltung:
+      required:
+        -  id
+      type: object,
+      properties:
+        id:
+          minimum: 1
+          type: integer
+          description: Datenbank-ID in Moses,
+          format: int32
+        name:
+          type: string
+          description: "Name: Beste menschenlesbare Darstellung des Objekts."
+        kurzname:
+          type: string,
+          description: "Wenn es einen abgekürzten Namen gibt, wird dieser hier zurückgegeben. Ansonsten wird der normale Name zurückgegeben."
+        mosesTypeCode:
+          type: string
+          description: ""
+        endpointPath:
+          type: string
+          enum:
+            - "/calveranstaltung"
+          description: ""
+        calVeranstaltungstyp:
+          type: string
+          enum:
+            - "PRUEFUNG",
+            - "LEHRVERANSTALTUNG",
+            - "EVENT"
+        lvVorlage:
+          $ref: "#/components/schemas/lvVorlage"
+        oeList:
+          type: array
+          items:
+            $ref: "#/components/schemas/organisationseinheit"
+        buchungsgruppeList:
+          type: array
+          items:
+            $ref: "#/components/schemas/buchungsgruppe"
+          description: CONTENT NOT KNOWN USE WITH CAUTION
+        vplGruppeList:
+          type: array
+          items:
+            type: object
+          description: CONTENT NOT KNOWN USE WITH CAUTION
+        lvNummer:
+          type: string
+        veroeffentlicht:
+          type: boolean
+        semester:
+          $ref: "#/components/schemas/semester"
+        veranstaltungsformat:
+          type: object
+          properties:
+            id:
+              minimum: 1
+              type: integer
+              description: Datenbank-ID in Moses,
+              format: int32
+            eidFromImport:
+              type: string
+              description: "Extern-ID, wird beim Import aus anderen Systemen gesetzt. Muss keine Zahl sein, da intern als Zeichenkette gespeichert."
+            name:
+              type: string
+              description: "Name: Beste menschenlesbare Darstellung des Objekts."
+            mosesTypeCode:
+              type: string
+              description: ""
+        pruefendeList:
+          type: array,
+          items:
+            $ref: "#/components/schemas/entity"
+        new:
+          type: boolean
+        geaendert:
+          type: boolean
+
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
       in: header
       name: Authorization
       description: API-Schlüssel für den Zugriff auf die Stundenplan-API.
+
   parameters:
     pageNumber:
       in: query

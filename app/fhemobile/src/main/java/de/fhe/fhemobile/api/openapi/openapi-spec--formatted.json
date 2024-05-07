@@ -750,22 +750,22 @@
             }
           }
         ],
-"responses": {
-  "default": {
-    "content": {
-      "application/json": {
-        "schema": {
-          "type": "array",
-          "items": {
-            "$ref": "#/components/schemas/ECalVeranstaltung"
+        "responses": {
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ECalVeranstaltung"
+                  }
+                },
+                "example": "No example provided."
+              }
+            },
+            "description": ""
           }
         },
-        "example": "No example provided."
-      }
-    },
-    "description": ""
-  }
-},
         "operationId": "v1_calveranstaltung_getAll"
       }
     },
@@ -10357,26 +10357,26 @@
           }
         }
       },
-"ECalVeranstaltung": {
-  "required": [
-    "id"
-  ],
-  "type": "object",
-  "properties": {
-    "id": {
-      "minimum": 1,
-      "type": "integer",
-      "description": "Datenbank-ID in Moses",
-      "format": "int32"
-    },
-    "eidFromImport": {
-      "type": "string",
-      "description": "Extern-ID, wird beim Import aus anderen Systemen gesetzt. Muss keine Zahl sein, da intern als Zeichenkette gespeichert."
-    },
-    "name": {
-      "type": "string",
-      "description": "Name: Beste menschenlesbare Darstellung des Objekts."
-    },
+      "ECalVeranstaltung": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "minimum": 1,
+            "type": "integer",
+            "description": "Datenbank-ID in Moses",
+            "format": "int32"
+          },
+          "eidFromImport": {
+            "type": "string",
+            "description": "Extern-ID, wird beim Import aus anderen Systemen gesetzt. Muss keine Zahl sein, da intern als Zeichenkette gespeichert."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name: Beste menschenlesbare Darstellung des Objekts."
+          },
           "multiname": {
             "type": "object",
             "additionalProperties": {
