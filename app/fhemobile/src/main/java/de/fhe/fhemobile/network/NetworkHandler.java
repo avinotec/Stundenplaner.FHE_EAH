@@ -42,6 +42,7 @@ import java.util.concurrent.TimeUnit;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.api.MosesCalVeranstaltungApi;
+import de.fhe.fhemobile.api.MosesFachsemesterApi;
 import de.fhe.fhemobile.api.MosesStudiengangApi;
 import de.fhe.fhemobile.api.MosesApi;
 import de.fhe.fhemobile.api.MosesStupoApi;
@@ -99,6 +100,7 @@ public final class NetworkHandler {
 	public MosesCalVeranstaltungApi mosesCalVeranstaltungApi = new MosesCalVeranstaltungApi(mosesApiClient);
 	public MosesStudiengangApi mosesStudiengangApi = new MosesStudiengangApi(mosesApiClient);
 	public MosesStupoApi mosesStupoApi = new MosesStupoApi(mosesApiClient);
+	public MosesFachsemesterApi mosesFachsemesterApi = new MosesFachsemesterApi(mosesApiClient);
 
 	/**
 	 * Private constructor
