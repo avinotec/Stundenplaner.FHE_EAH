@@ -18,6 +18,7 @@ package de.fhe.fhemobile.views.timetable;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -26,13 +27,9 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import de.fhe.fhemobile.R;
-import de.fhe.fhemobile.comparator.StudyProgramComparator;
-import de.fhe.fhemobile.api.CalVeranstaltungsApi;
-import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.vos.timetable.TimetableSemesterVo;
 import de.fhe.fhemobile.vos.timetable.TimetableStudyGroupVo;
 import de.fhe.fhemobile.vos.timetable.TimetableStudyProgramVo;
@@ -62,7 +59,10 @@ public class TimetableDialogView extends LinearLayout {
 
         mStudyProgramPicker2.setFragmentManager(_Manager);
         mStudyProgramPicker2.toggleEnabled(false);
-        mStudyProgramPicker2.setOnItemChosenListener(mStudyProgramListener);
+        /*
+         * Refactor:
+         * mStudyProgramPicker2.setOnItemChosenListener(mStudyProgramListener);
+         */
 
         mSemesterPicker.setFragmentManager(_Manager);
         mSemesterPicker.toggleEnabled(false);
@@ -78,7 +78,10 @@ public class TimetableDialogView extends LinearLayout {
     }
 
     public void setStudyProgramItems(final ArrayList<TimetableStudyProgramVo> _Items) {
-        Collections.sort(_Items, new StudyProgramComparator());
+        /*
+         * Consider to refactor/delete:
+         * Collections.sort(_Items, new StudyProgramComparator());
+         */
         mStudyProgramPicker2.setItems(_Items);
         mStudyProgramPicker2.toggleEnabled(true);
     }
@@ -172,8 +175,7 @@ public class TimetableDialogView extends LinearLayout {
         @Override
         public void onClick(final View v) {
             if (mViewListener != null) {
-                CalVeranstaltungsApi api = NetworkHandler.getInstance().calVeranstaltungsApi;
-                api.gV();
+                Log.e("calz", "place debug methods here");
             }
         }
     };

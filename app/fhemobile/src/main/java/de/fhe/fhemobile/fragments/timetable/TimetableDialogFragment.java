@@ -18,6 +18,7 @@
 package de.fhe.fhemobile.fragments.timetable;
 
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +33,9 @@ import androidx.annotation.Nullable;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+
+import org.openapitools.client.model.Studiengang;
+import org.openapitools.client.model.StudiengangReponse;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -84,8 +88,8 @@ public class TimetableDialogFragment extends FeatureFragment {
         super.onCreate(savedInstanceState);
 
         mChosenStudyProgram = null;
-        mChosenSemester     = null;
-        mChosenStudyGroup   = null;
+        mChosenSemester = null;
+        mChosenStudyGroup = null;
     }
 
     @Override
@@ -125,11 +129,77 @@ public class TimetableDialogFragment extends FeatureFragment {
     @Override
     public void onResume() {
         super.onResume();
-        NetworkHandler.getInstance().fetchStudyPrograms(mFetchStudyProgramsCallback);
+        /*
+         * Refactor/delete later:
+         * NetworkHandler.getInstance().fetchStudyPrograms(mFetchStudyProgramsCallback);
+         */
+
+        NetworkHandler.getInstance().mosesStudiengangApi
+                .studiengangGetAll(
+                        null,
+                        10000,
+                        studiengangReponseCallback
+                );
+    }
+
+    Callback<StudiengangReponse> studiengangReponseCallback = new Callback<StudiengangReponse>() {
+        @Override
+        public void onResponse(
+                Call<StudiengangReponse> call,
+                Response<StudiengangReponse> response
+        ) {
+            if (response.isSuccessful()) {
+                StudiengangReponse studiengangReponse = response.body();
+                /*
+                 * Moses based list of events which will converted to fit with existing code
+                 */
+                ArrayList<Studiengang> studiengangList;
+                ArrayList<TimetableStudyProgramVo> studiengangVoList = new ArrayList<>();
+
+                if (studiengangReponse == null) return;
+                studiengangList = (ArrayList<Studiengang>) studiengangReponse.getData();
+
+                if (studiengangList != null) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        studiengangList.forEach(
+                                studiengang -> studiengangVoList.add(convertStudiengang(studiengang))
+                        );
+                    }
+                }
+
+                mView.setStudyProgramItems(studiengangVoList);
+            }
+        }
+
+        @Override
+        public void onFailure(Call<StudiengangReponse> call, Throwable throwable) {
+            // TODO: handle failure branch
+        }
+    };
+
+    private TimetableStudyProgramVo convertStudiengang(Studiengang studiengang) {
+        TimetableStudyProgramVo convert = new TimetableStudyProgramVo();
+
+        convert.setmLongTitle(studiengang.getName());
+        convert.setmShortTitle(studiengang.getKurzname());
+        /*
+         * Refactor consider using Optional Class
+         * or displaying degree in a different way.
+         */
+        if (studiengang.getStudiengangart() != null) {
+            convert.setmDegree(studiengang.getStudiengangart().getName());
+        } else {
+            convert.setmDegree(" ");
+        }
+
+        return convert;
     }
 
     void proceedToTimetable(final String _TimetableId) {
-        ((MainActivity) getActivity()).changeFragment(TimetableFragment.newInstance(_TimetableId), true);
+        ((MainActivity) getActivity()).changeFragment(
+                TimetableFragment.newInstance(_TimetableId),
+                true
+        );
     }
 
     private final TimetableDialogView.IViewListener mViewListener = new TimetableDialogView.IViewListener() {
@@ -153,8 +223,7 @@ public class TimetableDialogFragment extends FeatureFragment {
                 if (mChosenStudyProgram.getSemestersAsSortedList() != null) {
                     //redundant errorOccurred = false;
                     mView.setSemesterItems(mChosenStudyProgram.getSemestersAsSortedList());
-                }
-                else {
+                } else {
                     // No semesters in this study program
                     errorOccurred = true;
                 }
@@ -163,8 +232,7 @@ public class TimetableDialogFragment extends FeatureFragment {
             if (errorOccurred) {
                 mView.toggleSemesterPickerVisibility(false);
                 Utils.showToast(R.string.timetable_error);
-            }
-            else {
+            } else {
                 mView.toggleSemesterPickerVisibility(true);
             }
         }
@@ -178,7 +246,7 @@ public class TimetableDialogFragment extends FeatureFragment {
             mChosenSemester = null;
 
             final Map<String, TimetableSemesterVo> semesters = mChosenStudyProgram.getSemesters();
-            if(semesters.containsKey(_SemesterId)) {
+            if (semesters.containsKey(_SemesterId)) {
                 mChosenSemester = semesters.get(_SemesterId);
                 mView.setStudyGroupItems(mChosenSemester.getStudyGroupList());
             }
@@ -205,26 +273,29 @@ public class TimetableDialogFragment extends FeatureFragment {
                 mChosenStudyProgram = null;
                 mChosenSemester = null;
                 mChosenStudyGroup = null;
-            }
-            else {
+            } else {
                 Utils.showToast(R.string.timetable_error_incomplete);
             }
         }
     };
 
 
+    /**
+     * Refator/delete:
+     * When everythin is done and adapted for the new API delete this method.
+     */
     private final Callback<TimetableDialogResponse> mFetchStudyProgramsCallback = new Callback<TimetableDialogResponse>() {
         @Override
         public void onResponse(@NonNull final Call<TimetableDialogResponse> call, final Response<TimetableDialogResponse> response) {
-            if (response.isSuccessful()){
+            if (response.isSuccessful()) {
                 mResponse = response.body();
 
                 final ArrayList<TimetableStudyProgramVo> studyPrograms = new ArrayList<>();
                 //remove "Brückenkurse" and only keep bachelor and master study programs
-                for(final TimetableStudyProgramVo studyProgramVo : response.body().getStudyProgramsAsList()){
+                for (final TimetableStudyProgramVo studyProgramVo : response.body().getStudyProgramsAsList()) {
 
-                    if("Bachelor".equals(studyProgramVo.getDegree())
-                            || "Master".equals(studyProgramVo.getDegree())){
+                    if ("Bachelor".equals(studyProgramVo.getDegree())
+                            || "Master".equals(studyProgramVo.getDegree())) {
                         studyPrograms.add(studyProgramVo);
                     }
                 }
@@ -239,7 +310,7 @@ public class TimetableDialogFragment extends FeatureFragment {
         @Override
         public void onFailure(final Call<TimetableDialogResponse> call, final Throwable t) {
             ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.TIMETABLE_DIALOG_FRAGMENT_CODE2);
-            Log.d(TAG, "failure: request " + call.request().url() + " - "+ t.getMessage());
+            Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
         }
     };
 
@@ -248,5 +319,5 @@ public class TimetableDialogFragment extends FeatureFragment {
     TimetableDialogResponse mResponse;
     TimetableStudyProgramVo mChosenStudyProgram;
     TimetableSemesterVo mChosenSemester;
-    String                  mChosenStudyGroup;
+    String mChosenStudyGroup;
 }

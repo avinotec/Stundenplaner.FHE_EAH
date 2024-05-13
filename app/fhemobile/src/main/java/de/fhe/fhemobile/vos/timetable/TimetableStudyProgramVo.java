@@ -54,8 +54,16 @@ public class TimetableStudyProgramVo implements Parcelable {
         return mShortTitle;
     }
 
+    public void setmShortTitle(String mShortTitle) {
+        this.mShortTitle = mShortTitle;
+    }
+
     public String getLongTitle() {
         return mLongTitle;
+    }
+
+    public void setmLongTitle(String mLongTitle) {
+        this.mLongTitle = mLongTitle;
     }
 
     /**
@@ -83,6 +91,10 @@ public class TimetableStudyProgramVo implements Parcelable {
 
     public String getDegree() {
         return mDegree;
+    }
+
+    public void setmDegree(String mDegree) {
+        this.mDegree = mDegree;
     }
 
     // PARCELABLE --------------------------------------------------------------------------------
