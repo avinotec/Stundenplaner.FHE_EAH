@@ -21,8 +21,6 @@ public class MosesFachsemesterApi {
                         null,
                         null,
                         null,
-                        null,
-                        null,
                         null
                 ).enqueue(fachsemesterResponseCallback);
     }

@@ -768,11 +768,6 @@ paths:
         schema:
           type: integer
           format: int32
-      - name: vertiefungsrichtungId
-        in: query
-        schema:
-          type: integer
-          format: int32
       - name: idlist
         in: query
         description: "A comma-separated list of URL-encoded EIDs. Each EID should be URL-encoded using percent-encoding."
@@ -782,10 +777,6 @@ paths:
             type: string
           example: "The EID \",!ö\" should be given as such \"%2C%21%C3%B6\". Hence the EID-list ,!ö, ,!ö becomes %2C%21%C3%B6, %2C%21%C3%B6"
       - name: eidlist
-        in: query
-        schema:
-          type: string
-      - name: name
         in: query
         schema:
           type: string
