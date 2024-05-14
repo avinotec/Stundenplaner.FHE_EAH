@@ -316,7 +316,8 @@ dependencies {
 
     implementation 'com.google.gms:google-services:4.4.1'
     implementation platform('com.google.firebase:firebase-inappmessaging-display-ktx:21.0.0')
-    
+    implementation 'com.google.android.gms:play-services-base:18.4.0'
+
     // Adds libraries defining annotations to only the compile classpath.
     compileOnly 'com.google.dagger:dagger:2.51.1'
     // Adds the annotation processor dependency to the annotation processor classpath.
@@ -347,6 +348,9 @@ dependencies {
 
     // DO NOT BUMP
     implementation('org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.2') {
+    //noinspection GradleDependency -- DO NOT UPDATE
+    implementation 'jakarta.annotation:jakarta.annotation-api:1.3.5'
+
         exclude group: 'org.apache.oltu.oauth2', module: 'org.apache.oltu.oauth2.common'
     }
 }
