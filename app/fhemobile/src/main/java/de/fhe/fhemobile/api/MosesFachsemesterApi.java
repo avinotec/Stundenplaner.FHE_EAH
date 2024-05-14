@@ -4,6 +4,8 @@ import org.openapitools.client.ApiClient;
 import org.openapitools.client.api.FachsemesterzuordnungApi;
 import org.openapitools.client.model.FachsemesterResponse;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -15,14 +17,20 @@ public class MosesFachsemesterApi {
         fachsemesterApi = apiClient.createService(FachsemesterzuordnungApi.class);
     }
 
-    public void fachsemesterGetAll() {
+    public void fachsemesterGetAll(
+            Integer stupoId,
+            Integer lvvId,
+            List<String> idlist,
+            String eidlist,
+            Callback<FachsemesterResponse> _Callback
+    ) {
         fachsemesterApi
                 .v1FachsemesterzuordnungGetAll(
-                        null,
-                        null,
-                        null,
-                        null
-                ).enqueue(fachsemesterResponseCallback);
+                        stupoId,
+                        lvvId,
+                        idlist,
+                        eidlist
+                ).enqueue(_Callback);
     }
 
     Callback<FachsemesterResponse> fachsemesterResponseCallback =

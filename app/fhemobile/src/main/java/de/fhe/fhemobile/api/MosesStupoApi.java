@@ -22,10 +22,15 @@ public class MosesStupoApi {
                 .createService(StudienUndPrfungsordnungApi.class);
     }
 
-    public void stupoGetAll() {
+    public void stupoGetAll(
+            List<String> idlist,
+            String eidlist,
+            String name,
+            Callback<StupoReponse> _Callback
+    ) {
         studienUndPruefungsordnungApiService
-                .v1StupoGetAll(null, null, null)
-                .enqueue(stupoReponseCallback);
+                .v1StupoGetAll(idlist, eidlist, name)
+                .enqueue(_Callback);
     }
 
     Callback<StupoReponse> stupoReponseCallback = new Callback<StupoReponse>() {

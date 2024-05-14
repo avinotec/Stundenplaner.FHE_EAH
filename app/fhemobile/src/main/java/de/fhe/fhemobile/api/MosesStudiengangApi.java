@@ -42,10 +42,13 @@ public class MosesStudiengangApi {
                 .enqueue(_Callback);
     }
 
-    public void studiengangGetById(Integer id) {
+    public void studiengangGetById(
+            Integer id,
+            Callback<StudiengangByIdReponse> _Callback
+    ) {
         studiengangApiService
                 .v1StudiengangidGetById(id)
-                .enqueue(studiengangByIdReponseCallback);
+                .enqueue(_Callback);
     }
 
     public Callback<StudiengangByIdReponse> studiengangByIdReponseCallback =
