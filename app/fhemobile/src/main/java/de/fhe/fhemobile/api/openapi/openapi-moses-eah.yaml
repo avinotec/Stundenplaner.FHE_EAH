@@ -190,6 +190,13 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/calVeranstaltung"
+    calVeranstaltungByIdReponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/calVeranstaltung"
     studiengang:
       required:
         - id
@@ -551,6 +558,12 @@ components:
         type: integer
         format: int32
         default: 50
+    name:
+      in: query
+      name: name
+      required: false
+      schema:
+        type: string
 
 security:
   - ApiKeyAuth: []
@@ -560,6 +573,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/pageNumber'
       - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/name'
     get:
       operationId: "v1_calveranstaltung_getAll"
       summary: Alle Veranstaltungen abrufen
@@ -575,7 +589,47 @@ paths:
                  $ref: '#/components/schemas/calVeranstaltungReponse'
         default:
           description: Unexpected error
+  /calveranstaltung/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+    get:
+      operationId: "v1_calveranstaltung_{id}_getById"
+      summary: ""
+      tags:
+        - Veranstaltung
 
+      responses:
+        '200':
+          description: Erfolgreiche Abfrage einer Veranstaltung per ID/eId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/calVeranstaltungByIdReponse'
+  /calveranstaltung/eid/{eidFromImport}:
+    parameters:
+      - name: eidFromImport
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      operationId: "v1_calveranstaltung_getByEid"
+      summary: ""
+      tags:
+        - Veranstaltung
+
+      responses:
+        '200':
+          description: Erfolgreiche Abfrage einer Veranstaltung per ID/eId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/calVeranstaltungByIdReponse'
   /studiengang:
     parameters:
       - $ref: '#/components/parameters/pageNumber'

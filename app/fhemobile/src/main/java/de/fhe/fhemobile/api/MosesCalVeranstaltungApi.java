@@ -6,6 +6,7 @@ import android.util.Log;
 import org.openapitools.client.ApiClient;
 import org.openapitools.client.api.VeranstaltungApi;
 import org.openapitools.client.model.CalVeranstaltung;
+import org.openapitools.client.model.CalVeranstaltungByIdReponse;
 import org.openapitools.client.model.CalVeranstaltungReponse;
 
 import java.util.List;
@@ -21,10 +22,33 @@ public class MosesCalVeranstaltungApi {
         this.veranstaltungApiService = apiClient.createService(VeranstaltungApi.class);
     }
 
-    public void gV() {
+    public void calVeranstaltungGetAll(
+            Integer pageNumber,
+            Integer pageSize,
+            String name,
+            Callback<CalVeranstaltungReponse> _Callback
+    ) {
         veranstaltungApiService
-                .v1CalveranstaltungGetAll(null, null)
-                .enqueue(calResponseCallback);
+                .v1CalveranstaltungGetAll(pageNumber, pageSize, name)
+                .enqueue(_Callback);
+    }
+
+    public void calVeranstaltungById(
+            Integer id,
+            Callback<CalVeranstaltungByIdReponse> _Callback
+    ) {
+        veranstaltungApiService
+                .v1CalveranstaltungidGetById(id)
+                .enqueue(_Callback);
+    }
+
+    public void calVeranstaltungByEid(
+            String eidFromImport,
+            Callback<CalVeranstaltungByIdReponse> _Callback
+    ) {
+        veranstaltungApiService
+                .v1CalveranstaltungGetByEid(eidFromImport)
+                .enqueue(_Callback);
     }
 
     Callback<CalVeranstaltungReponse> calResponseCallback =
