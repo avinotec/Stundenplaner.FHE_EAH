@@ -343,14 +343,14 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-scalars:2.11.0'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.1'
 
-    implementation 'jakarta.annotation:jakarta.annotation-api:1.3.5' // DO NOT BUMP
-    implementation 'io.gsonfire:gson-fire:1.9.0'
-
-    // DO NOT BUMP
-    implementation('org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.2') {
     //noinspection GradleDependency -- DO NOT UPDATE
     implementation 'jakarta.annotation:jakarta.annotation-api:1.3.5'
+    implementation 'io.gsonfire:gson-fire:1.9.0'
 
+    //noinspection GradleDependency -- DO NOT UPDATE
+    implementation('org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.1') {
+    //noinspection GradleDependency -- DO NOT UPDATE
+    implementation 'jakarta.annotation:jakarta.annotation-api:1.3.5'
         exclude group: 'org.apache.oltu.oauth2', module: 'org.apache.oltu.oauth2.common'
     }
 }
