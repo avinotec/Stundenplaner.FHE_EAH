@@ -47,10 +47,8 @@ public class MosesStupoApi {
                 if (stupoReponseReponse != null) {
                     stupoResponseList = stupoReponseReponse.getData();
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        stupoResponseList.forEach((stupo -> {
-                            Log.d("calz", stupo.getName());
-                        }));
+                    for (Stupo stupo : stupoResponseList) {
+                        Log.d("calz", stupo.getName());
                     }
                 }
             }

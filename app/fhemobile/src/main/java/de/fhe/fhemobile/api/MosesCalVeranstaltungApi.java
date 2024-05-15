@@ -67,8 +67,8 @@ public class MosesCalVeranstaltungApi {
                         }
 
 
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            calList.forEach(calVeranstaltung -> Log.e("calz", calVeranstaltung.getKurzname()));
+                        for (CalVeranstaltung calVeranstaltung : calList) {
+                            Log.e("calz", calVeranstaltung.getKurzname());
                         }
                     }
                 }
