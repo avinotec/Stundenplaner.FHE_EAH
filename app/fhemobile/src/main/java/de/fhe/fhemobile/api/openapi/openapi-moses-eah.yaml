@@ -68,6 +68,35 @@ components:
           description: ""
     buchungsgruppe:
       type: object
+
+    vplGruppe:
+      type: object
+      properties:
+        verlaufsplan:
+          $ref: '#/components/schemas/verlaufsplan'
+        kurzname:
+          type: string
+        name:
+          type: string
+        id:
+          type: integer
+        fachsemester:
+          type: integer
+    verlaufsplan:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+        anzahlFachsemester:
+          type: integer
+        parents:
+          type: array
+          items:
+            type: object
+
+
     semester:
       required:
         - id
@@ -836,5 +865,60 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/fachsemesterByIdResponse'
+        default:
+          description: Unexpected error
+  /vplgruppe/{studiengangId}:
+    parameters:
+      - name: studiengangId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+    get:
+      operationId: "v1_vplgruppe_{studiengangId}_findAll"
+      summary: ""
+      tags:
+        - VplGruppe
+      responses:
+        '200':
+          description: Erfolgreiche Abfrage von Verlaufsplangruppen
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/vplGruppe"
+        default:
+          description: Unexpected error
+  /vplgruppe/{studiengangId}/{semester}:
+    parameters:
+      - name: studiengangId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: semester
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+          minimum: 1
+    get:
+      operationId: "v1_vplgruppe_{studiengangId}_{semester}_findAll"
+      summary: ""
+      tags:
+        - VplGruppe
+      responses:
+        '200':
+          description: Erfolgreiche Abfrage von Verlaufsplangruppen
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/vplGruppe"
         default:
           description: Unexpected error

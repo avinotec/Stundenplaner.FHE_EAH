@@ -36,9 +36,13 @@ import androidx.fragment.app.Fragment;
 
 import org.openapitools.client.model.Studiengang;
 import org.openapitools.client.model.StudiengangReponse;
+import org.openapitools.client.model.VplGruppe;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
@@ -140,7 +144,57 @@ public class TimetableDialogFragment extends FeatureFragment {
                         10000,
                         studiengangReponseCallback
                 );
+
+        // WIP
+        NetworkHandler.getInstance().mosesVplGruppeApi
+                .vplgruppestudiengangIdFindAll(
+                        7, // E-Commerce Bachelor with ID 7
+                        vplGruppeResponseCallback
+                );
     }
+
+    /**
+     * Construct a sorted, unique set of fachsemester from a vplGruppeResponse
+     */
+    Callback<List<VplGruppe>> vplGruppeResponseCallback = new Callback<List<VplGruppe>>() {
+        @Override
+        public void onResponse(
+                Call<List<VplGruppe>> call,
+                Response<List<VplGruppe>> response
+        ) {
+            if (response.isSuccessful()) {
+                List<VplGruppe> vplGruppeResponse = response.body();
+                Set<Integer> fachsemesterSet = fachsemesterSetFromResponse(vplGruppeResponse);
+
+                for (Integer fachsemester : fachsemesterSet) {
+                    Log.e("calz", fachsemester.toString());
+                }
+            }
+        }
+
+        @Override
+        public void onFailure(
+                Call<List<VplGruppe>> call,
+                Throwable throwable
+        ) {
+        }
+    };
+    /**
+     * Construct a sorted, unique set of fachsemester from a vplGruppeResponse
+     *
+     * @param vplGruppeResponse
+     * @return
+     */
+    Set<Integer> fachsemesterSetFromResponse(List<VplGruppe> vplGruppeResponse) {
+        // TreeSet is used to construct a sorted set of semesters without duplicates
+        Set<Integer> fachsemesterSet = new TreeSet<>();
+
+        for (VplGruppe vplGruppe : vplGruppeResponse) {
+            fachsemesterSet.add(vplGruppe.getFachsemester());
+        }
+
+        return fachsemesterSet;
+    };
 
     Callback<StudiengangReponse> studiengangReponseCallback = new Callback<StudiengangReponse>() {
         @Override
@@ -160,10 +214,8 @@ public class TimetableDialogFragment extends FeatureFragment {
                 studiengangList = (ArrayList<Studiengang>) studiengangReponse.getData();
 
                 if (studiengangList != null) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        studiengangList.forEach(
-                                studiengang -> studiengangVoList.add(convertStudiengang(studiengang))
-                        );
+                    for (Studiengang studiengang : studiengangList) {
+                        studiengangVoList.add(convertStudiengang(studiengang));
                     }
                 }
 

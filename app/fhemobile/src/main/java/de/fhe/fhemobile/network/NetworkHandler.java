@@ -46,6 +46,7 @@ import de.fhe.fhemobile.api.MosesFachsemesterApi;
 import de.fhe.fhemobile.api.MosesStudiengangApi;
 import de.fhe.fhemobile.api.MosesApi;
 import de.fhe.fhemobile.api.MosesStupoApi;
+import de.fhe.fhemobile.api.MosesVplGruppeApi;
 import de.fhe.fhemobile.events.CanteenChangeEvent;
 import de.fhe.fhemobile.models.canteen.CanteenModel;
 import de.fhe.fhemobile.models.myschedule.MyScheduleModel;
@@ -101,6 +102,7 @@ public final class NetworkHandler {
 	public MosesStudiengangApi mosesStudiengangApi = new MosesStudiengangApi(mosesApiClient);
 	public MosesStupoApi mosesStupoApi = new MosesStupoApi(mosesApiClient);
 	public MosesFachsemesterApi mosesFachsemesterApi = new MosesFachsemesterApi(mosesApiClient);
+	public MosesVplGruppeApi mosesVplGruppeApi = new MosesVplGruppeApi(mosesApiClient);
 
 	/**
 	 * Private constructor
