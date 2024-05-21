@@ -66,9 +66,160 @@ components:
           enum:
             - "/organisationseinheit"
           description: ""
+    raum:
+      type: object
+      properties:
+        id:
+          minimum: 1
+          type: integer
+          description: Datenbank-ID in Moses
+          format: int32
+        eidFromImport:
+          type: string
+          description: "Extern-ID, wird beim Import aus anderen Systemen gesetzt. Muss keine Zahl sein, da intern als Zeichenkette gespeichert."
+        endpointPath:
+          type: string
+          enum:
+            - "/raum"
+          description: ""
+    person:
+      type: object
+      properties:
+        id:
+          minimum: 1
+          type: integer
+          description: Datenbank-ID in Moses
+          format: int32
+        name:
+          type: string
+          description: "Name: Beste menschenlesbare Darstellung des Objekts."
+        mosesTypeCode:
+          type: string
+          enum:
+            - "person"
+          description: ""
+        endpointPath:
+          type: string
+          enum:
+            - "/person"
+          description: ""
+    buchung:
+      type: object
+      properties:
+        id:
+          minimum: 1
+          type: integer
+          description: Datenbank-ID in Moses
+          format: int32
+        name:
+          type: string
+          description: "Name: Beste menschenlesbare Darstellung des Objekts."
+        kurzname:
+          type: string
+          description: "Wenn es einen abgekürzten Namen gibt, wird dieser hier zurückgegeben. Ansonsten wird der normale Name zurückgegeben."
+        mosesTypeCode:
+          type: string
+          enum:
+            - "buchung"
+          description: ""
+        endpointPath:
+          type: string
+          enum:
+            - "/buchung"
+          description: ""
     buchungsgruppe:
       type: object
-
+      properties:
+        id:
+          minimum: 1
+          type: integer
+          description: Datenbank-ID in Moses
+          format: int32
+        name:
+          type: string
+          description: "Name: Beste menschenlesbare Darstellung des Objekts."
+        kurzname:
+          type: string
+          description: "Wenn es einen abgekürzten Namen gibt, wird dieser hier zurückgegeben. Ansonsten wird der normale Name zurückgegeben."
+        mosesTypeCode:
+          type: string
+          enum:
+            - "buchungsgruppe"
+          description: ""
+        endpointPath:
+          type: string
+          enum:
+            - "/buchungsgruppe"
+          description: ""
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        startPoint:
+          type: string
+          format: date-time
+        endPoint:
+          type: string
+          format: date-time
+        campusList:
+          type: array
+          items:
+            $ref: '#/components/schemas/campus'
+        calVeranstaltung:
+          type: array
+          items:
+            $ref: '#/components/schemas/calVeranstaltung'
+        buchungProto:
+          type: object
+          properties:
+            dateList:
+              type: array
+              items:
+                type: date
+            startTime:
+              type: string
+              format: time
+            endTime:
+              type: string
+              format: time
+            includeWeekend:
+              type: boolean
+            includeHoliday:
+              type: boolean
+            includeVacation:
+              type: boolean
+            pausendauer:
+              type: integer
+              format: int32
+            vorbereitungsdauer:
+              type: integer
+              format: int32
+            nachbereitungsdauer:
+              type: integer
+              format: int32
+        buchungsList:
+          type: array
+          items:
+            $ref: '#/components/schemas/buchung'
+        dozierendeList:
+          type: array
+          items:
+            $ref: "#/components/schemas/person"
+        raumList:
+          type: array
+          items:
+            $ref: "#/components/schemas/raum"
+        terminart:
+          type: string
+          enum:
+            - EINZELTERMIN
+            - BLOCKTERMIN
+            - PERIODISCHER_TERMIN
+            - CUSTOM
+        ort:
+          type: string
     vplGruppe:
       type: object
       properties:
@@ -117,6 +268,30 @@ components:
           description: ""
     entity:
       type: object
+    campus:
+      type: object
+      properties:
+        id:
+          minimum: 1
+          type: integer
+          description: Datenbank-ID in Moses
+          format: int32
+        eidFromImport:
+          type: string
+          description: "Extern-ID, wird beim Import aus anderen Systemen gesetzt. Muss keine Zahl sein, da intern als Zeichenkette gespeichert."
+        name:
+          type: string
+          description: "Name: Beste menschenlesbare Darstellung des Objekts."
+        mosesTypeCode:
+          type: string
+          enum:
+            - "campus"
+          description: ""
+        endpointPath:
+          type: string
+          enum:
+            - "/campus"
+          description: ""
     ###
     # Main schemas to be used as return types
     ###
@@ -562,6 +737,13 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/fachsemester"
+    buchungsGruppeByIdResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/buchungsgruppe"
 
   securitySchemes:
     ApiKeyAuth:
@@ -743,7 +925,7 @@ paths:
       operationId: "v1_stupo_getAll"
       summary: ""
       tags:
-        - "Studien- und Prüfungsordnung"
+        - Studien- und Prüfungsordnung
       responses:
         '200':
           description: Erfolgreiche Abfrage der Prüfungsordnungen
@@ -759,6 +941,8 @@ paths:
     get:
       operationId: "v1_stupo_getById"
       summary: ""
+      tags:
+        - Studien- und Prüfungsordnung
       responses:
         '200':
           description: Erfolgreiche Abfrage eines Studiengangs per ID/eId
@@ -773,7 +957,7 @@ paths:
       operationId: "v1_stupo_getByEid"
       summary: ""
       tags:
-        - "Studien- und Prüfungsordnung"
+        - Studien- und Prüfungsordnung
       responses:
         '200':
           description: Erfolgreiche Abfrage einer Studienordnung per ID/eId
@@ -896,5 +1080,22 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/vplGruppe"
+        default:
+          description: Unexpected error
+  /buchungsgruppe/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      operationId: "v1_buchungsgruppe_{id}_getById"
+      summary: ""
+      tags:
+        - Buchungsgruppe
+      responses:
+        '200':
+          description: Erfolgreiche Abfrage der Buchungsgruppe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/buchungsGruppeByIdResponse'
         default:
           description: Unexpected error

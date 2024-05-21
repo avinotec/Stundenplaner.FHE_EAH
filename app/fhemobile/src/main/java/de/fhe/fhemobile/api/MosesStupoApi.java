@@ -1,6 +1,5 @@
 package de.fhe.fhemobile.api;
 
-import android.os.Build;
 import android.util.Log;
 
 import org.openapitools.client.ApiClient;

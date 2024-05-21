@@ -389,6 +389,7 @@ def openApiOutputPath =
 openApiGenerate {
     generatorName.set("java")
     library = "retrofit2"
+    typeMappings = ["time": "LocalTime"]
     inputSpec.set(openApiSpecInputFile)
     outputDir = openApiOutputPath
 }
