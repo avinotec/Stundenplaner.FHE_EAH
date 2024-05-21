@@ -571,6 +571,7 @@ components:
       description: API-Schlüssel für den Zugriff auf die Stundenplan-API.
 
   parameters:
+    # "named" parameters: [endpoint]?pageNumber=2&pageSize=1000
     pageNumber:
       in: query
       name: pageNumber
@@ -593,6 +594,35 @@ components:
       required: false
       schema:
         type: string
+    idlist:
+      in: query
+      description: "A comma-separated list of URL-encoded EIDs. Each EID should be URL-encoded using percent-encoding."
+      name: idlist
+      schema:
+        type: array
+        items:
+          type: string
+      example: "The EID \",!ö\" should be given as such \"%2C%21%C3%B6\". Hence the EID-list ,!ö, ,!ö becomes %2C%21%C3%B6, %2C%21%C3%B6"
+    eidlist:
+      in: query
+      description: probably the same as idlist
+      name: eidlist
+      schema:
+        type: string
+    # path parameters: baseurl/[endpoint]/{eidFromImport} = api.dev/cal/1234
+    id:
+      in: path
+      required: true
+      name: id
+      schema:
+        type: integer
+        format: int32
+    eidFromImport:
+      in: path
+      required: true
+      name: eidFromImport
+      schema:
+        type: string
 
 security:
   - ApiKeyAuth: []
@@ -603,6 +633,12 @@ paths:
       - $ref: '#/components/parameters/pageNumber'
       - $ref: '#/components/parameters/pageSize'
       - $ref: '#/components/parameters/name'
+      - name: planungsgruppeId
+        in: query
+        description: "Direct mapping of events that are assigned to a specific study program + semester"
+        schema:
+          type: integer
+          format: int32
     get:
       operationId: "v1_calveranstaltung_getAll"
       summary: Alle Veranstaltungen abrufen
@@ -620,12 +656,7 @@ paths:
           description: Unexpected error
   /calveranstaltung/{id}:
     parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
+      - $ref: '#/components/parameters/id'
     get:
       operationId: "v1_calveranstaltung_{id}_getById"
       summary: ""
@@ -641,11 +672,7 @@ paths:
                 $ref: '#/components/schemas/calVeranstaltungByIdReponse'
   /calveranstaltung/eid/{eidFromImport}:
     parameters:
-      - name: eidFromImport
-        in: path
-        required: true
-        schema:
-          type: string
+      - $ref: '#/components/parameters/eidFromImport'
     get:
       operationId: "v1_calveranstaltung_getByEid"
       summary: ""
@@ -679,12 +706,7 @@ paths:
           description: Unexpected error
   /studiengang/{id}:
     parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
+      - $ref: '#/components/parameters/id'
     get:
       operationId: "v1_studiengang_{id}_getById"
       summary: ""
@@ -699,11 +721,7 @@ paths:
                 $ref: '#/components/schemas/studiengangByIdReponse'
   /studiengang/eid/{eidFromImport}:
     parameters:
-      - name: eidFromImport
-        in: path
-        required: true
-        schema:
-          type: string
+      - $ref: '#/components/parameters/eidFromImport'
     get:
       operationId: "v1_studiengang_getByEid"
       summary: ""
@@ -718,22 +736,9 @@ paths:
                 $ref: '#/components/schemas/studiengangByIdReponse'
   /stupo:
     parameters:
-      - name: idlist
-        in: query
-        description: "A comma-separated list of URL-encoded EIDs. Each EID should be URL-encoded using percent-encoding."
-        schema:
-          type: array
-          items:
-            type: string
-        example: "The EID \",!ö\" should be given as such \"%2C%21%C3%B6\". Hence the EID-list ,!ö, ,!ö becomes %2C%21%C3%B6, %2C%21%C3%B6"
-      - name: eidlist
-        in: query
-        schema:
-          type: string
-      - name: name
-        in: query
-        schema:
-          type: string
+      - $ref: '#/components/parameters/idlist'
+      - $ref: '#/components/parameters/eidlist'
+      - $ref: '#/components/parameters/name'
     get:
       operationId: "v1_stupo_getAll"
       summary: ""
@@ -750,12 +755,7 @@ paths:
           description: Unexpected error
   /stupo/{id}:
     parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
+      - $ref: '#/components/parameters/id'
     get:
       operationId: "v1_stupo_getById"
       summary: ""
@@ -768,11 +768,7 @@ paths:
                 $ref: '#/components/schemas/stupoByIdReponse'
   /stupo/eid/{eidFromImport}:
     parameters:
-      - name: eidFromImport
-        in: path
-        required: true
-        schema:
-          type: string
+      - $ref: '#/components/parameters/eidFromImport'
     get:
       operationId: "v1_stupo_getByEid"
       summary: ""
@@ -797,18 +793,8 @@ paths:
         schema:
           type: integer
           format: int32
-      - name: idlist
-        in: query
-        description: "A comma-separated list of URL-encoded EIDs. Each EID should be URL-encoded using percent-encoding."
-        schema:
-          type: array
-          items:
-            type: string
-          example: "The EID \",!ö\" should be given as such \"%2C%21%C3%B6\". Hence the EID-list ,!ö, ,!ö becomes %2C%21%C3%B6, %2C%21%C3%B6"
-      - name: eidlist
-        in: query
-        schema:
-          type: string
+      - $ref: '#/components/parameters/idlist'
+      - $ref: '#/components/parameters/eidlist'
     get:
       operationId: "v1_fachsemesterzuordnung_getAll"
       summary: ""
@@ -825,12 +811,7 @@ paths:
           description: Unexpected error
   /fachsemesterzuordnung/{id}:
     parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
+      - $ref: '#/components/parameters/id'
     get:
       operationId: "v1_fachsemesterzuordnung_{id}_getById"
       summary: ""
@@ -847,12 +828,7 @@ paths:
           description: Unexpected error
   /fachsemesterzuordnung/eid/{eidFromImport}:
     parameters:
-      - name: eidFromImport
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
+      - $ref: '#/components/parameters/eidFromImport'
     get:
       operationId: "v1_fachsemesterzuordnung_getByEid"
       summary: ""

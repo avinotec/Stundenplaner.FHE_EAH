@@ -26,10 +26,11 @@ public class MosesCalVeranstaltungApi {
             Integer pageNumber,
             Integer pageSize,
             String name,
+            Integer planungsgruppeId,
             Callback<CalVeranstaltungReponse> _Callback
     ) {
         veranstaltungApiService
-                .v1CalveranstaltungGetAll(pageNumber, pageSize, name)
+                .v1CalveranstaltungGetAll(pageNumber, pageSize, name, planungsgruppeId)
                 .enqueue(_Callback);
     }
 
@@ -49,6 +50,30 @@ public class MosesCalVeranstaltungApi {
         veranstaltungApiService
                 .v1CalveranstaltungGetByEid(eidFromImport)
                 .enqueue(_Callback);
+    }
+
+    /**
+     * This is an important method as it returns a list of CalVeranstaltung for a specific
+     * study program, semester and group.
+     * This might not be the las method to call in the application as you could use one of its
+     * 'buchungsgruppeList' ID values to query in buchungsgruppe/{buchungsgruppeListId}
+     *
+     * @param pageSize
+     * @param planungsgruppeId
+     * @param _Callback
+     */
+    public void calVeranstaltungByPlanungsgruppeId(
+            Integer pageSize,
+            Integer planungsgruppeId,
+            Callback<CalVeranstaltungReponse> _Callback
+    ) {
+        veranstaltungApiService
+                .v1CalveranstaltungGetAll(
+                        null,
+                        pageSize,
+                        null,
+                        planungsgruppeId
+                ).enqueue(_Callback);
     }
 
     Callback<CalVeranstaltungReponse> calResponseCallback =

@@ -13,6 +13,7 @@ Although a specification should also correspond to the actual API,
 this is unfortunately not the case at the moment. 
 Both `openapi-spec.json` (provided by the Moses API vendor) and `openapi-spec--formatted.json` 
 do not correspond to the actual API. `openapi-moses-eah.yaml` is our attempt to remodel the actual 
-responses.
+responses. They can be used as an inspiration but every endpoint and its parameters and responses
+should be used with caution.
 
 For further details have a look at those files.
