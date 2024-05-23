@@ -37,6 +37,7 @@ import de.fhe.fhemobile.widgets.picker.SemesterPicker;
 import de.fhe.fhemobile.widgets.picker.StudyGroupPicker;
 import de.fhe.fhemobile.widgets.picker.StudyProgramPicker;
 import de.fhe.fhemobile.widgets.picker.base.OnItemChosenListener;
+import de.fhe.fhemobile.widgets.picker.baseMoses.OnItemChosenListenerMoses;
 
 /**
  * Created by paul on 12.03.15.
@@ -59,10 +60,7 @@ public class TimetableDialogView extends LinearLayout {
 
         mStudyProgramPicker2.setFragmentManager(_Manager);
         mStudyProgramPicker2.toggleEnabled(false);
-        /*
-         * Refactor:
-         * mStudyProgramPicker2.setOnItemChosenListener(mStudyProgramListener);
-         */
+        mStudyProgramPicker2.setOnItemChosenListenerMoses(mStudyProgramListenerMoses);
 
         mSemesterPicker.setFragmentManager(_Manager);
         mSemesterPicker.toggleEnabled(false);
@@ -127,7 +125,7 @@ public class TimetableDialogView extends LinearLayout {
         //Study Program
         mStudyProgramPicker2 = findViewById(R.id.picker_timetable_studyprogram);
         //Semester
-        mSemesterPicker    = findViewById(R.id.picker_timetable_semester);
+        mSemesterPicker = findViewById(R.id.picker_timetable_semester);
         //Set
         mStudyGroupPicker = findViewById(R.id.picker_timetable_studygroup);
         mSaveChoiceButton = findViewById(R.id.btn_timetable_savechoice);
@@ -135,20 +133,28 @@ public class TimetableDialogView extends LinearLayout {
         mTestButton = findViewById(R.id.btn_request);
     }
 
-    private final OnItemChosenListener mStudyProgramListener = new OnItemChosenListener() {
-        @Override
-        public void onItemChosen(final String _ItemId, final int _ItemPos) {
-            if (mViewListener != null) {
-                mViewListener.onStudyProgramChosen(_ItemId);
-            }
-        }
-    };
+    private final OnItemChosenListenerMoses mStudyProgramListenerMoses =
+            new OnItemChosenListenerMoses() {
+                @Override
+                public void onItemChosenMoses(
+                        String _ItemId,
+                        int _ItemPos,
+                        Integer _StudyProgramId
+                ) {
+                    if (mViewListener != null) {
+                        mViewListener.onStudyProgramChosenMoses(
+                                _ItemId,
+                                _StudyProgramId
+                        );
+                    }
+                }
+            };
 
     private final OnItemChosenListener mSemesterListener = new OnItemChosenListener() {
         @Override
         public void onItemChosen(final String _ItemId, final int _ItemPos) {
             if (mViewListener != null) {
-                mViewListener.onSemesterChosen(_ItemId);
+                mViewListener.onSemesterChosenMoses(_ItemId);
             }
         }
     };
@@ -182,8 +188,13 @@ public class TimetableDialogView extends LinearLayout {
 
     public interface IViewListener {
         void onStudyProgramChosen(String _StudyCourseId);
-        void onSemesterChosen(String _SemesterId);
+
+        void onStudyProgramChosenMoses(String _StudyProgramName, Integer _StudyProgramId);
+
+        void onSemesterChosenMoses(String _SemesterId);
+
         void onStudyGroupChosen(String _TimetableId);
+
         void onSearchClicked();
     }
 
@@ -192,7 +203,6 @@ public class TimetableDialogView extends LinearLayout {
     private StudyProgramPicker mStudyProgramPicker2;
     private SemesterPicker mSemesterPicker;
     private StudyGroupPicker mStudyGroupPicker;
-
     private SwitchCompat mSaveChoiceButton;
     private Button mSearchButton;
     private Button mTestButton;
