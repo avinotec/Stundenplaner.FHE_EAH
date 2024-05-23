@@ -18,7 +18,6 @@
 package de.fhe.fhemobile.fragments.timetable;
 
 
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,12 +40,11 @@ import org.openapitools.client.model.VplGruppe;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
+import de.fhe.fhemobile.fragments.timetable.converters.MosesConverter;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.ApiErrorUtils;
 import de.fhe.fhemobile.utils.Utils;
@@ -55,6 +53,7 @@ import de.fhe.fhemobile.views.timetable.TimetableDialogView;
 import de.fhe.fhemobile.vos.ApiErrorResponse;
 import de.fhe.fhemobile.vos.timetable.TimetableDialogResponse;
 import de.fhe.fhemobile.vos.timetable.TimetableSemesterVo;
+import de.fhe.fhemobile.vos.timetable.TimetableStudyGroupVo;
 import de.fhe.fhemobile.vos.timetable.TimetableStudyProgramVo;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -134,22 +133,13 @@ public class TimetableDialogFragment extends FeatureFragment {
     public void onResume() {
         super.onResume();
         /*
-         * Refactor/delete later:
-         * NetworkHandler.getInstance().fetchStudyPrograms(mFetchStudyProgramsCallback);
+         * Call the studiengang/ endpoint to receive a list of all study programs
          */
-
         NetworkHandler.getInstance().mosesStudiengangApi
                 .studiengangGetAll(
                         null,
                         10000,
                         studiengangReponseCallback
-                );
-
-        // WIP
-        NetworkHandler.getInstance().mosesVplGruppeApi
-                .vplgruppestudiengangIdFindAll(
-                        7, // E-Commerce Bachelor with ID 7
-                        vplGruppeResponseCallback
                 );
     }
 
@@ -163,12 +153,18 @@ public class TimetableDialogFragment extends FeatureFragment {
                 Response<List<VplGruppe>> response
         ) {
             if (response.isSuccessful()) {
-                List<VplGruppe> vplGruppeResponse = response.body();
-                Set<Integer> fachsemesterSet = fachsemesterSetFromResponse(vplGruppeResponse);
+                List<VplGruppe> vplGruppeList = response.body();
+                if (vplGruppeList == null) return;
 
-                for (Integer fachsemester : fachsemesterSet) {
-                    Log.e("calz", fachsemester.toString());
-                }
+                List<TimetableSemesterVo> semesterList =
+                        mosesConverter.semesterVosListFromVplGruppe(vplGruppeList);
+
+                List<TimetableSemesterVo> semesterUniqueList = new ArrayList<>(
+                        mosesConverter.semesterVosSetFromList(semesterList)
+                );
+
+                mView.toggleSemesterPickerVisibility(true);
+                mView.setSemesterItems(semesterUniqueList);
             }
         }
 
@@ -179,22 +175,37 @@ public class TimetableDialogFragment extends FeatureFragment {
         ) {
         }
     };
-    /**
-     * Construct a sorted, unique set of fachsemester from a vplGruppeResponse
-     *
-     * @param vplGruppeResponse
-     * @return
-     */
-    Set<Integer> fachsemesterSetFromResponse(List<VplGruppe> vplGruppeResponse) {
-        // TreeSet is used to construct a sorted set of semesters without duplicates
-        Set<Integer> fachsemesterSet = new TreeSet<>();
 
-        for (VplGruppe vplGruppe : vplGruppeResponse) {
-            fachsemesterSet.add(vplGruppe.getFachsemester());
-        }
+    Callback<List<VplGruppe>> vplGruppeWithSemesterResponceCallback =
+            new Callback<List<VplGruppe>>() {
+                @Override
+                public void onResponse(
+                        Call<List<VplGruppe>> call,
+                        Response<List<VplGruppe>> response
+                ) {
+                    if (response.isSuccessful()) {
+                        List<VplGruppe> vplGruppeResponse = response.body();
+                        ArrayList<TimetableStudyGroupVo> studyGroupVoList = new ArrayList<>();
 
-        return fachsemesterSet;
-    };
+                        if (vplGruppeResponse == null) return;
+
+                        for (VplGruppe vplGruppe : vplGruppeResponse) {
+                            studyGroupVoList.add(
+                                    mosesConverter.studyGroupFromVplGruppe(vplGruppe)
+                            );
+                        }
+
+                        mView.setStudyGroupItems(studyGroupVoList);
+                    }
+                }
+
+                @Override
+                public void onFailure(
+                        Call<List<VplGruppe>> call,
+                        Throwable throwable
+                ) {
+                }
+            };
 
     Callback<StudiengangReponse> studiengangReponseCallback = new Callback<StudiengangReponse>() {
         @Override
@@ -215,7 +226,9 @@ public class TimetableDialogFragment extends FeatureFragment {
 
                 if (studiengangList != null) {
                     for (Studiengang studiengang : studiengangList) {
-                        studiengangVoList.add(convertStudiengang(studiengang));
+                        studiengangVoList.add(
+                                mosesConverter.studyProgramFromStudiengang(studiengang)
+                        );
                     }
                 }
 
@@ -229,29 +242,35 @@ public class TimetableDialogFragment extends FeatureFragment {
         }
     };
 
-    private TimetableStudyProgramVo convertStudiengang(Studiengang studiengang) {
-        TimetableStudyProgramVo convert = new TimetableStudyProgramVo();
-
-        convert.setmLongTitle(studiengang.getName());
-        convert.setmShortTitle(studiengang.getKurzname());
-        /*
-         * Refactor consider using Optional Class
-         * or displaying degree in a different way.
-         */
-        if (studiengang.getStudiengangart() != null) {
-            convert.setmDegree(studiengang.getStudiengangart().getName());
-        } else {
-            convert.setmDegree(" ");
-        }
-
-        return convert;
-    }
-
     void proceedToTimetable(final String _TimetableId) {
         ((MainActivity) getActivity()).changeFragment(
                 TimetableFragment.newInstance(_TimetableId),
                 true
         );
+    }
+
+    /**
+     * Resets controls except the study program picker.
+     */
+    private void resetControls() {
+        mView.toggleGroupsPickerVisibility(false);
+        mView.toggleButtonEnabled(false);
+        mView.resetSemesterPicker();
+        mView.resetGroupsPicker();
+    }
+
+    private void prepareGroupsPicker() {
+        mView.toggleGroupsPickerVisibility(true);
+        mView.toggleButtonEnabled(false);
+        mView.resetGroupsPicker();
+    }
+
+    /**
+     * Resetting variables from previous selections.
+     */
+    private void resetPreviousSelections() {
+        mChosenStudyProgram = null;
+        mChosenSemester = null;
     }
 
     private final TimetableDialogView.IViewListener mViewListener = new TimetableDialogView.IViewListener() {
@@ -289,19 +308,54 @@ public class TimetableDialogFragment extends FeatureFragment {
             }
         }
 
+        /**
+         * When a study program has been selected, a request is made
+         * to obtain the available semesters and form controls and variables are reset.
+         *
+         * @param _StudyProgramName
+         * @param _StudyProgramId
+         */
         @Override
-        public void onSemesterChosen(final String _SemesterId) {
-            mView.toggleGroupsPickerVisibility(true);
-            mView.toggleButtonEnabled(false);
-            mView.resetGroupsPicker();
+        public void onStudyProgramChosenMoses(
+                final String _StudyProgramName,
+                final Integer _StudyProgramId
+        ) {
+            /*
+             * Resets controls except the study program control
+             * to be invisible or disabled again.
+             */
+            resetControls();
+            resetPreviousSelections();
+            // When a study program is selected save its id for later use
+            chosenStudyProgramId = _StudyProgramId;
+            /*
+             * When a study program is selected, the vplGruppe endpoint is called to receive the
+             * available groups for that study program. We use this as a workaround to create a
+             * set of available semesters by extracting those from the VplGruppe objects.
+             *
+             * Refactor: when there's a better endpoint available consider using it.
+             */
+            NetworkHandler.getInstance().mosesVplGruppeApi
+                    .vplgruppestudiengangIdFindAll(
+                            _StudyProgramId,
+                            // The callback calls the next endpoint
+                            vplGruppeResponseCallback
+                    );
+        }
 
-            mChosenSemester = null;
+        @Override
+        public void onSemesterChosenMoses(final String _Semester) {
+            // When a semester has been chosen, we reset the related controls
+            prepareGroupsPicker();
 
-            final Map<String, TimetableSemesterVo> semesters = mChosenStudyProgram.getSemesters();
-            if (semesters.containsKey(_SemesterId)) {
-                mChosenSemester = semesters.get(_SemesterId);
-                mView.setStudyGroupItems(mChosenSemester.getStudyGroupList());
-            }
+            chosenSemester = Integer.parseInt(_Semester);
+
+            NetworkHandler.getInstance().mosesVplGruppeApi
+                    .vplgruppestudiengangIdsemesterFindAll(
+                            chosenStudyProgramId,
+                            chosenSemester,
+                            vplGruppeWithSemesterResponceCallback
+                    );
         }
 
         /**
@@ -371,5 +425,8 @@ public class TimetableDialogFragment extends FeatureFragment {
     TimetableDialogResponse mResponse;
     TimetableStudyProgramVo mChosenStudyProgram;
     TimetableSemesterVo mChosenSemester;
+    Integer chosenSemester;
+    Integer chosenStudyProgramId;
     String mChosenStudyGroup;
+    MosesConverter mosesConverter = new MosesConverter();
 }
