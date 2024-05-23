@@ -36,6 +36,7 @@ import de.fhe.fhemobile.vos.timetable.TimetableStudyProgramVo;
 import de.fhe.fhemobile.widgets.picker.SemesterPicker;
 import de.fhe.fhemobile.widgets.picker.StudyProgramPicker;
 import de.fhe.fhemobile.widgets.picker.base.OnItemChosenListener;
+import de.fhe.fhemobile.widgets.picker.baseMoses.OnItemChosenListenerMoses;
 
 
 public class MyScheduleDialogView extends LinearLayout {
@@ -56,7 +57,7 @@ public class MyScheduleDialogView extends LinearLayout {
 
         mStudyProgramPicker.setFragmentManager(_Manager);
         mStudyProgramPicker.toggleEnabled(false);
-        mStudyProgramPicker.setOnItemChosenListener(mStudyProgramListener);
+        mStudyProgramPicker.setOnItemChosenListenerMoses(mStudyProgramListenerMoses);
 
         mSemesterPicker.setFragmentManager(_Manager);
         mSemesterPicker.toggleEnabled(false);
@@ -118,9 +119,13 @@ public class MyScheduleDialogView extends LinearLayout {
     }
 
 
-    private final OnItemChosenListener mStudyProgramListener = new OnItemChosenListener() {
+    private final OnItemChosenListenerMoses mStudyProgramListenerMoses = new OnItemChosenListenerMoses() {
         @Override
-        public void onItemChosen(final String _ItemId, final int _ItemPos) {
+        public void onItemChosenMoses(
+                final String _ItemId,
+                final int _ItemPos,
+                final Integer _StudyProgramId
+        ) {
             if (mViewListener != null) {
                 mViewListener.onStudyProgramChosen(_ItemId);
             }
