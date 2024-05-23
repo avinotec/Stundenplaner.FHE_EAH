@@ -34,6 +34,7 @@ public class TimetableStudyGroupVo implements Parcelable {
         mId = in.readString();
         mTitle = in.readString();
         mNumber = in.readString();
+        groupId = in.readInt();
     }
 
     public String getTitle() {
@@ -46,12 +47,33 @@ public class TimetableStudyGroupVo implements Parcelable {
 
     public String getNumber() {
         //mNumber not available when fetched for MySchedule
-        if(mNumber == null){
+        if (mNumber == null) {
             final String[] splitString = mTitle.split("\\.");
-            mNumber = splitString[splitString.length-1].replaceAll("\\D", "");
+            mNumber = splitString[splitString.length - 1].replaceAll("\\D", "");
         }
         return mNumber;
     }
+
+    public void setmId(String mId) {
+        this.mId = mId;
+    }
+
+    public void setmTitle(String mTitle) {
+        this.mTitle = mTitle;
+    }
+
+    public void setmNumber(String mNumber) {
+        this.mNumber = mNumber;
+    }
+
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
+    }
+
 
 
     // PARCELABLE --------------------------------------------------------------------------------
@@ -90,4 +112,7 @@ public class TimetableStudyGroupVo implements Parcelable {
 
     @SerializedName("studentsetNumber")
     private String mNumber;
+
+    @SerializedName("groupId")
+    private Integer groupId;
 }
