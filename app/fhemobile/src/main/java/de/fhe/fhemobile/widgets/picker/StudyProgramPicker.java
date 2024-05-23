@@ -24,13 +24,13 @@ import java.util.List;
 
 import de.fhe.fhemobile.comparator.StudyProgramComparator;
 import de.fhe.fhemobile.vos.timetable.TimetableStudyProgramVo;
-import de.fhe.fhemobile.widgets.picker.base.IdPicker;
+import de.fhe.fhemobile.widgets.picker.baseMoses.IdPickerMoses;
 
 /**
  * Created by paul on 12.03.15
  * Edited by Nadja - 04/2022
  */
-public class StudyProgramPicker extends IdPicker {
+public class StudyProgramPicker extends IdPickerMoses {
 
     public StudyProgramPicker(final Context context, final AttributeSet attrs) {
         super(context, attrs);
@@ -52,6 +52,11 @@ public class StudyProgramPicker extends IdPicker {
     @Override
     protected String getName(final int _Position) {
         return mItems.get(_Position).getGuiName();
+    }
+
+    @Override
+    protected Integer getStudyProgramId(final int _Position) {
+        return mItems.get(_Position).getStudyProgramId();
     }
 
     @Override
