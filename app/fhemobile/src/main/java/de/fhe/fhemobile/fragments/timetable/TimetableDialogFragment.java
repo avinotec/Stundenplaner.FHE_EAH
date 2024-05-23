@@ -44,7 +44,6 @@ import java.util.Map;
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
 import de.fhe.fhemobile.fragments.FeatureFragment;
-import de.fhe.fhemobile.fragments.timetable.converters.MosesConverter;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.ApiErrorUtils;
 import de.fhe.fhemobile.utils.Utils;
@@ -428,5 +427,5 @@ public class TimetableDialogFragment extends FeatureFragment {
     Integer chosenSemester;
     Integer chosenStudyProgramId;
     String mChosenStudyGroup;
-    MosesConverter mosesConverter = new MosesConverter();
+    MosesTimetableConverter mosesConverter = new MosesTimetableConverter();
 }

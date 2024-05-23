@@ -1,4 +1,4 @@
-package de.fhe.fhemobile.fragments.timetable.converters;
+package de.fhe.fhemobile.fragments.timetable;
 
 import org.openapitools.client.model.Studiengang;
 import org.openapitools.client.model.VplGruppe;
@@ -12,7 +12,7 @@ import de.fhe.fhemobile.vos.timetable.TimetableSemesterVo;
 import de.fhe.fhemobile.vos.timetable.TimetableStudyGroupVo;
 import de.fhe.fhemobile.vos.timetable.TimetableStudyProgramVo;
 
-public class MosesConverter {
+public class MosesTimetableConverter {
     /**
      * This method is needed to convert a VplGruppe to a TimetableSemesterVo in order to
      * keep existing code working with Moses.
