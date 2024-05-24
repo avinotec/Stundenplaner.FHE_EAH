@@ -58,7 +58,8 @@ buildscript {
 		//classpath 'com.google.android.gms:google-services:4.4.0'
 		classpath 'com.google.gms:google-services:4.4.1'
 
-		classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.9'
+		classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.1'
+
 	}
 }
 
@@ -68,6 +69,12 @@ plugins {
 	id 'com.google.gms.google-services' version '4.4.0' apply false
 	// Add the dependency for the Crashlytics Gradle plugin
 	id 'com.google.firebase.crashlytics' version '2.9.9' apply false
+
+	// This is needed work with OpenAPI spec files to generate models, methods and API clients
+	//Plugin Repositories (plugin dependency must include a version number for this source)
+	id 'org.openapi.generator' version '7.5.0' apply false
+	//id 'io.swagger.core.v3.swagger-gradle-plugin' version '2.2.22' apply false
+
 }
 
 /**
