@@ -42,7 +42,18 @@ public class TimetableSemesterVo implements Parcelable {
         mId = in.readString();
         mNumber = in.readString();
         mTitle = in.readString();
-        in.readMap(mStudyGroups, TimetableStudyGroupVo.class.getClassLoader());
+    }
+
+    public void setmId(String mId) {
+        this.mId = mId;
+    }
+
+    public void setmNumber(String mNumber) {
+        this.mNumber = mNumber;
+    }
+
+    public void setmTitle(String mTitle) {
+        this.mTitle = mTitle;
     }
 
     public String getId() { return mId;  }

@@ -66,6 +66,14 @@ public class TimetableStudyProgramVo implements Parcelable {
         this.mLongTitle = mLongTitle;
     }
 
+    public void setStudyProgramId(Integer studyProgramId) {
+        this.studyProgramId = studyProgramId;
+    }
+
+    public Integer getStudyProgramId() {
+        return studyProgramId;
+    }
+
     /**
      * Get semesters as Arraylist, sorted by semester number
      * @return
@@ -138,4 +146,7 @@ public class TimetableStudyProgramVo implements Parcelable {
 
     @SerializedName("semesterData")
     private final Map<String, TimetableSemesterVo> mSemesters = new HashMap<>();
+
+    @SerializedName("studyProgramId")
+    private Integer studyProgramId;
 }
