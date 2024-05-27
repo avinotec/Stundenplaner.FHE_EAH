@@ -25,6 +25,6 @@ public interface OnItemChosenListenerMoses {
     void onItemChosenMoses(
             String _ItemId,
             int _ItemPos,
-            Integer _StudyProgramId
+            Integer _MosesObjectId
     );
 }

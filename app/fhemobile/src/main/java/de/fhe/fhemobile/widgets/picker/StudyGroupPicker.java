@@ -22,12 +22,12 @@ import android.util.AttributeSet;
 import java.util.List;
 
 import de.fhe.fhemobile.vos.timetable.TimetableStudyGroupVo;
-import de.fhe.fhemobile.widgets.picker.base.IdPicker;
+import de.fhe.fhemobile.widgets.picker.baseMoses.IdPickerMoses;
 
 /**
  * Created by paul on 12.03.15
  */
-public class StudyGroupPicker extends IdPicker {
+public class StudyGroupPicker extends IdPickerMoses {
 
     public StudyGroupPicker(final Context context, final AttributeSet attrs) {
         super(context, attrs);
@@ -42,12 +42,17 @@ public class StudyGroupPicker extends IdPicker {
 
     @Override
     protected String getId(final int _Position) {
-        return mItems.get(_Position).getStudyGroupId();
+        return mItems.get(_Position).getGroupId().toString();
     }
 
     @Override
     protected String getName(final int _Position) {
         return mItems.get(_Position).getNumber();
+    }
+
+    @Override
+    protected Integer getMosesObjectId(int _Position) {
+        return mItems.get(_Position).getGroupId();
     }
 
     @Override

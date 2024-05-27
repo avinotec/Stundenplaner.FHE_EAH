@@ -81,7 +81,7 @@ public class IdStringDialogMoses extends DialogFragment {
                 final long id
         ) {
             String studyProgramName = mItems.get(position).getId();
-            Integer studyProgramId = mItems.get(position).getmStudyProgramId();
+            Integer mosesObjectId = mItems.get(position).getmMosesObjectId();
 
             Log.e("cz studyProgramName", studyProgramName);
 
@@ -89,7 +89,7 @@ public class IdStringDialogMoses extends DialogFragment {
                 mListener.onItemChosenMoses(
                         studyProgramName,
                         position,
-                        studyProgramId
+                        mosesObjectId
                 );
             }
             dismiss();

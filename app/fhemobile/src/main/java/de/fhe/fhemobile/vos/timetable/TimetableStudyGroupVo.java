@@ -41,8 +41,12 @@ public class TimetableStudyGroupVo implements Parcelable {
         return mTitle;
     }
 
-    public String getStudyGroupId() {
-        return mId;
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
     }
 
     public String getNumber() {
@@ -66,13 +70,6 @@ public class TimetableStudyGroupVo implements Parcelable {
         this.mNumber = mNumber;
     }
 
-    public Integer getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(Integer groupId) {
-        this.groupId = groupId;
-    }
 
 
 

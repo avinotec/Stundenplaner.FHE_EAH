@@ -52,7 +52,7 @@ public abstract class IdPickerMoses extends LinearLayout {
      */
     protected abstract String getName(int _Position);
 
-    protected abstract Integer getStudyProgramId(int _Position);
+    protected abstract Integer getMosesObjectId(int _Position);
 
     /**
      * @return
@@ -149,7 +149,7 @@ public abstract class IdPickerMoses extends LinearLayout {
             items.add(new IdItemMoses(
                     getName(i),
                     getId(i),
-                    getStudyProgramId(i)
+                    getMosesObjectId(i)
             ));
         }
 
@@ -170,13 +170,16 @@ public abstract class IdPickerMoses extends LinearLayout {
         public void onItemChosenMoses(
                 final String _ItemId,
                 final int _ItemPos,
-                final Integer _ProgramId
+                final Integer _MosesObjectId
         ) {
             mContentView.setText(getName(_ItemPos));
 
-
             if (mListenerMoses != null) {
-                mListenerMoses.onItemChosenMoses(_ItemId, _ItemPos, _ProgramId);
+                mListenerMoses.onItemChosenMoses(
+                        _ItemId,
+                        _ItemPos,
+                        _MosesObjectId
+                );
             }
         }
     };

@@ -23,11 +23,11 @@ class IdItemMoses {
     IdItemMoses(
             final String _Name,
             final String _Id,
-            final Integer _StudyProgramId
+            final Integer _MosesObjectId
     ) {
         mName = _Name;
         mId = _Id;
-        mStudyProgramId = _StudyProgramId;
+        mMosesObjectId = _MosesObjectId;
     }
 
     public String getName() {
@@ -46,15 +46,15 @@ class IdItemMoses {
         mId = _id;
     }
 
-    public Integer getmStudyProgramId() {
-        return mStudyProgramId;
+    public Integer getmMosesObjectId() {
+        return mMosesObjectId;
     }
 
-    public void setmProgramId(Integer mStudyProgramId) {
-        this.mStudyProgramId = mStudyProgramId;
+    public void setmMosesObjectId(Integer mMosesObjectId) {
+        this.mMosesObjectId = mMosesObjectId;
     }
 
     private String mName;
     private String mId;
-    private Integer mStudyProgramId;
+    private Integer mMosesObjectId;
 }
