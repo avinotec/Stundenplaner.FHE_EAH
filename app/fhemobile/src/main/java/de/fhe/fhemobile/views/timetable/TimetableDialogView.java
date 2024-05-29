@@ -68,7 +68,7 @@ public class TimetableDialogView extends LinearLayout {
 
         mStudyGroupPicker.setFragmentManager(_Manager);
         mStudyGroupPicker.toggleEnabled(false);
-        mStudyGroupPicker.setOnItemChosenListener(mStudyGroupListener);
+        mStudyGroupPicker.setOnItemChosenListenerMoses(mStudyGroupListenerMoses);
 
         mSearchButton.setOnClickListener(mSearchClickListener);
         toggleButtonEnabled(false);
@@ -159,14 +159,26 @@ public class TimetableDialogView extends LinearLayout {
         }
     };
 
-    private final OnItemChosenListener mStudyGroupListener = new OnItemChosenListener() {
-        @Override
-        public void onItemChosen(final String _ItemId, final int _ItemPos) {
-            if (mViewListener != null) {
-                mViewListener.onStudyGroupChosen(_ItemId);
-            }
-        }
-    };
+    private final OnItemChosenListenerMoses mStudyGroupListenerMoses =
+            new OnItemChosenListenerMoses() {
+                @Override
+                public void onItemChosenMoses(
+                        String _ItemId,
+                        int _ItemPos,
+                        Integer _MosesObjectId
+                ) {
+
+                    Log.e("cz", _ItemId);
+                    Log.e("cz", _MosesObjectId.toString());
+
+                    if (mViewListener != null) {
+                        mViewListener.onStudyGroupChosenMoses(
+                                _ItemId,
+                                _MosesObjectId
+                        );
+                    }
+                }
+            };
 
     private final OnClickListener mSearchClickListener = new OnClickListener() {
         @Override
@@ -194,6 +206,8 @@ public class TimetableDialogView extends LinearLayout {
         void onSemesterChosenMoses(String _SemesterId);
 
         void onStudyGroupChosen(String _TimetableId);
+
+        void onStudyGroupChosenMoses(String _TimetableId, Integer _StudyGroupId);
 
         void onSearchClicked();
     }

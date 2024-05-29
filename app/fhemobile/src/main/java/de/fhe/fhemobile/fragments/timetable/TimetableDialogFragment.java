@@ -33,6 +33,7 @@ import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 
+import org.openapitools.client.model.Buchungsgruppe;
 import org.openapitools.client.model.Studiengang;
 import org.openapitools.client.model.StudiengangReponse;
 import org.openapitools.client.model.VplGruppe;
@@ -189,9 +190,9 @@ public class TimetableDialogFragment extends FeatureFragment {
                         if (vplGruppeResponse == null) return;
 
                         for (VplGruppe vplGruppe : vplGruppeResponse) {
-                            studyGroupVoList.add(
-                                    mosesConverter.studyGroupFromVplGruppe(vplGruppe)
-                            );
+                            TimetableStudyGroupVo studyGroup = mosesConverter
+                                    .studyGroupFromVplGruppe(vplGruppe);
+                            studyGroupVoList.add(studyGroup);
                         }
 
                         mView.setStudyGroupItems(studyGroupVoList);
@@ -205,6 +206,23 @@ public class TimetableDialogFragment extends FeatureFragment {
                 ) {
                 }
             };
+
+    Callback<Buchungsgruppe> buchungsgruppeCallback = new Callback<Buchungsgruppe>() {
+        @Override
+        public void onResponse(
+                Call<Buchungsgruppe> call,
+                Response<Buchungsgruppe> response
+        ) {
+
+        }
+
+        @Override
+        public void onFailure(
+                Call<Buchungsgruppe> call,
+                Throwable throwable
+        ) {
+        }
+    };
 
     Callback<StudiengangReponse> studiengangReponseCallback = new Callback<StudiengangReponse>() {
         @Override
@@ -357,6 +375,25 @@ public class TimetableDialogFragment extends FeatureFragment {
                     );
         }
 
+        @Override
+        public void onStudyGroupChosenMoses(
+                String _TimetableId,
+                Integer _StudyGroupId
+        ) {
+
+            chosenStudyGroupId = _StudyGroupId;
+
+            //NetworkHandler.getInstance()
+              //      .mosesBuchungsGruppeApi
+                //    .buchungsGruppeById(
+                  //          chosenStudyGroupId
+
+                    //        );
+
+
+            Log.e("cz _StudyGroupId", _StudyGroupId.toString());
+        }
+
         /**
          * Choosing the group determines the timetable
          * @param _TimetableId
@@ -426,6 +463,7 @@ public class TimetableDialogFragment extends FeatureFragment {
     TimetableSemesterVo mChosenSemester;
     Integer chosenSemester;
     Integer chosenStudyProgramId;
+    Integer chosenStudyGroupId;
     String mChosenStudyGroup;
     MosesTimetableConverter mosesConverter = new MosesTimetableConverter();
 }

@@ -55,7 +55,7 @@ public class StudyProgramPicker extends IdPickerMoses {
     }
 
     @Override
-    protected Integer getStudyProgramId(final int _Position) {
+    protected Integer getMosesObjectId(int _Position) {
         return mItems.get(_Position).getStudyProgramId();
     }
 
