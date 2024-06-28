@@ -274,7 +274,7 @@ dependencies {
     // ------------ okhttp ------------------------
     
     
-    implementation 'com.google.firebase:firebase-analytics:22.0.1'
+    implementation 'com.google.firebase:firebase-analytics:22.0.2'
 
     // Testing-only dependencies
     //testImplementation 'junit:junit:4.13.2'
@@ -291,12 +291,12 @@ dependencies {
     // Add the dependencies for the Crashlytics and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
     // Import the Firebase BoM
-    implementation platform('com.google.firebase:firebase-bom:33.1.0')
+    implementation platform('com.google.firebase:firebase-bom:33.1.1')
     implementation 'com.google.firebase:firebase-messaging:24.0.0'
     implementation 'com.google.firebase:firebase-inappmessaging-display:21.0.0'
-	implementation 'com.google.firebase:firebase-crashlytics:19.0.1'
+	implementation 'com.google.firebase:firebase-crashlytics:19.0.2'
     // Add the dependency for the Firebase SDK for Google Analytics
-    implementation 'com.google.firebase:firebase-analytics:22.0.1'
+    implementation 'com.google.firebase:firebase-analytics:22.0.2'
 
     implementation 'com.google.gms:google-services:4.4.2'
     implementation platform('com.google.firebase:firebase-inappmessaging-display-ktx:21.0.0')
