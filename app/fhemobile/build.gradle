@@ -41,7 +41,6 @@ base {
  * build options.
  */
 android {
-    compileSdk 34
     /**
      * compileSdkVersion specifies the Android API level Gradle should use to
      * compile your app. This means your app can use the API features included in
@@ -234,14 +233,14 @@ java {
  */
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'com.google.android.material:material:1.12.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.navigation:navigation-fragment:2.7.7'
-    implementation 'androidx.navigation:navigation-ui:2.7.7'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
+    implementation 'androidx.navigation:navigation-fragment:2.8.6'
+    implementation 'androidx.navigation:navigation-ui:2.8.6'
 
     //new gesture actions
-    implementation 'androidx.activity:activity:1.9.0'
+    implementation 'androidx.activity:activity:1.10.0'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
 
     //Swipe to refresh
@@ -250,7 +249,7 @@ dependencies {
     implementation 'androidx.preference:preference:1.2.1'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.annotation:annotation:1.8.0'
+    implementation 'androidx.annotation:annotation:1.9.1'
 
 
     // ------------ okhttp ------------------------
@@ -274,7 +273,7 @@ dependencies {
     // ------------ okhttp ------------------------
     
     
-    implementation 'com.google.firebase:firebase-analytics:22.0.0'
+    implementation 'com.google.firebase:firebase-analytics:22.2.0'
 
     // Testing-only dependencies
     //testImplementation 'junit:junit:4.13.2'
@@ -291,28 +290,28 @@ dependencies {
     // Add the dependencies for the Crashlytics and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
     // Import the Firebase BoM
-    implementation platform('com.google.firebase:firebase-bom:33.0.0')
-    implementation 'com.google.firebase:firebase-messaging:24.0.0'
-    implementation 'com.google.firebase:firebase-inappmessaging-display:21.0.0'
-	implementation 'com.google.firebase:firebase-crashlytics:19.0.0'
+    implementation platform('com.google.firebase:firebase-bom:33.8.0')
+    implementation 'com.google.firebase:firebase-messaging:24.1.0'
+    implementation 'com.google.firebase:firebase-inappmessaging-display:21.0.1'
+	implementation 'com.google.firebase:firebase-crashlytics:19.4.0'
     // Add the dependency for the Firebase SDK for Google Analytics
-    implementation 'com.google.firebase:firebase-analytics:22.0.0'
+    implementation 'com.google.firebase:firebase-analytics:22.2.0'
 
-    implementation 'com.google.gms:google-services:4.4.1'
-    implementation platform('com.google.firebase:firebase-inappmessaging-display-ktx:21.0.0')
-    implementation 'com.google.android.gms:play-services-base:18.4.0'
+    implementation 'com.google.gms:google-services:4.4.2'
+    implementation platform('com.google.firebase:firebase-inappmessaging-display-ktx:21.0.1')
+    implementation 'com.google.android.gms:play-services-base:18.5.0'
 
     // Adds libraries defining annotations to only the compile classpath.
-    compileOnly 'com.google.dagger:dagger:2.51.1'
+    compileOnly 'com.google.dagger:dagger:2.55'
     // Adds the annotation processor dependency to the annotation processor classpath.
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.51.1'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.55'
     
     //implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
-    implementation(platform('org.jetbrains.kotlin:kotlin-bom:2.0.0'))
+    implementation(platform('org.jetbrains.kotlin:kotlin-bom:2.1.10'))
 
 
 	// release version braucht einen simple logger
-	implementation 'org.slf4j:slf4j-simple:2.0.13'
+	implementation 'org.slf4j:slf4j-simple:2.0.16'
 
     implementation 'com.github.bumptech.glide:glide:4.16.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
@@ -325,7 +324,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.11.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.11.0'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
 
     // MOSES --------------------------------------------------------------------
     implementation 'jakarta.annotation:jakarta.annotation-api:3.0.0'
@@ -333,7 +332,7 @@ dependencies {
     implementation 'io.gsonfire:gson-fire:1.9.0'
 
     //noinspection GradleDependency -- DO NOT UPDATE
-    implementation('org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.1') {
+    implementation('org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.2') {
         exclude group: 'org.apache.oltu.oauth2', module: 'org.apache.oltu.oauth2.common'
     }
 }
@@ -410,6 +409,7 @@ tasks.preBuild {
  * these must be added to the sourceSets so that they are known in the project.
  */
 android {
+    compileSdk 35
     sourceSets {
         main {
             java {
