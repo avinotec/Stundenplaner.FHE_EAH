@@ -34,16 +34,24 @@ import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 
 import org.openapitools.client.model.Buchungsgruppe;
+import org.openapitools.client.model.CalVeranstaltung;
+import org.openapitools.client.model.CalVeranstaltungReponse;
+import org.openapitools.client.model.Semester;
+import org.openapitools.client.model.SemesterResponse;
 import org.openapitools.client.model.Studiengang;
 import org.openapitools.client.model.StudiengangReponse;
 import org.openapitools.client.model.VplGruppe;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.activities.MainActivity;
+import de.fhe.fhemobile.api.MosesSemesterApi;
 import de.fhe.fhemobile.fragments.FeatureFragment;
 import de.fhe.fhemobile.network.NetworkHandler;
 import de.fhe.fhemobile.utils.ApiErrorUtils;
@@ -68,6 +76,8 @@ import retrofit2.Response;
 public class TimetableDialogFragment extends FeatureFragment {
 
     public static final String TAG = TimetableDialogFragment.class.getSimpleName();
+    private Semester currentSemester;
+
 
     /**
      * Use this factory method to create a new instance of
@@ -141,7 +151,24 @@ public class TimetableDialogFragment extends FeatureFragment {
                         10000,
                         studiengangReponseCallback
                 );
+
+
+        NetworkHandler.getInstance().mosesSemesterApi.getCurrentSemester(new MosesSemesterApi.CurrentSemesterCallback() {
+            @Override
+            public void onCurrentSemesterReceived(Semester semester) {
+                currentSemester = semester;
+                System.out.println("Aktuelles Semester: " + semester.getName());
+                System.out.println("Aktuelles Semester [ID]: " + semester.getId());
+                System.out.println("Aktuelles Semester [Start/Ende]: " + semester.getStartDate() + " / " + semester.getEndDate());
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                System.err.println("Fehler: " + errorMessage);
+            }
+        });
     }
+
 
     /**
      * Construct a sorted, unique set of fachsemester from a vplGruppeResponse
@@ -256,6 +283,43 @@ public class TimetableDialogFragment extends FeatureFragment {
         @Override
         public void onFailure(Call<StudiengangReponse> call, Throwable throwable) {
             // TODO: handle failure branch
+        }
+    };
+
+    Callback<SemesterResponse> semesterResponseCallback = new Callback<SemesterResponse>() {
+        @Override
+        public void onResponse(Call<SemesterResponse> call, Response<SemesterResponse> response) {
+
+        }
+
+        @Override
+        public void onFailure(Call<SemesterResponse> call, Throwable throwable) {
+
+        }
+    };
+
+    Callback<CalVeranstaltungReponse> calVeranstaltungReponseCallback = new Callback<CalVeranstaltungReponse>() {
+        @Override
+        public void onResponse(
+                Call<CalVeranstaltungReponse> call,
+                Response<CalVeranstaltungReponse> response
+        ) {
+            calVeranstaltungIds.clear();
+
+            for (CalVeranstaltung calVeranstaltung : response.body().getData()) {
+                calVeranstaltungIds.add(calVeranstaltung.getId());
+                Log.d("cz", "id: " + calVeranstaltung.getId() + " name: " + calVeranstaltung.getName());
+                // Tony hier weiter machen 27.01.2025
+            }
+            // Log.d("cz", response.body().getData().toString());
+        }
+
+        @Override
+        public void onFailure(
+                Call<CalVeranstaltungReponse> call,
+                Throwable throwable
+        ) {
+
         }
     };
 
@@ -384,14 +448,24 @@ public class TimetableDialogFragment extends FeatureFragment {
             chosenStudyGroupId = _StudyGroupId;
 
             //NetworkHandler.getInstance()
-              //      .mosesBuchungsGruppeApi
-                //    .buchungsGruppeById(
-                  //          chosenStudyGroupId
+            //      .mosesBuchungsGruppeApi
+            //    .buchungsGruppeById(
+            //          chosenStudyGroupId
 
-                    //        );
+            //        );
 
+            // TODO: hier wichtig weiter zu machen
 
             Log.e("cz _StudyGroupId", _StudyGroupId.toString());
+
+            Log.e("cz currentSemester", currentSemester.getId().toString());
+
+            NetworkHandler.getInstance().mosesCalVeranstaltungApi.calVeranstaltungByPlanungsgruppeId(
+                    null,
+                    _StudyGroupId,
+                    currentSemester.getId(),
+                    // Tony: 10.12.2024
+                    calVeranstaltungReponseCallback);
         }
 
         /**
@@ -465,5 +539,6 @@ public class TimetableDialogFragment extends FeatureFragment {
     Integer chosenStudyProgramId;
     Integer chosenStudyGroupId;
     String mChosenStudyGroup;
+    ArrayList<Integer> calVeranstaltungIds = new ArrayList<Integer>();
     MosesTimetableConverter mosesConverter = new MosesTimetableConverter();
 }

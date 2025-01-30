@@ -44,6 +44,7 @@ import de.fhe.fhemobile.R;
 import de.fhe.fhemobile.api.MosesBuchungsGruppeApi;
 import de.fhe.fhemobile.api.MosesCalVeranstaltungApi;
 import de.fhe.fhemobile.api.MosesFachsemesterApi;
+import de.fhe.fhemobile.api.MosesSemesterApi;
 import de.fhe.fhemobile.api.MosesStudiengangApi;
 import de.fhe.fhemobile.api.MosesApi;
 import de.fhe.fhemobile.api.MosesStupoApi;
@@ -105,6 +106,7 @@ public final class NetworkHandler {
 	public MosesFachsemesterApi mosesFachsemesterApi = new MosesFachsemesterApi(mosesApiClient);
 	public MosesVplGruppeApi mosesVplGruppeApi = new MosesVplGruppeApi(mosesApiClient);
 	public MosesBuchungsGruppeApi mosesBuchungsGruppeApi = new MosesBuchungsGruppeApi(mosesApiClient);
+	public MosesSemesterApi mosesSemesterApi = new MosesSemesterApi(mosesApiClient);
 
 	/**
 	 * Private constructor

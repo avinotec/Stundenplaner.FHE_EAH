@@ -77,6 +77,12 @@ components:
         eidFromImport:
           type: string
           description: "Extern-ID, wird beim Import aus anderen Systemen gesetzt. Muss keine Zahl sein, da intern als Zeichenkette gespeichert."
+        name:
+          type: string
+        mosesTypeCode:
+          type: string
+          enum:
+            - "raum"
         endpointPath:
           type: string
           enum:
@@ -127,6 +133,60 @@ components:
           enum:
             - "/buchung"
           description: ""
+        startPoint:
+          type: string
+          format: date-time
+        endPoint:
+          type: string
+          format: date-time
+        startTime:
+          type: string
+          format: time
+        endTime:
+          type: string
+          format: time
+        onlineTermin:
+          type: boolean
+          description: 'Ob die Vorlesung in Person oder online stattfindet'
+        raumList:
+          type: array
+          items:
+            $ref: "#/components/schemas/raum"
+        dozierendeList:
+          type: array
+          items:
+            $ref: "#/components/schemas/person"
+        calVeranstaltungstyp:
+          type: string
+          enum:
+            - "PRUEFUNG"
+            - "LEHRVERANSTALTUNG"
+            - "EVENT"
+        buchungsgruppe:
+          type: object
+          properties:
+            id:
+              minimum: 1
+              type: integer
+              description: Datenbank-ID in Moses
+              format: int32
+            name:
+              type: string
+              description: "Name: Beste menschenlesbare Darstellung des Objekts."
+            kurzname:
+              type: string
+              description: "Wenn es einen abgekürzten Namen gibt, wird dieser hier zurückgegeben. Ansonsten wird der normale Name zurückgegeben."
+            mosesTypeCode:
+              type: string
+              enum:
+                - "buchungsgruppe"
+              description: ""
+            endpointPath:
+              type: string
+              enum:
+                - "/buchungsgruppe"
+              description: ""
+
     buchungsgruppe:
       type: object
       properties:
@@ -261,11 +321,45 @@ components:
         eidFromImport:
           type: string
           description: "Extern-ID, wird beim Import aus anderen Systemen gesetzt. Muss keine Zahl sein, da intern als Zeichenkette gespeichert."
+        name:
+          type: string
+          description: 'Name: Beste menschenlesbare Darstellung des Objekts.'
+        kurzname:
+          type: string
+          description: >-
+            Wenn es einen abgekürzten Namen gibt, wird dieser hier
+            zurückgegeben. Ansonsten wird der normale Name
+            zurückgegeben.
+        mosesTypeCode:
+          type: string
+          enum:
+            - "semester"
+          description: ""
         endpointPath:
           type: string
           enum:
             - "/semester"
           description: ""
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        vorlesungszeit:
+          type: object
+          properties:
+            startDate:
+              type: string
+              format: date
+            endDate:
+              type: string
+              format: date
+        semesterTyp:
+          type: string
+          enum:
+            - WINTER
+            - SOMMER
     entity:
       type: object
     campus:
@@ -744,6 +838,35 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/buchungsgruppe"
+    semesterResponse:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+          minimum: 1
+          description: Die Gesamtzahl der Seiten mit Fachsemestern
+        pageNumber:
+          type: integer
+          format: int32
+          minimum: 1
+          description: Die aktuelle Seitennummer
+        pageSize:
+          type: integer
+          format: int32
+          minimum: 1
+          description: Die Anzahl der Fachsemester pro Seite
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/semester"
+    buchungByIdResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/buchung"
 
   securitySchemes:
     ApiKeyAuth:
@@ -818,6 +941,12 @@ paths:
       - name: planungsgruppeId
         in: query
         description: "Direct mapping of events that are assigned to a specific study program + semester"
+        schema:
+          type: integer
+          format: int32
+      - name: semesterId
+        in: query
+        description: "Die ID des Semesters. Damit ist das konkrete Semester also bspw. WS 2024/2025 gemeint"
         schema:
           type: integer
           format: int32
@@ -1099,3 +1228,36 @@ paths:
                 $ref: '#/components/schemas/buchungsGruppeByIdResponse'
         default:
           description: Unexpected error
+  /semester:
+    get:
+      tags:
+        - Semester
+      responses:
+        '200':
+          description: Erfolgreiche Abfrage der Fachsemester
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/semesterResponse'
+      operationId: semester_getAll
+      security:
+        - AuthorizationHeader: [ ]
+  /buchung/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      operationId: "v1_buchung_{id}_getById"
+      summary: ""
+      tags:
+        - Buchung
+      responses:
+        '200':
+          description: Erfolgreiche Abfrage einer Buchung
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/buchungByIdResponse'
+
+# TODO: Endpunkte
+# - [x] /buchungsgruppe/{id}
+# - [x] /buchung/{id}

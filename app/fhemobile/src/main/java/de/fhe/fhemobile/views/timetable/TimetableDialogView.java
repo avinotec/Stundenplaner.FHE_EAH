@@ -171,6 +171,7 @@ public class TimetableDialogView extends LinearLayout {
                     Log.e("cz", _ItemId);
                     Log.e("cz", _MosesObjectId.toString());
 
+                    // TONY: hier wird die vplgruppe also 856 bei
                     if (mViewListener != null) {
                         mViewListener.onStudyGroupChosenMoses(
                                 _ItemId,

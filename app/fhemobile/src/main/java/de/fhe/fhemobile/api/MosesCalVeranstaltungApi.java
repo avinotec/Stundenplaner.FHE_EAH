@@ -27,10 +27,11 @@ public class MosesCalVeranstaltungApi {
             Integer pageSize,
             String name,
             Integer planungsgruppeId,
+            Integer semesterId,
             Callback<CalVeranstaltungReponse> _Callback
     ) {
         veranstaltungApiService
-                .v1CalveranstaltungGetAll(pageNumber, pageSize, name, planungsgruppeId)
+                .v1CalveranstaltungGetAll(pageNumber, pageSize, name, planungsgruppeId, semesterId)
                 .enqueue(_Callback);
     }
 
@@ -65,6 +66,7 @@ public class MosesCalVeranstaltungApi {
     public void calVeranstaltungByPlanungsgruppeId(
             Integer pageSize,
             Integer planungsgruppeId,
+            Integer semesterId,
             Callback<CalVeranstaltungReponse> _Callback
     ) {
         veranstaltungApiService
@@ -72,7 +74,8 @@ public class MosesCalVeranstaltungApi {
                         null,
                         pageSize,
                         null,
-                        planungsgruppeId
+                        planungsgruppeId,
+                        semesterId
                 ).enqueue(_Callback);
     }
 

@@ -132,8 +132,8 @@ android {
             storePassword 'EAHJena2019Stundenplan'
             keyAlias 'EAHStundenplan'
             keyPassword 'EAHJena2019Stundenplan'
-            storeFile file('D:\\Projekt\\Mobile.AndroidStudio\\Stundenplaner.FHE_EAH.2019\\doc\\EAHKeystore')
-            // storeFile file('D:\\Projekt\\Mobile.AndroidStudio\\Stundenplaner.FHE_EAH.2019\\doc\\EAHKeystore')
+            //storeFile file('D:\\Projekt\\Mobile.AndroidStudio\\Stundenplaner.FHE_EAH.2019\\doc\\EAHKeystore')
+            //storeFile file('D:\\Projekt\\Mobile.AndroidStudio\\Stundenplaner.FHE_EAH.2019\\doc\\EAHKeystore')
         }
         debug {
             // Ein fester debug keystore damit, wenn man mit verschiedenen Rechnern arbeitet, die APK updaten kann.

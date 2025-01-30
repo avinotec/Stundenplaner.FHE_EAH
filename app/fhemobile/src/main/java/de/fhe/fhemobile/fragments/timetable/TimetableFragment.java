@@ -139,12 +139,15 @@ public class TimetableFragment extends FeatureFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+
+		// Tony:
 		NetworkHandler.getInstance().fetchTimetable(mChosenTimetableId, mCallback);
 //		todo: for debugging response = null
 //		NetworkHandler.getInstance().fetchTimetableEvents("53B3DB05F11C6EA417AA82B3DA33991B", mCallback);
 
 	}
 
+	// Tony:
 	private final Callback<Map<String, TimetableWeekVo>> mCallback = new Callback<Map<String, TimetableWeekVo>>() {
 		@Override
 		public void onResponse(@NonNull final Call<Map<String, TimetableWeekVo>> call, final Response<Map<String, TimetableWeekVo>> response) {
