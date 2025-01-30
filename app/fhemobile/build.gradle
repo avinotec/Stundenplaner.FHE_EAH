@@ -236,8 +236,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
-    implementation 'androidx.navigation:navigation-fragment:2.8.5'
-    implementation 'androidx.navigation:navigation-ui:2.8.5'
+    implementation 'androidx.navigation:navigation-fragment:2.8.6'
+    implementation 'androidx.navigation:navigation-ui:2.8.6'
 
     //new gesture actions
     implementation 'androidx.activity:activity:1.10.0'
@@ -273,7 +273,7 @@ dependencies {
     // ------------ okhttp ------------------------
     
     
-    implementation 'com.google.firebase:firebase-analytics:22.1.2'
+    implementation 'com.google.firebase:firebase-analytics:22.2.0'
 
     // Testing-only dependencies
     //testImplementation 'junit:junit:4.13.2'
@@ -290,12 +290,12 @@ dependencies {
     // Add the dependencies for the Crashlytics and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
     // Import the Firebase BoM
-    implementation platform('com.google.firebase:firebase-bom:33.7.0')
+    implementation platform('com.google.firebase:firebase-bom:33.8.0')
     implementation 'com.google.firebase:firebase-messaging:24.1.0'
     implementation 'com.google.firebase:firebase-inappmessaging-display:21.0.1'
-	implementation 'com.google.firebase:firebase-crashlytics:19.3.0'
+	implementation 'com.google.firebase:firebase-crashlytics:19.4.0'
     // Add the dependency for the Firebase SDK for Google Analytics
-    implementation 'com.google.firebase:firebase-analytics:22.1.2'
+    implementation 'com.google.firebase:firebase-analytics:22.2.0'
 
     implementation 'com.google.gms:google-services:4.4.2'
     implementation platform('com.google.firebase:firebase-inappmessaging-display-ktx:21.0.1')
@@ -307,7 +307,7 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.55'
     
     //implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
-    implementation(platform('org.jetbrains.kotlin:kotlin-bom:2.1.0'))
+    implementation(platform('org.jetbrains.kotlin:kotlin-bom:2.1.10'))
 
 
 	// release version braucht einen simple logger
