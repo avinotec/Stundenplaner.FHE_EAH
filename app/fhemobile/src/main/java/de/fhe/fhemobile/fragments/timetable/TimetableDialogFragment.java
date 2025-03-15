@@ -33,6 +33,8 @@ import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 
+import org.openapitools.client.model.Buchung;
+import org.openapitools.client.model.BuchungsGruppeByIdResponse;
 import org.openapitools.client.model.Buchungsgruppe;
 import org.openapitools.client.model.CalVeranstaltung;
 import org.openapitools.client.model.CalVeranstaltungReponse;
@@ -42,11 +44,9 @@ import org.openapitools.client.model.Studiengang;
 import org.openapitools.client.model.StudiengangReponse;
 import org.openapitools.client.model.VplGruppe;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import de.fhe.fhemobile.R;
@@ -67,293 +67,39 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link TimetableDialogFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class TimetableDialogFragment extends FeatureFragment {
-
     public static final String TAG = TimetableDialogFragment.class.getSimpleName();
+
+    // UI components
+    private TimetableDialogView mView;
+
+    // Data
+    private TimetableDialogResponse mResponse;
     private Semester currentSemester;
 
+    // Selection state
+    private TimetableStudyProgramVo mChosenStudyProgram;
+    private TimetableSemesterVo mChosenSemester;
+    private Integer chosenStudyProgramId;
+    private Integer chosenStudyGroupId;
+    private String mChosenStudyGroup;
+    private Integer chosenSemester;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment TimetableDialogFragment.
-     */
-    public static TimetableDialogFragment newInstance() {
-        final TimetableDialogFragment fragment = new TimetableDialogFragment();
-        final Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+    // Data lists for API calls
+    private final ArrayList<Integer> einzeltermineIds = new ArrayList<>();
+    private final ArrayList<Integer> calVeranstaltungIds = new ArrayList<Integer>();
+    private final ArrayList<MosesCalVeranstaltungWithBuchungsGruppe> calVeranstaltungenWithBuchungsGruppen = new ArrayList<>();
+    private final Map<Integer, List<Buchung>> buchungsGruppenMap = new HashMap<>();
 
-    public TimetableDialogFragment() {
-        super(TAG);
-    }
+    // Converters
+    private final MosesTimetableConverter mosesConverter = new MosesTimetableConverter();
 
-    @Override
-    public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        mChosenStudyProgram = null;
-        mChosenSemester = null;
-        mChosenStudyGroup = null;
-    }
-
-    @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-                             final Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        mView = (TimetableDialogView) inflater.inflate(R.layout.fragment_timetable_dialog, container, false);
-        mView.setViewListener(mViewListener);
-        mView.initializeView(getChildFragmentManager());
-
-        return mView;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
-        // see https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
-        final MenuHost menuHost = requireActivity();
-        menuHost.addMenuProvider(new MenuProvider() {
-            @Override
-            public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
-                // Add menu items here
-                menu.clear();
-                menuInflater.inflate(R.menu.menu_main, menu);
-            }
-
-            @Override
-            public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
-                // Handle the menu selection
-                return false;
-            }
-        });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        /*
-         * Call the studiengang/ endpoint to receive a list of all study programs
-         */
-        NetworkHandler.getInstance().mosesStudiengangApi
-                .studiengangGetAll(
-                        null,
-                        10000,
-                        studiengangReponseCallback
-                );
-
-
-        NetworkHandler.getInstance().mosesSemesterApi.getCurrentSemester(new MosesSemesterApi.CurrentSemesterCallback() {
-            @Override
-            public void onCurrentSemesterReceived(Semester semester) {
-                currentSemester = semester;
-                System.out.println("Aktuelles Semester: " + semester.getName());
-                System.out.println("Aktuelles Semester [ID]: " + semester.getId());
-                System.out.println("Aktuelles Semester [Start/Ende]: " + semester.getStartDate() + " / " + semester.getEndDate());
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                System.err.println("Fehler: " + errorMessage);
-            }
-        });
-    }
-
-
-    /**
-     * Construct a sorted, unique set of fachsemester from a vplGruppeResponse
-     */
-    Callback<List<VplGruppe>> vplGruppeResponseCallback = new Callback<List<VplGruppe>>() {
-        @Override
-        public void onResponse(
-                Call<List<VplGruppe>> call,
-                Response<List<VplGruppe>> response
-        ) {
-            if (response.isSuccessful()) {
-                List<VplGruppe> vplGruppeList = response.body();
-                if (vplGruppeList == null) return;
-
-                List<TimetableSemesterVo> semesterList =
-                        mosesConverter.semesterVosListFromVplGruppe(vplGruppeList);
-
-                List<TimetableSemesterVo> semesterUniqueList = new ArrayList<>(
-                        mosesConverter.semesterVosSetFromList(semesterList)
-                );
-
-                mView.toggleSemesterPickerVisibility(true);
-                mView.setSemesterItems(semesterUniqueList);
-            }
-        }
-
-        @Override
-        public void onFailure(
-                Call<List<VplGruppe>> call,
-                Throwable throwable
-        ) {
-        }
-    };
-
-    Callback<List<VplGruppe>> vplGruppeWithSemesterResponceCallback =
-            new Callback<List<VplGruppe>>() {
-                @Override
-                public void onResponse(
-                        Call<List<VplGruppe>> call,
-                        Response<List<VplGruppe>> response
-                ) {
-                    if (response.isSuccessful()) {
-                        List<VplGruppe> vplGruppeResponse = response.body();
-                        ArrayList<TimetableStudyGroupVo> studyGroupVoList = new ArrayList<>();
-
-                        if (vplGruppeResponse == null) return;
-
-                        for (VplGruppe vplGruppe : vplGruppeResponse) {
-                            TimetableStudyGroupVo studyGroup = mosesConverter
-                                    .studyGroupFromVplGruppe(vplGruppe);
-                            studyGroupVoList.add(studyGroup);
-                        }
-
-                        mView.setStudyGroupItems(studyGroupVoList);
-                    }
-                }
-
-                @Override
-                public void onFailure(
-                        Call<List<VplGruppe>> call,
-                        Throwable throwable
-                ) {
-                }
-            };
-
-    Callback<Buchungsgruppe> buchungsgruppeCallback = new Callback<Buchungsgruppe>() {
-        @Override
-        public void onResponse(
-                Call<Buchungsgruppe> call,
-                Response<Buchungsgruppe> response
-        ) {
-
-        }
-
-        @Override
-        public void onFailure(
-                Call<Buchungsgruppe> call,
-                Throwable throwable
-        ) {
-        }
-    };
-
-    Callback<StudiengangReponse> studiengangReponseCallback = new Callback<StudiengangReponse>() {
-        @Override
-        public void onResponse(
-                Call<StudiengangReponse> call,
-                Response<StudiengangReponse> response
-        ) {
-            if (response.isSuccessful()) {
-                StudiengangReponse studiengangReponse = response.body();
-                /*
-                 * Moses based list of events which will converted to fit with existing code
-                 */
-                ArrayList<Studiengang> studiengangList;
-                ArrayList<TimetableStudyProgramVo> studiengangVoList = new ArrayList<>();
-
-                if (studiengangReponse == null) return;
-                studiengangList = (ArrayList<Studiengang>) studiengangReponse.getData();
-
-                if (studiengangList != null) {
-                    for (Studiengang studiengang : studiengangList) {
-                        studiengangVoList.add(
-                                mosesConverter.studyProgramFromStudiengang(studiengang)
-                        );
-                    }
-                }
-
-                mView.setStudyProgramItems(studiengangVoList);
-            }
-        }
-
-        @Override
-        public void onFailure(Call<StudiengangReponse> call, Throwable throwable) {
-            // TODO: handle failure branch
-        }
-    };
-
-    Callback<SemesterResponse> semesterResponseCallback = new Callback<SemesterResponse>() {
-        @Override
-        public void onResponse(Call<SemesterResponse> call, Response<SemesterResponse> response) {
-
-        }
-
-        @Override
-        public void onFailure(Call<SemesterResponse> call, Throwable throwable) {
-
-        }
-    };
-
-    Callback<CalVeranstaltungReponse> calVeranstaltungReponseCallback = new Callback<CalVeranstaltungReponse>() {
-        @Override
-        public void onResponse(
-                Call<CalVeranstaltungReponse> call,
-                Response<CalVeranstaltungReponse> response
-        ) {
-            calVeranstaltungIds.clear();
-
-            for (CalVeranstaltung calVeranstaltung : response.body().getData()) {
-                calVeranstaltungIds.add(calVeranstaltung.getId());
-                Log.d("cz", "id: " + calVeranstaltung.getId() + " name: " + calVeranstaltung.getName());
-                // Tony hier weiter machen 27.01.2025
-            }
-            // Log.d("cz", response.body().getData().toString());
-        }
-
-        @Override
-        public void onFailure(
-                Call<CalVeranstaltungReponse> call,
-                Throwable throwable
-        ) {
-
-        }
-    };
-
-    void proceedToTimetable(final String _TimetableId) {
-        ((MainActivity) getActivity()).changeFragment(
-                TimetableFragment.newInstance(_TimetableId),
-                true
-        );
-    }
-
-    /**
-     * Resets controls except the study program picker.
-     */
-    private void resetControls() {
-        mView.toggleGroupsPickerVisibility(false);
-        mView.toggleButtonEnabled(false);
-        mView.resetSemesterPicker();
-        mView.resetGroupsPicker();
-    }
-
-    private void prepareGroupsPicker() {
-        mView.toggleGroupsPickerVisibility(true);
-        mView.toggleButtonEnabled(false);
-        mView.resetGroupsPicker();
-    }
-
-    /**
-     * Resetting variables from previous selections.
-     */
-    private void resetPreviousSelections() {
-        mChosenStudyProgram = null;
-        mChosenSemester = null;
-    }
-
+    // View Listener
     private final TimetableDialogView.IViewListener mViewListener = new TimetableDialogView.IViewListener() {
         @Override
         public void onStudyProgramChosen(final String _StudyProgramId) {
@@ -495,11 +241,62 @@ public class TimetableDialogFragment extends FeatureFragment {
         }
     };
 
+    // API-Callbacks
+    private final Callback<Buchungsgruppe> buchungsgruppeCallback = new Callback<Buchungsgruppe>() {
+        @Override
+        public void onResponse(
+                Call<Buchungsgruppe> call,
+                Response<Buchungsgruppe> response
+        ) {
 
-    /**
-     * Refator/delete:
-     * When everythin is done and adapted for the new API delete this method.
-     */
+        }
+
+        @Override
+        public void onFailure(
+                Call<Buchungsgruppe> call,
+                Throwable throwable
+        ) {
+        }
+    };
+    private final Callback<SemesterResponse> semesterResponseCallback = new Callback<SemesterResponse>() {
+        @Override
+        public void onResponse(Call<SemesterResponse> call, Response<SemesterResponse> response) {
+
+        }
+
+        @Override
+        public void onFailure(Call<SemesterResponse> call, Throwable throwable) {
+
+        }
+    };
+    private final Callback<BuchungsGruppeByIdResponse> buchungsgruppeResponseCallback = new Callback<BuchungsGruppeByIdResponse>() {
+        @Override
+        public void onResponse(Call<BuchungsGruppeByIdResponse> call, Response<BuchungsGruppeByIdResponse> response) {
+            Log.d("cz", "buchungsgruppeResponseCallback");
+
+            if (response.isSuccessful()) {
+                BuchungsGruppeByIdResponse buchungsGruppeByIdResponse = response.body();
+
+                List<Buchungsgruppe> buchungsGruppeList = buchungsGruppeByIdResponse.getData();
+
+                Integer buchungsGruppeId = buchungsGruppeList.get(0).getId();
+                List<Buchung> buchungList = buchungsGruppeList.get(0).getBuchungList();
+
+
+                for (Buchung buchung : buchungList) {
+                    einzeltermineIds.add(buchung.getId());
+                }
+
+
+            }
+        }
+
+        @Override
+        public void onFailure(Call<BuchungsGruppeByIdResponse> call, Throwable throwable) {
+            Log.d("cz", "buchungsgruppeResponseCallback onFailure");
+
+        }
+    };
     private final Callback<TimetableDialogResponse> mFetchStudyProgramsCallback = new Callback<TimetableDialogResponse>() {
         @Override
         public void onResponse(@NonNull final Call<TimetableDialogResponse> call, final Response<TimetableDialogResponse> response) {
@@ -507,7 +304,7 @@ public class TimetableDialogFragment extends FeatureFragment {
                 mResponse = response.body();
 
                 final ArrayList<TimetableStudyProgramVo> studyPrograms = new ArrayList<>();
-                //remove "Brückenkurse" and only keep bachelor and master study programs
+                // remove "Brückenkurse" and only keep bachelor and master study programs
                 for (final TimetableStudyProgramVo studyProgramVo : response.body().getStudyProgramsAsList()) {
 
                     if ("Bachelor".equals(studyProgramVo.getDegree())
@@ -529,16 +326,287 @@ public class TimetableDialogFragment extends FeatureFragment {
             Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
         }
     };
+    private final Callback<CalVeranstaltungReponse> calVeranstaltungReponseCallback = new Callback<CalVeranstaltungReponse>() {
+        @Override
+        public void onResponse(
+                Call<CalVeranstaltungReponse> call,
+                Response<CalVeranstaltungReponse> response
+        ) {
+            Log.d("cz", "calVeranstaltungReponseCallback");
 
-    TimetableDialogView mView;
+            calVeranstaltungIds.clear();
+            calVeranstaltungenWithBuchungsGruppen.clear();
 
-    TimetableDialogResponse mResponse;
-    TimetableStudyProgramVo mChosenStudyProgram;
-    TimetableSemesterVo mChosenSemester;
-    Integer chosenSemester;
-    Integer chosenStudyProgramId;
-    Integer chosenStudyGroupId;
-    String mChosenStudyGroup;
-    ArrayList<Integer> calVeranstaltungIds = new ArrayList<Integer>();
-    MosesTimetableConverter mosesConverter = new MosesTimetableConverter();
+            for (CalVeranstaltung calVeranstaltung : response.body().getData()) {
+                Log.d("cz", "calVeranstaltung.getId(): " + calVeranstaltung.getId());
+                calVeranstaltungIds.add(calVeranstaltung.getId());
+
+                // TODO ^ das hier kann weg
+
+                List<Buchungsgruppe> buchungsgruppeList = calVeranstaltung.getBuchungsgruppeList();
+
+                if (buchungsgruppeList != null && !buchungsgruppeList.isEmpty()) {
+
+                    MosesCalVeranstaltungWithBuchungsGruppe mGruppe = new MosesCalVeranstaltungWithBuchungsGruppe(
+                            calVeranstaltung.getId(),
+                            calVeranstaltung.getName(),
+                            buchungsgruppeList.get(0).getId()
+                    );
+
+                    calVeranstaltungenWithBuchungsGruppen.add(mGruppe);
+                    Log.d("cz", mGruppe.toString());
+
+                }
+
+                for (MosesCalVeranstaltungWithBuchungsGruppe mosesCalVeranstaltungWithBuchungsGruppe : calVeranstaltungenWithBuchungsGruppen) {
+                    fetchBuchungsgruppeById(mosesCalVeranstaltungWithBuchungsGruppe.buchungsGruppeId, buchungsgruppeResponseCallback);
+                   /* NetworkHandler.getInstance().mosesBuchungsGruppeApi.buchungsGruppeById(
+                            mosesCalVeranstaltungWithBuchungsGruppe.buchungsGruppeId,
+                            buchungsgruppeResponseCallback
+                    );*/
+                }
+
+                // TODO: Requests für alle Buchungsgruppe
+
+                // Log.d("cz", "id: " + calVeranstaltung.getId() + " name: " + calVeranstaltung.getName());
+            }
+            // Log.d("cz", response.body().getData().toString());
+        }
+
+        @Override
+        public void onFailure(
+                Call<CalVeranstaltungReponse> call,
+                Throwable throwable
+        ) {
+
+        }
+    };
+    private final Callback<List<VplGruppe>> vplGruppeResponseCallback = new Callback<List<VplGruppe>>() {
+        /**
+         * Construct a sorted, unique set of fachsemester from a vplGruppeResponse
+         */
+
+        @Override
+        public void onResponse(
+                Call<List<VplGruppe>> call,
+                Response<List<VplGruppe>> response
+        ) {
+            if (response.isSuccessful()) {
+                List<VplGruppe> vplGruppeList = response.body();
+                if (vplGruppeList == null) return;
+
+                List<TimetableSemesterVo> semesterList =
+                        mosesConverter.semesterVosListFromVplGruppe(vplGruppeList);
+
+                List<TimetableSemesterVo> semesterUniqueList = new ArrayList<>(
+                        mosesConverter.semesterVosSetFromList(semesterList)
+                );
+
+                mView.toggleSemesterPickerVisibility(true);
+                mView.setSemesterItems(semesterUniqueList);
+            }
+        }
+
+        @Override
+        public void onFailure(
+                Call<List<VplGruppe>> call,
+                Throwable throwable
+        ) {
+        }
+    };
+    private final Callback<List<VplGruppe>> vplGruppeWithSemesterResponceCallback =
+            new Callback<List<VplGruppe>>() {
+                @Override
+                public void onResponse(
+                        Call<List<VplGruppe>> call,
+                        Response<List<VplGruppe>> response
+                ) {
+                    if (response.isSuccessful()) {
+                        List<VplGruppe> vplGruppeResponse = response.body();
+                        ArrayList<TimetableStudyGroupVo> studyGroupVoList = new ArrayList<>();
+
+                        if (vplGruppeResponse == null) return;
+
+                        for (VplGruppe vplGruppe : vplGruppeResponse) {
+                            TimetableStudyGroupVo studyGroup = mosesConverter
+                                    .studyGroupFromVplGruppe(vplGruppe);
+                            studyGroupVoList.add(studyGroup);
+                        }
+
+                        mView.setStudyGroupItems(studyGroupVoList);
+                    }
+                }
+
+                @Override
+                public void onFailure(
+                        Call<List<VplGruppe>> call,
+                        Throwable throwable
+                ) {
+                }
+            };
+    private final Callback<StudiengangReponse> studiengangReponseCallback = new Callback<StudiengangReponse>() {
+        @Override
+        public void onResponse(
+                Call<StudiengangReponse> call,
+                Response<StudiengangReponse> response
+        ) {
+            if (response.isSuccessful()) {
+                StudiengangReponse studiengangReponse = response.body();
+                /*
+                 * Moses based list of events which will converted to fit with existing code
+                 */
+                ArrayList<Studiengang> studiengangList;
+                ArrayList<TimetableStudyProgramVo> studiengangVoList = new ArrayList<>();
+
+                if (studiengangReponse == null) return;
+                studiengangList = (ArrayList<Studiengang>) studiengangReponse.getData();
+
+                if (studiengangList != null) {
+                    for (Studiengang studiengang : studiengangList) {
+                        studiengangVoList.add(
+                                mosesConverter.studyProgramFromStudiengang(studiengang)
+                        );
+                    }
+                }
+
+                mView.setStudyProgramItems(studiengangVoList);
+            }
+        }
+
+        @Override
+        public void onFailure(Call<StudiengangReponse> call, Throwable throwable) {
+            // TODO: handle failure branch
+        }
+    };
+
+    public TimetableDialogFragment() {
+        super(TAG);
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @return A new instance of fragment TimetableDialogFragment.
+     */
+    public static TimetableDialogFragment newInstance() {
+        final TimetableDialogFragment fragment = new TimetableDialogFragment();
+        final Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mChosenStudyProgram = null;
+        mChosenSemester = null;
+        mChosenStudyGroup = null;
+    }
+
+    @Override
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        mView = (TimetableDialogView) inflater.inflate(R.layout.fragment_timetable_dialog, container, false);
+        mView.setViewListener(mViewListener);
+        mView.initializeView(getChildFragmentManager());
+
+        return mView;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        //replacement of deprecated setHasOptionsMenu(), onCreateOptionsMenu() and onOptionsItemSelected()
+        // see https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
+        final MenuHost menuHost = requireActivity();
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
+                // Add menu items here
+                menu.clear();
+                menuInflater.inflate(R.menu.menu_main, menu);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
+                // Handle the menu selection
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        /*
+         * Call the studiengang/ endpoint to receive a list of all study programs
+         */
+        NetworkHandler.getInstance().mosesStudiengangApi
+                .studiengangGetAll(
+                        null,
+                        10000,
+                        studiengangReponseCallback
+                );
+
+
+        NetworkHandler.getInstance().mosesSemesterApi.getCurrentSemester(new MosesSemesterApi.CurrentSemesterCallback() {
+            @Override
+            public void onCurrentSemesterReceived(Semester semester) {
+                currentSemester = semester;
+                System.out.println("Aktuelles Semester: " + semester.getName());
+                System.out.println("Aktuelles Semester [ID]: " + semester.getId());
+                System.out.println("Aktuelles Semester [Start/Ende]: " + semester.getStartDate() + " / " + semester.getEndDate());
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                System.err.println("Fehler: " + errorMessage);
+            }
+        });
+    }
+
+    void proceedToTimetable(final String _TimetableId) {
+        ((MainActivity) getActivity()).changeFragment(
+                TimetableFragment.newInstance(_TimetableId),
+                true
+        );
+    }
+
+    public void fetchBuchungsgruppeById(Integer id, final Callback<BuchungsGruppeByIdResponse> callback) {
+        NetworkHandler.getInstance().mosesBuchungsGruppeApi.buchungsGruppeById(id, callback);
+    }
+
+    /**
+     * Resets controls except the study program picker.
+     */
+    private void resetControls() {
+        mView.toggleGroupsPickerVisibility(false);
+        mView.toggleButtonEnabled(false);
+        mView.resetSemesterPicker();
+        mView.resetGroupsPicker();
+    }
+
+    private void prepareGroupsPicker() {
+        mView.toggleGroupsPickerVisibility(true);
+        mView.toggleButtonEnabled(false);
+        mView.resetGroupsPicker();
+    }
+
+    /**
+     * Resetting variables from previous selections.
+     */
+    private void resetPreviousSelections() {
+        mChosenStudyProgram = null;
+        mChosenSemester = null;
+    }
+
+
+    /**
+     * Callback Implementations
+     */
+
 }

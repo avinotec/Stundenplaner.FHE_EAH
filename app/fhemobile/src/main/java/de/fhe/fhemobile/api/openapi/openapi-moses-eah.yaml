@@ -217,49 +217,27 @@ components:
         endDate:
           type: string
           format: date
-        startPoint:
-          type: string
-          format: date-time
-        endPoint:
-          type: string
-          format: date-time
+
+        # Alternativ dieses Format nutzen, da von der API ein Datum mit Uhrzeit OHNE Zeitzone zurückkommt (also ohne Z hinten)
+        #pattern: '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$'
+        #description: 'Startzeitpunkt (Format: YYYY-MM-DDTHH:mm:ss)'
+        #example: "2024-10-15T15:15:00"
+
+        #startPoint:
+         # type: string
+         # format: date-time
+
+        # endPoint:
+         # type: string
+         # format: date-time
+
         campusList:
           type: array
           items:
             $ref: '#/components/schemas/campus'
         calVeranstaltung:
-          type: array
-          items:
-            $ref: '#/components/schemas/calVeranstaltung'
-        buchungProto:
-          type: object
-          properties:
-            dateList:
-              type: array
-              items:
-                type: date
-            startTime:
-              type: string
-              format: time
-            endTime:
-              type: string
-              format: time
-            includeWeekend:
-              type: boolean
-            includeHoliday:
-              type: boolean
-            includeVacation:
-              type: boolean
-            pausendauer:
-              type: integer
-              format: int32
-            vorbereitungsdauer:
-              type: integer
-              format: int32
-            nachbereitungsdauer:
-              type: integer
-              format: int32
-        buchungsList:
+          $ref: '#/components/schemas/calVeranstaltung'
+        buchungList:
           type: array
           items:
             $ref: '#/components/schemas/buchung'
