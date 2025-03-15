@@ -241,33 +241,6 @@ public class TimetableDialogFragment extends FeatureFragment {
     };
 
     // API-Callbacks
-    private final Callback<Buchungsgruppe> buchungsgruppeCallback = new Callback<Buchungsgruppe>() {
-        @Override
-        public void onResponse(
-                Call<Buchungsgruppe> call,
-                Response<Buchungsgruppe> response
-        ) {
-
-        }
-
-        @Override
-        public void onFailure(
-                Call<Buchungsgruppe> call,
-                Throwable throwable
-        ) {
-        }
-    };
-    private final Callback<SemesterResponse> semesterResponseCallback = new Callback<SemesterResponse>() {
-        @Override
-        public void onResponse(Call<SemesterResponse> call, Response<SemesterResponse> response) {
-
-        }
-
-        @Override
-        public void onFailure(Call<SemesterResponse> call, Throwable throwable) {
-
-        }
-    };
     private final Callback<BuchungsGruppeByIdResponse> buchungsgruppeResponseCallback = new Callback<BuchungsGruppeByIdResponse>() {
         @Override
         public void onResponse(Call<BuchungsGruppeByIdResponse> call, Response<BuchungsGruppeByIdResponse> response) {
@@ -281,12 +254,9 @@ public class TimetableDialogFragment extends FeatureFragment {
                 Integer buchungsGruppeId = buchungsGruppeList.get(0).getId();
                 List<Buchung> buchungList = buchungsGruppeList.get(0).getBuchungList();
 
-
                 for (Buchung buchung : buchungList) {
                     einzeltermineIds.add(buchung.getId());
                 }
-
-
             }
         }
 
@@ -296,35 +266,7 @@ public class TimetableDialogFragment extends FeatureFragment {
 
         }
     };
-    private final Callback<TimetableDialogResponse> mFetchStudyProgramsCallback = new Callback<TimetableDialogResponse>() {
-        @Override
-        public void onResponse(@NonNull final Call<TimetableDialogResponse> call, final Response<TimetableDialogResponse> response) {
-            if (response.isSuccessful()) {
-                mResponse = response.body();
 
-                final ArrayList<TimetableStudyProgramVo> studyPrograms = new ArrayList<>();
-                // remove "Brückenkurse" and only keep bachelor and master study programs
-                for (final TimetableStudyProgramVo studyProgramVo : response.body().getStudyProgramsAsList()) {
-
-                    if ("Bachelor".equals(studyProgramVo.getDegree())
-                            || "Master".equals(studyProgramVo.getDegree())) {
-                        studyPrograms.add(studyProgramVo);
-                    }
-                }
-
-                mView.setStudyProgramItems(studyPrograms);
-            } else {
-                final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
-                ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.TIMETABLE_DIALOG_FRAGMENT_CODE1);
-            }
-        }
-
-        @Override
-        public void onFailure(final Call<TimetableDialogResponse> call, final Throwable t) {
-            ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.TIMETABLE_DIALOG_FRAGMENT_CODE2);
-            Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
-        }
-    };
     private final Callback<CalVeranstaltungReponse> calVeranstaltungReponseCallback = new Callback<CalVeranstaltungReponse>() {
         @Override
         public void onResponse(
@@ -380,6 +322,7 @@ public class TimetableDialogFragment extends FeatureFragment {
 
         }
     };
+
     private final Callback<List<VplGruppe>> vplGruppeResponseCallback = new Callback<List<VplGruppe>>() {
         /**
          * Construct a sorted, unique set of fachsemester from a vplGruppeResponse
@@ -413,6 +356,7 @@ public class TimetableDialogFragment extends FeatureFragment {
         ) {
         }
     };
+
     private final Callback<List<VplGruppe>> vplGruppeWithSemesterResponceCallback =
             new Callback<List<VplGruppe>>() {
                 @Override
@@ -443,6 +387,7 @@ public class TimetableDialogFragment extends FeatureFragment {
                 ) {
                 }
             };
+
     private final Callback<StudiengangReponse> studiengangReponseCallback = new Callback<StudiengangReponse>() {
         @Override
         public void onResponse(
@@ -475,6 +420,37 @@ public class TimetableDialogFragment extends FeatureFragment {
         @Override
         public void onFailure(Call<StudiengangReponse> call, Throwable throwable) {
             // TODO: handle failure branch
+        }
+    };
+
+    // API-Callbacks (no usages)
+    private final Callback<TimetableDialogResponse> mFetchStudyProgramsCallback = new Callback<TimetableDialogResponse>() {
+        @Override
+        public void onResponse(@NonNull final Call<TimetableDialogResponse> call, final Response<TimetableDialogResponse> response) {
+            if (response.isSuccessful()) {
+                mResponse = response.body();
+
+                final ArrayList<TimetableStudyProgramVo> studyPrograms = new ArrayList<>();
+                // remove "Brückenkurse" and only keep bachelor and master study programs
+                for (final TimetableStudyProgramVo studyProgramVo : response.body().getStudyProgramsAsList()) {
+
+                    if ("Bachelor".equals(studyProgramVo.getDegree())
+                            || "Master".equals(studyProgramVo.getDegree())) {
+                        studyPrograms.add(studyProgramVo);
+                    }
+                }
+
+                mView.setStudyProgramItems(studyPrograms);
+            } else {
+                final ApiErrorResponse error = ApiErrorUtils.getApiErrorResponse(response);
+                ApiErrorUtils.showErrorToast(error, ApiErrorUtils.ApiErrorCode.TIMETABLE_DIALOG_FRAGMENT_CODE1);
+            }
+        }
+
+        @Override
+        public void onFailure(final Call<TimetableDialogResponse> call, final Throwable t) {
+            ApiErrorUtils.showConnectionErrorToast(ApiErrorUtils.ApiErrorCode.TIMETABLE_DIALOG_FRAGMENT_CODE2);
+            Log.d(TAG, "failure: request " + call.request().url() + " - " + t.getMessage());
         }
     };
 
