@@ -39,7 +39,6 @@ import org.openapitools.client.model.Buchungsgruppe;
 import org.openapitools.client.model.CalVeranstaltung;
 import org.openapitools.client.model.CalVeranstaltungReponse;
 import org.openapitools.client.model.Semester;
-import org.openapitools.client.model.SemesterResponse;
 import org.openapitools.client.model.Studiengang;
 import org.openapitools.client.model.StudiengangReponse;
 import org.openapitools.client.model.VplGruppe;
