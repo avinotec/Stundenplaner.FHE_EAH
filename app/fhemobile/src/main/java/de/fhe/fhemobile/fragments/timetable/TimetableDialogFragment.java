@@ -119,7 +119,6 @@ public class TimetableDialogFragment extends FeatureFragment {
 
                 // Check if study program has any semesters
                 if (mChosenStudyProgram.getSemestersAsSortedList() != null) {
-                    //redundant errorOccurred = false;
                     mView.setSemesterItems(mChosenStudyProgram.getSemestersAsSortedList());
                 } else {
                     // No semesters in this study program
@@ -603,10 +602,4 @@ public class TimetableDialogFragment extends FeatureFragment {
         mChosenStudyProgram = null;
         mChosenSemester = null;
     }
-
-
-    /**
-     * Callback Implementations
-     */
-
 }
