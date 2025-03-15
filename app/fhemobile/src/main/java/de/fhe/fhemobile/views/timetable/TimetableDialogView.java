@@ -76,10 +76,6 @@ public class TimetableDialogView extends LinearLayout {
     }
 
     public void setStudyProgramItems(final ArrayList<TimetableStudyProgramVo> _Items) {
-        /*
-         * Consider to refactor/delete:
-         * Collections.sort(_Items, new StudyProgramComparator());
-         */
         mStudyProgramPicker2.setItems(_Items);
         mStudyProgramPicker2.toggleEnabled(true);
     }

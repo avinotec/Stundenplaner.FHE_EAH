@@ -188,15 +188,7 @@ public class TimetableDialogFragment extends FeatureFragment {
                 String _TimetableId,
                 Integer _StudyGroupId
         ) {
-
             chosenStudyGroupId = _StudyGroupId;
-
-            //NetworkHandler.getInstance()
-            //      .mosesBuchungsGruppeApi
-            //    .buchungsGruppeById(
-            //          chosenStudyGroupId
-
-            //        );
 
             // TODO: hier wichtig weiter zu machen
 
@@ -208,7 +200,6 @@ public class TimetableDialogFragment extends FeatureFragment {
                     null,
                     _StudyGroupId,
                     currentSemester.getId(),
-                    // Tony: 10.12.2024
                     calVeranstaltungReponseCallback);
         }
 
@@ -239,7 +230,11 @@ public class TimetableDialogFragment extends FeatureFragment {
         }
     };
 
-    // API-Callbacks
+    /**
+     * API-Callbacks
+     * ==========================================================================================
+     */
+
     private final Callback<BuchungsGruppeByIdResponse> buchungsgruppeResponseCallback = new Callback<BuchungsGruppeByIdResponse>() {
         @Override
         public void onResponse(Call<BuchungsGruppeByIdResponse> call, Response<BuchungsGruppeByIdResponse> response) {
@@ -318,15 +313,14 @@ public class TimetableDialogFragment extends FeatureFragment {
                 Call<CalVeranstaltungReponse> call,
                 Throwable throwable
         ) {
-
         }
     };
 
+    /**
+     * Construct a sorted, unique set of fachsemester from a vplGruppeResponse
+     * [1, 1, 3, 5, 5] -> [1, 3, 5]
+     */
     private final Callback<List<VplGruppe>> vplGruppeResponseCallback = new Callback<List<VplGruppe>>() {
-        /**
-         * Construct a sorted, unique set of fachsemester from a vplGruppeResponse
-         */
-
         @Override
         public void onResponse(
                 Call<List<VplGruppe>> call,
